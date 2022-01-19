@@ -6,7 +6,7 @@
   <link href="http://immortalqx.github.io/atom.xml" rel="self"/>
   
   <link href="http://immortalqx.github.io/"/>
-  <updated>2022-01-19T07:57:56.133Z</updated>
+  <updated>2022-01-19T08:04:54.276Z</updated>
   <id>http://immortalqx.github.io/</id>
   
   <author>
@@ -17,11 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>机器学习笔记（六）：深入理解卷积神经网络</title>
+    <link href="http://immortalqx.github.io/2022/01/15/machine-learning-6/"/>
+    <id>http://immortalqx.github.io/2022/01/15/machine-learning-6/</id>
+    <published>2022-01-15T08:00:19.000Z</published>
+    <updated>2022-01-19T08:04:54.276Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;机器学习笔记（六）：深入理解卷积神经网络&quot;&gt;&lt;a href=&quot;#机器学习笔记（六）：深入理解卷积神经网络&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="机器学习" scheme="http://immortalqx.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="CNN" scheme="http://immortalqx.github.io/tags/CNN/"/>
+    
+  </entry>
+  
+  <entry>
     <title>机器学习笔记（五）：初探卷积神经网络</title>
     <link href="http://immortalqx.github.io/2022/01/12/machine-learning-5/"/>
     <id>http://immortalqx.github.io/2022/01/12/machine-learning-5/</id>
     <published>2022-01-12T13:13:20.000Z</published>
-    <updated>2022-01-19T07:57:56.133Z</updated>
+    <updated>2022-01-19T07:59:45.770Z</updated>
     
     
       
@@ -497,31 +522,6 @@
         
         
     <summary type="html">&lt;h1 id=&quot;ROS中的URDF&quot;&gt;&lt;a href=&quot;#ROS中的URDF&quot; class=&quot;headerlink&quot; title=&quot;ROS中的URDF&quot;&gt;&lt;/a&gt;ROS中的URDF&lt;/h1&gt;&lt;h2 id=&quot;什么是URDF&quot;&gt;&lt;a href=&quot;#什么是URDF&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="ROS" scheme="http://immortalqx.github.io/categories/ROS/"/>
-    
-    
-    <category term="ROS基础" scheme="http://immortalqx.github.io/tags/ROS%E5%9F%BA%E7%A1%80/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ROS中的TF</title>
-    <link href="http://immortalqx.github.io/2021/07/18/ros-notes-4/"/>
-    <id>http://immortalqx.github.io/2021/07/18/ros-notes-4/</id>
-    <published>2021-07-18T08:51:40.000Z</published>
-    <updated>2022-01-11T09:10:51.449Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;ROS中的TF&quot;&gt;&lt;a href=&quot;#ROS中的TF&quot; class=&quot;headerlink&quot; title=&quot;ROS中的TF&quot;&gt;&lt;/a&gt;ROS中的TF&lt;/h1&gt;&lt;h2 id=&quot;TF介绍&quot;&gt;&lt;a href=&quot;#TF介绍&quot; class=&quot;headerlink&quot;</summary>
         
       
     
