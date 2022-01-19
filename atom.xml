@@ -6,7 +6,7 @@
   <link href="http://immortalqx.github.io/atom.xml" rel="self"/>
   
   <link href="http://immortalqx.github.io/"/>
-  <updated>2022-01-11T09:10:51.453Z</updated>
+  <updated>2022-01-19T07:57:56.133Z</updated>
   <id>http://immortalqx.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>机器学习笔记（五）：初探卷积神经网络</title>
+    <link href="http://immortalqx.github.io/2022/01/12/machine-learning-5/"/>
+    <id>http://immortalqx.github.io/2022/01/12/machine-learning-5/</id>
+    <published>2022-01-12T13:13:20.000Z</published>
+    <updated>2022-01-19T07:57:56.133Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;机器学习笔记（五）：初探卷积神经网络&quot;&gt;&lt;a href=&quot;#机器学习笔记（五）：初探卷积神经网络&quot; class=&quot;headerlink&quot; title=&quot;机器学习笔记（五）：初探卷积神经网络&quot;&gt;&lt;/a&gt;机器学习笔记（五）：初探卷积神经网络&lt;/h1&gt;&lt;h2</summary>
+        
+      
+    
+    
+    
+    <category term="机器学习" scheme="http://immortalqx.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="CNN" scheme="http://immortalqx.github.io/tags/CNN/"/>
+    
+  </entry>
   
   <entry>
     <title>机器学习笔记（四）：手写多层神经网络并应用</title>
@@ -497,31 +522,6 @@
         
         
     <summary type="html">&lt;h1 id=&quot;ROS中的TF&quot;&gt;&lt;a href=&quot;#ROS中的TF&quot; class=&quot;headerlink&quot; title=&quot;ROS中的TF&quot;&gt;&lt;/a&gt;ROS中的TF&lt;/h1&gt;&lt;h2 id=&quot;TF介绍&quot;&gt;&lt;a href=&quot;#TF介绍&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="ROS" scheme="http://immortalqx.github.io/categories/ROS/"/>
-    
-    
-    <category term="ROS基础" scheme="http://immortalqx.github.io/tags/ROS%E5%9F%BA%E7%A1%80/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>解决source多个ROS工作空间时的覆盖问题</title>
-    <link href="http://immortalqx.github.io/2021/07/17/ros-notes-3/"/>
-    <id>http://immortalqx.github.io/2021/07/17/ros-notes-3/</id>
-    <published>2021-07-17T09:12:15.000Z</published>
-    <updated>2022-01-11T09:10:51.449Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;解决source多个ROS工作空间时的覆盖问题&quot;&gt;&lt;a href=&quot;#解决source多个ROS工作空间时的覆盖问题&quot; class=&quot;headerlink&quot;</summary>
         
       
     
