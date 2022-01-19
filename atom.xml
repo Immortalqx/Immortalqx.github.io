@@ -171,6 +171,31 @@
   </entry>
   
   <entry>
+    <title>APSIPA ASC 2021杰出讲师报告会参会总结</title>
+    <link href="http://immortalqx.github.io/2022/01/05/meeting-1/"/>
+    <id>http://immortalqx.github.io/2022/01/05/meeting-1/</id>
+    <published>2022-01-05T08:49:28.000Z</published>
+    <updated>2022-01-19T09:05:32.604Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;APSIPA-ASC-2021杰出讲师报告会参会总结&quot;&gt;&lt;a href=&quot;#APSIPA-ASC-2021杰出讲师报告会参会总结&quot; class=&quot;headerlink&quot; title=&quot;APSIPA ASC 2021杰出讲师报告会参会总结&quot;&gt;&lt;/a&gt;APSIPA</summary>
+        
+      
+    
+    
+    
+    <category term="计算机视觉" scheme="http://immortalqx.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/"/>
+    
+    
+    <category term="学术会议" scheme="http://immortalqx.github.io/tags/%E5%AD%A6%E6%9C%AF%E4%BC%9A%E8%AE%AE/"/>
+    
+  </entry>
+  
+  <entry>
     <title>基于SIFT的图像拼接（融合）实现</title>
     <link href="http://immortalqx.github.io/2021/12/31/opencv-notes-6/"/>
     <id>http://immortalqx.github.io/2021/12/31/opencv-notes-6/</id>
@@ -506,31 +531,6 @@
     <category term="PX4" scheme="http://immortalqx.github.io/tags/PX4/"/>
     
     <category term="Gazebo" scheme="http://immortalqx.github.io/tags/Gazebo/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ROS中的URDF</title>
-    <link href="http://immortalqx.github.io/2021/07/18/ros-notes-5/"/>
-    <id>http://immortalqx.github.io/2021/07/18/ros-notes-5/</id>
-    <published>2021-07-18T11:45:28.000Z</published>
-    <updated>2022-01-11T09:10:51.449Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;ROS中的URDF&quot;&gt;&lt;a href=&quot;#ROS中的URDF&quot; class=&quot;headerlink&quot; title=&quot;ROS中的URDF&quot;&gt;&lt;/a&gt;ROS中的URDF&lt;/h1&gt;&lt;h2 id=&quot;什么是URDF&quot;&gt;&lt;a href=&quot;#什么是URDF&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="ROS" scheme="http://immortalqx.github.io/categories/ROS/"/>
-    
-    
-    <category term="ROS基础" scheme="http://immortalqx.github.io/tags/ROS%E5%9F%BA%E7%A1%80/"/>
     
   </entry>
   

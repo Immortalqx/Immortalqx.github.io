@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://immortalqx.github.io/2022/01/05/meeting-1/</loc>
+    
+    <lastmod>2022-01-19</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://immortalqx.github.io/2022/01/15/machine-learning-6/</loc>
     
     <lastmod>2022-01-19</lastmod>
@@ -177,14 +184,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/google561fc42db74e2484.html</loc>
+    <loc>http://immortalqx.github.io/baidu_verify_code-fJe6tVB0Yt.html</loc>
     
     <lastmod>2022-01-11</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/categories/index.html</loc>
+    <loc>http://immortalqx.github.io/google561fc42db74e2484.html</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -198,7 +205,7 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/baidu_verify_code-fJe6tVB0Yt.html</loc>
+    <loc>http://immortalqx.github.io/categories/index.html</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -240,6 +247,13 @@
   </url>
   
   <url>
+    <loc>http://immortalqx.github.io/2021/07/28/ielts-1/</loc>
+    
+    <lastmod>2022-01-11</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://immortalqx.github.io/2021/03/27/hkust-application/</loc>
     
     <lastmod>2022-01-11</lastmod>
@@ -254,13 +268,6 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/07/28/ielts-1/</loc>
-    
-    <lastmod>2022-01-11</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://immortalqx.github.io/2020/09/05/ros-notes-1/</loc>
     
     <lastmod>2022-01-11</lastmod>
@@ -268,14 +275,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2020/09/04/ros-notes-2/</loc>
+    <loc>http://immortalqx.github.io/2021/07/17/ros-notes-3/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/07/17/ros-notes-3/</loc>
+    <loc>http://immortalqx.github.io/2020/09/04/ros-notes-2/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -452,6 +459,13 @@
   </url>
   
   <url>
+    <loc>http://immortalqx.github.io/tags/IELTS/</loc>
+    <lastmod>2022-01-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/</loc>
     <lastmod>2022-01-19</lastmod>
     <changefreq>daily</changefreq>
@@ -460,13 +474,6 @@
   
   <url>
     <loc>http://immortalqx.github.io/tags/OpenVINS/</loc>
-    <lastmod>2022-01-19</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/tags/IELTS/</loc>
     <lastmod>2022-01-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -579,6 +586,13 @@
   
   <url>
     <loc>http://immortalqx.github.io/tags/CNN/</loc>
+    <lastmod>2022-01-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/tags/%E5%AD%A6%E6%9C%AF%E4%BC%9A%E8%AE%AE/</loc>
     <lastmod>2022-01-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
