@@ -565,9 +565,10 @@
 <p><img src="/images/machine-learning-6/v2-c9ab4a0dc54874a747773dd2550eb061_720w.jpg"></p>
 <p>作用后的结果：</p>
 <p><img src="/images/machine-learning-6/v2-1ae057962612ca7a840003152fbfd78e_720w.jpg"></p>
-<h3 id="2-2-其他常见的非线性激活函数"><a href="#2-2-其他常见的非线性激活函数" class="headerlink" title="2.2 其他常见的非线性激活函数"></a>2.2 其他常见的非线性激活函数</h3><p>数学表达式为：<br>$$<br>sigmoid(x)=\frac{1}{1+e^{-x}} \</p>
-<p>tanh(x)=\frac{e^x-e^{-x}}{e^x+e^{-x}} \<br>$$<br>函数图像：</p>
-<p><img src="/media/immortalqx/Windows-SSD/%E5%AD%A6%E4%B9%A0/%E8%AE%B0%E5%BD%95/%E4%B8%B4%E6%97%B6%E7%AC%94%E8%AE%B0%EF%BC%88%E8%BD%AClinux%E5%8D%9A%E5%AE%A2%EF%BC%89/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C.assets/tanh-sigmoid.png"></p>
+<h3 id="2-2-其他常见的非线性激活函数"><a href="#2-2-其他常见的非线性激活函数" class="headerlink" title="2.2 其他常见的非线性激活函数"></a>2.2 其他常见的非线性激活函数</h3><p>sigmoid函数：$sigmoid(x)=\frac{1}{1+e^{-x}} $</p>
+<p>tanh函数： $tanh(x)=\frac{e^x-e^{-x}}{e^x+e^{-x}}$</p>
+<p>这两个函数的图像如下所示：</p>
+<p><img src="/images/machine-learning-6/tanh-sigmoid.png"></p>
 <h3 id="2-3-为何使用relu"><a href="#2-3-为何使用relu" class="headerlink" title="2.3 为何使用relu"></a>2.3 为何使用relu</h3><p>实际应用中，特别是深层网络在训练时，tanh和sigmoid会在端值趋于饱和，造成训练速度减慢，故深层网络的激活函数默认大多采用relu函数，浅层网络可以采用sigmoid和tanh函数。</p>
 <p>那么为什么现在这么多网络，都更多地使用relu函数呢？一个重要原因就是上面提到的，其稀疏激活性。</p>
 <ol>

@@ -514,7 +514,7 @@
 </li>
 </ul>
 <p>但是，CNN真正能做的，只是起到一个<strong>图像特征提取器</strong>的作用！</p>
-<h2 id="二、CNN是什么"><a href="#二、CNN是什么" class="headerlink" title="二、CNN是什么"></a>二、CNN是什么</h2><h4 id="2-1-卷积神经网络（CNN）是一种带有卷积结构的深度神经网络"><a href="#2-1-卷积神经网络（CNN）是一种带有卷积结构的深度神经网络" class="headerlink" title="2.1 卷积神经网络（CNN）是一种带有卷积结构的深度神经网络"></a>2.1 卷积神经网络（CNN）是一种带有卷积结构的深度神经网络</h4><p><strong>卷积结构</strong>可以减少深层网络占用的内存量。</p>
+<h2 id="二、CNN是什么"><a href="#二、CNN是什么" class="headerlink" title="二、CNN是什么"></a>二、CNN是什么</h2><h3 id="2-1-卷积神经网络（CNN）是一种带有卷积结构的深度神经网络"><a href="#2-1-卷积神经网络（CNN）是一种带有卷积结构的深度神经网络" class="headerlink" title="2.1 卷积神经网络（CNN）是一种带有卷积结构的深度神经网络"></a>2.1 卷积神经网络（CNN）是一种带有卷积结构的深度神经网络</h3><p><strong>卷积结构</strong>可以减少深层网络占用的内存量。</p>
 <p><strong>卷积结构有三个关键的操作</strong></p>
 <ul>
 <li>其一是局部感受野，</li>
@@ -522,7 +522,7 @@
 <li>其三是池化层pooling。</li>
 </ul>
 <p><strong>作用：</strong>可以有效的减少网络的参数个数，缓解模型的过拟合问题。</p>
-<h4 id="2-2-卷积神经网络（CNN）与普通神经网络非常相似"><a href="#2-2-卷积神经网络（CNN）与普通神经网络非常相似" class="headerlink" title="2.2 卷积神经网络（CNN）与普通神经网络非常相似"></a>2.2 卷积神经网络（CNN）与普通神经网络非常相似</h4><p><strong>相同点</strong>：</p>
+<h3 id="2-2-卷积神经网络（CNN）与普通神经网络非常相似"><a href="#2-2-卷积神经网络（CNN）与普通神经网络非常相似" class="headerlink" title="2.2 卷积神经网络（CNN）与普通神经网络非常相似"></a>2.2 卷积神经网络（CNN）与普通神经网络非常相似</h3><p><strong>相同点</strong>：</p>
 <p>它们都由具有“可学习的权重W”和“偏置常量b”的神经元组成。<br>每个神经元都接收一些输入，并做一些点积计算，输出是每个分类的分数，普通神经网络里的一些计算技巧到这里依旧适用。</p>
 <p><strong>不同之处在哪？</strong></p>
 <p><strong>CNN具有三维体积的神经元(3D volumes of neurons)</strong></p>
@@ -533,12 +533,12 @@
 <p><img src="/images/machine-learning/5-1.jpg"></p>
 <p>卷积神经网络：一个CNN由很多层组成，它们的输入是三维的，输出也是三维的</p>
 <p><img src="/images/machine-learning/5-2.jpg"></p>
-<h4 id="2-3-卷积神经网络（CNN）的结构"><a href="#2-3-卷积神经网络（CNN）的结构" class="headerlink" title="2.3 卷积神经网络（CNN）的结构"></a>2.3 卷积神经网络（CNN）的结构</h4><h5 id="1）卷积层（Convolutional-layer）"><a href="#1）卷积层（Convolutional-layer）" class="headerlink" title="1）卷积层（Convolutional layer）"></a>1）卷积层（Convolutional layer）</h5><p>卷积神经网路中，每层卷积层由若干卷积核组成，每个卷积核的参数都是通过反向传播算法优化得到的。</p>
+<h3 id="2-3-卷积神经网络（CNN）的结构"><a href="#2-3-卷积神经网络（CNN）的结构" class="headerlink" title="2.3 卷积神经网络（CNN）的结构"></a>2.3 卷积神经网络（CNN）的结构</h3><h5 id="1）卷积层（Convolutional-layer）"><a href="#1）卷积层（Convolutional-layer）" class="headerlink" title="1）卷积层（Convolutional layer）"></a>1）卷积层（Convolutional layer）</h5><p>卷积神经网路中，每层卷积层由若干卷积核组成，每个卷积核的参数都是通过反向传播算法优化得到的。</p>
 <p>卷积运算的目的是提取输入的不同特征，第一层卷积层可能只能提取一些低级的特征如边缘、线条和角等层级，更多层的网络能从低级特征中迭代提取更复杂的特征。</p>
 <h5 id="2）线性整流层（Rectified-Linear-Units-layer-ReLU-layer）"><a href="#2）线性整流层（Rectified-Linear-Units-layer-ReLU-layer）" class="headerlink" title="2）线性整流层（Rectified Linear Units layer, ReLU layer）"></a>2）线性整流层（Rectified Linear Units layer, ReLU layer）</h5><p>这一层神经的激活函数（Activation function）使用线性整流（Rectified Linear Units, ReLU）。</p>
 <h5 id="3）池化层（Pooling-layer）"><a href="#3）池化层（Pooling-layer）" class="headerlink" title="3）池化层（Pooling layer）"></a>3）池化层（Pooling layer）</h5><p>通常在卷积层之后，会得到维度很大的特征，将特征切成几个区域，取其最大值或平均值，得到新的、维度较小的特征。</p>
 <h5 id="4）全连接层（-Fully-Connected-layer）"><a href="#4）全连接层（-Fully-Connected-layer）" class="headerlink" title="4）全连接层（ Fully-Connected layer）"></a>4）全连接层（ Fully-Connected layer）</h5><p>把所有局部特征，结合变成全局特征，用来计算最后每一类的得分。</p>
-<h4 id="2-4-一个卷积神经网络各层应用实例"><a href="#2-4-一个卷积神经网络各层应用实例" class="headerlink" title="2.4 一个卷积神经网络各层应用实例"></a>2.4 一个卷积神经网络各层应用实例</h4><p><img src="/images/machine-learning/5-3.jpg"></p>
+<h3 id="2-4-一个卷积神经网络各层应用实例"><a href="#2-4-一个卷积神经网络各层应用实例" class="headerlink" title="2.4 一个卷积神经网络各层应用实例"></a>2.4 一个卷积神经网络各层应用实例</h3><p><img src="/images/machine-learning/5-3.jpg"></p>
 <p>上图中，CNN要做的事情是：给定一张图片，现在需要模型判断这张图片里具体是一个什么东西，总之输出一个结果：这是什么？</p>
 <p>左边是：</p>
 <ul>
@@ -1281,13 +1281,6 @@
 
 </main>
 
-
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
-    });
-</script>
 
 
 

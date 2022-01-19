@@ -151,6 +151,64 @@
       </tags>
   </entry>
   <entry>
+    <title>OpenVINS学习笔记（一）</title>
+    <url>/2021/07/06/openvins-note-1/</url>
+    <content><![CDATA[<h1 id="OpenVINS学习笔记（一）"><a href="#OpenVINS学习笔记（一）" class="headerlink" title="OpenVINS学习笔记（一）"></a>OpenVINS学习笔记（一）</h1><blockquote>
+<p>论文摘要与代码框架</p>
+</blockquote>
+<h2 id="论文摘要"><a href="#论文摘要" class="headerlink" title="论文摘要"></a>论文摘要</h2><p>构建OpenVINS开源代码库，对通常需要的视觉惯性估计特性具有现成的支持，包括：<br>（i） 流形上的滑动窗口卡尔曼滤波器；</p>
+<p>（ii）在线相机内外参数标定；</p>
+<p>（iii）相机到惯性传感器的时间偏移校准；</p>
+<p>（iv）具有不同表示和一致的首次估计（FEJ）处理的SLAM地标；</p>
+<p>（v） 模块化状态管理系统；</p>
+<p>（vi）可扩展视觉惯性系统模拟器；</p>
+<p>（vii）算法评估工具箱。</p>
+<h2 id="代码框架"><a href="#代码框架" class="headerlink" title="代码框架"></a>代码框架</h2><ul>
+<li><p><strong>ov_core</strong></p>
+<ul>
+<li><p>2D图像稀疏视觉特征跟踪；</p>
+</li>
+<li><p>线性和高斯-牛顿特征三角剖分方法；</p>
+</li>
+<li><p>用于任意数量相机和频率的视觉惯性模拟器；</p>
+</li>
+<li><p>基本的流形数学运算</p>
+</li>
+</ul>
+</li>
+<li><p><strong>ov_eval</strong></p>
+<ul>
+<li>轨迹对齐；</li>
+<li>轨迹精度和一致性评估的绘图工具；</li>
+<li>不同精度指标的蒙特卡罗评价；</li>
+<li>ROS topic录制到文件。</li>
+</ul>
+</li>
+<li><p><strong>ov_msckf</strong></p>
+<p>可扩展模块扩展卡尔曼滤波器（EKF）为基础的滑动窗口视觉惯性估计器与流形系统的灵活状态表示。</p>
+<p>特点包括：</p>
+<ul>
+<li>首次估计Jacobains（FEJ）</li>
+<li>IMU相机时间偏移校准</li>
+<li>相机内部和外部校准</li>
+<li>标准MSCKF和不同表示的3DSLAM地标。</li>
+</ul>
+</li>
+</ul>
+<p><strong>代码入口：</strong></p>
+<p><img src="/images/OpenVINS-Note/1-1.png"></p>
+<p><img src="/images/OpenVINS-Note/1-2.png"></p>
+<p>注：<a href="https://blog.csdn.net/weixin_43793960/article/details/110929635">图片来源</a></p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>视觉SLAM</tag>
+        <tag>OpenVINS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>雅思备考经验分享</title>
     <url>/2021/07/28/ielts-1/</url>
     <content><![CDATA[<h1 id="雅思备考经验分享"><a href="#雅思备考经验分享" class="headerlink" title="雅思备考经验分享"></a>雅思备考经验分享</h1><blockquote>
@@ -284,64 +342,6 @@
       </categories>
       <tags>
         <tag>IELTS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OpenVINS学习笔记（一）</title>
-    <url>/2021/07/06/openvins-note-1/</url>
-    <content><![CDATA[<h1 id="OpenVINS学习笔记（一）"><a href="#OpenVINS学习笔记（一）" class="headerlink" title="OpenVINS学习笔记（一）"></a>OpenVINS学习笔记（一）</h1><blockquote>
-<p>论文摘要与代码框架</p>
-</blockquote>
-<h2 id="论文摘要"><a href="#论文摘要" class="headerlink" title="论文摘要"></a>论文摘要</h2><p>构建OpenVINS开源代码库，对通常需要的视觉惯性估计特性具有现成的支持，包括：<br>（i） 流形上的滑动窗口卡尔曼滤波器；</p>
-<p>（ii）在线相机内外参数标定；</p>
-<p>（iii）相机到惯性传感器的时间偏移校准；</p>
-<p>（iv）具有不同表示和一致的首次估计（FEJ）处理的SLAM地标；</p>
-<p>（v） 模块化状态管理系统；</p>
-<p>（vi）可扩展视觉惯性系统模拟器；</p>
-<p>（vii）算法评估工具箱。</p>
-<h2 id="代码框架"><a href="#代码框架" class="headerlink" title="代码框架"></a>代码框架</h2><ul>
-<li><p><strong>ov_core</strong></p>
-<ul>
-<li><p>2D图像稀疏视觉特征跟踪；</p>
-</li>
-<li><p>线性和高斯-牛顿特征三角剖分方法；</p>
-</li>
-<li><p>用于任意数量相机和频率的视觉惯性模拟器；</p>
-</li>
-<li><p>基本的流形数学运算</p>
-</li>
-</ul>
-</li>
-<li><p><strong>ov_eval</strong></p>
-<ul>
-<li>轨迹对齐；</li>
-<li>轨迹精度和一致性评估的绘图工具；</li>
-<li>不同精度指标的蒙特卡罗评价；</li>
-<li>ROS topic录制到文件。</li>
-</ul>
-</li>
-<li><p><strong>ov_msckf</strong></p>
-<p>可扩展模块扩展卡尔曼滤波器（EKF）为基础的滑动窗口视觉惯性估计器与流形系统的灵活状态表示。</p>
-<p>特点包括：</p>
-<ul>
-<li>首次估计Jacobains（FEJ）</li>
-<li>IMU相机时间偏移校准</li>
-<li>相机内部和外部校准</li>
-<li>标准MSCKF和不同表示的3DSLAM地标。</li>
-</ul>
-</li>
-</ul>
-<p><strong>代码入口：</strong></p>
-<p><img src="/images/OpenVINS-Note/1-1.png"></p>
-<p><img src="/images/OpenVINS-Note/1-2.png"></p>
-<p>注：<a href="https://blog.csdn.net/weixin_43793960/article/details/110929635">图片来源</a></p>
-]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>视觉SLAM</tag>
-        <tag>OpenVINS</tag>
       </tags>
   </entry>
   <entry>
@@ -2958,7 +2958,7 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
 </li>
 </ul>
 <p>但是，CNN真正能做的，只是起到一个<strong>图像特征提取器</strong>的作用！</p>
-<h2 id="二、CNN是什么"><a href="#二、CNN是什么" class="headerlink" title="二、CNN是什么"></a>二、CNN是什么</h2><h4 id="2-1-卷积神经网络（CNN）是一种带有卷积结构的深度神经网络"><a href="#2-1-卷积神经网络（CNN）是一种带有卷积结构的深度神经网络" class="headerlink" title="2.1 卷积神经网络（CNN）是一种带有卷积结构的深度神经网络"></a>2.1 卷积神经网络（CNN）是一种带有卷积结构的深度神经网络</h4><p><strong>卷积结构</strong>可以减少深层网络占用的内存量。</p>
+<h2 id="二、CNN是什么"><a href="#二、CNN是什么" class="headerlink" title="二、CNN是什么"></a>二、CNN是什么</h2><h3 id="2-1-卷积神经网络（CNN）是一种带有卷积结构的深度神经网络"><a href="#2-1-卷积神经网络（CNN）是一种带有卷积结构的深度神经网络" class="headerlink" title="2.1 卷积神经网络（CNN）是一种带有卷积结构的深度神经网络"></a>2.1 卷积神经网络（CNN）是一种带有卷积结构的深度神经网络</h3><p><strong>卷积结构</strong>可以减少深层网络占用的内存量。</p>
 <p><strong>卷积结构有三个关键的操作</strong></p>
 <ul>
 <li>其一是局部感受野，</li>
@@ -2966,7 +2966,7 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
 <li>其三是池化层pooling。</li>
 </ul>
 <p><strong>作用：</strong>可以有效的减少网络的参数个数，缓解模型的过拟合问题。</p>
-<h4 id="2-2-卷积神经网络（CNN）与普通神经网络非常相似"><a href="#2-2-卷积神经网络（CNN）与普通神经网络非常相似" class="headerlink" title="2.2 卷积神经网络（CNN）与普通神经网络非常相似"></a>2.2 卷积神经网络（CNN）与普通神经网络非常相似</h4><p><strong>相同点</strong>：</p>
+<h3 id="2-2-卷积神经网络（CNN）与普通神经网络非常相似"><a href="#2-2-卷积神经网络（CNN）与普通神经网络非常相似" class="headerlink" title="2.2 卷积神经网络（CNN）与普通神经网络非常相似"></a>2.2 卷积神经网络（CNN）与普通神经网络非常相似</h3><p><strong>相同点</strong>：</p>
 <p>它们都由具有“可学习的权重W”和“偏置常量b”的神经元组成。<br>每个神经元都接收一些输入，并做一些点积计算，输出是每个分类的分数，普通神经网络里的一些计算技巧到这里依旧适用。</p>
 <p><strong>不同之处在哪？</strong></p>
 <p><strong>CNN具有三维体积的神经元(3D volumes of neurons)</strong></p>
@@ -2977,12 +2977,12 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
 <p><img src="/images/machine-learning/5-1.jpg"></p>
 <p>卷积神经网络：一个CNN由很多层组成，它们的输入是三维的，输出也是三维的</p>
 <p><img src="/images/machine-learning/5-2.jpg"></p>
-<h4 id="2-3-卷积神经网络（CNN）的结构"><a href="#2-3-卷积神经网络（CNN）的结构" class="headerlink" title="2.3 卷积神经网络（CNN）的结构"></a>2.3 卷积神经网络（CNN）的结构</h4><h5 id="1）卷积层（Convolutional-layer）"><a href="#1）卷积层（Convolutional-layer）" class="headerlink" title="1）卷积层（Convolutional layer）"></a>1）卷积层（Convolutional layer）</h5><p>卷积神经网路中，每层卷积层由若干卷积核组成，每个卷积核的参数都是通过反向传播算法优化得到的。</p>
+<h3 id="2-3-卷积神经网络（CNN）的结构"><a href="#2-3-卷积神经网络（CNN）的结构" class="headerlink" title="2.3 卷积神经网络（CNN）的结构"></a>2.3 卷积神经网络（CNN）的结构</h3><h5 id="1）卷积层（Convolutional-layer）"><a href="#1）卷积层（Convolutional-layer）" class="headerlink" title="1）卷积层（Convolutional layer）"></a>1）卷积层（Convolutional layer）</h5><p>卷积神经网路中，每层卷积层由若干卷积核组成，每个卷积核的参数都是通过反向传播算法优化得到的。</p>
 <p>卷积运算的目的是提取输入的不同特征，第一层卷积层可能只能提取一些低级的特征如边缘、线条和角等层级，更多层的网络能从低级特征中迭代提取更复杂的特征。</p>
 <h5 id="2）线性整流层（Rectified-Linear-Units-layer-ReLU-layer）"><a href="#2）线性整流层（Rectified-Linear-Units-layer-ReLU-layer）" class="headerlink" title="2）线性整流层（Rectified Linear Units layer, ReLU layer）"></a>2）线性整流层（Rectified Linear Units layer, ReLU layer）</h5><p>这一层神经的激活函数（Activation function）使用线性整流（Rectified Linear Units, ReLU）。</p>
 <h5 id="3）池化层（Pooling-layer）"><a href="#3）池化层（Pooling-layer）" class="headerlink" title="3）池化层（Pooling layer）"></a>3）池化层（Pooling layer）</h5><p>通常在卷积层之后，会得到维度很大的特征，将特征切成几个区域，取其最大值或平均值，得到新的、维度较小的特征。</p>
 <h5 id="4）全连接层（-Fully-Connected-layer）"><a href="#4）全连接层（-Fully-Connected-layer）" class="headerlink" title="4）全连接层（ Fully-Connected layer）"></a>4）全连接层（ Fully-Connected layer）</h5><p>把所有局部特征，结合变成全局特征，用来计算最后每一类的得分。</p>
-<h4 id="2-4-一个卷积神经网络各层应用实例"><a href="#2-4-一个卷积神经网络各层应用实例" class="headerlink" title="2.4 一个卷积神经网络各层应用实例"></a>2.4 一个卷积神经网络各层应用实例</h4><p><img src="/images/machine-learning/5-3.jpg"></p>
+<h3 id="2-4-一个卷积神经网络各层应用实例"><a href="#2-4-一个卷积神经网络各层应用实例" class="headerlink" title="2.4 一个卷积神经网络各层应用实例"></a>2.4 一个卷积神经网络各层应用实例</h3><p><img src="/images/machine-learning/5-3.jpg"></p>
 <p>上图中，CNN要做的事情是：给定一张图片，现在需要模型判断这张图片里具体是一个什么东西，总之输出一个结果：这是什么？</p>
 <p>左边是：</p>
 <ul>
@@ -3084,9 +3084,10 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
 <p><img src="/images/machine-learning-6/v2-c9ab4a0dc54874a747773dd2550eb061_720w.jpg"></p>
 <p>作用后的结果：</p>
 <p><img src="/images/machine-learning-6/v2-1ae057962612ca7a840003152fbfd78e_720w.jpg"></p>
-<h3 id="2-2-其他常见的非线性激活函数"><a href="#2-2-其他常见的非线性激活函数" class="headerlink" title="2.2 其他常见的非线性激活函数"></a>2.2 其他常见的非线性激活函数</h3><p>数学表达式为：<br>$$<br>sigmoid(x)=\frac{1}{1+e^{-x}} \</p>
-<p>tanh(x)=\frac{e^x-e^{-x}}{e^x+e^{-x}} \<br>$$<br>函数图像：</p>
-<p><img src="/media/immortalqx/Windows-SSD/%E5%AD%A6%E4%B9%A0/%E8%AE%B0%E5%BD%95/%E4%B8%B4%E6%97%B6%E7%AC%94%E8%AE%B0%EF%BC%88%E8%BD%AClinux%E5%8D%9A%E5%AE%A2%EF%BC%89/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C.assets/tanh-sigmoid.png"></p>
+<h3 id="2-2-其他常见的非线性激活函数"><a href="#2-2-其他常见的非线性激活函数" class="headerlink" title="2.2 其他常见的非线性激活函数"></a>2.2 其他常见的非线性激活函数</h3><p>sigmoid函数：$sigmoid(x)=\frac{1}{1+e^{-x}} $</p>
+<p>tanh函数： $tanh(x)=\frac{e^x-e^{-x}}{e^x+e^{-x}}$</p>
+<p>这两个函数的图像如下所示：</p>
+<p><img src="/images/machine-learning-6/tanh-sigmoid.png"></p>
 <h3 id="2-3-为何使用relu"><a href="#2-3-为何使用relu" class="headerlink" title="2.3 为何使用relu"></a>2.3 为何使用relu</h3><p>实际应用中，特别是深层网络在训练时，tanh和sigmoid会在端值趋于饱和，造成训练速度减慢，故深层网络的激活函数默认大多采用relu函数，浅层网络可以采用sigmoid和tanh函数。</p>
 <p>那么为什么现在这么多网络，都更多地使用relu函数呢？一个重要原因就是上面提到的，其稀疏激活性。</p>
 <ol>
