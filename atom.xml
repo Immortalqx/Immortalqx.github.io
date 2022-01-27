@@ -6,7 +6,7 @@
   <link href="http://immortalqx.github.io/atom.xml" rel="self"/>
   
   <link href="http://immortalqx.github.io/"/>
-  <updated>2022-01-27T12:55:49.974Z</updated>
+  <updated>2022-01-27T13:53:34.222Z</updated>
   <id>http://immortalqx.github.io/</id>
   
   <author>
@@ -17,18 +17,47 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>机器学习笔记（七）：CNN应用——服装分类问题</title>
+    <title>机器学习笔记（八）：应用CNN和RNN解决数独问题</title>
+    <link href="http://immortalqx.github.io/2022/01/25/machine-learning-8/"/>
+    <id>http://immortalqx.github.io/2022/01/25/machine-learning-8/</id>
+    <published>2022-01-25T13:26:13.000Z</published>
+    <updated>2022-01-27T13:53:34.222Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;机器学习笔记（八）：应用CNN和RNN解决数独问题&quot;&gt;&lt;a href=&quot;#机器学习笔记（八）：应用CNN和RNN解决数独问题&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="机器学习" scheme="http://immortalqx.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="机器学习笔记" scheme="http://immortalqx.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="CNN" scheme="http://immortalqx.github.io/tags/CNN/"/>
+    
+    <category term="RNN" scheme="http://immortalqx.github.io/tags/RNN/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>机器学习笔记（七）：使用CNN解决服装分类问题</title>
     <link href="http://immortalqx.github.io/2022/01/21/machine-learning-7/"/>
     <id>http://immortalqx.github.io/2022/01/21/machine-learning-7/</id>
     <published>2022-01-21T12:24:12.000Z</published>
-    <updated>2022-01-27T12:55:49.974Z</updated>
+    <updated>2022-01-27T13:44:07.813Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h1 id=&quot;机器学习笔记（七）：CNN应用——服装分类问题&quot;&gt;&lt;a href=&quot;#机器学习笔记（七）：CNN应用——服装分类问题&quot; class=&quot;headerlink&quot;</summary>
+    <summary type="html">&lt;h1 id=&quot;机器学习笔记（七）：使用CNN解决服装分类问题&quot;&gt;&lt;a href=&quot;#机器学习笔记（七）：使用CNN解决服装分类问题&quot; class=&quot;headerlink&quot;</summary>
         
       
     
@@ -508,35 +537,6 @@
     
     
     <category term="IELTS" scheme="http://immortalqx.github.io/tags/IELTS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>区分PIXHAWK、PX4与APM(ardupilot)</title>
-    <link href="http://immortalqx.github.io/2021/07/27/uav-notes-1/"/>
-    <id>http://immortalqx.github.io/2021/07/27/uav-notes-1/</id>
-    <published>2021-07-27T09:09:49.000Z</published>
-    <updated>2022-01-11T09:10:51.449Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;区分PIXHAWK、PX4与APM-ardupilot&quot;&gt;&lt;a href=&quot;#区分PIXHAWK、PX4与APM-ardupilot&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="其他" scheme="http://immortalqx.github.io/categories/%E5%85%B6%E4%BB%96/"/>
-    
-    
-    <category term="PX4" scheme="http://immortalqx.github.io/tags/PX4/"/>
-    
-    <category term="PIXHAWK" scheme="http://immortalqx.github.io/tags/PIXHAWK/"/>
-    
-    <category term="APM" scheme="http://immortalqx.github.io/tags/APM/"/>
     
   </entry>
   

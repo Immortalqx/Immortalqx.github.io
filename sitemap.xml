@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://immortalqx.github.io/2021/11/21/cpp-notes-0/</loc>
+    <loc>http://immortalqx.github.io/2022/01/25/machine-learning-8/</loc>
     
     <lastmod>2022-01-27</lastmod>
     
@@ -10,6 +10,13 @@
   
   <url>
     <loc>http://immortalqx.github.io/2022/01/21/machine-learning-7/</loc>
+    
+    <lastmod>2022-01-27</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/2021/11/21/cpp-notes-0/</loc>
     
     <lastmod>2022-01-27</lastmod>
     
@@ -282,14 +289,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/07/28/ielts-1/</loc>
+    <loc>http://immortalqx.github.io/2021/03/27/hkust-application/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/03/27/hkust-application/</loc>
+    <loc>http://immortalqx.github.io/2021/07/28/ielts-1/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -324,14 +331,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/07/18/ros-notes-5/</loc>
+    <loc>http://immortalqx.github.io/2021/07/18/ros-notes-4/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/07/18/ros-notes-4/</loc>
+    <loc>http://immortalqx.github.io/2021/07/18/ros-notes-5/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -642,6 +649,13 @@
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E5%A4%9A%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/</loc>
+    <lastmod>2022-01-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/tags/RNN/</loc>
     <lastmod>2022-01-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
