@@ -6,7 +6,7 @@
   <link href="http://immortalqx.github.io/atom.xml" rel="self"/>
   
   <link href="http://immortalqx.github.io/"/>
-  <updated>2022-01-19T08:12:40.045Z</updated>
+  <updated>2022-01-27T12:52:05.963Z</updated>
   <id>http://immortalqx.github.io/</id>
   
   <author>
@@ -17,11 +17,38 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>机器学习笔记（七）：CNN应用——服装分类问题</title>
+    <link href="http://immortalqx.github.io/2022/01/21/machine-learning-7/"/>
+    <id>http://immortalqx.github.io/2022/01/21/machine-learning-7/</id>
+    <published>2022-01-21T12:24:12.000Z</published>
+    <updated>2022-01-27T12:52:05.963Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;机器学习笔记（七）：CNN应用——服装分类问题&quot;&gt;&lt;a href=&quot;#机器学习笔记（七）：CNN应用——服装分类问题&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="机器学习" scheme="http://immortalqx.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="机器学习笔记" scheme="http://immortalqx.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="CNN" scheme="http://immortalqx.github.io/tags/CNN/"/>
+    
+  </entry>
+  
+  <entry>
     <title>机器学习笔记（六）：深入理解卷积神经网络</title>
     <link href="http://immortalqx.github.io/2022/01/15/machine-learning-6/"/>
     <id>http://immortalqx.github.io/2022/01/15/machine-learning-6/</id>
     <published>2022-01-15T08:00:19.000Z</published>
-    <updated>2022-01-19T08:12:40.045Z</updated>
+    <updated>2022-01-27T12:26:41.212Z</updated>
     
     
       
@@ -37,6 +64,8 @@
     <category term="机器学习" scheme="http://immortalqx.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
     
+    <category term="机器学习笔记" scheme="http://immortalqx.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
     <category term="CNN" scheme="http://immortalqx.github.io/tags/CNN/"/>
     
   </entry>
@@ -46,7 +75,7 @@
     <link href="http://immortalqx.github.io/2022/01/12/machine-learning-5/"/>
     <id>http://immortalqx.github.io/2022/01/12/machine-learning-5/</id>
     <published>2022-01-12T13:13:20.000Z</published>
-    <updated>2022-01-19T08:09:55.753Z</updated>
+    <updated>2022-01-27T12:33:57.462Z</updated>
     
     
       
@@ -62,6 +91,8 @@
     <category term="机器学习" scheme="http://immortalqx.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
     
+    <category term="机器学习笔记" scheme="http://immortalqx.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
     <category term="CNN" scheme="http://immortalqx.github.io/tags/CNN/"/>
     
   </entry>
@@ -71,7 +102,7 @@
     <link href="http://immortalqx.github.io/2022/01/10/machine-learning-4/"/>
     <id>http://immortalqx.github.io/2022/01/10/machine-learning-4/</id>
     <published>2022-01-10T07:00:36.000Z</published>
-    <updated>2022-01-11T09:10:51.453Z</updated>
+    <updated>2022-01-27T12:26:20.681Z</updated>
     
     
       
@@ -87,6 +118,8 @@
     <category term="机器学习" scheme="http://immortalqx.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
     
+    <category term="机器学习笔记" scheme="http://immortalqx.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
     <category term="多层神经网络" scheme="http://immortalqx.github.io/tags/%E5%A4%9A%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
@@ -96,7 +129,7 @@
     <link href="http://immortalqx.github.io/2022/01/09/machine-learning-3/"/>
     <id>http://immortalqx.github.io/2022/01/09/machine-learning-3/</id>
     <published>2022-01-09T06:24:54.000Z</published>
-    <updated>2022-01-11T09:10:51.449Z</updated>
+    <updated>2022-01-27T12:26:12.336Z</updated>
     
     
       
@@ -112,6 +145,8 @@
     <category term="机器学习" scheme="http://immortalqx.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
     
+    <category term="机器学习笔记" scheme="http://immortalqx.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
     <category term="多层神经网络" scheme="http://immortalqx.github.io/tags/%E5%A4%9A%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
@@ -121,7 +156,7 @@
     <link href="http://immortalqx.github.io/2022/01/08/machine-learning-2/"/>
     <id>http://immortalqx.github.io/2022/01/08/machine-learning-2/</id>
     <published>2022-01-08T02:43:03.000Z</published>
-    <updated>2022-01-11T09:10:51.449Z</updated>
+    <updated>2022-01-27T12:26:03.198Z</updated>
     
     
       
@@ -137,7 +172,7 @@
     <category term="机器学习" scheme="http://immortalqx.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
     
-    <category term="机器学习" scheme="http://immortalqx.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    <category term="机器学习笔记" scheme="http://immortalqx.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     <category term="逻辑回归" scheme="http://immortalqx.github.io/tags/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/"/>
     
@@ -148,7 +183,7 @@
     <link href="http://immortalqx.github.io/2022/01/07/machine-learning-1/"/>
     <id>http://immortalqx.github.io/2022/01/07/machine-learning-1/</id>
     <published>2022-01-07T13:49:31.000Z</published>
-    <updated>2022-01-11T09:10:51.449Z</updated>
+    <updated>2022-01-27T12:25:48.682Z</updated>
     
     
       
@@ -164,9 +199,9 @@
     <category term="机器学习" scheme="http://immortalqx.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
     
-    <category term="机器学习" scheme="http://immortalqx.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
-    
     <category term="K-Means" scheme="http://immortalqx.github.io/tags/K-Means/"/>
+    
+    <category term="机器学习笔记" scheme="http://immortalqx.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -502,35 +537,6 @@
     <category term="PIXHAWK" scheme="http://immortalqx.github.io/tags/PIXHAWK/"/>
     
     <category term="APM" scheme="http://immortalqx.github.io/tags/APM/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PX4 Offboard Control Using MAVROS on Gazebo</title>
-    <link href="http://immortalqx.github.io/2021/07/23/ros-notes-6/"/>
-    <id>http://immortalqx.github.io/2021/07/23/ros-notes-6/</id>
-    <published>2021-07-23T03:49:16.000Z</published>
-    <updated>2022-01-11T09:10:51.449Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;PX4-Offboard-Control-Using-MAVROS-on-Gazebo&quot;&gt;&lt;a href=&quot;#PX4-Offboard-Control-Using-MAVROS-on-Gazebo&quot; class=&quot;headerlink&quot; title=&quot;PX4</summary>
-        
-      
-    
-    
-    
-    <category term="ROS" scheme="http://immortalqx.github.io/categories/ROS/"/>
-    
-    
-    <category term="MAVROS" scheme="http://immortalqx.github.io/tags/MAVROS/"/>
-    
-    <category term="PX4" scheme="http://immortalqx.github.io/tags/PX4/"/>
-    
-    <category term="Gazebo" scheme="http://immortalqx.github.io/tags/Gazebo/"/>
     
   </entry>
   

@@ -433,6 +433,10 @@
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                                <span class="chip bg-color">机器学习笔记</span>
+                            </a>
+                        
                             <a href="/tags/CNN/">
                                 <span class="chip bg-color">CNN</span>
                             </a>
@@ -467,7 +471,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.2k
+                    1.3k
                 </div>
                 
 
@@ -558,7 +562,7 @@
 <h2 id="三、为什么使用CNN"><a href="#三、为什么使用CNN" class="headerlink" title="三、为什么使用CNN"></a>三、为什么使用CNN</h2><p>在图像领域，用传统的神经网络并不合适。</p>
 <p>我们知道，图像是由一个个像素点构成，每个像素点有三个通道，分别代表RGB颜色。如果一个图像的尺寸是（28，28，1），即代表这个图像的是一个长宽均为28，channel为1的图像（channel也叫depth,此处1代表灰色图像）。</p>
 <p>使用全连接的网络结构，即，网络中的神经与与相邻层上的每个神经元均连接，那就意味着我们的网络输入层有28 * 28 =784个神经元，再假设隐藏层采用了15个神经元，输出层采用了10个神经元。那么简单计算一下，我们需要的参数个数(w和b)就有：784*15*10+15+10=117625个。这个参数太多了，随便进行一次反向传播计算量都是巨大的，从计算资源和调参的角度都不建议用传统的神经网络。</p>
-<p>使用卷积神经网络，就可以比较好的解决这个问题。</p>
+<p>使用卷积神经网络，就可以比较好的解决这个问题。卷积层可以很好的利用图像本身具有的二维空间特征，比全连接网络仅仅考虑单个像素点的效果会更好，同时使用卷积核后图片的尺寸变小，方便后续计算；而池化层通过降采样的方式，在不影响图像质量的情况下，压缩图片，减少参数，这样计算量也会比全连接网络小很多。</p>
 
                 
             </div>
@@ -622,6 +626,10 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
+                            
+                                <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                                    <span class="chip bg-color">机器学习笔记</span>
+                                </a>
                             
                                 <a href="/tags/CNN/">
                                     <span class="chip bg-color">CNN</span>
@@ -1100,6 +1108,10 @@
                 
                 <div class="card-action article-tags">
                     
+                    <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">机器学习笔记</span>
+                    </a>
+                    
                     <a href="/tags/CNN/">
                         <span class="chip bg-color">CNN</span>
                     </a>
@@ -1148,6 +1160,10 @@
                 </div>
                 
                 <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">机器学习笔记</span>
+                    </a>
                     
                     <a href="/tags/%E5%A4%9A%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
                         <span class="chip bg-color">多层神经网络</span>
@@ -1298,7 +1314,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">104.6k</span>&nbsp;字
+                class="white-color">110.7k</span>&nbsp;字
             
             
             

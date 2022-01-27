@@ -1,15 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://Immortalqx.github.io/2022/01/05/meeting-1/</loc>
-    <lastmod>2022-01-19</lastmod>
-  </url>
-  <url>
-    <loc>http://Immortalqx.github.io/2022/01/15/machine-learning-6/</loc>
-    <lastmod>2022-01-19</lastmod>
+    <loc>http://Immortalqx.github.io/2022/01/21/machine-learning-7/</loc>
+    <lastmod>2022-01-27</lastmod>
   </url>
   <url>
     <loc>http://Immortalqx.github.io/2022/01/12/machine-learning-5/</loc>
+    <lastmod>2022-01-27</lastmod>
+  </url>
+  <url>
+    <loc>http://Immortalqx.github.io/2022/01/15/machine-learning-6/</loc>
+    <lastmod>2022-01-27</lastmod>
+  </url>
+  <url>
+    <loc>http://Immortalqx.github.io/2022/01/10/machine-learning-4/</loc>
+    <lastmod>2022-01-27</lastmod>
+  </url>
+  <url>
+    <loc>http://Immortalqx.github.io/2022/01/09/machine-learning-3/</loc>
+    <lastmod>2022-01-27</lastmod>
+  </url>
+  <url>
+    <loc>http://Immortalqx.github.io/2022/01/08/machine-learning-2/</loc>
+    <lastmod>2022-01-27</lastmod>
+  </url>
+  <url>
+    <loc>http://Immortalqx.github.io/2022/01/07/machine-learning-1/</loc>
+    <lastmod>2022-01-27</lastmod>
+  </url>
+  <url>
+    <loc>http://Immortalqx.github.io/2022/01/05/meeting-1/</loc>
     <lastmod>2022-01-19</lastmod>
   </url>
   <url>
@@ -89,10 +109,6 @@
     <lastmod>2022-01-11</lastmod>
   </url>
   <url>
-    <loc>http://Immortalqx.github.io/2022/01/10/machine-learning-4/</loc>
-    <lastmod>2022-01-11</lastmod>
-  </url>
-  <url>
     <loc>http://Immortalqx.github.io/2021/12/31/opencv-notes-6/</loc>
     <lastmod>2022-01-11</lastmod>
   </url>
@@ -113,11 +129,11 @@
     <lastmod>2022-01-11</lastmod>
   </url>
   <url>
-    <loc>http://Immortalqx.github.io/2021/07/28/ielts-1/</loc>
+    <loc>http://Immortalqx.github.io/2021/03/27/hkust-application/</loc>
     <lastmod>2022-01-11</lastmod>
   </url>
   <url>
-    <loc>http://Immortalqx.github.io/2021/03/27/hkust-application/</loc>
+    <loc>http://Immortalqx.github.io/2021/07/28/ielts-1/</loc>
     <lastmod>2022-01-11</lastmod>
   </url>
   <url>
@@ -129,11 +145,11 @@
     <lastmod>2022-01-11</lastmod>
   </url>
   <url>
-    <loc>http://Immortalqx.github.io/2021/07/17/ros-notes-3/</loc>
+    <loc>http://Immortalqx.github.io/2020/09/04/ros-notes-2/</loc>
     <lastmod>2022-01-11</lastmod>
   </url>
   <url>
-    <loc>http://Immortalqx.github.io/2020/09/04/ros-notes-2/</loc>
+    <loc>http://Immortalqx.github.io/2021/07/17/ros-notes-3/</loc>
     <lastmod>2022-01-11</lastmod>
   </url>
   <url>
@@ -181,23 +197,15 @@
     <lastmod>2022-01-11</lastmod>
   </url>
   <url>
-    <loc>http://Immortalqx.github.io/2021/04/17/introduce-event-based-camera/</loc>
-    <lastmod>2022-01-11</lastmod>
-  </url>
-  <url>
     <loc>http://Immortalqx.github.io/2021/04/06/introduce-qt/</loc>
     <lastmod>2022-01-11</lastmod>
   </url>
   <url>
+    <loc>http://Immortalqx.github.io/2021/04/17/introduce-event-based-camera/</loc>
+    <lastmod>2022-01-11</lastmod>
+  </url>
+  <url>
     <loc>http://Immortalqx.github.io/2021/03/28/learning-cartographer/</loc>
-    <lastmod>2022-01-11</lastmod>
-  </url>
-  <url>
-    <loc>http://Immortalqx.github.io/2022/01/07/machine-learning-1/</loc>
-    <lastmod>2022-01-11</lastmod>
-  </url>
-  <url>
-    <loc>http://Immortalqx.github.io/2022/01/08/machine-learning-2/</loc>
     <lastmod>2022-01-11</lastmod>
   </url>
   <url>
@@ -206,10 +214,6 @@
   </url>
   <url>
     <loc>http://Immortalqx.github.io/2021/07/04/kalibr-for-camera-imu-calibration/</loc>
-    <lastmod>2022-01-11</lastmod>
-  </url>
-  <url>
-    <loc>http://Immortalqx.github.io/2022/01/09/machine-learning-3/</loc>
     <lastmod>2022-01-11</lastmod>
   </url>
 </urlset> 
