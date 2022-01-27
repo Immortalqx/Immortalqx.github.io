@@ -287,64 +287,6 @@
       </tags>
   </entry>
   <entry>
-    <title>OpenVINS学习笔记（一）</title>
-    <url>/2021/07/06/openvins-note-1/</url>
-    <content><![CDATA[<h1 id="OpenVINS学习笔记（一）"><a href="#OpenVINS学习笔记（一）" class="headerlink" title="OpenVINS学习笔记（一）"></a>OpenVINS学习笔记（一）</h1><blockquote>
-<p>论文摘要与代码框架</p>
-</blockquote>
-<h2 id="论文摘要"><a href="#论文摘要" class="headerlink" title="论文摘要"></a>论文摘要</h2><p>构建OpenVINS开源代码库，对通常需要的视觉惯性估计特性具有现成的支持，包括：<br>（i） 流形上的滑动窗口卡尔曼滤波器；</p>
-<p>（ii）在线相机内外参数标定；</p>
-<p>（iii）相机到惯性传感器的时间偏移校准；</p>
-<p>（iv）具有不同表示和一致的首次估计（FEJ）处理的SLAM地标；</p>
-<p>（v） 模块化状态管理系统；</p>
-<p>（vi）可扩展视觉惯性系统模拟器；</p>
-<p>（vii）算法评估工具箱。</p>
-<h2 id="代码框架"><a href="#代码框架" class="headerlink" title="代码框架"></a>代码框架</h2><ul>
-<li><p><strong>ov_core</strong></p>
-<ul>
-<li><p>2D图像稀疏视觉特征跟踪；</p>
-</li>
-<li><p>线性和高斯-牛顿特征三角剖分方法；</p>
-</li>
-<li><p>用于任意数量相机和频率的视觉惯性模拟器；</p>
-</li>
-<li><p>基本的流形数学运算</p>
-</li>
-</ul>
-</li>
-<li><p><strong>ov_eval</strong></p>
-<ul>
-<li>轨迹对齐；</li>
-<li>轨迹精度和一致性评估的绘图工具；</li>
-<li>不同精度指标的蒙特卡罗评价；</li>
-<li>ROS topic录制到文件。</li>
-</ul>
-</li>
-<li><p><strong>ov_msckf</strong></p>
-<p>可扩展模块扩展卡尔曼滤波器（EKF）为基础的滑动窗口视觉惯性估计器与流形系统的灵活状态表示。</p>
-<p>特点包括：</p>
-<ul>
-<li>首次估计Jacobains（FEJ）</li>
-<li>IMU相机时间偏移校准</li>
-<li>相机内部和外部校准</li>
-<li>标准MSCKF和不同表示的3DSLAM地标。</li>
-</ul>
-</li>
-</ul>
-<p><strong>代码入口：</strong></p>
-<p><img src="/images/OpenVINS-Note/1-1.png"></p>
-<p><img src="/images/OpenVINS-Note/1-2.png"></p>
-<p>注：<a href="https://blog.csdn.net/weixin_43793960/article/details/110929635">图片来源</a></p>
-]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>视觉SLAM</tag>
-        <tag>OpenVINS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ROS中使用ddynamicReconfigure</title>
     <url>/2020/09/05/ros-notes-1/</url>
     <content><![CDATA[<h1 id="ROS中使用ddynamicReconfigure"><a href="#ROS中使用ddynamicReconfigure" class="headerlink" title="ROS中使用ddynamicReconfigure"></a>ROS中使用ddynamicReconfigure</h1><h2 id="关于ddynamicReconfigure类"><a href="#关于ddynamicReconfigure类" class="headerlink" title="关于ddynamicReconfigure类"></a>关于ddynamicReconfigure类</h2><p>The DDynamicReconfigure class allows to use ROS dynamic reconfigure without the need to write a custom cpf file, <strong>variables are registered and exposed at run time</strong>.  Modification of the variables is done through a variable pointer or through a callback function.</p>
@@ -472,6 +414,64 @@ int main(int argc, char **argv) {
       </categories>
       <tags>
         <tag>ROS基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OpenVINS学习笔记（一）</title>
+    <url>/2021/07/06/openvins-note-1/</url>
+    <content><![CDATA[<h1 id="OpenVINS学习笔记（一）"><a href="#OpenVINS学习笔记（一）" class="headerlink" title="OpenVINS学习笔记（一）"></a>OpenVINS学习笔记（一）</h1><blockquote>
+<p>论文摘要与代码框架</p>
+</blockquote>
+<h2 id="论文摘要"><a href="#论文摘要" class="headerlink" title="论文摘要"></a>论文摘要</h2><p>构建OpenVINS开源代码库，对通常需要的视觉惯性估计特性具有现成的支持，包括：<br>（i） 流形上的滑动窗口卡尔曼滤波器；</p>
+<p>（ii）在线相机内外参数标定；</p>
+<p>（iii）相机到惯性传感器的时间偏移校准；</p>
+<p>（iv）具有不同表示和一致的首次估计（FEJ）处理的SLAM地标；</p>
+<p>（v） 模块化状态管理系统；</p>
+<p>（vi）可扩展视觉惯性系统模拟器；</p>
+<p>（vii）算法评估工具箱。</p>
+<h2 id="代码框架"><a href="#代码框架" class="headerlink" title="代码框架"></a>代码框架</h2><ul>
+<li><p><strong>ov_core</strong></p>
+<ul>
+<li><p>2D图像稀疏视觉特征跟踪；</p>
+</li>
+<li><p>线性和高斯-牛顿特征三角剖分方法；</p>
+</li>
+<li><p>用于任意数量相机和频率的视觉惯性模拟器；</p>
+</li>
+<li><p>基本的流形数学运算</p>
+</li>
+</ul>
+</li>
+<li><p><strong>ov_eval</strong></p>
+<ul>
+<li>轨迹对齐；</li>
+<li>轨迹精度和一致性评估的绘图工具；</li>
+<li>不同精度指标的蒙特卡罗评价；</li>
+<li>ROS topic录制到文件。</li>
+</ul>
+</li>
+<li><p><strong>ov_msckf</strong></p>
+<p>可扩展模块扩展卡尔曼滤波器（EKF）为基础的滑动窗口视觉惯性估计器与流形系统的灵活状态表示。</p>
+<p>特点包括：</p>
+<ul>
+<li>首次估计Jacobains（FEJ）</li>
+<li>IMU相机时间偏移校准</li>
+<li>相机内部和外部校准</li>
+<li>标准MSCKF和不同表示的3DSLAM地标。</li>
+</ul>
+</li>
+</ul>
+<p><strong>代码入口：</strong></p>
+<p><img src="/images/OpenVINS-Note/1-1.png"></p>
+<p><img src="/images/OpenVINS-Note/1-2.png"></p>
+<p>注：<a href="https://blog.csdn.net/weixin_43793960/article/details/110929635">图片来源</a></p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>视觉SLAM</tag>
+        <tag>OpenVINS</tag>
       </tags>
   </entry>
   <entry>
@@ -827,159 +827,6 @@ geometry_msgs/Transform transform
       </tags>
   </entry>
   <entry>
-    <title>ROS中的URDF</title>
-    <url>/2021/07/18/ros-notes-5/</url>
-    <content><![CDATA[<h1 id="ROS中的URDF"><a href="#ROS中的URDF" class="headerlink" title="ROS中的URDF"></a>ROS中的URDF</h1><h2 id="什么是URDF"><a href="#什么是URDF" class="headerlink" title="什么是URDF"></a>什么是URDF</h2><ul>
-<li><p>Unified Robot Description Format，统一机器人描述格式，简称为URDF；</p>
-</li>
-<li><p>ROS中一个非常重要的机器人模型描述格式；</p>
-</li>
-<li><p>URDF文件使用XML格式描述机器人模型；</p>
-</li>
-<li><p>ROS中的urdf功能包包含一个URDF的C++解析器。</p>
-</li>
-</ul>
-<h2 id="URDF标签说明"><a href="#URDF标签说明" class="headerlink" title="URDF标签说明"></a>URDF标签说明</h2><h3 id="lt-link-gt"><a href="#lt-link-gt" class="headerlink" title="<link>"></a>&lt;link&gt;</h3><p><strong>作用：</strong></p>
-<ul>
-<li>描述机器人某个刚体部分的外观和物理属性；</li>
-<li>尺寸（size）、颜色（color）、形状（shape）、惯性矩阵（inertial matrix）、碰撞参数（collision properties）等。</li>
-</ul>
-<img src="/images/ros-notes/5-1.png" style="zoom:33%;">
-
-<p><strong>子标签：</strong></p>
-<ul>
-<li>&lt;visual&gt;：描述机器人link部分的外观参数；</li>
-<li>&lt;inertial&gt;：描述link的惯性参数；</li>
-<li>&lt;collision&gt;：描述link的碰撞属性。</li>
-</ul>
-<img src="/images/ros-notes/5-2.png" style="zoom: 67%;">
-
-<h3 id="lt-joint-gt"><a href="#lt-joint-gt" class="headerlink" title="<joint>"></a>&lt;joint&gt;</h3><p><strong>作用：</strong></p>
-<ul>
-<li>描述机器人关节的运动学和动力学属性；</li>
-<li>包括关节运动的位置和速度限制；</li>
-<li>根据关节运动的形式，可以将其分为六种类型。</li>
-</ul>
-<img src="/images/ros-notes/5-3.png" style="zoom:33%;">
-
-<table>
-<thead>
-<tr>
-<th>关节类型</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>continuous</td>
-<td>旋转关节，可以围绕单轴无限旋转</td>
-</tr>
-<tr>
-<td>revolute</td>
-<td>旋转关节，类似于continuous，但有旋转的角度限制</td>
-</tr>
-<tr>
-<td>prismatic</td>
-<td>滑动关节，沿某一轴线移动的关节，带有位置极限</td>
-</tr>
-<tr>
-<td>planar</td>
-<td>平面关节，允许在平面正交方向上平移或者旋转</td>
-</tr>
-<tr>
-<td>floating</td>
-<td>浮动关节，允许进行平移、旋转运动</td>
-</tr>
-<tr>
-<td>fixed</td>
-<td>固定关节，不允许运动的特殊关节</td>
-</tr>
-</tbody></table>
-<p><strong>子标签：</strong></p>
-<ul>
-<li>&lt;calibration&gt;：关节的参考位置，用来校准关节的绝对位置；</li>
-<li>&lt;dynamics&gt;：描述关节的物理属性，例如阻尼值、物理静摩擦力等，经常在动力学仿真中用到；</li>
-<li>&lt;limit&gt;：描述运动的一些极限值，包括关节运动的上下限位置、速度限制、力矩限制等；</li>
-<li>&lt;mimic&gt;：描述该关节与已有关节的关系；</li>
-<li>&lt;safety＿controller&gt;：描述安全控制器参数。 </li>
-</ul>
-<img src="/images/ros-notes/5-4.png" style="zoom:67%;">
-
-<h3 id="lt-robot-gt"><a href="#lt-robot-gt" class="headerlink" title="<robot>"></a>&lt;robot&gt;</h3><ul>
-<li>完整机器人模型的最顶层标签；</li>
-<li>&lt;link&gt;和&lt;joint&gt;标签都必须包含在&lt;robot&gt;标签内。</li>
-</ul>
-<img src="/images/ros-notes/5-5.png" style="zoom:33%;">
-
-<p>一个完整的机器人模型，由一系列&lt;link&gt;和&lt;joint&gt;组成。</p>
-<img src="/images/ros-notes/5-6.png" style="zoom:67%;">
-
-<h2 id="URDF建模优化"><a href="#URDF建模优化" class="headerlink" title="URDF建模优化"></a>URDF建模优化</h2><h3 id="URDF建模存在的问题："><a href="#URDF建模存在的问题：" class="headerlink" title="URDF建模存在的问题："></a>URDF建模存在的问题：</h3><ol>
-<li>模型冗长，重复内容过多；</li>
-<li>参数修改麻烦，不便于二次开发；</li>
-<li>没有参数计算的功能。</li>
-</ol>
-<h3 id="URDF模型的进化版本——xacro模型文件"><a href="#URDF模型的进化版本——xacro模型文件" class="headerlink" title="URDF模型的进化版本——xacro模型文件"></a>URDF模型的进化版本——xacro模型文件</h3><ul>
-<li>精简模型代码<ul>
-<li>创建宏定义</li>
-<li>文件包含</li>
-</ul>
-</li>
-<li>提供可编程接口<ul>
-<li>常量</li>
-<li>变量</li>
-<li>数学计算</li>
-<li>条件语句</li>
-</ul>
-</li>
-</ul>
-<h3 id="常量的定义和使用"><a href="#常量的定义和使用" class="headerlink" title="常量的定义和使用"></a>常量的定义和使用</h3><p>常量定义：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>M_PI<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>3.14159<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>常量使用：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpy</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>${M_PI/2} 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<img src="/images/ros-notes/5-7.png" style="zoom:67%;">
-
-<h3 id="数学计算"><a href="#数学计算" class="headerlink" title="数学计算"></a>数学计算</h3><p>数学计算：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 ${(motor_length+wheel_length)/2} 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpx</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<img src="/images/ros-notes/5-8.png" style="zoom:67%;">
-
-<p>注意：所有的数学运算都会转换成浮点数进行，以保证运算精度。</p>
-<h3 id="宏定义"><a href="#宏定义" class="headerlink" title="宏定义"></a>宏定义</h3><p>宏定义：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>macro</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">params</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A B C<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
-    ......
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">sacro:</span>macros</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>宏调用：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span> <span class="token attr-name">A</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A_value<span class="token punctuation">"</span></span> <span class="token attr-name">B</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>B_value<span class="token punctuation">"</span></span> <span class="token attr-name">C</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>C_value<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<img src="/images/ros-notes/5-9.png" style="zoom:67%;">
-
-<h3 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h3><p>文件包含：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">xacro:</span>include</span> <span class="token attr-name">filename</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find mbot_description)/urdf/xacro/mbot_base.xacro<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<img src="/images/ros-notes/5-10.png" style="zoom:67%;">
-
-<h3 id="模型显示"><a href="#模型显示" class="headerlink" title="模型显示"></a>模型显示</h3><p>方法一：将xacro文件转换成URDF文件后显示</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun xacro xacro.py mbot.xacro<span class="token operator">&gt;</span>mbot.urdf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>方法二：直接调用xacro文件解析器</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>arg</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>model<span class="token punctuation">"</span></span> <span class="token attr-name">default</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find xacro)/xacro --inorder <span class="token punctuation">'</span>$(find mbot_description)/urdf/xacro/mbot.xacro<span class="token punctuation">'</span><span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>robot_description<span class="token punctuation">"</span></span> <span class="token attr-name">command</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(arg model)<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">roslaunch mbot_description display_mbot_base_xacro.launch<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>相关学习资料：<a href="http://wiki.ros.org/urdf/Tutorials">http://wiki.ros.org/urdf/Tutorials</a></p>
-]]></content>
-      <categories>
-        <category>ROS</category>
-      </categories>
-      <tags>
-        <tag>ROS基础</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>PX4 Offboard Control Using MAVROS on Gazebo</title>
     <url>/2021/07/23/ros-notes-6/</url>
     <content><![CDATA[<h1 id="PX4-Offboard-Control-Using-MAVROS-on-Gazebo"><a href="#PX4-Offboard-Control-Using-MAVROS-on-Gazebo" class="headerlink" title="PX4 Offboard Control Using MAVROS on Gazebo"></a>PX4 Offboard Control Using MAVROS on Gazebo</h1><p>最近在学习PX4和mavros，感觉px4官网的教程总体上讲得不错，但有一些地方不是很友好，比如offboard control这一块儿，讲的比较简单，省略了gazebo的使用，我上网查了一大堆资料才勉强把这个示例代码在gazebo中跑出来。所以这里做一个记录，希望对看到的人有点帮助。</p>
@@ -1193,6 +1040,159 @@ int main(int argc, char **argv)
       </tags>
   </entry>
   <entry>
+    <title>ROS中的URDF</title>
+    <url>/2021/07/18/ros-notes-5/</url>
+    <content><![CDATA[<h1 id="ROS中的URDF"><a href="#ROS中的URDF" class="headerlink" title="ROS中的URDF"></a>ROS中的URDF</h1><h2 id="什么是URDF"><a href="#什么是URDF" class="headerlink" title="什么是URDF"></a>什么是URDF</h2><ul>
+<li><p>Unified Robot Description Format，统一机器人描述格式，简称为URDF；</p>
+</li>
+<li><p>ROS中一个非常重要的机器人模型描述格式；</p>
+</li>
+<li><p>URDF文件使用XML格式描述机器人模型；</p>
+</li>
+<li><p>ROS中的urdf功能包包含一个URDF的C++解析器。</p>
+</li>
+</ul>
+<h2 id="URDF标签说明"><a href="#URDF标签说明" class="headerlink" title="URDF标签说明"></a>URDF标签说明</h2><h3 id="lt-link-gt"><a href="#lt-link-gt" class="headerlink" title="<link>"></a>&lt;link&gt;</h3><p><strong>作用：</strong></p>
+<ul>
+<li>描述机器人某个刚体部分的外观和物理属性；</li>
+<li>尺寸（size）、颜色（color）、形状（shape）、惯性矩阵（inertial matrix）、碰撞参数（collision properties）等。</li>
+</ul>
+<img src="/images/ros-notes/5-1.png" style="zoom:33%;">
+
+<p><strong>子标签：</strong></p>
+<ul>
+<li>&lt;visual&gt;：描述机器人link部分的外观参数；</li>
+<li>&lt;inertial&gt;：描述link的惯性参数；</li>
+<li>&lt;collision&gt;：描述link的碰撞属性。</li>
+</ul>
+<img src="/images/ros-notes/5-2.png" style="zoom: 67%;">
+
+<h3 id="lt-joint-gt"><a href="#lt-joint-gt" class="headerlink" title="<joint>"></a>&lt;joint&gt;</h3><p><strong>作用：</strong></p>
+<ul>
+<li>描述机器人关节的运动学和动力学属性；</li>
+<li>包括关节运动的位置和速度限制；</li>
+<li>根据关节运动的形式，可以将其分为六种类型。</li>
+</ul>
+<img src="/images/ros-notes/5-3.png" style="zoom:33%;">
+
+<table>
+<thead>
+<tr>
+<th>关节类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>continuous</td>
+<td>旋转关节，可以围绕单轴无限旋转</td>
+</tr>
+<tr>
+<td>revolute</td>
+<td>旋转关节，类似于continuous，但有旋转的角度限制</td>
+</tr>
+<tr>
+<td>prismatic</td>
+<td>滑动关节，沿某一轴线移动的关节，带有位置极限</td>
+</tr>
+<tr>
+<td>planar</td>
+<td>平面关节，允许在平面正交方向上平移或者旋转</td>
+</tr>
+<tr>
+<td>floating</td>
+<td>浮动关节，允许进行平移、旋转运动</td>
+</tr>
+<tr>
+<td>fixed</td>
+<td>固定关节，不允许运动的特殊关节</td>
+</tr>
+</tbody></table>
+<p><strong>子标签：</strong></p>
+<ul>
+<li>&lt;calibration&gt;：关节的参考位置，用来校准关节的绝对位置；</li>
+<li>&lt;dynamics&gt;：描述关节的物理属性，例如阻尼值、物理静摩擦力等，经常在动力学仿真中用到；</li>
+<li>&lt;limit&gt;：描述运动的一些极限值，包括关节运动的上下限位置、速度限制、力矩限制等；</li>
+<li>&lt;mimic&gt;：描述该关节与已有关节的关系；</li>
+<li>&lt;safety＿controller&gt;：描述安全控制器参数。 </li>
+</ul>
+<img src="/images/ros-notes/5-4.png" style="zoom:67%;">
+
+<h3 id="lt-robot-gt"><a href="#lt-robot-gt" class="headerlink" title="<robot>"></a>&lt;robot&gt;</h3><ul>
+<li>完整机器人模型的最顶层标签；</li>
+<li>&lt;link&gt;和&lt;joint&gt;标签都必须包含在&lt;robot&gt;标签内。</li>
+</ul>
+<img src="/images/ros-notes/5-5.png" style="zoom:33%;">
+
+<p>一个完整的机器人模型，由一系列&lt;link&gt;和&lt;joint&gt;组成。</p>
+<img src="/images/ros-notes/5-6.png" style="zoom:67%;">
+
+<h2 id="URDF建模优化"><a href="#URDF建模优化" class="headerlink" title="URDF建模优化"></a>URDF建模优化</h2><h3 id="URDF建模存在的问题："><a href="#URDF建模存在的问题：" class="headerlink" title="URDF建模存在的问题："></a>URDF建模存在的问题：</h3><ol>
+<li>模型冗长，重复内容过多；</li>
+<li>参数修改麻烦，不便于二次开发；</li>
+<li>没有参数计算的功能。</li>
+</ol>
+<h3 id="URDF模型的进化版本——xacro模型文件"><a href="#URDF模型的进化版本——xacro模型文件" class="headerlink" title="URDF模型的进化版本——xacro模型文件"></a>URDF模型的进化版本——xacro模型文件</h3><ul>
+<li>精简模型代码<ul>
+<li>创建宏定义</li>
+<li>文件包含</li>
+</ul>
+</li>
+<li>提供可编程接口<ul>
+<li>常量</li>
+<li>变量</li>
+<li>数学计算</li>
+<li>条件语句</li>
+</ul>
+</li>
+</ul>
+<h3 id="常量的定义和使用"><a href="#常量的定义和使用" class="headerlink" title="常量的定义和使用"></a>常量的定义和使用</h3><p>常量定义：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>M_PI<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>3.14159<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>常量使用：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpy</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>${M_PI/2} 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<img src="/images/ros-notes/5-7.png" style="zoom:67%;">
+
+<h3 id="数学计算"><a href="#数学计算" class="headerlink" title="数学计算"></a>数学计算</h3><p>数学计算：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 ${(motor_length+wheel_length)/2} 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpx</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<img src="/images/ros-notes/5-8.png" style="zoom:67%;">
+
+<p>注意：所有的数学运算都会转换成浮点数进行，以保证运算精度。</p>
+<h3 id="宏定义"><a href="#宏定义" class="headerlink" title="宏定义"></a>宏定义</h3><p>宏定义：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>macro</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">params</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A B C<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    ......
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">sacro:</span>macros</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>宏调用：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span> <span class="token attr-name">A</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A_value<span class="token punctuation">"</span></span> <span class="token attr-name">B</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>B_value<span class="token punctuation">"</span></span> <span class="token attr-name">C</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>C_value<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<img src="/images/ros-notes/5-9.png" style="zoom:67%;">
+
+<h3 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h3><p>文件包含：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">xacro:</span>include</span> <span class="token attr-name">filename</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find mbot_description)/urdf/xacro/mbot_base.xacro<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<img src="/images/ros-notes/5-10.png" style="zoom:67%;">
+
+<h3 id="模型显示"><a href="#模型显示" class="headerlink" title="模型显示"></a>模型显示</h3><p>方法一：将xacro文件转换成URDF文件后显示</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun xacro xacro.py mbot.xacro<span class="token operator">&gt;</span>mbot.urdf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>方法二：直接调用xacro文件解析器</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>arg</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>model<span class="token punctuation">"</span></span> <span class="token attr-name">default</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find xacro)/xacro --inorder <span class="token punctuation">'</span>$(find mbot_description)/urdf/xacro/mbot.xacro<span class="token punctuation">'</span><span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>robot_description<span class="token punctuation">"</span></span> <span class="token attr-name">command</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(arg model)<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">roslaunch mbot_description display_mbot_base_xacro.launch<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>相关学习资料：<a href="http://wiki.ros.org/urdf/Tutorials">http://wiki.ros.org/urdf/Tutorials</a></p>
+]]></content>
+      <categories>
+        <category>ROS</category>
+      </categories>
+      <tags>
+        <tag>ROS基础</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>区分PIXHAWK、PX4与APM(ardupilot)</title>
     <url>/2021/07/27/uav-notes-1/</url>
     <content><![CDATA[<h1 id="区分PIXHAWK、PX4与APM-ardupilot"><a href="#区分PIXHAWK、PX4与APM-ardupilot" class="headerlink" title="区分PIXHAWK、PX4与APM(ardupilot)"></a>区分PIXHAWK、PX4与APM(ardupilot)</h1><h3 id="一、PIXHAWK介绍"><a href="#一、PIXHAWK介绍" class="headerlink" title="一、PIXHAWK介绍"></a>一、PIXHAWK介绍</h3><p><strong>pixhawk是硬件平台</strong>，PX4是pixhawk的原生固件，专门为pixhawk开发。</p>
@@ -1217,80 +1217,6 @@ int main(int argc, char **argv)
         <tag>PX4</tag>
         <tag>PIXHAWK</tag>
         <tag>APM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>航拍笔记（零）：准备、检查与保养</title>
-    <url>/2021/08/22/aerial-note-0/</url>
-    <content><![CDATA[<h1 id="航拍笔记（零）：准备、检查与保养"><a href="#航拍笔记（零）：准备、检查与保养" class="headerlink" title="航拍笔记（零）：准备、检查与保养"></a>航拍笔记（零）：准备、检查与保养</h1><h2 id="一、前期准备"><a href="#一、前期准备" class="headerlink" title="一、前期准备"></a>一、前期准备</h2><ol>
-<li><strong>查询拍摄城市的无人机禁（限）飞区</strong>，这一点可以去无人机厂家官网、当地政府部门网站等地方查询；</li>
-<li><strong>提前观察飞行环境</strong>，做好航线规划，选择四周及上方空旷、地面平整的场地作为起降点；</li>
-<li><strong>关注天气预报</strong>，确认拍摄当天的天气状况，避免在大风、雨雾、雷电等恶劣天气飞行；</li>
-<li><strong>对无人机所有部件进行详细检查</strong>，确保无损伤，特别要注意检查动力电池的健康状态。</li>
-</ol>
-<h2 id="二、起飞检查"><a href="#二、起飞检查" class="headerlink" title="二、起飞检查"></a>二、起飞检查</h2><ol>
-<li>确认自己已获得飞行许可，或不在禁（限）飞区；</li>
-<li>如果环境温度低于15摄氏度，建议将动力电池预热（可用车载空调）到30摄氏度以上，极寒天气还应对电池做好保温措施；</li>
-<li>设置安全的自动返航高度，同时建议记下一个起降点附近的明显参照物，以备出现紧急情况时快速找到返航点；</li>
-<li>再次检查无人机各部件是否有损伤、连接是否正常、可靠，动力电池、地面站（遥控、图传）电量充足；</li>
-<li>起飞前对无人机做一次指南针校准，并确认无人机已记录返航点；</li>
-<li>飞手精神状态良好，如果近视请带上眼镜；</li>
-<li>起飞前，注意引导围观者（特别是好奇心重的小朋友）远离无人机；</li>
-</ol>
-<h2 id="三、飞行期间的注意事项"><a href="#三、飞行期间的注意事项" class="headerlink" title="三、飞行期间的注意事项"></a>三、飞行期间的注意事项</h2><ol>
-<li><strong>飞行切记炫耀、浮躁，飞手应该保持沉稳冷静的心态；</strong></li>
-<li><strong>避免无人机在人群密集处上空悬停，远离电力线、通信线、移动通信塔等可能的干扰源；</strong></li>
-<li><strong>尽可能保持无人机在视距内飞行</strong>，最好不要绕飞至建筑物背后（远离起飞点的一侧），因为这样容易导致无人机失去遥控（图传）信号；</li>
-<li>航拍时，云台相机视角常常与第一飞行视角不一致，飞手应<strong>留意无人机机头朝向，避免出现误操作</strong>；</li>
-<li><strong>关注监视器上无人机航行仪表信息</strong>，如飞行途中出现异常，应立即查明原因并排除，必要时中止飞行，并立即返航降落；</li>
-<li><strong>随时关注无人机动力电池电量</strong>，切忌低电量贪飞，确保有足够的时间返航。</li>
-</ol>
-<h2 id="四、返航降落"><a href="#四、返航降落" class="headerlink" title="四、返航降落"></a>四、返航降落</h2><ol>
-<li>拍摄结束或电量不足返航时，注意避开障碍物，保持足够的净空安全距离；</li>
-<li><strong>对于旋翼飞行器，下降（竖直）速度不宜过快</strong>，过快的下降速度容易导致无人机姿态失稳，可采用斜向返航的飞行方式增强无人机姿态稳定性；</li>
-<li>着陆前瞬间，俯仰、横滚舵宜归中，无人机不要出现大幅度水平移动，避免侧翻；</li>
-<li>着陆后，无人机螺旋桨完全停止转动前，所有人员不要靠近无人机；</li>
-<li>航拍作业完成，<strong>先关无人机动力电源，再关地面站（遥控、图传）电源</strong>；</li>
-<li>飞行结束，请参照原厂说明书对电池进行保养。</li>
-</ol>
-<h2 id="五、保养"><a href="#五、保养" class="headerlink" title="五、保养"></a>五、保养</h2><h3 id="电池"><a href="#电池" class="headerlink" title="电池"></a>电池</h3><ol>
-<li><p>避免在强静电或者磁场环境中使用电池。</p>
-</li>
-<li><p>请勿在电池电源打开的状态下插拔电池，若电池接口有污物，可用干布擦拭干净。</p>
-</li>
-<li><p>电池应在 -10℃ 至 40℃* 的环境下使用，当飞行环境低于 5℃ 时，应提前将电池放置在常温环境下进行预热，充分预热至 20°C 以上。</p>
-<p><em>部分机型如 Mavic Mini 的工作环境为 0℃ 至 40℃；</em> </p>
-<p><em>悟 Inspire 2 可在 -20℃ 至 40℃ 环境下工作 ，且有自加热功能。</em></p>
-</li>
-<li><p>如有破损、膨胀、漏液等异常现象，请勿再次使用。</p>
-<p><em>电池内部液体有强腐蚀性，如有泄露，请远离。</em></p>
-</li>
-<li><p>电池可充电环境温度为 5℃ - 40℃，理想的充电环境温度（22℃-28℃）可大幅度延长电池寿命，飞行结束后，建议待降至室温后再进行充电。</p>
-</li>
-</ol>
-<p><strong>电池存放建议：</strong></p>
-<ul>
-<li>设备不使用时，电池需单独存放；</li>
-<li>保持存放环境干燥，不可将电池放置于靠近热源、易燃易爆品的区域；</li>
-<li>避免电池长期放置在低温的室外，否则电池活性将大大降低，甚至造成锂电池性能不可逆的下降；</li>
-<li>电池请勿在完全放电状态下长期放置，以免电池进入过放状态造成电芯损害，应将电池放电至 40%-65% 电量进行存放；</li>
-<li>建议 2-3 个月重新充放电一次，以保证电池活性；</li>
-<li>长期存储时，在-10°C~45°C范围内的环境中存放。</li>
-</ul>
-<h3 id="电机"><a href="#电机" class="headerlink" title="电机"></a>电机</h3><p>检查电机无沙尘和水渍，并活动各个电机轴，确认与机臂固定牢固且能顺畅达到最大位置，然后卸下桨叶后开机并启动电机，判断电机有无异响。</p>
-<h3 id="桨叶"><a href="#桨叶" class="headerlink" title="桨叶"></a>桨叶</h3><p>检查桨叶是否有破损、变形，若存在异常，则更换新的桨叶。在飞行时，建议给桨叶安装桨叶保护罩。</p>
-<h3 id="云台相机"><a href="#云台相机" class="headerlink" title="云台相机"></a>云台相机</h3><p>检查镜头无划痕、破损、污垢，云台卡扣是否有异物、排线是否正常连接。必要时，对云台相机做一个自动校准，点选 App 中的云台设置——云台自动校准。</p>
-<h3 id="视觉系统"><a href="#视觉系统" class="headerlink" title="视觉系统"></a>视觉系统</h3><p>检查视觉避障系统与红外传感器镜片是否有划痕、破损或污渍。</p>
-<h3 id="遥控器"><a href="#遥控器" class="headerlink" title="遥控器"></a>遥控器</h3><p>检查遥控器天线是否有损坏，以及按键是否可以正常按压反馈，并且遥控器遥杆等是否正常。</p>
-<h3 id="App和固件版本"><a href="#App和固件版本" class="headerlink" title="App和固件版本"></a>App和固件版本</h3><p>及时更新 app 和固件版本，提升拍摄体验的同时能获得得到更好的拍摄效果。</p>
-<p><strong>附一张无人机飞行检查表</strong></p>
-<p><img src="/images/aerial-notes/0-1.jpg"></p>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>航拍</tag>
       </tags>
   </entry>
   <entry>
@@ -1380,6 +1306,80 @@ int main(int argc, char **argv)
 <p>3、连续流畅的镜头动作能持续抓住观众的注意力。</p>
 <p><strong>打杆方法</strong></p>
 <p>右手往上或往下拨动俯仰杆，控制前进或后退，同时左手逆时针方向拨动云台俯仰拨轮，让云台缓慢朝下转动。</p>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>航拍</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>航拍笔记（零）：准备、检查与保养</title>
+    <url>/2021/08/22/aerial-note-0/</url>
+    <content><![CDATA[<h1 id="航拍笔记（零）：准备、检查与保养"><a href="#航拍笔记（零）：准备、检查与保养" class="headerlink" title="航拍笔记（零）：准备、检查与保养"></a>航拍笔记（零）：准备、检查与保养</h1><h2 id="一、前期准备"><a href="#一、前期准备" class="headerlink" title="一、前期准备"></a>一、前期准备</h2><ol>
+<li><strong>查询拍摄城市的无人机禁（限）飞区</strong>，这一点可以去无人机厂家官网、当地政府部门网站等地方查询；</li>
+<li><strong>提前观察飞行环境</strong>，做好航线规划，选择四周及上方空旷、地面平整的场地作为起降点；</li>
+<li><strong>关注天气预报</strong>，确认拍摄当天的天气状况，避免在大风、雨雾、雷电等恶劣天气飞行；</li>
+<li><strong>对无人机所有部件进行详细检查</strong>，确保无损伤，特别要注意检查动力电池的健康状态。</li>
+</ol>
+<h2 id="二、起飞检查"><a href="#二、起飞检查" class="headerlink" title="二、起飞检查"></a>二、起飞检查</h2><ol>
+<li>确认自己已获得飞行许可，或不在禁（限）飞区；</li>
+<li>如果环境温度低于15摄氏度，建议将动力电池预热（可用车载空调）到30摄氏度以上，极寒天气还应对电池做好保温措施；</li>
+<li>设置安全的自动返航高度，同时建议记下一个起降点附近的明显参照物，以备出现紧急情况时快速找到返航点；</li>
+<li>再次检查无人机各部件是否有损伤、连接是否正常、可靠，动力电池、地面站（遥控、图传）电量充足；</li>
+<li>起飞前对无人机做一次指南针校准，并确认无人机已记录返航点；</li>
+<li>飞手精神状态良好，如果近视请带上眼镜；</li>
+<li>起飞前，注意引导围观者（特别是好奇心重的小朋友）远离无人机；</li>
+</ol>
+<h2 id="三、飞行期间的注意事项"><a href="#三、飞行期间的注意事项" class="headerlink" title="三、飞行期间的注意事项"></a>三、飞行期间的注意事项</h2><ol>
+<li><strong>飞行切记炫耀、浮躁，飞手应该保持沉稳冷静的心态；</strong></li>
+<li><strong>避免无人机在人群密集处上空悬停，远离电力线、通信线、移动通信塔等可能的干扰源；</strong></li>
+<li><strong>尽可能保持无人机在视距内飞行</strong>，最好不要绕飞至建筑物背后（远离起飞点的一侧），因为这样容易导致无人机失去遥控（图传）信号；</li>
+<li>航拍时，云台相机视角常常与第一飞行视角不一致，飞手应<strong>留意无人机机头朝向，避免出现误操作</strong>；</li>
+<li><strong>关注监视器上无人机航行仪表信息</strong>，如飞行途中出现异常，应立即查明原因并排除，必要时中止飞行，并立即返航降落；</li>
+<li><strong>随时关注无人机动力电池电量</strong>，切忌低电量贪飞，确保有足够的时间返航。</li>
+</ol>
+<h2 id="四、返航降落"><a href="#四、返航降落" class="headerlink" title="四、返航降落"></a>四、返航降落</h2><ol>
+<li>拍摄结束或电量不足返航时，注意避开障碍物，保持足够的净空安全距离；</li>
+<li><strong>对于旋翼飞行器，下降（竖直）速度不宜过快</strong>，过快的下降速度容易导致无人机姿态失稳，可采用斜向返航的飞行方式增强无人机姿态稳定性；</li>
+<li>着陆前瞬间，俯仰、横滚舵宜归中，无人机不要出现大幅度水平移动，避免侧翻；</li>
+<li>着陆后，无人机螺旋桨完全停止转动前，所有人员不要靠近无人机；</li>
+<li>航拍作业完成，<strong>先关无人机动力电源，再关地面站（遥控、图传）电源</strong>；</li>
+<li>飞行结束，请参照原厂说明书对电池进行保养。</li>
+</ol>
+<h2 id="五、保养"><a href="#五、保养" class="headerlink" title="五、保养"></a>五、保养</h2><h3 id="电池"><a href="#电池" class="headerlink" title="电池"></a>电池</h3><ol>
+<li><p>避免在强静电或者磁场环境中使用电池。</p>
+</li>
+<li><p>请勿在电池电源打开的状态下插拔电池，若电池接口有污物，可用干布擦拭干净。</p>
+</li>
+<li><p>电池应在 -10℃ 至 40℃* 的环境下使用，当飞行环境低于 5℃ 时，应提前将电池放置在常温环境下进行预热，充分预热至 20°C 以上。</p>
+<p><em>部分机型如 Mavic Mini 的工作环境为 0℃ 至 40℃；</em> </p>
+<p><em>悟 Inspire 2 可在 -20℃ 至 40℃ 环境下工作 ，且有自加热功能。</em></p>
+</li>
+<li><p>如有破损、膨胀、漏液等异常现象，请勿再次使用。</p>
+<p><em>电池内部液体有强腐蚀性，如有泄露，请远离。</em></p>
+</li>
+<li><p>电池可充电环境温度为 5℃ - 40℃，理想的充电环境温度（22℃-28℃）可大幅度延长电池寿命，飞行结束后，建议待降至室温后再进行充电。</p>
+</li>
+</ol>
+<p><strong>电池存放建议：</strong></p>
+<ul>
+<li>设备不使用时，电池需单独存放；</li>
+<li>保持存放环境干燥，不可将电池放置于靠近热源、易燃易爆品的区域；</li>
+<li>避免电池长期放置在低温的室外，否则电池活性将大大降低，甚至造成锂电池性能不可逆的下降；</li>
+<li>电池请勿在完全放电状态下长期放置，以免电池进入过放状态造成电芯损害，应将电池放电至 40%-65% 电量进行存放；</li>
+<li>建议 2-3 个月重新充放电一次，以保证电池活性；</li>
+<li>长期存储时，在-10°C~45°C范围内的环境中存放。</li>
+</ul>
+<h3 id="电机"><a href="#电机" class="headerlink" title="电机"></a>电机</h3><p>检查电机无沙尘和水渍，并活动各个电机轴，确认与机臂固定牢固且能顺畅达到最大位置，然后卸下桨叶后开机并启动电机，判断电机有无异响。</p>
+<h3 id="桨叶"><a href="#桨叶" class="headerlink" title="桨叶"></a>桨叶</h3><p>检查桨叶是否有破损、变形，若存在异常，则更换新的桨叶。在飞行时，建议给桨叶安装桨叶保护罩。</p>
+<h3 id="云台相机"><a href="#云台相机" class="headerlink" title="云台相机"></a>云台相机</h3><p>检查镜头无划痕、破损、污垢，云台卡扣是否有异物、排线是否正常连接。必要时，对云台相机做一个自动校准，点选 App 中的云台设置——云台自动校准。</p>
+<h3 id="视觉系统"><a href="#视觉系统" class="headerlink" title="视觉系统"></a>视觉系统</h3><p>检查视觉避障系统与红外传感器镜片是否有划痕、破损或污渍。</p>
+<h3 id="遥控器"><a href="#遥控器" class="headerlink" title="遥控器"></a>遥控器</h3><p>检查遥控器天线是否有损坏，以及按键是否可以正常按压反馈，并且遥控器遥杆等是否正常。</p>
+<h3 id="App和固件版本"><a href="#App和固件版本" class="headerlink" title="App和固件版本"></a>App和固件版本</h3><p>及时更新 app 和固件版本，提升拍摄体验的同时能获得得到更好的拍摄效果。</p>
+<p><strong>附一张无人机飞行检查表</strong></p>
+<p><img src="/images/aerial-notes/0-1.jpg"></p>
 ]]></content>
       <categories>
         <category>其他</category>
@@ -1766,6 +1766,64 @@ public:
       </categories>
       <tags>
         <tag>C++基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>事件相机介绍</title>
+    <url>/2021/04/17/introduce-event-based-camera/</url>
+    <content><![CDATA[<h1 id="Event-based-Camera"><a href="#Event-based-Camera" class="headerlink" title="Event-based Camera"></a>Event-based Camera</h1><blockquote>
+<p>本文将网上的相关资料整理到了一起，方便阅读</p>
+</blockquote>
+<p><strong>前言</strong></p>
+<p>事件相机英文名为：Event-based Camera，或简称为Event Camera，缩写为EB。有时也称作DVS（Dynamic Vision Sensor “动态视觉传感器”）、DAVIS（Dynamic and Active-Pixel Vision Sensor）等。 </p>
+<p>不同于传统相机拍摄一幅完整的图像，事件相机拍摄的是“事件”，可以简单理解为“像素亮度的变化”，即事件相机输出的是像素亮度的变化情况。相比于以固定的帧率采集图像，这种相机通多测量每个像素的亮度变化来输出异步信号（包括事件，位置和亮度变化的符号）。</p>
+<p>事件相机与传统相机相比具有很多的优点: 高的动态测量范围（140dB vs. 60dB）， 高时间分辨率， 低功耗，不受运动模糊的影响。在高速、高动态范围的场景下有着广阔的应用空间。</p>
+<h2 id="零、传统相机的缺点"><a href="#零、传统相机的缺点" class="headerlink" title="零、传统相机的缺点"></a>零、传统相机的缺点</h2><p>传统相机，无论是CMOS传感器，还是CCD传感器，亦或是RGBD相机，都有一个参数：帧率。它们是以恒定的频率拍摄获取图像。这样，即使帧率能够达到1KHz，那也具有1ms的延时。所以传统相机存在一定的延迟问题。</p>
+<p>除此之外，传统相机需要通过一定时间的曝光，使感光器件积累一定的光子，那么在曝光时间之内如果物体在高速运动，则会产生模糊，这也是传统相机的一个问题。</p>
+<p>另外，传统相机的动态范围较低，具体表现为在光线极差或者亮度极高时，相机获取的信息有限。</p>
+<p>以上三点，是由于相机自身硬件的限制，即使高性能相机能够一定程度减小这些问题，但由于相机原理，这些问题无法避免。这些问题极大地限制了一些应用场景。而事件相机完全不存在这些问题。 </p>
+<h2 id="一、事件相机的介绍"><a href="#一、事件相机的介绍" class="headerlink" title="一、事件相机的介绍"></a>一、事件相机的介绍</h2><p>事件相机具有优势的典型场景包括实时交互系统，比如机器人与可穿戴设备，因为这些场景下的光照条件不可控，并且对于延时以及功率敏感。事件相机可以用于物体跟踪、识别以及手势控制，也可以应用在三维重建、光流估计、图像HDR和SLAM中，随着事件相机的发展，图像去模糊以及恒星跟踪也成为新的应用范围。</p>
+<h2 id="二、事件相机的原理"><a href="#二、事件相机的原理" class="headerlink" title="二、事件相机的原理"></a>二、事件相机的原理</h2><p><strong>基本原理</strong></p>
+<p>事件相机的最基本的原理，即：当某个像素的亮度变化累计达到一定阈值后，输出一个事件。这里强调几个概念：</p>
+<p>a） 亮度变化：说明事件相机的输出和变化有关，而与亮度的绝对值没有关系；</p>
+<p>b） 阈值：当亮度变化达到一定程度时，将输出数据，这个阈值是相机的固有参数。</p>
+<p>下面重点解释什么是一个“事件”。事件具有三要素：时间戳、像素坐标与极性。一个事件表达的是“在什么时间，哪个像素点，发生了亮度的增加或减小”。</p>
+<p>当场景中由物体运动或光照改变造成大量像素变化时，会产生一系列的事件，这些事件以事件流（Events stream）方式输出。事件流的数据量远小于传统相机传输的数据，且事件流没有最小时间单位，所以不像传统相机定时输出数据，具有低延迟特性。下面的动图揭示了事件相机与传统相机的成像的不同。</p>
+<p><img src="/images/Event-Camera/001.gif"></p>
+<p><em>（动图：左侧为有一个黑色斑块的圆盘，匀速旋转时，右上方的传统相机会定时拍摄完整的图像，下方事件相机的输出会仅输出变化，即黑斑的运动。当圆盘不转时，传统相机依旧傻傻的拍摄图像，而事件相机不会产生任何输出）</em></p>
+<p>由于事件相机的成像原理，我们可以发现只要亮度一有变化就会输出，且仅输出变化的数据占用了很小的带宽，同时由于事件相机更擅长捕捉亮度变化，所以在较暗和强光场景下也能输出有效数据。事件相机具有低延迟（&lt;𝟏𝝁𝒔）、高动态范围（𝟏𝟒𝟎𝒅𝑩）、极低功耗（𝟏𝒎𝑾）等特性。</p>
+<p><strong>深入了解</strong></p>
+<p>事件相机是对每一个像素下面有一个计算电路，左边的光电转换电路将光强转换为电压值，中间是一个差分电路，结果达到触发阈值之后会触发信号。信号从片上到USB是采用一种AER（Address Event Representation）编码的方式，国内有人将这种编码用于二值图像的压缩，具体的结果就是USB传输过来的数据不是前文所说的$(x, y, polarity, timestamp)$的形式，而是需要解码之后才能得到，常见的解码程序有:</p>
+<blockquote>
+<p><a href="https://github.com/inivation/libcaer">https://github.com/inivation/libcaer</a></p>
+<p><a href="https://github.com/SensorsINI/jaer">https://github.com/SensorsINI/jaer</a></p>
+</blockquote>
+<p>这些开源代码往往已经包含在了事件相机厂商提供的SDK中了。</p>
+<p><img src="/images/Event-Camera/002.jpg" alt="简化事件相机的硬件电路"></p>
+<p>虽然事件相机很好用，但有的时候还是有人想要使用绝对的灰度值。ATIS就实现了这样的一种相机，它通过触发事件后将电容器设置为高电压，然后在用另一个二极管从电容器中放电，光强越大放电越快，ATIS对放电事件进行编码得到强度值。但这样就导致在较暗的环境下放电速度不够快会导致新的事件打断放电过程（算法见<a href="https://github.com/SensorsINI/jaer/blob/master/src/eu/seebetter/ini/chips/davis/DavisAutoShooter.java">jaer</a>）。DAVIS是另一种使用广泛的将DVS（Dynamic Vision Sensor）和APS（Active Pixel Sensor）结合在一起的传感器，它将二者的光电二极管进行共享，不同在加装了一个读出电路，因此可以在输出事件的同时输出强度帧（来自APS）。</p>
+<p>事件相机的理想模型很简单：<br>$$<br>\Delta L(x_k,t_k)=p_kC<br>$$<br>等式左边是对数灰度的变化，右边是输出的极性以及阈值，一般而言$C$会设置在 $15%-50%$。但是实际中事件相机会受到噪声以及像素错配的影响，所以一般会在该模型加上高斯随机噪声，这一点在事件相机的仿真器中有体现：</p>
+<blockquote>
+<p><a href="http://rpg.ifi.uzh.ch/esim.html">http://rpg.ifi.uzh.ch/esim.html</a></p>
+</blockquote>
+<p>跟普通相机一样，事件相机也有需要一个<a href="https://en.wikipedia.org/wiki/Fixed-pattern_noise">FPN</a>（Fixed Pixel Noise），即相机灰度的初始bias，对于事件相机而言，bias的定义就是指阈值 $C$ ，一般而言不同像素之间的 $C$ 可能相差 $2.5%-4%$，现在不存在事件相机的FPN标定计算方案，这是一个能做的研究方向。</p>
+<p>BSI（back-side illumination）技术是广泛应用于智能手机相机上的增大填充系数的技术，目前事件相机上的光电芯片的FSI方法会阻碍光线到达像素，意味着必须增大像素面积才能获取足够的光强，使用BSI技术可以使得相机模块更薄、更小，但由于这项技术的难度与花费，现在只有少数的验证用的事件相机。</p>
+<p>下面是一些现有的商业化的事件相机比较，最后一列是来自中国上海的芯仑科技的事件相机，最新的Celex-V相机是世界上第一台百万级像素的事件相机。（但是CeleX-IV的填充系数只有9per…）</p>
+<p><img src="/images/Event-Camera/003.jpg" alt="现有的商业化的事件相机比较"></p>
+<h2 id="三、事件相机的处理范式"><a href="#三、事件相机的处理范式" class="headerlink" title="三、事件相机的处理范式"></a>三、事件相机的处理范式</h2><p>事件相机的输出是事件流，主要有三种常见的处理范式，分别是：</p>
+<h3 id="A-Event-by-Event"><a href="#A-Event-by-Event" class="headerlink" title="A. Event-by-Event"></a>A. Event-by-Event</h3><p>Event-by-Event的方法常常用于许多任务中，如SLAM里面的特征追踪、位姿追踪和图像重建。一类的方法是依赖于模型的（模型可以从其它类型的传感器数据中获得，如获得一个半稠密的深度图），然后再通过处理一个一个的事件来更新系统的状态。另一类方法是不依赖于模型的（数据驱动即机器学习）。</p>
+<h3 id="B-Groups-of-Events"><a href="#B-Groups-of-Events" class="headerlink" title="B. Groups of Events"></a>B. Groups of Events</h3><p>由于每个事件的携带的信息很少，并且容易受到噪声的影响，因此将几个事件一起处理，能够为需要解决的问题产生足够的信噪比。基于模型的方法往往是将事件转化为frame，然后运用传统的视觉方法来解决问题。而另外一种就是基于数据驱动的事件组方法，其已经用在了分类、光流估计、深度估计等任务中。经典的CNN网络使用张量作为输入，因此事件组必须转为类似的形式。现有的一些转换方法有：事件的像素直方图、最近时间戳表面（SAE）、插值体素网格。在网络架构方面，这些任务往往都会使用流形的Encoder-Decoder架构，具体网络中的其它细节可以在引文中查找对应的引用。</p>
+<p><img src="/images/Event-Camera/004.jpg" alt="流形的Encoder-Decoder架构"></p>
+<h3 id="C-SNN"><a href="#C-SNN" class="headerlink" title="C. SNN"></a>C. SNN</h3><p>事件相机是受到生物学启发的传感器，SNN也是一种受到生物学启发的网络。SNN 使用脉冲（发生在时间点上的离散事件）进行连接。一个神经元从视觉空间的一个小区域（一个感受野）接受输入事件，在状态超过阈值时产生输出事件。神经元以分层的方式连接，形成一个网络，事件从输入到SNN的第一层一直往后传播。所以SNN跟事件相机搭配在一起就跟珍珠配奶茶一样自然。</p>
+<h2 id="四、事件相机的发展与研究现状"><a href="#四、事件相机的发展与研究现状" class="headerlink" title="四、事件相机的发展与研究现状"></a>四、事件相机的发展与研究现状</h2><p>事件相机诞生于1990年，那个时间许多研究人员探讨动物感知环境的方式，发现对变化更为敏感，所以设计出了实验室用的事件相机。</p>
+<p>2008年，诞生了第一款商用的事件相机。这么看来，事件相机从商用到现在也刚刚过了十来年。目前，许多商业公司致力于事件相机的发展，有韩国Samsung、法国prophesee、瑞士iniVation、中国CelePixel（芯仑科技）等。</p>
+<p>在学术上，苏黎世联邦理工学院（ETH）的机器人与感知团队对事件相机有着系统深入的研究，其他高校例如帝国理工、慕尼黑大学等也开始相关研究。</p>
+<p>事件相机，目前在在特征提取与跟踪、光流、三维重建、SLAM、模式识别、控制等方向正在不断进行着研究，具有广泛的应用前景。</p>
+]]></content>
+      <categories>
+        <category>计算机视觉</category>
+      </categories>
+      <tags>
+        <tag>Camera</tag>
       </tags>
   </entry>
   <entry>
@@ -2216,64 +2274,6 @@ thread t3(move(t1));<span aria-hidden="true" class="line-numbers-rows"><span></s
       </categories>
       <tags>
         <tag>Qt</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>事件相机介绍</title>
-    <url>/2021/04/17/introduce-event-based-camera/</url>
-    <content><![CDATA[<h1 id="Event-based-Camera"><a href="#Event-based-Camera" class="headerlink" title="Event-based Camera"></a>Event-based Camera</h1><blockquote>
-<p>本文将网上的相关资料整理到了一起，方便阅读</p>
-</blockquote>
-<p><strong>前言</strong></p>
-<p>事件相机英文名为：Event-based Camera，或简称为Event Camera，缩写为EB。有时也称作DVS（Dynamic Vision Sensor “动态视觉传感器”）、DAVIS（Dynamic and Active-Pixel Vision Sensor）等。 </p>
-<p>不同于传统相机拍摄一幅完整的图像，事件相机拍摄的是“事件”，可以简单理解为“像素亮度的变化”，即事件相机输出的是像素亮度的变化情况。相比于以固定的帧率采集图像，这种相机通多测量每个像素的亮度变化来输出异步信号（包括事件，位置和亮度变化的符号）。</p>
-<p>事件相机与传统相机相比具有很多的优点: 高的动态测量范围（140dB vs. 60dB）， 高时间分辨率， 低功耗，不受运动模糊的影响。在高速、高动态范围的场景下有着广阔的应用空间。</p>
-<h2 id="零、传统相机的缺点"><a href="#零、传统相机的缺点" class="headerlink" title="零、传统相机的缺点"></a>零、传统相机的缺点</h2><p>传统相机，无论是CMOS传感器，还是CCD传感器，亦或是RGBD相机，都有一个参数：帧率。它们是以恒定的频率拍摄获取图像。这样，即使帧率能够达到1KHz，那也具有1ms的延时。所以传统相机存在一定的延迟问题。</p>
-<p>除此之外，传统相机需要通过一定时间的曝光，使感光器件积累一定的光子，那么在曝光时间之内如果物体在高速运动，则会产生模糊，这也是传统相机的一个问题。</p>
-<p>另外，传统相机的动态范围较低，具体表现为在光线极差或者亮度极高时，相机获取的信息有限。</p>
-<p>以上三点，是由于相机自身硬件的限制，即使高性能相机能够一定程度减小这些问题，但由于相机原理，这些问题无法避免。这些问题极大地限制了一些应用场景。而事件相机完全不存在这些问题。 </p>
-<h2 id="一、事件相机的介绍"><a href="#一、事件相机的介绍" class="headerlink" title="一、事件相机的介绍"></a>一、事件相机的介绍</h2><p>事件相机具有优势的典型场景包括实时交互系统，比如机器人与可穿戴设备，因为这些场景下的光照条件不可控，并且对于延时以及功率敏感。事件相机可以用于物体跟踪、识别以及手势控制，也可以应用在三维重建、光流估计、图像HDR和SLAM中，随着事件相机的发展，图像去模糊以及恒星跟踪也成为新的应用范围。</p>
-<h2 id="二、事件相机的原理"><a href="#二、事件相机的原理" class="headerlink" title="二、事件相机的原理"></a>二、事件相机的原理</h2><p><strong>基本原理</strong></p>
-<p>事件相机的最基本的原理，即：当某个像素的亮度变化累计达到一定阈值后，输出一个事件。这里强调几个概念：</p>
-<p>a） 亮度变化：说明事件相机的输出和变化有关，而与亮度的绝对值没有关系；</p>
-<p>b） 阈值：当亮度变化达到一定程度时，将输出数据，这个阈值是相机的固有参数。</p>
-<p>下面重点解释什么是一个“事件”。事件具有三要素：时间戳、像素坐标与极性。一个事件表达的是“在什么时间，哪个像素点，发生了亮度的增加或减小”。</p>
-<p>当场景中由物体运动或光照改变造成大量像素变化时，会产生一系列的事件，这些事件以事件流（Events stream）方式输出。事件流的数据量远小于传统相机传输的数据，且事件流没有最小时间单位，所以不像传统相机定时输出数据，具有低延迟特性。下面的动图揭示了事件相机与传统相机的成像的不同。</p>
-<p><img src="/images/Event-Camera/001.gif"></p>
-<p><em>（动图：左侧为有一个黑色斑块的圆盘，匀速旋转时，右上方的传统相机会定时拍摄完整的图像，下方事件相机的输出会仅输出变化，即黑斑的运动。当圆盘不转时，传统相机依旧傻傻的拍摄图像，而事件相机不会产生任何输出）</em></p>
-<p>由于事件相机的成像原理，我们可以发现只要亮度一有变化就会输出，且仅输出变化的数据占用了很小的带宽，同时由于事件相机更擅长捕捉亮度变化，所以在较暗和强光场景下也能输出有效数据。事件相机具有低延迟（&lt;𝟏𝝁𝒔）、高动态范围（𝟏𝟒𝟎𝒅𝑩）、极低功耗（𝟏𝒎𝑾）等特性。</p>
-<p><strong>深入了解</strong></p>
-<p>事件相机是对每一个像素下面有一个计算电路，左边的光电转换电路将光强转换为电压值，中间是一个差分电路，结果达到触发阈值之后会触发信号。信号从片上到USB是采用一种AER（Address Event Representation）编码的方式，国内有人将这种编码用于二值图像的压缩，具体的结果就是USB传输过来的数据不是前文所说的$(x, y, polarity, timestamp)$的形式，而是需要解码之后才能得到，常见的解码程序有:</p>
-<blockquote>
-<p><a href="https://github.com/inivation/libcaer">https://github.com/inivation/libcaer</a></p>
-<p><a href="https://github.com/SensorsINI/jaer">https://github.com/SensorsINI/jaer</a></p>
-</blockquote>
-<p>这些开源代码往往已经包含在了事件相机厂商提供的SDK中了。</p>
-<p><img src="/images/Event-Camera/002.jpg" alt="简化事件相机的硬件电路"></p>
-<p>虽然事件相机很好用，但有的时候还是有人想要使用绝对的灰度值。ATIS就实现了这样的一种相机，它通过触发事件后将电容器设置为高电压，然后在用另一个二极管从电容器中放电，光强越大放电越快，ATIS对放电事件进行编码得到强度值。但这样就导致在较暗的环境下放电速度不够快会导致新的事件打断放电过程（算法见<a href="https://github.com/SensorsINI/jaer/blob/master/src/eu/seebetter/ini/chips/davis/DavisAutoShooter.java">jaer</a>）。DAVIS是另一种使用广泛的将DVS（Dynamic Vision Sensor）和APS（Active Pixel Sensor）结合在一起的传感器，它将二者的光电二极管进行共享，不同在加装了一个读出电路，因此可以在输出事件的同时输出强度帧（来自APS）。</p>
-<p>事件相机的理想模型很简单：<br>$$<br>\Delta L(x_k,t_k)=p_kC<br>$$<br>等式左边是对数灰度的变化，右边是输出的极性以及阈值，一般而言$C$会设置在 $15%-50%$。但是实际中事件相机会受到噪声以及像素错配的影响，所以一般会在该模型加上高斯随机噪声，这一点在事件相机的仿真器中有体现：</p>
-<blockquote>
-<p><a href="http://rpg.ifi.uzh.ch/esim.html">http://rpg.ifi.uzh.ch/esim.html</a></p>
-</blockquote>
-<p>跟普通相机一样，事件相机也有需要一个<a href="https://en.wikipedia.org/wiki/Fixed-pattern_noise">FPN</a>（Fixed Pixel Noise），即相机灰度的初始bias，对于事件相机而言，bias的定义就是指阈值 $C$ ，一般而言不同像素之间的 $C$ 可能相差 $2.5%-4%$，现在不存在事件相机的FPN标定计算方案，这是一个能做的研究方向。</p>
-<p>BSI（back-side illumination）技术是广泛应用于智能手机相机上的增大填充系数的技术，目前事件相机上的光电芯片的FSI方法会阻碍光线到达像素，意味着必须增大像素面积才能获取足够的光强，使用BSI技术可以使得相机模块更薄、更小，但由于这项技术的难度与花费，现在只有少数的验证用的事件相机。</p>
-<p>下面是一些现有的商业化的事件相机比较，最后一列是来自中国上海的芯仑科技的事件相机，最新的Celex-V相机是世界上第一台百万级像素的事件相机。（但是CeleX-IV的填充系数只有9per…）</p>
-<p><img src="/images/Event-Camera/003.jpg" alt="现有的商业化的事件相机比较"></p>
-<h2 id="三、事件相机的处理范式"><a href="#三、事件相机的处理范式" class="headerlink" title="三、事件相机的处理范式"></a>三、事件相机的处理范式</h2><p>事件相机的输出是事件流，主要有三种常见的处理范式，分别是：</p>
-<h3 id="A-Event-by-Event"><a href="#A-Event-by-Event" class="headerlink" title="A. Event-by-Event"></a>A. Event-by-Event</h3><p>Event-by-Event的方法常常用于许多任务中，如SLAM里面的特征追踪、位姿追踪和图像重建。一类的方法是依赖于模型的（模型可以从其它类型的传感器数据中获得，如获得一个半稠密的深度图），然后再通过处理一个一个的事件来更新系统的状态。另一类方法是不依赖于模型的（数据驱动即机器学习）。</p>
-<h3 id="B-Groups-of-Events"><a href="#B-Groups-of-Events" class="headerlink" title="B. Groups of Events"></a>B. Groups of Events</h3><p>由于每个事件的携带的信息很少，并且容易受到噪声的影响，因此将几个事件一起处理，能够为需要解决的问题产生足够的信噪比。基于模型的方法往往是将事件转化为frame，然后运用传统的视觉方法来解决问题。而另外一种就是基于数据驱动的事件组方法，其已经用在了分类、光流估计、深度估计等任务中。经典的CNN网络使用张量作为输入，因此事件组必须转为类似的形式。现有的一些转换方法有：事件的像素直方图、最近时间戳表面（SAE）、插值体素网格。在网络架构方面，这些任务往往都会使用流形的Encoder-Decoder架构，具体网络中的其它细节可以在引文中查找对应的引用。</p>
-<p><img src="/images/Event-Camera/004.jpg" alt="流形的Encoder-Decoder架构"></p>
-<h3 id="C-SNN"><a href="#C-SNN" class="headerlink" title="C. SNN"></a>C. SNN</h3><p>事件相机是受到生物学启发的传感器，SNN也是一种受到生物学启发的网络。SNN 使用脉冲（发生在时间点上的离散事件）进行连接。一个神经元从视觉空间的一个小区域（一个感受野）接受输入事件，在状态超过阈值时产生输出事件。神经元以分层的方式连接，形成一个网络，事件从输入到SNN的第一层一直往后传播。所以SNN跟事件相机搭配在一起就跟珍珠配奶茶一样自然。</p>
-<h2 id="四、事件相机的发展与研究现状"><a href="#四、事件相机的发展与研究现状" class="headerlink" title="四、事件相机的发展与研究现状"></a>四、事件相机的发展与研究现状</h2><p>事件相机诞生于1990年，那个时间许多研究人员探讨动物感知环境的方式，发现对变化更为敏感，所以设计出了实验室用的事件相机。</p>
-<p>2008年，诞生了第一款商用的事件相机。这么看来，事件相机从商用到现在也刚刚过了十来年。目前，许多商业公司致力于事件相机的发展，有韩国Samsung、法国prophesee、瑞士iniVation、中国CelePixel（芯仑科技）等。</p>
-<p>在学术上，苏黎世联邦理工学院（ETH）的机器人与感知团队对事件相机有着系统深入的研究，其他高校例如帝国理工、慕尼黑大学等也开始相关研究。</p>
-<p>事件相机，目前在在特征提取与跟踪、光流、三维重建、SLAM、模式识别、控制等方向正在不断进行着研究，具有广泛的应用前景。</p>
-]]></content>
-      <categories>
-        <category>计算机视觉</category>
-      </categories>
-      <tags>
-        <tag>Camera</tag>
       </tags>
   </entry>
   <entry>
@@ -6490,89 +6490,73 @@ input_image <span class="token operator">=</span> input_image<span class="token 
 <p><strong>nn.MaxPool2d</strong></p>
 <p>class torch.nn.MaxPool2d(kernel_size, stride=None, padding=0, dilation=1, return_indices=False, ceil_mode=False)</p>
 <p>计算公式：<code>out=(input+2∗padding−kernel_size)/stride+1</code></p>
-<p>import torch.nn as nn</p>
-<p>“””<br>Notes:</p>
-<pre><code>torch.nn是专门为神经网络设计的模块化接口。nn构建于autograd之上，可以用来定义和运行神经网络。
-nn.Module是nn中十分重要的类,包含网络各层的定义及forward方法。
-定义自已的网络：
-    需要继承nn.Module类，并实现forward方法。
-    一般把网络中具有可学习参数的层放在构造函数__init__()中，
-    不具有可学习参数的层(如ReLU)可放在构造函数中，也可不放在构造函数中(而在forward中使用nn.functional来代替)
-    
-    只要在nn.Module的子类中定义了forward函数，backward函数就会被自动实现(利用Autograd)。
-    在forward函数中可以使用任何Variable支持的函数，毕竟在整个pytorch构建的图中，是Variable在流动。还可以使用
-    if,for,print,log等python语法.
-    
-    注：Pytorch基于nn.Module构建的模型中，只支持mini-batch的Variable输入方式，
-    比如，只有一张输入图片，也需要变成 N x C x H x W 的形式：(batch channel H W) 
-    
-    input_image = torch.FloatTensor(1, 28, 28)
-    input_image = Variable(input_image)
-input_image = input_image.unsqueeze(0)   # 1 x 1 x 28 x 28
-</code></pre>
-<p>“””</p>
-<p>class FashionCNN(nn.Module):</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># 在设计的时候，注意CNN里面的输入输出公式！！！</span>
-<span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token builtin">super</span><span class="token punctuation">(</span>FashionCNN<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch<span class="token punctuation">.</span>nn <span class="token keyword">as</span> nn
 
-    <span class="token comment"># 第一层卷积</span>
-    <span class="token comment"># 输入[1,28,28]</span>
-    self<span class="token punctuation">.</span>layer1 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
-        <span class="token comment"># 卷积层</span>
-        <span class="token comment">#   padding是边缘填充，可以分为四类：零填充，常数填充，镜像填充，重复填充。</span>
-        nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span>in_channels<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> out_channels<span class="token operator">=</span><span class="token number">32</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-        <span class="token comment"># 归一化处理https://zhuanlan.zhihu.com/p/205453986</span>
-        <span class="token comment">#   在卷积神经网络的卷积层之后总会添加BatchNorm2d进行数据的归一化处理</span>
-        <span class="token comment">#   这使得数据在进行Relu之前不会因为数据过大而导致网络性能的不稳定</span>
-        nn<span class="token punctuation">.</span>BatchNorm2d<span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-        nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-        <span class="token comment"># 池化层</span>
-        <span class="token comment"># 　池化层是夹在连续的卷积层的中间层，池化层可以非常有效地缩小矩阵的尺寸。从而减少最后全连接层中的参数。</span>
-        nn<span class="token punctuation">.</span>MaxPool2d<span class="token punctuation">(</span>kernel_size<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span>
-    <span class="token punctuation">)</span>
 
-    <span class="token comment"># 第二层卷积</span>
-    <span class="token comment"># 输入[32,14,14]https://img-blog.csdnimg.cn/20200604155746947.bmp</span>
-    self<span class="token punctuation">.</span>layer2 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
-        nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span>in_channels<span class="token operator">=</span><span class="token number">32</span><span class="token punctuation">,</span> out_channels<span class="token operator">=</span><span class="token number">128</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-        nn<span class="token punctuation">.</span>BatchNorm2d<span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-        nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-        nn<span class="token punctuation">.</span>MaxPool2d<span class="token punctuation">(</span>kernel_size<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span>
-    <span class="token punctuation">)</span>
-    <span class="token comment"># 第三层卷积</span>
-    <span class="token comment"># 输入[128，6，6]</span>
-    self<span class="token punctuation">.</span>layer3 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
-        nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span>in_channels<span class="token operator">=</span><span class="token number">128</span><span class="token punctuation">,</span> out_channels<span class="token operator">=</span><span class="token number">64</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-        nn<span class="token punctuation">.</span>BatchNorm2d<span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-        nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-        nn<span class="token punctuation">.</span>MaxPool2d<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
-    <span class="token punctuation">)</span>
+<span class="token keyword">class</span> <span class="token class-name">FashionCNN</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
 
-    <span class="token comment"># 防止过拟合</span>
-    self<span class="token punctuation">.</span>drop <span class="token operator">=</span> nn<span class="token punctuation">.</span>Dropout2d<span class="token punctuation">(</span><span class="token number">0.25</span><span class="token punctuation">)</span>
+    <span class="token comment"># 在设计的时候，注意CNN里面的输入输出公式！！！</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token builtin">super</span><span class="token punctuation">(</span>FashionCNN<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
-    <span class="token comment"># 全连接层</span>
-    <span class="token comment"># 输入[64,2，2]</span>
-    self<span class="token punctuation">.</span>fc1 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>in_features<span class="token operator">=</span><span class="token number">64</span> <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">,</span> out_features<span class="token operator">=</span><span class="token number">600</span><span class="token punctuation">)</span>
-    self<span class="token punctuation">.</span>fc2 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>in_features<span class="token operator">=</span><span class="token number">600</span><span class="token punctuation">,</span> out_features<span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">)</span>
-    self<span class="token punctuation">.</span>fc3 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>in_features<span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">,</span> out_features<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">)</span>
-    self<span class="token punctuation">.</span>fc4 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Softmax<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token comment"># 第一层卷积</span>
+        <span class="token comment"># 输入[1,28,28]</span>
+        self<span class="token punctuation">.</span>layer1 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
+            <span class="token comment"># 卷积层</span>
+            <span class="token comment">#   padding是边缘填充，可以分为四类：零填充，常数填充，镜像填充，重复填充。</span>
+            nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span>in_channels<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> out_channels<span class="token operator">=</span><span class="token number">32</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token comment"># 归一化处理https://zhuanlan.zhihu.com/p/205453986</span>
+            <span class="token comment">#   在卷积神经网络的卷积层之后总会添加BatchNorm2d进行数据的归一化处理</span>
+            <span class="token comment">#   这使得数据在进行Relu之前不会因为数据过大而导致网络性能的不稳定</span>
+            nn<span class="token punctuation">.</span>BatchNorm2d<span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token comment"># 池化层</span>
+            <span class="token comment"># 　池化层是夹在连续的卷积层的中间层，池化层可以非常有效地缩小矩阵的尺寸。从而减少最后全连接层中的参数。</span>
+            nn<span class="token punctuation">.</span>MaxPool2d<span class="token punctuation">(</span>kernel_size<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span>
+        <span class="token punctuation">)</span>
 
-<span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    out <span class="token operator">=</span> self<span class="token punctuation">.</span>layer1<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
-    out <span class="token operator">=</span> self<span class="token punctuation">.</span>layer2<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
-    out <span class="token operator">=</span> self<span class="token punctuation">.</span>layer3<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
+        <span class="token comment"># 第二层卷积</span>
+        <span class="token comment"># 输入[32,14,14]https://img-blog.csdnimg.cn/20200604155746947.bmp</span>
+        self<span class="token punctuation">.</span>layer2 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
+            nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span>in_channels<span class="token operator">=</span><span class="token number">32</span><span class="token punctuation">,</span> out_channels<span class="token operator">=</span><span class="token number">128</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>BatchNorm2d<span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>MaxPool2d<span class="token punctuation">(</span>kernel_size<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span>
+        <span class="token punctuation">)</span>
+        <span class="token comment"># 第三层卷积</span>
+        <span class="token comment"># 输入[128，6，6]</span>
+        self<span class="token punctuation">.</span>layer3 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
+            nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span>in_channels<span class="token operator">=</span><span class="token number">128</span><span class="token punctuation">,</span> out_channels<span class="token operator">=</span><span class="token number">64</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>BatchNorm2d<span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>MaxPool2d<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+        <span class="token punctuation">)</span>
 
-    out <span class="token operator">=</span> out<span class="token punctuation">.</span>view<span class="token punctuation">(</span>out<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token comment"># 防止过拟合</span>
+        self<span class="token punctuation">.</span>drop <span class="token operator">=</span> nn<span class="token punctuation">.</span>Dropout2d<span class="token punctuation">(</span><span class="token number">0.25</span><span class="token punctuation">)</span>
 
-    out <span class="token operator">=</span> self<span class="token punctuation">.</span>fc1<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
-    out <span class="token operator">=</span> self<span class="token punctuation">.</span>drop<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
-    out <span class="token operator">=</span> self<span class="token punctuation">.</span>fc2<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
-    out <span class="token operator">=</span> self<span class="token punctuation">.</span>fc3<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
-    out <span class="token operator">=</span> self<span class="token punctuation">.</span>fc4<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
+        <span class="token comment"># 全连接层</span>
+        <span class="token comment"># 输入[64,2，2]</span>
+        self<span class="token punctuation">.</span>fc1 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>in_features<span class="token operator">=</span><span class="token number">64</span> <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">,</span> out_features<span class="token operator">=</span><span class="token number">600</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>fc2 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>in_features<span class="token operator">=</span><span class="token number">600</span><span class="token punctuation">,</span> out_features<span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>fc3 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>in_features<span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">,</span> out_features<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>fc4 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Softmax<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
-    <span class="token keyword">return</span> out<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        out <span class="token operator">=</span> self<span class="token punctuation">.</span>layer1<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+        out <span class="token operator">=</span> self<span class="token punctuation">.</span>layer2<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
+        out <span class="token operator">=</span> self<span class="token punctuation">.</span>layer3<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
+
+        out <span class="token operator">=</span> out<span class="token punctuation">.</span>view<span class="token punctuation">(</span>out<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+        out <span class="token operator">=</span> self<span class="token punctuation">.</span>fc1<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
+        out <span class="token operator">=</span> self<span class="token punctuation">.</span>drop<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
+        out <span class="token operator">=</span> self<span class="token punctuation">.</span>fc2<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
+        out <span class="token operator">=</span> self<span class="token punctuation">.</span>fc3<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
+        out <span class="token operator">=</span> self<span class="token punctuation">.</span>fc4<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
+
+        <span class="token keyword">return</span> out
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="训练CNN"><a href="#训练CNN" class="headerlink" title="训练CNN"></a>训练CNN</h2><h3 id="引入库"><a href="#引入库" class="headerlink" title="引入库"></a>引入库</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> copy
 <span class="token keyword">from</span> itertools <span class="token keyword">import</span> chain
