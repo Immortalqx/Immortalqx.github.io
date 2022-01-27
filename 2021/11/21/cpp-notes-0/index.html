@@ -4,13 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="C++知识碎碎念（不定期更新）, 所念皆星河">
-    <meta name="description" content="C++知识碎碎念（不定期更新）
-始于2021-11-21，终于开始写pi-slam-fusion的代码了，但是代码的坑很多。
-我应该重新把C++学一遍。。。
+    <meta name="keywords" content="C++中的头文件, 所念皆星河">
+    <meta name="description" content="C++中的头文件
+最近在写pi-slam-fusion，遇到的问题比较多，最离谱的问题可能就是和头文件有关的这部分了。
 
 1. 关于为什么C++需要“在头文件中声明，在源文件中定义”？
-当时为了把pis">
+当时为了把pislam和map2dfusion弄到一个">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -22,7 +21,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>C++知识碎碎念（不定期更新） | 所念皆星河</title>
+    <title>C++中的头文件 | 所念皆星河</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -308,12 +307,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/46.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">C++知识碎碎念（不定期更新）</h1>
+                    <h1 class="description center-align post-title">C++中的头文件</h1>
                 </div>
             </div>
         </div>
@@ -463,14 +462,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2k
+                    1.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    7 分
+                    5 分
                 </div>
                 
 
@@ -493,9 +492,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="C-知识碎碎念（不定期更新）"><a href="#C-知识碎碎念（不定期更新）" class="headerlink" title="C++知识碎碎念（不定期更新）"></a>C++知识碎碎念（不定期更新）</h1><blockquote>
-<p>始于2021-11-21，终于开始写pi-slam-fusion的代码了，但是代码的坑很多。</p>
-<p>我应该重新把C++学一遍。。。</p>
+                <h1 id="C-中的头文件"><a href="#C-中的头文件" class="headerlink" title="C++中的头文件"></a>C++中的头文件</h1><blockquote>
+<p>最近在写pi-slam-fusion，遇到的问题比较多，最离谱的问题可能就是和头文件有关的这部分了。</p>
 </blockquote>
 <h3 id="1-关于为什么C-需要“在头文件中声明，在源文件中定义”？"><a href="#1-关于为什么C-需要“在头文件中声明，在源文件中定义”？" class="headerlink" title="1. 关于为什么C++需要“在头文件中声明，在源文件中定义”？"></a>1. 关于为什么C++需要“在头文件中声明，在源文件中定义”？</h3><blockquote>
 <p>当时为了把pislam和map2dfusion弄到一个程序里面，想出了#include “main.cpp” 和把 “main.cpp”重命名为”pislam.h”再进行#include的操作，这样肯定是有问题的！</p>
@@ -552,27 +550,8 @@
 </ul>
 <p>不能包含：</p>
 <ul>
-<li>1． 所有非静态变量（不是类的数据成员）的声明</li>
-<li>2。 默认命名空间声明不要放在头文件，using namespace std;等应放在.cpp中，在 .h 文件中使用 std::string</li>
-</ul>
-<h3 id="3-类中的虚函数"><a href="#3-类中的虚函数" class="headerlink" title="3. 类中的虚函数"></a>3. 类中的虚函数</h3><blockquote>
-<p>后面我开始分别重构pislam和map2dfusion的main.cpp，给弄成一个头文件一个源文件。这个期间又遇到一些问题，就是main.cpp里面定义了类，并且这个类它用了虚函数，然后虚函数的定义好像又必须得放在类里面（我给放在源文件里面就报错，放在头文件里面就没问题）。</p>
-<p>其实后面发现是源文件里虚函数的实现是不需要再加virtual的。</p>
-<p>这说明我虚函数也忘得差不多了(；′⌒`)。</p>
-<p><strong>TODO：这个部分的笔记并没有完成！</strong></p>
-</blockquote>
-<p>多态（polymorphism）是面向对象编程语言的一大特点，而虚函数是实现多态的机制。</p>
-<p>其核心理念就是通过基类访问派生类定义的函数。多态性使得程序调用的函数是在运行时动态确定的，而不是在编译时静态确定的。使用一个基类类型的指针或者引用，来指向子类对象，进而调用由子类复写的个性化的虚函数，这是C++实现多态性的一个最经典的场景。</p>
-<ul>
-<li>虚函数，在类成员方法的声明（不是定义）语句前加“virtual”, 如 virtual void func()</li>
-<li>纯虚函数，在虚函数后加“=0”，如 virtual void func()=0</li>
-<li>对于虚函数，子类可以（也可以不）重新定义基类的虚函数，该行为称之为复写Override。</li>
-<li>对于纯虚函数，子类必须提供纯虚函数的个性化实现。</li>
-</ul>
-<p>在派生子类中对虚函数和纯虚函数的个性化实现，都体现了“多态”特性。但区别是：</p>
-<ul>
-<li>子类如果不提供虚函数的实现，将会自动调用基类的缺省虚函数实现，作为备选方案；</li>
-<li>子类如果不提供纯虚函数的实现，编译将会失败。尽管在基类中可以给出纯虚函数的实现，但无法通过指向子类对象的基类类型指针来调用该纯虚函数，也即不能作为子类相应纯虚函数的备选方案。（纯虚函数在基类中的实现跟多态性无关，它只是提供了一种语法上的便利，在变化多端的应用场景中留有后路。）</li>
+<li>所有非静态变量（不是类的数据成员）的声明</li>
+<li>默认命名空间声明不要放在头文件，using namespace std;等应放在.cpp中，在 .h 文件中使用 std::string</li>
 </ul>
 
                 
@@ -1317,7 +1296,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">110.4k</span>&nbsp;字
+                class="white-color">109.8k</span>&nbsp;字
             
             
             
