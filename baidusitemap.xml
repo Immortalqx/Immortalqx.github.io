@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://Immortalqx.github.io/2021/12/05/cpp-notes-4/</loc>
+    <lastmod>2022-01-31</lastmod>
+  </url>
+  <url>
+    <loc>http://Immortalqx.github.io/2021/12/04/cpp-notes-3/</loc>
+    <lastmod>2022-01-31</lastmod>
+  </url>
+  <url>
     <loc>http://Immortalqx.github.io/2022/01/25/machine-learning-8/</loc>
     <lastmod>2022-01-27</lastmod>
   </url>
@@ -197,10 +205,6 @@
     <lastmod>2022-01-11</lastmod>
   </url>
   <url>
-    <loc>http://Immortalqx.github.io/2021/12/04/cpp-notes-3/</loc>
-    <lastmod>2022-01-11</lastmod>
-  </url>
-  <url>
     <loc>http://Immortalqx.github.io/2021/04/17/introduce-event-based-camera/</loc>
     <lastmod>2022-01-11</lastmod>
   </url>
@@ -210,10 +214,6 @@
   </url>
   <url>
     <loc>http://Immortalqx.github.io/2021/03/28/learning-cartographer/</loc>
-    <lastmod>2022-01-11</lastmod>
-  </url>
-  <url>
-    <loc>http://Immortalqx.github.io/2021/12/05/cpp-notes-4/</loc>
     <lastmod>2022-01-11</lastmod>
   </url>
   <url>

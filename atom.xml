@@ -289,7 +289,7 @@
     <link href="http://immortalqx.github.io/2021/12/05/cpp-notes-4/"/>
     <id>http://immortalqx.github.io/2021/12/05/cpp-notes-4/</id>
     <published>2021-12-05T09:17:11.000Z</published>
-    <updated>2022-01-11T09:10:51.449Z</updated>
+    <updated>2022-01-31T08:41:50.347Z</updated>
     
     
       
@@ -305,9 +305,7 @@
     <category term="C++" scheme="http://immortalqx.github.io/categories/C/"/>
     
     
-    <category term="C++基础" scheme="http://immortalqx.github.io/tags/C-%E5%9F%BA%E7%A1%80/"/>
-    
-    <category term="多线程编程" scheme="http://immortalqx.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/"/>
+    <category term="多线程" scheme="http://immortalqx.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
   </entry>
   
@@ -316,7 +314,7 @@
     <link href="http://immortalqx.github.io/2021/12/04/cpp-notes-3/"/>
     <id>http://immortalqx.github.io/2021/12/04/cpp-notes-3/</id>
     <published>2021-12-04T13:10:56.000Z</published>
-    <updated>2022-01-11T09:10:51.449Z</updated>
+    <updated>2022-01-31T08:41:39.951Z</updated>
     
     
       
@@ -332,9 +330,7 @@
     <category term="C++" scheme="http://immortalqx.github.io/categories/C/"/>
     
     
-    <category term="C++基础" scheme="http://immortalqx.github.io/tags/C-%E5%9F%BA%E7%A1%80/"/>
-    
-    <category term="多线程编程" scheme="http://immortalqx.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/"/>
+    <category term="多线程" scheme="http://immortalqx.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
   </entry>
   

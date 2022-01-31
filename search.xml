@@ -2026,8 +2026,7 @@ thread t3(move(t1));<span aria-hidden="true" class="line-numbers-rows"><span></s
         <category>C++</category>
       </categories>
       <tags>
-        <tag>C++基础</tag>
-        <tag>多线程编程</tag>
+        <tag>多线程</tag>
       </tags>
   </entry>
   <entry>
@@ -5318,8 +5317,7 @@ Main(): Waited and joined with 3 threads. Final value of count = 145. Done.<span
         <category>C++</category>
       </categories>
       <tags>
-        <tag>C++基础</tag>
-        <tag>多线程编程</tag>
+        <tag>多线程</tag>
       </tags>
   </entry>
   <entry>
