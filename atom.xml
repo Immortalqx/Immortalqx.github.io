@@ -6,7 +6,7 @@
   <link href="http://immortalqx.github.io/atom.xml" rel="self"/>
   
   <link href="http://immortalqx.github.io/"/>
-  <updated>2022-01-27T13:53:34.222Z</updated>
+  <updated>2022-02-05T03:31:26.064Z</updated>
   <id>http://immortalqx.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>C++ 多线程编程（三）：单例模式</title>
+    <link href="http://immortalqx.github.io/2022/02/04/cpp-notes-5/"/>
+    <id>http://immortalqx.github.io/2022/02/04/cpp-notes-5/</id>
+    <published>2022-02-04T05:46:05.000Z</published>
+    <updated>2022-02-05T03:31:26.064Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;C-多线程编程（三）：单例模式&quot;&gt;&lt;a href=&quot;#C-多线程编程（三）：单例模式&quot; class=&quot;headerlink&quot; title=&quot;C++ 多线程编程（三）：单例模式&quot;&gt;&lt;/a&gt;C++ 多线程编程（三）：单例模式&lt;/h1&gt;&lt;h2</summary>
+        
+      
+    
+    
+    
+    <category term="C++" scheme="http://immortalqx.github.io/categories/C/"/>
+    
+    
+    <category term="多线程" scheme="http://immortalqx.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+    <category term="单例模式" scheme="http://immortalqx.github.io/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>机器学习笔记（八）：应用CNN和RNN解决数独问题</title>
@@ -508,31 +535,6 @@
     
     
     <category term="论文阅读" scheme="http://immortalqx.github.io/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>雅思备考经验分享</title>
-    <link href="http://immortalqx.github.io/2021/07/28/ielts-1/"/>
-    <id>http://immortalqx.github.io/2021/07/28/ielts-1/</id>
-    <published>2021-07-28T13:59:34.000Z</published>
-    <updated>2022-01-11T09:10:51.449Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;雅思备考经验分享&quot;&gt;&lt;a href=&quot;#雅思备考经验分享&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="经验&amp;方法" scheme="http://immortalqx.github.io/categories/%E7%BB%8F%E9%AA%8C-%E6%96%B9%E6%B3%95/"/>
-    
-    
-    <category term="IELTS" scheme="http://immortalqx.github.io/tags/IELTS/"/>
     
   </entry>
   
