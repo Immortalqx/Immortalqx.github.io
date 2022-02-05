@@ -567,93 +567,93 @@ rosinstall_generator --rosdistro kinetic mavlink <span class="token operator">|<
 catkin_create_pkg offboard_pkg roscpp std_msgs geometry_msgs mavros_msgs<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>在目录<code>~/catkin_ws/src/offboard_pkg/src/</code>中，新建一个文件<code>offboard_node.cpp</code>，写入如下的代码：</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">/**
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">/**
  * @file offb_node.cpp
  * @brief Offboard control example node, written with MAVROS version 0.19.x, PX4 Pro Flight
  * Stack and tested in Gazebo SITL
- */
+ */</span>
 
-#include &lt;ros/ros.h&gt;
-#include &lt;geometry_msgs/PoseStamped.h&gt;
-#include &lt;mavros_msgs/CommandBool.h&gt;
-#include &lt;mavros_msgs/SetMode.h&gt;
-#include &lt;mavros_msgs/State.h&gt;
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;geometry_msgs/PoseStamped.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;mavros_msgs/CommandBool.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;mavros_msgs/SetMode.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;mavros_msgs/State.h&gt;</span></span>
 
-mavros_msgs::State current_state;
-void state_cb(const mavros_msgs::State::ConstPtr&amp; msg){
-    current_state = *msg;
-}
+mavros_msgs<span class="token double-colon punctuation">::</span>State current_state<span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">state_cb</span><span class="token punctuation">(</span><span class="token keyword">const</span> mavros_msgs<span class="token double-colon punctuation">::</span>State<span class="token double-colon punctuation">::</span>ConstPtr<span class="token operator">&amp;</span> msg<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    current_state <span class="token operator">=</span> <span class="token operator">*</span>msg<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-int main(int argc, char **argv)
-{
-    ros::init(argc, argv, "offb_node");
-    ros::NodeHandle nh;
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    ros<span class="token double-colon punctuation">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"offb_node"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ros<span class="token double-colon punctuation">::</span>NodeHandle nh<span class="token punctuation">;</span>
 
-    ros::Subscriber state_sub = nh.subscribe&lt;mavros_msgs::State&gt;
-            ("mavros/state", 10, state_cb);
-    ros::Publisher local_pos_pub = nh.advertise&lt;geometry_msgs::PoseStamped&gt;
-            ("mavros/setpoint_position/local", 10);
-    ros::ServiceClient arming_client = nh.serviceClient&lt;mavros_msgs::CommandBool&gt;
-            ("mavros/cmd/arming");
-    ros::ServiceClient set_mode_client = nh.serviceClient&lt;mavros_msgs::SetMode&gt;
-            ("mavros/set_mode");
+    ros<span class="token double-colon punctuation">::</span>Subscriber state_sub <span class="token operator">=</span> nh<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">subscribe</span><span class="token generic class-name"><span class="token operator">&lt;</span>mavros_msgs<span class="token double-colon punctuation">::</span>State<span class="token operator">&gt;</span></span></span>
+            <span class="token punctuation">(</span><span class="token string">"mavros/state"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> state_cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ros<span class="token double-colon punctuation">::</span>Publisher local_pos_pub <span class="token operator">=</span> nh<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">advertise</span><span class="token generic class-name"><span class="token operator">&lt;</span>geometry_msgs<span class="token double-colon punctuation">::</span>PoseStamped<span class="token operator">&gt;</span></span></span>
+            <span class="token punctuation">(</span><span class="token string">"mavros/setpoint_position/local"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ros<span class="token double-colon punctuation">::</span>ServiceClient arming_client <span class="token operator">=</span> nh<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">serviceClient</span><span class="token generic class-name"><span class="token operator">&lt;</span>mavros_msgs<span class="token double-colon punctuation">::</span>CommandBool<span class="token operator">&gt;</span></span></span>
+            <span class="token punctuation">(</span><span class="token string">"mavros/cmd/arming"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ros<span class="token double-colon punctuation">::</span>ServiceClient set_mode_client <span class="token operator">=</span> nh<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">serviceClient</span><span class="token generic class-name"><span class="token operator">&lt;</span>mavros_msgs<span class="token double-colon punctuation">::</span>SetMode<span class="token operator">&gt;</span></span></span>
+            <span class="token punctuation">(</span><span class="token string">"mavros/set_mode"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    //the setpoint publishing rate MUST be faster than 2Hz
-    ros::Rate rate(20.0);
+    <span class="token comment">//the setpoint publishing rate MUST be faster than 2Hz</span>
+    ros<span class="token double-colon punctuation">::</span>Rate <span class="token function">rate</span><span class="token punctuation">(</span><span class="token number">20.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    // wait for FCU connection
-    while(ros::ok() &amp;&amp; !current_state.connected){
-        ros::spinOnce();
-        rate.sleep();
-    }
+    <span class="token comment">// wait for FCU connection</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>ros<span class="token double-colon punctuation">::</span><span class="token function">ok</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>current_state<span class="token punctuation">.</span>connected<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        ros<span class="token double-colon punctuation">::</span><span class="token function">spinOnce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        rate<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    geometry_msgs::PoseStamped pose;
-    pose.pose.position.x = 0;
-    pose.pose.position.y = 0;
-    pose.pose.position.z = 2;
+    geometry_msgs<span class="token double-colon punctuation">::</span>PoseStamped pose<span class="token punctuation">;</span>
+    pose<span class="token punctuation">.</span>pose<span class="token punctuation">.</span>position<span class="token punctuation">.</span>x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    pose<span class="token punctuation">.</span>pose<span class="token punctuation">.</span>position<span class="token punctuation">.</span>y <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    pose<span class="token punctuation">.</span>pose<span class="token punctuation">.</span>position<span class="token punctuation">.</span>z <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
 
-    //send a few setpoints before starting
-    for(int i = 100; ros::ok() &amp;&amp; i &gt; 0; --i){
-        local_pos_pub.publish(pose);
-        ros::spinOnce();
-        rate.sleep();
-    }
+    <span class="token comment">//send a few setpoints before starting</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span> ros<span class="token double-colon punctuation">::</span><span class="token function">ok</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> i <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token operator">--</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        local_pos_pub<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span>pose<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ros<span class="token double-colon punctuation">::</span><span class="token function">spinOnce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        rate<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    mavros_msgs::SetMode offb_set_mode;
-    offb_set_mode.request.custom_mode = "OFFBOARD";
+    mavros_msgs<span class="token double-colon punctuation">::</span>SetMode offb_set_mode<span class="token punctuation">;</span>
+    offb_set_mode<span class="token punctuation">.</span>request<span class="token punctuation">.</span>custom_mode <span class="token operator">=</span> <span class="token string">"OFFBOARD"</span><span class="token punctuation">;</span>
 
-    mavros_msgs::CommandBool arm_cmd;
-    arm_cmd.request.value = true;
+    mavros_msgs<span class="token double-colon punctuation">::</span>CommandBool arm_cmd<span class="token punctuation">;</span>
+    arm_cmd<span class="token punctuation">.</span>request<span class="token punctuation">.</span>value <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
 
-    ros::Time last_request = ros::Time::now();
+    ros<span class="token double-colon punctuation">::</span>Time last_request <span class="token operator">=</span> ros<span class="token double-colon punctuation">::</span><span class="token class-name">Time</span><span class="token double-colon punctuation">::</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    while(ros::ok()){
-        if( current_state.mode != "OFFBOARD" &amp;&amp;
-            (ros::Time::now() - last_request &gt; ros::Duration(5.0))){
-            if( set_mode_client.call(offb_set_mode) &amp;&amp;
-                offb_set_mode.response.mode_sent){
-                ROS_INFO("Offboard enabled");
-            }
-            last_request = ros::Time::now();
-        } else {
-            if( !current_state.armed &amp;&amp;
-                (ros::Time::now() - last_request &gt; ros::Duration(5.0))){
-                if( arming_client.call(arm_cmd) &amp;&amp;
-                    arm_cmd.response.success){
-                    ROS_INFO("Vehicle armed");
-                }
-                last_request = ros::Time::now();
-            }
-        }
+    <span class="token keyword">while</span><span class="token punctuation">(</span>ros<span class="token double-colon punctuation">::</span><span class="token function">ok</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span> current_state<span class="token punctuation">.</span>mode <span class="token operator">!=</span> <span class="token string">"OFFBOARD"</span> <span class="token operator">&amp;&amp;</span>
+            <span class="token punctuation">(</span>ros<span class="token double-colon punctuation">::</span><span class="token class-name">Time</span><span class="token double-colon punctuation">::</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> last_request <span class="token operator">&gt;</span> ros<span class="token double-colon punctuation">::</span><span class="token function">Duration</span><span class="token punctuation">(</span><span class="token number">5.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span> set_mode_client<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>offb_set_mode<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span>
+                offb_set_mode<span class="token punctuation">.</span>response<span class="token punctuation">.</span>mode_sent<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"Offboard enabled"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            last_request <span class="token operator">=</span> ros<span class="token double-colon punctuation">::</span><span class="token class-name">Time</span><span class="token double-colon punctuation">::</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span> <span class="token operator">!</span>current_state<span class="token punctuation">.</span>armed <span class="token operator">&amp;&amp;</span>
+                <span class="token punctuation">(</span>ros<span class="token double-colon punctuation">::</span><span class="token class-name">Time</span><span class="token double-colon punctuation">::</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> last_request <span class="token operator">&gt;</span> ros<span class="token double-colon punctuation">::</span><span class="token function">Duration</span><span class="token punctuation">(</span><span class="token number">5.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span> arming_client<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>arm_cmd<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span>
+                    arm_cmd<span class="token punctuation">.</span>response<span class="token punctuation">.</span>success<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"Vehicle armed"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                last_request <span class="token operator">=</span> ros<span class="token double-colon punctuation">::</span><span class="token class-name">Time</span><span class="token double-colon punctuation">::</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
 
-        local_pos_pub.publish(pose);
+        local_pos_pub<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span>pose<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        ros::spinOnce();
-        rate.sleep();
-    }
+        ros<span class="token double-colon punctuation">::</span><span class="token function">spinOnce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        rate<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    return 0;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>然后打开目录<code>~/catkin_ws/src/offboard_pkg/</code>下的<code>CMakeLists.txt</code>添加下面的两行：</p>
 <pre class="line-numbers language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">add_executable</span><span class="token punctuation">(</span>offboard_node src/offboard_node.cpp<span class="token punctuation">)</span>

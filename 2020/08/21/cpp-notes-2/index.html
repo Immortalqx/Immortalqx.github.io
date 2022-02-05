@@ -496,47 +496,47 @@
 <h3 id="delete的优点"><a href="#delete的优点" class="headerlink" title="delete的优点"></a>delete的优点</h3><p>​    删除函数一个重要的优势是任何函数都可以是删除的,然而仅有成员函数才可以是私有的。</p>
 <h4 id="防止普通非成员函数中的隐式转化"><a href="#防止普通非成员函数中的隐式转化" class="headerlink" title="防止普通非成员函数中的隐式转化"></a>防止普通非成员函数中的隐式转化</h4><p>​    C++继承于C意味着,很多其他类型被隐式的转换为in 类型,但是有些调用可以编译但是没有任何意义.</p>
 <p>​    举个例子,加入我们有个非成员函数,以一个整数位参数,然后返回这个参数是不是幸运数字:</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">bool isLucky(int number);
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">bool</span> <span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token keyword">int</span> number<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-isLucky('a');
-isLucky(true);
-isLucky(3.5);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token number">3.5</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>​    如果幸运数字一定要是一个整数,我们希望能到阻止上面那种形式的调用。</p>
 <p>​    完成这个任务的一个方法是为想被排除出去的类型的重载函数声明为删除的:</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">bool isLucky(int number);
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">bool</span> <span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token keyword">int</span> number<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-bool isLucky(char)=delete;
-bool isLucky(bool)=delete;
-bool isLucky(double)=delete;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">bool</span> <span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token keyword">delete</span><span class="token punctuation">;</span>
+<span class="token keyword">bool</span> <span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token keyword">bool</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token keyword">delete</span><span class="token punctuation">;</span>
+<span class="token keyword">bool</span> <span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token keyword">delete</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>​    如果给float一个转换为int或者double的可能性, C++总是倾向于转化为double的。以float类型调用isLucky总是调用对应的double重载,而不是int类型的那个重载。结果就是将double类型的重载删除将会阻止float类型的调用编译。</p>
 <h4 id="阻止应该被禁用的模板实现"><a href="#阻止应该被禁用的模板实现" class="headerlink" title="阻止应该被禁用的模板实现"></a>阻止应该被禁用的模板实现</h4><p>​    假设你需要使用一个内嵌指针的模板：</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;
-void processPointer(T* ptr);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+<span class="token keyword">void</span> <span class="token function">processPointer</span><span class="token punctuation">(</span>T<span class="token operator">*</span> ptr<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>​    但是在指针家族中，有两个特殊的指针。</p>
 <p>一个是 void* 指针，因为没有办法对它们解析引用，递增或者递减。</p>
 <p>另一个是 char* 指针，因为它们往往表示指向C类型的字符串，而不是指向独立字符的指针。</p>
 <p>​    这些特殊情况经常需要特殊处理。如果希望不能以 void* 或者 char* 为参数调用该函数，只需要删除这些实现：</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;&gt;
-void processPointer&lt;void*&gt;(void*)=delete;
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token operator">&gt;</span>
+<span class="token keyword">void</span> <span class="token generic-function"><span class="token function">processPointer</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token keyword">delete</span><span class="token punctuation">;</span>
 
-template&lt;&gt;
-void processPointer&lt;void*&gt;(void*)=delete;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token operator">&gt;</span>
+<span class="token keyword">void</span> <span class="token generic-function"><span class="token function">processPointer</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token keyword">delete</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>现在，使用 void* 或者 char* 调用该函数都是无效的，但使用 const void* 或者 const char* 调用也需要是无效的， 所以这些实现也需要被删除。（略）</p>
 <p>如果类内部有一个函数模板，想通过声明它们为私有来禁止某些实现，是做不到的，因为赋予一个成员函数模板的某种特殊情况下的拥有不同于模板主体的访问权限是不可能的。</p>
 <p>（可以声明 void* 和 char* 的版本却不实现它们 ）</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">class MyClass
-{
-public:
-	template&lt;typename T&gt;
-	void function(T t);
-private:
-	template&lt;&gt;				//错误！！！
-	void function(char);	
-};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">MyClass</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+	<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+	<span class="token keyword">void</span> <span class="token function">function</span><span class="token punctuation">(</span>T t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+	<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token operator">&gt;</span>				<span class="token comment">//错误！！！</span>
+	<span class="token keyword">void</span> <span class="token function">function</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>并且模板的特殊情况必须要写在命名空间的作用域内，而不是类的作用域内。</p>
 <p>不过，这个问题对于删除函数是不存在的，它们也可以在类外被声明为是被删除的（也就是在命名空间的作用域内）</p>
@@ -572,36 +572,36 @@ private:
 <p>（引用修饰符是为了实现限制成员函数仅用于左值或者右值）</p>
 </li>
 </ul>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">class Widget
-{
-public:
-    void doWork() &amp;;	//只有*this为左值时，这个版本才会被调用
-    void doWork() &amp;&amp;;	//只有*this为右值时，这个函数才会被调用
-};
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Widget</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">void</span> <span class="token function">doWork</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token punctuation">;</span>	<span class="token comment">//只有*this为左值时，这个版本才会被调用</span>
+    <span class="token keyword">void</span> <span class="token function">doWork</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span><span class="token punctuation">;</span>	<span class="token comment">//只有*this为右值时，这个函数才会被调用</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-Widget makeWidget();	//工厂函数，返回右值
-Widget w;				//正常对象（左值）
+Widget <span class="token function">makeWidget</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//工厂函数，返回右值</span>
+Widget w<span class="token punctuation">;</span>				<span class="token comment">//正常对象（左值）</span>
 
-w.doWork();				//调用了Widget::doWork &amp;
-makeWidget().doWork();	//调用了Widget::doWork &amp;&amp;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+w<span class="token punctuation">.</span><span class="token function">doWork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>				<span class="token comment">//调用了Widget::doWork &amp;</span>
+<span class="token function">makeWidget</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">doWork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//调用了Widget::doWork &amp;&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>正是因为覆盖有这么多的要求，所以一个很小的错误都可以造成很大的偏差。并且覆盖函数中出现的错误通常还是合法的，，但它导致的结果并不是你想要的。所以当你犯了某些错误的时候，你并不能依赖于编译器对你的通知。</p>
 <p>例如下面这个例子，这些代码是完全合法的，但它一个虚函数都没有被覆盖——没有任何一个派生类的函数是和基类的对应函数绑定的。</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">class	Base{
-public:
-    virtual	void	mf1()	const;
-    virtual	void	mf2(int	x);
-    virtual	void	mf3()	&amp;;
-    void	mf4()	const;
-};
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span>	<span class="token class-name">Base</span><span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span>	<span class="token keyword">void</span>	<span class="token function">mf1</span><span class="token punctuation">(</span><span class="token punctuation">)</span>	<span class="token keyword">const</span><span class="token punctuation">;</span>
+    <span class="token keyword">virtual</span>	<span class="token keyword">void</span>	<span class="token function">mf2</span><span class="token punctuation">(</span><span class="token keyword">int</span>	x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">virtual</span>	<span class="token keyword">void</span>	<span class="token function">mf3</span><span class="token punctuation">(</span><span class="token punctuation">)</span>	<span class="token operator">&amp;</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span>	<span class="token function">mf4</span><span class="token punctuation">(</span><span class="token punctuation">)</span>	<span class="token keyword">const</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-class	Derived:	public	Base	{
-public:
-    virtual	void	mf1();
-    virtual	void	mf2(unsigned	int	x);
-    virtual	void	mf3()	&amp;&amp;;
-    void	mf4()	const;
-};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">class</span>	<span class="token class-name">Derived</span><span class="token operator">:</span>	<span class="token base-clause"><span class="token keyword">public</span>	<span class="token class-name">Base</span></span>	<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span>	<span class="token keyword">void</span>	<span class="token function">mf1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">virtual</span>	<span class="token keyword">void</span>	<span class="token function">mf2</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span>	<span class="token keyword">int</span>	x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">virtual</span>	<span class="token keyword">void</span>	<span class="token function">mf3</span><span class="token punctuation">(</span><span class="token punctuation">)</span>	<span class="token operator">&amp;&amp;</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span>	<span class="token function">mf4</span><span class="token punctuation">(</span><span class="token punctuation">)</span>	<span class="token keyword">const</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>提示：</p>
 <ul>
@@ -611,16 +611,16 @@ public:
 <li>mf4没有继承Base中的虚函数</li>
 </ul>
 <p>因为声明派生类的覆盖函数很重要，又如此容易出错，所以C++11提供了一种方法来显示的标明派生类中的函数是为了改写基类的版本，为其加上override声明即可。</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">class	Derived:	public	Base {
-public:
-    virtual void mf1() override;
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span>	<span class="token class-name">Derived</span><span class="token operator">:</span>	<span class="token base-clause"><span class="token keyword">public</span>	<span class="token class-name">Base</span></span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">mf1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">override</span><span class="token punctuation">;</span>
 
-    virtual void mf2(unsigned int x) override;
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">mf2</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token keyword">override</span><span class="token punctuation">;</span>
 
-    virtual void mf3() &amp;&amp; override;
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">mf3</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token keyword">override</span><span class="token punctuation">;</span>
 
-    virtual void mf4() const override;
-};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">mf4</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token keyword">override</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这样，上面这些代码就无法通过编译了，并且编译器会把覆盖函数所有的问题揭露出来。</p>
 <h3 id="扩展：-1"><a href="#扩展：-1" class="headerlink" title="扩展："></a>扩展：</h3><h4 id="与成员函数有关的几个描述符："><a href="#与成员函数有关的几个描述符：" class="headerlink" title="与成员函数有关的几个描述符："></a>与成员函数有关的几个描述符：</h4><ol>

@@ -589,18 +589,18 @@
 <span class="token builtin class-name">export</span> <span class="token assign-left variable">LD_LIBRARY_PATH</span><span class="token operator">=</span>/usr/local/opencv_4.2.0/lib<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="验证配置结果"><a href="#验证配置结果" class="headerlink" title="验证配置结果"></a>验证配置结果</h3><p>任意目录创建一个<code>test.cpp</code>文件，写入如下内容：</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#include "opencv.hpp"
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"opencv.hpp"</span></span>
  
-using namespace cv;
-using namespace std;
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> cv<span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
  
-int main( int argc, char** argv )
-{
-  cout &lt;&lt; "OpenCV version : " &lt;&lt; CV_VERSION &lt;&lt; endl;
-  cout &lt;&lt; "Major version : " &lt;&lt; CV_MAJOR_VERSION &lt;&lt; endl;
-  cout &lt;&lt; "Minor version : " &lt;&lt; CV_MINOR_VERSION &lt;&lt; endl;
-  cout &lt;&lt; "Subminor version : " &lt;&lt; CV_SUBMINOR_VERSION &lt;&lt; endl;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span> <span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv <span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  cout <span class="token operator">&lt;&lt;</span> <span class="token string">"OpenCV version : "</span> <span class="token operator">&lt;&lt;</span> CV_VERSION <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+  cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Major version : "</span> <span class="token operator">&lt;&lt;</span> CV_MAJOR_VERSION <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+  cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Minor version : "</span> <span class="token operator">&lt;&lt;</span> CV_MINOR_VERSION <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+  cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Subminor version : "</span> <span class="token operator">&lt;&lt;</span> CV_SUBMINOR_VERSION <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>使用命令行在其文件夹下执行：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 编译test.cpp程序，并生成可执行文件</span>

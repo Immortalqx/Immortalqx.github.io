@@ -494,34 +494,34 @@ algorithm();
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="图片上打印帧率等信息"><a href="#图片上打印帧率等信息" class="headerlink" title="图片上打印帧率等信息"></a>图片上打印帧率等信息</h1><h2 id="计算某一个算法的帧率"><a href="#计算某一个算法的帧率" class="headerlink" title="计算某一个算法的帧率"></a>计算某一个算法的帧率</h2><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">// Start timer
-double timer = (double) getTickCount();
+                <h1 id="图片上打印帧率等信息"><a href="#图片上打印帧率等信息" class="headerlink" title="图片上打印帧率等信息"></a>图片上打印帧率等信息</h1><h2 id="计算某一个算法的帧率"><a href="#计算某一个算法的帧率" class="headerlink" title="计算某一个算法的帧率"></a>计算某一个算法的帧率</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// Start timer</span>
+<span class="token keyword">double</span> timer <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span> <span class="token function">getTickCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-//待测算法
-algorithm();
+<span class="token comment">//待测算法</span>
+<span class="token function">algorithm</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-// Calculate Frames per second (FPS)
-float fps = getTickFrequency() / ((double) getTickCount() - timer);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">// Calculate Frames per second (FPS)</span>
+<span class="token keyword">float</span> fps <span class="token operator">=</span> <span class="token function">getTickFrequency</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span> <span class="token function">getTickCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> timer<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="使用putText-函数将信息直接输出到图片上"><a href="#使用putText-函数将信息直接输出到图片上" class="headerlink" title="使用putText()函数将信息直接输出到图片上"></a>使用putText()函数将信息直接输出到图片上</h2><h3 id="函数原型"><a href="#函数原型" class="headerlink" title="函数原型"></a>函数原型</h3><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">void cv::putText(
-	cv::Mat&amp; img, // 待绘制的图像
-	const string&amp; text, // 待绘制的文字
-	cv::Point origin, // 文本框的左下角
-	int fontFace, // 字体 (如cv::FONT_HERSHEY_PLAIN)
-	double fontScale, // 尺寸因子，值越大文字越大
-	cv::Scalar color, // 线条的颜色（RGB）
-	int thickness = 1, // 线条宽度
-	int lineType = 8, // 线型（4邻域或8邻域，默认8邻域）
-	bool bottomLeftOrigin = false // true='origin at lower left'
-);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="使用putText-函数将信息直接输出到图片上"><a href="#使用putText-函数将信息直接输出到图片上" class="headerlink" title="使用putText()函数将信息直接输出到图片上"></a>使用putText()函数将信息直接输出到图片上</h2><h3 id="函数原型"><a href="#函数原型" class="headerlink" title="函数原型"></a>函数原型</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> cv<span class="token double-colon punctuation">::</span><span class="token function">putText</span><span class="token punctuation">(</span>
+	cv<span class="token double-colon punctuation">::</span>Mat<span class="token operator">&amp;</span> img<span class="token punctuation">,</span> <span class="token comment">// 待绘制的图像</span>
+	<span class="token keyword">const</span> string<span class="token operator">&amp;</span> text<span class="token punctuation">,</span> <span class="token comment">// 待绘制的文字</span>
+	cv<span class="token double-colon punctuation">::</span>Point origin<span class="token punctuation">,</span> <span class="token comment">// 文本框的左下角</span>
+	<span class="token keyword">int</span> fontFace<span class="token punctuation">,</span> <span class="token comment">// 字体 (如cv::FONT_HERSHEY_PLAIN)</span>
+	<span class="token keyword">double</span> fontScale<span class="token punctuation">,</span> <span class="token comment">// 尺寸因子，值越大文字越大</span>
+	cv<span class="token double-colon punctuation">::</span>Scalar color<span class="token punctuation">,</span> <span class="token comment">// 线条的颜色（RGB）</span>
+	<span class="token keyword">int</span> thickness <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token comment">// 线条宽度</span>
+	<span class="token keyword">int</span> lineType <span class="token operator">=</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token comment">// 线型（4邻域或8邻域，默认8邻域）</span>
+	<span class="token keyword">bool</span> bottomLeftOrigin <span class="token operator">=</span> <span class="token boolean">false</span> <span class="token comment">// true='origin at lower left'</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h3><p>在图片左上角显示使用的算法，帧率，是否检测到目标物</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">putText(frame, detectionType, Point(100, 20), FONT_HERSHEY_SIMPLEX, 0.75, Scalar(50, 170, 50), 2);
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">putText</span><span class="token punctuation">(</span>frame<span class="token punctuation">,</span> detectionType<span class="token punctuation">,</span> <span class="token function">Point</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span> FONT_HERSHEY_SIMPLEX<span class="token punctuation">,</span> <span class="token number">0.75</span><span class="token punctuation">,</span> <span class="token function">Scalar</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">170</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-putText(frame, "FPS : " + to_string(int(fps)), Point(100, 50), FONT_HERSHEY_SIMPLEX, 0.75, Scalar(50, 170, 50), 2);
+<span class="token function">putText</span><span class="token punctuation">(</span>frame<span class="token punctuation">,</span> <span class="token string">"FPS : "</span> <span class="token operator">+</span> <span class="token function">to_string</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">(</span>fps<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">Point</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">,</span> FONT_HERSHEY_SIMPLEX<span class="token punctuation">,</span> <span class="token number">0.75</span><span class="token punctuation">,</span> <span class="token function">Scalar</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">170</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-if(detection_failed)
-	putText(frame, " Detection failed", Point(100, 80), FONT_HERSHEY_SIMPLEX, 0.75, Scalar(0, 0, 255), 2);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">if</span><span class="token punctuation">(</span>detection_failed<span class="token punctuation">)</span>
+	<span class="token function">putText</span><span class="token punctuation">(</span>frame<span class="token punctuation">,</span> <span class="token string">" Detection failed"</span><span class="token punctuation">,</span> <span class="token function">Point</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">80</span><span class="token punctuation">)</span><span class="token punctuation">,</span> FONT_HERSHEY_SIMPLEX<span class="token punctuation">,</span> <span class="token number">0.75</span><span class="token punctuation">,</span> <span class="token function">Scalar</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>下面是效果图：</p>
 <p><img src="/images/OpenCV-Notes/1-1.png"></p>

@@ -581,175 +581,175 @@ roslaunch ballseeker quickstart.launch<span aria-hidden="true" class="line-numbe
 <p>这里的代码的作用是调用摄像头来检测它看到的网球</p>
 </blockquote>
 <p>在seek.hpp中写入：</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#pragma once
-#include "ros/ros.h"
-#include "opencv2/opencv.hpp"
-#include "vector"
-#include "sstream"
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">pragma</span> <span class="token expression">once</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"ros/ros.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"opencv2/opencv.hpp"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"vector"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"sstream"</span></span>
 
-const int red_ball = 0;
-const int yellow_ball = 1;
-const int blue_ball = 2;
+<span class="token keyword">const</span> <span class="token keyword">int</span> red_ball <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> yellow_ball <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> blue_ball <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
 
-class seek
-{
-public:
-    seek(int service_id=0);
-    ~seek();
-    void getstart();        //从摄像头获取图片、双边滤波、转化hsv
-    void display();         //找球并展示中间效果和最终效果
-    void creatbar();        //创建滑动条调整参数
+<span class="token keyword">class</span> <span class="token class-name">seek</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">seek</span><span class="token punctuation">(</span><span class="token keyword">int</span> service_id<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">~</span><span class="token function">seek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">getstart</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment">//从摄像头获取图片、双边滤波、转化hsv</span>
+    <span class="token keyword">void</span> <span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment">//找球并展示中间效果和最终效果</span>
+    <span class="token keyword">void</span> <span class="token function">creatbar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment">//创建滑动条调整参数</span>
 
-private:
-    int bgr_min[3];
-    int bgr_max[3];
-    int hsv_min[3];
-    int hsv_max[3];
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> bgr_min<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> bgr_max<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> hsv_min<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> hsv_max<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 
-    cv::Mat src;
-    cv::Mat bgr_dst;
-    cv::Mat hsv_dst;
+    cv<span class="token double-colon punctuation">::</span>Mat src<span class="token punctuation">;</span>
+    cv<span class="token double-colon punctuation">::</span>Mat bgr_dst<span class="token punctuation">;</span>
+    cv<span class="token double-colon punctuation">::</span>Mat hsv_dst<span class="token punctuation">;</span>
 
-    cv::Mat see_red;
-    cv::Mat see_yellow;
-    cv::Mat see_blue;
+    cv<span class="token double-colon punctuation">::</span>Mat see_red<span class="token punctuation">;</span>
+    cv<span class="token double-colon punctuation">::</span>Mat see_yellow<span class="token punctuation">;</span>
+    cv<span class="token double-colon punctuation">::</span>Mat see_blue<span class="token punctuation">;</span>
 
-    cv::VideoCapture capture;
-    void updateparam(int type_of_ball);
-    void process(cv::Mat&amp; input,int type_of_ball);//阈值化、膨胀、找轮廓、找矩形并筛选、画圆
-    static void on_change(int, void*);
-};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    cv<span class="token double-colon punctuation">::</span>VideoCapture capture<span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">updateparam</span><span class="token punctuation">(</span><span class="token keyword">int</span> type_of_ball<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">process</span><span class="token punctuation">(</span>cv<span class="token double-colon punctuation">::</span>Mat<span class="token operator">&amp;</span> input<span class="token punctuation">,</span><span class="token keyword">int</span> type_of_ball<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//阈值化、膨胀、找轮廓、找矩形并筛选、画圆</span>
+    <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">on_change</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>在seek.cpp中写入：</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#include "../include/ballseeker/seek.hpp"
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"../include/ballseeker/seek.hpp"</span></span>
 
-seek::seek(int service_id)
-{
-    //设置摄像机参数
-    capture.open(1);
-    capture.set(CV_CAP_PROP_FRAME_WIDTH,640);
-	capture.set(CV_CAP_PROP_FRAME_HEIGHT,480);
-}
+seek<span class="token double-colon punctuation">::</span><span class="token function">seek</span><span class="token punctuation">(</span><span class="token keyword">int</span> service_id<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">//设置摄像机参数</span>
+    capture<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    capture<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>CV_CAP_PROP_FRAME_WIDTH<span class="token punctuation">,</span><span class="token number">640</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	capture<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>CV_CAP_PROP_FRAME_HEIGHT<span class="token punctuation">,</span><span class="token number">480</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-seek::~seek()
-{
+<span class="token class-name">seek</span><span class="token double-colon punctuation">::</span><span class="token operator">~</span><span class="token function">seek</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
 
-}
+<span class="token punctuation">}</span>
 
-void seek::getstart()
-{
-    capture&gt;&gt;src;
-    cv::bilateralFilter(src,bgr_dst,20,1000,1000);
-    cv::cvtColor(bgr_dst,hsv_dst,CV_BGR2HSV);
-}
+<span class="token keyword">void</span> seek<span class="token double-colon punctuation">::</span><span class="token function">getstart</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    capture<span class="token operator">&gt;&gt;</span>src<span class="token punctuation">;</span>
+    cv<span class="token double-colon punctuation">::</span><span class="token function">bilateralFilter</span><span class="token punctuation">(</span>src<span class="token punctuation">,</span>bgr_dst<span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">,</span><span class="token number">1000</span><span class="token punctuation">,</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cv<span class="token double-colon punctuation">::</span><span class="token function">cvtColor</span><span class="token punctuation">(</span>bgr_dst<span class="token punctuation">,</span>hsv_dst<span class="token punctuation">,</span>CV_BGR2HSV<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-void seek::display()
-{
-    process(see_red,red_ball);       //可能得会用bgr处理红球了，HSV下效果不太好
-    process(see_yellow,yellow_ball);
-    process(see_blue,blue_ball);
-    cv::imshow("SEE_RED_BALL",see_red);
-    cv::imshow("SEE_YELLOW_BALL",see_yellow);
-    cv::imshow("SEE_BLUE_BALL",see_blue);
+<span class="token keyword">void</span> seek<span class="token double-colon punctuation">::</span><span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">process</span><span class="token punctuation">(</span>see_red<span class="token punctuation">,</span>red_ball<span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">//可能得会用bgr处理红球了，HSV下效果不太好</span>
+    <span class="token function">process</span><span class="token punctuation">(</span>see_yellow<span class="token punctuation">,</span>yellow_ball<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">process</span><span class="token punctuation">(</span>see_blue<span class="token punctuation">,</span>blue_ball<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cv<span class="token double-colon punctuation">::</span><span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"SEE_RED_BALL"</span><span class="token punctuation">,</span>see_red<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cv<span class="token double-colon punctuation">::</span><span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"SEE_YELLOW_BALL"</span><span class="token punctuation">,</span>see_yellow<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cv<span class="token double-colon punctuation">::</span><span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"SEE_BLUE_BALL"</span><span class="token punctuation">,</span>see_blue<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    cv::imshow("FINALLY",src);
+    cv<span class="token double-colon punctuation">::</span><span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"FINALLY"</span><span class="token punctuation">,</span>src<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    cv::waitKey(30);
-}
+    cv<span class="token double-colon punctuation">::</span><span class="token function">waitKey</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-void seek::process(cv::Mat&amp; input, int type_of_ball)
-{
-    updateparam(type_of_ball);
+<span class="token keyword">void</span> seek<span class="token double-colon punctuation">::</span><span class="token function">process</span><span class="token punctuation">(</span>cv<span class="token double-colon punctuation">::</span>Mat<span class="token operator">&amp;</span> input<span class="token punctuation">,</span> <span class="token keyword">int</span> type_of_ball<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">updateparam</span><span class="token punctuation">(</span>type_of_ball<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    cv::inRange(hsv_dst,cv::Scalar(hsv_min[0],hsv_min[1],hsv_min[2]),
-        cv::Scalar(hsv_max[0],hsv_max[1],hsv_max[2]),input);
+    cv<span class="token double-colon punctuation">::</span><span class="token function">inRange</span><span class="token punctuation">(</span>hsv_dst<span class="token punctuation">,</span>cv<span class="token double-colon punctuation">::</span><span class="token function">Scalar</span><span class="token punctuation">(</span>hsv_min<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>hsv_min<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>hsv_min<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        cv<span class="token double-colon punctuation">::</span><span class="token function">Scalar</span><span class="token punctuation">(</span>hsv_max<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>hsv_max<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>hsv_max<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>input<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    cv::Mat element =cv::getStructuringElement(cv::MORPH_RECT, cv::Size(15, 15));   
-    cv::dilate(input, input, element);
+    cv<span class="token double-colon punctuation">::</span>Mat element <span class="token operator">=</span>cv<span class="token double-colon punctuation">::</span><span class="token function">getStructuringElement</span><span class="token punctuation">(</span>cv<span class="token double-colon punctuation">::</span>MORPH_RECT<span class="token punctuation">,</span> cv<span class="token double-colon punctuation">::</span><span class="token function">Size</span><span class="token punctuation">(</span><span class="token number">15</span><span class="token punctuation">,</span> <span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   
+    cv<span class="token double-colon punctuation">::</span><span class="token function">dilate</span><span class="token punctuation">(</span>input<span class="token punctuation">,</span> input<span class="token punctuation">,</span> element<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    std::vector&lt;std::vector&lt;cv::Point&gt; &gt; contours;
-    std::vector&lt;cv::Vec4i&gt; hierarchy;
-    std::vector&lt;cv::Rect&gt; rects;
+    std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>cv<span class="token double-colon punctuation">::</span>Point<span class="token operator">&gt;</span> <span class="token operator">&gt;</span> contours<span class="token punctuation">;</span>
+    std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>cv<span class="token double-colon punctuation">::</span>Vec4i<span class="token operator">&gt;</span> hierarchy<span class="token punctuation">;</span>
+    std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>cv<span class="token double-colon punctuation">::</span>Rect<span class="token operator">&gt;</span> rects<span class="token punctuation">;</span>
 
-    cv::findContours(input, contours, hierarchy, cv::RETR_CCOMP, cv::CHAIN_APPROX_SIMPLE);
+    cv<span class="token double-colon punctuation">::</span><span class="token function">findContours</span><span class="token punctuation">(</span>input<span class="token punctuation">,</span> contours<span class="token punctuation">,</span> hierarchy<span class="token punctuation">,</span> cv<span class="token double-colon punctuation">::</span>RETR_CCOMP<span class="token punctuation">,</span> cv<span class="token double-colon punctuation">::</span>CHAIN_APPROX_SIMPLE<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    for (int i = 0; i &lt; contours.size(); i++)
-    {
-        rects.push_back(cv::boundingRect(contours[i]));
-        if ((rects.back().height &lt; 100 || rects.back().width &lt; 100) ||
-            fabsf(rects.back().height - rects.back().width) &gt; 20)
-            rects.erase(rects.end() - 1);
-    }
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> contours<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        rects<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>cv<span class="token double-colon punctuation">::</span><span class="token function">boundingRect</span><span class="token punctuation">(</span>contours<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>rects<span class="token punctuation">.</span><span class="token function">back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>height <span class="token operator">&lt;</span> <span class="token number">100</span> <span class="token operator">||</span> rects<span class="token punctuation">.</span><span class="token function">back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>width <span class="token operator">&lt;</span> <span class="token number">100</span><span class="token punctuation">)</span> <span class="token operator">||</span>
+            <span class="token function">fabsf</span><span class="token punctuation">(</span>rects<span class="token punctuation">.</span><span class="token function">back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>height <span class="token operator">-</span> rects<span class="token punctuation">.</span><span class="token function">back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>width<span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token number">20</span><span class="token punctuation">)</span>
+            rects<span class="token punctuation">.</span><span class="token function">erase</span><span class="token punctuation">(</span>rects<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    for (int i = 0; i &lt; rects.size(); i++)
-    {
-        double R = (rects[i].height + rects[i].width) / 4;
-        double x = rects[i].x + R;
-        double y = rects[i].y + R;
-        cv::Point center(x, y);
-        cv::circle(src, center, R + 5, cv::Scalar(0, 0, 255), 5);
-    }
-}
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> rects<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">double</span> R <span class="token operator">=</span> <span class="token punctuation">(</span>rects<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>height <span class="token operator">+</span> rects<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>width<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">4</span><span class="token punctuation">;</span>
+        <span class="token keyword">double</span> x <span class="token operator">=</span> rects<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>x <span class="token operator">+</span> R<span class="token punctuation">;</span>
+        <span class="token keyword">double</span> y <span class="token operator">=</span> rects<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>y <span class="token operator">+</span> R<span class="token punctuation">;</span>
+        cv<span class="token double-colon punctuation">::</span>Point <span class="token function">center</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        cv<span class="token double-colon punctuation">::</span><span class="token function">circle</span><span class="token punctuation">(</span>src<span class="token punctuation">,</span> center<span class="token punctuation">,</span> R <span class="token operator">+</span> <span class="token number">5</span><span class="token punctuation">,</span> cv<span class="token double-colon punctuation">::</span><span class="token function">Scalar</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 
-void seek::updateparam(int type_of_ball)
-{
-    switch (type_of_ball)
-    {
-    case red_ball:
-        hsv_min[0]= 0 ;hsv_min[1]= 105 ;hsv_min[2]= 108 ;
-        hsv_max[0]= 11 ;hsv_max[1]= 255 ;hsv_max[1]= 255 ;
-        break;
-    case yellow_ball:
-        hsv_min[0]= 18 ;hsv_min[1]= 56 ;hsv_min[2]= 177 ;
-        hsv_max[0]= 71 ;hsv_max[1]= 187 ;hsv_max[1]= 255 ;
-        break;
-    case blue_ball:
-        hsv_min[0]= 85 ;hsv_min[1]= 129 ;hsv_min[2]= 128 ;
-        hsv_max[0]= 124 ;hsv_max[1]= 255 ;hsv_max[1]= 255 ;
-        break;
-    default:
-        break;
-    }
-}
+<span class="token keyword">void</span> seek<span class="token double-colon punctuation">::</span><span class="token function">updateparam</span><span class="token punctuation">(</span><span class="token keyword">int</span> type_of_ball<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">switch</span> <span class="token punctuation">(</span>type_of_ball<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> red_ball<span class="token operator">:</span>
+        hsv_min<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span> <span class="token number">0</span> <span class="token punctuation">;</span>hsv_min<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span> <span class="token number">105</span> <span class="token punctuation">;</span>hsv_min<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">=</span> <span class="token number">108</span> <span class="token punctuation">;</span>
+        hsv_max<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span> <span class="token number">11</span> <span class="token punctuation">;</span>hsv_max<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span> <span class="token number">255</span> <span class="token punctuation">;</span>hsv_max<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span> <span class="token number">255</span> <span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> yellow_ball<span class="token operator">:</span>
+        hsv_min<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span> <span class="token number">18</span> <span class="token punctuation">;</span>hsv_min<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span> <span class="token number">56</span> <span class="token punctuation">;</span>hsv_min<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">=</span> <span class="token number">177</span> <span class="token punctuation">;</span>
+        hsv_max<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span> <span class="token number">71</span> <span class="token punctuation">;</span>hsv_max<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span> <span class="token number">187</span> <span class="token punctuation">;</span>hsv_max<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span> <span class="token number">255</span> <span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> blue_ball<span class="token operator">:</span>
+        hsv_min<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span> <span class="token number">85</span> <span class="token punctuation">;</span>hsv_min<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span> <span class="token number">129</span> <span class="token punctuation">;</span>hsv_min<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">=</span> <span class="token number">128</span> <span class="token punctuation">;</span>
+        hsv_max<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span> <span class="token number">124</span> <span class="token punctuation">;</span>hsv_max<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span> <span class="token number">255</span> <span class="token punctuation">;</span>hsv_max<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span> <span class="token number">255</span> <span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">default</span><span class="token operator">:</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 
-void seek::creatbar()
-{
-    cv::namedWindow("SetParam");
-	cv::createTrackbar("minH", "SetParam", &amp;hsv_min[0], 180, on_change);
-	cv::createTrackbar("minS", "SetParam", &amp;hsv_min[1], 255, on_change);
-	cv::createTrackbar("minV", "SetParam", &amp;hsv_min[2], 255, on_change);
-	cv::createTrackbar("maxH", "SetParam", &amp;hsv_max[0], 180, on_change);
-	cv::createTrackbar("maxS", "SetParam", &amp;hsv_max[1], 255, on_change);
-	cv::createTrackbar("maxV", "SetParam", &amp;hsv_max[2], 255, on_change);
-	on_change(0, 0);
-}
+<span class="token keyword">void</span> seek<span class="token double-colon punctuation">::</span><span class="token function">creatbar</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    cv<span class="token double-colon punctuation">::</span><span class="token function">namedWindow</span><span class="token punctuation">(</span><span class="token string">"SetParam"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	cv<span class="token double-colon punctuation">::</span><span class="token function">createTrackbar</span><span class="token punctuation">(</span><span class="token string">"minH"</span><span class="token punctuation">,</span> <span class="token string">"SetParam"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>hsv_min<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">180</span><span class="token punctuation">,</span> on_change<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	cv<span class="token double-colon punctuation">::</span><span class="token function">createTrackbar</span><span class="token punctuation">(</span><span class="token string">"minS"</span><span class="token punctuation">,</span> <span class="token string">"SetParam"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>hsv_min<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> on_change<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	cv<span class="token double-colon punctuation">::</span><span class="token function">createTrackbar</span><span class="token punctuation">(</span><span class="token string">"minV"</span><span class="token punctuation">,</span> <span class="token string">"SetParam"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>hsv_min<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> on_change<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	cv<span class="token double-colon punctuation">::</span><span class="token function">createTrackbar</span><span class="token punctuation">(</span><span class="token string">"maxH"</span><span class="token punctuation">,</span> <span class="token string">"SetParam"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>hsv_max<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">180</span><span class="token punctuation">,</span> on_change<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	cv<span class="token double-colon punctuation">::</span><span class="token function">createTrackbar</span><span class="token punctuation">(</span><span class="token string">"maxS"</span><span class="token punctuation">,</span> <span class="token string">"SetParam"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>hsv_max<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> on_change<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	cv<span class="token double-colon punctuation">::</span><span class="token function">createTrackbar</span><span class="token punctuation">(</span><span class="token string">"maxV"</span><span class="token punctuation">,</span> <span class="token string">"SetParam"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>hsv_max<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> on_change<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">on_change</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-void seek::on_change(int, void*)
-{
+<span class="token keyword">void</span> seek<span class="token double-colon punctuation">::</span><span class="token function">on_change</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
 
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>在seekernode.cpp中写入：</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#include "../include/ballseeker/seek.hpp"
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"../include/ballseeker/seek.hpp"</span></span>
 
 
-int main(int argc,char** argv)
-{
-    ros::init(argc,argv,"seekernode");
-    ros::NodeHandle n;
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    ros<span class="token double-colon punctuation">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span>argv<span class="token punctuation">,</span><span class="token string">"seekernode"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ros<span class="token double-colon punctuation">::</span>NodeHandle n<span class="token punctuation">;</span>
 
-    seek icu(1);
-    icu.creatbar();
+    seek <span class="token function">icu</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    icu<span class="token punctuation">.</span><span class="token function">creatbar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    while(ros::ok())
-    {
-        icu.getstart();
-        icu.display();
-        ros::spinOnce();
-    }
+    <span class="token keyword">while</span><span class="token punctuation">(</span>ros<span class="token double-colon punctuation">::</span><span class="token function">ok</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        icu<span class="token punctuation">.</span><span class="token function">getstart</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        icu<span class="token punctuation">.</span><span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ros<span class="token double-colon punctuation">::</span><span class="token function">spinOnce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    return 0;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>

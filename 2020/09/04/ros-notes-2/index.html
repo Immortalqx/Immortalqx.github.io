@@ -502,34 +502,34 @@ catkin_make
 
 catkin_create_pkg try_nodelet roscpp rospy nodelet std_msgs sensor_msgs cv_bridge image_transport ddynamic_reconfigure<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="2-2-创建并且编写cpp文件与hpp文件"><a href="#2-2-创建并且编写cpp文件与hpp文件" class="headerlink" title="2.2 创建并且编写cpp文件与hpp文件"></a>2.2 创建并且编写cpp文件与hpp文件</h3><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">//try_use.hpp
-#pragma once
-#include &lt;nodelet/nodelet.h&gt;
-#include &lt;ros/ros.h&gt;
+<h3 id="2-2-创建并且编写cpp文件与hpp文件"><a href="#2-2-创建并且编写cpp文件与hpp文件" class="headerlink" title="2.2 创建并且编写cpp文件与hpp文件"></a>2.2 创建并且编写cpp文件与hpp文件</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">//try_use.hpp</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">pragma</span> <span class="token expression">once</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;nodelet/nodelet.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h&gt;</span></span>
 
-namespace try_nodelet
-{
-    class try_use : public nodelet::Nodelet
-    {
-    public:
-        virtual void onInit();
-    };
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">namespace</span> try_nodelet
+<span class="token punctuation">{</span>
+    <span class="token keyword">class</span> <span class="token class-name">try_use</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> nodelet<span class="token double-colon punctuation">::</span><span class="token class-name">Nodelet</span></span>
+    <span class="token punctuation">{</span>
+    <span class="token keyword">public</span><span class="token operator">:</span>
+        <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">onInit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">//try_use.cpp
-#include &lt;pluginlib/class_list_macros.h&gt;
-#include &lt;../include/try_nodelet/try_use.hpp&gt;
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">//try_use.cpp</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pluginlib/class_list_macros.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;../include/try_nodelet/try_use.hpp&gt;</span></span>
 
-PLUGINLIB_EXPORT_CLASS(try_nodelet::try_use,nodelet::Nodelet)
+<span class="token function">PLUGINLIB_EXPORT_CLASS</span><span class="token punctuation">(</span>try_nodelet<span class="token double-colon punctuation">::</span>try_use<span class="token punctuation">,</span>nodelet<span class="token double-colon punctuation">::</span>Nodelet<span class="token punctuation">)</span>
 
-namespace try_nodelet
-{
-    void try_use::onInit()
-    {
-        NODELET_DEBUG("Initializing nodelet...");
-        ROS_INFO("Nodelet is Ok for test!!");
-    }
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">namespace</span> try_nodelet
+<span class="token punctuation">{</span>
+    <span class="token keyword">void</span> try_use<span class="token double-colon punctuation">::</span><span class="token function">onInit</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">NODELET_DEBUG</span><span class="token punctuation">(</span><span class="token string">"Initializing nodelet..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"Nodelet is Ok for test!!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="2-3-编写nodelet-plugins-xml"><a href="#2-3-编写nodelet-plugins-xml" class="headerlink" title="2.3 编写nodelet_plugins.xml"></a>2.3 编写nodelet_plugins.xml</h3><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>library</span> <span class="token attr-name">path</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>lib/libtry_nodelet<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
     
