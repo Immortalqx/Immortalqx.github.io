@@ -465,7 +465,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3k
+                    3.1k
                 </div>
                 
 
@@ -568,49 +568,45 @@ Single <span class="token operator">*</span>Single<span class="token double-colo
     single<span class="token operator">-&gt;</span><span class="token function">Print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
-<span class="token keyword">void</span> <span class="token function">test_thread</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
     std<span class="token double-colon punctuation">::</span>thread T<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> <span class="token operator">&amp;</span>i<span class="token operator">:</span> T<span class="token punctuation">)</span>
         i <span class="token operator">=</span> std<span class="token double-colon punctuation">::</span><span class="token function">thread</span><span class="token punctuation">(</span>test<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> <span class="token operator">&amp;</span>i<span class="token operator">:</span> T<span class="token punctuation">)</span>
-        i<span class="token punctuation">.</span><span class="token function">detach</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//下面两个循环二选一即可！</span>
+    <span class="token comment">//for (auto &amp;i: T)</span>
+    <span class="token comment">//    i.detach();</span>
+    <span class="token comment">//getchar();</span>
 
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> <span class="token operator">&amp;</span>i<span class="token operator">:</span> T<span class="token punctuation">)</span>
         <span class="token keyword">if</span> <span class="token punctuation">(</span>i<span class="token punctuation">.</span><span class="token function">joinable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
             i<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token function">test_thread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>一个运行结果是：</p>
-<pre class="line-numbers language-none"><code class="language-none">构造函数构造函数构造函数构造函数构造函数
-
-我的内存地址是:构造函数0x7fc864000b20
-
-我的内存地址是:0x7fc83c000b20
+<pre class="line-numbers language-none"><code class="language-none">构造函数构造函数
+我的内存地址是:构造函数0x7f6c14000b20
 构造函数
-我的内存地址是:0x7fc834000b20
 构造函数
-我的内存地址是:0x7fc86c000b20
 
-我的内存地址是:0x7fc85c000b20
+我的内存地址是:0x7f6c04000b20
 构造函数
-我的内存地址是:0x7fc82c000b20
+我的内存地址是:0x7f6bfc000b20
+构造函数构造函数
 
-我的内存地址是:0x7fc84c000b20我的内存地址是:
+我的内存地址是:我的内存地址是:0x7f6c1c000b200x7f6c0c000b20
 
-我的内存地址是:0x7fc840000b20构造函数
-我的内存地址是:0x7fc854000b20
-0x7fc844000b20<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+构造函数
+我的内存地址是:0x7f6bf8000b20
+构造函数我的内存地址是:我的内存地址是:0x7f6bec000b20
+我的内存地址是:
+我的内存地址是:0x7f6bf4000b20
+0x7f6be4000b20
+0x7f6be8000b20<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>可以看到这里的实例并不是唯一的！这种方式会导致两个问题：</p>
 <ol>
@@ -694,43 +690,37 @@ std<span class="token double-colon punctuation">::</span>mutex Single<span class
     single<span class="token operator">-&gt;</span><span class="token function">Print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
-<span class="token keyword">void</span> <span class="token function">test_thread</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
     std<span class="token double-colon punctuation">::</span>thread T<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> <span class="token operator">&amp;</span>i<span class="token operator">:</span> T<span class="token punctuation">)</span>
         i <span class="token operator">=</span> std<span class="token double-colon punctuation">::</span><span class="token function">thread</span><span class="token punctuation">(</span>test<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> <span class="token operator">&amp;</span>i<span class="token operator">:</span> T<span class="token punctuation">)</span>
-        i<span class="token punctuation">.</span><span class="token function">detach</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//下面两个循环二选一即可！</span>
+    <span class="token comment">//for (auto &amp;i: T)</span>
+    <span class="token comment">//    i.detach();</span>
+    <span class="token comment">//getchar();</span>
 
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> <span class="token operator">&amp;</span>i<span class="token operator">:</span> T<span class="token punctuation">)</span>
         <span class="token keyword">if</span> <span class="token punctuation">(</span>i<span class="token punctuation">.</span><span class="token function">joinable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
             i<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token function">test_thread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>一个运行结果是：</p>
 <pre class="line-numbers language-none"><code class="language-none">构造函数
-我的内存地址是:0x7f715c000b20
-我的内存地址是:我的内存地址是:0x7f715c000b20
-我的内存地址是:0x7f715c000b20
-我的内存地址是:0x7f715c000b20
-我的内存地址是:0x7f715c000b20
-我的内存地址是:0x7f715c000b20
-0x7f715c000b20
-我的内存地址是:0x7f715c000b20
-我的内存地址是:0x7f715c000b20
-我的内存地址是:0x7f715c000b20
-
-析构函数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+我的内存地址是:0x7f08b4000b20
+我的内存地址是:0x7f08b4000b20
+我的内存地址是:0x7f08b4000b20
+我的内存地址是:0x7f08b4000b20
+我的内存地址是:0x7f08b4000b20
+我的内存地址是:0x7f08b4000b20
+我的内存地址是:0x7f08b4000b20
+我的内存地址是:0x7f08b4000b20
+我的内存地址是:0x7f08b4000b20
+我的内存地址是:0x7f08b4000b20
+析构函数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>shared_ptr和mutex都是C++11的标准，以上这种方法的优点是：</p>
 <ul>
@@ -813,43 +803,37 @@ std<span class="token double-colon punctuation">::</span>mutex Single<span class
     single<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
-<span class="token keyword">void</span> <span class="token function">test_thread</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
     std<span class="token double-colon punctuation">::</span>thread T<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> <span class="token operator">&amp;</span>i<span class="token operator">:</span> T<span class="token punctuation">)</span>
         i <span class="token operator">=</span> std<span class="token double-colon punctuation">::</span><span class="token function">thread</span><span class="token punctuation">(</span>test<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> <span class="token operator">&amp;</span>i<span class="token operator">:</span> T<span class="token punctuation">)</span>
-        i<span class="token punctuation">.</span><span class="token function">detach</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//下面两个循环二选一即可！</span>
+    <span class="token comment">//for (auto &amp;i: T)</span>
+    <span class="token comment">//    i.detach();</span>
+    <span class="token comment">//getchar();</span>
 
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> <span class="token operator">&amp;</span>i<span class="token operator">:</span> T<span class="token punctuation">)</span>
         <span class="token keyword">if</span> <span class="token punctuation">(</span>i<span class="token punctuation">.</span><span class="token function">joinable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
             i<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token function">test_thread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>一个运行结果是：</p>
 <pre class="line-numbers language-none"><code class="language-none">构造函数
-我的实例内存地址是:0x5557bf98b1d0
-我的实例内存地址是:0x5557bf98b1d0
-我的实例内存地址是:我的实例内存地址是:0x5557bf98b1d00x5557bf98b1d0
+我的实例内存地址是:我的实例内存地址是:0x55c6ee5541d00x55c6ee5541d0
 
-我的实例内存地址是:0x5557bf98b1d0
-我的实例内存地址是:0x5557bf98b1d0我的实例内存地址是:我的实例内存地址是:0x5557bf98b1d0
-
-我的实例内存地址是:0x5557bf98b1d0
-0x5557bf98b1d0
-我的实例内存地址是:0x5557bf98b1d0
-
-析构函数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+我的实例内存地址是:0x55c6ee5541d0
+我的实例内存地址是:我的实例内存地址是:0x55c6ee5541d094312890450384
+我的实例内存地址是:
+我的实例内存地址是:0x55c6ee5541d0
+我的实例内存地址是:0x55c6ee5541d0
+0x55c6ee5541d0
+我的实例内存地址是:0x55c6ee5541d0
+我的实例内存地址是:0x55c6ee5541d0
+析构函数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>这是最推荐的一种单例实现方式：</strong></p>
 <ol>
@@ -919,43 +903,37 @@ Single Single<span class="token double-colon punctuation">::</span>instance<span
     single<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
-<span class="token keyword">void</span> <span class="token function">test_thread</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
     std<span class="token double-colon punctuation">::</span>thread T<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> <span class="token operator">&amp;</span>i<span class="token operator">:</span> T<span class="token punctuation">)</span>
         i <span class="token operator">=</span> std<span class="token double-colon punctuation">::</span><span class="token function">thread</span><span class="token punctuation">(</span>test<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> <span class="token operator">&amp;</span>i<span class="token operator">:</span> T<span class="token punctuation">)</span>
-        i<span class="token punctuation">.</span><span class="token function">detach</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//下面两个循环二选一即可！</span>
+    <span class="token comment">//for (auto &amp;i: T)</span>
+    <span class="token comment">//    i.detach();</span>
+    <span class="token comment">//getchar();</span>
 
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> <span class="token operator">&amp;</span>i<span class="token operator">:</span> T<span class="token punctuation">)</span>
         <span class="token keyword">if</span> <span class="token punctuation">(</span>i<span class="token punctuation">.</span><span class="token function">joinable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
             i<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token function">test_thread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>一个运行结果是：</p>
 <pre class="line-numbers language-none"><code class="language-none">构造函数
-我的实例内存地址是:我的实例内存地址是:0x558b9513d1380x558b9513d138
-我的实例内存地址是:我的实例内存地址是:我的实例内存地址是:0x558b9513d138
-我的实例内存地址是:0x558b9513d138
-我的实例内存地址是:0x558b9513d138
-我的实例内存地址是:0x558b9513d138
-我的实例内存地址是:0x558b9513d138
-我的实例内存地址是:0x558b9513d138
+我的实例内存地址是:我的实例内存地址是:0x55ee2cf391380x55ee2cf39138
 
-0x558b9513d138
-0x558b9513d138
+我的实例内存地址是:0x55ee2cf39138
+我的实例内存地址是:0x55ee2cf39138我的实例内存地址是:
+我的实例内存地址是:我的实例内存地址是:0x55ee2cf39138我的实例内存地址是:我的实例内存地址是:
+0x55ee2cf39138
+0x55ee2cf39138我的实例内存地址是:0x55ee2cf39138
+0x55ee2cf39138
+0x55ee2cf39138
 
-析构函数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+析构函数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>由于在main函数之前初始化，所以没有线程安全的问题。但是潜在问题在于no-local static对象（函数外的static对象）在不同编译单元中的初始化顺序是未定义的。</p>
 <p>也就是说，<code>static Singleton instance</code>和<code>static Singleton&amp; getInstance()</code>二者的初始化顺序不确定，如果在初始化完成之前调用<code>getInstance() </code>方法会返回一个未定义的实例。</p>

@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://immortalqx.github.io/2022/02/04/cpp-notes-5/</loc>
+    
+    <lastmod>2022-02-07</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://immortalqx.github.io/2021/07/23/ros-notes-6/</loc>
     
     <lastmod>2022-02-05</lastmod>
@@ -52,13 +59,6 @@
   
   <url>
     <loc>http://immortalqx.github.io/2020/08/21/cpp-notes-2/</loc>
-    
-    <lastmod>2022-02-05</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/2022/02/04/cpp-notes-5/</loc>
     
     <lastmod>2022-02-05</lastmod>
     
@@ -275,13 +275,6 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/baidu_verify_code-fJe6tVB0Yt.html</loc>
-    
-    <lastmod>2022-01-11</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://immortalqx.github.io/google561fc42db74e2484.html</loc>
     
     <lastmod>2022-01-11</lastmod>
@@ -289,7 +282,21 @@
   </url>
   
   <url>
+    <loc>http://immortalqx.github.io/baidu_verify_code-fJe6tVB0Yt.html</loc>
+    
+    <lastmod>2022-01-11</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://immortalqx.github.io/about/index.html</loc>
+    
+    <lastmod>2022-01-11</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/contact/index.html</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -310,13 +317,6 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/contact/index.html</loc>
-    
-    <lastmod>2022-01-11</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://immortalqx.github.io/2021/02/12/2021-best-wishes/</loc>
     
     <lastmod>2022-01-11</lastmod>
@@ -331,14 +331,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/03/25/hk-universities-requirement/</loc>
+    <loc>http://immortalqx.github.io/2021/03/27/hkust-application/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/03/27/hkust-application/</loc>
+    <loc>http://immortalqx.github.io/2021/03/25/hk-universities-requirement/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -352,13 +352,6 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/07/06/openvins-note-1/</loc>
-    
-    <lastmod>2022-01-11</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://immortalqx.github.io/2021/07/17/ros-notes-3/</loc>
     
     <lastmod>2022-01-11</lastmod>
@@ -366,7 +359,7 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/07/18/ros-notes-4/</loc>
+    <loc>http://immortalqx.github.io/2021/07/06/openvins-note-1/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -380,7 +373,7 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/08/22/aerial-note-0/</loc>
+    <loc>http://immortalqx.github.io/2021/07/18/ros-notes-4/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -388,6 +381,13 @@
   
   <url>
     <loc>http://immortalqx.github.io/2021/07/27/uav-notes-1/</loc>
+    
+    <lastmod>2022-01-11</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/2021/08/22/aerial-note-0/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -452,7 +452,7 @@
 
   <url>
     <loc>http://immortalqx.github.io/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -460,217 +460,217 @@
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E8%8A%82%E6%97%A5%E7%A5%9D%E7%A6%8F/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E5%87%BA%E5%9B%BD%E7%95%99%E5%AD%A6/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/IELTS/</loc>
-    <lastmod>2022-02-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/</loc>
-    <lastmod>2022-02-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/tags/OpenVINS/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/ROS%E5%9F%BA%E7%A1%80/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/</loc>
+    <lastmod>2022-02-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/tags/OpenVINS/</loc>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/MAVROS/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/PX4/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/Gazebo/</loc>
-    <lastmod>2022-02-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/tags/%E8%88%AA%E6%8B%8D/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/PIXHAWK/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/APM/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/tags/%E8%88%AA%E6%8B%8D/</loc>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/C-%E5%9F%BA%E7%A1%80/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/Camera/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/Qt/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E6%BF%80%E5%85%89SLAM/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/K-Means/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/CNN/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E5%AD%A6%E6%9C%AF%E4%BC%9A%E8%AE%AE/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E5%A4%9A%E4%BC%A0%E6%84%9F%E5%99%A8%E8%9E%8D%E5%90%88/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/OpenCV/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E5%8D%8F%E5%90%8C%E5%AF%BC%E8%88%AA/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E7%82%B9%E4%BA%91/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E5%A4%9A%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/RNN/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -679,56 +679,56 @@
   
   <url>
     <loc>http://immortalqx.github.io/categories/%E5%85%B6%E4%BB%96/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/categories/%E7%BB%8F%E9%AA%8C-%E6%96%B9%E6%B3%95/</loc>
-    <lastmod>2022-02-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/categories/slam/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/categories/ROS/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/categories/slam/</loc>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/categories/C/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/categories/%E5%AF%BC%E8%88%AA/</loc>
-    <lastmod>2022-02-05</lastmod>
+    <lastmod>2022-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
