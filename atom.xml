@@ -6,7 +6,7 @@
   <link href="http://immortalqx.github.io/atom.xml" rel="self"/>
   
   <link href="http://immortalqx.github.io/"/>
-  <updated>2022-02-07T11:47:24.351Z</updated>
+  <updated>2022-02-08T13:28:57.208Z</updated>
   <id>http://immortalqx.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>C++ 多线程编程（四）：生产者消费者模型</title>
+    <link href="http://immortalqx.github.io/2022/02/08/cpp-notes-6/"/>
+    <id>http://immortalqx.github.io/2022/02/08/cpp-notes-6/</id>
+    <published>2022-02-08T12:45:12.000Z</published>
+    <updated>2022-02-08T13:28:57.208Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;C-多线程编程（四）：生产者消费者模型&quot;&gt;&lt;a href=&quot;#C-多线程编程（四）：生产者消费者模型&quot; class=&quot;headerlink&quot; title=&quot;C++ 多线程编程（四）：生产者消费者模型&quot;&gt;&lt;/a&gt;C++</summary>
+        
+      
+    
+    
+    
+    <category term="C++" scheme="http://immortalqx.github.io/categories/C/"/>
+    
+    
+    <category term="多线程" scheme="http://immortalqx.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+    <category term="单例模式" scheme="http://immortalqx.github.io/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>C++ 多线程编程（三）：单例模式</title>
@@ -510,31 +537,6 @@
     
     
     <category term="航拍" scheme="http://immortalqx.github.io/tags/%E8%88%AA%E6%8B%8D/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>论文阅读-Map2DFusion：Real-time Incremental UAV Image Mosaicing based onMonocular SLAM</title>
-    <link href="http://immortalqx.github.io/2021/07/29/paper-reading-5/"/>
-    <id>http://immortalqx.github.io/2021/07/29/paper-reading-5/</id>
-    <published>2021-07-29T06:34:59.000Z</published>
-    <updated>2022-01-11T09:10:51.453Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;论文阅读-Map2DFusion：Real-time-Incremental-UAV-Image-Mosaicing-based-onMonocular-SLAM&quot;&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
-    
-    
-    <category term="论文阅读" scheme="http://immortalqx.github.io/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"/>
     
   </entry>
   

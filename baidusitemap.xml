@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://Immortalqx.github.io/2022/02/08/cpp-notes-6/</loc>
+    <lastmod>2022-02-08</lastmod>
+  </url>
+  <url>
     <loc>http://Immortalqx.github.io/2022/02/04/cpp-notes-5/</loc>
     <lastmod>2022-02-07</lastmod>
   </url>
@@ -161,10 +165,6 @@
     <lastmod>2022-01-11</lastmod>
   </url>
   <url>
-    <loc>http://Immortalqx.github.io/2021/03/27/hkust-application/</loc>
-    <lastmod>2022-01-11</lastmod>
-  </url>
-  <url>
     <loc>http://Immortalqx.github.io/2021/03/25/hk-universities-requirement/</loc>
     <lastmod>2022-01-11</lastmod>
   </url>
@@ -173,7 +173,7 @@
     <lastmod>2022-01-11</lastmod>
   </url>
   <url>
-    <loc>http://Immortalqx.github.io/2021/07/17/ros-notes-3/</loc>
+    <loc>http://Immortalqx.github.io/2021/03/27/hkust-application/</loc>
     <lastmod>2022-01-11</lastmod>
   </url>
   <url>
@@ -181,11 +181,15 @@
     <lastmod>2022-01-11</lastmod>
   </url>
   <url>
-    <loc>http://Immortalqx.github.io/2021/07/18/ros-notes-5/</loc>
+    <loc>http://Immortalqx.github.io/2021/07/17/ros-notes-3/</loc>
     <lastmod>2022-01-11</lastmod>
   </url>
   <url>
     <loc>http://Immortalqx.github.io/2021/07/18/ros-notes-4/</loc>
+    <lastmod>2022-01-11</lastmod>
+  </url>
+  <url>
+    <loc>http://Immortalqx.github.io/2021/07/18/ros-notes-5/</loc>
     <lastmod>2022-01-11</lastmod>
   </url>
   <url>
