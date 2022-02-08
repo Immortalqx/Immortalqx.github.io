@@ -6,7 +6,7 @@
   <link href="http://immortalqx.github.io/atom.xml" rel="self"/>
   
   <link href="http://immortalqx.github.io/"/>
-  <updated>2022-02-08T13:28:57.208Z</updated>
+  <updated>2022-02-08T13:36:13.298Z</updated>
   <id>http://immortalqx.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://immortalqx.github.io/2022/02/08/cpp-notes-6/"/>
     <id>http://immortalqx.github.io/2022/02/08/cpp-notes-6/</id>
     <published>2022-02-08T12:45:12.000Z</published>
-    <updated>2022-02-08T13:28:57.208Z</updated>
+    <updated>2022-02-08T13:36:13.298Z</updated>
     
     
       
@@ -38,8 +38,6 @@
     
     
     <category term="多线程" scheme="http://immortalqx.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-    <category term="单例模式" scheme="http://immortalqx.github.io/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
     
   </entry>
   
