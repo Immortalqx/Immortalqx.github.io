@@ -4,8 +4,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="cpp-notes-8, 所念皆星河">
-    <meta name="description" content="">
+    <meta name="keywords" content="C++ 编程规范（二）, 所念皆星河">
+    <meta name="description" content="C++ 编程规范（二）
+这部分就直接从那边往这边搬运了
+
+注释注释虽然写起来很痛苦, 但对保证代码可读性至关重要. 下面的规则描述了如何注释以及在哪儿注释. 当然也要记住: 注释固然很重要, 但最好的代码应当本身就是文档. 有意义的类型名和">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +20,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>cpp-notes-8 | 所念皆星河</title>
+    <title>C++ 编程规范（二） | 所念皆星河</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -303,12 +306,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/44.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">cpp-notes-8</h1>
+                    <h1 class="description center-align post-title">C++ 编程规范（二）</h1>
                 </div>
             </div>
         </div>
@@ -422,12 +425,25 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/C-%E5%9F%BA%E7%A1%80/">
+                                <span class="chip bg-color">C++基础</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/C/" class="post-category">
+                                C++
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -445,14 +461,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    8.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    32 分
                 </div>
                 
 
@@ -475,7 +491,416 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h1 id="C-编程规范（二）"><a href="#C-编程规范（二）" class="headerlink" title="C++ 编程规范（二）"></a>C++ 编程规范（二）</h1><blockquote>
+<p>这部分就直接从那边往这边搬运了</p>
+</blockquote>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>注释虽然写起来很痛苦, 但对保证代码可读性至关重要. 下面的规则描述了如何注释以及在哪儿注释. 当然也要记住: 注释固然很重要, 但最好的代码应当本身就是文档. 有意义的类型名和变量名, 要远胜过要用注释解释的含糊不清的名字.</p>
+<p>你写的注释是给代码读者看的, 也就是下一个需要理解你的代码的人. 所以慷慨些吧, 下一个读者可能就是你!</p>
+<h3 id="注释风格"><a href="#注释风格" class="headerlink" title="注释风格"></a>注释风格</h3><p><strong>总述</strong></p>
+<p>使用 <code>//</code> 或 <code>/* */</code>, 统一就好.</p>
+<p><strong>说明</strong></p>
+<p><code>//</code> 或 <code>/* */</code> 都可以; 但 <code>//</code> <em>更</em> 常用. 要在如何注释及注释风格上确保统一.</p>
+<h3 id="文件注释"><a href="#文件注释" class="headerlink" title="文件注释"></a>文件注释</h3><p><strong>总述</strong></p>
+<p>在每一个文件开头加入版权公告.</p>
+<p>文件注释描述了该文件的内容. 如果一个文件只声明, 或实现, 或测试了一个对象, 并且这个对象已经在它的声明处进行了详细的注释, 那么就没必要再加上文件注释. 除此之外的其他文件都需要文件注释.</p>
+<p><strong>说明</strong></p>
+<h4 id="法律公告和作者信息"><a href="#法律公告和作者信息" class="headerlink" title="法律公告和作者信息"></a>法律公告和作者信息</h4><p>每个文件都应该包含许可证引用. 为项目选择合适的许可证版本.(比如, Apache 2.0, BSD, LGPL, GPL)</p>
+<p>如果你对原始作者的文件做了重大修改, 请考虑删除原作者信息.</p>
+<h4 id="文件内容"><a href="#文件内容" class="headerlink" title="文件内容"></a>文件内容</h4><p>如果一个 <code>.h</code> 文件声明了多个概念, 则文件注释应当对文件的内容做一个大致的说明, 同时说明各概念之间的联系. 一个一到两行的文件注释就足够了, 对于每个概念的详细文档应当放在各个概念中, 而不是文件注释中.</p>
+<p>不要在 <code>.h</code> 和 <code>.cc</code> 之间复制注释, 这样的注释偏离了注释的实际意义.</p>
+<h3 id="类注释"><a href="#类注释" class="headerlink" title="类注释"></a>类注释</h3><p><strong>总述</strong></p>
+<p>每个类的定义都要附带一份注释, 描述类的功能和用法, 除非它的功能相当明显.</p>
+<pre class="line-numbers language-none"><code class="language-none">// Iterates over the contents of a GargantuanTable.
+// Example:
+//    GargantuanTableIterator* iter = table-&gt;NewIterator();
+//    for (iter-&gt;Seek("foo"); !iter-&gt;done(); iter-&gt;Next()) {
+//      process(iter-&gt;key(), iter-&gt;value());
+//    }
+//    delete iter;
+class GargantuanTableIterator {
+  ...
+};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>说明</strong></p>
+<p>类注释应当为读者理解如何使用与何时使用类提供足够的信息, 同时应当提醒读者在正确使用此类时应当考虑的因素. 如果类有任何同步前提, 请用文档说明. 如果该类的实例可被多线程访问, 要特别注意文档说明多线程环境下相关的规则和常量使用.</p>
+<p>如果你想用一小段代码演示这个类的基本用法或通常用法, 放在类注释里也非常合适.</p>
+<p>如果类的声明和定义分开了(例如分别放在了 <code>.h</code> 和 <code>.cc</code> 文件中), 此时, 描述类用法的注释应当和接口定义放在一起, 描述类的操作和实现的注释应当和实现放在一起.</p>
+<h3 id="函数注释"><a href="#函数注释" class="headerlink" title="函数注释"></a>函数注释</h3><p><strong>总述</strong></p>
+<p>函数声明处的注释描述函数功能; 定义处的注释描述函数实现.</p>
+<p><strong>说明</strong></p>
+<h4 id="函数声明"><a href="#函数声明" class="headerlink" title="函数声明"></a>函数声明</h4><p>基本上每个函数声明处前都应当加上注释, 描述函数的功能和用途. 只有在函数的功能简单而明显时才能省略这些注释(例如, 简单的取值和设值函数). 注释使用叙述式 (“Opens the file”) 而非指令式 (“Open the file”); 注释只是为了描述函数, 而不是命令函数做什么. 通常, 注释不会描述函数如何工作. 那是函数定义部分的事情.</p>
+<p>函数声明处注释的内容:</p>
+<ul>
+<li>函数的输入输出.</li>
+<li>对类成员函数而言: 函数调用期间对象是否需要保持引用参数, 是否会释放这些参数.</li>
+<li>函数是否分配了必须由调用者释放的空间.</li>
+<li>参数是否可以为空指针.</li>
+<li>是否存在函数使用上的性能隐患.</li>
+<li>如果函数是可重入的, 其同步前提是什么?</li>
+</ul>
+<p>举例如下:</p>
+<pre class="line-numbers language-none"><code class="language-none">// Returns an iterator for this table.  It is the client's
+// responsibility to delete the iterator when it is done with it,
+// and it must not use the iterator once the GargantuanTable object
+// on which the iterator was created has been deleted.
+//
+// The iterator is initially positioned at the beginning of the table.
+//
+// This method is equivalent to:
+//    Iterator* iter = table-&gt;NewIterator();
+//    iter-&gt;Seek("");
+//    return iter;
+// If you are going to immediately seek to another place in the
+// returned iterator, it will be faster to use NewIterator()
+// and avoid the extra seek.
+Iterator* GetIterator() const;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>但也要避免罗罗嗦嗦, 或者对显而易见的内容进行说明. 下面的注释就没有必要加上 “否则返回 false”, 因为已经暗含其中了:</p>
+<pre class="line-numbers language-none"><code class="language-none">// Returns true if the table cannot hold any more entries.
+bool IsTableFull();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>注释函数重载时, 注释的重点应该是函数中被重载的部分, 而不是简单的重复被重载的函数的注释. 多数情况下, 函数重载不需要额外的文档, 因此也没有必要加上注释.</p>
+<p>注释构造/析构函数时, 切记读代码的人知道构造/析构函数的功能, 所以 “销毁这一对象” 这样的注释是没有意义的. 你应当注明的是注明构造函数对参数做了什么 (例如, 是否取得指针所有权) 以及析构函数清理了什么. 如果都是些无关紧要的内容, 直接省掉注释. 析构函数前没有注释是很正常的.</p>
+<h4 id="函数定义"><a href="#函数定义" class="headerlink" title="函数定义"></a>函数定义</h4><p>如果函数的实现过程中用到了很巧妙的方式, 那么在函数定义处应当加上解释性的注释. 例如, 你所使用的编程技巧, 实现的大致步骤, 或解释如此实现的理由. 举个例子, 你可以说明为什么函数的前半部分要加锁而后半部分不需要.</p>
+<p><em>不要</em> 从 <code>.h</code> 文件或其他地方的函数声明处直接复制注释. 简要重述函数功能是可以的, 但注释重点要放在如何实现上.</p>
+<h3 id="变量注释"><a href="#变量注释" class="headerlink" title="变量注释"></a>变量注释</h3><p><strong>总述</strong></p>
+<p>通常变量名本身足以很好说明变量用途. 某些情况下, 也需要额外的注释说明.</p>
+<p><strong>说明</strong></p>
+<h4 id="类数据成员"><a href="#类数据成员" class="headerlink" title="类数据成员"></a>类数据成员</h4><p>每个类数据成员 (也叫实例变量或成员变量) 都应该用注释说明用途. 如果有非变量的参数(例如特殊值, 数据成员之间的关系, 生命周期等)不能够用类型与变量名明确表达, 则应当加上注释. 然而, 如果变量类型与变量名已经足以描述一个变量, 那么就不再需要加上注释.</p>
+<p>特别地, 如果变量可以接受 <code>NULL</code> 或 <code>-1</code> 等警戒值, 须加以说明. 比如:</p>
+<pre class="line-numbers language-none"><code class="language-none">private:
+ // Used to bounds-check table accesses. -1 means
+ // that we don't yet know how many entries the table has.
+ int num_total_entries_;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h4><p>和数据成员一样, 所有全局变量也要注释说明含义及用途, 以及作为全局变量的原因. 比如:</p>
+<pre class="line-numbers language-none"><code class="language-none">// The total number of tests cases that we run through in this regression test.
+const int kNumTestCases = 6;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="实现注释"><a href="#实现注释" class="headerlink" title="实现注释"></a>实现注释</h3><p><strong>总述</strong></p>
+<p>对于代码中巧妙的, 晦涩的, 有趣的, 重要的地方加以注释.</p>
+<p><strong>说明</strong></p>
+<h4 id="代码前注释"><a href="#代码前注释" class="headerlink" title="代码前注释"></a>代码前注释</h4><p>巧妙或复杂的代码段前要加注释. 比如:</p>
+<pre class="line-numbers language-none"><code class="language-none">// Divide result by two, taking into account that x
+// contains the carry from the add.
+for (int i = 0; i &lt; result-&gt;size(); i++) {
+  x = (x &lt;&lt; 8) + (*result)[i];
+  (*result)[i] = x &gt;&gt; 1;
+  x &amp;= 1;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="行注释"><a href="#行注释" class="headerlink" title="行注释"></a>行注释</h4><p>比较隐晦的地方要在行尾加入注释. 在行尾空两格进行注释. 比如:</p>
+<pre class="line-numbers language-none"><code class="language-none">// If we have enough memory, mmap the data portion too.
+mmap_budget = max&lt;int64&gt;(0, mmap_budget - index_-&gt;length());
+if (mmap_budget &gt;= data_size_ &amp;&amp; !MmapData(mmap_chunk_bytes, mlock))
+  return;  // Error already logged.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>注意, 这里用了两段注释分别描述这段代码的作用, 和提示函数返回时错误已经被记入日志.</p>
+<p>如果你需要连续进行多行注释, 可以使之对齐获得更好的可读性:</p>
+<pre class="line-numbers language-none"><code class="language-none">DoSomething();                  // Comment here so the comments line up.
+DoSomethingElseThatIsLonger();  // Two spaces between the code and the comment.
+{ // One space before comment when opening a new scope is allowed,
+  // thus the comment lines up with the following comments and code.
+  DoSomethingElse();  // Two spaces before line comments normally.
+}
+std::vector&lt;string&gt; list{
+                    // Comments in braced lists describe the next element...
+                    "First item",
+                    // .. and should be aligned appropriately.
+"Second item"};
+DoSomething(); /* For trailing block comments, one space is fine. */<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="函数参数注释"><a href="#函数参数注释" class="headerlink" title="函数参数注释"></a>函数参数注释</h4><p>如果函数参数的意义不明显, 考虑用下面的方式进行弥补:</p>
+<ul>
+<li>如果参数是一个字面常量, 并且这一常量在多处函数调用中被使用, 用以推断它们一致, 你应当用一个常量名让这一约定变得更明显, 并且保证这一约定不会被打破.</li>
+<li>考虑更改函数的签名, 让某个 <code>bool</code> 类型的参数变为 <code>enum</code> 类型, 这样可以让这个参数的值表达其意义.</li>
+<li>如果某个函数有多个配置选项, 你可以考虑定义一个类或结构体以保存所有的选项, 并传入类或结构体的实例. 这样的方法有许多优点, 例如这样的选项可以在调用处用变量名引用, 这样就能清晰地表明其意义. 同时也减少了函数参数的数量, 使得函数调用更易读也易写. 除此之外, 以这样的方式, 如果你使用其他的选项, 就无需对调用点进行更改.</li>
+<li>用具名变量代替大段而复杂的嵌套表达式.</li>
+<li>万不得已时, 才考虑在调用点用注释阐明参数的意义.</li>
+</ul>
+<p>比如下面的示例的对比:</p>
+<pre class="line-numbers language-none"><code class="language-none">// What are these arguments?const DecimalNumber product = CalculateProduct(values, 7, false, nullptr);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>和</p>
+<pre class="line-numbers language-none"><code class="language-none">ProductOptions options;options.set_precision_decimals(7);options.set_use_cache(ProductOptions::kDontUseCache);const DecimalNumber product =    CalculateProduct(values, options, /*completion_callback=*/nullptr);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>哪个更清晰一目了然.</p>
+<h4 id="不允许的行为"><a href="#不允许的行为" class="headerlink" title="不允许的行为"></a>不允许的行为</h4><p>不要描述显而易见的现象, <em>永远不要</em> 用自然语言翻译代码作为注释, 除非即使对深入理解 C++ 的读者来说代码的行为都是不明显的. 要假设读代码的人 C++ 水平比你高, 即便他/她可能不知道你的用意:</p>
+<p>你所提供的注释应当解释代码 <em>为什么</em> 要这么做和代码的目的, 或者最好是让代码自文档化.</p>
+<p>比较这样的注释:</p>
+<pre class="line-numbers language-none"><code class="language-none">// Find the element in the vector.  &lt;-- 差: 这太明显了!auto iter = std::find(v.begin(), v.end(), element);if (iter != v.end()) {  Process(element);}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>和这样的注释:</p>
+<pre class="line-numbers language-none"><code class="language-none">// Process "element" unless it was already processed.auto iter = std::find(v.begin(), v.end(), element);if (iter != v.end()) {  Process(element);}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>自文档化的代码根本就不需要注释. 上面例子中的注释对下面的代码来说就是毫无必要的:</p>
+<pre class="line-numbers language-none"><code class="language-none">if (!IsAlreadyProcessed(element)) {  Process(element);}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="标点-拼写和语法"><a href="#标点-拼写和语法" class="headerlink" title="标点, 拼写和语法"></a>标点, 拼写和语法</h3><p><strong>总述</strong></p>
+<p>注意标点, 拼写和语法; 写的好的注释比差的要易读的多.</p>
+<p><strong>说明</strong></p>
+<p>注释的通常写法是包含正确大小写和结尾句号的完整叙述性语句. 大多数情况下, 完整的句子比句子片段可读性更高. 短一点的注释, 比如代码行尾注释, 可以随意点, 但依然要注意风格的一致性.</p>
+<p>虽然被别人指出该用分号时却用了逗号多少有些尴尬, 但清晰易读的代码还是很重要的. 正确的标点, 拼写和语法对此会有很大帮助.</p>
+<h3 id="TODO-注释"><a href="#TODO-注释" class="headerlink" title="TODO 注释"></a>TODO 注释</h3><p><strong>总述</strong></p>
+<p>对那些临时的, 短期的解决方案, 或已经够好但仍不完美的代码使用 <code>TODO</code> 注释.</p>
+<p><code>TODO</code> 注释要使用全大写的字符串 <code>TODO</code>, 在随后的圆括号里写上你的名字, 邮件地址, bug ID, 或其它身份标识和与这一 <code>TODO</code> 相关的 issue. 主要目的是让添加注释的人 (也是可以请求提供更多细节的人) 可根据规范的 <code>TODO</code> 格式进行查找. 添加 <code>TODO</code> 注释并不意味着你要自己来修正, 因此当你加上带有姓名的 <code>TODO</code> 时, 一般都是写上自己的名字.</p>
+<pre class="line-numbers language-none"><code class="language-none">// TODO(kl@gmail.com): Use a "*" here for concatenation operator.// TODO(Zeke) change this to use relations.// TODO(bug 12345): remove the "Last visitors" feature<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如果加 <code>TODO</code> 是为了在 “将来某一天做某事”, 可以附上一个非常明确的时间 “Fix by November 2005”), 或者一个明确的事项 (“Remove this code when all clients can handle XML responses.”).</p>
+<h3 id="弃用注释"><a href="#弃用注释" class="headerlink" title="弃用注释"></a>弃用注释</h3><p><strong>总述</strong></p>
+<p>通过弃用注释（<code>DEPRECATED</code> comments）以标记某接口点已弃用.</p>
+<p>您可以写上包含全大写的 <code>DEPRECATED</code> 的注释, 以标记某接口为弃用状态. 注释可以放在接口声明前, 或者同一行.</p>
+<p>在 <code>DEPRECATED</code> 一词后, 在括号中留下您的名字, 邮箱地址以及其他身份标识.</p>
+<p>弃用注释应当包涵简短而清晰的指引, 以帮助其他人修复其调用点. 在 C++ 中, 你可以将一个弃用函数改造成一个内联函数, 这一函数将调用新的接口.</p>
+<p>仅仅标记接口为 <code>DEPRECATED</code> 并不会让大家不约而同地弃用, 您还得亲自主动修正调用点（callsites）, 或是找个帮手.</p>
+<p>修正好的代码应该不会再涉及弃用接口点了, 着实改用新接口点. 如果您不知从何下手, 可以找标记弃用注释的当事人一起商量.</p>
+<h2 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h2><p>每个人都可能有自己的代码风格和格式, 但如果一个项目中的所有人都遵循同一风格的话, 这个项目就能更顺利地进行. 每个人未必能同意下述的每一处格式规则, 而且其中的不少规则需要一定时间的适应, 但整个项目服从统一的编程风格是很重要的, 只有这样才能让所有人轻松地阅读和理解代码.</p>
+<p>为了帮助你正确的格式化代码, 我们写了一个 <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/google/styleguide/gh-pages/google-c-style.el">emacs 配置文件</a>.</p>
+<h3 id="行长度"><a href="#行长度" class="headerlink" title="行长度"></a>行长度</h3><p><strong>总述</strong></p>
+<p>每一行代码字符数不超过 80.</p>
+<p>我们也认识到这条规则是有争议的, 但很多已有代码都遵照这一规则, 因此我们感觉一致性更重要.</p>
+<p><strong>优点</strong></p>
+<p>提倡该原则的人认为强迫他们调整编辑器窗口大小是很野蛮的行为. 很多人同时并排开几个代码窗口, 根本没有多余的空间拉伸窗口. 大家都把窗口最大尺寸加以限定, 并且 80 列宽是传统标准. 那么为什么要改变呢?</p>
+<p><strong>缺点</strong></p>
+<p>反对该原则的人则认为更宽的代码行更易阅读. 80 列的限制是上个世纪 60 年代的大型机的古板缺陷; 现代设备具有更宽的显示屏, 可以很轻松地显示更多代码.</p>
+<p><strong>结论</strong></p>
+<p>80 个字符是最大值.</p>
+<p>如果无法在不伤害易读性的条件下进行断行, 那么注释行可以超过 80 个字符, 这样可以方便复制粘贴. 例如, 带有命令示例或 URL 的行可以超过 80 个字符.</p>
+<p>包含长路径的 <code>#include</code> 语句可以超出80列.</p>
+<p><a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/headers/#define-guard">头文件保护</a> 可以无视该原则.</p>
+<h3 id="非-ASCII-字符"><a href="#非-ASCII-字符" class="headerlink" title="非 ASCII 字符"></a>非 ASCII 字符</h3><p><strong>总述</strong></p>
+<p>尽量不使用非 ASCII 字符, 使用时必须使用 UTF-8 编码.</p>
+<p><strong>说明</strong></p>
+<p>即使是英文, 也不应将用户界面的文本硬编码到源代码中, 因此非 ASCII 字符应当很少被用到. 特殊情况下可以适当包含此类字符. 例如, 代码分析外部数据文件时, 可以适当硬编码数据文件中作为分隔符的非 ASCII 字符串; 更常见的是 (不需要本地化的) 单元测试代码可能包含非 ASCII 字符串. 此类情况下, 应使用 UTF-8 编码, 因为很多工具都可以理解和处理 UTF-8 编码.</p>
+<p>十六进制编码也可以, 能增强可读性的情况下尤其鼓励 —— 比如 <code>"\xEF\xBB\xBF"</code>, 或者更简洁地写作 <code>u8"\uFEFF"</code>, 在 Unicode 中是 <em>零宽度 无间断</em> 的间隔符号, 如果不用十六进制直接放在 UTF-8 格式的源文件中, 是看不到的.</p>
+<p>(Yang.Y 注: <code>"\xEF\xBB\xBF"</code> 通常用作 UTF-8 with BOM 编码标记)</p>
+<p>使用 <code>u8</code> 前缀把带 <code>uXXXX</code> 转义序列的字符串字面值编码成 UTF-8. 不要用在本身就带 UTF-8 字符的字符串字面值上, 因为如果编译器不把源代码识别成 UTF-8, 输出就会出错.</p>
+<p>别用 C++11 的 <code>char16_t</code> 和 <code>char32_t</code>, 它们和 UTF-8 文本没有关系, <code>wchar_t</code> 同理, 除非你写的代码要调用 Windows API, 后者广泛使用了 <code>wchar_t</code>.</p>
+<h3 id="空格还是制表位"><a href="#空格还是制表位" class="headerlink" title="空格还是制表位"></a>空格还是制表位</h3><p><strong>总述</strong></p>
+<p>只使用空格, 每次缩进 2 个空格.</p>
+<p><strong>说明</strong></p>
+<p>我们使用空格缩进. 不要在代码中使用制表符. 你应该设置编辑器将制表符转为空格.</p>
+<h3 id="函数声明与定义"><a href="#函数声明与定义" class="headerlink" title="函数声明与定义"></a>函数声明与定义</h3><p><strong>总述</strong></p>
+<p>返回类型和函数名在同一行, 参数也尽量放在同一行, 如果放不下就对形参分行, 分行方式与 <a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/formatting/#function-calls">函数调用</a> 一致.</p>
+<p><strong>说明</strong></p>
+<p>函数看上去像这样:</p>
+<pre class="line-numbers language-none"><code class="language-none">ReturnType ClassName::FunctionName(Type par_name1, Type par_name2) {  DoSomething();  ...}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如果同一行文本太多, 放不下所有参数:</p>
+<pre class="line-numbers language-none"><code class="language-none">ReturnType ClassName::ReallyLongFunctionName(Type par_name1, Type par_name2,                                             Type par_name3) {  DoSomething();  ...}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>甚至连第一个参数都放不下:</p>
+<pre class="line-numbers language-none"><code class="language-none">ReturnType LongClassName::ReallyReallyReallyLongFunctionName(    Type par_name1,  // 4 space indent    Type par_name2,    Type par_name3) {  DoSomething();  // 2 space indent  ...}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>注意以下几点:</p>
+<ul>
+<li>使用好的参数名.</li>
+<li>只有在参数未被使用或者其用途非常明显时, 才能省略参数名.</li>
+<li>如果返回类型和函数名在一行放不下, 分行.</li>
+<li>如果返回类型与函数声明或定义分行了, 不要缩进.</li>
+<li>左圆括号总是和函数名在同一行.</li>
+<li>函数名和左圆括号间永远没有空格.</li>
+<li>圆括号与参数间没有空格.</li>
+<li>左大括号总在最后一个参数同一行的末尾处, 不另起新行.</li>
+<li>右大括号总是单独位于函数最后一行, 或者与左大括号同一行.</li>
+<li>右圆括号和左大括号间总是有一个空格.</li>
+<li>所有形参应尽可能对齐.</li>
+<li>缺省缩进为 2 个空格.</li>
+<li>换行后的参数保持 4 个空格的缩进.</li>
+</ul>
+<p>未被使用的参数, 或者根据上下文很容易看出其用途的参数, 可以省略参数名:</p>
+<pre class="line-numbers language-none"><code class="language-none">class Foo { public:  Foo(Foo&amp;&amp;);  Foo(const Foo&amp;);  Foo&amp; operator=(Foo&amp;&amp;);  Foo&amp; operator=(const Foo&amp;);};<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>未被使用的参数如果其用途不明显的话, 在函数定义处将参数名注释起来:</p>
+<pre class="line-numbers language-none"><code class="language-none">class Shape { public:  virtual void Rotate(double radians) = 0;};class Circle : public Shape { public:  void Rotate(double radians) override;};void Circle::Rotate(double /*radians*/) {}// 差 - 如果将来有人要实现, 很难猜出变量的作用.void Circle::Rotate(double) {}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>属性, 和展开为属性的宏, 写在函数声明或定义的最前面, 即返回类型之前:</p>
+<pre class="line-numbers language-none"><code class="language-none">MUST_USE_RESULT bool IsOK();<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="Lambda-表达式"><a href="#Lambda-表达式" class="headerlink" title="Lambda 表达式"></a>Lambda 表达式</h3><p><strong>总述</strong></p>
+<p>Lambda 表达式对形参和函数体的格式化和其他函数一致; 捕获列表同理, 表项用逗号隔开.</p>
+<p><strong>说明</strong></p>
+<p>若用引用捕获, 在变量名和 <code>&amp;</code> 之间不留空格.</p>
+<pre class="line-numbers language-none"><code class="language-none">int x = 0;auto add_to_x = [&amp;x](int n) { x += n; };<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>短 lambda 就写得和内联函数一样.</p>
+<pre class="line-numbers language-none"><code class="language-none">std::set&lt;int&gt; blacklist = {7, 8, 9};std::vector&lt;int&gt; digits = {3, 9, 1, 8, 4, 7, 1};digits.erase(std::remove_if(digits.begin(), digits.end(), [&amp;blacklist](int i) {               return blacklist.find(i) != blacklist.end();             }),             digits.end());<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="函数调用"><a href="#函数调用" class="headerlink" title="函数调用"></a>函数调用</h3><p><strong>总述</strong></p>
+<p>要么一行写完函数调用, 要么在圆括号里对参数分行, 要么参数另起一行且缩进四格. 如果没有其它顾虑的话, 尽可能精简行数, 比如把多个参数适当地放在同一行里.</p>
+<p><strong>说明</strong></p>
+<p>函数调用遵循如下形式：</p>
+<pre class="line-numbers language-none"><code class="language-none">bool retval = DoSomething(argument1, argument2, argument3);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如果同一行放不下, 可断为多行, 后面每一行都和第一个实参对齐, 左圆括号后和右圆括号前不要留空格：</p>
+<pre class="line-numbers language-none"><code class="language-none">bool retval = DoSomething(averyveryveryverylongargument1,                          argument2, argument3);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>参数也可以放在次行, 缩进四格：</p>
+<pre class="line-numbers language-none"><code class="language-none">if (...) {  ...  ...  if (...) {    DoSomething(        argument1, argument2,  // 4 空格缩进        argument3, argument4);  }<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>把多个参数放在同一行以减少函数调用所需的行数, 除非影响到可读性. 有人认为把每个参数都独立成行, 不仅更好读, 而且方便编辑参数. 不过, 比起所谓的参数编辑, 我们更看重可读性, 且后者比较好办：</p>
+<p>如果一些参数本身就是略复杂的表达式, 且降低了可读性, 那么可以直接创建临时变量描述该表达式, 并传递给函数：</p>
+<pre class="line-numbers language-none"><code class="language-none">int my_heuristic = scores[x] * y + bases[x];bool retval = DoSomething(my_heuristic, x, y, z);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>或者放着不管, 补充上注释：</p>
+<pre class="line-numbers language-none"><code class="language-none">bool retval = DoSomething(scores[x] * y + bases[x],  // Score heuristic.                          x, y, z);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如果某参数独立成行, 对可读性更有帮助的话, 那也可以如此做. 参数的格式处理应当以可读性而非其他作为最重要的原则.</p>
+<p>此外, 如果一系列参数本身就有一定的结构, 可以酌情地按其结构来决定参数格式：</p>
+<pre class="line-numbers language-none"><code class="language-none">// 通过 3x3 矩阵转换 widget.my_widget.Transform(x1, x2, x3,                    y1, y2, y3,                    z1, z2, z3);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="列表初始化格式"><a href="#列表初始化格式" class="headerlink" title="列表初始化格式"></a>列表初始化格式</h3><p><strong>总述</strong></p>
+<p>您平时怎么格式化函数调用, 就怎么格式化 <a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/others/#braced-initializer-list">列表初始化</a>.</p>
+<p><strong>说明</strong></p>
+<p>如果列表初始化伴随着名字, 比如类型或变量名, 格式化时将将名字视作函数调用名, {} 视作函数调用的括号. 如果没有名字, 就视作名字长度为零.</p>
+<pre class="line-numbers language-none"><code class="language-none">// 一行列表初始化示范.return {foo, bar};functioncall({foo, bar});pair&lt;int, int&gt; p{foo, bar};// 当不得不断行时.SomeFunction(    {"assume a zero-length name before {"},  // 假设在 { 前有长度为零的名字.    some_other_function_parameter);SomeType variable{    some, other, values,    {"assume a zero-length name before {"},  // 假设在 { 前有长度为零的名字.    SomeOtherType{        "Very long string requiring the surrounding breaks.",  // 非常长的字符串, 前后都需要断行.        some, other values},    SomeOtherType{"Slightly shorter string",  // 稍短的字符串.                  some, other, values}};SomeType variable{    "This is too long to fit all in one line"};  // 字符串过长, 因此无法放在同一行.MyType m = {  // 注意了, 您可以在 { 前断行.    superlongvariablename1,    superlongvariablename2,    {short, interior, list},    {interiorwrappinglist,     interiorwrappinglist2}};<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="条件语句"><a href="#条件语句" class="headerlink" title="条件语句"></a>条件语句</h3><p><strong>总述</strong></p>
+<p>倾向于不在圆括号内使用空格. 关键字 <code>if</code> 和 <code>else</code> 另起一行.</p>
+<p><strong>说明</strong></p>
+<p>对基本条件语句有两种可以接受的格式. 一种在圆括号和条件之间有空格, 另一种没有.</p>
+<p>最常见的是没有空格的格式. 哪一种都可以, 最重要的是 <em>保持一致</em>. 如果你是在修改一个文件, 参考当前已有格式. 如果是写新的代码, 参考目录下或项目中其它文件. 还在犹豫的话, 就不要加空格了.</p>
+<pre class="line-numbers language-none"><code class="language-none">if (condition) {  // 圆括号里没有空格.  ...  // 2 空格缩进.} else if (...) {  // else 与 if 的右括号同一行.  ...} else {  ...}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如果你更喜欢在圆括号内部加空格:</p>
+<pre class="line-numbers language-none"><code class="language-none">if ( condition ) {  // 圆括号与空格紧邻 - 不常见  ...  // 2 空格缩进.} else {  // else 与 if 的右括号同一行.  ...}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>注意所有情况下 <code>if</code> 和左圆括号间都有个空格. 右圆括号和左大括号之间也要有个空格:</p>
+<pre class="line-numbers language-none"><code class="language-none">if(condition)     // 差 - IF 后面没空格.if (condition){   // 差 - { 前面没空格.if(condition){    // 变本加厉地差.if (condition) {  // 好 - IF 和 { 都与空格紧邻.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如果能增强可读性, 简短的条件语句允许写在同一行. 只有当语句简单并且没有使用 <code>else</code> 子句时使用:</p>
+<pre class="line-numbers language-none"><code class="language-none">if (x == kFoo) return new Foo();if (x == kBar) return new Bar();<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如果语句有 <code>else</code> 分支则不允许:</p>
+<pre class="line-numbers language-none"><code class="language-none">// 不允许 - 当有 ELSE 分支时 IF 块却写在同一行if (x) DoThis();else DoThat();<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>通常, 单行语句不需要使用大括号, 如果你喜欢用也没问题; 复杂的条件或循环语句用大括号可读性会更好. 也有一些项目要求 <code>if</code> 必须总是使用大括号:</p>
+<pre class="line-numbers language-none"><code class="language-none">if (condition)  DoSomething();  // 2 空格缩进.if (condition) {  DoSomething();  // 2 空格缩进.}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>但如果语句中某个 <code>if-else</code> 分支使用了大括号的话, 其它分支也必须使用:</p>
+<pre class="line-numbers language-none"><code class="language-none">// 不可以这样子 - IF 有大括号 ELSE 却没有.if (condition) {  foo;} else  bar;// 不可以这样子 - ELSE 有大括号 IF 却没有.if (condition)  foo;else {  bar;}// 只要其中一个分支用了大括号, 两个分支都要用上大括号.if (condition) {  foo;} else {  bar;}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="循环和开关选择语句"><a href="#循环和开关选择语句" class="headerlink" title="循环和开关选择语句"></a>循环和开关选择语句</h3><p><strong>总述</strong></p>
+<p><code>switch</code> 语句可以使用大括号分段, 以表明 cases 之间不是连在一起的. 在单语句循环里, 括号可用可不用. 空循环体应使用 <code>{}</code> 或 <code>continue</code>.</p>
+<p><strong>说明</strong></p>
+<p><code>switch</code> 语句中的 <code>case</code> 块可以使用大括号也可以不用, 取决于你的个人喜好. 如果用的话, 要按照下文所述的方法.</p>
+<p>如果有不满足 <code>case</code> 条件的枚举值, <code>switch</code> 应该总是包含一个 <code>default</code> 匹配 (如果有输入值没有 case 去处理, 编译器将给出 warning). 如果 <code>default</code> 应该永远执行不到, 简单的加条 <code>assert</code>:</p>
+<pre class="line-numbers language-none"><code class="language-none">switch (var) {  case 0: {  // 2 空格缩进    ...      // 4 空格缩进    break;  }  case 1: {    ...    break;  }  default: {    assert(false);  }}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>在单语句循环里, 括号可用可不用：</p>
+<pre class="line-numbers language-none"><code class="language-none">for (int i = 0; i &lt; kSomeNumber; ++i)  printf("I love you\n");for (int i = 0; i &lt; kSomeNumber; ++i) {  printf("I take it back\n");}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>空循环体应使用 <code>{}</code> 或 <code>continue</code>, 而不是一个简单的分号.</p>
+<pre class="line-numbers language-none"><code class="language-none">while (condition) {  // 反复循环直到条件失效.}for (int i = 0; i &lt; kSomeNumber; ++i) {}  // 可 - 空循环体.while (condition) continue;  // 可 - contunue 表明没有逻辑.while (condition);  // 差 - 看起来仅仅只是 while/loop 的部分之一.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="指针和引用表达式"><a href="#指针和引用表达式" class="headerlink" title="指针和引用表达式"></a>指针和引用表达式</h3><p><strong>总述</strong></p>
+<p>句点或箭头前后不要有空格. 指针/地址操作符 (<code>*, &amp;</code>) 之后不能有空格.</p>
+<p><strong>说明</strong></p>
+<p>下面是指针和引用表达式的正确使用范例:</p>
+<pre class="line-numbers language-none"><code class="language-none">x = *p;p = &amp;x;x = r.y;x = r-&gt;y;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>注意:</p>
+<ul>
+<li>在访问成员时, 句点或箭头前后没有空格.</li>
+<li>指针操作符 <code>*</code> 或 <code>&amp;</code> 后没有空格.</li>
+</ul>
+<p>在声明指针变量或参数时, 星号与类型或变量名紧挨都可以:</p>
+<pre class="line-numbers language-none"><code class="language-none">// 好, 空格前置.char *c;const string &amp;str;// 好, 空格后置.char* c;const string&amp; str;int x, *y;  // 不允许 - 在多重声明中不能使用 &amp; 或 *char * c;  // 差 - * 两边都有空格const string &amp; str;  // 差 - &amp; 两边都有空格.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>在单个文件内要保持风格一致, 所以, 如果是修改现有文件, 要遵照该文件的风格.</p>
+<h3 id="布尔表达式"><a href="#布尔表达式" class="headerlink" title="布尔表达式"></a>布尔表达式</h3><p><strong>总述</strong></p>
+<p>如果一个布尔表达式超过 <a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/formatting/#line-length">标准行宽</a>, 断行方式要统一一下.</p>
+<p><strong>说明</strong></p>
+<p>下例中, 逻辑与 (<code>&amp;&amp;</code>) 操作符总位于行尾:</p>
+<pre class="line-numbers language-none"><code class="language-none">if (this_one_thing &gt; this_other_thing &amp;&amp;    a_third_thing == a_fourth_thing &amp;&amp;    yet_another &amp;&amp; last_one) {  ...}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>注意, 上例的逻辑与 (<code>&amp;&amp;</code>) 操作符均位于行尾. 这个格式在 Google 里很常见, 虽然把所有操作符放在开头也可以. 可以考虑额外插入圆括号, 合理使用的话对增强可读性是很有帮助的. 此外, 直接用符号形式的操作符, 比如 <code>&amp;&amp;</code> 和 <code>~</code>, 不要用词语形式的 <code>and</code> 和 <code>compl</code>.</p>
+<h3 id="函数返回值"><a href="#函数返回值" class="headerlink" title="函数返回值"></a>函数返回值</h3><p><strong>总述</strong></p>
+<p>不要在 <code>return</code> 表达式里加上非必须的圆括号.</p>
+<p><strong>说明</strong></p>
+<p>只有在写 <code>x = expr</code> 要加上括号的时候才在 <code>return expr;</code> 里使用括号.</p>
+<pre class="line-numbers language-none"><code class="language-none">return result;                  // 返回值很简单, 没有圆括号.// 可以用圆括号把复杂表达式圈起来, 改善可读性.return (some_long_condition &amp;&amp;        another_condition);return (value);                // 毕竟您从来不会写 var = (value);return(result);                // return 可不是函数！<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="变量及数组初始化"><a href="#变量及数组初始化" class="headerlink" title="变量及数组初始化"></a>变量及数组初始化</h3><p><strong>总述</strong></p>
+<p>用 <code>=</code>, <code>()</code> 和 <code>{}</code> 均可.</p>
+<p><strong>说明</strong></p>
+<p>您可以用 <code>=</code>, <code>()</code> 和 <code>{}</code>, 以下的例子都是正确的：</p>
+<pre class="line-numbers language-none"><code class="language-none">int x = 3;int x(3);int x{3};string name("Some Name");string name = "Some Name";string name{"Some Name"};<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>请务必小心列表初始化 <code>{...}</code> 用 <code>std::initializer_list</code> 构造函数初始化出的类型. 非空列表初始化就会优先调用 <code>std::initializer_list</code>, 不过空列表初始化除外, 后者原则上会调用默认构造函数. 为了强制禁用 <code>std::initializer_list</code> 构造函数, 请改用括号.</p>
+<pre class="line-numbers language-none"><code class="language-none">vector&lt;int&gt; v(100, 1);  // 内容为 100 个 1 的向量.vector&lt;int&gt; v{100, 1};  // 内容为 100 和 1 的向量.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>此外, 列表初始化不允许整型类型的四舍五入, 这可以用来避免一些类型上的编程失误.</p>
+<pre class="line-numbers language-none"><code class="language-none">int pi(3.14);  // 好 - pi == 3.int pi{3.14};  // 编译错误: 缩窄转换.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="预处理指令"><a href="#预处理指令" class="headerlink" title="预处理指令"></a>预处理指令</h3><p><strong>总述</strong></p>
+<p>预处理指令不要缩进, 从行首开始.</p>
+<p><strong>说明</strong></p>
+<p>即使预处理指令位于缩进代码块中, 指令也应从行首开始.</p>
+<pre class="line-numbers language-none"><code class="language-none">// 好 - 指令从行首开始  if (lopsided_score) {#if DISASTER_PENDING      // 正确 - 从行首开始    DropEverything();# if NOTIFY               // 非必要 - # 后跟空格    NotifyClient();# endif#endif    BackToNormal();  }// 差 - 指令缩进  if (lopsided_score) {    #if DISASTER_PENDING  // 差 - "#if" 应该放在行开头    DropEverything();    #endif                // 差 - "#endif" 不要缩进    BackToNormal();  }<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="类格式"><a href="#类格式" class="headerlink" title="类格式"></a>类格式</h3><p><strong>总述</strong></p>
+<p>访问控制块的声明依次序是 <code>public:</code>, <code>protected:</code>, <code>private:</code>, 每个都缩进 1 个空格.</p>
+<p><strong>说明</strong></p>
+<p>类声明 (下面的代码中缺少注释, 参考 <a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/comments/#class-comments">类注释</a>) 的基本格式如下:</p>
+<pre class="line-numbers language-none"><code class="language-none">class MyClass : public OtherClass { public:      // 注意有一个空格的缩进  MyClass();  // 标准的两空格缩进  explicit MyClass(int var);  ~MyClass() {}  void SomeFunction();  void SomeFunctionThatDoesNothing() {  }  void set_some_var(int var) { some_var_ = var; }  int some_var() const { return some_var_; } private:  bool SomeInternalFunction();  int some_var_;  int some_other_var_;};<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>注意事项:</p>
+<ul>
+<li>所有基类名应在 80 列限制下尽量与子类名放在同一行.</li>
+<li>关键词 <code>public:</code>, <code>protected:</code>, <code>private:</code> 要缩进 1 个空格.</li>
+<li>除第一个关键词 (一般是 <code>public</code>) 外, 其他关键词前要空一行. 如果类比较小的话也可以不空.</li>
+<li>这些关键词后不要保留空行.</li>
+<li><code>public</code> 放在最前面, 然后是 <code>protected</code>, 最后是 <code>private</code>.</li>
+<li>关于声明顺序的规则请参考 <a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/classes/#declaration-order">声明顺序</a> 一节.</li>
+</ul>
+<h3 id="构造函数初始值列表"><a href="#构造函数初始值列表" class="headerlink" title="构造函数初始值列表"></a>构造函数初始值列表</h3><p><strong>总述</strong></p>
+<p>构造函数初始化列表放在同一行或按四格缩进并排多行.</p>
+<p><strong>说明</strong></p>
+<p>下面两种初始值列表方式都可以接受:</p>
+<pre class="line-numbers language-none"><code class="language-none">// 如果所有变量能放在同一行:MyClass::MyClass(int var) : some_var_(var) {  DoSomething();}// 如果不能放在同一行,// 必须置于冒号后, 并缩进 4 个空格MyClass::MyClass(int var)    : some_var_(var), some_other_var_(var + 1) {  DoSomething();}// 如果初始化列表需要置于多行, 将每一个成员放在单独的一行// 并逐行对齐MyClass::MyClass(int var)    : some_var_(var),             // 4 space indent      some_other_var_(var + 1) {  // lined up  DoSomething();}// 右大括号 } 可以和左大括号 { 放在同一行// 如果这样做合适的话MyClass::MyClass(int var)    : some_var_(var) {}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="命名空间格式化"><a href="#命名空间格式化" class="headerlink" title="命名空间格式化"></a>命名空间格式化</h3><p><strong>总述</strong></p>
+<p>命名空间内容不缩进.</p>
+<p><strong>说明</strong></p>
+<p><a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/scoping/#namespaces">命名空间</a> 不要增加额外的缩进层次, 例如:</p>
+<pre class="line-numbers language-none"><code class="language-none">namespace {void foo() {  // 正确. 命名空间内没有额外的缩进.  ...}}  // namespace<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>不要在命名空间内缩进:</p>
+<pre class="line-numbers language-none"><code class="language-none">namespace {  // 错, 缩进多余了.  void foo() {    ...  }}  // namespace<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>声明嵌套命名空间时, 每个命名空间都独立成行.</p>
+<pre class="line-numbers language-none"><code class="language-none">namespace foo {namespace bar {<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="水平留白"><a href="#水平留白" class="headerlink" title="水平留白"></a>水平留白</h3><p><strong>总述</strong></p>
+<p>水平留白的使用根据在代码中的位置决定. 永远不要在行尾添加没意义的留白.</p>
+<p><strong>说明</strong></p>
+<h4 id="通用"><a href="#通用" class="headerlink" title="通用"></a>通用</h4><pre class="line-numbers language-none"><code class="language-none">void f(bool b) {  // 左大括号前总是有空格.  ...int i = 0;  // 分号前不加空格.// 列表初始化中大括号内的空格是可选的.// 如果加了空格, 那么两边都要加上.int x[] = { 0 };int x[] = {0};// 继承与初始化列表中的冒号前后恒有空格.class Foo : public Bar { public:  // 对于单行函数的实现, 在大括号内加上空格  // 然后是函数实现  Foo(int b) : Bar(), baz_(b) {}  // 大括号里面是空的话, 不加空格.  void Reset() { baz_ = 0; }  // 用空格把大括号与实现分开.  ...<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>添加冗余的留白会给其他人编辑时造成额外负担. 因此, 行尾不要留空格. 如果确定一行代码已经修改完毕, 将多余的空格去掉; 或者在专门清理空格时去掉（尤其是在没有其他人在处理这件事的时候). (Yang.Y 注: 现在大部分代码编辑器稍加设置后, 都支持自动删除行首/行尾空格, 如果不支持, 考虑换一款编辑器或 IDE)</p>
+<h4 id="循环和条件语句"><a href="#循环和条件语句" class="headerlink" title="循环和条件语句"></a>循环和条件语句</h4><pre class="line-numbers language-none"><code class="language-none">if (b) {          // if 条件语句和循环语句关键字后均有空格.} else {          // else 前后有空格.}while (test) {}   // 圆括号内部不紧邻空格.switch (i) {for (int i = 0; i &lt; 5; ++i) {switch ( i ) {    // 循环和条件语句的圆括号里可以与空格紧邻.if ( test ) {     // 圆括号, 但这很少见. 总之要一致.for ( int i = 0; i &lt; 5; ++i ) {for ( ; i &lt; 5 ; ++i) {  // 循环里内 ; 后恒有空格, ;  前可以加个空格.switch (i) {  case 1:         // switch case 的冒号前无空格.    ...  case 2: break;  // 如果冒号有代码, 加个空格.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h4 id="操作符"><a href="#操作符" class="headerlink" title="操作符"></a>操作符</h4><pre class="line-numbers language-none"><code class="language-none">// 赋值运算符前后总是有空格.x = 0;// 其它二元操作符也前后恒有空格, 不过对于表达式的子式可以不加空格.// 圆括号内部没有紧邻空格.v = w * x + y / z;v = w*x + y/z;v = w * (x + z);// 在参数和一元操作符之间不加空格.x = -5;++x;if (x &amp;&amp; !y)  ...<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h4 id="模板和转换"><a href="#模板和转换" class="headerlink" title="模板和转换"></a>模板和转换</h4><pre class="line-numbers language-none"><code class="language-none">// 尖括号(&lt; and &gt;) 不与空格紧邻, &lt; 前没有空格, &gt; 和 ( 之间也没有.vector&lt;string&gt; x;y = static_cast&lt;char*&gt;(x);// 在类型与指针操作符之间留空格也可以, 但要保持一致.vector&lt;char *&gt; x;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="垂直留白"><a href="#垂直留白" class="headerlink" title="垂直留白"></a>垂直留白</h3><p><strong>总述</strong></p>
+<p>垂直留白越少越好.</p>
+<p><strong>说明</strong></p>
+<p>这不仅仅是规则而是原则问题了: 不在万不得已, 不要使用空行. 尤其是: 两个函数定义之间的空行不要超过 2 行, 函数体首尾不要留空行, 函数体中也不要随意添加空行.</p>
+<p>基本原则是: 同一屏可以显示的代码越多, 越容易理解程序的控制流. 当然, 过于密集的代码块和过于疏松的代码块同样难看, 这取决于你的判断. 但通常是垂直留白越少越好.</p>
+<p>下面的规则可以让加入的空行更有效:</p>
+<ul>
+<li>函数体内开头或结尾的空行可读性微乎其微.</li>
+<li>在多重 if-else 块里加空行或许有点可读性.</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>一图以蔽之</p>
+<p><img src="/images/cpp-notes/google-cpp-style.png" alt="google-cpp-style"></p>
+
                 
             </div>
             <hr/>
@@ -538,7 +963,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/C-%E5%9F%BA%E7%A1%80/">
+                                    <span class="chip bg-color">C++基础</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -983,9 +1412,9 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="cpp-notes-8">
+                        <img src="/medias/featureimages/44.jpg" class="responsive-img" alt="C++ 编程规范（二）">
                         
-                        <span class="card-title">cpp-notes-8</span>
+                        <span class="card-title">C++ 编程规范（二）</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1000,13 +1429,25 @@
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Immortalqx
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/C/" class="post-category">
+                                    C++
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
 
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/C-%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">C++基础</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -1200,7 +1641,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">127k</span>&nbsp;字
+                class="white-color">135.6k</span>&nbsp;字
             
             
             
