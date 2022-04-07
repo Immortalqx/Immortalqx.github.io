@@ -151,64 +151,6 @@
       </tags>
   </entry>
   <entry>
-    <title>OpenVINS学习笔记（一）</title>
-    <url>/2021/07/06/openvins-note-1/</url>
-    <content><![CDATA[<h1 id="OpenVINS学习笔记（一）"><a href="#OpenVINS学习笔记（一）" class="headerlink" title="OpenVINS学习笔记（一）"></a>OpenVINS学习笔记（一）</h1><blockquote>
-<p>论文摘要与代码框架</p>
-</blockquote>
-<h2 id="论文摘要"><a href="#论文摘要" class="headerlink" title="论文摘要"></a>论文摘要</h2><p>构建OpenVINS开源代码库，对通常需要的视觉惯性估计特性具有现成的支持，包括：<br>（i） 流形上的滑动窗口卡尔曼滤波器；</p>
-<p>（ii）在线相机内外参数标定；</p>
-<p>（iii）相机到惯性传感器的时间偏移校准；</p>
-<p>（iv）具有不同表示和一致的首次估计（FEJ）处理的SLAM地标；</p>
-<p>（v） 模块化状态管理系统；</p>
-<p>（vi）可扩展视觉惯性系统模拟器；</p>
-<p>（vii）算法评估工具箱。</p>
-<h2 id="代码框架"><a href="#代码框架" class="headerlink" title="代码框架"></a>代码框架</h2><ul>
-<li><p><strong>ov_core</strong></p>
-<ul>
-<li><p>2D图像稀疏视觉特征跟踪；</p>
-</li>
-<li><p>线性和高斯-牛顿特征三角剖分方法；</p>
-</li>
-<li><p>用于任意数量相机和频率的视觉惯性模拟器；</p>
-</li>
-<li><p>基本的流形数学运算</p>
-</li>
-</ul>
-</li>
-<li><p><strong>ov_eval</strong></p>
-<ul>
-<li>轨迹对齐；</li>
-<li>轨迹精度和一致性评估的绘图工具；</li>
-<li>不同精度指标的蒙特卡罗评价；</li>
-<li>ROS topic录制到文件。</li>
-</ul>
-</li>
-<li><p><strong>ov_msckf</strong></p>
-<p>可扩展模块扩展卡尔曼滤波器（EKF）为基础的滑动窗口视觉惯性估计器与流形系统的灵活状态表示。</p>
-<p>特点包括：</p>
-<ul>
-<li>首次估计Jacobains（FEJ）</li>
-<li>IMU相机时间偏移校准</li>
-<li>相机内部和外部校准</li>
-<li>标准MSCKF和不同表示的3DSLAM地标。</li>
-</ul>
-</li>
-</ul>
-<p><strong>代码入口：</strong></p>
-<p><img src="/images/OpenVINS-Note/1-1.png"></p>
-<p><img src="/images/OpenVINS-Note/1-2.png"></p>
-<p>注：<a href="https://blog.csdn.net/weixin_43793960/article/details/110929635">图片来源</a></p>
-]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>视觉SLAM</tag>
-        <tag>OpenVINS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>雅思备考经验分享</title>
     <url>/2021/07/28/ielts-1/</url>
     <content><![CDATA[<h1 id="雅思备考经验分享"><a href="#雅思备考经验分享" class="headerlink" title="雅思备考经验分享"></a>雅思备考经验分享</h1><blockquote>
@@ -342,6 +284,64 @@
       </categories>
       <tags>
         <tag>IELTS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OpenVINS学习笔记（一）</title>
+    <url>/2021/07/06/openvins-note-1/</url>
+    <content><![CDATA[<h1 id="OpenVINS学习笔记（一）"><a href="#OpenVINS学习笔记（一）" class="headerlink" title="OpenVINS学习笔记（一）"></a>OpenVINS学习笔记（一）</h1><blockquote>
+<p>论文摘要与代码框架</p>
+</blockquote>
+<h2 id="论文摘要"><a href="#论文摘要" class="headerlink" title="论文摘要"></a>论文摘要</h2><p>构建OpenVINS开源代码库，对通常需要的视觉惯性估计特性具有现成的支持，包括：<br>（i） 流形上的滑动窗口卡尔曼滤波器；</p>
+<p>（ii）在线相机内外参数标定；</p>
+<p>（iii）相机到惯性传感器的时间偏移校准；</p>
+<p>（iv）具有不同表示和一致的首次估计（FEJ）处理的SLAM地标；</p>
+<p>（v） 模块化状态管理系统；</p>
+<p>（vi）可扩展视觉惯性系统模拟器；</p>
+<p>（vii）算法评估工具箱。</p>
+<h2 id="代码框架"><a href="#代码框架" class="headerlink" title="代码框架"></a>代码框架</h2><ul>
+<li><p><strong>ov_core</strong></p>
+<ul>
+<li><p>2D图像稀疏视觉特征跟踪；</p>
+</li>
+<li><p>线性和高斯-牛顿特征三角剖分方法；</p>
+</li>
+<li><p>用于任意数量相机和频率的视觉惯性模拟器；</p>
+</li>
+<li><p>基本的流形数学运算</p>
+</li>
+</ul>
+</li>
+<li><p><strong>ov_eval</strong></p>
+<ul>
+<li>轨迹对齐；</li>
+<li>轨迹精度和一致性评估的绘图工具；</li>
+<li>不同精度指标的蒙特卡罗评价；</li>
+<li>ROS topic录制到文件。</li>
+</ul>
+</li>
+<li><p><strong>ov_msckf</strong></p>
+<p>可扩展模块扩展卡尔曼滤波器（EKF）为基础的滑动窗口视觉惯性估计器与流形系统的灵活状态表示。</p>
+<p>特点包括：</p>
+<ul>
+<li>首次估计Jacobains（FEJ）</li>
+<li>IMU相机时间偏移校准</li>
+<li>相机内部和外部校准</li>
+<li>标准MSCKF和不同表示的3DSLAM地标。</li>
+</ul>
+</li>
+</ul>
+<p><strong>代码入口：</strong></p>
+<p><img src="/images/OpenVINS-Note/1-1.png"></p>
+<p><img src="/images/OpenVINS-Note/1-2.png"></p>
+<p>注：<a href="https://blog.csdn.net/weixin_43793960/article/details/110929635">图片来源</a></p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>视觉SLAM</tag>
+        <tag>OpenVINS</tag>
       </tags>
   </entry>
   <entry>
@@ -1389,97 +1389,6 @@ mavros_msgs<span class="token double-colon punctuation">::</span>State current_s
       </tags>
   </entry>
   <entry>
-    <title>类的六个默认的成员函数</title>
-    <url>/2020/08/22/cpp-notes-1/</url>
-    <content><![CDATA[<h1 id="类的六个默认的成员函数"><a href="#类的六个默认的成员函数" class="headerlink" title="类的六个默认的成员函数"></a>类的六个默认的成员函数</h1><h2 id="类的6个默认的成员函数包括："><a href="#类的6个默认的成员函数包括：" class="headerlink" title="类的6个默认的成员函数包括："></a>类的6个默认的成员函数包括：</h2><p>构造函数、析构函数、拷贝构造函数、赋值运算符重载函数、取地址操作符重载、const修饰的取地址操作符重载。</p>
-<h3 id="（一）构造函数"><a href="#（一）构造函数" class="headerlink" title="（一）构造函数"></a>（一）构造函数</h3><p>构造函数，顾名思义，为对象分配空间，进行初始化。它是一种特殊的成员函数，具有以下特点:</p>
-<ol>
-<li><p>函数名与类名相同。</p>
-</li>
-<li><p>无返回值。</p>
-</li>
-<li><p>构造对象的时候系统会自动调用构造函数。</p>
-</li>
-<li><p>可以重载。</p>
-</li>
-<li><p>可以在类中定义，也可以在类外定义。</p>
-</li>
-<li><p>如果类中没有给出构造函数，编译器会自动产生一个缺省的构造函数，如果类中有构造函数，编译器就不会产生缺省构造函数。</p>
-</li>
-<li><p>全缺省的构造函数和无参的构造函数只能有一个，否则调用的时候就会产生冲突。</p>
-</li>
-<li><p>没有this指针。因为构造函数才是创建对象的，没有创建对象就不会有对象的首地址。</p>
-</li>
-</ol>
-<p>构造函数，说来就是给成员变量进行初始化。而初始化却有两种方法：初始化列表、构造函数函数体内赋值。尽量使用初始化列表，因为它更高效。</p>
-<h4 id="有些成员变量必须再初始化列表中初始化，比如："><a href="#有些成员变量必须再初始化列表中初始化，比如：" class="headerlink" title="有些成员变量必须再初始化列表中初始化，比如："></a>有些成员变量必须再初始化列表中初始化，比如：</h4><ol>
-<li><p>常量成员变量。（常量创建时必须初始化，因为对于一个常量，我们给它赋值，是不对的）</p>
-</li>
-<li><p>引用类型成员变量。（引用创建时必须初始化）</p>
-</li>
-<li><p>没有缺省构造函数的类成员变量。（如果构造函数的参数列表中有一个类的对象，并且该对象的类里没有缺省参数的构造函数时，要是不使用初始化列表，参数中会调用无参或者全缺省的构造函数，而那个类中又没有。）</p>
-</li>
-</ol>
-<h3 id="（二）析构函数"><a href="#（二）析构函数" class="headerlink" title="（二）析构函数"></a>（二）析构函数</h3><h4 id="析构函数是一种特殊的成员函数，具有以下特点："><a href="#析构函数是一种特殊的成员函数，具有以下特点：" class="headerlink" title="析构函数是一种特殊的成员函数，具有以下特点："></a>析构函数是一种特殊的成员函数，具有以下特点：</h4><ol>
-<li><p>析构函数函数名是在类名加上字符 ~ 。</p>
-</li>
-<li><p>无参数无返回值（但有this指针）。</p>
-</li>
-<li><p>一个类有且只有一个析构函数，所以肯定不能重载。若未显示定义，系统会自动生成缺省的析构函数。</p>
-</li>
-<li><p>对象生命周期结束时，C++编译系统系统自动调用析构函数。</p>
-</li>
-<li><p>注意析构函数体内并不是删除对象，而是做一些清理工作。（比如我们在构造函数中动态开辟过一段空间，函数结束后需要释放，而系统自动生成的析构函数才不管内存释放呢，所以需要人为地写出析构函数）</p>
-</li>
-</ol>
-<p>注意：对象生命周期结束后，后构造的对象先释放。</p>
-<h3 id="（三）拷贝构造函数"><a href="#（三）拷贝构造函数" class="headerlink" title="（三）拷贝构造函数"></a>（三）拷贝构造函数</h3><p>用已有的对象创建一个新的对象。</p>
-<p>创建对象时使用同类对象来进行初始化，这时所用的构造函数就是拷贝构造函数（Copy  Constructor）。拷贝构造函数也是构造函数，但它只有一个参数，这个参数只能是本类的一个对象，而且采用对象的常引用形式。拷贝构造函数的作用就是将实参对象的各成员值一一赋给新的对象中对应的成员。</p>
-<p>该函数的参数是一个常引用，如果不是引用，形参是实参的一份临时拷贝，由于两者都是对象，此时就会调用自己的拷贝构造函数，陷入无限递归中…….</p>
-<h4 id="拷贝构造函数的特征"><a href="#拷贝构造函数的特征" class="headerlink" title="拷贝构造函数的特征"></a>拷贝构造函数的特征</h4><p> （1）拷贝构造函数其实是一个构造函数的重载。<br> （2）拷贝构造函数的参数必须使用引用传参，使用传参方式会引发无穷递归调用。<br> （3）若为显示定义，系统默认生成缺省的拷贝构造函数，缺省的拷贝构造函数会按照成员的声明顺序依次拷贝类成员进行初始化</p>
-<h4 id="调用拷贝构造函数的两种方法："><a href="#调用拷贝构造函数的两种方法：" class="headerlink" title="调用拷贝构造函数的两种方法："></a>调用拷贝构造函数的两种方法：</h4><ol>
-<li><p>代入法：</p>
-<p>Person p2(p1);</p>
-</li>
-<li><p>赋值法：</p>
-<p>Person p2 = p1;</p>
-</li>
-</ol>
-<h4 id="为什么这里的对象可以直接访问私有成员变量？"><a href="#为什么这里的对象可以直接访问私有成员变量？" class="headerlink" title="为什么这里的对象可以直接访问私有成员变量？"></a>为什么这里的对象可以直接访问私有成员变量？</h4><p> 1）在类的成员函数里可以直接访问同类对象的私有或保护的成员。<br> 2）C++的访问限定符是以类为单位的，即：在这个单位内的成员可以互相访问。</p>
-<h3 id="（四）赋值运算符重载函数"><a href="#（四）赋值运算符重载函数" class="headerlink" title="（四）赋值运算符重载函数"></a>（四）赋值运算符重载函数</h3><p>用一个对象修改已经存在对象的内容，不是去创建新的对象，修改之后，两个对象的内容一致</p>
-<blockquote>
-<ol>
-<li>可以通过检查是否给自己赋值，进行优化</li>
-<li><strong>如果需要连续赋值，返回值不能是void，一般为引用类型</strong></li>
-<li>*<em>返回值一般是 <em>this</em></em></li>
-<li>编译器默认生成的赋值运算符为字节拷贝，即浅拷贝，如果资源需要拷贝，需要显示定义，完成深拷贝</li>
-</ol>
-<p>=调用：如果对象都存在，调用赋值运算符重载函数</p>
-<p>​              如果左边对象不存在，调用拷贝构造创建左边对象</p>
-</blockquote>
-<p><em>赋值是从右向左进行的</em></p>
-<p>如果不写，编译器会自动生成，默认生成的也是字节拷贝，浅拷贝</p>
-<p>如果当前类中有资源，则必须显示定义运算符重载函数，完成深拷贝</p>
-<h4 id="普通运算符重载函数"><a href="#普通运算符重载函数" class="headerlink" title="普通运算符重载函数"></a>普通运算符重载函数</h4><blockquote>
-<ol>
-<li>不能创建新的操作符，如operator@</li>
-<li>重载操作符必须有一个类类型或者枚举类型的操作符</li>
-<li>用于内置类型的操作符，其含义不能改变</li>
-<li>运算符重载函数如果是成员函数，则参数的个数比运算符需要的个数少一个，这里编译器会传入this指针作为第一个参数</li>
-<li>普通的运算符重载函数，参数的个数和运算符需要的个数一致</li>
-</ol>
-</blockquote>
-<p><strong>.*（成员指针访问运算符） ,  ::  ,  sizeof  ,  ? :  ,  .   五个运算符不能被重载</strong></p>
-<h3 id="（五）取地址运算符重载函数-const取地址运算符重载函数：获取对象的地址"><a href="#（五）取地址运算符重载函数-const取地址运算符重载函数：获取对象的地址" class="headerlink" title="（五）取地址运算符重载函数 / const取地址运算符重载函数：获取对象的地址**"></a>（五）取地址运算符重载函数 / const取地址运算符重载函数：获取对象的地址**</h3><p>一般不需要显示定义，直接使用编译器自动生成的即可</p>
-]]></content>
-      <categories>
-        <category>C++</category>
-      </categories>
-      <tags>
-        <tag>C++基础</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>航拍笔记（二）：不同场景的拍摄方法</title>
     <url>/2021/08/22/aerial-note-2/</url>
     <content><![CDATA[<h1 id="航拍笔记（二）：不同场景的拍摄方法"><a href="#航拍笔记（二）：不同场景的拍摄方法" class="headerlink" title="航拍笔记（二）：不同场景的拍摄方法"></a>航拍笔记（二）：不同场景的拍摄方法</h1><h2 id="一、海边：要旋转冲天，不要直接冲天"><a href="#一、海边：要旋转冲天，不要直接冲天" class="headerlink" title="一、海边：要旋转冲天，不要直接冲天"></a>一、海边：要旋转冲天，不要直接冲天</h2><p>冲天拍摄是一种云台朝下、飞行器垂直向上飞行的常见拍摄方式。但是单纯的冲天拍摄，如果场景本身的变化度不高的话，或多或少会有一点单调。</p>
@@ -1571,6 +1480,97 @@ mavros_msgs<span class="token double-colon punctuation">::</span>State current_s
 <li>所有非静态变量（不是类的数据成员）的声明</li>
 <li>默认命名空间声明不要放在头文件，using namespace std;等应放在.cpp中，在 .h 文件中使用 std::string</li>
 </ul>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>类的六个默认的成员函数</title>
+    <url>/2020/08/22/cpp-notes-1/</url>
+    <content><![CDATA[<h1 id="类的六个默认的成员函数"><a href="#类的六个默认的成员函数" class="headerlink" title="类的六个默认的成员函数"></a>类的六个默认的成员函数</h1><h2 id="类的6个默认的成员函数包括："><a href="#类的6个默认的成员函数包括：" class="headerlink" title="类的6个默认的成员函数包括："></a>类的6个默认的成员函数包括：</h2><p>构造函数、析构函数、拷贝构造函数、赋值运算符重载函数、取地址操作符重载、const修饰的取地址操作符重载。</p>
+<h3 id="（一）构造函数"><a href="#（一）构造函数" class="headerlink" title="（一）构造函数"></a>（一）构造函数</h3><p>构造函数，顾名思义，为对象分配空间，进行初始化。它是一种特殊的成员函数，具有以下特点:</p>
+<ol>
+<li><p>函数名与类名相同。</p>
+</li>
+<li><p>无返回值。</p>
+</li>
+<li><p>构造对象的时候系统会自动调用构造函数。</p>
+</li>
+<li><p>可以重载。</p>
+</li>
+<li><p>可以在类中定义，也可以在类外定义。</p>
+</li>
+<li><p>如果类中没有给出构造函数，编译器会自动产生一个缺省的构造函数，如果类中有构造函数，编译器就不会产生缺省构造函数。</p>
+</li>
+<li><p>全缺省的构造函数和无参的构造函数只能有一个，否则调用的时候就会产生冲突。</p>
+</li>
+<li><p>没有this指针。因为构造函数才是创建对象的，没有创建对象就不会有对象的首地址。</p>
+</li>
+</ol>
+<p>构造函数，说来就是给成员变量进行初始化。而初始化却有两种方法：初始化列表、构造函数函数体内赋值。尽量使用初始化列表，因为它更高效。</p>
+<h4 id="有些成员变量必须再初始化列表中初始化，比如："><a href="#有些成员变量必须再初始化列表中初始化，比如：" class="headerlink" title="有些成员变量必须再初始化列表中初始化，比如："></a>有些成员变量必须再初始化列表中初始化，比如：</h4><ol>
+<li><p>常量成员变量。（常量创建时必须初始化，因为对于一个常量，我们给它赋值，是不对的）</p>
+</li>
+<li><p>引用类型成员变量。（引用创建时必须初始化）</p>
+</li>
+<li><p>没有缺省构造函数的类成员变量。（如果构造函数的参数列表中有一个类的对象，并且该对象的类里没有缺省参数的构造函数时，要是不使用初始化列表，参数中会调用无参或者全缺省的构造函数，而那个类中又没有。）</p>
+</li>
+</ol>
+<h3 id="（二）析构函数"><a href="#（二）析构函数" class="headerlink" title="（二）析构函数"></a>（二）析构函数</h3><h4 id="析构函数是一种特殊的成员函数，具有以下特点："><a href="#析构函数是一种特殊的成员函数，具有以下特点：" class="headerlink" title="析构函数是一种特殊的成员函数，具有以下特点："></a>析构函数是一种特殊的成员函数，具有以下特点：</h4><ol>
+<li><p>析构函数函数名是在类名加上字符 ~ 。</p>
+</li>
+<li><p>无参数无返回值（但有this指针）。</p>
+</li>
+<li><p>一个类有且只有一个析构函数，所以肯定不能重载。若未显示定义，系统会自动生成缺省的析构函数。</p>
+</li>
+<li><p>对象生命周期结束时，C++编译系统系统自动调用析构函数。</p>
+</li>
+<li><p>注意析构函数体内并不是删除对象，而是做一些清理工作。（比如我们在构造函数中动态开辟过一段空间，函数结束后需要释放，而系统自动生成的析构函数才不管内存释放呢，所以需要人为地写出析构函数）</p>
+</li>
+</ol>
+<p>注意：对象生命周期结束后，后构造的对象先释放。</p>
+<h3 id="（三）拷贝构造函数"><a href="#（三）拷贝构造函数" class="headerlink" title="（三）拷贝构造函数"></a>（三）拷贝构造函数</h3><p>用已有的对象创建一个新的对象。</p>
+<p>创建对象时使用同类对象来进行初始化，这时所用的构造函数就是拷贝构造函数（Copy  Constructor）。拷贝构造函数也是构造函数，但它只有一个参数，这个参数只能是本类的一个对象，而且采用对象的常引用形式。拷贝构造函数的作用就是将实参对象的各成员值一一赋给新的对象中对应的成员。</p>
+<p>该函数的参数是一个常引用，如果不是引用，形参是实参的一份临时拷贝，由于两者都是对象，此时就会调用自己的拷贝构造函数，陷入无限递归中…….</p>
+<h4 id="拷贝构造函数的特征"><a href="#拷贝构造函数的特征" class="headerlink" title="拷贝构造函数的特征"></a>拷贝构造函数的特征</h4><p> （1）拷贝构造函数其实是一个构造函数的重载。<br> （2）拷贝构造函数的参数必须使用引用传参，使用传参方式会引发无穷递归调用。<br> （3）若为显示定义，系统默认生成缺省的拷贝构造函数，缺省的拷贝构造函数会按照成员的声明顺序依次拷贝类成员进行初始化</p>
+<h4 id="调用拷贝构造函数的两种方法："><a href="#调用拷贝构造函数的两种方法：" class="headerlink" title="调用拷贝构造函数的两种方法："></a>调用拷贝构造函数的两种方法：</h4><ol>
+<li><p>代入法：</p>
+<p>Person p2(p1);</p>
+</li>
+<li><p>赋值法：</p>
+<p>Person p2 = p1;</p>
+</li>
+</ol>
+<h4 id="为什么这里的对象可以直接访问私有成员变量？"><a href="#为什么这里的对象可以直接访问私有成员变量？" class="headerlink" title="为什么这里的对象可以直接访问私有成员变量？"></a>为什么这里的对象可以直接访问私有成员变量？</h4><p> 1）在类的成员函数里可以直接访问同类对象的私有或保护的成员。<br> 2）C++的访问限定符是以类为单位的，即：在这个单位内的成员可以互相访问。</p>
+<h3 id="（四）赋值运算符重载函数"><a href="#（四）赋值运算符重载函数" class="headerlink" title="（四）赋值运算符重载函数"></a>（四）赋值运算符重载函数</h3><p>用一个对象修改已经存在对象的内容，不是去创建新的对象，修改之后，两个对象的内容一致</p>
+<blockquote>
+<ol>
+<li>可以通过检查是否给自己赋值，进行优化</li>
+<li><strong>如果需要连续赋值，返回值不能是void，一般为引用类型</strong></li>
+<li>*<em>返回值一般是 <em>this</em></em></li>
+<li>编译器默认生成的赋值运算符为字节拷贝，即浅拷贝，如果资源需要拷贝，需要显示定义，完成深拷贝</li>
+</ol>
+<p>=调用：如果对象都存在，调用赋值运算符重载函数</p>
+<p>​              如果左边对象不存在，调用拷贝构造创建左边对象</p>
+</blockquote>
+<p><em>赋值是从右向左进行的</em></p>
+<p>如果不写，编译器会自动生成，默认生成的也是字节拷贝，浅拷贝</p>
+<p>如果当前类中有资源，则必须显示定义运算符重载函数，完成深拷贝</p>
+<h4 id="普通运算符重载函数"><a href="#普通运算符重载函数" class="headerlink" title="普通运算符重载函数"></a>普通运算符重载函数</h4><blockquote>
+<ol>
+<li>不能创建新的操作符，如operator@</li>
+<li>重载操作符必须有一个类类型或者枚举类型的操作符</li>
+<li>用于内置类型的操作符，其含义不能改变</li>
+<li>运算符重载函数如果是成员函数，则参数的个数比运算符需要的个数少一个，这里编译器会传入this指针作为第一个参数</li>
+<li>普通的运算符重载函数，参数的个数和运算符需要的个数一致</li>
+</ol>
+</blockquote>
+<p><strong>.*（成员指针访问运算符） ,  ::  ,  sizeof  ,  ? :  ,  .   五个运算符不能被重载</strong></p>
+<h3 id="（五）取地址运算符重载函数-const取地址运算符重载函数：获取对象的地址"><a href="#（五）取地址运算符重载函数-const取地址运算符重载函数：获取对象的地址" class="headerlink" title="（五）取地址运算符重载函数 / const取地址运算符重载函数：获取对象的地址**"></a>（五）取地址运算符重载函数 / const取地址运算符重载函数：获取对象的地址**</h3><p>一般不需要显示定义，直接使用编译器自动生成的即可</p>
 ]]></content>
       <categories>
         <category>C++</category>
@@ -4827,40 +4827,6 @@ seek<span class="token double-colon punctuation">::</span><span class="token fun
       </tags>
   </entry>
   <entry>
-    <title>论文阅读-Map2DFusion：Real-time Incremental UAV Image Mosaicing based onMonocular SLAM</title>
-    <url>/2021/07/29/paper-reading-5/</url>
-    <content><![CDATA[<h1 id="论文阅读-Map2DFusion：Real-time-Incremental-UAV-Image-Mosaicing-based-onMonocular-SLAM"><a href="#论文阅读-Map2DFusion：Real-time-Incremental-UAV-Image-Mosaicing-based-onMonocular-SLAM" class="headerlink" title="论文阅读-Map2DFusion：Real-time Incremental UAV Image Mosaicing based onMonocular SLAM"></a>论文阅读-Map2DFusion：Real-time Incremental UAV Image Mosaicing based onMonocular SLAM</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文提出了一种实时拼接大规模航空图像的方法。利用单目SLAM系统估计摄像机的位置和姿态，同时生成三维点云图，当GPS信息可用时，估计的轨迹在时间同步后自动转换为WGS84坐标。因此，输出正交图像保留全球坐标，而不包含地面控制点。采用自适应加权多波段算法对最终图像进行实时融合和可视化。为了评估该方法的有效性，本文创建了一个具有不同环境序列的公共可用航空图像数据集。实验结果表明，和现有的方法相比，本系统能够实现高效率和高质量。</p>
-<p>本文的主要贡献如下：</p>
-<ol>
-<li><p><strong>Automatic GPS and video synchronization</strong></p>
-<p>针对大多数视频流不与GPS同步的问题，提出了一种基于图优化的方法，使视频时间与GPS时间从粗到精同步。因此，本文的方法能够获得WGS84坐标，并通过将GPS信息融合到SLAM处理中克服累积漂移，而无需GCPs。</p>
-</li>
-<li><p><strong>Real-time orthoimage blender</strong></p>
-<p>本文提出了一种自适应加权多波段方法来实时增量地融合和可视化图像。与SfM方法相比，该方法效率更高，结果令人满意，且不会因视角有限而产生孔洞和扭曲。</p>
-</li>
-<li><p><strong>A public aerial image dataset</strong></p>
-<p>本文创建了一个具有多个不同序列的航空图像数据集，用于视觉SLAM、正射影像和三维重建评估。</p>
-</li>
-</ol>
-<h2 id="系统框架"><a href="#系统框架" class="headerlink" title="系统框架"></a>系统框架</h2><p>本文的系统概述如图2所示，其中包含五个主要部分，分别运行在不同的线程中：视频准备、跟踪、映射、地图优化和地图融合。</p>
-<p><img src="/images/paper-reading/4_pic0.png"></p>
-<p>各部分概要介绍如下：</p>
-<ol>
-<li>图像不失真为理想的针孔模型，提取具有特征的关键点进行跟踪。</li>
-<li>根据最后一帧跟踪当前帧的初始运动，然后与局部子贴图精确对齐。</li>
-<li>当当前帧和最后一个关键帧之间的距离超过某个阈值时，将向全局贴图添加新的关键帧，然后执行局部绑定以优化局部贴图点和关键帧姿态</li>
-<li>采用全局优化的方法进行检测和闭环，得到一致的映射。利用SIM（3）位姿图对视频和GPS时间戳之间的时差进行从粗到精的在线校准，并对估计的轨迹和地图点应用最终的相似变换。然后，在地图线的局部束优化中考虑了GPS约束，并用采样的地图点拟合镶嵌平面。</li>
-<li>贴图融合单元以增量方式将关键帧混合到马赛克平面中。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>论文阅读</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用RANSAC算法拟合点云中的平面</title>
     <url>/2021/11/28/ransac/</url>
     <content><![CDATA[<h1 id="使用RANSAC算法拟合点云中的平面"><a href="#使用RANSAC算法拟合点云中的平面" class="headerlink" title="使用RANSAC算法拟合点云中的平面"></a>使用RANSAC算法拟合点云中的平面</h1><p>最近在写pi-slam-fusion这个项目，需要根据pi-slam计算出来的点云拟合出大地平面的方程，从而让map2dfusion根据这个方程进行地图拼接。</p>
@@ -5020,6 +4986,40 @@ python3 RANSAC_3D.py<span aria-hidden="true" class="line-numbers-rows"><span></s
       <tags>
         <tag>视觉SLAM</tag>
         <tag>点云</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文阅读-Map2DFusion：Real-time Incremental UAV Image Mosaicing based onMonocular SLAM</title>
+    <url>/2021/07/29/paper-reading-5/</url>
+    <content><![CDATA[<h1 id="论文阅读-Map2DFusion：Real-time-Incremental-UAV-Image-Mosaicing-based-onMonocular-SLAM"><a href="#论文阅读-Map2DFusion：Real-time-Incremental-UAV-Image-Mosaicing-based-onMonocular-SLAM" class="headerlink" title="论文阅读-Map2DFusion：Real-time Incremental UAV Image Mosaicing based onMonocular SLAM"></a>论文阅读-Map2DFusion：Real-time Incremental UAV Image Mosaicing based onMonocular SLAM</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文提出了一种实时拼接大规模航空图像的方法。利用单目SLAM系统估计摄像机的位置和姿态，同时生成三维点云图，当GPS信息可用时，估计的轨迹在时间同步后自动转换为WGS84坐标。因此，输出正交图像保留全球坐标，而不包含地面控制点。采用自适应加权多波段算法对最终图像进行实时融合和可视化。为了评估该方法的有效性，本文创建了一个具有不同环境序列的公共可用航空图像数据集。实验结果表明，和现有的方法相比，本系统能够实现高效率和高质量。</p>
+<p>本文的主要贡献如下：</p>
+<ol>
+<li><p><strong>Automatic GPS and video synchronization</strong></p>
+<p>针对大多数视频流不与GPS同步的问题，提出了一种基于图优化的方法，使视频时间与GPS时间从粗到精同步。因此，本文的方法能够获得WGS84坐标，并通过将GPS信息融合到SLAM处理中克服累积漂移，而无需GCPs。</p>
+</li>
+<li><p><strong>Real-time orthoimage blender</strong></p>
+<p>本文提出了一种自适应加权多波段方法来实时增量地融合和可视化图像。与SfM方法相比，该方法效率更高，结果令人满意，且不会因视角有限而产生孔洞和扭曲。</p>
+</li>
+<li><p><strong>A public aerial image dataset</strong></p>
+<p>本文创建了一个具有多个不同序列的航空图像数据集，用于视觉SLAM、正射影像和三维重建评估。</p>
+</li>
+</ol>
+<h2 id="系统框架"><a href="#系统框架" class="headerlink" title="系统框架"></a>系统框架</h2><p>本文的系统概述如图2所示，其中包含五个主要部分，分别运行在不同的线程中：视频准备、跟踪、映射、地图优化和地图融合。</p>
+<p><img src="/images/paper-reading/4_pic0.png"></p>
+<p>各部分概要介绍如下：</p>
+<ol>
+<li>图像不失真为理想的针孔模型，提取具有特征的关键点进行跟踪。</li>
+<li>根据最后一帧跟踪当前帧的初始运动，然后与局部子贴图精确对齐。</li>
+<li>当当前帧和最后一个关键帧之间的距离超过某个阈值时，将向全局贴图添加新的关键帧，然后执行局部绑定以优化局部贴图点和关键帧姿态</li>
+<li>采用全局优化的方法进行检测和闭环，得到一致的映射。利用SIM（3）位姿图对视频和GPS时间戳之间的时差进行从粗到精的在线校准，并对估计的轨迹和地图点应用最终的相似变换。然后，在地图线的局部束优化中考虑了GPS约束，并用采样的地图点拟合镶嵌平面。</li>
+<li>贴图融合单元以增量方式将关键帧混合到马赛克平面中。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>论文阅读</tag>
       </tags>
   </entry>
   <entry>
@@ -6029,10 +6029,9 @@ Main(): Waited and joined with 3 threads. Final value of count = 145. Done.<span
       </tags>
   </entry>
   <entry>
-    <title>C++编程规范（一）</title>
+    <title>C++ 编程规范（一）</title>
     <url>/2022/04/05/cpp-notes-7/</url>
-    <content><![CDATA[<h1 id="C-编程规范（一）"><a href="#C-编程规范（一）" class="headerlink" title="C++编程规范（一）"></a>C++编程规范（一）</h1><p>[TOC]</p>
-<p>本文是我对于<a href="https://zh-google-styleguide.readthedocs.io/en/latest/">Google 开源项目风格指南——中文版</a>的学习笔记，在学习的过程中搬运和整理出了这篇文章。</p>
+    <content><![CDATA[<h1 id="C-编程规范（一）"><a href="#C-编程规范（一）" class="headerlink" title="C++ 编程规范（一）"></a>C++ 编程规范（一）</h1><p>本文是我对于<a href="https://zh-google-styleguide.readthedocs.io/en/latest/">Google 开源项目风格指南——中文版</a>的学习笔记，在学习的过程中搬运和整理出了这篇文章。</p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>编程规范是一个特别重要的问题。</p>
 <p>关于编程规范、代码风格相关的教程，网上已经特别丰富，本文仅做一个简单的介绍，期望读者阅读本文后能够对如何规范的用C++语言进行编程有一个基本的认知。</p>
 <p>如果想要更详细的介绍，可以参考：<a href="https://zh-google-styleguide.readthedocs.io/en/latest/">Google 开源项目风格指南——中文版</a>。</p>
@@ -6129,10 +6128,21 @@ Main(): Waited and joined with 3 threads. Final value of count = 145. Done.<span
 <h3 id="非成员函数、静态成员函数和全局函数"><a href="#非成员函数、静态成员函数和全局函数" class="headerlink" title="非成员函数、静态成员函数和全局函数"></a>非成员函数、静态成员函数和全局函数</h3><p>使用静态成员函数或命名空间内的非成员函数，尽量不要用裸的全局函数。</p>
 <p>将一系列函数直接置于命名空间中，不要用类的静态方法模拟出命名空间的效果，类的静态方法应当和类的实例或静态数据紧密相关。</p>
 <p>推荐：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">namespace</span> myproject <span class="token punctuation">{</span><span class="token keyword">namespace</span> foo_bar <span class="token punctuation">{</span><span class="token keyword">void</span> <span class="token function">Function1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">void</span> <span class="token function">Function2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span>  <span class="token comment">// namespace foo_bar}  // namespace myproject</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">namespace</span> myproject <span class="token punctuation">{</span>
+<span class="token keyword">namespace</span> foo_bar <span class="token punctuation">{</span>
+<span class="token keyword">void</span> <span class="token function">Function1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">Function2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>  <span class="token comment">// namespace foo_bar</span>
+<span class="token punctuation">}</span>  <span class="token comment">// namespace myproject</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>不推荐：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">namespace</span> myproject <span class="token punctuation">{</span><span class="token keyword">class</span> <span class="token class-name">FooBar</span> <span class="token punctuation">{</span> <span class="token keyword">public</span><span class="token operator">:</span>  <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Function1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Function2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span><span class="token punctuation">;</span><span class="token punctuation">}</span>  <span class="token comment">// namespace myproject</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">namespace</span> myproject <span class="token punctuation">{</span>
+<span class="token keyword">class</span> <span class="token class-name">FooBar</span> <span class="token punctuation">{</span>
+ <span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Function1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Function2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>  <span class="token comment">// namespace myproject</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>定义在同一编译单元的函数，被其他编译单元直接调用可能会引入不必要的耦合和链接时依赖；静态成员函数对此尤其敏感。可以考虑提取到新类中，或者将函数置于独立库的命名空间内。</p>
 <p>如果你必须定义非成员函数，又只是在 <code>.cc</code> 文件中使用它，可使用匿名 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/scoping/#namespaces">2.1. 命名空间</a> 或 <code>static</code> 链接关键字（如 <code>static int Foo() {...}</code>）限定其作用域。</p>
@@ -6153,10 +6163,17 @@ Main(): Waited and joined with 3 threads. Final value of count = 145. Done.<span
 
 <p><strong>例外：</strong></p>
 <p>有一个例外，如果变量是一个对象，每次进入作用域都要调用其构造函数，每次退出作用域都要调用其析构函数，这会导致效率降低。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 低效的实现for (int i = 0; i &lt; 1000000; ++i) {    Foo f;                  // 构造函数和析构函数分别调用 1000000 次!    f.DoSomething(i);}</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 低效的实现</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">1000000</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Foo f<span class="token punctuation">;</span>                  <span class="token comment">// 构造函数和析构函数分别调用 1000000 次!</span>
+    f<span class="token punctuation">.</span><span class="token function">DoSomething</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>在循环作用域外面声明这类变量要高效的多:</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Foo f<span class="token punctuation">;</span>                      <span class="token comment">// 构造函数和析构函数只调用 1 次for (int i = 0; i &lt; 1000000; ++i) {    f.DoSomething(i);}</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Foo f<span class="token punctuation">;</span>                      <span class="token comment">// 构造函数和析构函数只调用 1 次</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">1000000</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    f<span class="token punctuation">.</span><span class="token function">DoSomething</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="静态和全局变量"><a href="#静态和全局变量" class="headerlink" title="静态和全局变量"></a>静态和全局变量</h3><blockquote>
 <p>禁止定义静态储存周期非POD变量，禁止使用含有副作用的函数初始化POD全局变量，因为多编译单元中的静态变量执行时的构造和析构顺序是未明确的，这将导致代码的不可移植。</p>
@@ -6183,11 +6200,20 @@ Main(): Waited and joined with 3 threads. Final value of count = 145. Done.<span
 <p>不能以一个参数进行调用的构造函数不应当加上 <code>explicit</code>。接受一个 <code>std::initializer_list</code> 作为参数的构造函数也应当省略 <code>explicit</code>，以便支持拷贝初始化（）例如 <code>MyType m = {1, 2};</code>）。</p>
 <h3 id="可拷贝类型和可移动类型"><a href="#可拷贝类型和可移动类型" class="headerlink" title="可拷贝类型和可移动类型"></a>可拷贝类型和可移动类型</h3><p>如果需要就让你的类型可拷贝 / 可移动。作为一个经验法则，如果对于你的用户来说这个拷贝操作不是一眼就能看出来的，那就不要把类型设置为可拷贝。如果让类型可拷贝，一定要同时给出拷贝构造函数和赋值操作的定义，反之亦然。如果让类型可移动，同时移动操作的效率高于拷贝操作，那么就把移动的两个操作（移动构造函数和赋值操作）也给出定义。如果类型不可拷贝，但是移动操作的正确性对用户显然可见，那么把这个类型设置为只可移动并定义移动的两个操作。</p>
 <p>如果定义了拷贝/移动操作，则要保证这些操作的默认实现是正确的。记得时刻检查默认操作的正确性，并且在文档中说明类是可拷贝的且/或可移动的。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Foo</span> <span class="token punctuation">{</span> <span class="token keyword">public</span><span class="token operator">:</span>  <span class="token function">Foo</span><span class="token punctuation">(</span>Foo<span class="token operator">&amp;&amp;</span> other<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">field_</span><span class="token punctuation">(</span>other<span class="token punctuation">.</span>field<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>  <span class="token comment">// 差，只定义了移动构造函数，而没有定义对应的赋值运算符. private:  Field field_;};</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Foo</span> <span class="token punctuation">{</span>
+ <span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token function">Foo</span><span class="token punctuation">(</span>Foo<span class="token operator">&amp;&amp;</span> other<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">field_</span><span class="token punctuation">(</span>other<span class="token punctuation">.</span>field<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token comment">// 差，只定义了移动构造函数，而没有定义对应的赋值运算符.</span>
+
+ <span class="token keyword">private</span><span class="token operator">:</span>
+  Field field_<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>由于存在对象切割的风险，不要为任何有可能有派生类的对象提供赋值操作或者拷贝 / 移动构造函数（当然也不要继承有这样的成员函数的类）。如果你的基类需要可复制属性，请提供一个 <code>public virtual Clone()</code> 和一个 <code>protected</code> 的拷贝构造函数以供派生类实现。</p>
 <p>如果你的类不需要拷贝 / 移动操作，请显式地通过在 <code>public</code> 域中使用 <code>= delete</code> 或其他手段禁用之。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// MyClass is neither copyable nor movable.MyClass(const MyClass&amp;) = delete;MyClass&amp; operator=(const MyClass&amp;) = delete;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// MyClass is neither copyable nor movable.</span>
+<span class="token function">MyClass</span><span class="token punctuation">(</span><span class="token keyword">const</span> MyClass<span class="token operator">&amp;</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">delete</span><span class="token punctuation">;</span>
+MyClass<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> MyClass<span class="token operator">&amp;</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">delete</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="结构体-VS-类"><a href="#结构体-VS-类" class="headerlink" title="结构体 VS. 类"></a>结构体 VS. 类</h3><p>仅当只有数据成员时使用 <code>struct</code>， 其它一概使用 <code>class</code>。</p>
 <p>在 C++ 中 <code>struct</code> 和 <code>class</code> 关键字几乎含义一样。我们为这两个关键字添加我们自己的语义理解，以便为定义的数据类型选择合适的关键字。</p>
@@ -6214,9 +6240,16 @@ Main(): Waited and joined with 3 threads. Final value of count = 145. Done.<span
 <p>命名规则具有一定随意性，但相比按个人喜好命名，一致性更重要，所以无论你认为它们是否重要，规则总归是规则。</p>
 <h3 id="通用命名规则"><a href="#通用命名规则" class="headerlink" title="通用命名规则"></a>通用命名规则</h3><p>函数命名，变量命名，文件命名要有描述性；少用缩写。</p>
 <p>尽可能使用描述性的命名，别心疼空间，毕竟相比之下让代码易于新读者理解更重要。不要用只有项目开发者能理解的缩写，也不要通过砍掉几个字母来缩写单词。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> price_count_reader<span class="token punctuation">;</span>    <span class="token comment">// 无缩写int num_errors;            // "num" 是一个常见的写法int num_dns_connections;   // 人人都知道 "DNS" 是什么</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> price_count_reader<span class="token punctuation">;</span>    <span class="token comment">// 无缩写</span>
+<span class="token keyword">int</span> num_errors<span class="token punctuation">;</span>            <span class="token comment">// "num" 是一个常见的写法</span>
+<span class="token keyword">int</span> num_dns_connections<span class="token punctuation">;</span>   <span class="token comment">// 人人都知道 "DNS" 是什么</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> n<span class="token punctuation">;</span>                     <span class="token comment">// 毫无意义.int nerr;                  // 含糊不清的缩写.int n_comp_conns;          // 含糊不清的缩写.int wgc_connections;       // 只有贵团队知道是什么意思.int pc_reader;             // "pc" 有太多可能的解释了.int cstmr_id;              // 删减了若干字母.</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> n<span class="token punctuation">;</span>                     <span class="token comment">// 毫无意义.</span>
+<span class="token keyword">int</span> nerr<span class="token punctuation">;</span>                  <span class="token comment">// 含糊不清的缩写.</span>
+<span class="token keyword">int</span> n_comp_conns<span class="token punctuation">;</span>          <span class="token comment">// 含糊不清的缩写.</span>
+<span class="token keyword">int</span> wgc_connections<span class="token punctuation">;</span>       <span class="token comment">// 只有贵团队知道是什么意思.</span>
+<span class="token keyword">int</span> pc_reader<span class="token punctuation">;</span>             <span class="token comment">// "pc" 有太多可能的解释了.</span>
+<span class="token keyword">int</span> cstmr_id<span class="token punctuation">;</span>              <span class="token comment">// 删减了若干字母.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>注意，一些特定的广为人知的缩写是允许的，例如用 <code>i</code> 表示迭代变量和用 <code>T</code> 表示模板参数。</p>
 <p>模板参数的命名应当遵循对应的分类：类型模板参数应当遵循 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/#type-names">类型命名</a> 的规则，而非类型模板应当遵循 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/#variable-names">变量命名</a> 的规则。</p>
@@ -6238,16 +6271,41 @@ Main(): Waited and joined with 3 threads. Final value of count = 145. Done.<span
 <p>内联函数必须放在 <code>.h</code> 文件中。如果内联函数比较短，就直接放在 <code>.h</code> 中。</p>
 <h3 id="类型命名"><a href="#类型命名" class="headerlink" title="类型命名"></a>类型命名</h3><p>类型名称的每个单词首字母均大写，不包含下划线：<code>MyExcitingClass</code>，<code>MyExcitingEnum</code>。</p>
 <p>所有类型命名 —— 类，结构体，类型定义 (<code>typedef</code>)，枚举，类型模板参数 —— 均使用相同约定，即以大写字母开始，每个单词首字母均大写，不包含下划线。例如：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 类和结构体class UrlTable { ...class UrlTableTester { ...struct UrlTableProperties { ...// 类型定义typedef hash_map&lt;UrlTableProperties *, string&gt; PropertiesMap;// using 别名using PropertiesMap = hash_map&lt;UrlTableProperties *, string&gt;;// 枚举enum UrlTableErrors { ...</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 类和结构体</span>
+<span class="token keyword">class</span> <span class="token class-name">UrlTable</span> <span class="token punctuation">{</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">class</span> <span class="token class-name">UrlTableTester</span> <span class="token punctuation">{</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">struct</span> <span class="token class-name">UrlTableProperties</span> <span class="token punctuation">{</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+<span class="token comment">// 类型定义</span>
+<span class="token keyword">typedef</span> hash_map<span class="token operator">&lt;</span>UrlTableProperties <span class="token operator">*</span><span class="token punctuation">,</span> string<span class="token operator">&gt;</span> PropertiesMap<span class="token punctuation">;</span>
+
+<span class="token comment">// using 别名</span>
+<span class="token keyword">using</span> PropertiesMap <span class="token operator">=</span> hash_map<span class="token operator">&lt;</span>UrlTableProperties <span class="token operator">*</span><span class="token punctuation">,</span> string<span class="token operator">&gt;</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 枚举</span>
+<span class="token keyword">enum</span> <span class="token class-name">UrlTableErrors</span> <span class="token punctuation">{</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="变量命名"><a href="#变量命名" class="headerlink" title="变量命名"></a>变量命名</h3><p>变量（包括函数参数）和数据成员名一律小写，单词之间用下划线连接。类的成员变量以下划线结尾，但结构体的就不用，如：<code>a_local_variable</code>，<code>a_struct_data_member</code>，<code>a_class_data_member_</code>。</p>
-<h3 id="普通变量命名"><a href="#普通变量命名" class="headerlink" title="普通变量命名"></a>普通变量命名</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string table_name<span class="token punctuation">;</span>  <span class="token comment">// 好 - 用下划线.string tablename;   // 好 - 全小写.string tableName;  // 差 - 混合大小写</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="普通变量命名"><a href="#普通变量命名" class="headerlink" title="普通变量命名"></a>普通变量命名</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string table_name<span class="token punctuation">;</span>  <span class="token comment">// 好 - 用下划线.</span>
+string tablename<span class="token punctuation">;</span>   <span class="token comment">// 好 - 全小写.</span>
+
+string tableName<span class="token punctuation">;</span>  <span class="token comment">// 差 - 混合大小写</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="类数据成员"><a href="#类数据成员" class="headerlink" title="类数据成员"></a>类数据成员</h3><p>不管是静态的还是非静态的，类数据成员都可以和普通变量一样，但要接下划线。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">TableInfo</span> <span class="token punctuation">{</span>  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token keyword">private</span><span class="token operator">:</span>  string table_name_<span class="token punctuation">;</span>  <span class="token comment">// 好 - 后加下划线.  string tablename_;   // 好.  static Pool&lt;TableInfo&gt;* pool_;  // 好.};</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">TableInfo</span> <span class="token punctuation">{</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+ <span class="token keyword">private</span><span class="token operator">:</span>
+  string table_name_<span class="token punctuation">;</span>  <span class="token comment">// 好 - 后加下划线.</span>
+  string tablename_<span class="token punctuation">;</span>   <span class="token comment">// 好.</span>
+  <span class="token keyword">static</span> Pool<span class="token operator">&lt;</span>TableInfo<span class="token operator">&gt;</span><span class="token operator">*</span> pool_<span class="token punctuation">;</span>  <span class="token comment">// 好.</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="结构体变量"><a href="#结构体变量" class="headerlink" title="结构体变量"></a>结构体变量</h3><p>不管是静态的还是非静态的，结构体数据成员都可以和普通变量一样，不用像类那样接下划线：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">UrlTableProperties</span> <span class="token punctuation">{</span>  string name<span class="token punctuation">;</span>  <span class="token keyword">int</span> num_entries<span class="token punctuation">;</span>  <span class="token keyword">static</span> Pool<span class="token operator">&lt;</span>UrlTableProperties<span class="token operator">&gt;</span><span class="token operator">*</span> pool<span class="token punctuation">;</span><span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">UrlTableProperties</span> <span class="token punctuation">{</span>
+  string name<span class="token punctuation">;</span>
+  <span class="token keyword">int</span> num_entries<span class="token punctuation">;</span>
+  <span class="token keyword">static</span> Pool<span class="token operator">&lt;</span>UrlTableProperties<span class="token operator">&gt;</span><span class="token operator">*</span> pool<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>结构体与类的使用讨论，参考 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/classes/#structs-vs-classes">结构体 vs. 类</a>。</p>
 <h3 id="常量命名"><a href="#常量命名" class="headerlink" title="常量命名"></a>常量命名</h3><p>声明为 <code>constexpr</code> 或 <code>const</code> 的变量，或在程序运行期间其值始终保持不变的，命名时以 “k” 开头，大小写混合。例如：</p>
@@ -6256,7 +6314,9 @@ Main(): Waited and joined with 3 threads. Final value of count = 145. Done.<span
 <p>所有具有静态存储类型的变量（例如静态变量或全局变量， 参见 <a href="http://en.cppreference.com/w/cpp/language/storage_duration#Storage_duration">存储类型</a>）都应当以此方式命名。对于其他存储类型的变量，如自动变量等，这条规则是可选的。如果不采用这条规则，就按照一般的变量命名规则。</p>
 <h3 id="函数命名"><a href="#函数命名" class="headerlink" title="函数命名"></a>函数命名</h3><p>常规函数使用大小写混合，取值和设值函数则要求与变量名匹配：<code>MyExcitingFunction()</code>，<code>MyExcitingMethod()</code>，<code>my_exciting_member_variable()</code>，<code>set_my_exciting_member_variable()</code>。</p>
 <p>一般来说，函数名的每个单词首字母大写（即 “驼峰变量名” 或 “帕斯卡变量名”），没有下划线。对于首字母缩写的单词，更倾向于将它们视作一个单词进行首字母大写（例如，写作 <code>StartRpc()</code> 而非 <code>StartRPC()</code>）。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">AddTableEntry</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token function">DeleteUrl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token function">OpenFileOrDie</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">AddTableEntry</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token function">DeleteUrl</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token function">OpenFileOrDie</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>（同样的命名规则同时适用于类作用域与命名空间作用域的常量， 因为它们是作为 API 的一部分暴露对外的， 因此应当让它们看起来像是一个函数， 因为在这时， 它们实际上是一个对象而非函数的这一事实对外不过是一个无关紧要的实现细节。）</p>
 <p>取值和设值函数的命名与变量一致。一般来说它们的名称与实际的成员变量对应， 但并不强制要求。例如 <code>int count()</code> 与 <code>void set_count(int count)</code>。</p>
@@ -6267,20 +6327,28 @@ Main(): Waited and joined with 3 threads. Final value of count = 145. Done.<span
 <p>对于 <code>internal</code> 命名空间， 要当心加入到同一 <code>internal</code> 命名空间的代码之间发生冲突 （由于内部维护人员通常来自同一团队， 因此常有可能导致冲突）。在这种情况下， 请使用文件名以使得内部名称独一无二 （例如对于 <code>frobber.h</code>， 使用 <code>websearch::index::frobber_internal</code>）。</p>
 <h3 id="枚举命名"><a href="#枚举命名" class="headerlink" title="枚举命名"></a>枚举命名</h3><p>枚举的命名应当和 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/#constant-names">常量</a> 或 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/#macro-names">宏</a> 一致: <code>kEnumName</code> 或是 <code>ENUM_NAME</code>。</p>
 <p>单独的枚举值应该优先采用 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/#constant-names">常量</a> 的命名方式。但 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/#macro-names">宏</a> 方式的命名也可以接受。枚举名 <code>UrlTableErrors</code> （以及 <code>AlternateUrlTableErrors</code>） 是类型， 所以要用大小写混合的方式。</p>
-<pre class="line-numbers language-none"><code class="language-none">enum UrlTableErrors {    kOK = 0,    kErrorOutOfMemory,    kErrorMalformedInput,};enum AlternateUrlTableErrors {    OK = 0,    OUT_OF_MEMORY = 1,    MALFORMED_INPUT = 2,};<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">enum</span> <span class="token class-name">UrlTableErrors</span> <span class="token punctuation">{</span>
+    kOK <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    kErrorOutOfMemory<span class="token punctuation">,</span>
+    kErrorMalformedInput<span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">enum</span> <span class="token class-name">AlternateUrlTableErrors</span> <span class="token punctuation">{</span>
+    OK <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    OUT_OF_MEMORY <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    MALFORMED_INPUT <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>2009 年 1 月之前， 我们一直建议采用 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/#macro-names">宏</a> 的方式命名枚举值。由于枚举值和宏之间的命名冲突， 直接导致了很多问题。由此， 这里改为优先选择常量风格的命名方式。新代码应该尽可能优先使用常量风格。但是老代码没必要切换到常量风格， 除非宏风格确实会产生编译期问题。</p>
 <h3 id="宏命名"><a href="#宏命名" class="headerlink" title="宏命名"></a>宏命名</h3><p>你并不打算 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/others/#preprocessor-macros">使用宏</a>， 对吧? 如果你一定要用， 像这样命名: <code>MY_MACRO_THAT_SCARES_SMALL_CHILDREN</code>。</p>
 <p>参考 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/others/#preprocessor-macros">预处理宏</a>； 通常 <em>不应该</em> 使用宏。如果不得不用， 其命名像枚举命名一样全部大写， 使用下划线:</p>
-<pre class="line-numbers language-none"><code class="language-none">#define ROUND(x) ...#define PI_ROUNDED 3.0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">ROUND</span><span class="token expression"><span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>#define PI_ROUNDED <span class="token number">3.0</span></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h3 id="命名规则的特例"><a href="#命名规则的特例" class="headerlink" title="命名规则的特例"></a>命名规则的特例</h3><p>如果你命名的实体与已有 C/C++ 实体相似， 可参考现有命名策略.</p>
 <p><code>bigopen()</code>: 函数名， 参照 <code>open()</code> 的形式</p>
-<pre class="line-numbers language-none"><code class="language-none">uint`: `typedef<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
+<p><code>uint</code>: <code>typedef</code></p>
 <p><code>bigpos</code>: <code>struct</code> 或 <code>class</code>， 参照 <code>pos</code> 的形式</p>
 <p><code>sparse_hash_map</code>: STL 型实体； 参照 STL 命名约定</p>
-<pre class="line-numbers language-none"><code class="language-none">LONGLONG_MAX`: 常量， 如同 `INT_MAX<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><code>LONGLONG_MAX</code>: 常量， 如同 <code>INT_MAX</code></p>
 ]]></content>
       <categories>
         <category>C++</category>
