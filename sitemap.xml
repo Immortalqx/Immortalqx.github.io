@@ -317,7 +317,7 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/categories/index.html</loc>
+    <loc>http://immortalqx.github.io/friends/index.html</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -331,7 +331,7 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/friends/index.html</loc>
+    <loc>http://immortalqx.github.io/categories/index.html</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -387,13 +387,6 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/07/18/ros-notes-5/</loc>
-    
-    <lastmod>2022-01-11</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://immortalqx.github.io/2021/07/18/ros-notes-4/</loc>
     
     <lastmod>2022-01-11</lastmod>
@@ -401,7 +394,7 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/07/27/uav-notes-1/</loc>
+    <loc>http://immortalqx.github.io/2021/07/18/ros-notes-5/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -409,6 +402,13 @@
   
   <url>
     <loc>http://immortalqx.github.io/2021/08/22/aerial-note-0/</loc>
+    
+    <lastmod>2022-01-11</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/2021/07/27/uav-notes-1/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -550,6 +550,13 @@
   </url>
   
   <url>
+    <loc>http://immortalqx.github.io/tags/%E8%88%AA%E6%8B%8D/</loc>
+    <lastmod>2022-04-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://immortalqx.github.io/tags/PIXHAWK/</loc>
     <lastmod>2022-04-07</lastmod>
     <changefreq>daily</changefreq>
@@ -558,13 +565,6 @@
   
   <url>
     <loc>http://immortalqx.github.io/tags/APM/</loc>
-    <lastmod>2022-04-07</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/tags/%E8%88%AA%E6%8B%8D/</loc>
     <lastmod>2022-04-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

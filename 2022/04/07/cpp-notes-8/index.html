@@ -510,16 +510,16 @@
 <p>不要在 <code>.h</code> 和 <code>.cc</code> 之间复制注释, 这样的注释偏离了注释的实际意义.</p>
 <h3 id="类注释"><a href="#类注释" class="headerlink" title="类注释"></a>类注释</h3><p><strong>总述</strong></p>
 <p>每个类的定义都要附带一份注释, 描述类的功能和用法, 除非它的功能相当明显.</p>
-<pre class="line-numbers language-none"><code class="language-none">// Iterates over the contents of a GargantuanTable.
-// Example:
-//    GargantuanTableIterator* iter = table-&gt;NewIterator();
-//    for (iter-&gt;Seek("foo"); !iter-&gt;done(); iter-&gt;Next()) {
-//      process(iter-&gt;key(), iter-&gt;value());
-//    }
-//    delete iter;
-class GargantuanTableIterator {
-  ...
-};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// Iterates over the contents of a GargantuanTable.</span>
+<span class="token comment">// Example:</span>
+<span class="token comment">//    GargantuanTableIterator* iter = table-&gt;NewIterator();</span>
+<span class="token comment">//    for (iter-&gt;Seek("foo"); !iter-&gt;done(); iter-&gt;Next()) {</span>
+<span class="token comment">//      process(iter-&gt;key(), iter-&gt;value());</span>
+<span class="token comment">//    }</span>
+<span class="token comment">//    delete iter;</span>
+<span class="token keyword">class</span> <span class="token class-name">GargantuanTableIterator</span> <span class="token punctuation">{</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>说明</strong></p>
 <p>类注释应当为读者理解如何使用与何时使用类提供足够的信息, 同时应当提醒读者在正确使用此类时应当考虑的因素. 如果类有任何同步前提, 请用文档说明. 如果该类的实例可被多线程访问, 要特别注意文档说明多线程环境下相关的规则和常量使用.</p>
@@ -539,25 +539,25 @@ class GargantuanTableIterator {
 <li>如果函数是可重入的, 其同步前提是什么?</li>
 </ul>
 <p>举例如下:</p>
-<pre class="line-numbers language-none"><code class="language-none">// Returns an iterator for this table.  It is the client's
-// responsibility to delete the iterator when it is done with it,
-// and it must not use the iterator once the GargantuanTable object
-// on which the iterator was created has been deleted.
-//
-// The iterator is initially positioned at the beginning of the table.
-//
-// This method is equivalent to:
-//    Iterator* iter = table-&gt;NewIterator();
-//    iter-&gt;Seek("");
-//    return iter;
-// If you are going to immediately seek to another place in the
-// returned iterator, it will be faster to use NewIterator()
-// and avoid the extra seek.
-Iterator* GetIterator() const;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// Returns an iterator for this table.  It is the client's</span>
+<span class="token comment">// responsibility to delete the iterator when it is done with it,</span>
+<span class="token comment">// and it must not use the iterator once the GargantuanTable object</span>
+<span class="token comment">// on which the iterator was created has been deleted.</span>
+<span class="token comment">//</span>
+<span class="token comment">// The iterator is initially positioned at the beginning of the table.</span>
+<span class="token comment">//</span>
+<span class="token comment">// This method is equivalent to:</span>
+<span class="token comment">//    Iterator* iter = table-&gt;NewIterator();</span>
+<span class="token comment">//    iter-&gt;Seek("");</span>
+<span class="token comment">//    return iter;</span>
+<span class="token comment">// If you are going to immediately seek to another place in the</span>
+<span class="token comment">// returned iterator, it will be faster to use NewIterator()</span>
+<span class="token comment">// and avoid the extra seek.</span>
+Iterator<span class="token operator">*</span> <span class="token function">GetIterator</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>但也要避免罗罗嗦嗦, 或者对显而易见的内容进行说明. 下面的注释就没有必要加上 “否则返回 false”, 因为已经暗含其中了:</p>
-<pre class="line-numbers language-none"><code class="language-none">// Returns true if the table cannot hold any more entries.
-bool IsTableFull();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// Returns true if the table cannot hold any more entries.</span>
+<span class="token keyword">bool</span> <span class="token function">IsTableFull</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>注释函数重载时, 注释的重点应该是函数中被重载的部分, 而不是简单的重复被重载的函数的注释. 多数情况下, 函数重载不需要额外的文档, 因此也没有必要加上注释.</p>
 <p>注释构造/析构函数时, 切记读代码的人知道构造/析构函数的功能, 所以 “销毁这一对象” 这样的注释是没有意义的. 你应当注明的是注明构造函数对参数做了什么 (例如, 是否取得指针所有权) 以及析构函数清理了什么. 如果都是些无关紧要的内容, 直接省掉注释. 析构函数前没有注释是很正常的.</p>
@@ -568,47 +568,47 @@ bool IsTableFull();<span aria-hidden="true" class="line-numbers-rows"><span></sp
 <p><strong>说明</strong></p>
 <h4 id="类数据成员"><a href="#类数据成员" class="headerlink" title="类数据成员"></a>类数据成员</h4><p>每个类数据成员 (也叫实例变量或成员变量) 都应该用注释说明用途. 如果有非变量的参数(例如特殊值, 数据成员之间的关系, 生命周期等)不能够用类型与变量名明确表达, 则应当加上注释. 然而, 如果变量类型与变量名已经足以描述一个变量, 那么就不再需要加上注释.</p>
 <p>特别地, 如果变量可以接受 <code>NULL</code> 或 <code>-1</code> 等警戒值, 须加以说明. 比如:</p>
-<pre class="line-numbers language-none"><code class="language-none">private:
- // Used to bounds-check table accesses. -1 means
- // that we don't yet know how many entries the table has.
- int num_total_entries_;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">private</span><span class="token operator">:</span>
+ <span class="token comment">// Used to bounds-check table accesses. -1 means</span>
+ <span class="token comment">// that we don't yet know how many entries the table has.</span>
+ <span class="token keyword">int</span> num_total_entries_<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h4><p>和数据成员一样, 所有全局变量也要注释说明含义及用途, 以及作为全局变量的原因. 比如:</p>
-<pre class="line-numbers language-none"><code class="language-none">// The total number of tests cases that we run through in this regression test.
-const int kNumTestCases = 6;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// The total number of tests cases that we run through in this regression test.</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> kNumTestCases <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <h3 id="实现注释"><a href="#实现注释" class="headerlink" title="实现注释"></a>实现注释</h3><p><strong>总述</strong></p>
 <p>对于代码中巧妙的, 晦涩的, 有趣的, 重要的地方加以注释.</p>
 <p><strong>说明</strong></p>
 <h4 id="代码前注释"><a href="#代码前注释" class="headerlink" title="代码前注释"></a>代码前注释</h4><p>巧妙或复杂的代码段前要加注释. 比如:</p>
-<pre class="line-numbers language-none"><code class="language-none">// Divide result by two, taking into account that x
-// contains the carry from the add.
-for (int i = 0; i &lt; result-&gt;size(); i++) {
-  x = (x &lt;&lt; 8) + (*result)[i];
-  (*result)[i] = x &gt;&gt; 1;
-  x &amp;= 1;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// Divide result by two, taking into account that x</span>
+<span class="token comment">// contains the carry from the add.</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> result<span class="token operator">-&gt;</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  x <span class="token operator">=</span> <span class="token punctuation">(</span>x <span class="token operator">&lt;&lt;</span> <span class="token number">8</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token operator">*</span>result<span class="token punctuation">)</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">(</span><span class="token operator">*</span>result<span class="token punctuation">)</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> x <span class="token operator">&gt;&gt;</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  x <span class="token operator">&amp;=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="行注释"><a href="#行注释" class="headerlink" title="行注释"></a>行注释</h4><p>比较隐晦的地方要在行尾加入注释. 在行尾空两格进行注释. 比如:</p>
-<pre class="line-numbers language-none"><code class="language-none">// If we have enough memory, mmap the data portion too.
-mmap_budget = max&lt;int64&gt;(0, mmap_budget - index_-&gt;length());
-if (mmap_budget &gt;= data_size_ &amp;&amp; !MmapData(mmap_chunk_bytes, mlock))
-  return;  // Error already logged.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// If we have enough memory, mmap the data portion too.</span>
+mmap_budget <span class="token operator">=</span> <span class="token generic-function"><span class="token function">max</span><span class="token generic class-name"><span class="token operator">&lt;</span>int64<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> mmap_budget <span class="token operator">-</span> index_<span class="token operator">-&gt;</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>mmap_budget <span class="token operator">&gt;=</span> data_size_ <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token function">MmapData</span><span class="token punctuation">(</span>mmap_chunk_bytes<span class="token punctuation">,</span> mlock<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span><span class="token punctuation">;</span>  <span class="token comment">// Error already logged.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>注意, 这里用了两段注释分别描述这段代码的作用, 和提示函数返回时错误已经被记入日志.</p>
 <p>如果你需要连续进行多行注释, 可以使之对齐获得更好的可读性:</p>
-<pre class="line-numbers language-none"><code class="language-none">DoSomething();                  // Comment here so the comments line up.
-DoSomethingElseThatIsLonger();  // Two spaces between the code and the comment.
-{ // One space before comment when opening a new scope is allowed,
-  // thus the comment lines up with the following comments and code.
-  DoSomethingElse();  // Two spaces before line comments normally.
-}
-std::vector&lt;string&gt; list{
-                    // Comments in braced lists describe the next element...
-                    "First item",
-                    // .. and should be aligned appropriately.
-"Second item"};
-DoSomething(); /* For trailing block comments, one space is fine. */<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">DoSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                  <span class="token comment">// Comment here so the comments line up.</span>
+<span class="token function">DoSomethingElseThatIsLonger</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// Two spaces between the code and the comment.</span>
+<span class="token punctuation">{</span> <span class="token comment">// One space before comment when opening a new scope is allowed,</span>
+  <span class="token comment">// thus the comment lines up with the following comments and code.</span>
+  <span class="token function">DoSomethingElse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// Two spaces before line comments normally.</span>
+<span class="token punctuation">}</span>
+std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>string<span class="token operator">&gt;</span> list<span class="token punctuation">{</span>
+                    <span class="token comment">// Comments in braced lists describe the next element...</span>
+                    <span class="token string">"First item"</span><span class="token punctuation">,</span>
+                    <span class="token comment">// .. and should be aligned appropriately.</span>
+<span class="token string">"Second item"</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token function">DoSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/* For trailing block comments, one space is fine. */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="函数参数注释"><a href="#函数参数注释" class="headerlink" title="函数参数注释"></a>函数参数注释</h4><p>如果函数参数的意义不明显, 考虑用下面的方式进行弥补:</p>
 <ul>
@@ -619,22 +619,37 @@ DoSomething(); /* For trailing block comments, one space is fine. */<span aria-h
 <li>万不得已时, 才考虑在调用点用注释阐明参数的意义.</li>
 </ul>
 <p>比如下面的示例的对比:</p>
-<pre class="line-numbers language-none"><code class="language-none">// What are these arguments?const DecimalNumber product = CalculateProduct(values, 7, false, nullptr);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// What are these arguments?</span>
+<span class="token keyword">const</span> DecimalNumber product <span class="token operator">=</span> <span class="token function">CalculateProduct</span><span class="token punctuation">(</span>values<span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>和</p>
-<pre class="line-numbers language-none"><code class="language-none">ProductOptions options;options.set_precision_decimals(7);options.set_use_cache(ProductOptions::kDontUseCache);const DecimalNumber product =    CalculateProduct(values, options, /*completion_callback=*/nullptr);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ProductOptions options<span class="token punctuation">;</span>
+options<span class="token punctuation">.</span><span class="token function">set_precision_decimals</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+options<span class="token punctuation">.</span><span class="token function">set_use_cache</span><span class="token punctuation">(</span>ProductOptions<span class="token double-colon punctuation">::</span>kDontUseCache<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> DecimalNumber product <span class="token operator">=</span>
+    <span class="token function">CalculateProduct</span><span class="token punctuation">(</span>values<span class="token punctuation">,</span> options<span class="token punctuation">,</span> <span class="token comment">/*completion_callback=*/</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>哪个更清晰一目了然.</p>
 <h4 id="不允许的行为"><a href="#不允许的行为" class="headerlink" title="不允许的行为"></a>不允许的行为</h4><p>不要描述显而易见的现象, <em>永远不要</em> 用自然语言翻译代码作为注释, 除非即使对深入理解 C++ 的读者来说代码的行为都是不明显的. 要假设读代码的人 C++ 水平比你高, 即便他/她可能不知道你的用意:</p>
 <p>你所提供的注释应当解释代码 <em>为什么</em> 要这么做和代码的目的, 或者最好是让代码自文档化.</p>
 <p>比较这样的注释:</p>
-<pre class="line-numbers language-none"><code class="language-none">// Find the element in the vector.  &lt;-- 差: 这太明显了!auto iter = std::find(v.begin(), v.end(), element);if (iter != v.end()) {  Process(element);}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// Find the element in the vector.  &lt;-- 差: 这太明显了!</span>
+<span class="token keyword">auto</span> iter <span class="token operator">=</span> std<span class="token double-colon punctuation">::</span><span class="token function">find</span><span class="token punctuation">(</span>v<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> v<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> element<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>iter <span class="token operator">!=</span> v<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">Process</span><span class="token punctuation">(</span>element<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>和这样的注释:</p>
-<pre class="line-numbers language-none"><code class="language-none">// Process "element" unless it was already processed.auto iter = std::find(v.begin(), v.end(), element);if (iter != v.end()) {  Process(element);}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// Process "element" unless it was already processed.</span>
+<span class="token keyword">auto</span> iter <span class="token operator">=</span> std<span class="token double-colon punctuation">::</span><span class="token function">find</span><span class="token punctuation">(</span>v<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> v<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> element<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>iter <span class="token operator">!=</span> v<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">Process</span><span class="token punctuation">(</span>element<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>自文档化的代码根本就不需要注释. 上面例子中的注释对下面的代码来说就是毫无必要的:</p>
-<pre class="line-numbers language-none"><code class="language-none">if (!IsAlreadyProcessed(element)) {  Process(element);}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">IsAlreadyProcessed</span><span class="token punctuation">(</span>element<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">Process</span><span class="token punctuation">(</span>element<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="标点-拼写和语法"><a href="#标点-拼写和语法" class="headerlink" title="标点, 拼写和语法"></a>标点, 拼写和语法</h3><p><strong>总述</strong></p>
 <p>注意标点, 拼写和语法; 写的好的注释比差的要易读的多.</p>
@@ -644,7 +659,9 @@ DoSomething(); /* For trailing block comments, one space is fine. */<span aria-h
 <h3 id="TODO-注释"><a href="#TODO-注释" class="headerlink" title="TODO 注释"></a>TODO 注释</h3><p><strong>总述</strong></p>
 <p>对那些临时的, 短期的解决方案, 或已经够好但仍不完美的代码使用 <code>TODO</code> 注释.</p>
 <p><code>TODO</code> 注释要使用全大写的字符串 <code>TODO</code>, 在随后的圆括号里写上你的名字, 邮件地址, bug ID, 或其它身份标识和与这一 <code>TODO</code> 相关的 issue. 主要目的是让添加注释的人 (也是可以请求提供更多细节的人) 可根据规范的 <code>TODO</code> 格式进行查找. 添加 <code>TODO</code> 注释并不意味着你要自己来修正, 因此当你加上带有姓名的 <code>TODO</code> 时, 一般都是写上自己的名字.</p>
-<pre class="line-numbers language-none"><code class="language-none">// TODO(kl@gmail.com): Use a "*" here for concatenation operator.// TODO(Zeke) change this to use relations.// TODO(bug 12345): remove the "Last visitors" feature<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// TODO(kl@gmail.com): Use a "*" here for concatenation operator.</span>
+<span class="token comment">// TODO(Zeke) change this to use relations.</span>
+<span class="token comment">// TODO(bug 12345): remove the "Last visitors" feature</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>如果加 <code>TODO</code> 是为了在 “将来某一天做某事”, 可以附上一个非常明确的时间 “Fix by November 2005”), 或者一个明确的事项 (“Remove this code when all clients can handle XML responses.”).</p>
 <h3 id="弃用注释"><a href="#弃用注释" class="headerlink" title="弃用注释"></a>弃用注释</h3><p><strong>总述</strong></p>
@@ -684,13 +701,26 @@ DoSomething(); /* For trailing block comments, one space is fine. */<span aria-h
 <p>返回类型和函数名在同一行, 参数也尽量放在同一行, 如果放不下就对形参分行, 分行方式与 <a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/formatting/#function-calls">函数调用</a> 一致.</p>
 <p><strong>说明</strong></p>
 <p>函数看上去像这样:</p>
-<pre class="line-numbers language-none"><code class="language-none">ReturnType ClassName::FunctionName(Type par_name1, Type par_name2) {  DoSomething();  ...}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ReturnType <span class="token class-name">ClassName</span><span class="token double-colon punctuation">::</span><span class="token function">FunctionName</span><span class="token punctuation">(</span>Type par_name1<span class="token punctuation">,</span> Type par_name2<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">DoSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>如果同一行文本太多, 放不下所有参数:</p>
-<pre class="line-numbers language-none"><code class="language-none">ReturnType ClassName::ReallyLongFunctionName(Type par_name1, Type par_name2,                                             Type par_name3) {  DoSomething();  ...}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ReturnType <span class="token class-name">ClassName</span><span class="token double-colon punctuation">::</span><span class="token function">ReallyLongFunctionName</span><span class="token punctuation">(</span>Type par_name1<span class="token punctuation">,</span> Type par_name2<span class="token punctuation">,</span>
+                                             Type par_name3<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">DoSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>甚至连第一个参数都放不下:</p>
-<pre class="line-numbers language-none"><code class="language-none">ReturnType LongClassName::ReallyReallyReallyLongFunctionName(    Type par_name1,  // 4 space indent    Type par_name2,    Type par_name3) {  DoSomething();  // 2 space indent  ...}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ReturnType <span class="token class-name">LongClassName</span><span class="token double-colon punctuation">::</span><span class="token function">ReallyReallyReallyLongFunctionName</span><span class="token punctuation">(</span>
+    Type par_name1<span class="token punctuation">,</span>  <span class="token comment">// 4 space indent</span>
+    Type par_name2<span class="token punctuation">,</span>
+    Type par_name3<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">DoSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 2 space indent</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>注意以下几点:</p>
 <ul>
@@ -709,22 +739,46 @@ DoSomething(); /* For trailing block comments, one space is fine. */<span aria-h
 <li>换行后的参数保持 4 个空格的缩进.</li>
 </ul>
 <p>未被使用的参数, 或者根据上下文很容易看出其用途的参数, 可以省略参数名:</p>
-<pre class="line-numbers language-none"><code class="language-none">class Foo { public:  Foo(Foo&amp;&amp;);  Foo(const Foo&amp;);  Foo&amp; operator=(Foo&amp;&amp;);  Foo&amp; operator=(const Foo&amp;);};<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Foo</span> <span class="token punctuation">{</span>
+ <span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token function">Foo</span><span class="token punctuation">(</span>Foo<span class="token operator">&amp;&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token keyword">const</span> Foo<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  Foo<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span>Foo<span class="token operator">&amp;&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  Foo<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> Foo<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>未被使用的参数如果其用途不明显的话, 在函数定义处将参数名注释起来:</p>
-<pre class="line-numbers language-none"><code class="language-none">class Shape { public:  virtual void Rotate(double radians) = 0;};class Circle : public Shape { public:  void Rotate(double radians) override;};void Circle::Rotate(double /*radians*/) {}// 差 - 如果将来有人要实现, 很难猜出变量的作用.void Circle::Rotate(double) {}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Shape</span> <span class="token punctuation">{</span>
+ <span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">Rotate</span><span class="token punctuation">(</span><span class="token keyword">double</span> radians<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Circle</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Shape</span></span> <span class="token punctuation">{</span>
+ <span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token keyword">void</span> <span class="token function">Rotate</span><span class="token punctuation">(</span><span class="token keyword">double</span> radians<span class="token punctuation">)</span> <span class="token keyword">override</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token class-name">Circle</span><span class="token double-colon punctuation">::</span><span class="token function">Rotate</span><span class="token punctuation">(</span><span class="token keyword">double</span> <span class="token comment">/*radians*/</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token comment">// 差 - 如果将来有人要实现, 很难猜出变量的作用.</span>
+<span class="token keyword">void</span> <span class="token class-name">Circle</span><span class="token double-colon punctuation">::</span><span class="token function">Rotate</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>属性, 和展开为属性的宏, 写在函数声明或定义的最前面, 即返回类型之前:</p>
-<pre class="line-numbers language-none"><code class="language-none">MUST_USE_RESULT bool IsOK();<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">MUST_USE_RESULT <span class="token keyword">bool</span> <span class="token function">IsOK</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h3 id="Lambda-表达式"><a href="#Lambda-表达式" class="headerlink" title="Lambda 表达式"></a>Lambda 表达式</h3><p><strong>总述</strong></p>
 <p>Lambda 表达式对形参和函数体的格式化和其他函数一致; 捕获列表同理, 表项用逗号隔开.</p>
 <p><strong>说明</strong></p>
 <p>若用引用捕获, 在变量名和 <code>&amp;</code> 之间不留空格.</p>
-<pre class="line-numbers language-none"><code class="language-none">int x = 0;auto add_to_x = [&amp;x](int n) { x += n; };<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">auto</span> add_to_x <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">&amp;</span>x<span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span> x <span class="token operator">+=</span> n<span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>短 lambda 就写得和内联函数一样.</p>
-<pre class="line-numbers language-none"><code class="language-none">std::set&lt;int&gt; blacklist = {7, 8, 9};std::vector&lt;int&gt; digits = {3, 9, 1, 8, 4, 7, 1};digits.erase(std::remove_if(digits.begin(), digits.end(), [&amp;blacklist](int i) {               return blacklist.find(i) != blacklist.end();             }),             digits.end());<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">std<span class="token double-colon punctuation">::</span>set<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span> blacklist <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span> digits <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+digits<span class="token punctuation">.</span><span class="token function">erase</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span><span class="token function">remove_if</span><span class="token punctuation">(</span>digits<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> digits<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token operator">&amp;</span>blacklist<span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+               <span class="token keyword">return</span> blacklist<span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token operator">!=</span> blacklist<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+             <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+             digits<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 
@@ -732,24 +786,37 @@ DoSomething(); /* For trailing block comments, one space is fine. */<span aria-h
 <p>要么一行写完函数调用, 要么在圆括号里对参数分行, 要么参数另起一行且缩进四格. 如果没有其它顾虑的话, 尽可能精简行数, 比如把多个参数适当地放在同一行里.</p>
 <p><strong>说明</strong></p>
 <p>函数调用遵循如下形式：</p>
-<pre class="line-numbers language-none"><code class="language-none">bool retval = DoSomething(argument1, argument2, argument3);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">bool</span> retval <span class="token operator">=</span> <span class="token function">DoSomething</span><span class="token punctuation">(</span>argument1<span class="token punctuation">,</span> argument2<span class="token punctuation">,</span> argument3<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>如果同一行放不下, 可断为多行, 后面每一行都和第一个实参对齐, 左圆括号后和右圆括号前不要留空格：</p>
-<pre class="line-numbers language-none"><code class="language-none">bool retval = DoSomething(averyveryveryverylongargument1,                          argument2, argument3);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">bool</span> retval <span class="token operator">=</span> <span class="token function">DoSomething</span><span class="token punctuation">(</span>averyveryveryverylongargument1<span class="token punctuation">,</span>
+                          argument2<span class="token punctuation">,</span> argument3<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>参数也可以放在次行, 缩进四格：</p>
-<pre class="line-numbers language-none"><code class="language-none">if (...) {  ...  ...  if (...) {    DoSomething(        argument1, argument2,  // 4 空格缩进        argument3, argument4);  }<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">DoSomething</span><span class="token punctuation">(</span>
+        argument1<span class="token punctuation">,</span> argument2<span class="token punctuation">,</span>  <span class="token comment">// 4 空格缩进</span>
+        argument3<span class="token punctuation">,</span> argument4<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>把多个参数放在同一行以减少函数调用所需的行数, 除非影响到可读性. 有人认为把每个参数都独立成行, 不仅更好读, 而且方便编辑参数. 不过, 比起所谓的参数编辑, 我们更看重可读性, 且后者比较好办：</p>
 <p>如果一些参数本身就是略复杂的表达式, 且降低了可读性, 那么可以直接创建临时变量描述该表达式, 并传递给函数：</p>
-<pre class="line-numbers language-none"><code class="language-none">int my_heuristic = scores[x] * y + bases[x];bool retval = DoSomething(my_heuristic, x, y, z);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> my_heuristic <span class="token operator">=</span> scores<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">*</span> y <span class="token operator">+</span> bases<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">bool</span> retval <span class="token operator">=</span> <span class="token function">DoSomething</span><span class="token punctuation">(</span>my_heuristic<span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> z<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>或者放着不管, 补充上注释：</p>
-<pre class="line-numbers language-none"><code class="language-none">bool retval = DoSomething(scores[x] * y + bases[x],  // Score heuristic.                          x, y, z);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">bool</span> retval <span class="token operator">=</span> <span class="token function">DoSomething</span><span class="token punctuation">(</span>scores<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">*</span> y <span class="token operator">+</span> bases<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">,</span>  <span class="token comment">// Score heuristic.</span>
+                          x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> z<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>如果某参数独立成行, 对可读性更有帮助的话, 那也可以如此做. 参数的格式处理应当以可读性而非其他作为最重要的原则.</p>
 <p>此外, 如果一系列参数本身就有一定的结构, 可以酌情地按其结构来决定参数格式：</p>
-<pre class="line-numbers language-none"><code class="language-none">// 通过 3x3 矩阵转换 widget.my_widget.Transform(x1, x2, x3,                    y1, y2, y3,                    z1, z2, z3);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 通过 3x3 矩阵转换 widget.</span>
+my_widget<span class="token punctuation">.</span><span class="token function">Transform</span><span class="token punctuation">(</span>x1<span class="token punctuation">,</span> x2<span class="token punctuation">,</span> x3<span class="token punctuation">,</span>
+                    y1<span class="token punctuation">,</span> y2<span class="token punctuation">,</span> y3<span class="token punctuation">,</span>
+                    z1<span class="token punctuation">,</span> z2<span class="token punctuation">,</span> z3<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 
@@ -757,51 +824,138 @@ DoSomething(); /* For trailing block comments, one space is fine. */<span aria-h
 <p>您平时怎么格式化函数调用, 就怎么格式化 <a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/others/#braced-initializer-list">列表初始化</a>.</p>
 <p><strong>说明</strong></p>
 <p>如果列表初始化伴随着名字, 比如类型或变量名, 格式化时将将名字视作函数调用名, {} 视作函数调用的括号. 如果没有名字, 就视作名字长度为零.</p>
-<pre class="line-numbers language-none"><code class="language-none">// 一行列表初始化示范.return {foo, bar};functioncall({foo, bar});pair&lt;int, int&gt; p{foo, bar};// 当不得不断行时.SomeFunction(    {"assume a zero-length name before {"},  // 假设在 { 前有长度为零的名字.    some_other_function_parameter);SomeType variable{    some, other, values,    {"assume a zero-length name before {"},  // 假设在 { 前有长度为零的名字.    SomeOtherType{        "Very long string requiring the surrounding breaks.",  // 非常长的字符串, 前后都需要断行.        some, other values},    SomeOtherType{"Slightly shorter string",  // 稍短的字符串.                  some, other, values}};SomeType variable{    "This is too long to fit all in one line"};  // 字符串过长, 因此无法放在同一行.MyType m = {  // 注意了, 您可以在 { 前断行.    superlongvariablename1,    superlongvariablename2,    {short, interior, list},    {interiorwrappinglist,     interiorwrappinglist2}};<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 一行列表初始化示范.</span>
+<span class="token keyword">return</span> <span class="token punctuation">{</span>foo<span class="token punctuation">,</span> bar<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token function">functioncall</span><span class="token punctuation">(</span><span class="token punctuation">{</span>foo<span class="token punctuation">,</span> bar<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+pair<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">&gt;</span> p<span class="token punctuation">{</span>foo<span class="token punctuation">,</span> bar<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 当不得不断行时.</span>
+<span class="token function">SomeFunction</span><span class="token punctuation">(</span>
+    <span class="token punctuation">{</span><span class="token string">"assume a zero-length name before {"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>  <span class="token comment">// 假设在 { 前有长度为零的名字.</span>
+    some_other_function_parameter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+SomeType variable<span class="token punctuation">{</span>
+    some<span class="token punctuation">,</span> other<span class="token punctuation">,</span> values<span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token string">"assume a zero-length name before {"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>  <span class="token comment">// 假设在 { 前有长度为零的名字.</span>
+    SomeOtherType<span class="token punctuation">{</span>
+        <span class="token string">"Very long string requiring the surrounding breaks."</span><span class="token punctuation">,</span>  <span class="token comment">// 非常长的字符串, 前后都需要断行.</span>
+        some<span class="token punctuation">,</span> other values<span class="token punctuation">}</span><span class="token punctuation">,</span>
+    SomeOtherType<span class="token punctuation">{</span><span class="token string">"Slightly shorter string"</span><span class="token punctuation">,</span>  <span class="token comment">// 稍短的字符串.</span>
+                  some<span class="token punctuation">,</span> other<span class="token punctuation">,</span> values<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+SomeType variable<span class="token punctuation">{</span>
+    <span class="token string">"This is too long to fit all in one line"</span><span class="token punctuation">}</span><span class="token punctuation">;</span>  <span class="token comment">// 字符串过长, 因此无法放在同一行.</span>
+MyType m <span class="token operator">=</span> <span class="token punctuation">{</span>  <span class="token comment">// 注意了, 您可以在 { 前断行.</span>
+    superlongvariablename1<span class="token punctuation">,</span>
+    superlongvariablename2<span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token keyword">short</span><span class="token punctuation">,</span> interior<span class="token punctuation">,</span> list<span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>interiorwrappinglist<span class="token punctuation">,</span>
+     interiorwrappinglist2<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="条件语句"><a href="#条件语句" class="headerlink" title="条件语句"></a>条件语句</h3><p><strong>总述</strong></p>
 <p>倾向于不在圆括号内使用空格. 关键字 <code>if</code> 和 <code>else</code> 另起一行.</p>
 <p><strong>说明</strong></p>
 <p>对基本条件语句有两种可以接受的格式. 一种在圆括号和条件之间有空格, 另一种没有.</p>
 <p>最常见的是没有空格的格式. 哪一种都可以, 最重要的是 <em>保持一致</em>. 如果你是在修改一个文件, 参考当前已有格式. 如果是写新的代码, 参考目录下或项目中其它文件. 还在犹豫的话, 就不要加空格了.</p>
-<pre class="line-numbers language-none"><code class="language-none">if (condition) {  // 圆括号里没有空格.  ...  // 2 空格缩进.} else if (...) {  // else 与 if 的右括号同一行.  ...} else {  ...}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span>condition<span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token comment">// 圆括号里没有空格.</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  <span class="token comment">// 2 空格缩进.</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token comment">// else 与 if 的右括号同一行.</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>如果你更喜欢在圆括号内部加空格:</p>
-<pre class="line-numbers language-none"><code class="language-none">if ( condition ) {  // 圆括号与空格紧邻 - 不常见  ...  // 2 空格缩进.} else {  // else 与 if 的右括号同一行.  ...}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span> condition <span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token comment">// 圆括号与空格紧邻 - 不常见</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  <span class="token comment">// 2 空格缩进.</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>  <span class="token comment">// else 与 if 的右括号同一行.</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>注意所有情况下 <code>if</code> 和左圆括号间都有个空格. 右圆括号和左大括号之间也要有个空格:</p>
-<pre class="line-numbers language-none"><code class="language-none">if(condition)     // 差 - IF 后面没空格.if (condition){   // 差 - { 前面没空格.if(condition){    // 变本加厉地差.if (condition) {  // 好 - IF 和 { 都与空格紧邻.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">if</span><span class="token punctuation">(</span>condition<span class="token punctuation">)</span>     <span class="token comment">// 差 - IF 后面没空格.</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>condition<span class="token punctuation">)</span><span class="token punctuation">{</span>   <span class="token comment">// 差 - { 前面没空格.</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span>condition<span class="token punctuation">)</span><span class="token punctuation">{</span>    <span class="token comment">// 变本加厉地差.</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>condition<span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token comment">// 好 - IF 和 { 都与空格紧邻.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>如果能增强可读性, 简短的条件语句允许写在同一行. 只有当语句简单并且没有使用 <code>else</code> 子句时使用:</p>
-<pre class="line-numbers language-none"><code class="language-none">if (x == kFoo) return new Foo();if (x == kBar) return new Bar();<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span>x <span class="token operator">==</span> kFoo<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>x <span class="token operator">==</span> kBar<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token function">Bar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>如果语句有 <code>else</code> 分支则不允许:</p>
-<pre class="line-numbers language-none"><code class="language-none">// 不允许 - 当有 ELSE 分支时 IF 块却写在同一行if (x) DoThis();else DoThat();<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 不允许 - 当有 ELSE 分支时 IF 块却写在同一行</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token function">DoThis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">else</span> <span class="token function">DoThat</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>通常, 单行语句不需要使用大括号, 如果你喜欢用也没问题; 复杂的条件或循环语句用大括号可读性会更好. 也有一些项目要求 <code>if</code> 必须总是使用大括号:</p>
-<pre class="line-numbers language-none"><code class="language-none">if (condition)  DoSomething();  // 2 空格缩进.if (condition) {  DoSomething();  // 2 空格缩进.}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span>condition<span class="token punctuation">)</span>
+  <span class="token function">DoSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 2 空格缩进.</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span>condition<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">DoSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 2 空格缩进.</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>但如果语句中某个 <code>if-else</code> 分支使用了大括号的话, 其它分支也必须使用:</p>
-<pre class="line-numbers language-none"><code class="language-none">// 不可以这样子 - IF 有大括号 ELSE 却没有.if (condition) {  foo;} else  bar;// 不可以这样子 - ELSE 有大括号 IF 却没有.if (condition)  foo;else {  bar;}// 只要其中一个分支用了大括号, 两个分支都要用上大括号.if (condition) {  foo;} else {  bar;}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 不可以这样子 - IF 有大括号 ELSE 却没有.</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>condition<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  foo<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span>
+  bar<span class="token punctuation">;</span>
+
+<span class="token comment">// 不可以这样子 - ELSE 有大括号 IF 却没有.</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>condition<span class="token punctuation">)</span>
+  foo<span class="token punctuation">;</span>
+<span class="token keyword">else</span> <span class="token punctuation">{</span>
+  bar<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// 只要其中一个分支用了大括号, 两个分支都要用上大括号.</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>condition<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  foo<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+  bar<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="循环和开关选择语句"><a href="#循环和开关选择语句" class="headerlink" title="循环和开关选择语句"></a>循环和开关选择语句</h3><p><strong>总述</strong></p>
 <p><code>switch</code> 语句可以使用大括号分段, 以表明 cases 之间不是连在一起的. 在单语句循环里, 括号可用可不用. 空循环体应使用 <code>{}</code> 或 <code>continue</code>.</p>
 <p><strong>说明</strong></p>
 <p><code>switch</code> 语句中的 <code>case</code> 块可以使用大括号也可以不用, 取决于你的个人喜好. 如果用的话, 要按照下文所述的方法.</p>
 <p>如果有不满足 <code>case</code> 条件的枚举值, <code>switch</code> 应该总是包含一个 <code>default</code> 匹配 (如果有输入值没有 case 去处理, 编译器将给出 warning). 如果 <code>default</code> 应该永远执行不到, 简单的加条 <code>assert</code>:</p>
-<pre class="line-numbers language-none"><code class="language-none">switch (var) {  case 0: {  // 2 空格缩进    ...      // 4 空格缩进    break;  }  case 1: {    ...    break;  }  default: {    assert(false);  }}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">switch</span> <span class="token punctuation">(</span>var<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">case</span> <span class="token number">0</span><span class="token operator">:</span> <span class="token punctuation">{</span>  <span class="token comment">// 2 空格缩进</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>      <span class="token comment">// 4 空格缩进</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">case</span> <span class="token number">1</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">default</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token function">assert</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>在单语句循环里, 括号可用可不用：</p>
-<pre class="line-numbers language-none"><code class="language-none">for (int i = 0; i &lt; kSomeNumber; ++i)  printf("I love you\n");for (int i = 0; i &lt; kSomeNumber; ++i) {  printf("I take it back\n");}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> kSomeNumber<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"I love you\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> kSomeNumber<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"I take it back\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>空循环体应使用 <code>{}</code> 或 <code>continue</code>, 而不是一个简单的分号.</p>
-<pre class="line-numbers language-none"><code class="language-none">while (condition) {  // 反复循环直到条件失效.}for (int i = 0; i &lt; kSomeNumber; ++i) {}  // 可 - 空循环体.while (condition) continue;  // 可 - contunue 表明没有逻辑.while (condition);  // 差 - 看起来仅仅只是 while/loop 的部分之一.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">while</span> <span class="token punctuation">(</span>condition<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 反复循环直到条件失效.</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> kSomeNumber<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>  <span class="token comment">// 可 - 空循环体.</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span>condition<span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>  <span class="token comment">// 可 - contunue 表明没有逻辑.</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span>condition<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 差 - 看起来仅仅只是 while/loop 的部分之一.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="指针和引用表达式"><a href="#指针和引用表达式" class="headerlink" title="指针和引用表达式"></a>指针和引用表达式</h3><p><strong>总述</strong></p>
 <p>句点或箭头前后不要有空格. 指针/地址操作符 (<code>*, &amp;</code>) 之后不能有空格.</p>
 <p><strong>说明</strong></p>
 <p>下面是指针和引用表达式的正确使用范例:</p>
-<pre class="line-numbers language-none"><code class="language-none">x = *p;p = &amp;x;x = r.y;x = r-&gt;y;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">x <span class="token operator">=</span> <span class="token operator">*</span>p<span class="token punctuation">;</span>
+p <span class="token operator">=</span> <span class="token operator">&amp;</span>x<span class="token punctuation">;</span>
+x <span class="token operator">=</span> r<span class="token punctuation">.</span>y<span class="token punctuation">;</span>
+x <span class="token operator">=</span> r<span class="token operator">-&gt;</span>y<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>注意:</p>
 <ul>
@@ -809,45 +963,104 @@ DoSomething(); /* For trailing block comments, one space is fine. */<span aria-h
 <li>指针操作符 <code>*</code> 或 <code>&amp;</code> 后没有空格.</li>
 </ul>
 <p>在声明指针变量或参数时, 星号与类型或变量名紧挨都可以:</p>
-<pre class="line-numbers language-none"><code class="language-none">// 好, 空格前置.char *c;const string &amp;str;// 好, 空格后置.char* c;const string&amp; str;int x, *y;  // 不允许 - 在多重声明中不能使用 &amp; 或 *char * c;  // 差 - * 两边都有空格const string &amp; str;  // 差 - &amp; 两边都有空格.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 好, 空格前置.</span>
+<span class="token keyword">char</span> <span class="token operator">*</span>c<span class="token punctuation">;</span>
+<span class="token keyword">const</span> string <span class="token operator">&amp;</span>str<span class="token punctuation">;</span>
+
+<span class="token comment">// 好, 空格后置.</span>
+<span class="token keyword">char</span><span class="token operator">*</span> c<span class="token punctuation">;</span>
+<span class="token keyword">const</span> string<span class="token operator">&amp;</span> str<span class="token punctuation">;</span>
+<span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token operator">*</span>y<span class="token punctuation">;</span>  <span class="token comment">// 不允许 - 在多重声明中不能使用 &amp; 或 *</span>
+<span class="token keyword">char</span> <span class="token operator">*</span> c<span class="token punctuation">;</span>  <span class="token comment">// 差 - * 两边都有空格</span>
+<span class="token keyword">const</span> string <span class="token operator">&amp;</span> str<span class="token punctuation">;</span>  <span class="token comment">// 差 - &amp; 两边都有空格.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>在单个文件内要保持风格一致, 所以, 如果是修改现有文件, 要遵照该文件的风格.</p>
 <h3 id="布尔表达式"><a href="#布尔表达式" class="headerlink" title="布尔表达式"></a>布尔表达式</h3><p><strong>总述</strong></p>
 <p>如果一个布尔表达式超过 <a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/formatting/#line-length">标准行宽</a>, 断行方式要统一一下.</p>
 <p><strong>说明</strong></p>
 <p>下例中, 逻辑与 (<code>&amp;&amp;</code>) 操作符总位于行尾:</p>
-<pre class="line-numbers language-none"><code class="language-none">if (this_one_thing &gt; this_other_thing &amp;&amp;    a_third_thing == a_fourth_thing &amp;&amp;    yet_another &amp;&amp; last_one) {  ...}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span>this_one_thing <span class="token operator">&gt;</span> this_other_thing <span class="token operator">&amp;&amp;</span>
+    a_third_thing <span class="token operator">==</span> a_fourth_thing <span class="token operator">&amp;&amp;</span>
+    yet_another <span class="token operator">&amp;&amp;</span> last_one<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>注意, 上例的逻辑与 (<code>&amp;&amp;</code>) 操作符均位于行尾. 这个格式在 Google 里很常见, 虽然把所有操作符放在开头也可以. 可以考虑额外插入圆括号, 合理使用的话对增强可读性是很有帮助的. 此外, 直接用符号形式的操作符, 比如 <code>&amp;&amp;</code> 和 <code>~</code>, 不要用词语形式的 <code>and</code> 和 <code>compl</code>.</p>
 <h3 id="函数返回值"><a href="#函数返回值" class="headerlink" title="函数返回值"></a>函数返回值</h3><p><strong>总述</strong></p>
 <p>不要在 <code>return</code> 表达式里加上非必须的圆括号.</p>
 <p><strong>说明</strong></p>
 <p>只有在写 <code>x = expr</code> 要加上括号的时候才在 <code>return expr;</code> 里使用括号.</p>
-<pre class="line-numbers language-none"><code class="language-none">return result;                  // 返回值很简单, 没有圆括号.// 可以用圆括号把复杂表达式圈起来, 改善可读性.return (some_long_condition &amp;&amp;        another_condition);return (value);                // 毕竟您从来不会写 var = (value);return(result);                // return 可不是函数！<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">return</span> result<span class="token punctuation">;</span>                  <span class="token comment">// 返回值很简单, 没有圆括号.</span>
+<span class="token comment">// 可以用圆括号把复杂表达式圈起来, 改善可读性.</span>
+<span class="token keyword">return</span> <span class="token punctuation">(</span>some_long_condition <span class="token operator">&amp;&amp;</span>
+        another_condition<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">return</span> <span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>                <span class="token comment">// 毕竟您从来不会写 var = (value);</span>
+<span class="token keyword">return</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>                <span class="token comment">// return 可不是函数！</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="变量及数组初始化"><a href="#变量及数组初始化" class="headerlink" title="变量及数组初始化"></a>变量及数组初始化</h3><p><strong>总述</strong></p>
 <p>用 <code>=</code>, <code>()</code> 和 <code>{}</code> 均可.</p>
 <p><strong>说明</strong></p>
 <p>您可以用 <code>=</code>, <code>()</code> 和 <code>{}</code>, 以下的例子都是正确的：</p>
-<pre class="line-numbers language-none"><code class="language-none">int x = 3;int x(3);int x{3};string name("Some Name");string name = "Some Name";string name{"Some Name"};<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">x</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> x<span class="token punctuation">{</span><span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+string <span class="token function">name</span><span class="token punctuation">(</span><span class="token string">"Some Name"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+string name <span class="token operator">=</span> <span class="token string">"Some Name"</span><span class="token punctuation">;</span>
+string name<span class="token punctuation">{</span><span class="token string">"Some Name"</span><span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>请务必小心列表初始化 <code>{...}</code> 用 <code>std::initializer_list</code> 构造函数初始化出的类型. 非空列表初始化就会优先调用 <code>std::initializer_list</code>, 不过空列表初始化除外, 后者原则上会调用默认构造函数. 为了强制禁用 <code>std::initializer_list</code> 构造函数, 请改用括号.</p>
-<pre class="line-numbers language-none"><code class="language-none">vector&lt;int&gt; v(100, 1);  // 内容为 100 个 1 的向量.vector&lt;int&gt; v{100, 1};  // 内容为 100 和 1 的向量.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span> <span class="token function">v</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 内容为 100 个 1 的向量.</span>
+vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span> v<span class="token punctuation">{</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">;</span>  <span class="token comment">// 内容为 100 和 1 的向量.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>此外, 列表初始化不允许整型类型的四舍五入, 这可以用来避免一些类型上的编程失误.</p>
-<pre class="line-numbers language-none"><code class="language-none">int pi(3.14);  // 好 - pi == 3.int pi{3.14};  // 编译错误: 缩窄转换.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">pi</span><span class="token punctuation">(</span><span class="token number">3.14</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 好 - pi == 3.</span>
+<span class="token keyword">int</span> pi<span class="token punctuation">{</span><span class="token number">3.14</span><span class="token punctuation">}</span><span class="token punctuation">;</span>  <span class="token comment">// 编译错误: 缩窄转换.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <h3 id="预处理指令"><a href="#预处理指令" class="headerlink" title="预处理指令"></a>预处理指令</h3><p><strong>总述</strong></p>
 <p>预处理指令不要缩进, 从行首开始.</p>
 <p><strong>说明</strong></p>
 <p>即使预处理指令位于缩进代码块中, 指令也应从行首开始.</p>
-<pre class="line-numbers language-none"><code class="language-none">// 好 - 指令从行首开始  if (lopsided_score) {#if DISASTER_PENDING      // 正确 - 从行首开始    DropEverything();# if NOTIFY               // 非必要 - # 后跟空格    NotifyClient();# endif#endif    BackToNormal();  }// 差 - 指令缩进  if (lopsided_score) {    #if DISASTER_PENDING  // 差 - "#if" 应该放在行开头    DropEverything();    #endif                // 差 - "#endif" 不要缩进    BackToNormal();  }<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 好 - 指令从行首开始</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>lopsided_score<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">if</span> <span class="token expression">DISASTER_PENDING      </span><span class="token comment">// 正确 - 从行首开始</span></span>
+    <span class="token function">DropEverything</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">if</span> <span class="token expression">NOTIFY               </span><span class="token comment">// 非必要 - # 后跟空格</span></span>
+    <span class="token function">NotifyClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">endif</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+    <span class="token function">BackToNormal</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token comment">// 差 - 指令缩进</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>lopsided_score<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">if</span> <span class="token expression">DISASTER_PENDING  </span><span class="token comment">// 差 - "#if" 应该放在行开头</span></span>
+    <span class="token function">DropEverything</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span>                <span class="token comment">// 差 - "#endif" 不要缩进</span></span>
+    <span class="token function">BackToNormal</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="类格式"><a href="#类格式" class="headerlink" title="类格式"></a>类格式</h3><p><strong>总述</strong></p>
 <p>访问控制块的声明依次序是 <code>public:</code>, <code>protected:</code>, <code>private:</code>, 每个都缩进 1 个空格.</p>
 <p><strong>说明</strong></p>
 <p>类声明 (下面的代码中缺少注释, 参考 <a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/comments/#class-comments">类注释</a>) 的基本格式如下:</p>
-<pre class="line-numbers language-none"><code class="language-none">class MyClass : public OtherClass { public:      // 注意有一个空格的缩进  MyClass();  // 标准的两空格缩进  explicit MyClass(int var);  ~MyClass() {}  void SomeFunction();  void SomeFunctionThatDoesNothing() {  }  void set_some_var(int var) { some_var_ = var; }  int some_var() const { return some_var_; } private:  bool SomeInternalFunction();  int some_var_;  int some_other_var_;};<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">MyClass</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">OtherClass</span></span> <span class="token punctuation">{</span>
+ <span class="token keyword">public</span><span class="token operator">:</span>      <span class="token comment">// 注意有一个空格的缩进</span>
+  <span class="token function">MyClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 标准的两空格缩进</span>
+  <span class="token keyword">explicit</span> <span class="token function">MyClass</span><span class="token punctuation">(</span><span class="token keyword">int</span> var<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token operator">~</span><span class="token function">MyClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+  <span class="token keyword">void</span> <span class="token function">SomeFunction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">void</span> <span class="token function">SomeFunctionThatDoesNothing</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">void</span> <span class="token function">set_some_var</span><span class="token punctuation">(</span><span class="token keyword">int</span> var<span class="token punctuation">)</span> <span class="token punctuation">{</span> some_var_ <span class="token operator">=</span> var<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+  <span class="token keyword">int</span> <span class="token function">some_var</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> some_var_<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+ <span class="token keyword">private</span><span class="token operator">:</span>
+  <span class="token keyword">bool</span> <span class="token function">SomeInternalFunction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">int</span> some_var_<span class="token punctuation">;</span>
+  <span class="token keyword">int</span> some_other_var_<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>注意事项:</p>
 <ul>
@@ -862,31 +1075,114 @@ DoSomething(); /* For trailing block comments, one space is fine. */<span aria-h
 <p>构造函数初始化列表放在同一行或按四格缩进并排多行.</p>
 <p><strong>说明</strong></p>
 <p>下面两种初始值列表方式都可以接受:</p>
-<pre class="line-numbers language-none"><code class="language-none">// 如果所有变量能放在同一行:MyClass::MyClass(int var) : some_var_(var) {  DoSomething();}// 如果不能放在同一行,// 必须置于冒号后, 并缩进 4 个空格MyClass::MyClass(int var)    : some_var_(var), some_other_var_(var + 1) {  DoSomething();}// 如果初始化列表需要置于多行, 将每一个成员放在单独的一行// 并逐行对齐MyClass::MyClass(int var)    : some_var_(var),             // 4 space indent      some_other_var_(var + 1) {  // lined up  DoSomething();}// 右大括号 } 可以和左大括号 { 放在同一行// 如果这样做合适的话MyClass::MyClass(int var)    : some_var_(var) {}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 如果所有变量能放在同一行:</span>
+<span class="token class-name">MyClass</span><span class="token double-colon punctuation">::</span><span class="token function">MyClass</span><span class="token punctuation">(</span><span class="token keyword">int</span> var<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">some_var_</span><span class="token punctuation">(</span>var<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">DoSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 如果不能放在同一行,</span>
+<span class="token comment">// 必须置于冒号后, 并缩进 4 个空格</span>
+<span class="token class-name">MyClass</span><span class="token double-colon punctuation">::</span><span class="token function">MyClass</span><span class="token punctuation">(</span><span class="token keyword">int</span> var<span class="token punctuation">)</span>
+    <span class="token operator">:</span> <span class="token function">some_var_</span><span class="token punctuation">(</span>var<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">some_other_var_</span><span class="token punctuation">(</span>var <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">DoSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 如果初始化列表需要置于多行, 将每一个成员放在单独的一行</span>
+<span class="token comment">// 并逐行对齐</span>
+<span class="token class-name">MyClass</span><span class="token double-colon punctuation">::</span><span class="token function">MyClass</span><span class="token punctuation">(</span><span class="token keyword">int</span> var<span class="token punctuation">)</span>
+    <span class="token operator">:</span> <span class="token function">some_var_</span><span class="token punctuation">(</span>var<span class="token punctuation">)</span><span class="token punctuation">,</span>             <span class="token comment">// 4 space indent</span>
+      <span class="token function">some_other_var_</span><span class="token punctuation">(</span>var <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token comment">// lined up</span>
+  <span class="token function">DoSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 右大括号 } 可以和左大括号 { 放在同一行</span>
+<span class="token comment">// 如果这样做合适的话</span>
+<span class="token class-name">MyClass</span><span class="token double-colon punctuation">::</span><span class="token function">MyClass</span><span class="token punctuation">(</span><span class="token keyword">int</span> var<span class="token punctuation">)</span>
+    <span class="token operator">:</span> <span class="token function">some_var_</span><span class="token punctuation">(</span>var<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="命名空间格式化"><a href="#命名空间格式化" class="headerlink" title="命名空间格式化"></a>命名空间格式化</h3><p><strong>总述</strong></p>
 <p>命名空间内容不缩进.</p>
 <p><strong>说明</strong></p>
 <p><a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/scoping/#namespaces">命名空间</a> 不要增加额外的缩进层次, 例如:</p>
-<pre class="line-numbers language-none"><code class="language-none">namespace {void foo() {  // 正确. 命名空间内没有额外的缩进.  ...}}  // namespace<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">namespace</span> <span class="token punctuation">{</span>
+
+<span class="token keyword">void</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token comment">// 正确. 命名空间内没有额外的缩进.</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>  <span class="token comment">// namespace</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>不要在命名空间内缩进:</p>
-<pre class="line-numbers language-none"><code class="language-none">namespace {  // 错, 缩进多余了.  void foo() {    ...  }}  // namespace<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">namespace</span> <span class="token punctuation">{</span>
+
+  <span class="token comment">// 错, 缩进多余了.</span>
+  <span class="token keyword">void</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+  <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>  <span class="token comment">// namespace</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>声明嵌套命名空间时, 每个命名空间都独立成行.</p>
-<pre class="line-numbers language-none"><code class="language-none">namespace foo {namespace bar {<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">namespace</span> foo <span class="token punctuation">{</span>
+<span class="token keyword">namespace</span> bar <span class="token punctuation">{</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <h3 id="水平留白"><a href="#水平留白" class="headerlink" title="水平留白"></a>水平留白</h3><p><strong>总述</strong></p>
 <p>水平留白的使用根据在代码中的位置决定. 永远不要在行尾添加没意义的留白.</p>
 <p><strong>说明</strong></p>
-<h4 id="通用"><a href="#通用" class="headerlink" title="通用"></a>通用</h4><pre class="line-numbers language-none"><code class="language-none">void f(bool b) {  // 左大括号前总是有空格.  ...int i = 0;  // 分号前不加空格.// 列表初始化中大括号内的空格是可选的.// 如果加了空格, 那么两边都要加上.int x[] = { 0 };int x[] = {0};// 继承与初始化列表中的冒号前后恒有空格.class Foo : public Bar { public:  // 对于单行函数的实现, 在大括号内加上空格  // 然后是函数实现  Foo(int b) : Bar(), baz_(b) {}  // 大括号里面是空的话, 不加空格.  void Reset() { baz_ = 0; }  // 用空格把大括号与实现分开.  ...<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="通用"><a href="#通用" class="headerlink" title="通用"></a>通用</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token keyword">bool</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token comment">// 左大括号前总是有空格.</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>  <span class="token comment">// 分号前不加空格.</span>
+<span class="token comment">// 列表初始化中大括号内的空格是可选的.</span>
+<span class="token comment">// 如果加了空格, 那么两边都要加上.</span>
+<span class="token keyword">int</span> x<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> x<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 继承与初始化列表中的冒号前后恒有空格.</span>
+<span class="token keyword">class</span> <span class="token class-name">Foo</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Bar</span></span> <span class="token punctuation">{</span>
+ <span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token comment">// 对于单行函数的实现, 在大括号内加上空格</span>
+  <span class="token comment">// 然后是函数实现</span>
+  <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token keyword">int</span> b<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">Bar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">baz_</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>  <span class="token comment">// 大括号里面是空的话, 不加空格.</span>
+  <span class="token keyword">void</span> <span class="token function">Reset</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> baz_ <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>  <span class="token comment">// 用空格把大括号与实现分开.</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>添加冗余的留白会给其他人编辑时造成额外负担. 因此, 行尾不要留空格. 如果确定一行代码已经修改完毕, 将多余的空格去掉; 或者在专门清理空格时去掉（尤其是在没有其他人在处理这件事的时候). (Yang.Y 注: 现在大部分代码编辑器稍加设置后, 都支持自动删除行首/行尾空格, 如果不支持, 考虑换一款编辑器或 IDE)</p>
-<h4 id="循环和条件语句"><a href="#循环和条件语句" class="headerlink" title="循环和条件语句"></a>循环和条件语句</h4><pre class="line-numbers language-none"><code class="language-none">if (b) {          // if 条件语句和循环语句关键字后均有空格.} else {          // else 前后有空格.}while (test) {}   // 圆括号内部不紧邻空格.switch (i) {for (int i = 0; i &lt; 5; ++i) {switch ( i ) {    // 循环和条件语句的圆括号里可以与空格紧邻.if ( test ) {     // 圆括号, 但这很少见. 总之要一致.for ( int i = 0; i &lt; 5; ++i ) {for ( ; i &lt; 5 ; ++i) {  // 循环里内 ; 后恒有空格, ;  前可以加个空格.switch (i) {  case 1:         // switch case 的冒号前无空格.    ...  case 2: break;  // 如果冒号有代码, 加个空格.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="循环和条件语句"><a href="#循环和条件语句" class="headerlink" title="循环和条件语句"></a>循环和条件语句</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span>b<span class="token punctuation">)</span> <span class="token punctuation">{</span>          <span class="token comment">// if 条件语句和循环语句关键字后均有空格.</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>          <span class="token comment">// else 前后有空格.</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span>test<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>   <span class="token comment">// 圆括号内部不紧邻空格.</span>
+<span class="token keyword">switch</span> <span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token keyword">switch</span> <span class="token punctuation">(</span> i <span class="token punctuation">)</span> <span class="token punctuation">{</span>    <span class="token comment">// 循环和条件语句的圆括号里可以与空格紧邻.</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span> test <span class="token punctuation">)</span> <span class="token punctuation">{</span>     <span class="token comment">// 圆括号, 但这很少见. 总之要一致.</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span> <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">;</span> <span class="token operator">++</span>i <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span> <span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5</span> <span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token comment">// 循环里内 ; 后恒有空格, ;  前可以加个空格.</span>
+<span class="token keyword">switch</span> <span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">case</span> <span class="token number">1</span><span class="token operator">:</span>         <span class="token comment">// switch case 的冒号前无空格.</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+  <span class="token keyword">case</span> <span class="token number">2</span><span class="token operator">:</span> <span class="token keyword">break</span><span class="token punctuation">;</span>  <span class="token comment">// 如果冒号有代码, 加个空格.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="操作符"><a href="#操作符" class="headerlink" title="操作符"></a>操作符</h4><pre class="line-numbers language-none"><code class="language-none">// 赋值运算符前后总是有空格.x = 0;// 其它二元操作符也前后恒有空格, 不过对于表达式的子式可以不加空格.// 圆括号内部没有紧邻空格.v = w * x + y / z;v = w*x + y/z;v = w * (x + z);// 在参数和一元操作符之间不加空格.x = -5;++x;if (x &amp;&amp; !y)  ...<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="操作符"><a href="#操作符" class="headerlink" title="操作符"></a>操作符</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 赋值运算符前后总是有空格.</span>
+x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
 
-<h4 id="模板和转换"><a href="#模板和转换" class="headerlink" title="模板和转换"></a>模板和转换</h4><pre class="line-numbers language-none"><code class="language-none">// 尖括号(&lt; and &gt;) 不与空格紧邻, &lt; 前没有空格, &gt; 和 ( 之间也没有.vector&lt;string&gt; x;y = static_cast&lt;char*&gt;(x);// 在类型与指针操作符之间留空格也可以, 但要保持一致.vector&lt;char *&gt; x;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<span class="token comment">// 其它二元操作符也前后恒有空格, 不过对于表达式的子式可以不加空格.</span>
+<span class="token comment">// 圆括号内部没有紧邻空格.</span>
+v <span class="token operator">=</span> w <span class="token operator">*</span> x <span class="token operator">+</span> y <span class="token operator">/</span> z<span class="token punctuation">;</span>
+v <span class="token operator">=</span> w<span class="token operator">*</span>x <span class="token operator">+</span> y<span class="token operator">/</span>z<span class="token punctuation">;</span>
+v <span class="token operator">=</span> w <span class="token operator">*</span> <span class="token punctuation">(</span>x <span class="token operator">+</span> z<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 在参数和一元操作符之间不加空格.</span>
+x <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">;</span>
+<span class="token operator">++</span>x<span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>x <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>y<span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="模板和转换"><a href="#模板和转换" class="headerlink" title="模板和转换"></a>模板和转换</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 尖括号(&lt; and &gt;) 不与空格紧邻, &lt; 前没有空格, &gt; 和 ( 之间也没有.</span>
+vector<span class="token operator">&lt;</span>string<span class="token operator">&gt;</span> x<span class="token punctuation">;</span>
+y <span class="token operator">=</span> <span class="token generic-function"><span class="token function">static_cast</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 在类型与指针操作符之间留空格也可以, 但要保持一致.</span>
+vector<span class="token operator">&lt;</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">&gt;</span> x<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="垂直留白"><a href="#垂直留白" class="headerlink" title="垂直留白"></a>垂直留白</h3><p><strong>总述</strong></p>
 <p>垂直留白越少越好.</p>
