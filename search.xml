@@ -151,6 +151,64 @@
       </tags>
   </entry>
   <entry>
+    <title>OpenVINS学习笔记（一）</title>
+    <url>/2021/07/06/openvins-note-1/</url>
+    <content><![CDATA[<h1 id="OpenVINS学习笔记（一）"><a href="#OpenVINS学习笔记（一）" class="headerlink" title="OpenVINS学习笔记（一）"></a>OpenVINS学习笔记（一）</h1><blockquote>
+<p>论文摘要与代码框架</p>
+</blockquote>
+<h2 id="论文摘要"><a href="#论文摘要" class="headerlink" title="论文摘要"></a>论文摘要</h2><p>构建OpenVINS开源代码库，对通常需要的视觉惯性估计特性具有现成的支持，包括：<br>（i） 流形上的滑动窗口卡尔曼滤波器；</p>
+<p>（ii）在线相机内外参数标定；</p>
+<p>（iii）相机到惯性传感器的时间偏移校准；</p>
+<p>（iv）具有不同表示和一致的首次估计（FEJ）处理的SLAM地标；</p>
+<p>（v） 模块化状态管理系统；</p>
+<p>（vi）可扩展视觉惯性系统模拟器；</p>
+<p>（vii）算法评估工具箱。</p>
+<h2 id="代码框架"><a href="#代码框架" class="headerlink" title="代码框架"></a>代码框架</h2><ul>
+<li><p><strong>ov_core</strong></p>
+<ul>
+<li><p>2D图像稀疏视觉特征跟踪；</p>
+</li>
+<li><p>线性和高斯-牛顿特征三角剖分方法；</p>
+</li>
+<li><p>用于任意数量相机和频率的视觉惯性模拟器；</p>
+</li>
+<li><p>基本的流形数学运算</p>
+</li>
+</ul>
+</li>
+<li><p><strong>ov_eval</strong></p>
+<ul>
+<li>轨迹对齐；</li>
+<li>轨迹精度和一致性评估的绘图工具；</li>
+<li>不同精度指标的蒙特卡罗评价；</li>
+<li>ROS topic录制到文件。</li>
+</ul>
+</li>
+<li><p><strong>ov_msckf</strong></p>
+<p>可扩展模块扩展卡尔曼滤波器（EKF）为基础的滑动窗口视觉惯性估计器与流形系统的灵活状态表示。</p>
+<p>特点包括：</p>
+<ul>
+<li>首次估计Jacobains（FEJ）</li>
+<li>IMU相机时间偏移校准</li>
+<li>相机内部和外部校准</li>
+<li>标准MSCKF和不同表示的3DSLAM地标。</li>
+</ul>
+</li>
+</ul>
+<p><strong>代码入口：</strong></p>
+<p><img src="/images/OpenVINS-Note/1-1.png"></p>
+<p><img src="/images/OpenVINS-Note/1-2.png"></p>
+<p>注：<a href="https://blog.csdn.net/weixin_43793960/article/details/110929635">图片来源</a></p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>视觉SLAM</tag>
+        <tag>OpenVINS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>雅思备考经验分享</title>
     <url>/2021/07/28/ielts-1/</url>
     <content><![CDATA[<h1 id="雅思备考经验分享"><a href="#雅思备考经验分享" class="headerlink" title="雅思备考经验分享"></a>雅思备考经验分享</h1><blockquote>
@@ -284,64 +342,6 @@
       </categories>
       <tags>
         <tag>IELTS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OpenVINS学习笔记（一）</title>
-    <url>/2021/07/06/openvins-note-1/</url>
-    <content><![CDATA[<h1 id="OpenVINS学习笔记（一）"><a href="#OpenVINS学习笔记（一）" class="headerlink" title="OpenVINS学习笔记（一）"></a>OpenVINS学习笔记（一）</h1><blockquote>
-<p>论文摘要与代码框架</p>
-</blockquote>
-<h2 id="论文摘要"><a href="#论文摘要" class="headerlink" title="论文摘要"></a>论文摘要</h2><p>构建OpenVINS开源代码库，对通常需要的视觉惯性估计特性具有现成的支持，包括：<br>（i） 流形上的滑动窗口卡尔曼滤波器；</p>
-<p>（ii）在线相机内外参数标定；</p>
-<p>（iii）相机到惯性传感器的时间偏移校准；</p>
-<p>（iv）具有不同表示和一致的首次估计（FEJ）处理的SLAM地标；</p>
-<p>（v） 模块化状态管理系统；</p>
-<p>（vi）可扩展视觉惯性系统模拟器；</p>
-<p>（vii）算法评估工具箱。</p>
-<h2 id="代码框架"><a href="#代码框架" class="headerlink" title="代码框架"></a>代码框架</h2><ul>
-<li><p><strong>ov_core</strong></p>
-<ul>
-<li><p>2D图像稀疏视觉特征跟踪；</p>
-</li>
-<li><p>线性和高斯-牛顿特征三角剖分方法；</p>
-</li>
-<li><p>用于任意数量相机和频率的视觉惯性模拟器；</p>
-</li>
-<li><p>基本的流形数学运算</p>
-</li>
-</ul>
-</li>
-<li><p><strong>ov_eval</strong></p>
-<ul>
-<li>轨迹对齐；</li>
-<li>轨迹精度和一致性评估的绘图工具；</li>
-<li>不同精度指标的蒙特卡罗评价；</li>
-<li>ROS topic录制到文件。</li>
-</ul>
-</li>
-<li><p><strong>ov_msckf</strong></p>
-<p>可扩展模块扩展卡尔曼滤波器（EKF）为基础的滑动窗口视觉惯性估计器与流形系统的灵活状态表示。</p>
-<p>特点包括：</p>
-<ul>
-<li>首次估计Jacobains（FEJ）</li>
-<li>IMU相机时间偏移校准</li>
-<li>相机内部和外部校准</li>
-<li>标准MSCKF和不同表示的3DSLAM地标。</li>
-</ul>
-</li>
-</ul>
-<p><strong>代码入口：</strong></p>
-<p><img src="/images/OpenVINS-Note/1-1.png"></p>
-<p><img src="/images/OpenVINS-Note/1-2.png"></p>
-<p>注：<a href="https://blog.csdn.net/weixin_43793960/article/details/110929635">图片来源</a></p>
-]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>视觉SLAM</tag>
-        <tag>OpenVINS</tag>
       </tags>
   </entry>
   <entry>
@@ -1389,6 +1389,97 @@ mavros_msgs<span class="token double-colon punctuation">::</span>State current_s
       </tags>
   </entry>
   <entry>
+    <title>类的六个默认的成员函数</title>
+    <url>/2020/08/22/cpp-notes-1/</url>
+    <content><![CDATA[<h1 id="类的六个默认的成员函数"><a href="#类的六个默认的成员函数" class="headerlink" title="类的六个默认的成员函数"></a>类的六个默认的成员函数</h1><h2 id="类的6个默认的成员函数包括："><a href="#类的6个默认的成员函数包括：" class="headerlink" title="类的6个默认的成员函数包括："></a>类的6个默认的成员函数包括：</h2><p>构造函数、析构函数、拷贝构造函数、赋值运算符重载函数、取地址操作符重载、const修饰的取地址操作符重载。</p>
+<h3 id="（一）构造函数"><a href="#（一）构造函数" class="headerlink" title="（一）构造函数"></a>（一）构造函数</h3><p>构造函数，顾名思义，为对象分配空间，进行初始化。它是一种特殊的成员函数，具有以下特点:</p>
+<ol>
+<li><p>函数名与类名相同。</p>
+</li>
+<li><p>无返回值。</p>
+</li>
+<li><p>构造对象的时候系统会自动调用构造函数。</p>
+</li>
+<li><p>可以重载。</p>
+</li>
+<li><p>可以在类中定义，也可以在类外定义。</p>
+</li>
+<li><p>如果类中没有给出构造函数，编译器会自动产生一个缺省的构造函数，如果类中有构造函数，编译器就不会产生缺省构造函数。</p>
+</li>
+<li><p>全缺省的构造函数和无参的构造函数只能有一个，否则调用的时候就会产生冲突。</p>
+</li>
+<li><p>没有this指针。因为构造函数才是创建对象的，没有创建对象就不会有对象的首地址。</p>
+</li>
+</ol>
+<p>构造函数，说来就是给成员变量进行初始化。而初始化却有两种方法：初始化列表、构造函数函数体内赋值。尽量使用初始化列表，因为它更高效。</p>
+<h4 id="有些成员变量必须再初始化列表中初始化，比如："><a href="#有些成员变量必须再初始化列表中初始化，比如：" class="headerlink" title="有些成员变量必须再初始化列表中初始化，比如："></a>有些成员变量必须再初始化列表中初始化，比如：</h4><ol>
+<li><p>常量成员变量。（常量创建时必须初始化，因为对于一个常量，我们给它赋值，是不对的）</p>
+</li>
+<li><p>引用类型成员变量。（引用创建时必须初始化）</p>
+</li>
+<li><p>没有缺省构造函数的类成员变量。（如果构造函数的参数列表中有一个类的对象，并且该对象的类里没有缺省参数的构造函数时，要是不使用初始化列表，参数中会调用无参或者全缺省的构造函数，而那个类中又没有。）</p>
+</li>
+</ol>
+<h3 id="（二）析构函数"><a href="#（二）析构函数" class="headerlink" title="（二）析构函数"></a>（二）析构函数</h3><h4 id="析构函数是一种特殊的成员函数，具有以下特点："><a href="#析构函数是一种特殊的成员函数，具有以下特点：" class="headerlink" title="析构函数是一种特殊的成员函数，具有以下特点："></a>析构函数是一种特殊的成员函数，具有以下特点：</h4><ol>
+<li><p>析构函数函数名是在类名加上字符 ~ 。</p>
+</li>
+<li><p>无参数无返回值（但有this指针）。</p>
+</li>
+<li><p>一个类有且只有一个析构函数，所以肯定不能重载。若未显示定义，系统会自动生成缺省的析构函数。</p>
+</li>
+<li><p>对象生命周期结束时，C++编译系统系统自动调用析构函数。</p>
+</li>
+<li><p>注意析构函数体内并不是删除对象，而是做一些清理工作。（比如我们在构造函数中动态开辟过一段空间，函数结束后需要释放，而系统自动生成的析构函数才不管内存释放呢，所以需要人为地写出析构函数）</p>
+</li>
+</ol>
+<p>注意：对象生命周期结束后，后构造的对象先释放。</p>
+<h3 id="（三）拷贝构造函数"><a href="#（三）拷贝构造函数" class="headerlink" title="（三）拷贝构造函数"></a>（三）拷贝构造函数</h3><p>用已有的对象创建一个新的对象。</p>
+<p>创建对象时使用同类对象来进行初始化，这时所用的构造函数就是拷贝构造函数（Copy  Constructor）。拷贝构造函数也是构造函数，但它只有一个参数，这个参数只能是本类的一个对象，而且采用对象的常引用形式。拷贝构造函数的作用就是将实参对象的各成员值一一赋给新的对象中对应的成员。</p>
+<p>该函数的参数是一个常引用，如果不是引用，形参是实参的一份临时拷贝，由于两者都是对象，此时就会调用自己的拷贝构造函数，陷入无限递归中…….</p>
+<h4 id="拷贝构造函数的特征"><a href="#拷贝构造函数的特征" class="headerlink" title="拷贝构造函数的特征"></a>拷贝构造函数的特征</h4><p> （1）拷贝构造函数其实是一个构造函数的重载。<br> （2）拷贝构造函数的参数必须使用引用传参，使用传参方式会引发无穷递归调用。<br> （3）若为显示定义，系统默认生成缺省的拷贝构造函数，缺省的拷贝构造函数会按照成员的声明顺序依次拷贝类成员进行初始化</p>
+<h4 id="调用拷贝构造函数的两种方法："><a href="#调用拷贝构造函数的两种方法：" class="headerlink" title="调用拷贝构造函数的两种方法："></a>调用拷贝构造函数的两种方法：</h4><ol>
+<li><p>代入法：</p>
+<p>Person p2(p1);</p>
+</li>
+<li><p>赋值法：</p>
+<p>Person p2 = p1;</p>
+</li>
+</ol>
+<h4 id="为什么这里的对象可以直接访问私有成员变量？"><a href="#为什么这里的对象可以直接访问私有成员变量？" class="headerlink" title="为什么这里的对象可以直接访问私有成员变量？"></a>为什么这里的对象可以直接访问私有成员变量？</h4><p> 1）在类的成员函数里可以直接访问同类对象的私有或保护的成员。<br> 2）C++的访问限定符是以类为单位的，即：在这个单位内的成员可以互相访问。</p>
+<h3 id="（四）赋值运算符重载函数"><a href="#（四）赋值运算符重载函数" class="headerlink" title="（四）赋值运算符重载函数"></a>（四）赋值运算符重载函数</h3><p>用一个对象修改已经存在对象的内容，不是去创建新的对象，修改之后，两个对象的内容一致</p>
+<blockquote>
+<ol>
+<li>可以通过检查是否给自己赋值，进行优化</li>
+<li><strong>如果需要连续赋值，返回值不能是void，一般为引用类型</strong></li>
+<li>*<em>返回值一般是 <em>this</em></em></li>
+<li>编译器默认生成的赋值运算符为字节拷贝，即浅拷贝，如果资源需要拷贝，需要显示定义，完成深拷贝</li>
+</ol>
+<p>=调用：如果对象都存在，调用赋值运算符重载函数</p>
+<p>​              如果左边对象不存在，调用拷贝构造创建左边对象</p>
+</blockquote>
+<p><em>赋值是从右向左进行的</em></p>
+<p>如果不写，编译器会自动生成，默认生成的也是字节拷贝，浅拷贝</p>
+<p>如果当前类中有资源，则必须显示定义运算符重载函数，完成深拷贝</p>
+<h4 id="普通运算符重载函数"><a href="#普通运算符重载函数" class="headerlink" title="普通运算符重载函数"></a>普通运算符重载函数</h4><blockquote>
+<ol>
+<li>不能创建新的操作符，如operator@</li>
+<li>重载操作符必须有一个类类型或者枚举类型的操作符</li>
+<li>用于内置类型的操作符，其含义不能改变</li>
+<li>运算符重载函数如果是成员函数，则参数的个数比运算符需要的个数少一个，这里编译器会传入this指针作为第一个参数</li>
+<li>普通的运算符重载函数，参数的个数和运算符需要的个数一致</li>
+</ol>
+</blockquote>
+<p><strong>.*（成员指针访问运算符） ,  ::  ,  sizeof  ,  ? :  ,  .   五个运算符不能被重载</strong></p>
+<h3 id="（五）取地址运算符重载函数-const取地址运算符重载函数：获取对象的地址"><a href="#（五）取地址运算符重载函数-const取地址运算符重载函数：获取对象的地址" class="headerlink" title="（五）取地址运算符重载函数 / const取地址运算符重载函数：获取对象的地址**"></a>（五）取地址运算符重载函数 / const取地址运算符重载函数：获取对象的地址**</h3><p>一般不需要显示定义，直接使用编译器自动生成的即可</p>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++基础</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>航拍笔记（二）：不同场景的拍摄方法</title>
     <url>/2021/08/22/aerial-note-2/</url>
     <content><![CDATA[<h1 id="航拍笔记（二）：不同场景的拍摄方法"><a href="#航拍笔记（二）：不同场景的拍摄方法" class="headerlink" title="航拍笔记（二）：不同场景的拍摄方法"></a>航拍笔记（二）：不同场景的拍摄方法</h1><h2 id="一、海边：要旋转冲天，不要直接冲天"><a href="#一、海边：要旋转冲天，不要直接冲天" class="headerlink" title="一、海边：要旋转冲天，不要直接冲天"></a>一、海边：要旋转冲天，不要直接冲天</h2><p>冲天拍摄是一种云台朝下、飞行器垂直向上飞行的常见拍摄方式。但是单纯的冲天拍摄，如果场景本身的变化度不高的话，或多或少会有一点单调。</p>
@@ -1480,97 +1571,6 @@ mavros_msgs<span class="token double-colon punctuation">::</span>State current_s
 <li>所有非静态变量（不是类的数据成员）的声明</li>
 <li>默认命名空间声明不要放在头文件，using namespace std;等应放在.cpp中，在 .h 文件中使用 std::string</li>
 </ul>
-]]></content>
-      <categories>
-        <category>C++</category>
-      </categories>
-      <tags>
-        <tag>C++基础</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>类的六个默认的成员函数</title>
-    <url>/2020/08/22/cpp-notes-1/</url>
-    <content><![CDATA[<h1 id="类的六个默认的成员函数"><a href="#类的六个默认的成员函数" class="headerlink" title="类的六个默认的成员函数"></a>类的六个默认的成员函数</h1><h2 id="类的6个默认的成员函数包括："><a href="#类的6个默认的成员函数包括：" class="headerlink" title="类的6个默认的成员函数包括："></a>类的6个默认的成员函数包括：</h2><p>构造函数、析构函数、拷贝构造函数、赋值运算符重载函数、取地址操作符重载、const修饰的取地址操作符重载。</p>
-<h3 id="（一）构造函数"><a href="#（一）构造函数" class="headerlink" title="（一）构造函数"></a>（一）构造函数</h3><p>构造函数，顾名思义，为对象分配空间，进行初始化。它是一种特殊的成员函数，具有以下特点:</p>
-<ol>
-<li><p>函数名与类名相同。</p>
-</li>
-<li><p>无返回值。</p>
-</li>
-<li><p>构造对象的时候系统会自动调用构造函数。</p>
-</li>
-<li><p>可以重载。</p>
-</li>
-<li><p>可以在类中定义，也可以在类外定义。</p>
-</li>
-<li><p>如果类中没有给出构造函数，编译器会自动产生一个缺省的构造函数，如果类中有构造函数，编译器就不会产生缺省构造函数。</p>
-</li>
-<li><p>全缺省的构造函数和无参的构造函数只能有一个，否则调用的时候就会产生冲突。</p>
-</li>
-<li><p>没有this指针。因为构造函数才是创建对象的，没有创建对象就不会有对象的首地址。</p>
-</li>
-</ol>
-<p>构造函数，说来就是给成员变量进行初始化。而初始化却有两种方法：初始化列表、构造函数函数体内赋值。尽量使用初始化列表，因为它更高效。</p>
-<h4 id="有些成员变量必须再初始化列表中初始化，比如："><a href="#有些成员变量必须再初始化列表中初始化，比如：" class="headerlink" title="有些成员变量必须再初始化列表中初始化，比如："></a>有些成员变量必须再初始化列表中初始化，比如：</h4><ol>
-<li><p>常量成员变量。（常量创建时必须初始化，因为对于一个常量，我们给它赋值，是不对的）</p>
-</li>
-<li><p>引用类型成员变量。（引用创建时必须初始化）</p>
-</li>
-<li><p>没有缺省构造函数的类成员变量。（如果构造函数的参数列表中有一个类的对象，并且该对象的类里没有缺省参数的构造函数时，要是不使用初始化列表，参数中会调用无参或者全缺省的构造函数，而那个类中又没有。）</p>
-</li>
-</ol>
-<h3 id="（二）析构函数"><a href="#（二）析构函数" class="headerlink" title="（二）析构函数"></a>（二）析构函数</h3><h4 id="析构函数是一种特殊的成员函数，具有以下特点："><a href="#析构函数是一种特殊的成员函数，具有以下特点：" class="headerlink" title="析构函数是一种特殊的成员函数，具有以下特点："></a>析构函数是一种特殊的成员函数，具有以下特点：</h4><ol>
-<li><p>析构函数函数名是在类名加上字符 ~ 。</p>
-</li>
-<li><p>无参数无返回值（但有this指针）。</p>
-</li>
-<li><p>一个类有且只有一个析构函数，所以肯定不能重载。若未显示定义，系统会自动生成缺省的析构函数。</p>
-</li>
-<li><p>对象生命周期结束时，C++编译系统系统自动调用析构函数。</p>
-</li>
-<li><p>注意析构函数体内并不是删除对象，而是做一些清理工作。（比如我们在构造函数中动态开辟过一段空间，函数结束后需要释放，而系统自动生成的析构函数才不管内存释放呢，所以需要人为地写出析构函数）</p>
-</li>
-</ol>
-<p>注意：对象生命周期结束后，后构造的对象先释放。</p>
-<h3 id="（三）拷贝构造函数"><a href="#（三）拷贝构造函数" class="headerlink" title="（三）拷贝构造函数"></a>（三）拷贝构造函数</h3><p>用已有的对象创建一个新的对象。</p>
-<p>创建对象时使用同类对象来进行初始化，这时所用的构造函数就是拷贝构造函数（Copy  Constructor）。拷贝构造函数也是构造函数，但它只有一个参数，这个参数只能是本类的一个对象，而且采用对象的常引用形式。拷贝构造函数的作用就是将实参对象的各成员值一一赋给新的对象中对应的成员。</p>
-<p>该函数的参数是一个常引用，如果不是引用，形参是实参的一份临时拷贝，由于两者都是对象，此时就会调用自己的拷贝构造函数，陷入无限递归中…….</p>
-<h4 id="拷贝构造函数的特征"><a href="#拷贝构造函数的特征" class="headerlink" title="拷贝构造函数的特征"></a>拷贝构造函数的特征</h4><p> （1）拷贝构造函数其实是一个构造函数的重载。<br> （2）拷贝构造函数的参数必须使用引用传参，使用传参方式会引发无穷递归调用。<br> （3）若为显示定义，系统默认生成缺省的拷贝构造函数，缺省的拷贝构造函数会按照成员的声明顺序依次拷贝类成员进行初始化</p>
-<h4 id="调用拷贝构造函数的两种方法："><a href="#调用拷贝构造函数的两种方法：" class="headerlink" title="调用拷贝构造函数的两种方法："></a>调用拷贝构造函数的两种方法：</h4><ol>
-<li><p>代入法：</p>
-<p>Person p2(p1);</p>
-</li>
-<li><p>赋值法：</p>
-<p>Person p2 = p1;</p>
-</li>
-</ol>
-<h4 id="为什么这里的对象可以直接访问私有成员变量？"><a href="#为什么这里的对象可以直接访问私有成员变量？" class="headerlink" title="为什么这里的对象可以直接访问私有成员变量？"></a>为什么这里的对象可以直接访问私有成员变量？</h4><p> 1）在类的成员函数里可以直接访问同类对象的私有或保护的成员。<br> 2）C++的访问限定符是以类为单位的，即：在这个单位内的成员可以互相访问。</p>
-<h3 id="（四）赋值运算符重载函数"><a href="#（四）赋值运算符重载函数" class="headerlink" title="（四）赋值运算符重载函数"></a>（四）赋值运算符重载函数</h3><p>用一个对象修改已经存在对象的内容，不是去创建新的对象，修改之后，两个对象的内容一致</p>
-<blockquote>
-<ol>
-<li>可以通过检查是否给自己赋值，进行优化</li>
-<li><strong>如果需要连续赋值，返回值不能是void，一般为引用类型</strong></li>
-<li>*<em>返回值一般是 <em>this</em></em></li>
-<li>编译器默认生成的赋值运算符为字节拷贝，即浅拷贝，如果资源需要拷贝，需要显示定义，完成深拷贝</li>
-</ol>
-<p>=调用：如果对象都存在，调用赋值运算符重载函数</p>
-<p>​              如果左边对象不存在，调用拷贝构造创建左边对象</p>
-</blockquote>
-<p><em>赋值是从右向左进行的</em></p>
-<p>如果不写，编译器会自动生成，默认生成的也是字节拷贝，浅拷贝</p>
-<p>如果当前类中有资源，则必须显示定义运算符重载函数，完成深拷贝</p>
-<h4 id="普通运算符重载函数"><a href="#普通运算符重载函数" class="headerlink" title="普通运算符重载函数"></a>普通运算符重载函数</h4><blockquote>
-<ol>
-<li>不能创建新的操作符，如operator@</li>
-<li>重载操作符必须有一个类类型或者枚举类型的操作符</li>
-<li>用于内置类型的操作符，其含义不能改变</li>
-<li>运算符重载函数如果是成员函数，则参数的个数比运算符需要的个数少一个，这里编译器会传入this指针作为第一个参数</li>
-<li>普通的运算符重载函数，参数的个数和运算符需要的个数一致</li>
-</ol>
-</blockquote>
-<p><strong>.*（成员指针访问运算符） ,  ::  ,  sizeof  ,  ? :  ,  .   五个运算符不能被重载</strong></p>
-<h3 id="（五）取地址运算符重载函数-const取地址运算符重载函数：获取对象的地址"><a href="#（五）取地址运算符重载函数-const取地址运算符重载函数：获取对象的地址" class="headerlink" title="（五）取地址运算符重载函数 / const取地址运算符重载函数：获取对象的地址**"></a>（五）取地址运算符重载函数 / const取地址运算符重载函数：获取对象的地址**</h3><p>一般不需要显示定义，直接使用编译器自动生成的即可</p>
 ]]></content>
       <categories>
         <category>C++</category>
@@ -2731,6 +2731,11 @@ std<span class="token double-colon punctuation">::</span>condition_variable cond
       <tags>
         <tag>多线程</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>cpp-notes-8</title>
+    <url>/2022/04/07/cpp-notes-8/</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>事件相机介绍</title>
@@ -6024,6 +6029,267 @@ Main(): Waited and joined with 3 threads. Final value of count = 145. Done.<span
       </tags>
   </entry>
   <entry>
+    <title>C++编程规范（一）</title>
+    <url>/2022/04/05/cpp-notes-7/</url>
+    <content><![CDATA[<h1 id="C-编程规范（一）"><a href="#C-编程规范（一）" class="headerlink" title="C++编程规范（一）"></a>C++编程规范（一）</h1><p>[TOC]</p>
+<p>本文是我对于<a href="https://zh-google-styleguide.readthedocs.io/en/latest/">Google 开源项目风格指南——中文版</a>的学习笔记，在学习的过程中搬运和整理出了这篇文章。</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>编程规范是一个特别重要的问题。</p>
+<p>关于编程规范、代码风格相关的教程，网上已经特别丰富，本文仅做一个简单的介绍，期望读者阅读本文后能够对如何规范的用C++语言进行编程有一个基本的认知。</p>
+<p>如果想要更详细的介绍，可以参考：<a href="https://zh-google-styleguide.readthedocs.io/en/latest/">Google 开源项目风格指南——中文版</a>。</p>
+<h2 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h2><p>通常每一个 <code>.cc</code> 文件都有一个对应的 <code>.h</code> 文件。也有一些常见例外，如单元测试代码和只包含 <code>main()</code> 函数的 <code>.cc</code> 文件。正确使用头文件可令代码在可读性、文件大小和性能上大为改观。</p>
+<h3 id="define-保护"><a href="#define-保护" class="headerlink" title="#define 保护"></a>#define 保护</h3><blockquote>
+<p>这其实是非常容易被忽视的一点，因为很多时候我们都习惯于用编译器创建头文件，而创建的头文件里面通常直接就包含了”#define保护”。</p>
+<p>我们可能不知道为什么会有它，也可能很少去考虑它的作用，一旦我们哪天遇到了“特殊情况”——比如在终端用vim创建头文件，大概率就忘记有<code>#ifndef......#define......#endif......</code>这么一回事了。</p>
+</blockquote>
+<p>所有头文件都应该有 <code>#define</code> 保护来防止头文件被多重包含，命名格式当是：<code>&lt;PROJECT&gt;_&lt;PATH&gt;_&lt;FILE&gt;_H_</code>。</p>
+<p>为保证唯一性，头文件的命名应该基于所在项目源代码树的全路径。例如，项目 <code>foo</code> 中的头文件 <code>foo/src/bar/baz.h</code> 可按如下方式保护：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">FOO_BAR_BAZ_H_</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">FOO_BAR_BAZ_H_</span></span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span> <span class="token comment">// FOO_BAR_BAZ_H_</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="include-的路径及顺序"><a href="#include-的路径及顺序" class="headerlink" title="#include 的路径及顺序"></a>#include 的路径及顺序</h3><p>使用标准的头文件包含顺序可增强可读性，避免隐藏依赖。</p>
+<p>推荐的 #include 顺序为：相关头文件，C 库，C++ 库，其他库的 .h，本项目内的 .h。</p>
+<p>项目内头文件应按照项目源代码目录树结构排列，避免使用 UNIX 特殊的快捷目录 <code>.</code>（当前目录）或 <code>..</code>（上级目录）。例如，<code>google-awesome-project/src/base/logging.h</code> 应该按如下方式包含：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"base/logging.h"</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>又如，<code>dir/foo.cc</code> 或 <code>dir/foo_test.cc</code> 的主要作用是实现或测试 <code>dir2/foo2.h</code> 的功能，<code>foo.cc</code> 中包含头文件的次序如下：</p>
+<ol>
+<li><code>dir2/foo2.h</code>（优先位置，详情如下）</li>
+<li>C 系统文件</li>
+<li>C++ 系统文件</li>
+<li>其他库的 <code>.h</code> 文件</li>
+<li>本项目内 <code>.h</code> 文件</li>
+</ol>
+<p>这种优先的顺序排序保证当 <code>dir2/foo2.h</code> 遗漏某些必要的库时， <code>dir/foo.cc</code> 或 <code>dir/foo_test.cc</code> 的构建会立刻中止。因此这一条规则保证维护这些文件的人们首先看到构建中止的消息而不是维护其他包的人们。</p>
+<p><code>dir/foo.cc</code> 和 <code>dir2/foo2.h</code> 通常位于同一目录下（如 <code>base/basictypes_unittest.cc</code> 和 <code>base/basictypes.h</code>），但也可以放在不同目录下。</p>
+<p>按字母顺序分别对每种类型的头文件进行二次排序是不错的主意。注意较老的代码可不符合这条规则，要在方便的时候改正它们。</p>
+<p>您所依赖的符号（symbols）被哪些头文件所定义，您就应该包含（include）哪些头文件，<a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/headers/#forward-declarations">前置声明</a>（forward declarations）情况除外。比如您要用到 <code>bar.h</code> 中的某个符号，哪怕您所包含的 <code>foo.h</code> 已经包含了 <code>bar.h</code>，也照样得包含 <code>bar.h</code>，除非 <code>foo.h</code> 有明确说明它会自动向您提供 <code>bar.h</code> 中的 symbol。不过，凡是 cc 文件所对应的「相关头文件」已经包含的，就不用再重复包含进其 cc 文件里面了，就像 <code>foo.cc</code> 只包含 <code>foo.h</code> 就够了，不用再管后者所包含的其它内容。</p>
+<p>举例来说，<code>google-awesome-project/src/foo/internal/fooserver.cc</code> 的包含次序如下：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"foo/public/fooserver.h"</span> <span class="token comment">// 优先位置</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;hash_map&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;vector&gt;</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"base/basictypes.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"base/commandlineflags.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"foo/public/bar.h"</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>例外：</strong></p>
+<p>有时，平台特定（system-specific）代码需要条件编译（conditional includes），这些代码可以放到其它 includes 之后。当然，您的平台特定代码也要够简练且独立，比如：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"foo/public/fooserver.h"</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"base/port.h"</span>  <span class="token comment">// For LANG_CXX11.</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">LANG_CXX11</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;initializer_list&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span>  <span class="token comment">// LANG_CXX11</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="头文件中应该写什么内容？"><a href="#头文件中应该写什么内容？" class="headerlink" title="头文件中应该写什么内容？"></a>头文件中应该写什么内容？</h3><p>参考另外一篇文章：<a href="https://immortalqx.github.io/2021/11/21/cpp-notes-0/">C++中的头文件</a></p>
+<h2 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h2><h3 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h3><p>使用具名的命名空间时，其名称可基于项目名或相对路径。比如：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// .h 文件</span>
+<span class="token keyword">namespace</span> mynamespace <span class="token punctuation">{</span>
+
+<span class="token comment">// 所有声明都置于命名空间中</span>
+<span class="token comment">// 注意不要使用缩进</span>
+<span class="token keyword">class</span> <span class="token class-name">MyClass</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">void</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span> <span class="token comment">// namespace mynamespace</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// .cc 文件</span>
+<span class="token keyword">namespace</span> mynamespace <span class="token punctuation">{</span>
+
+<span class="token comment">// 函数定义都置于命名空间中</span>
+<span class="token keyword">void</span> <span class="token class-name">MyClass</span><span class="token double-colon punctuation">::</span><span class="token function">Foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span> <span class="token comment">// namespace mynamespace</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>禁止使用 using 指示（using-directive）。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 禁止 —— 污染命名空间</span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> foo<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>禁止使用内联命名空间（inline namespace）。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 内联命名空间很容易令人迷惑，毕竟其内部的成员不再受其声明所在命名空间的限制。</span>
+<span class="token comment">// 内联命名空间只在大型版本控制里有用。</span>
+<span class="token keyword">namespace</span> X <span class="token punctuation">{</span>
+<span class="token keyword">inline</span> <span class="token keyword">namespace</span> Y <span class="token punctuation">{</span>
+<span class="token keyword">void</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>  <span class="token comment">// namespace Y</span>
+<span class="token punctuation">}</span>  <span class="token comment">// namespace X</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="非成员函数、静态成员函数和全局函数"><a href="#非成员函数、静态成员函数和全局函数" class="headerlink" title="非成员函数、静态成员函数和全局函数"></a>非成员函数、静态成员函数和全局函数</h3><p>使用静态成员函数或命名空间内的非成员函数，尽量不要用裸的全局函数。</p>
+<p>将一系列函数直接置于命名空间中，不要用类的静态方法模拟出命名空间的效果，类的静态方法应当和类的实例或静态数据紧密相关。</p>
+<p>推荐：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">namespace</span> myproject <span class="token punctuation">{</span><span class="token keyword">namespace</span> foo_bar <span class="token punctuation">{</span><span class="token keyword">void</span> <span class="token function">Function1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">void</span> <span class="token function">Function2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span>  <span class="token comment">// namespace foo_bar}  // namespace myproject</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>不推荐：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">namespace</span> myproject <span class="token punctuation">{</span><span class="token keyword">class</span> <span class="token class-name">FooBar</span> <span class="token punctuation">{</span> <span class="token keyword">public</span><span class="token operator">:</span>  <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Function1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Function2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span><span class="token punctuation">;</span><span class="token punctuation">}</span>  <span class="token comment">// namespace myproject</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>定义在同一编译单元的函数，被其他编译单元直接调用可能会引入不必要的耦合和链接时依赖；静态成员函数对此尤其敏感。可以考虑提取到新类中，或者将函数置于独立库的命名空间内。</p>
+<p>如果你必须定义非成员函数，又只是在 <code>.cc</code> 文件中使用它，可使用匿名 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/scoping/#namespaces">2.1. 命名空间</a> 或 <code>static</code> 链接关键字（如 <code>static int Foo() {...}</code>）限定其作用域。</p>
+<h3 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h3><blockquote>
+<p>将函数变量尽可能置于最小作用域内，并在变量声明时进行初始化。</p>
+</blockquote>
+<p>C++ 允许在函数的任何位置声明变量。我们提倡在尽可能小的作用域中声明变量，离第一次使用越近越好。这使得代码浏览者更容易定位变量声明的位置，了解变量的类型和初始值。特别是，应使用初始化的方式替代声明再赋值，比如：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> i<span class="token punctuation">;</span>i <span class="token operator">=</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 坏——初始化和声明分离</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 好——初始化时声明</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span> v<span class="token punctuation">;</span>v<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 用花括号初始化更好v.push_back(2);</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+ <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span> v <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// 好——v 一开始就初始化</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>属于 <code>if</code>，<code>while</code> 和 <code>for</code> 语句的变量应当在这些语句中正常地声明，这样子这些变量的作用域就被限制在这些语句中了，举例而言：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> p <span class="token operator">=</span> <span class="token function">strchr</span><span class="token punctuation">(</span>str<span class="token punctuation">,</span> <span class="token string">'/'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> str <span class="token operator">=</span> p <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>例外：</strong></p>
+<p>有一个例外，如果变量是一个对象，每次进入作用域都要调用其构造函数，每次退出作用域都要调用其析构函数，这会导致效率降低。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 低效的实现for (int i = 0; i &lt; 1000000; ++i) {    Foo f;                  // 构造函数和析构函数分别调用 1000000 次!    f.DoSomething(i);}</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>在循环作用域外面声明这类变量要高效的多:</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Foo f<span class="token punctuation">;</span>                      <span class="token comment">// 构造函数和析构函数只调用 1 次for (int i = 0; i &lt; 1000000; ++i) {    f.DoSomething(i);}</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="静态和全局变量"><a href="#静态和全局变量" class="headerlink" title="静态和全局变量"></a>静态和全局变量</h3><blockquote>
+<p>禁止定义静态储存周期非POD变量，禁止使用含有副作用的函数初始化POD全局变量，因为多编译单元中的静态变量执行时的构造和析构顺序是未明确的，这将导致代码的不可移植。</p>
+</blockquote>
+<p>禁止使用类的 <a href="http://zh.cppreference.com/w/cpp/language/storage_duration#.E5.AD.98.E5.82.A8.E6.9C.9F">静态储存周期</a> 变量：由于构造和析构函数调用顺序的不确定性，它们会导致难以发现的 bug 。不过 <code>constexpr</code> 变量除外，毕竟它们又不涉及动态初始化或析构。</p>
+<p>静态生存周期的对象，即包括了全局变量，静态变量，静态类成员变量和函数静态变量，都必须是原生数据类型 （POD : Plain Old Data）：即 int，char 和 float，以及 POD 类型的指针、数组和结构体。</p>
+<p>静态变量的构造函数、析构函数和初始化的顺序在 C++ 中是只有部分明确的，甚至随着构建变化而变化，导致难以发现的 bug。所以除了禁用类类型的全局变量，我们也不允许用函数返回值来初始化 POD 变量，除非该函数（比如 <code>getenv()</code> 或 <code>getpid()</code> ）不涉及任何全局变量。函数作用域里的静态变量除外，毕竟它的初始化顺序是有明确定义的，而且只会在指令执行到它的声明那里才会发生。</p>
+<blockquote>
+<p>同一个编译单元内是明确的，静态初始化优先于动态初始化，初始化顺序按照声明顺序进行，销毁则逆序。不同的编译单元之间初始化和销毁顺序属于未明确行为（unspecified behaviour）。</p>
+</blockquote>
+<p>同理，全局和静态变量在程序中断时会被析构，无论所谓中断是从 <code>main()</code> 返回还是对 <code>exit()</code> 的调用。析构顺序正好与构造函数调用的顺序相反。但既然构造顺序未定义，那么析构顺序当然也就不定了。比如，在程序结束时某静态变量已经被析构了，但代码还在跑——比如其它线程——并试图访问它且失败；再比如，一个静态 string 变量也许会在一个引用了前者的其它变量析构之前被析构掉。</p>
+<p>改善以上析构问题的办法之一是用 <code>quick_exit()</code> 来代替 <code>exit()</code> 并中断程序。它们的不同之处是前者不会执行任何析构，也不会执行 <code>atexit()</code> 所绑定的任何 handlers。如果您想在执行 <code>quick_exit()</code> 来中断时执行某 handler（比如刷新 log），您可以把它绑定到 <code>_at_quick_exit()</code>。如果您想在 <code>exit()</code> 和 <code>quick_exit()</code> 都用上该 handler，都绑定上去。</p>
+<p>综上所述，我们只允许 POD 类型的静态变量，即完全禁用 <code>vector</code> (使用 C 数组替代) 和 <code>string</code> (使用 <code>const char []</code>)。</p>
+<p>如果您确实需要一个 <code>class</code> 类型的静态或全局变量，可以考虑在 <code>main()</code> 函数或 <code>pthread_once()</code> 内初始化一个指针且永不回收。注意只能用 raw 指针，别用智能指针，毕竟后者的析构函数涉及到上文指出的不定顺序问题。</p>
+<blockquote>
+<p>上文提及的静态变量泛指静态生存周期的对象，包括: 全局变量，静态变量，静态类成员变量，以及函数静态变量.</p>
+</blockquote>
+<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><p>类是 C++ 中代码的基本单元。显然，它们被广泛使用。本节列举了在写一个类时的主要注意事项。</p>
+<h3 id="构造函数的职责"><a href="#构造函数的职责" class="headerlink" title="构造函数的职责"></a>构造函数的职责</h3><p>构造函数不允许调用虚函数。如果代码允许，直接终止程序是一个合适的处理错误的方式。否则，考虑用 <code>Init()</code> 方法或工厂函数。</p>
+<p>构造函数不得调用虚函数，或尝试报告一个非致命错误。如果对象需要进行有意义的 (non-trivial) 初始化，考虑使用明确的 Init() 方法或使用工厂模式。</p>
+<p>Avoid <code>Init()</code> methods on objects with no other states that affect which public methods may be called (此类形式的半构造对象有时无法正确工作)。</p>
+<h3 id="隐式类型转换"><a href="#隐式类型转换" class="headerlink" title="隐式类型转换"></a>隐式类型转换</h3><p>在类型定义中，类型转换运算符和单参数构造函数都应当用 <code>explicit</code> 进行标记。一个例外是，拷贝和移动构造函数不应当被标记为 <code>explicit</code>，因为它们并不执行类型转换。</p>
+<p>对于设计目的就是用于对其他类型进行透明包装的类来说，隐式类型转换有时是必要且合适的。这时应当联系项目组长并说明特殊情况。</p>
+<p>不能以一个参数进行调用的构造函数不应当加上 <code>explicit</code>。接受一个 <code>std::initializer_list</code> 作为参数的构造函数也应当省略 <code>explicit</code>，以便支持拷贝初始化（）例如 <code>MyType m = {1, 2};</code>）。</p>
+<h3 id="可拷贝类型和可移动类型"><a href="#可拷贝类型和可移动类型" class="headerlink" title="可拷贝类型和可移动类型"></a>可拷贝类型和可移动类型</h3><p>如果需要就让你的类型可拷贝 / 可移动。作为一个经验法则，如果对于你的用户来说这个拷贝操作不是一眼就能看出来的，那就不要把类型设置为可拷贝。如果让类型可拷贝，一定要同时给出拷贝构造函数和赋值操作的定义，反之亦然。如果让类型可移动，同时移动操作的效率高于拷贝操作，那么就把移动的两个操作（移动构造函数和赋值操作）也给出定义。如果类型不可拷贝，但是移动操作的正确性对用户显然可见，那么把这个类型设置为只可移动并定义移动的两个操作。</p>
+<p>如果定义了拷贝/移动操作，则要保证这些操作的默认实现是正确的。记得时刻检查默认操作的正确性，并且在文档中说明类是可拷贝的且/或可移动的。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Foo</span> <span class="token punctuation">{</span> <span class="token keyword">public</span><span class="token operator">:</span>  <span class="token function">Foo</span><span class="token punctuation">(</span>Foo<span class="token operator">&amp;&amp;</span> other<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">field_</span><span class="token punctuation">(</span>other<span class="token punctuation">.</span>field<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>  <span class="token comment">// 差，只定义了移动构造函数，而没有定义对应的赋值运算符. private:  Field field_;};</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>由于存在对象切割的风险，不要为任何有可能有派生类的对象提供赋值操作或者拷贝 / 移动构造函数（当然也不要继承有这样的成员函数的类）。如果你的基类需要可复制属性，请提供一个 <code>public virtual Clone()</code> 和一个 <code>protected</code> 的拷贝构造函数以供派生类实现。</p>
+<p>如果你的类不需要拷贝 / 移动操作，请显式地通过在 <code>public</code> 域中使用 <code>= delete</code> 或其他手段禁用之。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// MyClass is neither copyable nor movable.MyClass(const MyClass&amp;) = delete;MyClass&amp; operator=(const MyClass&amp;) = delete;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="结构体-VS-类"><a href="#结构体-VS-类" class="headerlink" title="结构体 VS. 类"></a>结构体 VS. 类</h3><p>仅当只有数据成员时使用 <code>struct</code>， 其它一概使用 <code>class</code>。</p>
+<p>在 C++ 中 <code>struct</code> 和 <code>class</code> 关键字几乎含义一样。我们为这两个关键字添加我们自己的语义理解，以便为定义的数据类型选择合适的关键字。</p>
+<p><code>struct</code> 用来定义包含数据的被动式对象，也可以包含相关的常量，但除了存取数据成员之外，没有别的函数功能。并且存取功能是通过直接访问位域，而非函数调用。除了构造函数，析构函数，<code>Initialize()</code>，<code>Reset()</code>，<code>Validate()</code> 等类似的用于设定数据成员的函数外，不能提供其它功能的函数。</p>
+<p>如果需要更多的函数功能，<code>class</code> 更适合。如果拿不准，就用 <code>class</code>。</p>
+<p>为了和 STL 保持一致，对于仿函数等特性可以不用 <code>class</code> 而是使用 <code>struct</code>。</p>
+<p>注意：类和结构体的成员变量使用不同的 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/#variable-names">命名规则</a>。</p>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h3 id="输入和输出"><a href="#输入和输出" class="headerlink" title="输入和输出"></a>输入和输出</h3><p>我们倾向于按值返回， 否则按引用返回。 避免返回指针， 除非它可以为空。</p>
+<h3 id="编写简短函数"><a href="#编写简短函数" class="headerlink" title="编写简短函数"></a>编写简短函数</h3><p>我们倾向于编写简短，凝练的函数。</p>
+<p>我们承认长函数有时是合理的，因此并不硬性限制函数的长度。如果函数超过 40 行，可以思索一下能不能在不影响程序结构的前提下对其进行分割。</p>
+<p>即使一个长函数现在工作的非常好，一旦有人对其修改，有可能出现新的问题，甚至导致难以发现的 bug。使函数尽量简短，以便于他人阅读和修改代码。</p>
+<p>在处理代码时，你可能会发现复杂的长函数。不要害怕修改现有代码：如果证实这些代码使用 / 调试起来很困难，或者你只需要使用其中的一小段代码，考虑将其分割为更加简短并易于管理的若干函数。</p>
+<h3 id="引用参数"><a href="#引用参数" class="headerlink" title="引用参数"></a>引用参数</h3><p>所有按引用传递的参数必须加上 <code>const</code>。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token keyword">const</span> string <span class="token operator">&amp;</span>in<span class="token punctuation">,</span> string <span class="token operator">*</span>out<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>事实上这在 Google Code 是一个硬性约定：输入参数是值参或 <code>const</code> 引用，输出参数为指针。输入参数可以是 <code>const</code> 指针，但决不能是非 <code>const</code> 的引用参数，除非特殊要求，比如 <code>swap()</code>。</p>
+<p>有时候，在输入形参中用 <code>const T*</code> 指针比 <code>const T&amp;</code> 更明智。比如：</p>
+<ul>
+<li>可能会传递空指针。</li>
+<li>函数要把指针或对地址的引用赋值给输入形参。</li>
+</ul>
+<p>总而言之，大多时候输入形参往往是 <code>const T&amp;</code>。若用 <code>const T*</code> 则说明输入另有处理。所以若要使用 <code>const T*</code>，则应给出相应的理由，否则会使得读者感到迷惑。</p>
+<h2 id="命名约定"><a href="#命名约定" class="headerlink" title="命名约定"></a>命名约定</h2><p>最重要的一致性规则是命名管理。命名的风格能让我们在不需要去查找类型声明的条件下快速地了解某个名字代表的含义：类型，变量，函数，常量，宏，等等，甚至。我们大脑中的模式匹配引擎非常依赖这些命名规则。</p>
+<p>命名规则具有一定随意性，但相比按个人喜好命名，一致性更重要，所以无论你认为它们是否重要，规则总归是规则。</p>
+<h3 id="通用命名规则"><a href="#通用命名规则" class="headerlink" title="通用命名规则"></a>通用命名规则</h3><p>函数命名，变量命名，文件命名要有描述性；少用缩写。</p>
+<p>尽可能使用描述性的命名，别心疼空间，毕竟相比之下让代码易于新读者理解更重要。不要用只有项目开发者能理解的缩写，也不要通过砍掉几个字母来缩写单词。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> price_count_reader<span class="token punctuation">;</span>    <span class="token comment">// 无缩写int num_errors;            // "num" 是一个常见的写法int num_dns_connections;   // 人人都知道 "DNS" 是什么</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> n<span class="token punctuation">;</span>                     <span class="token comment">// 毫无意义.int nerr;                  // 含糊不清的缩写.int n_comp_conns;          // 含糊不清的缩写.int wgc_connections;       // 只有贵团队知道是什么意思.int pc_reader;             // "pc" 有太多可能的解释了.int cstmr_id;              // 删减了若干字母.</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>注意，一些特定的广为人知的缩写是允许的，例如用 <code>i</code> 表示迭代变量和用 <code>T</code> 表示模板参数。</p>
+<p>模板参数的命名应当遵循对应的分类：类型模板参数应当遵循 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/#type-names">类型命名</a> 的规则，而非类型模板应当遵循 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/#variable-names">变量命名</a> 的规则。</p>
+<h3 id="文件命名"><a href="#文件命名" class="headerlink" title="文件命名"></a>文件命名</h3><p>文件名要全部小写，可以包含下划线 (<code>_</code>) 或连字符 (<code>-</code>)，依照项目的约定。如果没有约定，那么 “<code>_</code>” 更好。</p>
+<p>可接受的文件命名示例：</p>
+<ul>
+<li><p><code>my_useful_class.cc</code></p>
+</li>
+<li><p><code>my-useful-class.cc</code></p>
+</li>
+<li><p><code>myusefulclass.cc</code></p>
+</li>
+<li><p><code>myusefulclass_test.cc</code> // <code>_unittest</code> 和 <code>_regtest</code> 已弃用。</p>
+<p>C++ 文件要以 <code>.cc</code> 结尾，头文件以 <code>.h</code> 结尾。专门插入文本的文件则以 <code>.inc</code> 结尾，参见 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/headers/#self-contained-headers">头文件自足</a>。</p>
+</li>
+</ul>
+<p>不要使用已经存在于 <code>/usr/include</code> 下的文件名（即编译器搜索系统头文件的路径），如 <code>db.h</code>。</p>
+<p>通常应尽量让文件名更加明确。<code>http_server_logs.h</code> 就比 <code>logs.h</code> 要好。定义类时文件名一般成对出现，如 <code>foo_bar.h</code> 和 <code>foo_bar.cc</code>，对应于类 <code>FooBar</code>。</p>
+<p>内联函数必须放在 <code>.h</code> 文件中。如果内联函数比较短，就直接放在 <code>.h</code> 中。</p>
+<h3 id="类型命名"><a href="#类型命名" class="headerlink" title="类型命名"></a>类型命名</h3><p>类型名称的每个单词首字母均大写，不包含下划线：<code>MyExcitingClass</code>，<code>MyExcitingEnum</code>。</p>
+<p>所有类型命名 —— 类，结构体，类型定义 (<code>typedef</code>)，枚举，类型模板参数 —— 均使用相同约定，即以大写字母开始，每个单词首字母均大写，不包含下划线。例如：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 类和结构体class UrlTable { ...class UrlTableTester { ...struct UrlTableProperties { ...// 类型定义typedef hash_map&lt;UrlTableProperties *, string&gt; PropertiesMap;// using 别名using PropertiesMap = hash_map&lt;UrlTableProperties *, string&gt;;// 枚举enum UrlTableErrors { ...</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="变量命名"><a href="#变量命名" class="headerlink" title="变量命名"></a>变量命名</h3><p>变量（包括函数参数）和数据成员名一律小写，单词之间用下划线连接。类的成员变量以下划线结尾，但结构体的就不用，如：<code>a_local_variable</code>，<code>a_struct_data_member</code>，<code>a_class_data_member_</code>。</p>
+<h3 id="普通变量命名"><a href="#普通变量命名" class="headerlink" title="普通变量命名"></a>普通变量命名</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string table_name<span class="token punctuation">;</span>  <span class="token comment">// 好 - 用下划线.string tablename;   // 好 - 全小写.string tableName;  // 差 - 混合大小写</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="类数据成员"><a href="#类数据成员" class="headerlink" title="类数据成员"></a>类数据成员</h3><p>不管是静态的还是非静态的，类数据成员都可以和普通变量一样，但要接下划线。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">TableInfo</span> <span class="token punctuation">{</span>  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token keyword">private</span><span class="token operator">:</span>  string table_name_<span class="token punctuation">;</span>  <span class="token comment">// 好 - 后加下划线.  string tablename_;   // 好.  static Pool&lt;TableInfo&gt;* pool_;  // 好.};</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="结构体变量"><a href="#结构体变量" class="headerlink" title="结构体变量"></a>结构体变量</h3><p>不管是静态的还是非静态的，结构体数据成员都可以和普通变量一样，不用像类那样接下划线：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">UrlTableProperties</span> <span class="token punctuation">{</span>  string name<span class="token punctuation">;</span>  <span class="token keyword">int</span> num_entries<span class="token punctuation">;</span>  <span class="token keyword">static</span> Pool<span class="token operator">&lt;</span>UrlTableProperties<span class="token operator">&gt;</span><span class="token operator">*</span> pool<span class="token punctuation">;</span><span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>结构体与类的使用讨论，参考 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/classes/#structs-vs-classes">结构体 vs. 类</a>。</p>
+<h3 id="常量命名"><a href="#常量命名" class="headerlink" title="常量命名"></a>常量命名</h3><p>声明为 <code>constexpr</code> 或 <code>const</code> 的变量，或在程序运行期间其值始终保持不变的，命名时以 “k” 开头，大小写混合。例如：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> kDaysInAWeek <span class="token operator">=</span> <span class="token number">7</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>所有具有静态存储类型的变量（例如静态变量或全局变量， 参见 <a href="http://en.cppreference.com/w/cpp/language/storage_duration#Storage_duration">存储类型</a>）都应当以此方式命名。对于其他存储类型的变量，如自动变量等，这条规则是可选的。如果不采用这条规则，就按照一般的变量命名规则。</p>
+<h3 id="函数命名"><a href="#函数命名" class="headerlink" title="函数命名"></a>函数命名</h3><p>常规函数使用大小写混合，取值和设值函数则要求与变量名匹配：<code>MyExcitingFunction()</code>，<code>MyExcitingMethod()</code>，<code>my_exciting_member_variable()</code>，<code>set_my_exciting_member_variable()</code>。</p>
+<p>一般来说，函数名的每个单词首字母大写（即 “驼峰变量名” 或 “帕斯卡变量名”），没有下划线。对于首字母缩写的单词，更倾向于将它们视作一个单词进行首字母大写（例如，写作 <code>StartRpc()</code> 而非 <code>StartRPC()</code>）。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">AddTableEntry</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token function">DeleteUrl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token function">OpenFileOrDie</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>（同样的命名规则同时适用于类作用域与命名空间作用域的常量， 因为它们是作为 API 的一部分暴露对外的， 因此应当让它们看起来像是一个函数， 因为在这时， 它们实际上是一个对象而非函数的这一事实对外不过是一个无关紧要的实现细节。）</p>
+<p>取值和设值函数的命名与变量一致。一般来说它们的名称与实际的成员变量对应， 但并不强制要求。例如 <code>int count()</code> 与 <code>void set_count(int count)</code>。</p>
+<h3 id="命名空间命名"><a href="#命名空间命名" class="headerlink" title="命名空间命名"></a>命名空间命名</h3><p>命名空间以小写字母命名。最高级命名空间的名字取决于项目名称。要注意避免嵌套命名空间的名字之间和常见的顶级命名空间的名字之间发生冲突。</p>
+<p>顶级命名空间的名称应当是项目名或者是该命名空间中的代码所属的团队的名字。命名空间中的代码， 应当存放于和命名空间的名字匹配的文件夹或其子文件夹中。</p>
+<p>注意 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/#general-naming-rules">不使用缩写作为名称</a> 的规则同样适用于命名空间。命名空间中的代码极少需要涉及命名空间的名称， 因此没有必要在命名空间中使用缩写。</p>
+<p>要避免嵌套的命名空间与常见的顶级命名空间发生名称冲突。由于名称查找规则的存在， 命名空间之间的冲突完全有可能导致编译失败。尤其是， 不要创建嵌套的 <code>std</code> 命名空间。建议使用更独特的项目标识符 （<code>websearch::index</code>， <code>websearch::index_util</code>） 而非常见的极易发生冲突的名称 （比如 <code>websearch::util</code>）。</p>
+<p>对于 <code>internal</code> 命名空间， 要当心加入到同一 <code>internal</code> 命名空间的代码之间发生冲突 （由于内部维护人员通常来自同一团队， 因此常有可能导致冲突）。在这种情况下， 请使用文件名以使得内部名称独一无二 （例如对于 <code>frobber.h</code>， 使用 <code>websearch::index::frobber_internal</code>）。</p>
+<h3 id="枚举命名"><a href="#枚举命名" class="headerlink" title="枚举命名"></a>枚举命名</h3><p>枚举的命名应当和 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/#constant-names">常量</a> 或 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/#macro-names">宏</a> 一致: <code>kEnumName</code> 或是 <code>ENUM_NAME</code>。</p>
+<p>单独的枚举值应该优先采用 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/#constant-names">常量</a> 的命名方式。但 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/#macro-names">宏</a> 方式的命名也可以接受。枚举名 <code>UrlTableErrors</code> （以及 <code>AlternateUrlTableErrors</code>） 是类型， 所以要用大小写混合的方式。</p>
+<pre class="line-numbers language-none"><code class="language-none">enum UrlTableErrors {    kOK = 0,    kErrorOutOfMemory,    kErrorMalformedInput,};enum AlternateUrlTableErrors {    OK = 0,    OUT_OF_MEMORY = 1,    MALFORMED_INPUT = 2,};<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>2009 年 1 月之前， 我们一直建议采用 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/#macro-names">宏</a> 的方式命名枚举值。由于枚举值和宏之间的命名冲突， 直接导致了很多问题。由此， 这里改为优先选择常量风格的命名方式。新代码应该尽可能优先使用常量风格。但是老代码没必要切换到常量风格， 除非宏风格确实会产生编译期问题。</p>
+<h3 id="宏命名"><a href="#宏命名" class="headerlink" title="宏命名"></a>宏命名</h3><p>你并不打算 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/others/#preprocessor-macros">使用宏</a>， 对吧? 如果你一定要用， 像这样命名: <code>MY_MACRO_THAT_SCARES_SMALL_CHILDREN</code>。</p>
+<p>参考 <a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/others/#preprocessor-macros">预处理宏</a>； 通常 <em>不应该</em> 使用宏。如果不得不用， 其命名像枚举命名一样全部大写， 使用下划线:</p>
+<pre class="line-numbers language-none"><code class="language-none">#define ROUND(x) ...#define PI_ROUNDED 3.0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="命名规则的特例"><a href="#命名规则的特例" class="headerlink" title="命名规则的特例"></a>命名规则的特例</h3><p>如果你命名的实体与已有 C/C++ 实体相似， 可参考现有命名策略.</p>
+<p><code>bigopen()</code>: 函数名， 参照 <code>open()</code> 的形式</p>
+<pre class="line-numbers language-none"><code class="language-none">uint`: `typedef<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><code>bigpos</code>: <code>struct</code> 或 <code>class</code>， 参照 <code>pos</code> 的形式</p>
+<p><code>sparse_hash_map</code>: STL 型实体； 参照 STL 命名约定</p>
+<pre class="line-numbers language-none"><code class="language-none">LONGLONG_MAX`: 常量， 如同 `INT_MAX<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++基础</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用Kalibr进行Camera-IMU联合标定</title>
     <url>/2021/07/04/kalibr-for-camera-imu-calibration/</url>
     <content><![CDATA[<h1 id="使用kalibr进行Camera-IMU联合标定"><a href="#使用kalibr进行Camera-IMU联合标定" class="headerlink" title="使用kalibr进行Camera-IMU联合标定"></a>使用kalibr进行Camera-IMU联合标定</h1><p>本文以<u>Intel RealSense D435i</u>为例，介绍使用kalibr进行Camera-IMU联合标定的方法。</p>
@@ -6354,6 +6620,217 @@ Main(): Waited and joined with 3 threads. Final value of count = 145. Done.<span
       </categories>
       <tags>
         <tag>Camera</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>机器学习笔记（三）：多层神经网络</title>
+    <url>/2022/01/09/machine-learning-3/</url>
+    <content><![CDATA[<h1 id="机器学习笔记（三）：多层神经网络"><a href="#机器学习笔记（三）：多层神经网络" class="headerlink" title="机器学习笔记（三）：多层神经网络"></a>机器学习笔记（三）：多层神经网络</h1><p>基于生物神经元模型可得到多层感知器（Multi-layer Perceptron, MLP)的基本结构，最典型的MLP包括包括三层：输入层(Input Layer)、隐层(Hidden Layer)和输出层(Output Layer)，MLP神经网络不同层之间是全连接的（全连接的意思就是：上一层的任何一个神经元与下一层的所有神经元都有连接）。</p>
+<p><img src="/images/neural-network/mlp_theory.gif"></p>
+<h2 id="1-神经元"><a href="#1-神经元" class="headerlink" title="1. 神经元"></a>1. 神经元</h2><p>神经元和感知器本质上是一样的，感知器的激活函数是阶跃函数；而神经元的激活函数往往选择为sigmoid函数或tanh函数。如下图所示：</p>
+<p><img src="/images/neural-network/neuron.gif"></p>
+<p>计算一个神经元的输出的方法和计算一个感知器的输出是一样的。假设神经元的输入是向量$\vec{x}$，权重向量是$\vec{w}$(偏置项是$w_0$)，激活函数是sigmoid函数，则其输出$y$：<br>$$<br>y = sigmoid(\vec{w}^T \cdot \vec{x})<br>$$</p>
+<p>sigmoid函数的定义如下：<br>$$<br>sigmoid(x) = \frac{1}{1+e^{-x}}<br>$$<br>将其带入前面的式子，得到<br>$$<br>y = \frac{1}{1+e^{-\vec{w}^T \cdot \vec{x}}}<br>$$</p>
+<p>sigmoid函数是一个非线性函数，值域是(0,1)。函数图像如下图所示</p>
+<p><img src="/images/neural-network/sigmod.jpg"></p>
+<p>sigmoid函数的导数是：<br>$$<br>\begin{eqnarray}<br>y &amp; = &amp; sigmod(x) \tag{1} \<br>y’ &amp; = &amp; y(1-y)<br>\end{eqnarray}<br>$$<br>可以看到，sigmoid函数的导数可以用sigmoid函数自身来表示。这样，一旦计算出sigmoid函数的值，计算它的导数的值就非常方便。</p>
+<h2 id="2-神经网络的结构"><a href="#2-神经网络的结构" class="headerlink" title="2. 神经网络的结构"></a>2. 神经网络的结构</h2><p><img src="/images/neural-network/nn1.jpeg"></p>
+<p>神经网络就是按照一定规则连接起来的多个神经元。上图展示了一个全连接(Full Connected, FC)神经网络，通过观察上面的图，可以发现它的规则包括：</p>
+<ul>
+<li>神经元按照层来布局<ul>
+<li>最左边的层叫做输入层，负责接收输入数据；</li>
+<li>最右边的层叫输出层，可以从这层获取神经网络输出数据;</li>
+<li>输入层和输出层之间的层叫做隐藏层，因为它们对于外部来说是不可见的。</li>
+</ul>
+</li>
+<li>同一层的神经元之间没有连接</li>
+<li>第N层的每个神经元和第N-1层的所有神经元相连(这就是full connected的含义)，第N-1层神经元的输出就是第N层神经元的输入</li>
+<li>每个连接都有一个权值</li>
+</ul>
+<p>由此可知，神经网络主要有三个基本要素：权重、偏置和激活函数</p>
+<ul>
+<li>权重：神经元之间的连接强度由权重控制，权重的大小表示可能性的大小</li>
+<li>偏置：偏置的设置是为了正确分类样本，是模型中一个重要的参数，即保证通过输入算出的输出值不能随便激活。</li>
+<li>激活函数：起非线性映射的作用，其可将神经元的输出幅度限制在一定范围内，一般限制在（-1~1）或（0~1）之间。最常用的激活函数是Sigmoid函数，可将（-∞，+∞）的数映射到（0~1）的范围内。</li>
+</ul>
+<p>上面这些规则定义了全连接神经网络的结构。事实上还存在很多其它结构的神经网络，比如卷积神经网络(CNN)、循环神经网络(RNN)，他们都具有不同的连接规则。</p>
+<h2 id="3-计算神经网络的输出"><a href="#3-计算神经网络的输出" class="headerlink" title="3. 计算神经网络的输出"></a>3. 计算神经网络的输出</h2><p>神经网络实际上就是一个输入向量$\vec{x}$到输出向量$\vec{y}$的函数，即：</p>
+<p>$$<br>\vec{y} = f_{network}(\vec{x})<br>$$<br>根据输入计算神经网络的输出</p>
+<ul>
+<li>首先将输入向量$\vec{x}$的每个元素的值$x_i$赋给神经网络的输入层的对应神经元</li>
+<li>然后根据式（1）依次向前计算每一层的每个神经元的值，直到最后一层输出层的所有神经元的值计算完毕</li>
+<li>最后，将输出层每个神经元的值串在一起就得到了输出向量$\vec{y}$。</li>
+</ul>
+<p>接下来举一个例子来说明这个过程，我们先给神经网络的每个单元写上编号。</p>
+<p><img src="/images/neural-network/nn2.png"></p>
+<ul>
+<li>输入层有三个节点，我们将其依次编号为1、2、3；</li>
+<li>隐藏层的4个节点，编号依次为4、5、6、7；</li>
+<li>最后输出层的两个节点编号为8、9。</li>
+</ul>
+<p>因为这个神经网络是全连接网络，所以可以看到每个节点都和上一层的所有节点有连接。比如，隐藏层的节点4，它和输入层的三个节点1、2、3之间都有连接，其连接上的权重分别为$w_{41}$,$w_{42}$,$w_{43}$。那么，怎样计算节点4的输出值$a_4$呢？</p>
+<p>为了计算节点4的输出值，必须先得到其所有上游节点（也就是节点1、2、3）的输出值。节点1、2、3是输入层的节点，所以，他们的输出值就是输入向量$\vec{x}$本身。按照上图画出的对应关系，可以看到节点1、2、3的输出值分别是$x_1$,$x_2$,$x_3$。要求输入向量的维度和输入层神经元个数相同，而输入向量的某个元素对应到哪个输入节点是可以自由决定的。</p>
+<p>一旦有了节点1、2、3的输出值，就可以根据式1计算节点4的输出值$a_4$：</p>
+<p><img src="/images/neural-network/eqn_3_4.png"></p>
+<p>上式的$w_{4b}$是节点4的偏置项，图中没有画出来。而$w_{41}$,$w_{42}$,$w_{43}$分别为节点1、2、3到节点4连接的权重，在给权重$w_{ji}$编号时，目标节点的编号$j$放在前面，把源节点的编号$i$放在后面。</p>
+<p>同样，可以继续计算出节点5、6、7的输出值$a_5$,$a_6$,$a_7$。这样，隐藏层的4个节点的输出值就计算完成了，就可以接着计算输出层的节点8的输出值$y_1$：</p>
+<p><img src="/images/neural-network/eqn_5_6.png"></p>
+<p>同理，我们还可以计算出$y_2$的值。这样输出层所有节点的输出值计算完毕，就得到了在输入向量$\vec{x} = (x_1, x_2, x_3)^T$时，神经网络的输出向量$\vec{y} = (y_1, y_2)^T$。可以看出：输出向量的维度和输出层神经元个数相同。</p>
+<h2 id="4-神经网络的矩阵表示"><a href="#4-神经网络的矩阵表示" class="headerlink" title="4. 神经网络的矩阵表示"></a>4. 神经网络的矩阵表示</h2><p>神经网络的计算如果用矩阵来表示会很方便，此外可以用优化加速算法提高计算速度。</p>
+<p>隐藏层4个节点的计算依次排列出来：</p>
+<p><img src="/images/neural-network/eqn_hidden_units.png"></p>
+<p>接着，定义网络的输入向量$\vec{x}$和隐藏层每个节点的权重向量$\vec{w}$。令</p>
+<p><img src="/images/neural-network/eqn_7_12.png"></p>
+<p>代入到前面的一组式子，得到：</p>
+<p><img src="/images/neural-network/eqn_13_16.png"></p>
+<p>现在，把上述计算$a_4$, $a_5$,$a_6$,$a_7$的四个式子写到一个矩阵里面，每个式子作为矩阵的一行，就可以利用矩阵来表示它们的计算了。令</p>
+<p><img src="/images/neural-network/eqn_matrix1.png"></p>
+<p>带入前面的一组式子，得到</p>
+<p><img src="/images/neural-network/formular_2.png"></p>
+<p>在（式2）中，</p>
+<ul>
+<li>$f$是激活函数，在本例中是$sigmod$函数；</li>
+<li>$W$是某一层的权重矩阵；</li>
+<li>$\vec{x}$是某层的输入向量；</li>
+<li>$\vec{a}$是某层的输出向量。</li>
+</ul>
+<p>（式2）说明神经网络的每一层的作用实际上就是先将输入向量左乘一个数组进行线性变换，得到一个新的向量，然后再对这个向量逐元素应用一个激活函数。</p>
+<p>每一层的算法都是一样的。比如，对于包含一个输入层，一个输出层和三个隐藏层的神经网络，我们假设其权重矩阵分别为$W_1$,$W_2$,$W_3$,$W_4$，每个隐藏层的输出分别是$\vec{a}_1$,$\vec{a}_2$,$\vec{a}_3$，神经网络的输入为$\vec{x}$，神经网络的输出为$\vec{y}$，如下图所示：</p>
+<p><img src="/images/neural-network/nn_parameters_demo.png"></p>
+<p>则每一层的输出向量的计算可以表示为：</p>
+<p><img src="/images/neural-network/eqn_17_20.png"></p>
+<p>这就是神经网络输出值的矩阵计算方法。</p>
+<p>如果写成一个公式：<br>$$<br>\vec{y} = f(W4 \cdot f(W3 \cdot f(W2 \cdot f(W1 \cdot \vec{x}))))<br>$$<br>神经网络正向计算的过程比较简单，就是一层一层不断做运算，动态的演示如下图所示：<br><img src="/images/neural-network/neural_network_demo.gif"></p>
+<h2 id="5-神经网络的训练-反向传播算法"><a href="#5-神经网络的训练-反向传播算法" class="headerlink" title="5. 神经网络的训练 - 反向传播算法"></a>5. 神经网络的训练 - 反向传播算法</h2><p>神经网络的每个连接上的权值如果知道，那么就可以将输入数据代入得到希望的结果。神经网络是一个模型，那么这些权值就是<strong>模型的参数</strong>，也就是模型要学习的东西。然而，一个神经网络的连接方式、网络的层数、每层的节点数这些参数，则不是学习出来的，而是人为事先设置的。对于这些人为设置的参数，我们称之为**超参数(Hyper-Parameters)**。</p>
+<p>前面课程中所学的最小二乘、逻辑回归等可以直接优化损失函数来求解模型参数的更新值。在多层神经网络中：</p>
+<ul>
+<li>最后一层的参数可以用这样的方式求解得到；</li>
+<li>隐层节点没有输出的真值，因此无法直接构建损失函数来求解</li>
+</ul>
+<p>如何化解这个难题？</p>
+<p>反向传播算法其实就是链式求导法则的应用。然而，这个如此简单且显而易见的方法，却是在Roseblatt提出感知器算法将近30年之后才被发明和普及的。对此，Bengio这样回应道：</p>
+<blockquote>
+<p>很多看似显而易见的想法只有在事后才变得显而易见。</p>
+</blockquote>
+<p>按照机器学习的通用套路，我们先确定神经网络的目标函数，然后用随机梯度下降优化算法去求目标函数最小值时的参数值。</p>
+<p>我们取网络所有输出层节点的误差平方和作为目标函数：</p>
+<p><img src="/images/neural-network/bp_loss.png"></p>
+<p>其中，$E_d$表示是样本$d$的误差, <strong>t是样本的标签值</strong>，<strong>y是神经网络的输出值</strong>。</p>
+<p>然后，使用随机梯度下降算法对目标函数进行优化：</p>
+<p><img src="/images/neural-network/bp_weight_update.png"></p>
+<p>随机梯度下降算法也就是需要求出误差$E_d$对于每个权重$w_{ji}$的偏导数（也就是梯度），如何求解？</p>
+<p><img src="/images/neural-network/nn3.png"></p>
+<p>观察上图，我们发现权重$w_{ji}$仅能通过影响节点$j$的输入值影响网络的其它部分，设$net_j$是节点$j$的加权输入，即</p>
+<p><img src="/images/neural-network/eqn_21_22.png"></p>
+<p>$E_d$是$net_j$的函数，而$net_j$是$w_{ji}$的函数。根据链式求导法则，可以得到：</p>
+<p><img src="/images/neural-network/eqn_23_25.png"></p>
+<p>上式中，$x_{ji}$是节点传递给节点$j$的输入值，也就是节点$i$的输出值。</p>
+<p>对于的$\frac{\partial E_d}{\partial net_j}$推导，需要区分输出层和隐藏层两种情况。</p>
+<h3 id="5-1-输出层权值训练"><a href="#5-1-输出层权值训练" class="headerlink" title="5.1 输出层权值训练"></a>5.1 输出层权值训练</h3><p><img src="/images/neural-network/nn3.png"></p>
+<p>对于输出层来说，$net_j$仅能通过节点$j$的输出值$y_j$来影响网络其它部分，也就是说$E_d$是$y_j$的函数，而$y_j$是$net_j$的函数，其中$y_j = sigmod(net_j)$。所以我们可以再次使用链式求导法则：</p>
+<p><img src="/images/neural-network/eqn_26.png"></p>
+<p>考虑上式第一项:</p>
+<p><img src="/images/neural-network/eqn_27_29.png"></p>
+<p>考虑上式第二项：</p>
+<p><img src="/images/neural-network/eqn_30_31.png"></p>
+<p>将第一项和第二项带入，得到：</p>
+<p><img src="/images/neural-network/eqn_ed_net_j.png"></p>
+<p>如果令$\delta_j = - \frac{\partial E_d}{\partial net_j}$，也就是一个节点的误差项$\delta$是网络误差对这个节点输入的偏导数的相反数。带入上式，得到：</p>
+<p><img src="/images/neural-network/eqn_delta_j.png"></p>
+<p>将上述推导带入随机梯度下降公式，得到：</p>
+<p><img src="/images/neural-network/eqn_32_34.png"></p>
+<h3 id="5-2-隐藏层权值训练"><a href="#5-2-隐藏层权值训练" class="headerlink" title="5.2 隐藏层权值训练"></a>5.2 隐藏层权值训练</h3><p>现在我们要推导出隐藏层的$\frac{\partial E_d}{\partial net_j}$。</p>
+<p><img src="/images/neural-network/nn3.png"></p>
+<p>首先，我们需要定义节点$j$的所有直接下游节点的集合$Downstream(j)$。例如，对于节点4来说，它的直接下游节点是节点8、节点9。可以看到$net_j$只能通过影响$Downstream(j)$再影响$E_d$。设$net_k$是节点$j$的下游节点的输入，则$E_d$是$net_k$的函数，而$net_k$是$net_j$的函数。因为$net_k$有多个，我们应用全导数公式，可以做出如下推导：</p>
+<p><img src="/images/neural-network/eqn_35_40.png"></p>
+<p>因为$\delta_j = - \frac{\partial E_d}{\partial net_j}$，带入上式得到：</p>
+<p><img src="/images/neural-network/eqn_delta_hidden.png"></p>
+<p>至此，我们已经推导出了反向传播算法。需要注意的是，我们刚刚推导出的训练规则是根据激活函数是sigmoid函数、平方和误差、全连接网络、随机梯度下降优化算法。如果激活函数不同、误差计算方式不同、网络连接结构不同、优化算法不同，则具体的训练规则也会不一样。但是无论怎样，训练规则的推导方式都是一样的，应用链式求导法则进行推导即可。</p>
+<h3 id="5-3-具体解释"><a href="#5-3-具体解释" class="headerlink" title="5.3 具体解释"></a>5.3 具体解释</h3><p>假设每个训练样本为$(\vec{x}, \vec{t})$，其中向量$\vec{x}$是训练样本的特征，而$\vec{t}$是样本的目标值。</p>
+<p><img src="/images/neural-network/nn3.png"></p>
+<p>首先，根据上一节介绍的算法，用样本的特征$\vec{x}$，计算出神经网络中每个隐藏层节点的输出$a_i$，以及输出层每个节点的输出$y_i$。</p>
+<p>然后，按照下面的方法计算出每个节点的误差项$\delta_i$：</p>
+<ul>
+<li><strong>对于输出层节点$i$</strong></li>
+</ul>
+<p><img src="/images/neural-network/formular_3.png"></p>
+<p>其中，$\delta_i$是节点$i$的误差项，$y_i$是节点$i$的输出值，$t_i$是样本对应于节点$i$的目标值。举个例子，根据上图，对于输出层节点8来说，它的输出值是$y_1$，而样本的目标值是$t_1$，带入上面的公式得到节点8的误差项应该是：</p>
+<p><img src="/images/neural-network/forumlar_delta8.png"></p>
+<ul>
+<li><strong>对于隐藏层节点</strong></li>
+</ul>
+<p><img src="/images/neural-network/formular_4.png"></p>
+<p>其中，$a_i$是节点$i$的输出值，$w_{ki}$是节点$i$到它的下一层节点$k$的连接的权重，$\delta_k$是节点$i$的下一层节点$k$的误差项。例如，对于隐藏层节点4来说，计算方法如下：</p>
+<p><img src="/images/neural-network/forumlar_delta4.png"></p>
+<p>最后，更新每个连接上的权值：</p>
+<p><img src="/images/neural-network/formular_5.png"></p>
+<p>其中，$w_{ji}$是节点$i$到节点$j$的权重，$\eta$是一个成为学习速率的常数，$\delta_j$是节点$j$的误差项，$x_{ji}$是节点$i$传递给节点$j$的输入。例如，权重$w_{84}$的更新方法如下：</p>
+<p><img src="/images/neural-network/eqn_w84_update.png"></p>
+<p>类似的，权重$w_{41}$的更新方法如下：</p>
+<p><img src="/images/neural-network/eqn_w41_update.png"></p>
+<p>偏置项的输入值永远为1。例如，节点4的偏置项$w_{4b}$应该按照下面的方法计算：</p>
+<p><img src="/images/neural-network/eqn_w4b_update.png"></p>
+<p>计算一个节点的误差项，需要先计算每个与其相连的下一层节点的误差项，这就要求误差项的计算顺序必须是从输出层开始，然后反向依次计算每个隐藏层的误差项，直到与输入层相连的那个隐藏层，这就是反向传播算法的名字的含义。当所有节点的误差项计算完毕后，就可以根据式5来更新所有的权重。</p>
+<h2 id="6-为什么要使用激活函数"><a href="#6-为什么要使用激活函数" class="headerlink" title="6. 为什么要使用激活函数"></a>6. 为什么要使用激活函数</h2><p>激活函数在神经网络中非常重要，使用激活函数也是非常必要的，前面我们从人脑神经元的角度理解了激活函数，因为神经元需要通过激活才能往后传播，所以神经网络中需要激活函数，下面我们从数学的角度理解一下激活函数的必要性。</p>
+<p>比如一个两层的神经网络，使用 f 表示激活函数，那么</p>
+<p>$$<br>y = f( w_2  f(w_1 x) )<br>$$</p>
+<p>如果不使用激活函数，那么神经网络的结果就是</p>
+<p>$$<br>y = w_2 (w_1 x) = (w_2 w_1) x = \bar{w} x<br>$$</p>
+<p>可以看到，将两层神经网络的参数合在一起，用 $\bar{w}$ 来表示，两层的神经网络其实就变成了一层神经网络，只不过参数变成了新的 $\bar{w}$，所以如果不使用激活函数，那么不管多少层的神经网络，$y = w_n \cdots w_2 w_1 x = \bar{w} x$，就都变成了单层神经网络，所以在每一层都必须使用激活函数。</p>
+<p>最后看看激活函数对神经网络的影响</p>
+<p><img src="/images/neural-network/nn-activation-function.gif"></p>
+<p>可以看到使用了激活函数之后，神经网络可以通过改变权重实现任意形状，越是复杂的神经网络能拟合的形状越复杂，这就是著名的神经网络万有逼近定理。神经网络使用的激活函数都是非线性的，每个激活函数都输入一个值，然后做一种特定的数学运算得到一个结果。</p>
+<h3 id="6-1-sigmoid-激活函数"><a href="#6-1-sigmoid-激活函数" class="headerlink" title="6.1 sigmoid 激活函数"></a>6.1 sigmoid 激活函数</h3><p>$$\sigma(x) = \frac{1}{1 + e^{-x}}$$</p>
+<p><img src="/images/neural-network/act-sigmoid.jpg"></p>
+<h3 id="6-2-tanh-激活函数"><a href="#6-2-tanh-激活函数" class="headerlink" title="6.2 tanh 激活函数"></a>6.2 tanh 激活函数</h3><p>$$tanh(x) = 2 \sigma(2x) - 1$$</p>
+<p><img src="/images/neural-network/act-tanh.jpg"></p>
+<h3 id="6-3-ReLU-激活函数"><a href="#6-3-ReLU-激活函数" class="headerlink" title="6.3 ReLU 激活函数"></a>6.3 ReLU 激活函数</h3><p>$$ReLU(x) = max(0, x)$$</p>
+<p><img src="/images/neural-network/act-relu.jpg"></p>
+<p>当输入 $x&lt;0$ 时，输出为 $0$，当 $x&gt; 0$ 时，输出为 $x$。该激活函数使网络更快速地收敛。它不会饱和，即它可以对抗梯度消失问题，至少在正区域（$x&gt; 0$ 时）可以这样，因此神经元至少在一半区域中不会把所有零进行反向传播。由于使用了简单的阈值化（thresholding），ReLU 计算效率很高。</p>
+<p>在网络中，不同的输入可能包含着大小不同关键特征，使用大小可变的数据结构去做容器，则更加灵活。假如神经元激活具有稀疏性，那么不同激活路径上：不同数量（选择性不激活）、不同功能（分布式激活）。两种可优化的结构生成的激活路径，可以更好地从有效的数据的维度上，学习到相对稀疏的特征，起到自动化解离效果。</p>
+<p><img src="/images/neural-network/nn-sparse.png"></p>
+<p>稀疏特征并不需要网络具有很强的处理线性不可分机制，因此在深度学习模型中，使用简单、速度快的线性激活函数可能更为合适。如图，一旦神经元与神经元之间改为线性激活，网络的非线性部分仅仅来自于神经元部分选择性激活。</p>
+<p>更倾向于使用线性神经激活函数的另外一个原因是，减轻梯度法训练深度网络时的Vanishing Gradient Problem。</p>
+<p>看过BP推导的人都知道，误差从输出层反向传播算梯度时，在各层都要乘当前层的输入神经元值，激活函数的一阶导数。<br>$$<br>grad = error ⋅ sigmoid’(x) ⋅ x<br>$$</p>
+<p>使用双端饱和(即值域被限制)Sigmoid系函数会有两个问题：</p>
+<ol>
+<li>sigmoid’(x) ∈ (0,1)  导数缩放</li>
+<li>x∈(0,1)或x∈(-1,1)  饱和值缩放</li>
+</ol>
+<p>这样，经过每一层时，误差都是成倍的衰减，一旦进行递推式的多层的反向传播，梯度就会不停的衰减，消失，使得网络学习变慢。而校正激活函数的梯度是1，且只有一端饱和，梯度很好的在反向传播中流动，训练速度得到了很大的提高。</p>
+<h2 id="7-算法与处理步骤"><a href="#7-算法与处理步骤" class="headerlink" title="7. 算法与处理步骤"></a>7. 算法与处理步骤</h2><pre class="line-numbers language-none"><code class="language-none">W = random
+
+# 每次训练
+for k in range(epoch)
+    # 正向计算
+    for j in range(NN_depth):
+        # 式2 ( a = xxx)
+        X_j = f( W_{j, j-1} X_{j-1})
+
+    ＃ 反向误差计算
+    for j in range(NN_depth, 0, -1):
+        # 式3， 式4
+        delta = y_i(1-y_i)(t_i-y_i)
+        or 
+        delta = a_i(1-a_i) \sum w_ki delta_k
+
+        # 式5
+        w_ji = w_j + epsilon delta_j x_ji<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="7-1-正向计算："><a href="#7-1-正向计算：" class="headerlink" title="7.1 正向计算："></a>7.1 正向计算：</h3><p><img src="/images/neural-network/formular_2.png"></p>
+<h3 id="7-2-反向传播："><a href="#7-2-反向传播：" class="headerlink" title="7.2 反向传播："></a>7.2 反向传播：</h3><p>输出层的误差计算：</p>
+<p><img src="/images/neural-network/formular_3.png"></p>
+<p>隐层的误差计算：</p>
+<p><img src="/images/neural-network/formular_4.png"></p>
+<p>权值更新：</p>
+<p><img src="/images/neural-network/formular_5.png"></p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习笔记</tag>
+        <tag>多层神经网络</tag>
       </tags>
   </entry>
   <entry>
@@ -6899,217 +7376,6 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
     plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>机器学习笔记</tag>
-        <tag>多层神经网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>机器学习笔记（三）：多层神经网络</title>
-    <url>/2022/01/09/machine-learning-3/</url>
-    <content><![CDATA[<h1 id="机器学习笔记（三）：多层神经网络"><a href="#机器学习笔记（三）：多层神经网络" class="headerlink" title="机器学习笔记（三）：多层神经网络"></a>机器学习笔记（三）：多层神经网络</h1><p>基于生物神经元模型可得到多层感知器（Multi-layer Perceptron, MLP)的基本结构，最典型的MLP包括包括三层：输入层(Input Layer)、隐层(Hidden Layer)和输出层(Output Layer)，MLP神经网络不同层之间是全连接的（全连接的意思就是：上一层的任何一个神经元与下一层的所有神经元都有连接）。</p>
-<p><img src="/images/neural-network/mlp_theory.gif"></p>
-<h2 id="1-神经元"><a href="#1-神经元" class="headerlink" title="1. 神经元"></a>1. 神经元</h2><p>神经元和感知器本质上是一样的，感知器的激活函数是阶跃函数；而神经元的激活函数往往选择为sigmoid函数或tanh函数。如下图所示：</p>
-<p><img src="/images/neural-network/neuron.gif"></p>
-<p>计算一个神经元的输出的方法和计算一个感知器的输出是一样的。假设神经元的输入是向量$\vec{x}$，权重向量是$\vec{w}$(偏置项是$w_0$)，激活函数是sigmoid函数，则其输出$y$：<br>$$<br>y = sigmoid(\vec{w}^T \cdot \vec{x})<br>$$</p>
-<p>sigmoid函数的定义如下：<br>$$<br>sigmoid(x) = \frac{1}{1+e^{-x}}<br>$$<br>将其带入前面的式子，得到<br>$$<br>y = \frac{1}{1+e^{-\vec{w}^T \cdot \vec{x}}}<br>$$</p>
-<p>sigmoid函数是一个非线性函数，值域是(0,1)。函数图像如下图所示</p>
-<p><img src="/images/neural-network/sigmod.jpg"></p>
-<p>sigmoid函数的导数是：<br>$$<br>\begin{eqnarray}<br>y &amp; = &amp; sigmod(x) \tag{1} \<br>y’ &amp; = &amp; y(1-y)<br>\end{eqnarray}<br>$$<br>可以看到，sigmoid函数的导数可以用sigmoid函数自身来表示。这样，一旦计算出sigmoid函数的值，计算它的导数的值就非常方便。</p>
-<h2 id="2-神经网络的结构"><a href="#2-神经网络的结构" class="headerlink" title="2. 神经网络的结构"></a>2. 神经网络的结构</h2><p><img src="/images/neural-network/nn1.jpeg"></p>
-<p>神经网络就是按照一定规则连接起来的多个神经元。上图展示了一个全连接(Full Connected, FC)神经网络，通过观察上面的图，可以发现它的规则包括：</p>
-<ul>
-<li>神经元按照层来布局<ul>
-<li>最左边的层叫做输入层，负责接收输入数据；</li>
-<li>最右边的层叫输出层，可以从这层获取神经网络输出数据;</li>
-<li>输入层和输出层之间的层叫做隐藏层，因为它们对于外部来说是不可见的。</li>
-</ul>
-</li>
-<li>同一层的神经元之间没有连接</li>
-<li>第N层的每个神经元和第N-1层的所有神经元相连(这就是full connected的含义)，第N-1层神经元的输出就是第N层神经元的输入</li>
-<li>每个连接都有一个权值</li>
-</ul>
-<p>由此可知，神经网络主要有三个基本要素：权重、偏置和激活函数</p>
-<ul>
-<li>权重：神经元之间的连接强度由权重控制，权重的大小表示可能性的大小</li>
-<li>偏置：偏置的设置是为了正确分类样本，是模型中一个重要的参数，即保证通过输入算出的输出值不能随便激活。</li>
-<li>激活函数：起非线性映射的作用，其可将神经元的输出幅度限制在一定范围内，一般限制在（-1~1）或（0~1）之间。最常用的激活函数是Sigmoid函数，可将（-∞，+∞）的数映射到（0~1）的范围内。</li>
-</ul>
-<p>上面这些规则定义了全连接神经网络的结构。事实上还存在很多其它结构的神经网络，比如卷积神经网络(CNN)、循环神经网络(RNN)，他们都具有不同的连接规则。</p>
-<h2 id="3-计算神经网络的输出"><a href="#3-计算神经网络的输出" class="headerlink" title="3. 计算神经网络的输出"></a>3. 计算神经网络的输出</h2><p>神经网络实际上就是一个输入向量$\vec{x}$到输出向量$\vec{y}$的函数，即：</p>
-<p>$$<br>\vec{y} = f_{network}(\vec{x})<br>$$<br>根据输入计算神经网络的输出</p>
-<ul>
-<li>首先将输入向量$\vec{x}$的每个元素的值$x_i$赋给神经网络的输入层的对应神经元</li>
-<li>然后根据式（1）依次向前计算每一层的每个神经元的值，直到最后一层输出层的所有神经元的值计算完毕</li>
-<li>最后，将输出层每个神经元的值串在一起就得到了输出向量$\vec{y}$。</li>
-</ul>
-<p>接下来举一个例子来说明这个过程，我们先给神经网络的每个单元写上编号。</p>
-<p><img src="/images/neural-network/nn2.png"></p>
-<ul>
-<li>输入层有三个节点，我们将其依次编号为1、2、3；</li>
-<li>隐藏层的4个节点，编号依次为4、5、6、7；</li>
-<li>最后输出层的两个节点编号为8、9。</li>
-</ul>
-<p>因为这个神经网络是全连接网络，所以可以看到每个节点都和上一层的所有节点有连接。比如，隐藏层的节点4，它和输入层的三个节点1、2、3之间都有连接，其连接上的权重分别为$w_{41}$,$w_{42}$,$w_{43}$。那么，怎样计算节点4的输出值$a_4$呢？</p>
-<p>为了计算节点4的输出值，必须先得到其所有上游节点（也就是节点1、2、3）的输出值。节点1、2、3是输入层的节点，所以，他们的输出值就是输入向量$\vec{x}$本身。按照上图画出的对应关系，可以看到节点1、2、3的输出值分别是$x_1$,$x_2$,$x_3$。要求输入向量的维度和输入层神经元个数相同，而输入向量的某个元素对应到哪个输入节点是可以自由决定的。</p>
-<p>一旦有了节点1、2、3的输出值，就可以根据式1计算节点4的输出值$a_4$：</p>
-<p><img src="/images/neural-network/eqn_3_4.png"></p>
-<p>上式的$w_{4b}$是节点4的偏置项，图中没有画出来。而$w_{41}$,$w_{42}$,$w_{43}$分别为节点1、2、3到节点4连接的权重，在给权重$w_{ji}$编号时，目标节点的编号$j$放在前面，把源节点的编号$i$放在后面。</p>
-<p>同样，可以继续计算出节点5、6、7的输出值$a_5$,$a_6$,$a_7$。这样，隐藏层的4个节点的输出值就计算完成了，就可以接着计算输出层的节点8的输出值$y_1$：</p>
-<p><img src="/images/neural-network/eqn_5_6.png"></p>
-<p>同理，我们还可以计算出$y_2$的值。这样输出层所有节点的输出值计算完毕，就得到了在输入向量$\vec{x} = (x_1, x_2, x_3)^T$时，神经网络的输出向量$\vec{y} = (y_1, y_2)^T$。可以看出：输出向量的维度和输出层神经元个数相同。</p>
-<h2 id="4-神经网络的矩阵表示"><a href="#4-神经网络的矩阵表示" class="headerlink" title="4. 神经网络的矩阵表示"></a>4. 神经网络的矩阵表示</h2><p>神经网络的计算如果用矩阵来表示会很方便，此外可以用优化加速算法提高计算速度。</p>
-<p>隐藏层4个节点的计算依次排列出来：</p>
-<p><img src="/images/neural-network/eqn_hidden_units.png"></p>
-<p>接着，定义网络的输入向量$\vec{x}$和隐藏层每个节点的权重向量$\vec{w}$。令</p>
-<p><img src="/images/neural-network/eqn_7_12.png"></p>
-<p>代入到前面的一组式子，得到：</p>
-<p><img src="/images/neural-network/eqn_13_16.png"></p>
-<p>现在，把上述计算$a_4$, $a_5$,$a_6$,$a_7$的四个式子写到一个矩阵里面，每个式子作为矩阵的一行，就可以利用矩阵来表示它们的计算了。令</p>
-<p><img src="/images/neural-network/eqn_matrix1.png"></p>
-<p>带入前面的一组式子，得到</p>
-<p><img src="/images/neural-network/formular_2.png"></p>
-<p>在（式2）中，</p>
-<ul>
-<li>$f$是激活函数，在本例中是$sigmod$函数；</li>
-<li>$W$是某一层的权重矩阵；</li>
-<li>$\vec{x}$是某层的输入向量；</li>
-<li>$\vec{a}$是某层的输出向量。</li>
-</ul>
-<p>（式2）说明神经网络的每一层的作用实际上就是先将输入向量左乘一个数组进行线性变换，得到一个新的向量，然后再对这个向量逐元素应用一个激活函数。</p>
-<p>每一层的算法都是一样的。比如，对于包含一个输入层，一个输出层和三个隐藏层的神经网络，我们假设其权重矩阵分别为$W_1$,$W_2$,$W_3$,$W_4$，每个隐藏层的输出分别是$\vec{a}_1$,$\vec{a}_2$,$\vec{a}_3$，神经网络的输入为$\vec{x}$，神经网络的输出为$\vec{y}$，如下图所示：</p>
-<p><img src="/images/neural-network/nn_parameters_demo.png"></p>
-<p>则每一层的输出向量的计算可以表示为：</p>
-<p><img src="/images/neural-network/eqn_17_20.png"></p>
-<p>这就是神经网络输出值的矩阵计算方法。</p>
-<p>如果写成一个公式：<br>$$<br>\vec{y} = f(W4 \cdot f(W3 \cdot f(W2 \cdot f(W1 \cdot \vec{x}))))<br>$$<br>神经网络正向计算的过程比较简单，就是一层一层不断做运算，动态的演示如下图所示：<br><img src="/images/neural-network/neural_network_demo.gif"></p>
-<h2 id="5-神经网络的训练-反向传播算法"><a href="#5-神经网络的训练-反向传播算法" class="headerlink" title="5. 神经网络的训练 - 反向传播算法"></a>5. 神经网络的训练 - 反向传播算法</h2><p>神经网络的每个连接上的权值如果知道，那么就可以将输入数据代入得到希望的结果。神经网络是一个模型，那么这些权值就是<strong>模型的参数</strong>，也就是模型要学习的东西。然而，一个神经网络的连接方式、网络的层数、每层的节点数这些参数，则不是学习出来的，而是人为事先设置的。对于这些人为设置的参数，我们称之为**超参数(Hyper-Parameters)**。</p>
-<p>前面课程中所学的最小二乘、逻辑回归等可以直接优化损失函数来求解模型参数的更新值。在多层神经网络中：</p>
-<ul>
-<li>最后一层的参数可以用这样的方式求解得到；</li>
-<li>隐层节点没有输出的真值，因此无法直接构建损失函数来求解</li>
-</ul>
-<p>如何化解这个难题？</p>
-<p>反向传播算法其实就是链式求导法则的应用。然而，这个如此简单且显而易见的方法，却是在Roseblatt提出感知器算法将近30年之后才被发明和普及的。对此，Bengio这样回应道：</p>
-<blockquote>
-<p>很多看似显而易见的想法只有在事后才变得显而易见。</p>
-</blockquote>
-<p>按照机器学习的通用套路，我们先确定神经网络的目标函数，然后用随机梯度下降优化算法去求目标函数最小值时的参数值。</p>
-<p>我们取网络所有输出层节点的误差平方和作为目标函数：</p>
-<p><img src="/images/neural-network/bp_loss.png"></p>
-<p>其中，$E_d$表示是样本$d$的误差, <strong>t是样本的标签值</strong>，<strong>y是神经网络的输出值</strong>。</p>
-<p>然后，使用随机梯度下降算法对目标函数进行优化：</p>
-<p><img src="/images/neural-network/bp_weight_update.png"></p>
-<p>随机梯度下降算法也就是需要求出误差$E_d$对于每个权重$w_{ji}$的偏导数（也就是梯度），如何求解？</p>
-<p><img src="/images/neural-network/nn3.png"></p>
-<p>观察上图，我们发现权重$w_{ji}$仅能通过影响节点$j$的输入值影响网络的其它部分，设$net_j$是节点$j$的加权输入，即</p>
-<p><img src="/images/neural-network/eqn_21_22.png"></p>
-<p>$E_d$是$net_j$的函数，而$net_j$是$w_{ji}$的函数。根据链式求导法则，可以得到：</p>
-<p><img src="/images/neural-network/eqn_23_25.png"></p>
-<p>上式中，$x_{ji}$是节点传递给节点$j$的输入值，也就是节点$i$的输出值。</p>
-<p>对于的$\frac{\partial E_d}{\partial net_j}$推导，需要区分输出层和隐藏层两种情况。</p>
-<h3 id="5-1-输出层权值训练"><a href="#5-1-输出层权值训练" class="headerlink" title="5.1 输出层权值训练"></a>5.1 输出层权值训练</h3><p><img src="/images/neural-network/nn3.png"></p>
-<p>对于输出层来说，$net_j$仅能通过节点$j$的输出值$y_j$来影响网络其它部分，也就是说$E_d$是$y_j$的函数，而$y_j$是$net_j$的函数，其中$y_j = sigmod(net_j)$。所以我们可以再次使用链式求导法则：</p>
-<p><img src="/images/neural-network/eqn_26.png"></p>
-<p>考虑上式第一项:</p>
-<p><img src="/images/neural-network/eqn_27_29.png"></p>
-<p>考虑上式第二项：</p>
-<p><img src="/images/neural-network/eqn_30_31.png"></p>
-<p>将第一项和第二项带入，得到：</p>
-<p><img src="/images/neural-network/eqn_ed_net_j.png"></p>
-<p>如果令$\delta_j = - \frac{\partial E_d}{\partial net_j}$，也就是一个节点的误差项$\delta$是网络误差对这个节点输入的偏导数的相反数。带入上式，得到：</p>
-<p><img src="/images/neural-network/eqn_delta_j.png"></p>
-<p>将上述推导带入随机梯度下降公式，得到：</p>
-<p><img src="/images/neural-network/eqn_32_34.png"></p>
-<h3 id="5-2-隐藏层权值训练"><a href="#5-2-隐藏层权值训练" class="headerlink" title="5.2 隐藏层权值训练"></a>5.2 隐藏层权值训练</h3><p>现在我们要推导出隐藏层的$\frac{\partial E_d}{\partial net_j}$。</p>
-<p><img src="/images/neural-network/nn3.png"></p>
-<p>首先，我们需要定义节点$j$的所有直接下游节点的集合$Downstream(j)$。例如，对于节点4来说，它的直接下游节点是节点8、节点9。可以看到$net_j$只能通过影响$Downstream(j)$再影响$E_d$。设$net_k$是节点$j$的下游节点的输入，则$E_d$是$net_k$的函数，而$net_k$是$net_j$的函数。因为$net_k$有多个，我们应用全导数公式，可以做出如下推导：</p>
-<p><img src="/images/neural-network/eqn_35_40.png"></p>
-<p>因为$\delta_j = - \frac{\partial E_d}{\partial net_j}$，带入上式得到：</p>
-<p><img src="/images/neural-network/eqn_delta_hidden.png"></p>
-<p>至此，我们已经推导出了反向传播算法。需要注意的是，我们刚刚推导出的训练规则是根据激活函数是sigmoid函数、平方和误差、全连接网络、随机梯度下降优化算法。如果激活函数不同、误差计算方式不同、网络连接结构不同、优化算法不同，则具体的训练规则也会不一样。但是无论怎样，训练规则的推导方式都是一样的，应用链式求导法则进行推导即可。</p>
-<h3 id="5-3-具体解释"><a href="#5-3-具体解释" class="headerlink" title="5.3 具体解释"></a>5.3 具体解释</h3><p>假设每个训练样本为$(\vec{x}, \vec{t})$，其中向量$\vec{x}$是训练样本的特征，而$\vec{t}$是样本的目标值。</p>
-<p><img src="/images/neural-network/nn3.png"></p>
-<p>首先，根据上一节介绍的算法，用样本的特征$\vec{x}$，计算出神经网络中每个隐藏层节点的输出$a_i$，以及输出层每个节点的输出$y_i$。</p>
-<p>然后，按照下面的方法计算出每个节点的误差项$\delta_i$：</p>
-<ul>
-<li><strong>对于输出层节点$i$</strong></li>
-</ul>
-<p><img src="/images/neural-network/formular_3.png"></p>
-<p>其中，$\delta_i$是节点$i$的误差项，$y_i$是节点$i$的输出值，$t_i$是样本对应于节点$i$的目标值。举个例子，根据上图，对于输出层节点8来说，它的输出值是$y_1$，而样本的目标值是$t_1$，带入上面的公式得到节点8的误差项应该是：</p>
-<p><img src="/images/neural-network/forumlar_delta8.png"></p>
-<ul>
-<li><strong>对于隐藏层节点</strong></li>
-</ul>
-<p><img src="/images/neural-network/formular_4.png"></p>
-<p>其中，$a_i$是节点$i$的输出值，$w_{ki}$是节点$i$到它的下一层节点$k$的连接的权重，$\delta_k$是节点$i$的下一层节点$k$的误差项。例如，对于隐藏层节点4来说，计算方法如下：</p>
-<p><img src="/images/neural-network/forumlar_delta4.png"></p>
-<p>最后，更新每个连接上的权值：</p>
-<p><img src="/images/neural-network/formular_5.png"></p>
-<p>其中，$w_{ji}$是节点$i$到节点$j$的权重，$\eta$是一个成为学习速率的常数，$\delta_j$是节点$j$的误差项，$x_{ji}$是节点$i$传递给节点$j$的输入。例如，权重$w_{84}$的更新方法如下：</p>
-<p><img src="/images/neural-network/eqn_w84_update.png"></p>
-<p>类似的，权重$w_{41}$的更新方法如下：</p>
-<p><img src="/images/neural-network/eqn_w41_update.png"></p>
-<p>偏置项的输入值永远为1。例如，节点4的偏置项$w_{4b}$应该按照下面的方法计算：</p>
-<p><img src="/images/neural-network/eqn_w4b_update.png"></p>
-<p>计算一个节点的误差项，需要先计算每个与其相连的下一层节点的误差项，这就要求误差项的计算顺序必须是从输出层开始，然后反向依次计算每个隐藏层的误差项，直到与输入层相连的那个隐藏层，这就是反向传播算法的名字的含义。当所有节点的误差项计算完毕后，就可以根据式5来更新所有的权重。</p>
-<h2 id="6-为什么要使用激活函数"><a href="#6-为什么要使用激活函数" class="headerlink" title="6. 为什么要使用激活函数"></a>6. 为什么要使用激活函数</h2><p>激活函数在神经网络中非常重要，使用激活函数也是非常必要的，前面我们从人脑神经元的角度理解了激活函数，因为神经元需要通过激活才能往后传播，所以神经网络中需要激活函数，下面我们从数学的角度理解一下激活函数的必要性。</p>
-<p>比如一个两层的神经网络，使用 f 表示激活函数，那么</p>
-<p>$$<br>y = f( w_2  f(w_1 x) )<br>$$</p>
-<p>如果不使用激活函数，那么神经网络的结果就是</p>
-<p>$$<br>y = w_2 (w_1 x) = (w_2 w_1) x = \bar{w} x<br>$$</p>
-<p>可以看到，将两层神经网络的参数合在一起，用 $\bar{w}$ 来表示，两层的神经网络其实就变成了一层神经网络，只不过参数变成了新的 $\bar{w}$，所以如果不使用激活函数，那么不管多少层的神经网络，$y = w_n \cdots w_2 w_1 x = \bar{w} x$，就都变成了单层神经网络，所以在每一层都必须使用激活函数。</p>
-<p>最后看看激活函数对神经网络的影响</p>
-<p><img src="/images/neural-network/nn-activation-function.gif"></p>
-<p>可以看到使用了激活函数之后，神经网络可以通过改变权重实现任意形状，越是复杂的神经网络能拟合的形状越复杂，这就是著名的神经网络万有逼近定理。神经网络使用的激活函数都是非线性的，每个激活函数都输入一个值，然后做一种特定的数学运算得到一个结果。</p>
-<h3 id="6-1-sigmoid-激活函数"><a href="#6-1-sigmoid-激活函数" class="headerlink" title="6.1 sigmoid 激活函数"></a>6.1 sigmoid 激活函数</h3><p>$$\sigma(x) = \frac{1}{1 + e^{-x}}$$</p>
-<p><img src="/images/neural-network/act-sigmoid.jpg"></p>
-<h3 id="6-2-tanh-激活函数"><a href="#6-2-tanh-激活函数" class="headerlink" title="6.2 tanh 激活函数"></a>6.2 tanh 激活函数</h3><p>$$tanh(x) = 2 \sigma(2x) - 1$$</p>
-<p><img src="/images/neural-network/act-tanh.jpg"></p>
-<h3 id="6-3-ReLU-激活函数"><a href="#6-3-ReLU-激活函数" class="headerlink" title="6.3 ReLU 激活函数"></a>6.3 ReLU 激活函数</h3><p>$$ReLU(x) = max(0, x)$$</p>
-<p><img src="/images/neural-network/act-relu.jpg"></p>
-<p>当输入 $x&lt;0$ 时，输出为 $0$，当 $x&gt; 0$ 时，输出为 $x$。该激活函数使网络更快速地收敛。它不会饱和，即它可以对抗梯度消失问题，至少在正区域（$x&gt; 0$ 时）可以这样，因此神经元至少在一半区域中不会把所有零进行反向传播。由于使用了简单的阈值化（thresholding），ReLU 计算效率很高。</p>
-<p>在网络中，不同的输入可能包含着大小不同关键特征，使用大小可变的数据结构去做容器，则更加灵活。假如神经元激活具有稀疏性，那么不同激活路径上：不同数量（选择性不激活）、不同功能（分布式激活）。两种可优化的结构生成的激活路径，可以更好地从有效的数据的维度上，学习到相对稀疏的特征，起到自动化解离效果。</p>
-<p><img src="/images/neural-network/nn-sparse.png"></p>
-<p>稀疏特征并不需要网络具有很强的处理线性不可分机制，因此在深度学习模型中，使用简单、速度快的线性激活函数可能更为合适。如图，一旦神经元与神经元之间改为线性激活，网络的非线性部分仅仅来自于神经元部分选择性激活。</p>
-<p>更倾向于使用线性神经激活函数的另外一个原因是，减轻梯度法训练深度网络时的Vanishing Gradient Problem。</p>
-<p>看过BP推导的人都知道，误差从输出层反向传播算梯度时，在各层都要乘当前层的输入神经元值，激活函数的一阶导数。<br>$$<br>grad = error ⋅ sigmoid’(x) ⋅ x<br>$$</p>
-<p>使用双端饱和(即值域被限制)Sigmoid系函数会有两个问题：</p>
-<ol>
-<li>sigmoid’(x) ∈ (0,1)  导数缩放</li>
-<li>x∈(0,1)或x∈(-1,1)  饱和值缩放</li>
-</ol>
-<p>这样，经过每一层时，误差都是成倍的衰减，一旦进行递推式的多层的反向传播，梯度就会不停的衰减，消失，使得网络学习变慢。而校正激活函数的梯度是1，且只有一端饱和，梯度很好的在反向传播中流动，训练速度得到了很大的提高。</p>
-<h2 id="7-算法与处理步骤"><a href="#7-算法与处理步骤" class="headerlink" title="7. 算法与处理步骤"></a>7. 算法与处理步骤</h2><pre class="line-numbers language-none"><code class="language-none">W = random
-
-# 每次训练
-for k in range(epoch)
-    # 正向计算
-    for j in range(NN_depth):
-        # 式2 ( a = xxx)
-        X_j = f( W_{j, j-1} X_{j-1})
-
-    ＃ 反向误差计算
-    for j in range(NN_depth, 0, -1):
-        # 式3， 式4
-        delta = y_i(1-y_i)(t_i-y_i)
-        or 
-        delta = a_i(1-a_i) \sum w_ki delta_k
-
-        # 式5
-        w_ji = w_j + epsilon delta_j x_ji<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="7-1-正向计算："><a href="#7-1-正向计算：" class="headerlink" title="7.1 正向计算："></a>7.1 正向计算：</h3><p><img src="/images/neural-network/formular_2.png"></p>
-<h3 id="7-2-反向传播："><a href="#7-2-反向传播：" class="headerlink" title="7.2 反向传播："></a>7.2 反向传播：</h3><p>输出层的误差计算：</p>
-<p><img src="/images/neural-network/formular_3.png"></p>
-<p>隐层的误差计算：</p>
-<p><img src="/images/neural-network/formular_4.png"></p>
-<p>权值更新：</p>
-<p><img src="/images/neural-network/formular_5.png"></p>
 ]]></content>
       <categories>
         <category>机器学习</category>

@@ -6,7 +6,7 @@
   <link href="http://immortalqx.github.io/atom.xml" rel="self"/>
   
   <link href="http://immortalqx.github.io/"/>
-  <updated>2022-02-08T13:36:13.298Z</updated>
+  <updated>2022-04-07T14:36:50.599Z</updated>
   <id>http://immortalqx.github.io/</id>
   
   <author>
@@ -15,6 +15,45 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>cpp-notes-8</title>
+    <link href="http://immortalqx.github.io/2022/04/07/cpp-notes-8/"/>
+    <id>http://immortalqx.github.io/2022/04/07/cpp-notes-8/</id>
+    <published>2022-04-07T14:36:50.000Z</published>
+    <updated>2022-04-07T14:36:50.599Z</updated>
+    
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>C++编程规范（一）</title>
+    <link href="http://immortalqx.github.io/2022/04/05/cpp-notes-7/"/>
+    <id>http://immortalqx.github.io/2022/04/05/cpp-notes-7/</id>
+    <published>2022-04-05T12:20:20.000Z</published>
+    <updated>2022-04-07T14:38:34.732Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;C-编程规范（一）&quot;&gt;&lt;a href=&quot;#C-编程规范（一）&quot; class=&quot;headerlink&quot; title=&quot;C++编程规范（一）&quot;&gt;&lt;/a&gt;C++编程规范（一）&lt;/h1&gt;&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;p&gt;本文是我对于&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="C++" scheme="http://immortalqx.github.io/categories/C/"/>
+    
+    
+    <category term="C++基础" scheme="http://immortalqx.github.io/tags/C-%E5%9F%BA%E7%A1%80/"/>
+    
+  </entry>
   
   <entry>
     <title>C++ 多线程编程（四）：生产者消费者模型</title>
@@ -476,56 +515,6 @@
         
         
     <summary type="html">&lt;h1 id=&quot;航拍笔记（二）：不同场景的拍摄方法&quot;&gt;&lt;a href=&quot;#航拍笔记（二）：不同场景的拍摄方法&quot; class=&quot;headerlink&quot; title=&quot;航拍笔记（二）：不同场景的拍摄方法&quot;&gt;&lt;/a&gt;航拍笔记（二）：不同场景的拍摄方法&lt;/h1&gt;&lt;h2</summary>
-        
-      
-    
-    
-    
-    <category term="其他" scheme="http://immortalqx.github.io/categories/%E5%85%B6%E4%BB%96/"/>
-    
-    
-    <category term="航拍" scheme="http://immortalqx.github.io/tags/%E8%88%AA%E6%8B%8D/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>航拍笔记（一）：十种简单的运镜方式</title>
-    <link href="http://immortalqx.github.io/2021/08/22/aerial-note-1/"/>
-    <id>http://immortalqx.github.io/2021/08/22/aerial-note-1/</id>
-    <published>2021-08-22T14:16:13.000Z</published>
-    <updated>2022-01-11T09:10:51.449Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;航拍笔记（一）：十种简单的运镜方式&quot;&gt;&lt;a href=&quot;#航拍笔记（一）：十种简单的运镜方式&quot; class=&quot;headerlink&quot; title=&quot;航拍笔记（一）：十种简单的运镜方式&quot;&gt;&lt;/a&gt;航拍笔记（一）：十种简单的运镜方式&lt;/h1&gt;&lt;h2</summary>
-        
-      
-    
-    
-    
-    <category term="其他" scheme="http://immortalqx.github.io/categories/%E5%85%B6%E4%BB%96/"/>
-    
-    
-    <category term="航拍" scheme="http://immortalqx.github.io/tags/%E8%88%AA%E6%8B%8D/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>航拍笔记（零）：准备、检查与保养</title>
-    <link href="http://immortalqx.github.io/2021/08/22/aerial-note-0/"/>
-    <id>http://immortalqx.github.io/2021/08/22/aerial-note-0/</id>
-    <published>2021-08-22T14:12:09.000Z</published>
-    <updated>2022-01-11T09:10:51.449Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;航拍笔记（零）：准备、检查与保养&quot;&gt;&lt;a href=&quot;#航拍笔记（零）：准备、检查与保养&quot; class=&quot;headerlink&quot; title=&quot;航拍笔记（零）：准备、检查与保养&quot;&gt;&lt;/a&gt;航拍笔记（零）：准备、检查与保养&lt;/h1&gt;&lt;h2</summary>
         
       
     
