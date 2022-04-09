@@ -609,11 +609,14 @@
 <p>将函数变量尽可能置于最小作用域内，并在变量声明时进行初始化。</p>
 </blockquote>
 <p>C++ 允许在函数的任何位置声明变量。我们提倡在尽可能小的作用域中声明变量，离第一次使用越近越好。这使得代码浏览者更容易定位变量声明的位置，了解变量的类型和初始值。特别是，应使用初始化的方式替代声明再赋值，比如：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> i<span class="token punctuation">;</span>i <span class="token operator">=</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 坏——初始化和声明分离</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> i<span class="token punctuation">;</span>
+i <span class="token operator">=</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 坏——初始化和声明分离</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 好——初始化时声明</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span> v<span class="token punctuation">;</span>v<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 用花括号初始化更好v.push_back(2);</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span> v<span class="token punctuation">;</span>
+v<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 用花括号初始化更好</span>
+v<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
  <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span> v <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// 好——v 一开始就初始化</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -745,12 +748,12 @@ MyClass<span class="token operator">&amp;</span> <span class="token keyword">ope
 <span class="token keyword">enum</span> <span class="token class-name">UrlTableErrors</span> <span class="token punctuation">{</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="变量命名"><a href="#变量命名" class="headerlink" title="变量命名"></a>变量命名</h3><p>变量（包括函数参数）和数据成员名一律小写，单词之间用下划线连接。类的成员变量以下划线结尾，但结构体的就不用，如：<code>a_local_variable</code>，<code>a_struct_data_member</code>，<code>a_class_data_member_</code>。</p>
-<h3 id="普通变量命名"><a href="#普通变量命名" class="headerlink" title="普通变量命名"></a>普通变量命名</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string table_name<span class="token punctuation">;</span>  <span class="token comment">// 好 - 用下划线.</span>
+<h4 id="普通变量命名"><a href="#普通变量命名" class="headerlink" title="普通变量命名"></a>普通变量命名</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string table_name<span class="token punctuation">;</span>  <span class="token comment">// 好 - 用下划线.</span>
 string tablename<span class="token punctuation">;</span>   <span class="token comment">// 好 - 全小写.</span>
 
 string tableName<span class="token punctuation">;</span>  <span class="token comment">// 差 - 混合大小写</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="类数据成员"><a href="#类数据成员" class="headerlink" title="类数据成员"></a>类数据成员</h3><p>不管是静态的还是非静态的，类数据成员都可以和普通变量一样，但要接下划线。</p>
+<h4 id="类数据成员"><a href="#类数据成员" class="headerlink" title="类数据成员"></a>类数据成员</h4><p>不管是静态的还是非静态的，类数据成员都可以和普通变量一样，但要接下划线。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">TableInfo</span> <span class="token punctuation">{</span>
   <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
  <span class="token keyword">private</span><span class="token operator">:</span>
@@ -759,7 +762,7 @@ string tableName<span class="token punctuation">;</span>  <span class="token com
   <span class="token keyword">static</span> Pool<span class="token operator">&lt;</span>TableInfo<span class="token operator">&gt;</span><span class="token operator">*</span> pool_<span class="token punctuation">;</span>  <span class="token comment">// 好.</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="结构体变量"><a href="#结构体变量" class="headerlink" title="结构体变量"></a>结构体变量</h3><p>不管是静态的还是非静态的，结构体数据成员都可以和普通变量一样，不用像类那样接下划线：</p>
+<h4 id="结构体变量"><a href="#结构体变量" class="headerlink" title="结构体变量"></a>结构体变量</h4><p>不管是静态的还是非静态的，结构体数据成员都可以和普通变量一样，不用像类那样接下划线：</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">UrlTableProperties</span> <span class="token punctuation">{</span>
   string name<span class="token punctuation">;</span>
   <span class="token keyword">int</span> num_entries<span class="token punctuation">;</span>
