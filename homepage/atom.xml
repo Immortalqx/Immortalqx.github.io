@@ -6,7 +6,7 @@
   <link href="http://immortalqx.github.io/homepage/atom.xml" rel="self"/>
   
   <link href="http://immortalqx.github.io/homepage/"/>
-  <updated>2022-04-16T16:25:58.704Z</updated>
+  <updated>2022-04-16T16:26:54.119Z</updated>
   <id>http://immortalqx.github.io/homepage/</id>
   
   <author>
@@ -15,30 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>Quanxiang&#39;s Homepage</title>
-    <link href="http://immortalqx.github.io/homepage/2022/04/17/post/"/>
-    <id>http://immortalqx.github.io/homepage/2022/04/17/post/</id>
-    <published>2022-04-16T16:25:22.000Z</published>
-    <updated>2022-04-16T16:25:58.704Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;Hello Word!&lt;/p&gt;
-&lt;p&gt;This is Quanxiang Liu.&lt;/p&gt;
-&lt;h1 id=&quot;News&quot;&gt;&lt;a href=&quot;#News&quot; class=&quot;headerlink&quot; title=&quot;News&quot;&gt;&lt;/a&gt;News&lt;/h1&gt;&lt;p&gt;TODO&lt;/p&gt;
-&lt;h1</summary>
-        
-      
-    
-    
-    
-    
-  </entry>
   
   <entry>
     <title>Quanxiang&#39;s Homepage</title>
@@ -532,6 +508,31 @@
     <category term="视觉SLAM" scheme="http://immortalqx.github.io/homepage/tags/%E8%A7%86%E8%A7%89SLAM/"/>
     
     <category term="点云" scheme="http://immortalqx.github.io/homepage/tags/%E7%82%B9%E4%BA%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C++中的头文件</title>
+    <link href="http://immortalqx.github.io/homepage/2021/11/21/cpp-notes-0/"/>
+    <id>http://immortalqx.github.io/homepage/2021/11/21/cpp-notes-0/</id>
+    <published>2021-11-21T13:10:15.000Z</published>
+    <updated>2022-01-27T13:22:21.227Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;C-中的头文件&quot;&gt;&lt;a href=&quot;#C-中的头文件&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="C++" scheme="http://immortalqx.github.io/homepage/categories/C/"/>
+    
+    
+    <category term="C++基础" scheme="http://immortalqx.github.io/homepage/tags/C-%E5%9F%BA%E7%A1%80/"/>
     
   </entry>
   
