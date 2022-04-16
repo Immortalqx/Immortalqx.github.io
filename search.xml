@@ -345,129 +345,6 @@
       </tags>
   </entry>
   <entry>
-    <title>ROS中使用ddynamicReconfigure</title>
-    <url>/2020/09/05/ros-notes-1/</url>
-    <content><![CDATA[<h1 id="ROS中使用ddynamicReconfigure"><a href="#ROS中使用ddynamicReconfigure" class="headerlink" title="ROS中使用ddynamicReconfigure"></a>ROS中使用ddynamicReconfigure</h1><h2 id="关于ddynamicReconfigure类"><a href="#关于ddynamicReconfigure类" class="headerlink" title="关于ddynamicReconfigure类"></a>关于ddynamicReconfigure类</h2><p>The DDynamicReconfigure class allows to use ROS dynamic reconfigure without the need to write a custom cpf file, <strong>variables are registered and exposed at run time</strong>.  Modification of the variables is done through a variable pointer or through a callback function.</p>
-<p>The <a href="http://docs.ros.org/kinetic/api/ddynamic_reconfigure/html/classddynamic__reconfigure_1_1DDynamicReconfigure.html">DDynamicReconfigure</a> class is the main class responsible for keeping track of parameters basic properties, values, descriptions, etc. </p>
-<p>It is also responsible of handling callbacks, config change requests, description setup and config setup, and the ROS publishers and  services.</p>
-<p>To operate a DDynamic instance, you must go through the following procedure:</p>
-<ol>
-<li>Construct a <a href="http://docs.ros.org/kinetic/api/ddynamic_reconfigure/html/classddynamic__reconfigure_1_1DDynamicReconfigure.html">DDynamicReconfigure</a> instance with proper handling.</li>
-<li>Add parameters to the instance as needed with any of the “add” methods.</li>
-<li>Start the ROS services with any of the “start” methods.</li>
-<li>If you need to change the callback after startup you may do so using “setCallback”.</li>
-<li>When you need to get any of the stored parameters, call either “get” or “at” on this instance, rather than through the callback. </li>
-</ol>
-<h2 id="常用函数原型-amp-解析"><a href="#常用函数原型-amp-解析" class="headerlink" title="常用函数原型&amp;解析"></a>常用函数原型&amp;解析</h2><p>registerVariable register a variable to be modified via the dynamic_reconfigure API. </p>
-<p>When a change is made, <strong>it will be reflected in the variable directly.</strong></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
-  <span class="token keyword">void</span> <span class="token function">registerVariable</span><span class="token punctuation">(</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
-  T <span class="token operator">*</span>variable<span class="token punctuation">,</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span> 
-  T min <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMin</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
-  T max <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMax</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
-  <span class="token keyword">void</span> <span class="token function">registerEnumVariable</span><span class="token punctuation">(</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
-  T <span class="token operator">*</span>variable<span class="token punctuation">,</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span>
-  std<span class="token double-colon punctuation">::</span>map<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token punctuation">,</span> T<span class="token operator">&gt;</span> enum_dict <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>enum_description <span class="token operator">=</span> <span class="token string">""</span>
-  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<hr>
-<p>registerVariable register a variable to be modified via the dynamic_reconfigure API. </p>
-<p>When a change is made, <strong>the callback will be called with the new value.</strong></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
-  <span class="token keyword">void</span> <span class="token function">registerVariable</span><span class="token punctuation">(</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
-  T current_value<span class="token punctuation">,</span>
-  <span class="token keyword">const</span> boost<span class="token double-colon punctuation">::</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span>T value<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token operator">&amp;</span>callback<span class="token punctuation">,</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span> 
-  T min <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMin</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
-  T max <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMax</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
-  <span class="token keyword">void</span> <span class="token function">registerEnumVariable</span><span class="token punctuation">(</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
-  T current_value<span class="token punctuation">,</span>
-  <span class="token keyword">const</span> boost<span class="token double-colon punctuation">::</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span>T<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token operator">&amp;</span>callback<span class="token punctuation">,</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description<span class="token punctuation">,</span>
-  std<span class="token double-colon punctuation">::</span>map<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token punctuation">,</span> T<span class="token operator">&gt;</span> enum_dict <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>enum_description <span class="token operator">=</span> <span class="token string">""</span>
-  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<hr>
-<p>publishServicesTopics <strong>starts the server</strong> once all the needed variables are registered.</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">publishServicesTopics</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>关于getMin()与getMax()</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
-<span class="token keyword">inline</span> T <span class="token function">getMin</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">return</span> std<span class="token double-colon punctuation">::</span><span class="token class-name">numeric_limits</span><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span><span class="token double-colon punctuation">::</span><span class="token function">min</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
-<span class="token keyword">inline</span> <span class="token keyword">bool</span> <span class="token function">getMin</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
-<span class="token keyword">inline</span> std<span class="token double-colon punctuation">::</span>string <span class="token generic-function"><span class="token function">getMin</span><span class="token generic class-name"><span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
-<span class="token keyword">inline</span> T <span class="token function">getMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">return</span> std<span class="token double-colon punctuation">::</span><span class="token class-name">numeric_limits</span><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span><span class="token double-colon punctuation">::</span><span class="token function">min</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
-<span class="token keyword">inline</span> <span class="token keyword">bool</span> <span class="token function">getMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
-<span class="token keyword">inline</span> std<span class="token double-colon punctuation">::</span>string <span class="token function">getMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h&gt;</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ddynamic_reconfigure/ddynamic_reconfigure.h&gt;</span></span>
-
-<span class="token keyword">int</span> global_int<span class="token punctuation">;</span>
-
-<span class="token keyword">void</span> <span class="token function">paramCb</span><span class="token punctuation">(</span><span class="token keyword">int</span> new_value<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-   global_int <span class="token operator">=</span> new_value<span class="token punctuation">;</span>
-   <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"Param modified: %d"</span><span class="token punctuation">,</span> global_int<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment">// ROS init stage</span>
-    ros<span class="token double-colon punctuation">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"ddynamic_tutorials"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token double-colon punctuation">::</span>NodeHandle nh<span class="token punctuation">;</span>
-    ddynamic_reconfigure<span class="token double-colon punctuation">::</span>DDynamicReconfigure ddr<span class="token punctuation">;</span>
-    
-    ddr<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">registerVariable</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token string">"int_param"</span><span class="token punctuation">,</span><span class="token number">124</span><span class="token punctuation">,</span> boost<span class="token double-colon punctuation">::</span><span class="token function">bind</span><span class="token punctuation">(</span>paramCb<span class="token punctuation">,</span> _1<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"param description"</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1000</span><span class="token punctuation">,</span><span class="token number">2357</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ddr<span class="token punctuation">.</span><span class="token function">publishServicesTopics</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// Now parameter can be modified from the dynamic_reconfigure GUI or other tools and the callback is called on each update</span>
-    ros<span class="token double-colon punctuation">::</span><span class="token function">spin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
- <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-]]></content>
-      <categories>
-        <category>ROS</category>
-      </categories>
-      <tags>
-        <tag>ROS基础</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ROS中nodelet的使用</title>
     <url>/2020/09/04/ros-notes-2/</url>
     <content><![CDATA[<h1 id="ROS中nodelet的使用"><a href="#ROS中nodelet的使用" class="headerlink" title="ROS中nodelet的使用"></a>ROS中nodelet的使用</h1><h2 id="1-为什么使用nodelet？"><a href="#1-为什么使用nodelet？" class="headerlink" title="1. 为什么使用nodelet？"></a>1. 为什么使用nodelet？</h2><p>Nodelet提供了一种方法，可以在同一台计算机上，在同一个进程内，运行多个算法，且在进程内消息传递时不产生复制成本（zero  copy）。在一个node里面，roscpp利用指针传递可以实现在publish和subscribe调用时的零拷贝。为了实现相似的效果，多个nodelets允许将多个类动态加载到同一个node里，同时还提供独立的命名空间，从而使得这些nodelets尽管运行在同一个进程里，但却仍然像单独的node一样工作。也就实现了“在一个进程（node）里运行多个nodelet”的效果。</p>
@@ -625,6 +502,129 @@ rosrun nodelet nodelet load try_nodelet/try_use nodelet_manager __name:<span cla
       </tags>
   </entry>
   <entry>
+    <title>ROS中使用ddynamicReconfigure</title>
+    <url>/2020/09/05/ros-notes-1/</url>
+    <content><![CDATA[<h1 id="ROS中使用ddynamicReconfigure"><a href="#ROS中使用ddynamicReconfigure" class="headerlink" title="ROS中使用ddynamicReconfigure"></a>ROS中使用ddynamicReconfigure</h1><h2 id="关于ddynamicReconfigure类"><a href="#关于ddynamicReconfigure类" class="headerlink" title="关于ddynamicReconfigure类"></a>关于ddynamicReconfigure类</h2><p>The DDynamicReconfigure class allows to use ROS dynamic reconfigure without the need to write a custom cpf file, <strong>variables are registered and exposed at run time</strong>.  Modification of the variables is done through a variable pointer or through a callback function.</p>
+<p>The <a href="http://docs.ros.org/kinetic/api/ddynamic_reconfigure/html/classddynamic__reconfigure_1_1DDynamicReconfigure.html">DDynamicReconfigure</a> class is the main class responsible for keeping track of parameters basic properties, values, descriptions, etc. </p>
+<p>It is also responsible of handling callbacks, config change requests, description setup and config setup, and the ROS publishers and  services.</p>
+<p>To operate a DDynamic instance, you must go through the following procedure:</p>
+<ol>
+<li>Construct a <a href="http://docs.ros.org/kinetic/api/ddynamic_reconfigure/html/classddynamic__reconfigure_1_1DDynamicReconfigure.html">DDynamicReconfigure</a> instance with proper handling.</li>
+<li>Add parameters to the instance as needed with any of the “add” methods.</li>
+<li>Start the ROS services with any of the “start” methods.</li>
+<li>If you need to change the callback after startup you may do so using “setCallback”.</li>
+<li>When you need to get any of the stored parameters, call either “get” or “at” on this instance, rather than through the callback. </li>
+</ol>
+<h2 id="常用函数原型-amp-解析"><a href="#常用函数原型-amp-解析" class="headerlink" title="常用函数原型&amp;解析"></a>常用函数原型&amp;解析</h2><p>registerVariable register a variable to be modified via the dynamic_reconfigure API. </p>
+<p>When a change is made, <strong>it will be reflected in the variable directly.</strong></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+  <span class="token keyword">void</span> <span class="token function">registerVariable</span><span class="token punctuation">(</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
+  T <span class="token operator">*</span>variable<span class="token punctuation">,</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span> 
+  T min <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMin</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+  T max <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMax</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+  <span class="token keyword">void</span> <span class="token function">registerEnumVariable</span><span class="token punctuation">(</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
+  T <span class="token operator">*</span>variable<span class="token punctuation">,</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span>
+  std<span class="token double-colon punctuation">::</span>map<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token punctuation">,</span> T<span class="token operator">&gt;</span> enum_dict <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>enum_description <span class="token operator">=</span> <span class="token string">""</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<p>registerVariable register a variable to be modified via the dynamic_reconfigure API. </p>
+<p>When a change is made, <strong>the callback will be called with the new value.</strong></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+  <span class="token keyword">void</span> <span class="token function">registerVariable</span><span class="token punctuation">(</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
+  T current_value<span class="token punctuation">,</span>
+  <span class="token keyword">const</span> boost<span class="token double-colon punctuation">::</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span>T value<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token operator">&amp;</span>callback<span class="token punctuation">,</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span> 
+  T min <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMin</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+  T max <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMax</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+  <span class="token keyword">void</span> <span class="token function">registerEnumVariable</span><span class="token punctuation">(</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
+  T current_value<span class="token punctuation">,</span>
+  <span class="token keyword">const</span> boost<span class="token double-colon punctuation">::</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span>T<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token operator">&amp;</span>callback<span class="token punctuation">,</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description<span class="token punctuation">,</span>
+  std<span class="token double-colon punctuation">::</span>map<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token punctuation">,</span> T<span class="token operator">&gt;</span> enum_dict <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>enum_description <span class="token operator">=</span> <span class="token string">""</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<p>publishServicesTopics <strong>starts the server</strong> once all the needed variables are registered.</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">publishServicesTopics</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>关于getMin()与getMax()</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+<span class="token keyword">inline</span> T <span class="token function">getMin</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> std<span class="token double-colon punctuation">::</span><span class="token class-name">numeric_limits</span><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span><span class="token double-colon punctuation">::</span><span class="token function">min</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
+<span class="token keyword">inline</span> <span class="token keyword">bool</span> <span class="token function">getMin</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
+<span class="token keyword">inline</span> std<span class="token double-colon punctuation">::</span>string <span class="token generic-function"><span class="token function">getMin</span><span class="token generic class-name"><span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+<span class="token keyword">inline</span> T <span class="token function">getMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> std<span class="token double-colon punctuation">::</span><span class="token class-name">numeric_limits</span><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span><span class="token double-colon punctuation">::</span><span class="token function">min</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
+<span class="token keyword">inline</span> <span class="token keyword">bool</span> <span class="token function">getMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
+<span class="token keyword">inline</span> std<span class="token double-colon punctuation">::</span>string <span class="token function">getMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ddynamic_reconfigure/ddynamic_reconfigure.h&gt;</span></span>
+
+<span class="token keyword">int</span> global_int<span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">paramCb</span><span class="token punctuation">(</span><span class="token keyword">int</span> new_value<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   global_int <span class="token operator">=</span> new_value<span class="token punctuation">;</span>
+   <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"Param modified: %d"</span><span class="token punctuation">,</span> global_int<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// ROS init stage</span>
+    ros<span class="token double-colon punctuation">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"ddynamic_tutorials"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ros<span class="token double-colon punctuation">::</span>NodeHandle nh<span class="token punctuation">;</span>
+    ddynamic_reconfigure<span class="token double-colon punctuation">::</span>DDynamicReconfigure ddr<span class="token punctuation">;</span>
+    
+    ddr<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">registerVariable</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token string">"int_param"</span><span class="token punctuation">,</span><span class="token number">124</span><span class="token punctuation">,</span> boost<span class="token double-colon punctuation">::</span><span class="token function">bind</span><span class="token punctuation">(</span>paramCb<span class="token punctuation">,</span> _1<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"param description"</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1000</span><span class="token punctuation">,</span><span class="token number">2357</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ddr<span class="token punctuation">.</span><span class="token function">publishServicesTopics</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// Now parameter can be modified from the dynamic_reconfigure GUI or other tools and the callback is called on each update</span>
+    ros<span class="token double-colon punctuation">::</span><span class="token function">spin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+]]></content>
+      <categories>
+        <category>ROS</category>
+      </categories>
+      <tags>
+        <tag>ROS基础</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>解决source多个ROS工作空间时的覆盖问题</title>
     <url>/2021/07/17/ros-notes-3/</url>
     <content><![CDATA[<h1 id="解决source多个ROS工作空间时的覆盖问题"><a href="#解决source多个ROS工作空间时的覆盖问题" class="headerlink" title="解决source多个ROS工作空间时的覆盖问题"></a>解决source多个ROS工作空间时的覆盖问题</h1><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p><strong>在~/.zshrc或者~/.bashrc中source 了多个工作空间，但有的工作空间并没有被成功source</strong></p>
@@ -649,150 +649,6 @@ rosrun nodelet nodelet load try_nodelet/try_use nodelet_manager __name:<span cla
 <h4 id="方法三："><a href="#方法三：" class="headerlink" title="方法三："></a>方法三：</h4><p>其实还可以将<code>--extend</code>参数传递给setup.sh文件，它只会添加到环境中，而不会设置环境。</p>
 <p>在~/.zshrc或者~/.bashrc中，对应的操作是在source命令后面加上<code>--extend</code>。</p>
 <p>但是这可能是危险的，建议做适当的工作区链接。</p>
-]]></content>
-      <categories>
-        <category>ROS</category>
-      </categories>
-      <tags>
-        <tag>ROS基础</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ROS中的URDF</title>
-    <url>/2021/07/18/ros-notes-5/</url>
-    <content><![CDATA[<h1 id="ROS中的URDF"><a href="#ROS中的URDF" class="headerlink" title="ROS中的URDF"></a>ROS中的URDF</h1><h2 id="什么是URDF"><a href="#什么是URDF" class="headerlink" title="什么是URDF"></a>什么是URDF</h2><ul>
-<li><p>Unified Robot Description Format，统一机器人描述格式，简称为URDF；</p>
-</li>
-<li><p>ROS中一个非常重要的机器人模型描述格式；</p>
-</li>
-<li><p>URDF文件使用XML格式描述机器人模型；</p>
-</li>
-<li><p>ROS中的urdf功能包包含一个URDF的C++解析器。</p>
-</li>
-</ul>
-<h2 id="URDF标签说明"><a href="#URDF标签说明" class="headerlink" title="URDF标签说明"></a>URDF标签说明</h2><h3 id="lt-link-gt"><a href="#lt-link-gt" class="headerlink" title="<link>"></a>&lt;link&gt;</h3><p><strong>作用：</strong></p>
-<ul>
-<li>描述机器人某个刚体部分的外观和物理属性；</li>
-<li>尺寸（size）、颜色（color）、形状（shape）、惯性矩阵（inertial matrix）、碰撞参数（collision properties）等。</li>
-</ul>
-<img src="/images/ros-notes/5-1.png" style="zoom:33%;">
-
-<p><strong>子标签：</strong></p>
-<ul>
-<li>&lt;visual&gt;：描述机器人link部分的外观参数；</li>
-<li>&lt;inertial&gt;：描述link的惯性参数；</li>
-<li>&lt;collision&gt;：描述link的碰撞属性。</li>
-</ul>
-<img src="/images/ros-notes/5-2.png" style="zoom: 67%;">
-
-<h3 id="lt-joint-gt"><a href="#lt-joint-gt" class="headerlink" title="<joint>"></a>&lt;joint&gt;</h3><p><strong>作用：</strong></p>
-<ul>
-<li>描述机器人关节的运动学和动力学属性；</li>
-<li>包括关节运动的位置和速度限制；</li>
-<li>根据关节运动的形式，可以将其分为六种类型。</li>
-</ul>
-<img src="/images/ros-notes/5-3.png" style="zoom:33%;">
-
-<table>
-<thead>
-<tr>
-<th>关节类型</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>continuous</td>
-<td>旋转关节，可以围绕单轴无限旋转</td>
-</tr>
-<tr>
-<td>revolute</td>
-<td>旋转关节，类似于continuous，但有旋转的角度限制</td>
-</tr>
-<tr>
-<td>prismatic</td>
-<td>滑动关节，沿某一轴线移动的关节，带有位置极限</td>
-</tr>
-<tr>
-<td>planar</td>
-<td>平面关节，允许在平面正交方向上平移或者旋转</td>
-</tr>
-<tr>
-<td>floating</td>
-<td>浮动关节，允许进行平移、旋转运动</td>
-</tr>
-<tr>
-<td>fixed</td>
-<td>固定关节，不允许运动的特殊关节</td>
-</tr>
-</tbody></table>
-<p><strong>子标签：</strong></p>
-<ul>
-<li>&lt;calibration&gt;：关节的参考位置，用来校准关节的绝对位置；</li>
-<li>&lt;dynamics&gt;：描述关节的物理属性，例如阻尼值、物理静摩擦力等，经常在动力学仿真中用到；</li>
-<li>&lt;limit&gt;：描述运动的一些极限值，包括关节运动的上下限位置、速度限制、力矩限制等；</li>
-<li>&lt;mimic&gt;：描述该关节与已有关节的关系；</li>
-<li>&lt;safety＿controller&gt;：描述安全控制器参数。 </li>
-</ul>
-<img src="/images/ros-notes/5-4.png" style="zoom:67%;">
-
-<h3 id="lt-robot-gt"><a href="#lt-robot-gt" class="headerlink" title="<robot>"></a>&lt;robot&gt;</h3><ul>
-<li>完整机器人模型的最顶层标签；</li>
-<li>&lt;link&gt;和&lt;joint&gt;标签都必须包含在&lt;robot&gt;标签内。</li>
-</ul>
-<img src="/images/ros-notes/5-5.png" style="zoom:33%;">
-
-<p>一个完整的机器人模型，由一系列&lt;link&gt;和&lt;joint&gt;组成。</p>
-<img src="/images/ros-notes/5-6.png" style="zoom:67%;">
-
-<h2 id="URDF建模优化"><a href="#URDF建模优化" class="headerlink" title="URDF建模优化"></a>URDF建模优化</h2><h3 id="URDF建模存在的问题："><a href="#URDF建模存在的问题：" class="headerlink" title="URDF建模存在的问题："></a>URDF建模存在的问题：</h3><ol>
-<li>模型冗长，重复内容过多；</li>
-<li>参数修改麻烦，不便于二次开发；</li>
-<li>没有参数计算的功能。</li>
-</ol>
-<h3 id="URDF模型的进化版本——xacro模型文件"><a href="#URDF模型的进化版本——xacro模型文件" class="headerlink" title="URDF模型的进化版本——xacro模型文件"></a>URDF模型的进化版本——xacro模型文件</h3><ul>
-<li>精简模型代码<ul>
-<li>创建宏定义</li>
-<li>文件包含</li>
-</ul>
-</li>
-<li>提供可编程接口<ul>
-<li>常量</li>
-<li>变量</li>
-<li>数学计算</li>
-<li>条件语句</li>
-</ul>
-</li>
-</ul>
-<h3 id="常量的定义和使用"><a href="#常量的定义和使用" class="headerlink" title="常量的定义和使用"></a>常量的定义和使用</h3><p>常量定义：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>M_PI<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>3.14159<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>常量使用：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpy</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>${M_PI/2} 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<img src="/images/ros-notes/5-7.png" style="zoom:67%;">
-
-<h3 id="数学计算"><a href="#数学计算" class="headerlink" title="数学计算"></a>数学计算</h3><p>数学计算：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 ${(motor_length+wheel_length)/2} 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpx</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<img src="/images/ros-notes/5-8.png" style="zoom:67%;">
-
-<p>注意：所有的数学运算都会转换成浮点数进行，以保证运算精度。</p>
-<h3 id="宏定义"><a href="#宏定义" class="headerlink" title="宏定义"></a>宏定义</h3><p>宏定义：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>macro</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">params</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A B C<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
-    ......
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">sacro:</span>macros</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>宏调用：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span> <span class="token attr-name">A</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A_value<span class="token punctuation">"</span></span> <span class="token attr-name">B</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>B_value<span class="token punctuation">"</span></span> <span class="token attr-name">C</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>C_value<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<img src="/images/ros-notes/5-9.png" style="zoom:67%;">
-
-<h3 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h3><p>文件包含：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">xacro:</span>include</span> <span class="token attr-name">filename</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find mbot_description)/urdf/xacro/mbot_base.xacro<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<img src="/images/ros-notes/5-10.png" style="zoom:67%;">
-
-<h3 id="模型显示"><a href="#模型显示" class="headerlink" title="模型显示"></a>模型显示</h3><p>方法一：将xacro文件转换成URDF文件后显示</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun xacro xacro.py mbot.xacro<span class="token operator">&gt;</span>mbot.urdf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>方法二：直接调用xacro文件解析器</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>arg</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>model<span class="token punctuation">"</span></span> <span class="token attr-name">default</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find xacro)/xacro --inorder <span class="token punctuation">'</span>$(find mbot_description)/urdf/xacro/mbot.xacro<span class="token punctuation">'</span><span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>robot_description<span class="token punctuation">"</span></span> <span class="token attr-name">command</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(arg model)<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">roslaunch mbot_description display_mbot_base_xacro.launch<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>相关学习资料：<a href="http://wiki.ros.org/urdf/Tutorials">http://wiki.ros.org/urdf/Tutorials</a></p>
 ]]></content>
       <categories>
         <category>ROS</category>
@@ -940,6 +796,150 @@ geometry_msgs/Transform transform
 </li>
 </ol>
 <p>相关学习资料：<a href="http://wiki.ros.org/tf/Tutorials">http://wiki.ros.org/tf/Tutorials</a></p>
+]]></content>
+      <categories>
+        <category>ROS</category>
+      </categories>
+      <tags>
+        <tag>ROS基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ROS中的URDF</title>
+    <url>/2021/07/18/ros-notes-5/</url>
+    <content><![CDATA[<h1 id="ROS中的URDF"><a href="#ROS中的URDF" class="headerlink" title="ROS中的URDF"></a>ROS中的URDF</h1><h2 id="什么是URDF"><a href="#什么是URDF" class="headerlink" title="什么是URDF"></a>什么是URDF</h2><ul>
+<li><p>Unified Robot Description Format，统一机器人描述格式，简称为URDF；</p>
+</li>
+<li><p>ROS中一个非常重要的机器人模型描述格式；</p>
+</li>
+<li><p>URDF文件使用XML格式描述机器人模型；</p>
+</li>
+<li><p>ROS中的urdf功能包包含一个URDF的C++解析器。</p>
+</li>
+</ul>
+<h2 id="URDF标签说明"><a href="#URDF标签说明" class="headerlink" title="URDF标签说明"></a>URDF标签说明</h2><h3 id="lt-link-gt"><a href="#lt-link-gt" class="headerlink" title="<link>"></a>&lt;link&gt;</h3><p><strong>作用：</strong></p>
+<ul>
+<li>描述机器人某个刚体部分的外观和物理属性；</li>
+<li>尺寸（size）、颜色（color）、形状（shape）、惯性矩阵（inertial matrix）、碰撞参数（collision properties）等。</li>
+</ul>
+<img src="/images/ros-notes/5-1.png" style="zoom:33%;">
+
+<p><strong>子标签：</strong></p>
+<ul>
+<li>&lt;visual&gt;：描述机器人link部分的外观参数；</li>
+<li>&lt;inertial&gt;：描述link的惯性参数；</li>
+<li>&lt;collision&gt;：描述link的碰撞属性。</li>
+</ul>
+<img src="/images/ros-notes/5-2.png" style="zoom: 67%;">
+
+<h3 id="lt-joint-gt"><a href="#lt-joint-gt" class="headerlink" title="<joint>"></a>&lt;joint&gt;</h3><p><strong>作用：</strong></p>
+<ul>
+<li>描述机器人关节的运动学和动力学属性；</li>
+<li>包括关节运动的位置和速度限制；</li>
+<li>根据关节运动的形式，可以将其分为六种类型。</li>
+</ul>
+<img src="/images/ros-notes/5-3.png" style="zoom:33%;">
+
+<table>
+<thead>
+<tr>
+<th>关节类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>continuous</td>
+<td>旋转关节，可以围绕单轴无限旋转</td>
+</tr>
+<tr>
+<td>revolute</td>
+<td>旋转关节，类似于continuous，但有旋转的角度限制</td>
+</tr>
+<tr>
+<td>prismatic</td>
+<td>滑动关节，沿某一轴线移动的关节，带有位置极限</td>
+</tr>
+<tr>
+<td>planar</td>
+<td>平面关节，允许在平面正交方向上平移或者旋转</td>
+</tr>
+<tr>
+<td>floating</td>
+<td>浮动关节，允许进行平移、旋转运动</td>
+</tr>
+<tr>
+<td>fixed</td>
+<td>固定关节，不允许运动的特殊关节</td>
+</tr>
+</tbody></table>
+<p><strong>子标签：</strong></p>
+<ul>
+<li>&lt;calibration&gt;：关节的参考位置，用来校准关节的绝对位置；</li>
+<li>&lt;dynamics&gt;：描述关节的物理属性，例如阻尼值、物理静摩擦力等，经常在动力学仿真中用到；</li>
+<li>&lt;limit&gt;：描述运动的一些极限值，包括关节运动的上下限位置、速度限制、力矩限制等；</li>
+<li>&lt;mimic&gt;：描述该关节与已有关节的关系；</li>
+<li>&lt;safety＿controller&gt;：描述安全控制器参数。 </li>
+</ul>
+<img src="/images/ros-notes/5-4.png" style="zoom:67%;">
+
+<h3 id="lt-robot-gt"><a href="#lt-robot-gt" class="headerlink" title="<robot>"></a>&lt;robot&gt;</h3><ul>
+<li>完整机器人模型的最顶层标签；</li>
+<li>&lt;link&gt;和&lt;joint&gt;标签都必须包含在&lt;robot&gt;标签内。</li>
+</ul>
+<img src="/images/ros-notes/5-5.png" style="zoom:33%;">
+
+<p>一个完整的机器人模型，由一系列&lt;link&gt;和&lt;joint&gt;组成。</p>
+<img src="/images/ros-notes/5-6.png" style="zoom:67%;">
+
+<h2 id="URDF建模优化"><a href="#URDF建模优化" class="headerlink" title="URDF建模优化"></a>URDF建模优化</h2><h3 id="URDF建模存在的问题："><a href="#URDF建模存在的问题：" class="headerlink" title="URDF建模存在的问题："></a>URDF建模存在的问题：</h3><ol>
+<li>模型冗长，重复内容过多；</li>
+<li>参数修改麻烦，不便于二次开发；</li>
+<li>没有参数计算的功能。</li>
+</ol>
+<h3 id="URDF模型的进化版本——xacro模型文件"><a href="#URDF模型的进化版本——xacro模型文件" class="headerlink" title="URDF模型的进化版本——xacro模型文件"></a>URDF模型的进化版本——xacro模型文件</h3><ul>
+<li>精简模型代码<ul>
+<li>创建宏定义</li>
+<li>文件包含</li>
+</ul>
+</li>
+<li>提供可编程接口<ul>
+<li>常量</li>
+<li>变量</li>
+<li>数学计算</li>
+<li>条件语句</li>
+</ul>
+</li>
+</ul>
+<h3 id="常量的定义和使用"><a href="#常量的定义和使用" class="headerlink" title="常量的定义和使用"></a>常量的定义和使用</h3><p>常量定义：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>M_PI<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>3.14159<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>常量使用：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpy</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>${M_PI/2} 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<img src="/images/ros-notes/5-7.png" style="zoom:67%;">
+
+<h3 id="数学计算"><a href="#数学计算" class="headerlink" title="数学计算"></a>数学计算</h3><p>数学计算：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 ${(motor_length+wheel_length)/2} 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpx</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<img src="/images/ros-notes/5-8.png" style="zoom:67%;">
+
+<p>注意：所有的数学运算都会转换成浮点数进行，以保证运算精度。</p>
+<h3 id="宏定义"><a href="#宏定义" class="headerlink" title="宏定义"></a>宏定义</h3><p>宏定义：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>macro</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">params</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A B C<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    ......
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">sacro:</span>macros</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>宏调用：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span> <span class="token attr-name">A</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A_value<span class="token punctuation">"</span></span> <span class="token attr-name">B</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>B_value<span class="token punctuation">"</span></span> <span class="token attr-name">C</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>C_value<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<img src="/images/ros-notes/5-9.png" style="zoom:67%;">
+
+<h3 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h3><p>文件包含：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">xacro:</span>include</span> <span class="token attr-name">filename</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find mbot_description)/urdf/xacro/mbot_base.xacro<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<img src="/images/ros-notes/5-10.png" style="zoom:67%;">
+
+<h3 id="模型显示"><a href="#模型显示" class="headerlink" title="模型显示"></a>模型显示</h3><p>方法一：将xacro文件转换成URDF文件后显示</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun xacro xacro.py mbot.xacro<span class="token operator">&gt;</span>mbot.urdf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>方法二：直接调用xacro文件解析器</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>arg</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>model<span class="token punctuation">"</span></span> <span class="token attr-name">default</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find xacro)/xacro --inorder <span class="token punctuation">'</span>$(find mbot_description)/urdf/xacro/mbot.xacro<span class="token punctuation">'</span><span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>robot_description<span class="token punctuation">"</span></span> <span class="token attr-name">command</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(arg model)<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">roslaunch mbot_description display_mbot_base_xacro.launch<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>相关学习资料：<a href="http://wiki.ros.org/urdf/Tutorials">http://wiki.ros.org/urdf/Tutorials</a></p>
 ]]></content>
       <categories>
         <category>ROS</category>
@@ -4716,6 +4716,33 @@ seek<span class="token double-colon punctuation">::</span><span class="token fun
       </tags>
   </entry>
   <entry>
+    <title>论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm System in Cluttered Environments</title>
+    <url>/2021/04/27/paper-reading-4/</url>
+    <content><![CDATA[<h1 id="论文阅读-EGO-Swarm：A-Fully-Autonomous-and-Decentralized-Quadrotor-Swarm"><a href="#论文阅读-EGO-Swarm：A-Fully-Autonomous-and-Decentralized-Quadrotor-Swarm" class="headerlink" title="论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm"></a>论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文提出了一种分散的异步系统解决方案，该解决方案仅使用机载资源即可在未知富含障碍物的场景中实现多机器人自主导航。该计划系统是在基于梯度的局部计划框架下制定的，其中通过将碰撞风险表述为非线性优化问题的代价来实现避免碰撞。为了提高鲁棒性并避免局部极小值，本文采用了一种轻量级的拓扑轨迹生成方法。 然后，无人机使用不可靠的轨迹共享网络，仅在几毫秒内即可生成安全，平滑且动态可行的轨迹。通过使用深度图像中的无人机检测来纠正无人机之间的相对定位漂移。此外，它不需要外部定位和计算，也不需要预先构建的地图。</p>
+<p>本文的贡献概括如下：</p>
+<ol>
+<li>扩展了以前的工作EGO-Planner，提出了一种新颖而健壮的生物学计划方法，几乎不需要额外的计算。</li>
+<li>提出了一种分散式异步四旋翼机群框架，该框架对不可靠的通信和本地化漂移不敏感。</li>
+<li>所提出的方法已集成到完全自主的四旋翼系统中，其硬件和软件已发布，可供社区参考。</li>
+</ol>
+<h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><p>系统架构如图8所示，其中包含单机和多机通信系统的详细架构。</p>
+<p><img src="/images/paper-reading/3_pic1.png"></p>
+<h3 id="单机导航系统"><a href="#单机导航系统" class="headerlink" title="单机导航系统"></a>单机导航系统</h3><p>单机导航系统（包括硬件和软件设置）基于之前的工作EGO Planner，但带有一个额外的模块，用于补偿VIO漂移和移除图像上的代理。所有部件都集成在四轴无人机中，在未知环境下，采用局部规划器生成轨迹。</p>
+<h3 id="通信框架"><a href="#通信框架" class="headerlink" title="通信框架"></a>通信框架</h3><p>两个网络连接系统，即共享轨迹的广播网络和同步时间戳和管理顺序启动的链式网络。当当前轨迹与新发现的障碍物碰撞时，或者代理接近当前轨迹的终点时，规划被激活。</p>
+<p><strong>1） 广播网络：</strong>一旦一个代理生成一个新的无碰撞轨迹，它会立即广播给所有代理。然后，其他代理接收并存储此轨迹，以便在必要时为自己生成安全的轨迹。这种闭环策略在连接稳定且延迟可以忽略的理想情况下正常工作。然而，这在实际中并不能得到保证，因此，本文提出了两种降低碰撞可能性的方法。</p>
+<p>首先，在网络容量下，以给定的频率广播一条轨迹。这不会造成计算负担，因为包含三维航路点和其他参数的典型轨迹的大小小于0.5KB。相比之下，像Bluetooth2这样的现代无线网络可以达到1Mbps以上。然后，每个代理在接收到来自广播网络的轨迹后立即检查碰撞，如果检测到潜在的碰撞，则生成新的无碰撞轨迹。这种策略可以解决当多个代理在一个封闭的时间内生成轨迹时，由于延迟或数据包丢失而不接收其他代理的轨迹的问题。</p>
+<p>此外，本文还考虑了计算复杂度随代理数的增加而增加的问题。在规划之前，每个代理将其当前位置与接收到的代理轨迹进行比较，其中任何超出规划范围的轨迹都将被忽略。</p>
+<p><strong>2） 链式网络：</strong>基于连接的稳定链网络用于时间戳同步和系统启动管理。在系统启动时，代理按预定义的顺序生成代理。每个代理通过链式网络接收到优先级较高的代理的轨迹后，生成初始轨迹。该策略避免了系统启动时由于同时生成轨迹而引起的混沌，因为此时代理没有其他轨迹的信息。</p>
+]]></content>
+      <categories>
+        <category>导航</category>
+      </categories>
+      <tags>
+        <tag>论文阅读</tag>
+        <tag>协同导航</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>论文阅读-LVI-SAM：Tightly-coupled Lidar-Visual-Inertial Odometryvia Smoothing and Mapping</title>
     <url>/2021/04/24/paper-reading-3/</url>
     <content><![CDATA[<h1 id="论文阅读-LVI-SAM：Tightly-coupled-Lidar-Visual-Inertial-Odometryvia-Smoothing-and-Mapping"><a href="#论文阅读-LVI-SAM：Tightly-coupled-Lidar-Visual-Inertial-Odometryvia-Smoothing-and-Mapping" class="headerlink" title="论文阅读-LVI-SAM：Tightly-coupled Lidar-Visual-Inertial Odometryvia Smoothing and Mapping"></a>论文阅读-LVI-SAM：Tightly-coupled Lidar-Visual-Inertial Odometryvia Smoothing and Mapping</h1><p>最近，SLAM领域大佬Tixiao Shan（MIT博后，LeGO-LOAM和LIO-SAM作者）开源了最新力作LVI-SAM。这是一个雷达-视觉-惯导的紧耦合的SLAM框架，LVI-SAM分为两个部分：视觉惯性系统（以Vins-Mono为基础）和雷达惯性系统（以LIO-SAM为基础）。</p>
@@ -4751,33 +4778,6 @@ seek<span class="token double-colon punctuation">::</span><span class="token fun
       </categories>
       <tags>
         <tag>论文阅读</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm System in Cluttered Environments</title>
-    <url>/2021/04/27/paper-reading-4/</url>
-    <content><![CDATA[<h1 id="论文阅读-EGO-Swarm：A-Fully-Autonomous-and-Decentralized-Quadrotor-Swarm"><a href="#论文阅读-EGO-Swarm：A-Fully-Autonomous-and-Decentralized-Quadrotor-Swarm" class="headerlink" title="论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm"></a>论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文提出了一种分散的异步系统解决方案，该解决方案仅使用机载资源即可在未知富含障碍物的场景中实现多机器人自主导航。该计划系统是在基于梯度的局部计划框架下制定的，其中通过将碰撞风险表述为非线性优化问题的代价来实现避免碰撞。为了提高鲁棒性并避免局部极小值，本文采用了一种轻量级的拓扑轨迹生成方法。 然后，无人机使用不可靠的轨迹共享网络，仅在几毫秒内即可生成安全，平滑且动态可行的轨迹。通过使用深度图像中的无人机检测来纠正无人机之间的相对定位漂移。此外，它不需要外部定位和计算，也不需要预先构建的地图。</p>
-<p>本文的贡献概括如下：</p>
-<ol>
-<li>扩展了以前的工作EGO-Planner，提出了一种新颖而健壮的生物学计划方法，几乎不需要额外的计算。</li>
-<li>提出了一种分散式异步四旋翼机群框架，该框架对不可靠的通信和本地化漂移不敏感。</li>
-<li>所提出的方法已集成到完全自主的四旋翼系统中，其硬件和软件已发布，可供社区参考。</li>
-</ol>
-<h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><p>系统架构如图8所示，其中包含单机和多机通信系统的详细架构。</p>
-<p><img src="/images/paper-reading/3_pic1.png"></p>
-<h3 id="单机导航系统"><a href="#单机导航系统" class="headerlink" title="单机导航系统"></a>单机导航系统</h3><p>单机导航系统（包括硬件和软件设置）基于之前的工作EGO Planner，但带有一个额外的模块，用于补偿VIO漂移和移除图像上的代理。所有部件都集成在四轴无人机中，在未知环境下，采用局部规划器生成轨迹。</p>
-<h3 id="通信框架"><a href="#通信框架" class="headerlink" title="通信框架"></a>通信框架</h3><p>两个网络连接系统，即共享轨迹的广播网络和同步时间戳和管理顺序启动的链式网络。当当前轨迹与新发现的障碍物碰撞时，或者代理接近当前轨迹的终点时，规划被激活。</p>
-<p><strong>1） 广播网络：</strong>一旦一个代理生成一个新的无碰撞轨迹，它会立即广播给所有代理。然后，其他代理接收并存储此轨迹，以便在必要时为自己生成安全的轨迹。这种闭环策略在连接稳定且延迟可以忽略的理想情况下正常工作。然而，这在实际中并不能得到保证，因此，本文提出了两种降低碰撞可能性的方法。</p>
-<p>首先，在网络容量下，以给定的频率广播一条轨迹。这不会造成计算负担，因为包含三维航路点和其他参数的典型轨迹的大小小于0.5KB。相比之下，像Bluetooth2这样的现代无线网络可以达到1Mbps以上。然后，每个代理在接收到来自广播网络的轨迹后立即检查碰撞，如果检测到潜在的碰撞，则生成新的无碰撞轨迹。这种策略可以解决当多个代理在一个封闭的时间内生成轨迹时，由于延迟或数据包丢失而不接收其他代理的轨迹的问题。</p>
-<p>此外，本文还考虑了计算复杂度随代理数的增加而增加的问题。在规划之前，每个代理将其当前位置与接收到的代理轨迹进行比较，其中任何超出规划范围的轨迹都将被忽略。</p>
-<p><strong>2） 链式网络：</strong>基于连接的稳定链网络用于时间戳同步和系统启动管理。在系统启动时，代理按预定义的顺序生成代理。每个代理通过链式网络接收到优先级较高的代理的轨迹后，生成初始轨迹。该策略避免了系统启动时由于同时生成轨迹而引起的混沌，因为此时代理没有其他轨迹的信息。</p>
-]]></content>
-      <categories>
-        <category>导航</category>
-      </categories>
-      <tags>
-        <tag>论文阅读</tag>
-        <tag>协同导航</tag>
       </tags>
   </entry>
   <entry>
