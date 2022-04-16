@@ -1,0 +1,163 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"><title>所念皆星河</title><meta name="author" content="Immortalqx"><link rel="shortcut icon" href="/homepage/img/favicon.png"><link rel="stylesheet" href="/homepage/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><meta name="generator" content="Hexo 5.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/homepage/atom.xml" title="所念皆星河" type="application/atom+xml">
+</head><body><header id="page_header"><div class="header_wrap"><div id="blog_name"><a class="blog_title" id="site-name" href="/homepage/">所念皆星河</a></div><button class="menus_icon"><div class="navicon"></div></button><ul class="menus_items"><li class="menus_item"><a class="site-page" href="/homepage/#Publications"> Publications</a></li><li class="menus_item"><a class="site-page" href="/homepage/"> About</a></li><li class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://phower.me"> Blog</a></li></ul></div></header><main id="page_main"><div class="side-card sticky"><div class="card-wrap" itemscope itemtype="http://schema.org/Person"><div class="author-avatar"><img class="avatar-img" src="/homepage/img/avatar.jpg" onerror="this.onerror=null;this.src='/homepage/img/profile.png'" alt="avatar"></div><div class="author-discrip"><h3>Immortalqx</h3><p class="author-bio">Your biography can be writed down here.</p></div><div class="author-links"><button class="btn m-social-links">Links</button><ul class="social-icons"><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-facebook-square" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-github" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-stack-overflow" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-weibo" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-weixin" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-qq" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fas fa-envelope" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fas fa-rss" aria-hidden="true"></i></a></li></ul><ul class="social-links"><li><a class="e-social-link" href="/homepage/" target="_blank"><i class="fas fa-graduation-cap" aria-hidden="true"></i><span>Google Scholar</span></a></li><li><a class="e-social-link" href="/homepage/" target="_blank"><i class="fab fa-orcid" aria-hidden="true"></i><span>ORCID</span></a></li></ul></div><a class="cv-links" href="/homepage/attaches/CV.pdf" target="_blank"><i class="fas fa-file-pdf" aria-hidden="true"><span>My Detail CV.</span></i></a></div></div><div class="page" itemscope itemtype="http://schema.org/CreativeWork"><h2 class="page-title">视觉SLAM十四讲笔记</h2><article><h1 id="《视觉SLAM十四讲》笔记"><a href="#《视觉SLAM十四讲》笔记" class="headerlink" title="《视觉SLAM十四讲》笔记"></a>《视觉SLAM十四讲》笔记</h1><h2 id="第一、二讲-初识SLAM"><a href="#第一、二讲-初识SLAM" class="headerlink" title="第一、二讲    初识SLAM"></a>第一、二讲    <code>初识SLAM</code></h2><h3 id="一、知识总结"><a href="#一、知识总结" class="headerlink" title="一、知识总结"></a>一、知识总结</h3><ol>
+<li><p>slam英文为Simultaneous Localization and Mapping，意思是同时定位与建图。它指搭建特定的传感器的主体，在没有环境先验信息的情况下，在运动过程中建立环境的模型，同时估计自己的运动。当传感器主要为相机时，可称为‘视觉slam’。</p>
+</li>
+<li><p>slam技术应用在机器人定位导航，AR/VR、三feixianxingyouhua维重建等领域。</p>
+</li>
+<li><p>slam框架主要包括传感器信息读取、视觉里程计、后端优化、建图以及回环检测五部分。</p>
+<p><img src="/images/slam-notes/1.png"></p>
+<ul>
+<li>传感器信息的读取：主要为图像信息的读取和预处理。以及其他传感器如惯性传感器信息的读取和处理</li>
+<li>视觉里程计：估计相邻图像间的运动。单独的vo存在累计漂移问题。</li>
+<li>后端优化：对相机位姿和回环检测的信息进行优化，采用滤波和非线性优化方法，解决在带有噪声的数据中，估计整个系统的状态，以及状态估计的不确定性。目的是得到全局一致的轨迹和地图。</li>
+<li>建图：目的是解决位置估计随时间漂移的问题，建立与任务对应的地图。需要使机器人识别曾经到达过的场景的能力。如判断图像间相似性来完成回环检测。分为度量地图和拓扑地图。</li>
+</ul>
+</li>
+<li><p>拓扑地图：强调地图元素的关系，由节点和边组成，只考虑节点的联通性。</p>
+</li>
+<li><p>度量地图：强调精确地表示地图中物体的位置关系，用稀疏和稠密对它们进行分类。二维度量地图是许多个小格子组成，三维是方块。包括占据、空闲以及未知三种状态。</p>
+</li>
+</ol>
+<h3 id="二、数学表述"><a href="#二、数学表述" class="headerlink" title="二、数学表述"></a>二、数学表述</h3><ol>
+<li>运动方程</li>
+</ol>
+<p><img src="/images/slam-notes/2.png"></p>
+<ol start="2">
+<li><p>观测方程</p>
+<p><img src="/images/slam-notes/3.png"></p>
+</li>
+<li><p>符号意义x为机器人各时刻位置,y为路标，u为传感器的输入数据，w、v为噪声。z为观测数据。机器人在环境中移动可以描述为运动方程和观测方程，转化为求解定位x和建图y的问题。问题建模为一个状态估计问题。</p>
+</li>
+</ol>
+<h2 id="第三讲-三维空间刚体运动"><a href="#第三讲-三维空间刚体运动" class="headerlink" title="第三讲    三维空间刚体运动"></a>第三讲    <code>三维空间刚体运动</code></h2><ol>
+<li><p>内积：描述向量间的投影关系<br><img src="/images/slam-notes/4.png"></p>
+</li>
+<li><p>外积：外积的方向垂直a、b两个向量，大小为|a||b|sin&lt;a, b&gt;</p>
+</li>
+<li><p>它是两个向量张成的四边形的有向面积。外积只对三维向量存在定义，可以表示旋转^表示反对称符号，外积公式：<br><img src="/images/slam-notes/5.png"></p>
+</li>
+<li><p>欧氏变换：同一个向量在各个坐标系下的长度和夹角都不会发生变换，称为欧氏变换。</p>
+</li>
+<li><p>旋转矩阵：描述了旋转本身。它是行列式为1的正交矩阵。SO表示特殊正交群，集合定义如下：<br><img src="/images/slam-notes/6.png"></p>
+</li>
+<li><p>世界坐标系下向量a经过旋转R和平移t到a’描述一个欧氏空间完的变换关系。<br><img src="/images/slam-notes/7.png"></p>
+</li>
+<li><p>变换矩阵和齐次坐标是使用数学技巧，把转换关系变为线性关系。变换矩阵为特殊欧氏群，表示为：</p>
+<p><img src="/images/slam-notes/8.png"></p>
+</li>
+<li><p>欧拉角：把一个旋转分解成三次绕不同轴的旋转。使用前要定义方向，如：偏航-俯仰-滚转等价于ZYX旋转。</p>
+<p>欧拉角的一个重大缺点是会碰到著名的万向锁问题（Gimbal Lock）：在俯仰角为 ±90◦ 时，第一次旋转与第三次旋转将使用同一个轴，使得系统丢失了一个自由度（由三次 旋转变成了两次旋转）。这被称为奇异性问题，在其他形式的欧拉角中也同样存在。</p>
+<p><img src="/images/slam-notes/9.png"></p>
+<p>俯仰角在±90°时欧拉角出现万向锁的过程：</p>
+<p>​    假设旋转顺序是 xyz，    </p>
+<p>​    第一次绕x轴旋转，得到 xy’z’</p>
+<p>​    第二次绕y’轴旋转90度，得到 x’y’z’’</p>
+<p>​    由于y’旋转了90度，导致z’’与 x同轴了，这样在z’’上的旋转等价于最初在x上的旋转。</p>
+<p>​    相当于这一次的 xyz操作，可以简化为 xy. 我们将这个现象称为 万向锁。</p>
+</li>
+<li><p>旋转向量：使用方向与旋转轴n一致，长度等于旋转角的向量θ称为旋转向量，相比旋转矩阵更加紧凑，维数为6维。旋转矩阵和旋转向量之间的公式叫罗德里格斯，转换公式如下：<br><img src="/images/slam-notes/10.png"></p>
+<blockquote>
+<p> 符号 ∧ 是向量到反对称的转换符</p>
+</blockquote>
+</li>
+<li><p>四元数q:用复数的乘法表示旋转，紧凑的，没有奇异性。性质：一个模长为1的复数，可表示复平面的纯旋转；任意的旋转都可以用互为相反数的四元数表示；满足一定的运算。<br>  公式表达如下：<br>  <img src="/images/slam-notes/11.png"></p>
+<p>其中 i, j, k 为四元数的三个虚部。这三个虚部满足关系式：</p>
+<p><img src="/images/slam-notes/12.png"></p>
+</li>
+<li><p>用四元数表示旋转：</p>
+<p><img src="/images/slam-notes/a.png"></p>
+</li>
+<li><p>各种描述之间的转换</p>
+<p><img src="/images/slam-notes/b.png"></p>
+</li>
+</ol>
+<h2 id="第四讲-李群与李代数"><a href="#第四讲-李群与李代数" class="headerlink" title="第四讲    李群与李代数"></a>第四讲    <code>李群与李代数</code></h2><h3 id="一、李群"><a href="#一、李群" class="headerlink" title="一、李群"></a>一、李群</h3><p>群（Group）是一种集合加上一种运算的代数结构。我们把集合记作 A，运算记作 ·， 那么群可以记作 G = (A, ·)。群要求这个运算满足以下几个条件：</p>
+<p><img src="/images/slam-notes/15.png"></p>
+<p>矩阵中常见的群有：</p>
+<p>一般线性群 GL(n) 指 n × n 的可逆矩阵，它们对矩阵乘法成群。</p>
+<p>特殊正交群 SO(n) 也就是所谓的旋转矩阵群，其中 SO(2) 和 SO(3) 最为常见。</p>
+<p>特殊欧氏群 SE(n) 也就是前面提到的 n 维欧氏变换，如 SE(2) 和 SE(3)。</p>
+<p><strong>李群</strong>是指具有连续（光滑）性质的群。像整数群 Z 那样离散的群没有连续性质，所以不是李群。而 SO(n) 和 SE(n)，它们在实数空间上是连续的。我们能够直观地想象一个刚体能够连续地在空间中运动，所以它们都是李群。</p>
+<p><img src="/images/slam-notes/16.png"></p>
+<h3 id="二、李代数"><a href="#二、李代数" class="headerlink" title="二、李代数"></a>二、李代数</h3><p>每个李群都有与之对应的李代数。李代数描述了李群的局部性质。通用的李代数的定义如下：</p>
+<p>李代数由一个集合 V，一个数域 F 和一个二元运算 [, ] 组成。如果它们满足以下几条 性质，称 (V, F, [, ]) 为一个李代数，记作 g。</p>
+<p><img src="/images/slam-notes/17.png"></p>
+<p>其中二元运算被称为李括号。</p>
+<h4 id="2-1-李群SO-3-的李代数so-3"><a href="#2-1-李群SO-3-的李代数so-3" class="headerlink" title="2.1 李群SO(3)的李代数so(3)"></a>2.1 李群SO(3)的李代数so(3)</h4><p><img src="/images/slam-notes/c.png"></p>
+<h4 id="2-2-李群SE-3-的李代数se-3"><a href="#2-2-李群SE-3-的李代数se-3" class="headerlink" title="2.2 李群SE(3)的李代数se(3)"></a>2.2 李群SE(3)的李代数se(3)</h4><p><img src="/images/slam-notes/d.png"></p>
+<h3 id="三、指数与对数映射"><a href="#三、指数与对数映射" class="headerlink" title="三、指数与对数映射"></a>三、指数与对数映射</h3><p>指数映射反映了从李代数到李群的对应关系：<code>R=exp(ϕ^)</code></p>
+<p>由于 <code>ϕ</code> 是向量，定义其角度和模长：</p>
+<p>​    角度乘单位向量：<code>ϕ=θa</code></p>
+<p>​    关于 <code>a</code> ，可以验证以下性质：</p>
+<p><img src="/images/slam-notes/19.png">    </p>
+<p>​    <img src="/images/slam-notes/20.png"></p>
+<p>Taylor展开：</p>
+<p><img src="/images/slam-notes/21.png"></p>
+<p>结果：（对比之前的罗德里格斯公式）</p>
+<p><img src="/images/slam-notes/22.png"></p>
+<p><strong>SO(3)上的指数映射</strong></p>
+<p><img src="/images/slam-notes/23.png"></p>
+<p><strong>SE(3)上的指数映射</strong></p>
+<p><img src="/images/slam-notes/24.png"></p>
+<p><img src="/images/slam-notes/25.png"></p>
+<p><strong>SO(3), SE(3), so(3), se(3) 的对应关系</strong></p>
+<p><img src="/images/slam-notes/26.png"></p>
+<h2 id="第五讲-相机与图像"><a href="#第五讲-相机与图像" class="headerlink" title="第五讲    相机与图像"></a>第五讲    <code>相机与图像</code></h2><h3 id="一、相机"><a href="#一、相机" class="headerlink" title="一、相机"></a>一、相机</h3><p>相机主要分为单目（Monocular）、双目(Stereo)、深度相机(RGB-D)三类。</p>
+<ol>
+<li>单目相机：是三维空间的二维投影，可以用来估计相机运动和结构（场景的大小和远近）。<br>原理是近处的物体移动的快、远处的物体移动慢，相机运动可以形成视差。<br>优点：成本低；<br>缺点：尺度不确定性，无法估计物体的真实尺度。例如相机的运动和场景同时放大两倍，单目所看到的像是一样的。</li>
+<li>双目相机：基线（两个相机间的距离）来估计每个像素的空间位置。基线越大，测量的物体越远。<br>优点：解决了尺度不确定性。<br>缺点：深度量程和精度受双目的基线和分辨率限制；视差的计算消耗计算资源。</li>
+<li>深度相机：通过红外结构光或Time-of-Fligfeixianxingyouhuaht(ToF)原理，用物理方法测量物体的距离。<br>优点：相比双目节省计算量。<br>缺点：测量范围窄、噪声大、视野小、易受日光干扰、无法测量透射材料等</li>
+</ol>
+<h3 id="二、坐标系"><a href="#二、坐标系" class="headerlink" title="二、坐标系"></a>二、坐标系</h3><ul>
+<li><p>世界坐标</p>
+<ul>
+<li>也就是真实世界的立体空间坐标，是一个三维坐标系</li>
+<li><em>Ow-XwYwZw</em>：世界坐标系,描述相机位置,单位m</li>
+</ul>
+</li>
+<li><p>相机坐标</p>
+<ul>
+<li>根据透镜成像原理，将世界坐标在照相机内呈现，是一个三维坐标系</li>
+<li><em>Oc-XcYcZc</em>：相机坐标系,光心为原点,单位m</li>
+</ul>
+</li>
+<li><p>图像坐标</p>
+<ul>
+<li><p>将相机呈现的三维坐标投影到屏幕上，而建立的新坐标系，不含距离信息，是一个二维坐标系</p>
+</li>
+<li><p><em>o-xy</em> ：图像坐标系,原点为成像平面中点,单位mm一、相机<br>相机主要分为单目（Monocular）、双目(Stereo)、深度相机(RGB-D)三类。</p>
+<p>单目相机：是三维空间的二维投影，可以用来估计相机运动和结构（场景的大小和远近）。<br>原理是近处的物体移动的快、远处的物体移动慢，相机运动可以形成视差。<br>优点：成本低；<br>缺点：尺度不确定性，无法估计物体的真实尺度。例如相机的运动和场景同时放大两倍，单目所看到的像是一样的。</p>
+<p>双目相机：基线（两个相机间的距离）来估计每个像素的空间位置。基线越大，测量的物体越远。<br>优点：解决了尺度不确定性。<br>缺点：深度量程和精度受双目的基线和分辨率限制；视差的计算消耗计算资源。</p>
+<p>深度相机：通过红外结构光或Time-of-Fligfeixianxingyouhuaht(ToF)原理，用物理方法测量物体的距离。<br>优点：相比双目节省计算量。<br>缺点：测量范围窄、噪声大、视野小、易受日光干扰、无法测量透射材料等</p>
+</li>
+</ul>
+</li>
+<li><p>像素坐标</p>
+<ul>
+<li>将投影的图像坐标离散抽样形成的做种图片，是一个二维的坐标系</li>
+<li><em>uv</em> ：像素坐标系,原点为图像左上角,单位pixel</li>
+</ul>
+<p><img src="/images/slam-notes/27.png"></p>
+</li>
+</ul>
+<h3 id="三、针孔相机模型"><a href="#三、针孔相机模型" class="headerlink" title="三、针孔相机模型"></a>三、针孔相机模型</h3><p><img src="/images/slam-notes/28.png"></p>
+<p><strong>针孔相机模型的矩阵形式：</strong></p>
+<p>中间的矩阵是相机的内参，记为K。</p>
+<p><img src="/images/slam-notes/29.png"></p>
+<p>除内参外，相机坐标系P与世界坐标系Pw还相差一个变换：</p>
+<p><img src="/images/slam-notes/30.png"></p>
+<p>这里 R, t 或 T 称为外参，是SLAM估计的目标。</p>
+<h3 id="四、畸变"><a href="#四、畸变" class="headerlink" title="四、畸变"></a>四、畸变</h3><p>相机的前方通常会有一个透镜，会对成像产生影响，称为畸变。</p>
+<p>由透镜形状引起的畸变称为径向畸变，包括桶形畸变和枕形畸变。桶形畸变是由于图像放大率随着与光轴之间的距离增加而减小；枕形畸变相反。</p>
+<p><img src="/images/slam-notes/31.png"></p>
+<p>径向畸变的程度会随着与中心距离的增加而增加，可以通过公式(5.11)进行矫正。 </p>
+<p><img src="/images/slam-notes/32.png"></p>
+<p>透镜在装机过程中不和成像平面严格平行会引入切向畸变。</p>
+<p><img src="/images/slam-notes/33.png"></p>
+<p>切向畸变通过公式(5.12)矫正。</p>
+<p><img src="/images/slam-notes/34.png"></p>
+<p>对于畸变的矫正在实际当中可灵活保留各项系数。通常在视觉SLAM中，考虑先对整张图片进行去畸变，得到去畸变后的图像，然后讨论图像中的点的位置。</p>
+<h2 id="第六讲-非线性优化"><a href="#第六讲-非线性优化" class="headerlink" title="第六讲    非线性优化"></a>第六讲    <code>非线性优化</code></h2><p>待更新~</p>
+</article></div></main><div class="nav-wrap"><div class="nav"><button class="site-nav"><div class="navicon"></div></button><ul class="nav_items"><li class="nav_item"><a class="nav-page" href="/homepage/#Publications"> Publications</a></li><li class="nav_item"><a class="nav-page" href="/homepage/"> About</a></li><li class="nav_item"><a class="nav-page" target="_blank" rel="noopener" href="https://phower.me"> Blog</a></li></ul></div><div class="cd-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div></div><footer id="page_footer"><div class="footer_wrap"><div class="copyright">&copy;2020 - 2022 by Immortalqx</div><div class="theme-info">Powered by <a target="_blank" href="https://hexo.io" rel="nofollow noopener">Hexo</a> & <a target="_blank" href="https://github.com/PhosphorW/hexo-theme-academia" rel="nofollow noopener">Academia Theme</a></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery-pjax@latest/jquery.pjax.min.js"></script><script src="/homepage/js/main.js"></script></body></html>

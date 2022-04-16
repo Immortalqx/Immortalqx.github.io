@@ -1,0 +1,180 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"><title>所念皆星河</title><meta name="author" content="Immortalqx"><link rel="shortcut icon" href="/homepage/img/favicon.png"><link rel="stylesheet" href="/homepage/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><meta name="generator" content="Hexo 5.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/homepage/atom.xml" title="所念皆星河" type="application/atom+xml">
+</head><body><header id="page_header"><div class="header_wrap"><div id="blog_name"><a class="blog_title" id="site-name" href="/homepage/">所念皆星河</a></div><button class="menus_icon"><div class="navicon"></div></button><ul class="menus_items"><li class="menus_item"><a class="site-page" href="/homepage/#Publications"> Publications</a></li><li class="menus_item"><a class="site-page" href="/homepage/"> About</a></li><li class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://phower.me"> Blog</a></li></ul></div></header><main id="page_main"><div class="side-card sticky"><div class="card-wrap" itemscope itemtype="http://schema.org/Person"><div class="author-avatar"><img class="avatar-img" src="/homepage/img/avatar.jpg" onerror="this.onerror=null;this.src='/homepage/img/profile.png'" alt="avatar"></div><div class="author-discrip"><h3>Immortalqx</h3><p class="author-bio">Your biography can be writed down here.</p></div><div class="author-links"><button class="btn m-social-links">Links</button><ul class="social-icons"><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-facebook-square" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-github" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-stack-overflow" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-weibo" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-weixin" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fab fa-qq" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fas fa-envelope" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/" target="_blank"><i class="fas fa-rss" aria-hidden="true"></i></a></li></ul><ul class="social-links"><li><a class="e-social-link" href="/homepage/" target="_blank"><i class="fas fa-graduation-cap" aria-hidden="true"></i><span>Google Scholar</span></a></li><li><a class="e-social-link" href="/homepage/" target="_blank"><i class="fab fa-orcid" aria-hidden="true"></i><span>ORCID</span></a></li></ul></div><a class="cv-links" href="/homepage/attaches/CV.pdf" target="_blank"><i class="fas fa-file-pdf" aria-hidden="true"><span>My Detail CV.</span></i></a></div></div><div class="page" itemscope itemtype="http://schema.org/CreativeWork"><h2 class="page-title">PX4 Offboard Control Using MAVROS on Gazebo</h2><article><h1 id="PX4-Offboard-Control-Using-MAVROS-on-Gazebo"><a href="#PX4-Offboard-Control-Using-MAVROS-on-Gazebo" class="headerlink" title="PX4 Offboard Control Using MAVROS on Gazebo"></a>PX4 Offboard Control Using MAVROS on Gazebo</h1><p>最近在学习PX4和mavros，感觉px4官网的教程总体上讲得不错，但有一些地方不是很友好，比如offboard control这一块儿，讲的比较简单，省略了gazebo的使用，我上网查了一大堆资料才勉强把这个示例代码在gazebo中跑出来。所以这里做一个记录，希望对看到的人有点帮助。</p>
+<h2 id="安装MAVROS"><a href="#安装MAVROS" class="headerlink" title="安装MAVROS"></a>安装MAVROS</h2><blockquote>
+<p>介绍安装mavros的两种方式，建议参考：<a target="_blank" rel="noopener" href="https://docs.px4.io/master/en/ros/mavros_installation.html">ROS with MAVROS Installation Guide</a>。</p>
+</blockquote>
+<h3 id="方法一：二进制安装-Debian-Ubuntu"><a href="#方法一：二进制安装-Debian-Ubuntu" class="headerlink" title="方法一：二进制安装 (Debian / Ubuntu)"></a>方法一：二进制安装 (Debian / Ubuntu)</h3><p>ROS 存储库包含适用于 Ubuntu x86、amd64 (x86_64) 和 armhf (ARMv7) 的二进制包。Kinetic 还支持 Debian Jessie amd64 和 arm64 (ARMv8)。</p>
+<p>使用<code>apt-get</code>安装：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> ros-melodic-mavros ros-melodic-mavros-extras<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>然后安装<a target="_blank" rel="noopener" href="https://geographiclib.sourceforge.io/">GeographicLib</a>通过运行<code>install_geographiclib_datasets.sh</code>脚本获取数据集：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh
+<span class="token function">sudo</span> <span class="token function">bash</span> ./install_geographiclib_datasets.sh   <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="方法二：源码安装"><a href="#方法二：源码安装" class="headerlink" title="方法二：源码安装"></a>方法二：源码安装</h3><p>此安装假定您有一个 catkin 工作区位于<code>~/catkin_ws</code>如果您不使用以下内容创建一个：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> -p ~/catkin_ws/src
+<span class="token builtin class-name">cd</span> ~/catkin_ws
+catkin init
+wstool init src<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>您将使用 ROS Python 工具：<em>wstool</em>（用于检索源）、<em>rosinstall</em>和<em>catkin_tools</em>（构建）进行此安装。虽然它们可能是在您安装 ROS 期间安装的，但您也可以通过以下方式安装它们：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> python-catkin-tools python-rosinstall-generator -y<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<blockquote>
+<p>虽然可以使用<strong>catkin_make</strong>构建包，但首选方法是使用<strong>catkin_tools，</strong>因为它是一种更通用且“友好”的构建工具。</p>
+</blockquote>
+<p>如果这是您第一次使用 wstool，则需要使用以下命令初始化源空间：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">wstool init ~/catkin_ws/src<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>现在您已准备好进行构建</p>
+<ol>
+<li><p>安装 MAVLink；</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># We use the Kinetic reference for all ROS distros as it's not distro-specific and up to date</span>
+rosinstall_generator --rosdistro kinetic mavlink <span class="token operator">|</span> <span class="token function">tee</span> /tmp/mavros.rosinstall<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+<li><p>使用已发布或最新版本从源代码安装 MAVROS；</p>
+<ul>
+<li><p>发行版 / 稳定版</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosinstall_generator --upstream mavros <span class="token operator">|</span> <span class="token function">tee</span> -a /tmp/mavros.rosinstall<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li><p>最新源码</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosinstall_generator --upstream-development mavros <span class="token operator">|</span> <span class="token function">tee</span> -a /tmp/mavros.rosinstall<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># For fetching all the dependencies into your catkin_ws, </span>
+<span class="token comment"># just add '--deps' to the above scripts, E.g.:</span>
+<span class="token comment">#   rosinstall_generator --upstream mavros --deps | tee -a /tmp/mavros.rosinstall</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+<li><p>创建工作区 &amp; 安装依赖；</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">wstool merge -t src /tmp/mavros.rosinstallwstool update -t src -j4rosdep <span class="token function">install</span> --from-paths src --ignore-src -y<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li><p>安装 <a target="_blank" rel="noopener" href="https://geographiclib.sourceforge.io/">GeographicLib</a>数据集；</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./src/mavros/mavros/scripts/install_geographiclib_datasets.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li><p>构建；</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">catkin build<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li><p>确保您使用工作区中的 setup.bash 或 setup.zsh。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#Needed or rosrun can't find nodes from this workspace.</span>
+<span class="token builtin class-name">source</span> devel/setup.bash<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>出现错误的情况下，<a target="_blank" rel="noopener" href="https://github.com/mavlink/mavros/tree/master/mavros#installation">mavros repo</a>还有额外的安装和故障排除说明。</p>
+</li>
+</ol>
+<h2 id="构建offboard-control示例程序"><a href="#构建offboard-control示例程序" class="headerlink" title="构建offboard control示例程序"></a>构建offboard control示例程序</h2><blockquote>
+<p>这里介绍构建官网示例代码的步骤，代码解读请参考：<a target="_blank" rel="noopener" href="https://docs.px4.io/master/en/ros/mavros_offboard.html">MAVROS <em>Offboard</em> control example</a></p>
+</blockquote>
+<p>进入你的工作区并且创建一个包：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> ~/catkin_ws/src
+catkin_create_pkg offboard_pkg roscpp std_msgs geometry_msgs mavros_msgs<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>在目录<code>~/catkin_ws/src/offboard_pkg/src/</code>中，新建一个文件<code>offboard_node.cpp</code>，写入如下的代码：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">/**
+ * @file offb_node.cpp
+ * @brief Offboard control example node, written with MAVROS version 0.19.x, PX4 Pro Flight
+ * Stack and tested in Gazebo SITL
+ */</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;geometry_msgs/PoseStamped.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;mavros_msgs/CommandBool.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;mavros_msgs/SetMode.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;mavros_msgs/State.h&gt;</span></span>
+
+mavros_msgs<span class="token double-colon punctuation">::</span>State current_state<span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">state_cb</span><span class="token punctuation">(</span><span class="token keyword">const</span> mavros_msgs<span class="token double-colon punctuation">::</span>State<span class="token double-colon punctuation">::</span>ConstPtr<span class="token operator">&amp;</span> msg<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    current_state <span class="token operator">=</span> <span class="token operator">*</span>msg<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    ros<span class="token double-colon punctuation">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"offb_node"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ros<span class="token double-colon punctuation">::</span>NodeHandle nh<span class="token punctuation">;</span>
+
+    ros<span class="token double-colon punctuation">::</span>Subscriber state_sub <span class="token operator">=</span> nh<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">subscribe</span><span class="token generic class-name"><span class="token operator">&lt;</span>mavros_msgs<span class="token double-colon punctuation">::</span>State<span class="token operator">&gt;</span></span></span>
+            <span class="token punctuation">(</span><span class="token string">"mavros/state"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> state_cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ros<span class="token double-colon punctuation">::</span>Publisher local_pos_pub <span class="token operator">=</span> nh<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">advertise</span><span class="token generic class-name"><span class="token operator">&lt;</span>geometry_msgs<span class="token double-colon punctuation">::</span>PoseStamped<span class="token operator">&gt;</span></span></span>
+            <span class="token punctuation">(</span><span class="token string">"mavros/setpoint_position/local"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ros<span class="token double-colon punctuation">::</span>ServiceClient arming_client <span class="token operator">=</span> nh<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">serviceClient</span><span class="token generic class-name"><span class="token operator">&lt;</span>mavros_msgs<span class="token double-colon punctuation">::</span>CommandBool<span class="token operator">&gt;</span></span></span>
+            <span class="token punctuation">(</span><span class="token string">"mavros/cmd/arming"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ros<span class="token double-colon punctuation">::</span>ServiceClient set_mode_client <span class="token operator">=</span> nh<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">serviceClient</span><span class="token generic class-name"><span class="token operator">&lt;</span>mavros_msgs<span class="token double-colon punctuation">::</span>SetMode<span class="token operator">&gt;</span></span></span>
+            <span class="token punctuation">(</span><span class="token string">"mavros/set_mode"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">//the setpoint publishing rate MUST be faster than 2Hz</span>
+    ros<span class="token double-colon punctuation">::</span>Rate <span class="token function">rate</span><span class="token punctuation">(</span><span class="token number">20.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// wait for FCU connection</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>ros<span class="token double-colon punctuation">::</span><span class="token function">ok</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>current_state<span class="token punctuation">.</span>connected<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        ros<span class="token double-colon punctuation">::</span><span class="token function">spinOnce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        rate<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    geometry_msgs<span class="token double-colon punctuation">::</span>PoseStamped pose<span class="token punctuation">;</span>
+    pose<span class="token punctuation">.</span>pose<span class="token punctuation">.</span>position<span class="token punctuation">.</span>x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    pose<span class="token punctuation">.</span>pose<span class="token punctuation">.</span>position<span class="token punctuation">.</span>y <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    pose<span class="token punctuation">.</span>pose<span class="token punctuation">.</span>position<span class="token punctuation">.</span>z <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+
+    <span class="token comment">//send a few setpoints before starting</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span> ros<span class="token double-colon punctuation">::</span><span class="token function">ok</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> i <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token operator">--</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        local_pos_pub<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span>pose<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ros<span class="token double-colon punctuation">::</span><span class="token function">spinOnce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        rate<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    mavros_msgs<span class="token double-colon punctuation">::</span>SetMode offb_set_mode<span class="token punctuation">;</span>
+    offb_set_mode<span class="token punctuation">.</span>request<span class="token punctuation">.</span>custom_mode <span class="token operator">=</span> <span class="token string">"OFFBOARD"</span><span class="token punctuation">;</span>
+
+    mavros_msgs<span class="token double-colon punctuation">::</span>CommandBool arm_cmd<span class="token punctuation">;</span>
+    arm_cmd<span class="token punctuation">.</span>request<span class="token punctuation">.</span>value <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+
+    ros<span class="token double-colon punctuation">::</span>Time last_request <span class="token operator">=</span> ros<span class="token double-colon punctuation">::</span><span class="token class-name">Time</span><span class="token double-colon punctuation">::</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">while</span><span class="token punctuation">(</span>ros<span class="token double-colon punctuation">::</span><span class="token function">ok</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span> current_state<span class="token punctuation">.</span>mode <span class="token operator">!=</span> <span class="token string">"OFFBOARD"</span> <span class="token operator">&amp;&amp;</span>
+            <span class="token punctuation">(</span>ros<span class="token double-colon punctuation">::</span><span class="token class-name">Time</span><span class="token double-colon punctuation">::</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> last_request <span class="token operator">&gt;</span> ros<span class="token double-colon punctuation">::</span><span class="token function">Duration</span><span class="token punctuation">(</span><span class="token number">5.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span> set_mode_client<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>offb_set_mode<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span>
+                offb_set_mode<span class="token punctuation">.</span>response<span class="token punctuation">.</span>mode_sent<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"Offboard enabled"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            last_request <span class="token operator">=</span> ros<span class="token double-colon punctuation">::</span><span class="token class-name">Time</span><span class="token double-colon punctuation">::</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span> <span class="token operator">!</span>current_state<span class="token punctuation">.</span>armed <span class="token operator">&amp;&amp;</span>
+                <span class="token punctuation">(</span>ros<span class="token double-colon punctuation">::</span><span class="token class-name">Time</span><span class="token double-colon punctuation">::</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> last_request <span class="token operator">&gt;</span> ros<span class="token double-colon punctuation">::</span><span class="token function">Duration</span><span class="token punctuation">(</span><span class="token number">5.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span> arming_client<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>arm_cmd<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span>
+                    arm_cmd<span class="token punctuation">.</span>response<span class="token punctuation">.</span>success<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"Vehicle armed"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                last_request <span class="token operator">=</span> ros<span class="token double-colon punctuation">::</span><span class="token class-name">Time</span><span class="token double-colon punctuation">::</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+        local_pos_pub<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span>pose<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        ros<span class="token double-colon punctuation">::</span><span class="token function">spinOnce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        rate<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>然后打开目录<code>~/catkin_ws/src/offboard_pkg/</code>下的<code>CMakeLists.txt</code>添加下面的两行：</p>
+<pre class="line-numbers language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">add_executable</span><span class="token punctuation">(</span>offboard_node src/offboard_node.cpp<span class="token punctuation">)</span>
+<span class="token keyword">target_link_libraries</span><span class="token punctuation">(</span>offboard_node <span class="token punctuation">${</span>catkin_LIBRARIES<span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>然后到目录<code>~/catkin_ws</code>下，运行命令，完成编译：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">catkin_make<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>之后你可以在~.bashrc或者~.zshrc中写入source该工作空间的指令，如果出现了工作空间覆盖的问题，可以参考我的另外一篇博客<a href="https://immortalqx.github.io/2021/07/17/ros-notes-3/">解决source多个ROS工作空间时的覆盖问题</a>。</p>
+<h2 id="安装PX4-Autopilot"><a href="#安装PX4-Autopilot" class="headerlink" title="安装PX4-Autopilot"></a>安装PX4-Autopilot</h2><blockquote>
+<p>网上有一些教程讲的是Firmware，但两个应该都是一样的。</p>
+</blockquote>
+<h3 id="下载PX4-Autopilot"><a href="#下载PX4-Autopilot" class="headerlink" title="下载PX4-Autopilot"></a>下载PX4-Autopilot</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/PX4/PX4-Autopilot.git
+<span class="token builtin class-name">cd</span> PX4-Autopilot
+<span class="token function">git</span> checkout v1.12.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3 id="编译PX4-Autopilot"><a href="#编译PX4-Autopilot" class="headerlink" title="编译PX4-Autopilot"></a>编译PX4-Autopilot</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">make</span> distclean
+<span class="token function">make</span> px4_sitl_default gazebo<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>请确保<em>make px4_sitl_default gazebo</em>命令执行成功，如有报错信息，根据报错信息来进行修复即可。</p>
+<p>在这条指令运行成功之后，gazebo会打开，你会看到如下的界面：</p>
+<p><img src="/images/ros-notes/6-1.png"></p>
+<h3 id="修改-bashrc或者-zshrc（optional）"><a href="#修改-bashrc或者-zshrc（optional）" class="headerlink" title="修改~.bashrc或者~.zshrc（optional）"></a>修改~.bashrc或者~.zshrc（optional）</h3><p>这一步不影响我们在gazebo中运行Offboard Control示例程序，但还是建议修改一下。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">source</span> ~/PX4-Autopilot/Tools/setup_gazebo.bash ~/PX4-Autopilot ~/PX4-Autopilot/build/px4_sitl_defaultexport
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">ROS_PACKAGE_PATH</span><span class="token operator">=</span><span class="token variable">$ROS_PACKAGE_PATH</span>:~/PX4-Autopilotexport
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">ROS_PACKAGE_PATH</span><span class="token operator">=</span><span class="token variable">$ROS_PACKAGE_PATH</span>:~/PX4-Autopilot/Tools/sitl_gazebo<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h2 id="在Gazebo中运行Offboard-Control示例程序"><a href="#在Gazebo中运行Offboard-Control示例程序" class="headerlink" title="在Gazebo中运行Offboard Control示例程序"></a>在Gazebo中运行Offboard Control示例程序</h2><h3 id="启动Gazebo"><a href="#启动Gazebo" class="headerlink" title="启动Gazebo"></a>启动Gazebo</h3><p>像之前一样，进入到PX4-Autopilot的目录中，运行如下指令打开Gazebo：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">make</span> px4_sitl_default gazebo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="运行MAVROS"><a href="#运行MAVROS" class="headerlink" title="运行MAVROS"></a>运行MAVROS</h3><p><strong>mavlink会开放<code>14557</code>, 接到这个端口将会接收到实际飞行中发出的所有数据。</strong></p>
+<p>若要连接到一个特定的IP(fcu_url是SITL的IP/端口)，请使用一个如下形式的URL:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">roslaunch mavros px4.launch fcu_url:<span class="token operator">=</span><span class="token string">"udp://:14540@192.168.1.36:14557"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>连接本地:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">roslaunch mavros px4.launch fcu_url:<span class="token operator">=</span><span class="token string">"udp://:14540@127.0.0.1:14557"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这里我们在自己的电脑上运行，因此使用连接本地的指令即可。</p>
+<h3 id="运行offboard-node"><a href="#运行offboard-node" class="headerlink" title="运行offboard_node"></a>运行offboard_node</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun offboard_pkg offboard_node<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>最终的效果应该如下图所示，gazebo中的无人机起飞并且悬停在了空中。</p>
+<p><img src="/images/ros-notes/6-2.png"></p>
+</article></div></main><div class="nav-wrap"><div class="nav"><button class="site-nav"><div class="navicon"></div></button><ul class="nav_items"><li class="nav_item"><a class="nav-page" href="/homepage/#Publications"> Publications</a></li><li class="nav_item"><a class="nav-page" href="/homepage/"> About</a></li><li class="nav_item"><a class="nav-page" target="_blank" rel="noopener" href="https://phower.me"> Blog</a></li></ul></div><div class="cd-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div></div><footer id="page_footer"><div class="footer_wrap"><div class="copyright">&copy;2020 - 2022 by Immortalqx</div><div class="theme-info">Powered by <a target="_blank" href="https://hexo.io" rel="nofollow noopener">Hexo</a> & <a target="_blank" href="https://github.com/PhosphorW/hexo-theme-academia" rel="nofollow noopener">Academia Theme</a></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery-pjax@latest/jquery.pjax.min.js"></script><script src="/homepage/js/main.js"></script></body></html>
