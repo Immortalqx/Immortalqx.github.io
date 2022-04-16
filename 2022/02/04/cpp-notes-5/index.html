@@ -20,6 +20,8 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
+    
+
     <title>C++ 多线程编程（三）：单例模式 | 所念皆星河</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
@@ -37,8 +39,6 @@
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
 </head>
-
-
 
 
 <body>
@@ -128,7 +128,7 @@
     
     <a href="/homepage" class="waves-effect waves-light">
       
-      <i class="fas fa-homepage" style="zoom: 0.6;"></i>
+      <i class="fas fa-image" style="zoom: 0.6;"></i>
       
       <span>Homepage</span>
     </a>
@@ -229,7 +229,7 @@
 	  
 		<a href="/homepage" class="waves-effect waves-light">
 			
-			    <i class="fa-fw fas fa-homepage"></i>
+			    <i class="fa-fw fas fa-image"></i>
 			
 			Homepage
 		</a>
@@ -1489,6 +1489,8 @@ Single Single<span class="token double-colon punctuation">::</span>instance<span
 
     
 
+    
+
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
@@ -1648,19 +1650,6 @@ Single Single<span class="token double-colon punctuation">::</span>instance<span
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
             headingSelector: 'h2, h3, h4'
-        });
-
-        // modify the toc link href to support Chinese.
-        let i = 0;
-        let tocHeading = 'toc-heading-';
-        $('#toc-content a').each(function () {
-            $(this).attr('href', '#' + tocHeading + (++i));
-        });
-
-        // modify the heading title id to support Chinese.
-        i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
-            $(this).attr('id', tocHeading + (++i));
         });
 
         // Set scroll toc fixed.
