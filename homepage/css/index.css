@@ -721,7 +721,7 @@ blockquote p {
     position: sticky;
     top: 2em;
   }
-  .sticky&gt;* {
+  .sticky>* {
     display: block;
   }
   .author-avatar {

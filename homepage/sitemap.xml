@@ -2,20 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/css/index.css</loc>
-    
-    <lastmod>2022-04-16</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/homepage/css/user.css</loc>
-    
-    <lastmod>2022-04-16</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://immortalqx.github.io/homepage/2022/04/10/cpp-notes-9/</loc>
     
     <lastmod>2022-04-10</lastmod>
@@ -240,14 +226,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/2021/04/27/paper-reading-4/</loc>
+    <loc>http://immortalqx.github.io/homepage/2021/04/24/paper-reading-3/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/2021/04/24/paper-reading-3/</loc>
+    <loc>http://immortalqx.github.io/homepage/2021/04/27/paper-reading-4/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -387,14 +373,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/2021/07/28/ielts-1/</loc>
+    <loc>http://immortalqx.github.io/homepage/2021/07/06/openvins-note-1/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/2021/07/06/openvins-note-1/</loc>
+    <loc>http://immortalqx.github.io/homepage/2021/07/28/ielts-1/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -522,13 +508,6 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/tags/IELTS/</loc>
-    <lastmod>2022-04-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://immortalqx.github.io/homepage/tags/%E8%A7%86%E8%A7%89SLAM/</loc>
     <lastmod>2022-04-16</lastmod>
     <changefreq>daily</changefreq>
@@ -537,6 +516,13 @@
   
   <url>
     <loc>http://immortalqx.github.io/homepage/tags/OpenVINS/</loc>
+    <lastmod>2022-04-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/homepage/tags/IELTS/</loc>
     <lastmod>2022-04-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

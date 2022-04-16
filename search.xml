@@ -151,6 +151,64 @@
       </tags>
   </entry>
   <entry>
+    <title>OpenVINS学习笔记（一）</title>
+    <url>/2021/07/06/openvins-note-1/</url>
+    <content><![CDATA[<h1 id="OpenVINS学习笔记（一）"><a href="#OpenVINS学习笔记（一）" class="headerlink" title="OpenVINS学习笔记（一）"></a>OpenVINS学习笔记（一）</h1><blockquote>
+<p>论文摘要与代码框架</p>
+</blockquote>
+<h2 id="论文摘要"><a href="#论文摘要" class="headerlink" title="论文摘要"></a>论文摘要</h2><p>构建OpenVINS开源代码库，对通常需要的视觉惯性估计特性具有现成的支持，包括：<br>（i） 流形上的滑动窗口卡尔曼滤波器；</p>
+<p>（ii）在线相机内外参数标定；</p>
+<p>（iii）相机到惯性传感器的时间偏移校准；</p>
+<p>（iv）具有不同表示和一致的首次估计（FEJ）处理的SLAM地标；</p>
+<p>（v） 模块化状态管理系统；</p>
+<p>（vi）可扩展视觉惯性系统模拟器；</p>
+<p>（vii）算法评估工具箱。</p>
+<h2 id="代码框架"><a href="#代码框架" class="headerlink" title="代码框架"></a>代码框架</h2><ul>
+<li><p><strong>ov_core</strong></p>
+<ul>
+<li><p>2D图像稀疏视觉特征跟踪；</p>
+</li>
+<li><p>线性和高斯-牛顿特征三角剖分方法；</p>
+</li>
+<li><p>用于任意数量相机和频率的视觉惯性模拟器；</p>
+</li>
+<li><p>基本的流形数学运算</p>
+</li>
+</ul>
+</li>
+<li><p><strong>ov_eval</strong></p>
+<ul>
+<li>轨迹对齐；</li>
+<li>轨迹精度和一致性评估的绘图工具；</li>
+<li>不同精度指标的蒙特卡罗评价；</li>
+<li>ROS topic录制到文件。</li>
+</ul>
+</li>
+<li><p><strong>ov_msckf</strong></p>
+<p>可扩展模块扩展卡尔曼滤波器（EKF）为基础的滑动窗口视觉惯性估计器与流形系统的灵活状态表示。</p>
+<p>特点包括：</p>
+<ul>
+<li>首次估计Jacobains（FEJ）</li>
+<li>IMU相机时间偏移校准</li>
+<li>相机内部和外部校准</li>
+<li>标准MSCKF和不同表示的3DSLAM地标。</li>
+</ul>
+</li>
+</ul>
+<p><strong>代码入口：</strong></p>
+<p><img src="/images/OpenVINS-Note/1-1.png"></p>
+<p><img src="/images/OpenVINS-Note/1-2.png"></p>
+<p>注：<a href="https://blog.csdn.net/weixin_43793960/article/details/110929635">图片来源</a></p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>视觉SLAM</tag>
+        <tag>OpenVINS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>雅思备考经验分享</title>
     <url>/2021/07/28/ielts-1/</url>
     <content><![CDATA[<h1 id="雅思备考经验分享"><a href="#雅思备考经验分享" class="headerlink" title="雅思备考经验分享"></a>雅思备考经验分享</h1><blockquote>
@@ -287,61 +345,126 @@
       </tags>
   </entry>
   <entry>
-    <title>OpenVINS学习笔记（一）</title>
-    <url>/2021/07/06/openvins-note-1/</url>
-    <content><![CDATA[<h1 id="OpenVINS学习笔记（一）"><a href="#OpenVINS学习笔记（一）" class="headerlink" title="OpenVINS学习笔记（一）"></a>OpenVINS学习笔记（一）</h1><blockquote>
-<p>论文摘要与代码框架</p>
-</blockquote>
-<h2 id="论文摘要"><a href="#论文摘要" class="headerlink" title="论文摘要"></a>论文摘要</h2><p>构建OpenVINS开源代码库，对通常需要的视觉惯性估计特性具有现成的支持，包括：<br>（i） 流形上的滑动窗口卡尔曼滤波器；</p>
-<p>（ii）在线相机内外参数标定；</p>
-<p>（iii）相机到惯性传感器的时间偏移校准；</p>
-<p>（iv）具有不同表示和一致的首次估计（FEJ）处理的SLAM地标；</p>
-<p>（v） 模块化状态管理系统；</p>
-<p>（vi）可扩展视觉惯性系统模拟器；</p>
-<p>（vii）算法评估工具箱。</p>
-<h2 id="代码框架"><a href="#代码框架" class="headerlink" title="代码框架"></a>代码框架</h2><ul>
-<li><p><strong>ov_core</strong></p>
-<ul>
-<li><p>2D图像稀疏视觉特征跟踪；</p>
-</li>
-<li><p>线性和高斯-牛顿特征三角剖分方法；</p>
-</li>
-<li><p>用于任意数量相机和频率的视觉惯性模拟器；</p>
-</li>
-<li><p>基本的流形数学运算</p>
-</li>
-</ul>
-</li>
-<li><p><strong>ov_eval</strong></p>
-<ul>
-<li>轨迹对齐；</li>
-<li>轨迹精度和一致性评估的绘图工具；</li>
-<li>不同精度指标的蒙特卡罗评价；</li>
-<li>ROS topic录制到文件。</li>
-</ul>
-</li>
-<li><p><strong>ov_msckf</strong></p>
-<p>可扩展模块扩展卡尔曼滤波器（EKF）为基础的滑动窗口视觉惯性估计器与流形系统的灵活状态表示。</p>
-<p>特点包括：</p>
-<ul>
-<li>首次估计Jacobains（FEJ）</li>
-<li>IMU相机时间偏移校准</li>
-<li>相机内部和外部校准</li>
-<li>标准MSCKF和不同表示的3DSLAM地标。</li>
-</ul>
-</li>
-</ul>
-<p><strong>代码入口：</strong></p>
-<p><img src="/images/OpenVINS-Note/1-1.png"></p>
-<p><img src="/images/OpenVINS-Note/1-2.png"></p>
-<p>注：<a href="https://blog.csdn.net/weixin_43793960/article/details/110929635">图片来源</a></p>
+    <title>ROS中使用ddynamicReconfigure</title>
+    <url>/2020/09/05/ros-notes-1/</url>
+    <content><![CDATA[<h1 id="ROS中使用ddynamicReconfigure"><a href="#ROS中使用ddynamicReconfigure" class="headerlink" title="ROS中使用ddynamicReconfigure"></a>ROS中使用ddynamicReconfigure</h1><h2 id="关于ddynamicReconfigure类"><a href="#关于ddynamicReconfigure类" class="headerlink" title="关于ddynamicReconfigure类"></a>关于ddynamicReconfigure类</h2><p>The DDynamicReconfigure class allows to use ROS dynamic reconfigure without the need to write a custom cpf file, <strong>variables are registered and exposed at run time</strong>.  Modification of the variables is done through a variable pointer or through a callback function.</p>
+<p>The <a href="http://docs.ros.org/kinetic/api/ddynamic_reconfigure/html/classddynamic__reconfigure_1_1DDynamicReconfigure.html">DDynamicReconfigure</a> class is the main class responsible for keeping track of parameters basic properties, values, descriptions, etc. </p>
+<p>It is also responsible of handling callbacks, config change requests, description setup and config setup, and the ROS publishers and  services.</p>
+<p>To operate a DDynamic instance, you must go through the following procedure:</p>
+<ol>
+<li>Construct a <a href="http://docs.ros.org/kinetic/api/ddynamic_reconfigure/html/classddynamic__reconfigure_1_1DDynamicReconfigure.html">DDynamicReconfigure</a> instance with proper handling.</li>
+<li>Add parameters to the instance as needed with any of the “add” methods.</li>
+<li>Start the ROS services with any of the “start” methods.</li>
+<li>If you need to change the callback after startup you may do so using “setCallback”.</li>
+<li>When you need to get any of the stored parameters, call either “get” or “at” on this instance, rather than through the callback. </li>
+</ol>
+<h2 id="常用函数原型-amp-解析"><a href="#常用函数原型-amp-解析" class="headerlink" title="常用函数原型&amp;解析"></a>常用函数原型&amp;解析</h2><p>registerVariable register a variable to be modified via the dynamic_reconfigure API. </p>
+<p>When a change is made, <strong>it will be reflected in the variable directly.</strong></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+  <span class="token keyword">void</span> <span class="token function">registerVariable</span><span class="token punctuation">(</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
+  T <span class="token operator">*</span>variable<span class="token punctuation">,</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span> 
+  T min <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMin</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+  T max <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMax</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+  <span class="token keyword">void</span> <span class="token function">registerEnumVariable</span><span class="token punctuation">(</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
+  T <span class="token operator">*</span>variable<span class="token punctuation">,</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span>
+  std<span class="token double-colon punctuation">::</span>map<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token punctuation">,</span> T<span class="token operator">&gt;</span> enum_dict <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>enum_description <span class="token operator">=</span> <span class="token string">""</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<p>registerVariable register a variable to be modified via the dynamic_reconfigure API. </p>
+<p>When a change is made, <strong>the callback will be called with the new value.</strong></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+  <span class="token keyword">void</span> <span class="token function">registerVariable</span><span class="token punctuation">(</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
+  T current_value<span class="token punctuation">,</span>
+  <span class="token keyword">const</span> boost<span class="token double-colon punctuation">::</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span>T value<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token operator">&amp;</span>callback<span class="token punctuation">,</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span> 
+  T min <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMin</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+  T max <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMax</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+  <span class="token keyword">void</span> <span class="token function">registerEnumVariable</span><span class="token punctuation">(</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
+  T current_value<span class="token punctuation">,</span>
+  <span class="token keyword">const</span> boost<span class="token double-colon punctuation">::</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span>T<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token operator">&amp;</span>callback<span class="token punctuation">,</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description<span class="token punctuation">,</span>
+  std<span class="token double-colon punctuation">::</span>map<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token punctuation">,</span> T<span class="token operator">&gt;</span> enum_dict <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>enum_description <span class="token operator">=</span> <span class="token string">""</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<p>publishServicesTopics <strong>starts the server</strong> once all the needed variables are registered.</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">publishServicesTopics</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>关于getMin()与getMax()</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+<span class="token keyword">inline</span> T <span class="token function">getMin</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> std<span class="token double-colon punctuation">::</span><span class="token class-name">numeric_limits</span><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span><span class="token double-colon punctuation">::</span><span class="token function">min</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
+<span class="token keyword">inline</span> <span class="token keyword">bool</span> <span class="token function">getMin</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
+<span class="token keyword">inline</span> std<span class="token double-colon punctuation">::</span>string <span class="token generic-function"><span class="token function">getMin</span><span class="token generic class-name"><span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+<span class="token keyword">inline</span> T <span class="token function">getMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> std<span class="token double-colon punctuation">::</span><span class="token class-name">numeric_limits</span><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span><span class="token double-colon punctuation">::</span><span class="token function">min</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
+<span class="token keyword">inline</span> <span class="token keyword">bool</span> <span class="token function">getMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
+<span class="token keyword">inline</span> std<span class="token double-colon punctuation">::</span>string <span class="token function">getMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ddynamic_reconfigure/ddynamic_reconfigure.h&gt;</span></span>
+
+<span class="token keyword">int</span> global_int<span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">paramCb</span><span class="token punctuation">(</span><span class="token keyword">int</span> new_value<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   global_int <span class="token operator">=</span> new_value<span class="token punctuation">;</span>
+   <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"Param modified: %d"</span><span class="token punctuation">,</span> global_int<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// ROS init stage</span>
+    ros<span class="token double-colon punctuation">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"ddynamic_tutorials"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ros<span class="token double-colon punctuation">::</span>NodeHandle nh<span class="token punctuation">;</span>
+    ddynamic_reconfigure<span class="token double-colon punctuation">::</span>DDynamicReconfigure ddr<span class="token punctuation">;</span>
+    
+    ddr<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">registerVariable</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token string">"int_param"</span><span class="token punctuation">,</span><span class="token number">124</span><span class="token punctuation">,</span> boost<span class="token double-colon punctuation">::</span><span class="token function">bind</span><span class="token punctuation">(</span>paramCb<span class="token punctuation">,</span> _1<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"param description"</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1000</span><span class="token punctuation">,</span><span class="token number">2357</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ddr<span class="token punctuation">.</span><span class="token function">publishServicesTopics</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// Now parameter can be modified from the dynamic_reconfigure GUI or other tools and the callback is called on each update</span>
+    ros<span class="token double-colon punctuation">::</span><span class="token function">spin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 ]]></content>
       <categories>
-        <category>slam</category>
+        <category>ROS</category>
       </categories>
       <tags>
-        <tag>视觉SLAM</tag>
-        <tag>OpenVINS</tag>
+        <tag>ROS基础</tag>
       </tags>
   </entry>
   <entry>
@@ -493,129 +616,6 @@ rosrun nodelet nodelet load try_nodelet/try_use nodelet_manager __name:<span cla
 <p>注意，如果这里报错“According to the loaded plugin descriptions the class try_nodelet/try_use with base class type nodelet::Nodelet does not exist.”  一般是因为运行manager的窗口（终端2）没有source</p>
 <p>所以要么一开始就把source写进配置文件中，要么就每个相关的窗口都要source，这样能够避免很多问题，也方便自己找到程序的bug所在。</p>
 <h2 id="4-将已有的ROS工程改写为nodelet"><a href="#4-将已有的ROS工程改写为nodelet" class="headerlink" title="4.将已有的ROS工程改写为nodelet"></a>4.将已有的ROS工程改写为nodelet</h2><p>待补充~</p>
-]]></content>
-      <categories>
-        <category>ROS</category>
-      </categories>
-      <tags>
-        <tag>ROS基础</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ROS中使用ddynamicReconfigure</title>
-    <url>/2020/09/05/ros-notes-1/</url>
-    <content><![CDATA[<h1 id="ROS中使用ddynamicReconfigure"><a href="#ROS中使用ddynamicReconfigure" class="headerlink" title="ROS中使用ddynamicReconfigure"></a>ROS中使用ddynamicReconfigure</h1><h2 id="关于ddynamicReconfigure类"><a href="#关于ddynamicReconfigure类" class="headerlink" title="关于ddynamicReconfigure类"></a>关于ddynamicReconfigure类</h2><p>The DDynamicReconfigure class allows to use ROS dynamic reconfigure without the need to write a custom cpf file, <strong>variables are registered and exposed at run time</strong>.  Modification of the variables is done through a variable pointer or through a callback function.</p>
-<p>The <a href="http://docs.ros.org/kinetic/api/ddynamic_reconfigure/html/classddynamic__reconfigure_1_1DDynamicReconfigure.html">DDynamicReconfigure</a> class is the main class responsible for keeping track of parameters basic properties, values, descriptions, etc. </p>
-<p>It is also responsible of handling callbacks, config change requests, description setup and config setup, and the ROS publishers and  services.</p>
-<p>To operate a DDynamic instance, you must go through the following procedure:</p>
-<ol>
-<li>Construct a <a href="http://docs.ros.org/kinetic/api/ddynamic_reconfigure/html/classddynamic__reconfigure_1_1DDynamicReconfigure.html">DDynamicReconfigure</a> instance with proper handling.</li>
-<li>Add parameters to the instance as needed with any of the “add” methods.</li>
-<li>Start the ROS services with any of the “start” methods.</li>
-<li>If you need to change the callback after startup you may do so using “setCallback”.</li>
-<li>When you need to get any of the stored parameters, call either “get” or “at” on this instance, rather than through the callback. </li>
-</ol>
-<h2 id="常用函数原型-amp-解析"><a href="#常用函数原型-amp-解析" class="headerlink" title="常用函数原型&amp;解析"></a>常用函数原型&amp;解析</h2><p>registerVariable register a variable to be modified via the dynamic_reconfigure API. </p>
-<p>When a change is made, <strong>it will be reflected in the variable directly.</strong></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
-  <span class="token keyword">void</span> <span class="token function">registerVariable</span><span class="token punctuation">(</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
-  T <span class="token operator">*</span>variable<span class="token punctuation">,</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span> 
-  T min <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMin</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
-  T max <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMax</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
-  <span class="token keyword">void</span> <span class="token function">registerEnumVariable</span><span class="token punctuation">(</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
-  T <span class="token operator">*</span>variable<span class="token punctuation">,</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span>
-  std<span class="token double-colon punctuation">::</span>map<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token punctuation">,</span> T<span class="token operator">&gt;</span> enum_dict <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>enum_description <span class="token operator">=</span> <span class="token string">""</span>
-  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<hr>
-<p>registerVariable register a variable to be modified via the dynamic_reconfigure API. </p>
-<p>When a change is made, <strong>the callback will be called with the new value.</strong></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
-  <span class="token keyword">void</span> <span class="token function">registerVariable</span><span class="token punctuation">(</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
-  T current_value<span class="token punctuation">,</span>
-  <span class="token keyword">const</span> boost<span class="token double-colon punctuation">::</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span>T value<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token operator">&amp;</span>callback<span class="token punctuation">,</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span> 
-  T min <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMin</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
-  T max <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMax</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
-  <span class="token keyword">void</span> <span class="token function">registerEnumVariable</span><span class="token punctuation">(</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
-  T current_value<span class="token punctuation">,</span>
-  <span class="token keyword">const</span> boost<span class="token double-colon punctuation">::</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span>T<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token operator">&amp;</span>callback<span class="token punctuation">,</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description<span class="token punctuation">,</span>
-  std<span class="token double-colon punctuation">::</span>map<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token punctuation">,</span> T<span class="token operator">&gt;</span> enum_dict <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>enum_description <span class="token operator">=</span> <span class="token string">""</span>
-  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<hr>
-<p>publishServicesTopics <strong>starts the server</strong> once all the needed variables are registered.</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">publishServicesTopics</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>关于getMin()与getMax()</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
-<span class="token keyword">inline</span> T <span class="token function">getMin</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">return</span> std<span class="token double-colon punctuation">::</span><span class="token class-name">numeric_limits</span><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span><span class="token double-colon punctuation">::</span><span class="token function">min</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
-<span class="token keyword">inline</span> <span class="token keyword">bool</span> <span class="token function">getMin</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
-<span class="token keyword">inline</span> std<span class="token double-colon punctuation">::</span>string <span class="token generic-function"><span class="token function">getMin</span><span class="token generic class-name"><span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
-<span class="token keyword">inline</span> T <span class="token function">getMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">return</span> std<span class="token double-colon punctuation">::</span><span class="token class-name">numeric_limits</span><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span><span class="token double-colon punctuation">::</span><span class="token function">min</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
-<span class="token keyword">inline</span> <span class="token keyword">bool</span> <span class="token function">getMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
-<span class="token keyword">inline</span> std<span class="token double-colon punctuation">::</span>string <span class="token function">getMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h&gt;</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ddynamic_reconfigure/ddynamic_reconfigure.h&gt;</span></span>
-
-<span class="token keyword">int</span> global_int<span class="token punctuation">;</span>
-
-<span class="token keyword">void</span> <span class="token function">paramCb</span><span class="token punctuation">(</span><span class="token keyword">int</span> new_value<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-   global_int <span class="token operator">=</span> new_value<span class="token punctuation">;</span>
-   <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"Param modified: %d"</span><span class="token punctuation">,</span> global_int<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment">// ROS init stage</span>
-    ros<span class="token double-colon punctuation">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"ddynamic_tutorials"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token double-colon punctuation">::</span>NodeHandle nh<span class="token punctuation">;</span>
-    ddynamic_reconfigure<span class="token double-colon punctuation">::</span>DDynamicReconfigure ddr<span class="token punctuation">;</span>
-    
-    ddr<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">registerVariable</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token string">"int_param"</span><span class="token punctuation">,</span><span class="token number">124</span><span class="token punctuation">,</span> boost<span class="token double-colon punctuation">::</span><span class="token function">bind</span><span class="token punctuation">(</span>paramCb<span class="token punctuation">,</span> _1<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"param description"</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1000</span><span class="token punctuation">,</span><span class="token number">2357</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ddr<span class="token punctuation">.</span><span class="token function">publishServicesTopics</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// Now parameter can be modified from the dynamic_reconfigure GUI or other tools and the callback is called on each update</span>
-    ros<span class="token double-colon punctuation">::</span><span class="token function">spin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
- <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 ]]></content>
       <categories>
         <category>ROS</category>
@@ -1362,78 +1362,6 @@ mavros_msgs<span class="token double-colon punctuation">::</span>State current_s
       </tags>
   </entry>
   <entry>
-    <title>C++中的头文件</title>
-    <url>/2021/11/21/cpp-notes-0/</url>
-    <content><![CDATA[<h1 id="C-中的头文件"><a href="#C-中的头文件" class="headerlink" title="C++中的头文件"></a>C++中的头文件</h1><blockquote>
-<p>最近在写pi-slam-fusion，遇到的问题比较多，最离谱的问题可能就是和头文件有关的这部分了。</p>
-</blockquote>
-<h3 id="1-关于为什么C-需要“在头文件中声明，在源文件中定义”？"><a href="#1-关于为什么C-需要“在头文件中声明，在源文件中定义”？" class="headerlink" title="1. 关于为什么C++需要“在头文件中声明，在源文件中定义”？"></a>1. 关于为什么C++需要“在头文件中声明，在源文件中定义”？</h3><blockquote>
-<p>当时为了把pislam和map2dfusion弄到一个程序里面，想出了#include “main.cpp” 和把 “main.cpp”重命名为”pislam.h”再进行#include的操作，这样肯定是有问题的！</p>
-<p>实际上当时一编译就会跟我报“重定义”的错误，然后我居然还以为是CMakeList没写好</p>
-</blockquote>
-<ul>
-<li><p>第一，<strong>预编译指令#include的作用是将所包含的文件全文复制到#include的位置</strong>，相当于是个展开为一个文件的宏。</p>
-<p>c++的预处理器在编译之前执行，它看到#include指令，就会把那个文件的内容替换到当前位置。其它的预处理指令例如#define, #ifdef, ##等也在这个阶段被执行、并产生相应的内容。</p>
-<p>预处理器执行完成后，所有的预处理指令都会被移除。其结果是一个单个头的大文件（我猜测这文件只存在于内存里），这个文件才会被进一步传给编译器做编译。</p>
-</li>
-<li><p>第二，<strong>C++允许多次声明，但只允许一次实现。</strong>比如int foo();就是一次声明，而int foo(){}就是一次实现。</p>
-<p>如果编译时有多个.cpp文件中#include了同一个含有函数实现的.h，这时候链接器就会在多个目标文件中找到这个函数的实现，而这在C++中是不允许的，此时就会引爆<strong>LNK1169错误:找到一个或多个重定义的符号。</strong></p>
-<p>因此为了让函数可以在各个.cpp中共享，正确的做法就是在.h中只声明函数，并在另【 一个（重点）】.cpp中实现这个函数。这样就不会冲突了。</p>
-<blockquote>
-<p>所以#include一个.cpp文件也是不可以的，这和#include一个含有函数实现的.h文件效果一样糟糕。</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="2-头文件中应该写什么内容？"><a href="#2-头文件中应该写什么内容？" class="headerlink" title="2. 头文件中应该写什么内容？"></a>2. 头文件中应该写什么内容？</h3><blockquote>
-<p>因为问题一的存在，现在我其实对头文件里面应该写什么也不太清楚了，所以又查了一些内容。。。</p>
-</blockquote>
-<p><strong>头文件中应该只放变量和函数的声明，而不能放它们的定义。</strong>不过这样的规则有三个例外：</p>
-<ol>
-<li><p><strong>头文件中可以写 const 对象的定义。</strong></p>
-<p>因为全局的 const 对象默认是没有 extern 的声明的，所以它只在当前文件中有效。</p>
-<p>同理，static 对象的定义也可以放进头文件。</p>
-</li>
-<li><p><strong>头文件中可以写内联函数（inline）的定义。</strong></p>
-<p>C++ 规定，内联函数可以在程序中定义多次，只要内联函数在一个 .cpp 文件中只出现一次，并且在所有的 .cpp 文件中，这个内联函数的定义是一样的，就能通过编译。</p>
-<p>那么显然，把内联函数的定义放进一个头文件中是非常明智的做法。</p>
-</li>
-<li><p><strong>头文件中可以写类（class）的定义。</strong></p>
-<p>编译器只有在这个类的定义完全可见的情况下，才能知道这个类的对象应该如何布局，所以，关于类的定义的要求，跟内联函数是基本一样的。</p>
-<p>我们可以把类的定义放在头文件中，而把函数成员的实现代码放在一个 .cpp 文件中。</p>
-<p>也可以直接把函数成员的实现代码也写进类定义里面。<strong>在 C++ 的类中，如果函数成员在类的定义体中被定义，那么编译器会视这个函数为内联的。</strong>因此，把函数成员的定义写进类定义体，一起放进头文件中，是合法的。</p>
-<blockquote>
-<p>注意一下，如果把函数成员的定义写在类定义的头文件中，而没有写进类定义中，这是不合法的，因为这个函数成员此时就不是内联的了。一旦头文件被两个或两个以上的 .cpp 文件包含，这个函数成员就被重定义了。</p>
-</blockquote>
-</li>
-</ol>
-<p><strong>头文件中的保护措施：</strong></p>
-<p>设想一下，如果 a.h 中含有类 A 的定义，b.h 中含有类 B 的定义，由于类B的定义依赖了类 A，所以 b.h 中也 #include了a.h。现在有一个源文件，它同时用到了类A和类B，于是程序员在这个源文件中既把 a.h 包含进来了，也把 b.h 包含进来了。这时，问题就来了：类A的定义在这个源文件中出现了两次！于是整个程序就不能通过编译了。</p>
-<p>使用 “#define” 配合条件编译可以很好地解决这个问题。在一个头文件中，通过 #define 定义一个名字，并且通过条件编译 #ifndef…#endif 使得编译器可以根据这个名字是否被定义，再决定要不要继续编译该头文中后续的内容。这个方法虽然简单，但是写头文件时一定记得写进去。</p>
-<p><strong>综上所诉</strong></p>
-<p>.h文件中能包含：</p>
-<ul>
-<li>类成员数据的声明，但不能赋值</li>
-<li>类静态数据成员的定义和赋值，但不建议，只是个声明就好。</li>
-<li>类的成员函数的声明</li>
-<li>非类成员函数的声明</li>
-<li>常数的定义：如：constint a=5;</li>
-<li>静态函数的定义</li>
-<li>类的内联函数的定义</li>
-</ul>
-<p>不能包含：</p>
-<ul>
-<li>所有非静态变量（不是类的数据成员）的声明</li>
-<li>默认命名空间声明不要放在头文件，using namespace std;等应放在.cpp中，在 .h 文件中使用 std::string</li>
-</ul>
-]]></content>
-      <categories>
-        <category>C++</category>
-      </categories>
-      <tags>
-        <tag>C++基础</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>类的六个默认的成员函数</title>
     <url>/2020/08/22/cpp-notes-1/</url>
     <content><![CDATA[<h1 id="类的六个默认的成员函数"><a href="#类的六个默认的成员函数" class="headerlink" title="类的六个默认的成员函数"></a>类的六个默认的成员函数</h1><h2 id="类的6个默认的成员函数包括："><a href="#类的6个默认的成员函数包括：" class="headerlink" title="类的6个默认的成员函数包括："></a>类的6个默认的成员函数包括：</h2><p>构造函数、析构函数、拷贝构造函数、赋值运算符重载函数、取地址操作符重载、const修饰的取地址操作符重载。</p>
@@ -1516,6 +1444,78 @@ mavros_msgs<span class="token double-colon punctuation">::</span>State current_s
 </blockquote>
 <p><strong>.*（成员指针访问运算符） ,  ::  ,  sizeof  ,  ? :  ,  .   五个运算符不能被重载</strong></p>
 <h3 id="（五）取地址运算符重载函数-const取地址运算符重载函数：获取对象的地址"><a href="#（五）取地址运算符重载函数-const取地址运算符重载函数：获取对象的地址" class="headerlink" title="（五）取地址运算符重载函数 / const取地址运算符重载函数：获取对象的地址**"></a>（五）取地址运算符重载函数 / const取地址运算符重载函数：获取对象的地址**</h3><p>一般不需要显示定义，直接使用编译器自动生成的即可</p>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++中的头文件</title>
+    <url>/2021/11/21/cpp-notes-0/</url>
+    <content><![CDATA[<h1 id="C-中的头文件"><a href="#C-中的头文件" class="headerlink" title="C++中的头文件"></a>C++中的头文件</h1><blockquote>
+<p>最近在写pi-slam-fusion，遇到的问题比较多，最离谱的问题可能就是和头文件有关的这部分了。</p>
+</blockquote>
+<h3 id="1-关于为什么C-需要“在头文件中声明，在源文件中定义”？"><a href="#1-关于为什么C-需要“在头文件中声明，在源文件中定义”？" class="headerlink" title="1. 关于为什么C++需要“在头文件中声明，在源文件中定义”？"></a>1. 关于为什么C++需要“在头文件中声明，在源文件中定义”？</h3><blockquote>
+<p>当时为了把pislam和map2dfusion弄到一个程序里面，想出了#include “main.cpp” 和把 “main.cpp”重命名为”pislam.h”再进行#include的操作，这样肯定是有问题的！</p>
+<p>实际上当时一编译就会跟我报“重定义”的错误，然后我居然还以为是CMakeList没写好</p>
+</blockquote>
+<ul>
+<li><p>第一，<strong>预编译指令#include的作用是将所包含的文件全文复制到#include的位置</strong>，相当于是个展开为一个文件的宏。</p>
+<p>c++的预处理器在编译之前执行，它看到#include指令，就会把那个文件的内容替换到当前位置。其它的预处理指令例如#define, #ifdef, ##等也在这个阶段被执行、并产生相应的内容。</p>
+<p>预处理器执行完成后，所有的预处理指令都会被移除。其结果是一个单个头的大文件（我猜测这文件只存在于内存里），这个文件才会被进一步传给编译器做编译。</p>
+</li>
+<li><p>第二，<strong>C++允许多次声明，但只允许一次实现。</strong>比如int foo();就是一次声明，而int foo(){}就是一次实现。</p>
+<p>如果编译时有多个.cpp文件中#include了同一个含有函数实现的.h，这时候链接器就会在多个目标文件中找到这个函数的实现，而这在C++中是不允许的，此时就会引爆<strong>LNK1169错误:找到一个或多个重定义的符号。</strong></p>
+<p>因此为了让函数可以在各个.cpp中共享，正确的做法就是在.h中只声明函数，并在另【 一个（重点）】.cpp中实现这个函数。这样就不会冲突了。</p>
+<blockquote>
+<p>所以#include一个.cpp文件也是不可以的，这和#include一个含有函数实现的.h文件效果一样糟糕。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="2-头文件中应该写什么内容？"><a href="#2-头文件中应该写什么内容？" class="headerlink" title="2. 头文件中应该写什么内容？"></a>2. 头文件中应该写什么内容？</h3><blockquote>
+<p>因为问题一的存在，现在我其实对头文件里面应该写什么也不太清楚了，所以又查了一些内容。。。</p>
+</blockquote>
+<p><strong>头文件中应该只放变量和函数的声明，而不能放它们的定义。</strong>不过这样的规则有三个例外：</p>
+<ol>
+<li><p><strong>头文件中可以写 const 对象的定义。</strong></p>
+<p>因为全局的 const 对象默认是没有 extern 的声明的，所以它只在当前文件中有效。</p>
+<p>同理，static 对象的定义也可以放进头文件。</p>
+</li>
+<li><p><strong>头文件中可以写内联函数（inline）的定义。</strong></p>
+<p>C++ 规定，内联函数可以在程序中定义多次，只要内联函数在一个 .cpp 文件中只出现一次，并且在所有的 .cpp 文件中，这个内联函数的定义是一样的，就能通过编译。</p>
+<p>那么显然，把内联函数的定义放进一个头文件中是非常明智的做法。</p>
+</li>
+<li><p><strong>头文件中可以写类（class）的定义。</strong></p>
+<p>编译器只有在这个类的定义完全可见的情况下，才能知道这个类的对象应该如何布局，所以，关于类的定义的要求，跟内联函数是基本一样的。</p>
+<p>我们可以把类的定义放在头文件中，而把函数成员的实现代码放在一个 .cpp 文件中。</p>
+<p>也可以直接把函数成员的实现代码也写进类定义里面。<strong>在 C++ 的类中，如果函数成员在类的定义体中被定义，那么编译器会视这个函数为内联的。</strong>因此，把函数成员的定义写进类定义体，一起放进头文件中，是合法的。</p>
+<blockquote>
+<p>注意一下，如果把函数成员的定义写在类定义的头文件中，而没有写进类定义中，这是不合法的，因为这个函数成员此时就不是内联的了。一旦头文件被两个或两个以上的 .cpp 文件包含，这个函数成员就被重定义了。</p>
+</blockquote>
+</li>
+</ol>
+<p><strong>头文件中的保护措施：</strong></p>
+<p>设想一下，如果 a.h 中含有类 A 的定义，b.h 中含有类 B 的定义，由于类B的定义依赖了类 A，所以 b.h 中也 #include了a.h。现在有一个源文件，它同时用到了类A和类B，于是程序员在这个源文件中既把 a.h 包含进来了，也把 b.h 包含进来了。这时，问题就来了：类A的定义在这个源文件中出现了两次！于是整个程序就不能通过编译了。</p>
+<p>使用 “#define” 配合条件编译可以很好地解决这个问题。在一个头文件中，通过 #define 定义一个名字，并且通过条件编译 #ifndef…#endif 使得编译器可以根据这个名字是否被定义，再决定要不要继续编译该头文中后续的内容。这个方法虽然简单，但是写头文件时一定记得写进去。</p>
+<p><strong>综上所诉</strong></p>
+<p>.h文件中能包含：</p>
+<ul>
+<li>类成员数据的声明，但不能赋值</li>
+<li>类静态数据成员的定义和赋值，但不建议，只是个声明就好。</li>
+<li>类的成员函数的声明</li>
+<li>非类成员函数的声明</li>
+<li>常数的定义：如：constint a=5;</li>
+<li>静态函数的定义</li>
+<li>类的内联函数的定义</li>
+</ul>
+<p>不能包含：</p>
+<ul>
+<li>所有非静态变量（不是类的数据成员）的声明</li>
+<li>默认命名空间声明不要放在头文件，using namespace std;等应放在.cpp中，在 .h 文件中使用 std::string</li>
+</ul>
 ]]></content>
       <categories>
         <category>C++</category>
@@ -4716,33 +4716,6 @@ seek<span class="token double-colon punctuation">::</span><span class="token fun
       </tags>
   </entry>
   <entry>
-    <title>论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm System in Cluttered Environments</title>
-    <url>/2021/04/27/paper-reading-4/</url>
-    <content><![CDATA[<h1 id="论文阅读-EGO-Swarm：A-Fully-Autonomous-and-Decentralized-Quadrotor-Swarm"><a href="#论文阅读-EGO-Swarm：A-Fully-Autonomous-and-Decentralized-Quadrotor-Swarm" class="headerlink" title="论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm"></a>论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文提出了一种分散的异步系统解决方案，该解决方案仅使用机载资源即可在未知富含障碍物的场景中实现多机器人自主导航。该计划系统是在基于梯度的局部计划框架下制定的，其中通过将碰撞风险表述为非线性优化问题的代价来实现避免碰撞。为了提高鲁棒性并避免局部极小值，本文采用了一种轻量级的拓扑轨迹生成方法。 然后，无人机使用不可靠的轨迹共享网络，仅在几毫秒内即可生成安全，平滑且动态可行的轨迹。通过使用深度图像中的无人机检测来纠正无人机之间的相对定位漂移。此外，它不需要外部定位和计算，也不需要预先构建的地图。</p>
-<p>本文的贡献概括如下：</p>
-<ol>
-<li>扩展了以前的工作EGO-Planner，提出了一种新颖而健壮的生物学计划方法，几乎不需要额外的计算。</li>
-<li>提出了一种分散式异步四旋翼机群框架，该框架对不可靠的通信和本地化漂移不敏感。</li>
-<li>所提出的方法已集成到完全自主的四旋翼系统中，其硬件和软件已发布，可供社区参考。</li>
-</ol>
-<h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><p>系统架构如图8所示，其中包含单机和多机通信系统的详细架构。</p>
-<p><img src="/images/paper-reading/3_pic1.png"></p>
-<h3 id="单机导航系统"><a href="#单机导航系统" class="headerlink" title="单机导航系统"></a>单机导航系统</h3><p>单机导航系统（包括硬件和软件设置）基于之前的工作EGO Planner，但带有一个额外的模块，用于补偿VIO漂移和移除图像上的代理。所有部件都集成在四轴无人机中，在未知环境下，采用局部规划器生成轨迹。</p>
-<h3 id="通信框架"><a href="#通信框架" class="headerlink" title="通信框架"></a>通信框架</h3><p>两个网络连接系统，即共享轨迹的广播网络和同步时间戳和管理顺序启动的链式网络。当当前轨迹与新发现的障碍物碰撞时，或者代理接近当前轨迹的终点时，规划被激活。</p>
-<p><strong>1） 广播网络：</strong>一旦一个代理生成一个新的无碰撞轨迹，它会立即广播给所有代理。然后，其他代理接收并存储此轨迹，以便在必要时为自己生成安全的轨迹。这种闭环策略在连接稳定且延迟可以忽略的理想情况下正常工作。然而，这在实际中并不能得到保证，因此，本文提出了两种降低碰撞可能性的方法。</p>
-<p>首先，在网络容量下，以给定的频率广播一条轨迹。这不会造成计算负担，因为包含三维航路点和其他参数的典型轨迹的大小小于0.5KB。相比之下，像Bluetooth2这样的现代无线网络可以达到1Mbps以上。然后，每个代理在接收到来自广播网络的轨迹后立即检查碰撞，如果检测到潜在的碰撞，则生成新的无碰撞轨迹。这种策略可以解决当多个代理在一个封闭的时间内生成轨迹时，由于延迟或数据包丢失而不接收其他代理的轨迹的问题。</p>
-<p>此外，本文还考虑了计算复杂度随代理数的增加而增加的问题。在规划之前，每个代理将其当前位置与接收到的代理轨迹进行比较，其中任何超出规划范围的轨迹都将被忽略。</p>
-<p><strong>2） 链式网络：</strong>基于连接的稳定链网络用于时间戳同步和系统启动管理。在系统启动时，代理按预定义的顺序生成代理。每个代理通过链式网络接收到优先级较高的代理的轨迹后，生成初始轨迹。该策略避免了系统启动时由于同时生成轨迹而引起的混沌，因为此时代理没有其他轨迹的信息。</p>
-]]></content>
-      <categories>
-        <category>导航</category>
-      </categories>
-      <tags>
-        <tag>论文阅读</tag>
-        <tag>协同导航</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>论文阅读-LVI-SAM：Tightly-coupled Lidar-Visual-Inertial Odometryvia Smoothing and Mapping</title>
     <url>/2021/04/24/paper-reading-3/</url>
     <content><![CDATA[<h1 id="论文阅读-LVI-SAM：Tightly-coupled-Lidar-Visual-Inertial-Odometryvia-Smoothing-and-Mapping"><a href="#论文阅读-LVI-SAM：Tightly-coupled-Lidar-Visual-Inertial-Odometryvia-Smoothing-and-Mapping" class="headerlink" title="论文阅读-LVI-SAM：Tightly-coupled Lidar-Visual-Inertial Odometryvia Smoothing and Mapping"></a>论文阅读-LVI-SAM：Tightly-coupled Lidar-Visual-Inertial Odometryvia Smoothing and Mapping</h1><p>最近，SLAM领域大佬Tixiao Shan（MIT博后，LeGO-LOAM和LIO-SAM作者）开源了最新力作LVI-SAM。这是一个雷达-视觉-惯导的紧耦合的SLAM框架，LVI-SAM分为两个部分：视觉惯性系统（以Vins-Mono为基础）和雷达惯性系统（以LIO-SAM为基础）。</p>
@@ -4778,6 +4751,33 @@ seek<span class="token double-colon punctuation">::</span><span class="token fun
       </categories>
       <tags>
         <tag>论文阅读</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm System in Cluttered Environments</title>
+    <url>/2021/04/27/paper-reading-4/</url>
+    <content><![CDATA[<h1 id="论文阅读-EGO-Swarm：A-Fully-Autonomous-and-Decentralized-Quadrotor-Swarm"><a href="#论文阅读-EGO-Swarm：A-Fully-Autonomous-and-Decentralized-Quadrotor-Swarm" class="headerlink" title="论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm"></a>论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文提出了一种分散的异步系统解决方案，该解决方案仅使用机载资源即可在未知富含障碍物的场景中实现多机器人自主导航。该计划系统是在基于梯度的局部计划框架下制定的，其中通过将碰撞风险表述为非线性优化问题的代价来实现避免碰撞。为了提高鲁棒性并避免局部极小值，本文采用了一种轻量级的拓扑轨迹生成方法。 然后，无人机使用不可靠的轨迹共享网络，仅在几毫秒内即可生成安全，平滑且动态可行的轨迹。通过使用深度图像中的无人机检测来纠正无人机之间的相对定位漂移。此外，它不需要外部定位和计算，也不需要预先构建的地图。</p>
+<p>本文的贡献概括如下：</p>
+<ol>
+<li>扩展了以前的工作EGO-Planner，提出了一种新颖而健壮的生物学计划方法，几乎不需要额外的计算。</li>
+<li>提出了一种分散式异步四旋翼机群框架，该框架对不可靠的通信和本地化漂移不敏感。</li>
+<li>所提出的方法已集成到完全自主的四旋翼系统中，其硬件和软件已发布，可供社区参考。</li>
+</ol>
+<h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><p>系统架构如图8所示，其中包含单机和多机通信系统的详细架构。</p>
+<p><img src="/images/paper-reading/3_pic1.png"></p>
+<h3 id="单机导航系统"><a href="#单机导航系统" class="headerlink" title="单机导航系统"></a>单机导航系统</h3><p>单机导航系统（包括硬件和软件设置）基于之前的工作EGO Planner，但带有一个额外的模块，用于补偿VIO漂移和移除图像上的代理。所有部件都集成在四轴无人机中，在未知环境下，采用局部规划器生成轨迹。</p>
+<h3 id="通信框架"><a href="#通信框架" class="headerlink" title="通信框架"></a>通信框架</h3><p>两个网络连接系统，即共享轨迹的广播网络和同步时间戳和管理顺序启动的链式网络。当当前轨迹与新发现的障碍物碰撞时，或者代理接近当前轨迹的终点时，规划被激活。</p>
+<p><strong>1） 广播网络：</strong>一旦一个代理生成一个新的无碰撞轨迹，它会立即广播给所有代理。然后，其他代理接收并存储此轨迹，以便在必要时为自己生成安全的轨迹。这种闭环策略在连接稳定且延迟可以忽略的理想情况下正常工作。然而，这在实际中并不能得到保证，因此，本文提出了两种降低碰撞可能性的方法。</p>
+<p>首先，在网络容量下，以给定的频率广播一条轨迹。这不会造成计算负担，因为包含三维航路点和其他参数的典型轨迹的大小小于0.5KB。相比之下，像Bluetooth2这样的现代无线网络可以达到1Mbps以上。然后，每个代理在接收到来自广播网络的轨迹后立即检查碰撞，如果检测到潜在的碰撞，则生成新的无碰撞轨迹。这种策略可以解决当多个代理在一个封闭的时间内生成轨迹时，由于延迟或数据包丢失而不接收其他代理的轨迹的问题。</p>
+<p>此外，本文还考虑了计算复杂度随代理数的增加而增加的问题。在规划之前，每个代理将其当前位置与接收到的代理轨迹进行比较，其中任何超出规划范围的轨迹都将被忽略。</p>
+<p><strong>2） 链式网络：</strong>基于连接的稳定链网络用于时间戳同步和系统启动管理。在系统启动时，代理按预定义的顺序生成代理。每个代理通过链式网络接收到优先级较高的代理的轨迹后，生成初始轨迹。该策略避免了系统启动时由于同时生成轨迹而引起的混沌，因为此时代理没有其他轨迹的信息。</p>
+]]></content>
+      <categories>
+        <category>导航</category>
+      </categories>
+      <tags>
+        <tag>论文阅读</tag>
+        <tag>协同导航</tag>
       </tags>
   </entry>
   <entry>

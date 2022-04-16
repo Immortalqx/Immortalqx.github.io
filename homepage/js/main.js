@@ -1,7 +1,7 @@
 $(function () {
     // resize window
     $(window).resize(function () {
-        if ($(window).width() &lt; 1280 &amp;&amp; $(window).width()&gt;540) {
+        if ($(window).width() < 1280 && $(window).width()>540) {
             $(".page").css({"width": $(window).width() - $(".side-card").width() - 90, "float": "left"})
         } else {
             $(".page").removeAttr("style")
@@ -50,7 +50,7 @@ $(function () {
             $back_to_top = $('.nav-wrap');
 
         $(window).scroll(function () {
-            ($(this).scrollTop() &gt; offset) ? $back_to_top.addClass('is-visible') : $back_to_top.removeClass('is-visible');
+            ($(this).scrollTop() > offset) ? $back_to_top.addClass('is-visible') : $back_to_top.removeClass('is-visible');
         });
 
         $(".cd-top").on('click', function (event) {
@@ -88,7 +88,7 @@ $(function () {
     // smooth scroll
     $(function () {
         $('a[href*=\\#]:not([href=\\#])').click(function () {
-            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') &amp;&amp; location.hostname == this.hostname) {
+            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
                 var target = $(this.hash);
                 target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
                 if (target.length) {
