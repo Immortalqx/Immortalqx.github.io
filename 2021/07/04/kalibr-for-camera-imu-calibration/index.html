@@ -31,7 +31,7 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.3.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
 </head>
@@ -506,20 +506,16 @@
 <p><strong>注：</strong></p>
 <p>使用kalibr生成标定板的命令格式如下，运行后可以得到一个pdf文件。需要使用原始尺寸打印出来，并且这里的参数要记好，后面需要用。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kalibr_create_target_pdf --type apriltag --nx <span class="token punctuation">[</span>NUM_COLS<span class="token punctuation">]</span> --ny <span class="token punctuation">[</span>NUM_ROWS<span class="token punctuation">]</span> --tsize <span class="token punctuation">[</span>TAG_WIDTH_M<span class="token punctuation">]</span> --tspace <span class="token punctuation">[</span>TAG_SPACING_PERCENT<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>在开始下面的工作之前，你需要先做好这个部分的准备工作。标定板可以用纸张打印后平贴到墙壁上，相关软件、依赖参考官网的教程即可顺利完成，这里不再赘述。</p>
 <h2 id="使用imu-utils标定imu"><a href="#使用imu-utils标定imu" class="headerlink" title="使用imu_utils标定imu"></a>使用imu_utils标定imu</h2><h3 id="1-运行D435i相机"><a href="#1-运行D435i相机" class="headerlink" title="1.运行D435i相机"></a>1.运行D435i相机</h3><p>你可以通过下面的方式指定参数来运行：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">roslaunch realsense2_camera rs_camera.launch <span class="token punctuation">\</span>
     unite_imu_method:<span class="token operator">=</span><span class="token string">"linear_interpolation"</span> <span class="token punctuation">\</span>
     enable_gyro:<span class="token operator">=</span>true <span class="token punctuation">\</span>
      enable_accel:<span class="token operator">=</span>true<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>当然，也可以修改<code>rs_camera.launch</code>这个文件里面的内容，把上面对应的部分修改好即可。然后直接运行：</p>
 <pre class="line-numbers language-none"><code class="language-none">roslaunch realsense2_camera rs_camera.launch<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <h3 id="2-录制IMU数据包"><a href="#2-录制IMU数据包" class="headerlink" title="2.录制IMU数据包"></a>2.录制IMU数据包</h3><p>在相机运行起来后，imu数据会在<code>/camera/imu</code>话题下发布，录制这个话题的信息即可，建议录制比较长的时间。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosbag record -O imu_calibration /camera/imu <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <h3 id="3-使用imu-utils进行标定"><a href="#3-使用imu-utils进行标定" class="headerlink" title="3.使用imu_utils进行标定"></a>3.使用imu_utils进行标定</h3><p>首先需要新建一个<code>imu_utils</code>的launch文件，内容如下所示：</p>
 <pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>launch</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>node</span> <span class="token attr-name">pkg</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>imu_utils<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>imu_an<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>imu_an<span class="token punctuation">"</span></span> <span class="token attr-name">output</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>screen<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
@@ -534,25 +530,20 @@
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>max_cluster<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>int<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span> <span class="token punctuation">"</span>100<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>node</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>launch</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>我们把新建的launch文件命名为<code>d435i_imu_calibration.launch </code>，然后通过如下的命令就可以运行了：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">roslaunch imu_utils d435i_imu_calibration.launch <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>运行之后imu_utils会等待imu数据的发布，因此我们还需要播放之前录制的数据包。找到之前录制的数据包，运行下面的命令：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosbag play -r <span class="token number">200</span> imu_calibration.bag<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p><code>-r 200</code>是以200倍的速度播放这个数据包。</p>
 <p>这一部分的工作都完成之后，我们会得到D435i相机IMU的标定文件<code>D435i_imu_param.yaml</code>。</p>
 <h2 id="使用kalibr标定Camera"><a href="#使用kalibr标定Camera" class="headerlink" title="使用kalibr标定Camera"></a>使用kalibr标定Camera</h2><h3 id="1-确认标定板的参数"><a href="#1-确认标定板的参数" class="headerlink" title="1.确认标定板的参数"></a>1.确认标定板的参数</h3><p>这里我使用kalibr生成的标定板，生成的命令如下所示：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kalibr_create_target_pdf --type apriltag --nx <span class="token number">6</span> --ny <span class="token number">6</span> --tsize <span class="token number">0.03</span> --tspace <span class="token number">0.3</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>将上面命令中对应的参数保存到<code>april_s.yaml</code>文件中，之后我们还需要用到。文件内容如下所示：</p>
 <pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">target_type</span><span class="token punctuation">:</span> <span class="token string">'aprilgrid'</span> <span class="token comment">#gridtype</span>
 <span class="token key atrule">tagCols</span><span class="token punctuation">:</span> <span class="token number">6</span>               <span class="token comment">#number of apriltags</span>
 <span class="token key atrule">tagRows</span><span class="token punctuation">:</span> <span class="token number">6</span>               <span class="token comment">#number of apriltags</span>
 <span class="token key atrule">tagSize</span><span class="token punctuation">:</span> <span class="token number">0.03</span>           <span class="token comment">#size of apriltag, edge to edge [m]</span>
 <span class="token key atrule">tagSpacing</span><span class="token punctuation">:</span> <span class="token number">0.3</span>          <span class="token comment">#ratio of space between tags to tagSize</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="2-修改D435i的launch文件"><a href="#2-修改D435i的launch文件" class="headerlink" title="2.修改D435i的launch文件"></a>2.修改D435i的launch文件</h3><p>由于需要标定的是D435i的两个红外摄像头，因此我们要<strong>在launch文件中开启D435i的红外摄像头，同时关掉D435i的激光，防止产生干扰。</strong>对应的launch文件保存为<code>rs_d435i.launch</code>，具体内容如下所示，可直接使用：</p>
 <pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>launch</span><span class="token punctuation">&gt;</span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>arg</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>emitter_enable<span class="token punctuation">"</span></span>   	  <span class="token attr-name">default</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
@@ -713,7 +704,6 @@
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>include</span><span class="token punctuation">&gt;</span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>group</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>launch</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="3-录制Camera数据包"><a href="#3-录制Camera数据包" class="headerlink" title="3.录制Camera数据包"></a>3.录制Camera数据包</h3><h4 id="a-启动RealSense的Camera节点"><a href="#a-启动RealSense的Camera节点" class="headerlink" title="a) 启动RealSense的Camera节点"></a>a) 启动RealSense的Camera节点</h4><p>终端运行<code>roslaunch realsense2_camera rs_d435i.launch</code>，即运行我们上面编辑的launch文件，启动RealSense的Camera节点。</p>
 <h4 id="b-可视化相机影像"><a href="#b-可视化相机影像" class="headerlink" title="b) 可视化相机影像"></a>b) 可视化相机影像</h4><p>方便起见，我们需要可视化相机影像，可以利用<code>rqt_image_view</code>工具来查看影像流，终端运行<code>rosrun rqt_image_view rqt_image_view</code>或者<code>rqt_image_view</code>即可。</p>
 <p>我们需要标定的是D435i的两个红外摄像头，不过两个摄像头距离比较近，看到的东西差不多。所以开一个<code>rqt_image_view</code>，查看<code>/camera/infra1/image_rect_raw</code>或者<code>/camera/infra2/image_rect_raw</code>话题下的影像即可。</p>
@@ -728,10 +718,8 @@
 <p>不过因为这是标定Camera，所以也可以将打印出来的标定板拿好，然后在相机前面来回运动，但因为笔者是用纸张打印的标定板，所以没采用这种方式。</p>
 <p>通过如下命令录制camera数据包：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosbag record -O camera_calibration /infra1_image_rect_raw /infra2_image_rect_raw<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <h3 id="4-使用Kalibr进行标定"><a href="#4-使用Kalibr进行标定" class="headerlink" title="4.使用Kalibr进行标定"></a>4.使用Kalibr进行标定</h3><p>通过如下的命令运行kalibr进行标定：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kalibr_calibrate_cameras --target ./yaml/april_s.yaml --bag ./rosbag/camera_calibration.bag --bag-from-to <span class="token number">30</span> <span class="token number">90</span> --models pinhole-radtan pinhole-radtan  --topics /infra1_image_rect_raw /infra2_image_rect_raw<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p><code>--target</code>：标定板参数信息存放的路径，即我们上面的<code>april_s.yaml</code>的路径。</p>
 <p><code>--bag</code>：录制的Camera数据包的路径。</p>
 <p><code>--bag-from-to</code>：起始和终止时间，单位是秒。为了避免开始录制和结束录制时的抖动，这里取了第30秒到第90秒之间的信息。</p>
@@ -750,7 +738,6 @@
 <h4 id="d-录制Camera数据包-1"><a href="#d-录制Camera数据包-1" class="headerlink" title="d) 录制Camera数据包"></a>d) 录制Camera数据包</h4><p>确认前几步都做好后，我们将标定板固定在某处，让相机对着标定板运动，运动的方式是和之前一样的<strong>“三转、三移”</strong>。这里需要注意的是，一定要让相机对着标定板运动，因为我们需要标定imu，如果相机不动，imu的加速度就一直为0，无法进行标定。</p>
 <p>通过如下命令录制camera数据包：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosbag record -O camera_imu_calibration /infra1_image_rect_raw /infra2_image_rect_raw /imu<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <h3 id="2修改IMU标定文件"><a href="#2修改IMU标定文件" class="headerlink" title="2修改IMU标定文件"></a>2修改IMU标定文件</h3><p>我们之前使用<code>imu_utils</code>工具标定了IMU，但是得到标定文件是不能直接用的，还需要修改成kalibr指定的格式。</p>
 <p>原来的格式如下所示：</p>
 <pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">type</span><span class="token punctuation">:</span> IMU
@@ -783,7 +770,6 @@
    <span class="token key atrule">z-axis</span><span class="token punctuation">:</span>
       <span class="token key atrule">acc_n</span><span class="token punctuation">:</span> <span class="token number">2.3698497708022258e-02</span>
       <span class="token key atrule">acc_w</span><span class="token punctuation">:</span> <span class="token number">1.0175604150359932e-03</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>我们需要的是<code>acc_n</code>、<code>acc_w</code>、<code>gyr_n</code>和<code>gyr_w</code>这四个数据，将其对应的填到文件中即可，文件格式如下所示：</p>
 <pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment">#Accelerometers</span>
 <span class="token key atrule">accelerometer_noise_density</span><span class="token punctuation">:</span> <span class="token number">2.0588163388565360e-02</span>   <span class="token comment">#Noise density (continuous-time)</span>
@@ -795,10 +781,8 @@
 
 <span class="token key atrule">rostopic</span><span class="token punctuation">:</span>                		   /imu       <span class="token comment">#the IMU ROS topic</span>
 <span class="token key atrule">update_rate</span><span class="token punctuation">:</span>                 <span class="token number">200.0</span>      <span class="token comment">#Hz (for discretization of the values above)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="3-进行Camera-IMU联合标定"><a href="#3-进行Camera-IMU联合标定" class="headerlink" title="3.进行Camera-IMU联合标定"></a>3.进行Camera-IMU联合标定</h3><p>通过如下的命令运行kalibr进行标定：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kalibr_calibrate_imu_camera --target ./yaml/april_s.yaml  --cam ./result/camera/camchain-.rosbagcamera_calibration.yaml --imu ./result/imu/D435i_imu_param.yaml --bag rosbag/camera_imu_calibration.bag  --bag-from-to <span class="token number">20</span> <span class="token number">130</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p><code>--target</code>：标定板参数信息存放的路径，即我们上面的<code>april_s.yaml</code>的路径。</p>
 <p><code>--cam</code>：Camera的标定文件路径。</p>
 <p><code>--imu</code>：IMU的标定文件路径。</p>

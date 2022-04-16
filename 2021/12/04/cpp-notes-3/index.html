@@ -37,7 +37,7 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.3.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
 </head>
@@ -543,21 +543,18 @@
 	<span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>在一个for循环内，创建4个线程分别输出数字0、1、2、3，并且在每个数字的末尾输出换行符。语句<code>thread t(output, i)</code>创建一个线程t，该线程运行<code>output</code>，第二个参数i是传递给<code>output</code>的参数。t在创建完成后自动启动，<code>t.detach</code>表示该线程在后台允许，无需等待该线程完成，继续执行后面的语句。这段代码的功能是很简单的，如果是顺序执行的话，其结果很容易预测得到：</p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token number">0</span>
 <span class="token number">1</span>
 <span class="token number">2</span>
 <span class="token number">3</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>但是在并行多线程下，其执行的结果就多种多样了，比如下面就是代码一次运行的结果：</p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">01
 
 <span class="token number">2</span>
 <span class="token number">3</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>这就涉及到多线程编程最核心的问题：<strong>资源竞争</strong>。</p>
 <p>假设CPU有4核，可以同时执行4个线程，但是<strong>控制台却只有一个，同时只能有一个线程拥有这个唯一的控制台</strong>，将数字输出。将上面代码创建的四个线程进行编号：t0,t1,t2,t3，分别输出的数字：0,1,2,3。参照上图的执行结果，控制台的拥有权的转移如下：</p>
 <ul>
@@ -574,7 +571,6 @@
 <h3 id="启动一个线程"><a href="#启动一个线程" class="headerlink" title="启动一个线程"></a>启动一个线程</h3><p>C++ 11的线程库启动一个线程是非常简单的，只需要创建一个<code>std::thread</code>对象，就会启动一个线程，并使用该<code>std::thread</code>对象来管理该线程。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">do_task</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 std<span class="token double-colon punctuation">::</span><span class="token function">thread</span><span class="token punctuation">(</span>do_task<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p>这里创建<code>std::thread</code>传入的函数，实际上其构造函数需要的是可调用（callable）类型，只要是有函数调用类型的实例都是可以的。所以除了传递函数外，还可以使用：</p>
 <ul>
 <li><p>lambda表达式</p>
@@ -585,8 +581,7 @@ std<span class="token double-colon punctuation">::</span><span class="token func
 		cout <span class="token operator">&lt;&lt;</span> i <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
 	<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	t<span class="token punctuation">.</span><span class="token function">detach</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li><p>重载了()运算符的类的实例</p>
 <p>使用重载了()运算符的类实现多线程数字输出</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Task</span>
@@ -608,16 +603,13 @@ std<span class="token double-colon punctuation">::</span><span class="token func
 		t<span class="token punctuation">.</span><span class="token function">detach</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+<p>把函数对象传入<code>std::thread</code>的构造函数时，要注意一个C++的语法解析错误（C++’s most vexing parse）。向<code>std::thread</code>的构造函数中传入的是一个临时变量，而不是命名变量就会出现语法解析错误。如下代码：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">std<span class="token double-colon punctuation">::</span>thread <span class="token function">t</span><span class="token punctuation">(</span><span class="token function">Task</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这里相当于声明了一个函数t，其返回类型为<code>thread</code>，而不是启动了一个新的线程。可以使用新的初始化语法避免这种情况</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">std<span class="token double-colon punctuation">::</span>thread t<span class="token punctuation">{</span><span class="token function">Task</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>当线程启动后，<strong>一定要在和线程相关联的<code>thread</code>销毁前，确定以何种方式等待线程执行结束</strong>。</p>
 </li>
 </ul>
-<p>把函数对象传入<code>std::thread</code>的构造函数时，要注意一个C++的语法解析错误（C++’s most vexing parse）。向<code>std::thread</code>的构造函数中传入的是一个临时变量，而不是命名变量就会出现语法解析错误。如下代码：</p>
-  <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">std<span class="token double-colon punctuation">::</span>thread <span class="token function">t</span><span class="token punctuation">(</span><span class="token function">Task</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>这里相当于声明了一个函数t，其返回类型为<code>thread</code>，而不是启动了一个新的线程。可以使用新的初始化语法避免这种情况</p>
-  <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">std<span class="token double-colon punctuation">::</span>thread t<span class="token punctuation">{</span><span class="token function">Task</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>当线程启动后，<strong>一定要在和线程相关联的<code>thread</code>销毁前，确定以何种方式等待线程执行结束</strong>。</p>
 <p>C++11有两种方式来等待线程结束：</p>
 <ul>
 <li><strong>detach方式</strong>，启动的线程自主在后台运行，当前的代码继续往下执行，不等待新线程结束。前面代码所使用的就是这种方式。<ul>
@@ -654,7 +646,6 @@ std<span class="token double-colon punctuation">::</span><span class="token func
     thread <span class="token function">t</span><span class="token punctuation">(</span>fn<span class="token punctuation">,</span> <span class="token operator">&amp;</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
     t<span class="token punctuation">.</span><span class="token function">detach</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>在lambda表达式中，使用fn启动了一个新的线程，在装个新的线程中使用了局部变量a的指针，并且将该线程的运行方式设置为detach。这样，在lamb表达式执行结束后，变量a被销毁，但是在后台运行的线程仍然在使用已销毁变量a的指针，这样就可能会导致不正确的结果出现。</p>
 <p>所以在以detach的方式执行线程时，要将线程访问的局部数据复制到线程的空间（使用值传递），一定要确保线程没有使用局部变量的引用或者指针，除非你能肯定该线程会在局部作用域结束前执行结束。</p>
 <p>当然，使用join方式的话就不会出现这种问题，它会在作用域结束前完成退出。</p>
@@ -676,7 +667,6 @@ std<span class="token double-colon punctuation">::</span><span class="token func
 	<span class="token punctuation">}</span>
 	t<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>上面代码能够保证在正常或者异常的情况下，都会调用<code>join</code>方法，这样线程一定会在函数<code>func</code>退出前完成。但是使用这种方法，不但代码冗长，而且会出现一些作用域的问题，并不是一个很好的解决方法。</p>
 <p>一种比较好的方法是资源获取即初始化（RAII,Resource Acquisition Is Initialization)，该方法提供一个类，在析构函数中调用<code>join</code>。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">thread_guard</span>
@@ -704,7 +694,6 @@ std<span class="token double-colon punctuation">::</span><span class="token func
 
 	thread_guard <span class="token function">g</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>无论是何种情况，当函数退出时，局部变量<code>g</code>调用其析构函数销毁，从而能够保证<code>join</code>一定会被调用。</p>
 <h3 id="向线程传递参数"><a href="#向线程传递参数" class="headerlink" title="向线程传递参数"></a>向线程传递参数</h3><p>向线程调用的函数传递参数也是很简单的，只需要在构造<code>thread</code>的实例时，依次传入即可。例如：</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">*</span>a<span class="token punctuation">,</span><span class="token keyword">int</span> n<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
@@ -712,11 +701,9 @@ std<span class="token double-colon punctuation">::</span><span class="token func
 <span class="token keyword">int</span> buffer<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 thread <span class="token function">t</span><span class="token punctuation">(</span>func<span class="token punctuation">,</span>buffer<span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 t<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>需要注意的是，<strong>默认的会将传递的参数以拷贝的方式复制到线程空间，即使参数的类型是引用。</strong>例如：</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span> str<span class="token punctuation">)</span><span class="token punctuation">;</span>
 thread <span class="token function">t</span><span class="token punctuation">(</span>func<span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">"hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p><code>func</code>的第二个参数是<code>string &amp;</code>，而传入的是一个字符串字面量。该字面量以<code>const char*</code>类型传入线程空间后，在**线程的空间内转换为<code>string</code>**。</p>
 <p>如果在线程中使用引用来更新对象时，就需要注意了。默认的是将对象拷贝到线程空间，其引用的是拷贝的线程空间的对象，而不是初始希望改变的对象。如下：</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">_tagNode</span>
@@ -742,7 +729,6 @@ thread <span class="token function">t</span><span class="token punctuation">(</s
 	cout <span class="token operator">&lt;&lt;</span> node<span class="token punctuation">.</span>a <span class="token operator">&lt;&lt;</span> endl <span class="token punctuation">;</span>
 	cout <span class="token operator">&lt;&lt;</span> node<span class="token punctuation">.</span>b <span class="token operator">&lt;&lt;</span> endl <span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>在线程内，将对象的字段a和b设置为新的值，但是在线程调用结束后，这两个字段的值并不会改变。这样由于引用的实际上是局部变量<code>node</code>的一个拷贝，而不是<code>node</code>本身。在将对象传入线程的时候，调用<code>std::ref</code>，将<code>node</code>的引用传入线程，而不是一个拷贝。例如：<code>thread t(func,std::ref(node));</code></p>
 <p>也可以使用类的成员函数作为线程函数，示例如下</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">_tagNode</span><span class="token punctuation">{</span>
@@ -753,12 +739,10 @@ thread <span class="token function">t</span><span class="token punctuation">(</s
 _tagNode node<span class="token punctuation">;</span>
 
 thread <span class="token function">t</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>_tagNode<span class="token double-colon punctuation">::</span>do_some_work<span class="token punctuation">,</span> <span class="token operator">&amp;</span>node<span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>上面创建的线程会调用<code>node.do_some_work(20)</code>，第三个参数为成员函数的第一个参数，以此类推。</p>
 <h3 id="转移线程的所有权"><a href="#转移线程的所有权" class="headerlink" title="转移线程的所有权"></a>转移线程的所有权</h3><p><code>thread</code>是可移动的(movable)的，但不可复制(copyable)。可以通过<code>move</code>来改变线程的所有权，灵活的决定线程在什么时候join或者detach。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">thread <span class="token function">t1</span><span class="token punctuation">(</span>f1<span class="token punctuation">)</span><span class="token punctuation">;</span>
 thread <span class="token function">t3</span><span class="token punctuation">(</span><span class="token function">move</span><span class="token punctuation">(</span>t1<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p>将线程从t1转移给t3,这时候t1就不再拥有线程的所有权，调用<code>t1.join</code>或<code>t1.detach</code>会出现异常，要使用t3来管理线程。这也就意味着<code>thread</code>可以作为函数的返回类型，或者作为参数传递给函数，能够更为方便的管理线程。</p>
 <p>线程的标识类型为<code>std::thread::id</code>，有两种方式获得到线程的id。</p>
 <ul>

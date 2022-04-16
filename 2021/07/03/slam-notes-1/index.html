@@ -31,7 +31,7 @@ SSL_S">
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.3.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
 </head>
@@ -496,12 +496,10 @@ SSL_S">
 <span class="token builtin class-name">cd</span> <span class="token punctuation">..</span>
 catkin_make
 <span class="token builtin class-name">source</span> ~/catkin_ws/devel/setup.bash<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#运行ssl_slam</span>
 roslaunch ssl_slam ssl_slam_mapping.launch
 <span class="token comment">#运行L515</span>
 roslaunch ssl_slam ssl_slam_L515.launch<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>运行效果如下图所示：</p>
 <p><img src="/images/slam-for-L515/0.png"></p>
 <h2 id="RTAB-Map"><a href="#RTAB-Map" class="headerlink" title="RTAB-Map"></a>RTAB-Map</h2><p><strong>RTAB-Map</strong>（基于实时外观的映射）是一种基于 RGB-D、立体和激光雷达图的 SLAM 方法，它基于增量外观闭环检测器。闭环检测器使用词袋方法来确定新图像来自先前位置或新位置的可能性。当一个闭环假设被接受时，一个新的约束被添加到地图的图形中，然后图形优化器最小化地图中的错误。内存管理方法用于限制用于闭环检测和图形优化的位置数量，以便始终遵守对大规模环境的实时约束。RTAB-Map 可以单独与手持 Kinect、立体相机或 3D 激光雷达一起使用，用于 6DoF 映射，或用于配备激光测距仪的机器人进行 3DoF 映射。</p>
@@ -511,20 +509,17 @@ roslaunch realsense2_camera rs_camera.launch <span class="token punctuation">\</
     unite_imu_method:<span class="token operator">=</span><span class="token string">"linear_interpolation"</span> <span class="token punctuation">\</span>
     enable_gyro:<span class="token operator">=</span>true <span class="token punctuation">\</span>
      enable_accel:<span class="token operator">=</span>true<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun imu_filter_madgwick imu_filter_node <span class="token punctuation">\</span>
     _use_mag:<span class="token operator">=</span>false <span class="token punctuation">\</span>
     _publish_tf:<span class="token operator">=</span>false <span class="token punctuation">\</span>
     _world_frame:<span class="token operator">=</span><span class="token string">"enu"</span> <span class="token punctuation">\</span>
     /imu/data_raw:<span class="token operator">=</span>/camera/imu <span class="token punctuation">\</span>
     /imu/data:<span class="token operator">=</span>/rtabmap/imu<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="Run-RTAB-Map"><a href="#Run-RTAB-Map" class="headerlink" title="Run RTAB-Map"></a>Run RTAB-Map</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun nodelet nodelet standalone rtabmap_ros/point_cloud_xyz <span class="token punctuation">\</span>
     _approx_sync:<span class="token operator">=</span>false  <span class="token punctuation">\</span>
     /depth/image:<span class="token operator">=</span>/camera/depth/image_rect_raw <span class="token punctuation">\</span>
     /depth/camera_info:<span class="token operator">=</span>/camera/depth/camera_info <span class="token punctuation">\</span>
     _decimation:<span class="token operator">=</span><span class="token number">4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">roslaunch rtabmap_ros rtabmap.launch<span class="token punctuation">\</span>
     rtabmap_args:<span class="token operator">=</span><span class="token string">"\
       --delete_db_on_start \
@@ -549,10 +544,8 @@ roslaunch realsense2_camera rs_camera.launch <span class="token punctuation">\</
     approx_sync:<span class="token operator">=</span>false <span class="token punctuation">\</span>
     wait_imu_to_init:<span class="token operator">=</span>true <span class="token punctuation">\</span>
     imu_topic:<span class="token operator">=</span>/rtabmap/imu<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#delete memory</span>
 rosservice call /rtabmap/reset<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p>运行效果如下所示：</p>
 <p><img src="/images/slam-for-L515/1.png"></p>
 <p><img src="/images/slam-for-L515/2.png"></p>

@@ -33,7 +33,7 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.3.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
 </head>
@@ -518,7 +518,6 @@
  [6 0 0 0 0 0 1 0 5]
  [0 0 3 5 0 8 6 9 0]
  [0 4 2 9 1 0 3 0 0]]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="整体思路"><a href="#整体思路" class="headerlink" title="整体思路"></a>整体思路</h2><h3 id="分析数独问题并确定解决方案"><a href="#分析数独问题并确定解决方案" class="headerlink" title="分析数独问题并确定解决方案"></a>分析数独问题并确定解决方案</h3><p>数独（shù dú, Sudoku）需要我们根据9×9盘面上的已知数字，推理出所有剩余空格的数字，并满足每一行、每一列、每一个粗线宫（3*3）内的数字均含1-9，不重复。</p>
 <p>因此，数独是具有空间特征的，它有特殊的数字排列，这样的话，我们就可以尝试使用CNN来提取空间特征，进而通过CNN求解数独问题。</p>
 <h3 id="思考解决数独问题的其他方案"><a href="#思考解决数独问题的其他方案" class="headerlink" title="思考解决数独问题的其他方案"></a>思考解决数独问题的其他方案</h3><p>但是，在网上查找资料的时候，我了解到CNN解决数独问题的时候，是将整个数独盘作为输入，一次正向传播就直接得到完整的解决方案，这样的话就忽视了目标之间存在的归纳偏置，以及它们是以一致的方式互相作用的，所以在一些情况下CNN模型就会出现问题。</p>
@@ -629,7 +628,6 @@
     <span class="token comment"># 分割出训练集和测试集</span>
     train_set<span class="token punctuation">,</span> test_set <span class="token operator">=</span> create_sudoku_tensors<span class="token punctuation">(</span>my_sample<span class="token punctuation">,</span> one_hot<span class="token punctuation">)</span>
     <span class="token keyword">return</span> train_set<span class="token punctuation">,</span> test_set<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>通过下面的代码我们可以测试读取的数据格式。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># TEST</span>
 train_set<span class="token punctuation">,</span> test_set <span class="token operator">=</span> load_dataset<span class="token punctuation">(</span><span class="token string">"./src/data/sudoku_test.csv"</span><span class="token punctuation">,</span> <span class="token boolean">True</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span>
@@ -642,7 +640,6 @@ train_set<span class="token punctuation">,</span> test_set <span class="token op
     <span class="token keyword">print</span><span class="token punctuation">(</span>train_quiz<span class="token punctuation">.</span>shape<span class="token punctuation">)</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span>train_label<span class="token punctuation">.</span>shape<span class="token punctuation">)</span>
     <span class="token keyword">break</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="搭建CNN模型"><a href="#搭建CNN模型" class="headerlink" title="搭建CNN模型"></a>搭建CNN模型</h2><p>这里主要是根据report3使用的FashionCNN来搭建的，大体框架基本一样，不过增加了padding，去除了池化层，同时也放弃了dropout层。</p>
 <p>这个网络接收N*1*9*9的输入，最后会输出N*81*9的预测结果。</p>
 <p>N是数据批数，81是9*9的数独盘面数字列表，9是对于某一个盘面数字，它是每一种数字的概率。（这里数字的取值范围是0-8，但是代表的是数字1-9，这是因为如果取值为1-9，而数独不需要填0，标签中也没有0，所以标签的取值范围还是0-8，这样就等于是标签对应不上，交叉熵损失函数还是会运行失败）</p>
@@ -699,7 +696,6 @@ train_set<span class="token punctuation">,</span> test_set <span class="token op
 
         out <span class="token operator">=</span> self<span class="token punctuation">.</span>fc3<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
         <span class="token keyword">return</span> out<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="训练CNN模型"><a href="#训练CNN模型" class="headerlink" title="训练CNN模型"></a>训练CNN模型</h2><p>下面是训练CNN的代码，采用的是Adam优化器和CrossEntropyLoss损失函数。</p>
 <p>测试的时候发现这里的学习率要取比较小，取大了loss可能就不下降，或者仅仅是下降了一点点，然后发生震荡。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> copy
@@ -797,7 +793,6 @@ accuracy_list <span class="token operator">=</span> <span class="token punctuati
 
         <span class="token keyword">if</span> <span class="token keyword">not</span> <span class="token punctuation">(</span>count <span class="token operator">%</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
             <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Iteration: {}, Loss: {}, Accuracy: {}%"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>count<span class="token punctuation">,</span> loss<span class="token punctuation">.</span>data<span class="token punctuation">,</span> accuracy<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>运行输出：</p>
 <pre class="line-numbers language-none"><code class="language-none">Iteration: 100, Loss: 2.154716968536377, Accuracy: 17.909875869750977%
 Iteration: 200, Loss: 2.1245620250701904, Accuracy: 22.032262802124023%
@@ -816,7 +811,6 @@ Iteration: 17200, Loss: 1.4250632524490356, Accuracy: 71.79407501220703%
 Iteration: 17300, Loss: 1.423291802406311, Accuracy: 71.8446044921875%
 Iteration: 17400, Loss: 1.419376254081726, Accuracy: 71.94452667236328%
 Iteration: 17500, Loss: 1.4205855131149292, Accuracy: 71.94963073730469%<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="实现过程中出现的问题"><a href="#实现过程中出现的问题" class="headerlink" title="实现过程中出现的问题"></a>实现过程中出现的问题</h3><p>前面处理数据和定义模型都挺顺利的，但是训练CNN模型这里出现的问题特别特别多，整个实现过程好像也就这部分出了问题，耽误了比较长的时间。</p>
 <p><strong>这里主要是因为自己对交叉熵损失函数的具体实现过程不太了解，同时对pytorch处理tensor的一些常用手法不太熟练。</strong></p>
 <p>一开始我是用one hot编码在这里训练和测试，但是交叉熵损失函数并不支持one hot编码，并且它还会报错，报错内容大概是“multi target”相关的，这导致我一开始没有精准的定位问题所在，然后我尝试了其他的损失函数，有的可以用但可能因为我<strong>当时的数据格式处理本身有问题</strong>，最后的结果不收敛。所以后面我专门去学习了pytorch中的损失函数，并且也知道了<strong>交叉熵损失函数是不支持one hot编码的。</strong></p>
@@ -852,11 +846,9 @@ true_y_1 <span class="token operator">=</span> torch<span class="token punctuati
 <span class="token comment"># true_y_2是错误编码的，这最后会导致输出类型和标签对应不上</span>
 true_y_2 <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
 true_y_2 <span class="token operator">=</span> torch<span class="token punctuation">.</span>from_numpy<span class="token punctuation">(</span>true_y_2<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>如果使用one hot编码，这样的运行结果如下所示：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">loss <span class="token operator">=</span> F<span class="token punctuation">.</span>cross_entropy<span class="token punctuation">(</span>pred_y<span class="token punctuation">,</span> true_y_one_hot<span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>loss<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p>运行输出：</p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">---------------------------------------------------------------------------
 
@@ -874,11 +866,9 @@ RuntimeError                              Traceback <span class="token punctuati
    <span class="token number">2826</span> 
    
 RuntimeError: 1D target tensor expected, multi-target not supported<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>如果编码不正确，输出类型和标签不对应，就会发生下面这样的情况（在数独问题里面其实还要复杂一点）：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">loss <span class="token operator">=</span> F<span class="token punctuation">.</span>cross_entropy<span class="token punctuation">(</span>pred_y<span class="token punctuation">,</span> true_y_2<span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>loss<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p>运行输出：    </p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">---------------------------------------------------------------------------
 
@@ -896,14 +886,11 @@ IndexError                                Traceback <span class="token punctuati
    <span class="token number">2826</span> 
 
 IndexError: Target <span class="token number">3</span> is out of bounds.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>正常运行的话，是下面这样的情况：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">loss <span class="token operator">=</span> F<span class="token punctuation">.</span>cross_entropy<span class="token punctuation">(</span>pred_y<span class="token punctuation">,</span> true_y_1<span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>loss<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p>运行输出：</p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">tensor<span class="token punctuation">(</span><span class="token number">1.5929</span>, <span class="token assign-left variable">dtype</span><span class="token operator">=</span>torch.float64<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <h2 id="测试CNN模型"><a href="#测试CNN模型" class="headerlink" title="测试CNN模型"></a>测试CNN模型</h2><p>通过下面的代码可以简单测试训练好的CNN模型。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">for</span> test_quiz<span class="token punctuation">,</span> test_label <span class="token keyword">in</span> test_loader<span class="token punctuation">:</span>
     test_quiz<span class="token punctuation">,</span> test_label <span class="token operator">=</span> test_quiz<span class="token punctuation">.</span>to<span class="token punctuation">(</span>device<span class="token punctuation">)</span><span class="token punctuation">,</span> test_label<span class="token punctuation">.</span>to<span class="token punctuation">(</span>device<span class="token punctuation">)</span>
@@ -921,10 +908,8 @@ IndexError: Target <span class="token number">3</span> is out of bounds.<span ar
 accuracy <span class="token operator">=</span> correct <span class="token operator">*</span> <span class="token number">100</span> <span class="token operator">/</span> total
 
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Test Accuracy: {}%"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>accuracy<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>运行输出：</p>
 <pre class="line-numbers language-none"><code class="language-none">Test Accuracy: 71.94963073730469%<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <h2 id="结果可视化"><a href="#结果可视化" class="headerlink" title="结果可视化"></a>结果可视化</h2><p>我们可以把训练和测试过程中的损失与准确率画出来。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># 画出迭代中的损失</span>
 plt<span class="token punctuation">.</span>figure<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
@@ -940,7 +925,6 @@ plt<span class="token punctuation">.</span>ylabel<span class="token punctuation"
 plt<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token string">"Iterations vs Accuracy"</span><span class="token punctuation">)</span>
 
 plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>运行输出：</p>
 <p><img src="/images/machine-learning-8/output_28_0.png"></p>
 <p><img src="/images/machine-learning-8/output_28_1.png"></p>
@@ -1000,7 +984,6 @@ plt<span class="token punctuation">.</span>show<span class="token punctuation">(
             ones <span class="token operator">=</span> torch<span class="token punctuation">.</span>ones<span class="token punctuation">(</span>nz<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
             x<span class="token punctuation">.</span>index_put_<span class="token punctuation">(</span><span class="token punctuation">(</span>nz<span class="token punctuation">,</span> mmax_<span class="token punctuation">,</span> score_pos<span class="token punctuation">[</span>nz<span class="token punctuation">,</span> mmax_<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> ones<span class="token punctuation">)</span>
         <span class="token keyword">return</span> x_pred<span class="token punctuation">,</span> x<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="训练并测试"><a href="#训练并测试" class="headerlink" title="训练并测试"></a>训练并测试</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> copy
 <span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">as</span> plt
 <span class="token keyword">import</span> torch
@@ -1095,7 +1078,6 @@ accuracy <span class="token operator">=</span> <span class="token number">0</spa
 
         <span class="token keyword">if</span> <span class="token keyword">not</span> <span class="token punctuation">(</span>count <span class="token operator">%</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
             <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Iteration: {}, Loss: {}, Accuracy: {}"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>count<span class="token punctuation">,</span> loss<span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> accuracy<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>运行输出：</p>
 <pre class="line-numbers language-none"><code class="language-none">ACC:  0.6399711934156379
 error in cells:  87487
@@ -1119,7 +1101,6 @@ error in cells:  48
 ACC:  0.9998106995884773
 error in cells:  46
 Iteration: 70, Loss: 0.00030164315830916166, Accuracy: 0.9998106995884773<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="结果可视化-1"><a href="#结果可视化-1" class="headerlink" title="结果可视化"></a>结果可视化</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># 画出迭代中的损失</span>
 plt<span class="token punctuation">.</span>figure<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
 plt<span class="token punctuation">.</span>plot<span class="token punctuation">(</span>iteration_list<span class="token punctuation">,</span> loss_list<span class="token punctuation">)</span>
@@ -1134,7 +1115,6 @@ plt<span class="token punctuation">.</span>ylabel<span class="token punctuation"
 plt<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token string">"Iterations vs Accuracy"</span><span class="token punctuation">)</span>
 
 plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><img src="/images/machine-learning-8/output_37_0.png"></p>
 <p><img src="/images/machine-learning-8/output_37_1.png"></p>
 <h2 id="对比CNN与RNN"><a href="#对比CNN与RNN" class="headerlink" title="对比CNN与RNN"></a>对比CNN与RNN</h2><h3 id="对CNN模型进行测试"><a href="#对CNN模型进行测试" class="headerlink" title="对CNN模型进行测试"></a>对CNN模型进行测试</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch
@@ -1191,14 +1171,12 @@ accuracy <span class="token operator">=</span> correct <span class="token operat
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"SudokuCNN time = %s"</span> <span class="token operator">%</span> <span class="token builtin">str</span><span class="token punctuation">(</span>end <span class="token operator">-</span> start<span class="token punctuation">)</span><span class="token punctuation">)</span>
 
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"===================================================="</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>运行输出：</p>
 <pre class="line-numbers language-none"><code class="language-none">===================对CNN模型进行测试===================
 SudokuCNN accuracy: 75.1141128540039%
 SudokuCNN cells in error: 141103
 SudokuCNN time = 8.729239000000003
 ====================================================<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="对RNN模型进行测试"><a href="#对RNN模型进行测试" class="headerlink" title="对RNN模型进行测试"></a>对RNN模型进行测试</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"===================对RNN模型进行测试==================="</span><span class="token punctuation">)</span>
 
 model_path<span class="token operator">=</span><span class="token string">"./src/SudokuRNN_model_0.00001.pth"</span>
@@ -1247,14 +1225,12 @@ accuracy <span class="token operator">=</span> correct <span class="token operat
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"SudokuRNN time = %s"</span> <span class="token operator">%</span> <span class="token builtin">str</span><span class="token punctuation">(</span>end <span class="token operator">-</span> start<span class="token punctuation">)</span><span class="token punctuation">)</span>
 
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"===================================================="</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>运行输出：</p>
 <pre class="line-numbers language-none"><code class="language-none">===================对RNN模型进行测试===================
 SudokuRNN accuracy: 99.96490299823633%
 SudokuRNN cells in error: 199
 SudokuRNN time = 337.7354459999997
 ====================================================<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="比较分析"><a href="#比较分析" class="headerlink" title="比较分析"></a>比较分析</h3><p>从上面的结果我们发现:</p>
 <ul>
 <li><p>RNN的准确率远远超过CNN，RNN达到了99.6%的准确率，而CNN只有75%的准确率。</p>

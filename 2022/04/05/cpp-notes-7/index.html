@@ -32,7 +32,7 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.3.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
 </head>
@@ -505,12 +505,10 @@
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">FOO_BAR_BAZ_H_</span></span>
 <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span> <span class="token comment">// FOO_BAR_BAZ_H_</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="include-的路径及顺序"><a href="#include-的路径及顺序" class="headerlink" title="#include 的路径及顺序"></a>#include 的路径及顺序</h3><p>使用标准的头文件包含顺序可增强可读性，避免隐藏依赖。</p>
 <p>推荐的 #include 顺序为：相关头文件，C 库，C++ 库，其他库的 .h，本项目内的 .h。</p>
 <p>项目内头文件应按照项目源代码目录树结构排列，避免使用 UNIX 特殊的快捷目录 <code>.</code>（当前目录）或 <code>..</code>（上级目录）。例如，<code>google-awesome-project/src/base/logging.h</code> 应该按如下方式包含：</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"base/logging.h"</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>又如，<code>dir/foo.cc</code> 或 <code>dir/foo_test.cc</code> 的主要作用是实现或测试 <code>dir2/foo2.h</code> 的功能，<code>foo.cc</code> 中包含头文件的次序如下：</p>
 <ol>
 <li><code>dir2/foo2.h</code>（优先位置，详情如下）</li>
@@ -535,7 +533,6 @@
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"base/basictypes.h"</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"base/commandlineflags.h"</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"foo/public/bar.h"</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><strong>例外：</strong></p>
 <p>有时，平台特定（system-specific）代码需要条件编译（conditional includes），这些代码可以放到其它 includes 之后。当然，您的平台特定代码也要够简练且独立，比如：</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"foo/public/fooserver.h"</span></span>
@@ -545,7 +542,6 @@
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">LANG_CXX11</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;initializer_list&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span>  <span class="token comment">// LANG_CXX11</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="头文件中应该写什么内容？"><a href="#头文件中应该写什么内容？" class="headerlink" title="头文件中应该写什么内容？"></a>头文件中应该写什么内容？</h3><p>参考另外一篇文章：<a href="https://immortalqx.github.io/2021/11/21/cpp-notes-0/">C++中的头文件</a></p>
 <h2 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h2><h3 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h3><p>使用具名的命名空间时，其名称可基于项目名或相对路径。比如：</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// .h 文件</span>
@@ -560,7 +556,6 @@
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
 <span class="token punctuation">}</span> <span class="token comment">// namespace mynamespace</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// .cc 文件</span>
 <span class="token keyword">namespace</span> mynamespace <span class="token punctuation">{</span>
 
@@ -570,11 +565,9 @@
 <span class="token punctuation">}</span>
 
 <span class="token punctuation">}</span> <span class="token comment">// namespace mynamespace</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>禁止使用 using 指示（using-directive）。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 禁止 —— 污染命名空间</span>
 <span class="token keyword">using</span> <span class="token keyword">namespace</span> foo<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p>禁止使用内联命名空间（inline namespace）。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 内联命名空间很容易令人迷惑，毕竟其内部的成员不再受其声明所在命名空间的限制。</span>
 <span class="token comment">// 内联命名空间只在大型版本控制里有用。</span>
@@ -583,7 +576,6 @@
 <span class="token keyword">void</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>  <span class="token comment">// namespace Y</span>
 <span class="token punctuation">}</span>  <span class="token comment">// namespace X</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="非成员函数、静态成员函数和全局函数"><a href="#非成员函数、静态成员函数和全局函数" class="headerlink" title="非成员函数、静态成员函数和全局函数"></a>非成员函数、静态成员函数和全局函数</h3><p>使用静态成员函数或命名空间内的非成员函数，尽量不要用裸的全局函数。</p>
 <p>将一系列函数直接置于命名空间中，不要用类的静态方法模拟出命名空间的效果，类的静态方法应当和类的实例或静态数据紧密相关。</p>
 <p>推荐：</p>
@@ -593,7 +585,6 @@
 <span class="token keyword">void</span> <span class="token function">Function2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>  <span class="token comment">// namespace foo_bar</span>
 <span class="token punctuation">}</span>  <span class="token comment">// namespace myproject</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>不推荐：</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">namespace</span> myproject <span class="token punctuation">{</span>
 <span class="token keyword">class</span> <span class="token class-name">FooBar</span> <span class="token punctuation">{</span>
@@ -602,7 +593,6 @@
   <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Function2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>  <span class="token comment">// namespace myproject</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>定义在同一编译单元的函数，被其他编译单元直接调用可能会引入不必要的耦合和链接时依赖；静态成员函数对此尤其敏感。可以考虑提取到新类中，或者将函数置于独立库的命名空间内。</p>
 <p>如果你必须定义非成员函数，又只是在 <code>.cc</code> 文件中使用它，可使用匿名 <a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/scoping/#namespaces">2.1. 命名空间</a> 或 <code>static</code> 链接关键字（如 <code>static int Foo() {...}</code>）限定其作用域。</p>
 <h3 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h3><blockquote>
@@ -611,18 +601,13 @@
 <p>C++ 允许在函数的任何位置声明变量。我们提倡在尽可能小的作用域中声明变量，离第一次使用越近越好。这使得代码浏览者更容易定位变量声明的位置，了解变量的类型和初始值。特别是，应使用初始化的方式替代声明再赋值，比如：</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> i<span class="token punctuation">;</span>
 i <span class="token operator">=</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 坏——初始化和声明分离</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 好——初始化时声明</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span> v<span class="token punctuation">;</span>
 v<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 用花括号初始化更好</span>
 v<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
  <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span> v <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// 好——v 一开始就初始化</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>属于 <code>if</code>，<code>while</code> 和 <code>for</code> 语句的变量应当在这些语句中正常地声明，这样子这些变量的作用域就被限制在这些语句中了，举例而言：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> p <span class="token operator">=</span> <span class="token function">strchr</span><span class="token punctuation">(</span>str<span class="token punctuation">,</span> <span class="token string">'/'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> str <span class="token operator">=</span> p <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> p <span class="token operator">=</span> <span class="token function">strchr</span><span class="token punctuation">(</span>str<span class="token punctuation">,</span> <span class="token char">'/'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> str <span class="token operator">=</span> p <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p><strong>例外：</strong></p>
 <p>有一个例外，如果变量是一个对象，每次进入作用域都要调用其构造函数，每次退出作用域都要调用其析构函数，这会导致效率降低。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 低效的实现</span>
@@ -630,13 +615,11 @@ v<span class="token punctuation">.</span><span class="token function">push_back<
     Foo f<span class="token punctuation">;</span>                  <span class="token comment">// 构造函数和析构函数分别调用 1000000 次!</span>
     f<span class="token punctuation">.</span><span class="token function">DoSomething</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>在循环作用域外面声明这类变量要高效的多:</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Foo f<span class="token punctuation">;</span>                      <span class="token comment">// 构造函数和析构函数只调用 1 次</span>
 <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">1000000</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     f<span class="token punctuation">.</span><span class="token function">DoSomething</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="静态和全局变量"><a href="#静态和全局变量" class="headerlink" title="静态和全局变量"></a>静态和全局变量</h3><blockquote>
 <p>禁止定义静态储存周期非POD变量，禁止使用含有副作用的函数初始化POD全局变量，因为多编译单元中的静态变量执行时的构造和析构顺序是未明确的，这将导致代码的不可移植。</p>
 </blockquote>
@@ -670,13 +653,11 @@ v<span class="token punctuation">.</span><span class="token function">push_back<
  <span class="token keyword">private</span><span class="token operator">:</span>
   Field field_<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>由于存在对象切割的风险，不要为任何有可能有派生类的对象提供赋值操作或者拷贝 / 移动构造函数（当然也不要继承有这样的成员函数的类）。如果你的基类需要可复制属性，请提供一个 <code>public virtual Clone()</code> 和一个 <code>protected</code> 的拷贝构造函数以供派生类实现。</p>
 <p>如果你的类不需要拷贝 / 移动操作，请显式地通过在 <code>public</code> 域中使用 <code>= delete</code> 或其他手段禁用之。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// MyClass is neither copyable nor movable.</span>
 <span class="token function">MyClass</span><span class="token punctuation">(</span><span class="token keyword">const</span> MyClass<span class="token operator">&amp;</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">delete</span><span class="token punctuation">;</span>
 MyClass<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> MyClass<span class="token operator">&amp;</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">delete</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="结构体-VS-类"><a href="#结构体-VS-类" class="headerlink" title="结构体 VS. 类"></a>结构体 VS. 类</h3><p>仅当只有数据成员时使用 <code>struct</code>， 其它一概使用 <code>class</code>。</p>
 <p>在 C++ 中 <code>struct</code> 和 <code>class</code> 关键字几乎含义一样。我们为这两个关键字添加我们自己的语义理解，以便为定义的数据类型选择合适的关键字。</p>
 <p><code>struct</code> 用来定义包含数据的被动式对象，也可以包含相关的常量，但除了存取数据成员之外，没有别的函数功能。并且存取功能是通过直接访问位域，而非函数调用。除了构造函数，析构函数，<code>Initialize()</code>，<code>Reset()</code>，<code>Validate()</code> 等类似的用于设定数据成员的函数外，不能提供其它功能的函数。</p>
@@ -690,7 +671,6 @@ MyClass<span class="token operator">&amp;</span> <span class="token keyword">ope
 <p>在处理代码时，你可能会发现复杂的长函数。不要害怕修改现有代码：如果证实这些代码使用 / 调试起来很困难，或者你只需要使用其中的一小段代码，考虑将其分割为更加简短并易于管理的若干函数。</p>
 <h3 id="引用参数"><a href="#引用参数" class="headerlink" title="引用参数"></a>引用参数</h3><p>所有按引用传递的参数必须加上 <code>const</code>。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token keyword">const</span> string <span class="token operator">&amp;</span>in<span class="token punctuation">,</span> string <span class="token operator">*</span>out<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>事实上这在 Google Code 是一个硬性约定：输入参数是值参或 <code>const</code> 引用，输出参数为指针。输入参数可以是 <code>const</code> 指针，但决不能是非 <code>const</code> 的引用参数，除非特殊要求，比如 <code>swap()</code>。</p>
 <p>有时候，在输入形参中用 <code>const T*</code> 指针比 <code>const T&amp;</code> 更明智。比如：</p>
 <ul>
@@ -705,14 +685,12 @@ MyClass<span class="token operator">&amp;</span> <span class="token keyword">ope
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> price_count_reader<span class="token punctuation">;</span>    <span class="token comment">// 无缩写</span>
 <span class="token keyword">int</span> num_errors<span class="token punctuation">;</span>            <span class="token comment">// "num" 是一个常见的写法</span>
 <span class="token keyword">int</span> num_dns_connections<span class="token punctuation">;</span>   <span class="token comment">// 人人都知道 "DNS" 是什么</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> n<span class="token punctuation">;</span>                     <span class="token comment">// 毫无意义.</span>
 <span class="token keyword">int</span> nerr<span class="token punctuation">;</span>                  <span class="token comment">// 含糊不清的缩写.</span>
 <span class="token keyword">int</span> n_comp_conns<span class="token punctuation">;</span>          <span class="token comment">// 含糊不清的缩写.</span>
 <span class="token keyword">int</span> wgc_connections<span class="token punctuation">;</span>       <span class="token comment">// 只有贵团队知道是什么意思.</span>
 <span class="token keyword">int</span> pc_reader<span class="token punctuation">;</span>             <span class="token comment">// "pc" 有太多可能的解释了.</span>
 <span class="token keyword">int</span> cstmr_id<span class="token punctuation">;</span>              <span class="token comment">// 删减了若干字母.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>注意，一些特定的广为人知的缩写是允许的，例如用 <code>i</code> 表示迭代变量和用 <code>T</code> 表示模板参数。</p>
 <p>模板参数的命名应当遵循对应的分类：类型模板参数应当遵循 <a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/#type-names">类型命名</a> 的规则，而非类型模板应当遵循 <a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/#variable-names">变量命名</a> 的规则。</p>
 <h3 id="文件命名"><a href="#文件命名" class="headerlink" title="文件命名"></a>文件命名</h3><p>文件名要全部小写，可以包含下划线 (<code>_</code>) 或连字符 (<code>-</code>)，依照项目的约定。如果没有约定，那么 “<code>_</code>” 更好。</p>
@@ -746,13 +724,11 @@ MyClass<span class="token operator">&amp;</span> <span class="token keyword">ope
 
 <span class="token comment">// 枚举</span>
 <span class="token keyword">enum</span> <span class="token class-name">UrlTableErrors</span> <span class="token punctuation">{</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="变量命名"><a href="#变量命名" class="headerlink" title="变量命名"></a>变量命名</h3><p>变量（包括函数参数）和数据成员名一律小写，单词之间用下划线连接。类的成员变量以下划线结尾，但结构体的就不用，如：<code>a_local_variable</code>，<code>a_struct_data_member</code>，<code>a_class_data_member_</code>。</p>
 <h4 id="普通变量命名"><a href="#普通变量命名" class="headerlink" title="普通变量命名"></a>普通变量命名</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string table_name<span class="token punctuation">;</span>  <span class="token comment">// 好 - 用下划线.</span>
 string tablename<span class="token punctuation">;</span>   <span class="token comment">// 好 - 全小写.</span>
 
 string tableName<span class="token punctuation">;</span>  <span class="token comment">// 差 - 混合大小写</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="类数据成员"><a href="#类数据成员" class="headerlink" title="类数据成员"></a>类数据成员</h4><p>不管是静态的还是非静态的，类数据成员都可以和普通变量一样，但要接下划线。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">TableInfo</span> <span class="token punctuation">{</span>
   <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
@@ -761,25 +737,21 @@ string tableName<span class="token punctuation">;</span>  <span class="token com
   string tablename_<span class="token punctuation">;</span>   <span class="token comment">// 好.</span>
   <span class="token keyword">static</span> Pool<span class="token operator">&lt;</span>TableInfo<span class="token operator">&gt;</span><span class="token operator">*</span> pool_<span class="token punctuation">;</span>  <span class="token comment">// 好.</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="结构体变量"><a href="#结构体变量" class="headerlink" title="结构体变量"></a>结构体变量</h4><p>不管是静态的还是非静态的，结构体数据成员都可以和普通变量一样，不用像类那样接下划线：</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">UrlTableProperties</span> <span class="token punctuation">{</span>
   string name<span class="token punctuation">;</span>
   <span class="token keyword">int</span> num_entries<span class="token punctuation">;</span>
   <span class="token keyword">static</span> Pool<span class="token operator">&lt;</span>UrlTableProperties<span class="token operator">&gt;</span><span class="token operator">*</span> pool<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>结构体与类的使用讨论，参考 <a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/classes/#structs-vs-classes">结构体 vs. 类</a>。</p>
 <h3 id="常量命名"><a href="#常量命名" class="headerlink" title="常量命名"></a>常量命名</h3><p>声明为 <code>constexpr</code> 或 <code>const</code> 的变量，或在程序运行期间其值始终保持不变的，命名时以 “k” 开头，大小写混合。例如：</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> kDaysInAWeek <span class="token operator">=</span> <span class="token number">7</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>所有具有静态存储类型的变量（例如静态变量或全局变量， 参见 <a target="_blank" rel="noopener" href="http://en.cppreference.com/w/cpp/language/storage_duration#Storage_duration">存储类型</a>）都应当以此方式命名。对于其他存储类型的变量，如自动变量等，这条规则是可选的。如果不采用这条规则，就按照一般的变量命名规则。</p>
 <h3 id="函数命名"><a href="#函数命名" class="headerlink" title="函数命名"></a>函数命名</h3><p>常规函数使用大小写混合，取值和设值函数则要求与变量名匹配：<code>MyExcitingFunction()</code>，<code>MyExcitingMethod()</code>，<code>my_exciting_member_variable()</code>，<code>set_my_exciting_member_variable()</code>。</p>
 <p>一般来说，函数名的每个单词首字母大写（即 “驼峰变量名” 或 “帕斯卡变量名”），没有下划线。对于首字母缩写的单词，更倾向于将它们视作一个单词进行首字母大写（例如，写作 <code>StartRpc()</code> 而非 <code>StartRPC()</code>）。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">AddTableEntry</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token function">DeleteUrl</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token function">OpenFileOrDie</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p>（同样的命名规则同时适用于类作用域与命名空间作用域的常量， 因为它们是作为 API 的一部分暴露对外的， 因此应当让它们看起来像是一个函数， 因为在这时， 它们实际上是一个对象而非函数的这一事实对外不过是一个无关紧要的实现细节。）</p>
 <p>取值和设值函数的命名与变量一致。一般来说它们的名称与实际的成员变量对应， 但并不强制要求。例如 <code>int count()</code> 与 <code>void set_count(int count)</code>。</p>
 <h3 id="命名空间命名"><a href="#命名空间命名" class="headerlink" title="命名空间命名"></a>命名空间命名</h3><p>命名空间以小写字母命名。最高级命名空间的名字取决于项目名称。要注意避免嵌套命名空间的名字之间和常见的顶级命名空间的名字之间发生冲突。</p>
@@ -799,12 +771,10 @@ string tableName<span class="token punctuation">;</span>  <span class="token com
     OUT_OF_MEMORY <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span>
     MALFORMED_INPUT <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>2009 年 1 月之前， 我们一直建议采用 <a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/#macro-names">宏</a> 的方式命名枚举值。由于枚举值和宏之间的命名冲突， 直接导致了很多问题。由此， 这里改为优先选择常量风格的命名方式。新代码应该尽可能优先使用常量风格。但是老代码没必要切换到常量风格， 除非宏风格确实会产生编译期问题。</p>
 <h3 id="宏命名"><a href="#宏命名" class="headerlink" title="宏命名"></a>宏命名</h3><p>你并不打算 <a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/others/#preprocessor-macros">使用宏</a>， 对吧? 如果你一定要用， 像这样命名: <code>MY_MACRO_THAT_SCARES_SMALL_CHILDREN</code>。</p>
 <p>参考 <a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/others/#preprocessor-macros">预处理宏</a>； 通常 <em>不应该</em> 使用宏。如果不得不用， 其命名像枚举命名一样全部大写， 使用下划线:</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">ROUND</span><span class="token expression"><span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>#define PI_ROUNDED <span class="token number">3.0</span></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <h3 id="命名规则的特例"><a href="#命名规则的特例" class="headerlink" title="命名规则的特例"></a>命名规则的特例</h3><p>如果你命名的实体与已有 C/C++ 实体相似， 可参考现有命名策略.</p>
 <p><code>bigopen()</code>: 函数名， 参照 <code>open()</code> 的形式</p>
 <p><code>uint</code>: <code>typedef</code></p>

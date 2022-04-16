@@ -36,7 +36,7 @@ algorithm();
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.3.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
 </head>
@@ -502,7 +502,6 @@ algorithm();
 
 <span class="token comment">// Calculate Frames per second (FPS)</span>
 <span class="token keyword">float</span> fps <span class="token operator">=</span> <span class="token function">getTickFrequency</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span> <span class="token function">getTickCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> timer<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="使用putText-函数将信息直接输出到图片上"><a href="#使用putText-函数将信息直接输出到图片上" class="headerlink" title="使用putText()函数将信息直接输出到图片上"></a>使用putText()函数将信息直接输出到图片上</h2><h3 id="函数原型"><a href="#函数原型" class="headerlink" title="函数原型"></a>函数原型</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> cv<span class="token double-colon punctuation">::</span><span class="token function">putText</span><span class="token punctuation">(</span>
 	cv<span class="token double-colon punctuation">::</span>Mat<span class="token operator">&amp;</span> img<span class="token punctuation">,</span> <span class="token comment">// 待绘制的图像</span>
 	<span class="token keyword">const</span> string<span class="token operator">&amp;</span> text<span class="token punctuation">,</span> <span class="token comment">// 待绘制的文字</span>
@@ -514,7 +513,6 @@ algorithm();
 	<span class="token keyword">int</span> lineType <span class="token operator">=</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token comment">// 线型（4邻域或8邻域，默认8邻域）</span>
 	<span class="token keyword">bool</span> bottomLeftOrigin <span class="token operator">=</span> <span class="token boolean">false</span> <span class="token comment">// true='origin at lower left'</span>
 <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h3><p>在图片左上角显示使用的算法，帧率，是否检测到目标物</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">putText</span><span class="token punctuation">(</span>frame<span class="token punctuation">,</span> detectionType<span class="token punctuation">,</span> <span class="token function">Point</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span> FONT_HERSHEY_SIMPLEX<span class="token punctuation">,</span> <span class="token number">0.75</span><span class="token punctuation">,</span> <span class="token function">Scalar</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">170</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
@@ -522,7 +520,6 @@ algorithm();
 
 <span class="token keyword">if</span><span class="token punctuation">(</span>detection_failed<span class="token punctuation">)</span>
 	<span class="token function">putText</span><span class="token punctuation">(</span>frame<span class="token punctuation">,</span> <span class="token string">" Detection failed"</span><span class="token punctuation">,</span> <span class="token function">Point</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">80</span><span class="token punctuation">)</span><span class="token punctuation">,</span> FONT_HERSHEY_SIMPLEX<span class="token punctuation">,</span> <span class="token number">0.75</span><span class="token punctuation">,</span> <span class="token function">Scalar</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>下面是效果图：</p>
 <p><img src="/images/OpenCV-Notes/1-1.png"></p>
 <p><img src="/images/OpenCV-Notes/1-2.png"></p>

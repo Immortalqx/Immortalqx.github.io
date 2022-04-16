@@ -31,7 +31,7 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.3.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
 </head>
@@ -551,7 +551,6 @@
     <span class="token comment"># print("对应四元数:\t", Quaternion)</span>
 
     <span class="token keyword">return</span> Point<span class="token punctuation">,</span> Quaternion<span class="token punctuation">,</span> Nx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="计算点到平面的距离"><a href="#计算点到平面的距离" class="headerlink" title="计算点到平面的距离"></a>计算点到平面的距离</h3><p>我们可以根据点到平面的距离来判断这个点是否为内点。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">solve_distance</span><span class="token punctuation">(</span>M<span class="token punctuation">,</span> P<span class="token punctuation">,</span> N<span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token triple-quoted-string string">"""
@@ -576,7 +575,6 @@
 
     <span class="token keyword">return</span> fabs<span class="token punctuation">(</span>A <span class="token operator">*</span> M<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> B <span class="token operator">*</span> M<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> C <span class="token operator">*</span> M<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">+</span> D<span class="token punctuation">)</span> <span class="token operator">/</span> sqrt<span class="token punctuation">(</span>A <span class="token operator">**</span> <span class="token number">2</span> <span class="token operator">+</span> B <span class="token operator">**</span> <span class="token number">2</span> <span class="token operator">+</span> C <span class="token operator">**</span> <span class="token number">2</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="通过RANSAC算法进行拟合"><a href="#通过RANSAC算法进行拟合" class="headerlink" title="通过RANSAC算法进行拟合"></a>通过RANSAC算法进行拟合</h3><p>这里是RANSAC算法的主要实现过程。</p>
 <p>下面的函数计算出的P是平面上的一点，Q是平面的四元数，N是平面的法向量。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">RANSAC</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -617,12 +615,10 @@
         <span class="token keyword">if</span> total_inlier <span class="token operator">&gt;</span> SIZE <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">:</span>
             <span class="token keyword">break</span>
     <span class="token keyword">return</span> P<span class="token punctuation">,</span> Q<span class="token punctuation">,</span> N<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="运行项目"><a href="#运行项目" class="headerlink" title="运行项目"></a>运行项目</h2><p>具体的代码（包括C++实现和python实现）都放在<a target="_blank" rel="noopener" href="https://github.com/Immortalqx/RANSAC.git">https://github.com/Immortalqx/RANSAC.git</a></p>
 <p>你可以通过下面的指令运行这篇博客介绍的RANSAC算法。</p>
 <p><strong>克隆本项目：</strong></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/Immortalqx/RANSAC.git<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p><strong>运行C++部分的代码：</strong></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> RANSAC
 <span class="token function">mkdir</span> build
@@ -630,13 +626,11 @@
 cmake <span class="token punctuation">..</span>
 <span class="token function">make</span>
 ./RANSAC<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><strong>运行python部分的代码：</strong></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#在平面中用ransac算法拟合直线</span>
 python3 RANSAC_2D.py
 <span class="token comment">#在点云中用ransac算法拟合平面</span>
 python3 RANSAC_3D.py<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><strong>运行结果：</strong></p>
 <p>对2D平面中的直线进行拟合</p>
 <img src="/images/ransac/02.png" style="zoom: 50%;">

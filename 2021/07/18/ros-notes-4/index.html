@@ -31,7 +31,7 @@ ROS中机器人模型包含大量">
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.3.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
 </head>
@@ -574,7 +574,6 @@ geometry_msgs/Transform transform
                 float64 y
                 flaot64 z
                 float64 w<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="消息解释："><a href="#消息解释：" class="headerlink" title="消息解释："></a>消息解释：</h3><p>该消息表示的的是当前坐标系frame_id和它的子坐标系child_frame_id之间的转换关系。具体的转换位姿是由<code>geometry_msgs/Transform</code>消息类型来定义的，该消息类型用三维向量表示平移，用四元组表示旋转。</p>
 <h2 id="TF消息：TF树的消息类型"><a href="#TF消息：TF树的消息类型" class="headerlink" title="TF消息：TF树的消息类型"></a>TF消息：TF树的消息类型</h2><p><code>/tf</code>话题表示的内容是整个机器人的tf树，而非仅仅是某两个坐标系的转换关系，这样的话，<code>/tf</code>话题是需要很多的节点来维护的，每一个节点维护两个父子frame之间的关系。即一个<code>/tf</code>话题上面，可能会有很多个node向上面发送消息。</p>
 <p>这样就相当于tf tree是由很多的frame之间tf拼接而成。刚才说的<code>TransformStampde.msg</code>消息类型表示的是两个frame之间tf关系，接下来要介绍真正在<code>/tf</code>话题上进行传输的tf tree的消息类型。</p>
@@ -596,7 +595,6 @@ geometry_msgs/Transform transform
                         float64 y
                         flaot64 z
                         float64 w<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>可以看出tf树的消息类型实际上就是一个<code>TransformStamped</code>类型定义的可变长度数组。也就是说本质就是由很多个两个frame之间的tf消息<code>TransformStamped</code>形成描述整个机器人的tf树的消息类型<code>tf2_msgs/TFMessage.msg</code>。</p>
 <h2 id="TF在roscpp与rospy中的接口"><a href="#TF在roscpp与rospy中的接口" class="headerlink" title="TF在roscpp与rospy中的接口"></a>TF在roscpp与rospy中的接口</h2><p>无论是roscpp中还是rospy中都有tf库，tf提供了很多有用的接口。这里只大体描述，具体使用的时候再参考具体的资料。</p>
 <p>提供的结构种类：</p>
@@ -611,23 +609,18 @@ geometry_msgs/Transform transform
 <h2 id="TF程序包相关的命令行使用"><a href="#TF程序包相关的命令行使用" class="headerlink" title="TF程序包相关的命令行使用"></a>TF程序包相关的命令行使用</h2><ol>
 <li><p>用命令行显示当前所有frame的方法：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun tf tf_monitor <span class="token comment">#显示当前坐标变换树的信息，主要是名称和实时的时间延时</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rostopic <span class="token builtin class-name">echo</span> /tf <span class="token comment">#以TransformStamped消息类型的数组显示所有父子frame的位姿转换关系</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rostopic <span class="token builtin class-name">echo</span> /tf <span class="token comment">#以TransformStamped消息类型的数组显示所有父子frame的位姿转换关系</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 <li><p>根据当前的tf树创建一个pdf图：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun tf view_frames<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>这个工具首先订阅<code>/tf</code>，订阅5秒钟，根据这段时间接受到的tf信息，绘制成一张tf tree，然后创建成一个pdf图。</p>
 <p>将会以图形的形式显示出tf树中所有的frame和两个frame 的父子关系及其Broadcaster、Average rate等</p>
 </li>
 <li><p>查看当前的tf树：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun rqt_tf_tree rqt_tf_tree<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>该命令同样是查询tf tree的，但是与第一个命令的区别是该命令是动态的查询当前的tf tree，当前的任何变化都能当即看到，例如何时断开何时连接，捕捉到这些然后通过rqt插件显示出来。</p>
 </li>
 <li><p>查看两个frame之间的变换关系：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun tf tf_echo<span class="token punctuation">[</span>source_frame<span class="token punctuation">]</span><span class="token punctuation">[</span>target_frame<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>将会持续的显示源坐标系和目标坐标系的位姿变换关系。</p>
 </li>
 </ol>

@@ -30,7 +30,7 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.3.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
 </head>
@@ -495,7 +495,6 @@
 <p>对二者特性对比，用一句话简单概括就是：<strong>std::thread更加简便易用，而pthread功能更加强大。</strong></p>
 <h2 id="线程的创建和管理"><a href="#线程的创建和管理" class="headerlink" title="线程的创建和管理"></a>线程的创建和管理</h2><p>每个线程都有一个在进程中唯一的线程标识符，用一个数据类型 pthread_t 表示，该数据类型在 Linux 中就是一个无符号长整型数据。</p>
 <h3 id="创建新的线程"><a href="#创建新的线程" class="headerlink" title="创建新的线程"></a>创建新的线程</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">pthread_create</span> <span class="token punctuation">(</span><span class="token class-name">pthread_t</span> <span class="token operator">*</span>thread<span class="token punctuation">,</span><span class="token class-name">pthread_attr_t</span> <span class="token operator">*</span>attr<span class="token punctuation">,</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">*</span>start_routine<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token keyword">void</span> <span class="token operator">*</span>arg<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>若创建成功，返回0；若出错，则返回错误编号。</p>
 <ul>
 <li>thread 是线程标识符，但这个参数不是由用户指定的，而是由 pthread_create 函数在创建时将新的线程的标识符放到这个变量中。</li>
@@ -516,10 +515,8 @@
 <p>当然，一个线程结束，并不意味着它的所有信息都已经消失，后面会看到僵尸线程的问题。</p>
 <p>下面介绍这两个函数。</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">pthread_exit</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>retval<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>retval 是由用户指定的参数， pthread_exit 完成之后可以通过这个参数获得线程的退出状态。</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">pthread_cancel</span> <span class="token punctuation">(</span><span class="token class-name">pthread_t</span> thread<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>一个线程可以通过调用 pthread_cancel 函数来请求取消同一进程中的线程，这个线程由thread 参数指定。</p>
 <p>如果操作成功则返回0，失败则返回对应的错误编号。</p>
 <h3 id="一个简单的多线程实现"><a href="#一个简单的多线程实现" class="headerlink" title="一个简单的多线程实现"></a>一个简单的多线程实现</h3><p>这里是一个非常简单的基于pthread的多线程实现：</p>
@@ -555,11 +552,9 @@
     <span class="token comment">/* Last thing that main() should do */</span>
     <span class="token function">pthread_exit</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>可以在终端通过下面的命令编译执行：</p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">gcc -Wall hello.c -lpthread -o hello
 ./hello<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p>输出的结果为：</p>
 <pre class="line-numbers language-none"><code class="language-none">In main: creating thread 0
 In main: creating thread 1
@@ -571,7 +566,6 @@ Hello World! It's me, thread #2!
 In main: creating thread 4
 Hello World! It's me, thread #3!
 Hello World! It's me, thread #4!<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>注意输出的顺序可能不同， 要特别注意的是， main() 显示地调用了 pthread_exit() 来等待其他线程的结束。（如果不使用这个函数的话，可能main()函数结束了也有线程没有执行完毕！）</p>
 <h3 id="给线程传入初始化参数"><a href="#给线程传入初始化参数" class="headerlink" title="给线程传入初始化参数"></a>给线程传入初始化参数</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pthread.h&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
@@ -638,7 +632,6 @@ Hello World! It's me, thread #4!<span aria-hidden="true" class="line-numbers-row
     <span class="token punctuation">}</span>
     <span class="token function">pthread_exit</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>输出结果：</p>
 <pre class="line-numbers language-none"><code class="language-none">Creating thread 0
 Creating thread 1
@@ -656,10 +649,8 @@ Thread 6: Japan: Sekai e konnichiwa!  Sum=21
 Thread 3: Klingon: Nuq neH!  Sum=6
 Thread 0: English: Hello World!  Sum=0
 Thread 1: French: Bonjour, le monde!  Sum=1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="对线程的阻塞（Joining-and-Detaching-Threads）"><a href="#对线程的阻塞（Joining-and-Detaching-Threads）" class="headerlink" title="对线程的阻塞（Joining and Detaching Threads）"></a>对线程的阻塞（Joining and Detaching Threads）</h3><p>阻塞是线程之间同步的一种方法。</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">pthread_join</span><span class="token punctuation">(</span><span class="token class-name">pthread_t</span> threadid<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span>value_ptr<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>pthread_join 函数会让调用它的线程等待 threadid 线程运行结束之后再运行。</p>
 <p>value_ptr 存放了其他线程的返回值。</p>
 <p>一个可以被join的线程，仅仅可以被别的一个线程 join，如果同时有多个线程尝试 join 同一个线程时，最终结果是未知的。另外，线程不能 join 自己。</p>
@@ -678,7 +669,6 @@ Thread 1: French: Bonjour, le monde!  Sum=1<span aria-hidden="true" class="line-
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">pthread_detach</span> <span class="token punctuation">(</span>threadid<span class="token punctuation">)</span>
 <span class="token function">pthread_attr_setdetachstate</span> <span class="token punctuation">(</span>attr<span class="token punctuation">,</span>detachstate<span class="token punctuation">)</span>
 <span class="token function">pthread_attr_getdetachstate</span> <span class="token punctuation">(</span>attr<span class="token punctuation">,</span>detachstate<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="显式地设置一个线程为-joinable"><a href="#显式地设置一个线程为-joinable" class="headerlink" title="显式地设置一个线程为 joinable"></a>显式地设置一个线程为 joinable</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdlib.h&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pthread.h&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
@@ -740,7 +730,6 @@ Thread 1: French: Bonjour, le monde!  Sum=1<span aria-hidden="true" class="line-
 
     <span class="token function">pthread_exit</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>输出结果：</p>
 <pre class="line-numbers language-none"><code class="language-none">Main: creating thread 0
 Main: creating thread 1
@@ -751,13 +740,11 @@ Main: completed join with thread 0 having a status of 0
 Thread 1 done. Result = 3.135632e+06
 Main: completed join with thread 1 having a status of 1
 Main: program completed. Exiting.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="堆栈管理-（Stack-Management）"><a href="#堆栈管理-（Stack-Management）" class="headerlink" title="堆栈管理 （Stack Management）"></a>堆栈管理 （Stack Management）</h3><p>相关函数：</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">pthread_attr_getstacksize</span> <span class="token punctuation">(</span>attr<span class="token punctuation">,</span> stacksize<span class="token punctuation">)</span>
 <span class="token function">pthread_attr_setstacksize</span> <span class="token punctuation">(</span>attr<span class="token punctuation">,</span> stacksize<span class="token punctuation">)</span>
 <span class="token function">pthread_attr_getstackaddr</span> <span class="token punctuation">(</span>attr<span class="token punctuation">,</span> stackaddr<span class="token punctuation">)</span>
 <span class="token function">pthread_attr_setstackaddr</span> <span class="token punctuation">(</span>attr<span class="token punctuation">,</span> stackaddr<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>POSIX标准没有规定一个线程的堆栈大小。安全可移植的程序不会依赖于具体实现默认的堆栈限制，而是显式地调用 pthread_attr_setstacksize 来分配足够的堆栈空间。</p>
 <h4 id="关于堆栈大小的一个例子"><a href="#关于堆栈大小的一个例子" class="headerlink" title="关于堆栈大小的一个例子"></a>关于堆栈大小的一个例子</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdlib.h&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pthread.h&gt;</span></span>
@@ -811,7 +798,6 @@ Main: program completed. Exiting.<span aria-hidden="true" class="line-numbers-ro
     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Created %ld threads.\n"</span><span class="token punctuation">,</span> t<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">pthread_exit</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>输出结果：</p>
 <pre class="line-numbers language-none"><code class="language-none">Default stack size = 8388608
 Amount of stack needed per thread = 9000000
@@ -821,10 +807,8 @@ Created 4 threads.
 Thread 1: stack size = 9000000 bytes 
 Thread 0: stack size = 9000000 bytes 
 Thread 3: stack size = 9000000 bytes <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="其他重要函数"><a href="#其他重要函数" class="headerlink" title="其他重要函数"></a>其他重要函数</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">pthread_self</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token function">pthread_equal</span> <span class="token punctuation">(</span>thread1<span class="token punctuation">,</span>thread2<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p>调用pthread_self 可以返回它的 thread ID。</p>
 <p>pthread_equal 比较两个线程的 ID，如果不同则返回0，否则返回一个非零值。</p>
 <h2 id="互斥锁-Mutex"><a href="#互斥锁-Mutex" class="headerlink" title="互斥锁 Mutex"></a>互斥锁 Mutex</h2><p>Mutex 常常被用来保护那些可以被多个线程访问的共享资源，比如可以防止多个线程同时更新同一个数据时出现混乱。</p>
@@ -840,7 +824,6 @@ Thread 3: stack size = 9000000 bytes <span aria-hidden="true" class="line-number
 <p>有两种方式初始化一个互斥锁：</p>
 <p>第一种，利用已经定义的常量初始化，例如</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token class-name">pthread_mutex_t</span> mymutex <span class="token operator">=</span> PTHREAD_MUTEX_INITIALIZER<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>第二种方式是调用 pthread_mutex_init (mutex,attr) 进行初始化。</p>
 <p>当多个线程同时去锁定同一个互斥锁时，失败的那些线程，如果是用 pthread_mutex_lock 函数，那么会被阻塞，直到这个互斥锁被解锁，它们再继续竞争；如果是用 pthread_mutex_trylock 函数，那么失败者只会返回一个错误。</p>
 <p>最后需要指出的是，保护共享数据是程序员的责任。程序员要负责所有可以访问该数据的线程都使用mutex这种机制，否则，不使用 mutex 的线程还是有可能对数据造成破坏。</p>
@@ -852,7 +835,6 @@ Thread 3: stack size = 9000000 bytes <span aria-hidden="true" class="line-number
 <span class="token function">phtread_mutex_lock</span><span class="token punctuation">(</span><span class="token class-name">pthread_mutex_t</span> <span class="token operator">*</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token function">phtread_mutex_trylock</span><span class="token punctuation">(</span><span class="token class-name">pthread_mutex_t</span> <span class="token operator">*</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token function">phtread_mutex_unlock</span><span class="token punctuation">(</span><span class="token class-name">pthread_mutex_t</span> <span class="token operator">*</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>下面是一个利用多线程进行向量点乘的程序，其中需要对 dotstr.sum 这个共同读写的数据进行保护。</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pthread.h&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
@@ -993,27 +975,23 @@ are no longer needed.
     <span class="token function">pthread_mutex_destroy</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutexsum<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">pthread_exit</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>输出结果：</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">Thread <span class="token number">0</span> did <span class="token number">0</span> to <span class="token number">100000</span><span class="token operator">:</span>  mysum<span class="token operator">=</span><span class="token number">100000.000000</span> global sum<span class="token operator">=</span><span class="token number">100000.000000</span>
 Thread <span class="token number">1</span> did <span class="token number">100000</span> to <span class="token number">200000</span><span class="token operator">:</span>  mysum<span class="token operator">=</span><span class="token number">100000.000000</span> global sum<span class="token operator">=</span><span class="token number">200000.000000</span>
 Thread <span class="token number">2</span> did <span class="token number">200000</span> to <span class="token number">300000</span><span class="token operator">:</span>  mysum<span class="token operator">=</span><span class="token number">100000.000000</span> global sum<span class="token operator">=</span><span class="token number">300000.000000</span>
 Thread <span class="token number">3</span> did <span class="token number">300000</span> to <span class="token number">400000</span><span class="token operator">:</span>  mysum<span class="token operator">=</span><span class="token number">100000.000000</span> global sum<span class="token operator">=</span><span class="token number">400000.000000</span>
 Sum <span class="token operator">=</span>  <span class="token number">400000.000000</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="条件变量-Condition-Variable"><a href="#条件变量-Condition-Variable" class="headerlink" title="条件变量 Condition Variable"></a>条件变量 Condition Variable</h2><p>互斥锁只有两种状态，这限制了它的用途. 条件变量允许线程在阻塞的时候等待另一个线程发送的信号，当收到信号后，阻塞的线程就被唤醒并试图锁定与之相关的互斥锁. 条件变量要和互斥锁结合使用。</p>
 <h3 id="条件变量的声明和初始化"><a href="#条件变量的声明和初始化" class="headerlink" title="条件变量的声明和初始化"></a>条件变量的声明和初始化</h3><p>通过声明 pthread_cond_t 类型的数据,并且必须先初始化才能使用。</p>
 <p>初始化的方法也有两种：</p>
 <p>第一种，利用内部定义的常量，例如：</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token class-name">pthread_cond_t</span> myconvar <span class="token operator">=</span> PTHREAD_COND_INITIALIZER<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>第二种，利用函数 pthread_cond_init(cond,attr)，其中 attr 由 pthread_condattr_init() 和 pthread_condattr_destroy() 创建和销毁。</p>
 <p>可以用 pthread_cond_destroy() 销毁一个条件变量。</p>
 <p>相关函数：</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">pthread_cond_wait</span> <span class="token punctuation">(</span>condition<span class="token punctuation">,</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token function">pthread_cond_signal</span> <span class="token punctuation">(</span>condition<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token function">pthread_cond_broadcast</span> <span class="token punctuation">(</span>condition<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p>pthread_cond_wait() 会阻塞调用它的线程，直到收到某一信号。这个函数需要在 mutex 已经被锁之后进行调用，并且当线程被阻塞时，会自动解锁 mutex。信号收到后，线程被唤醒，这时 mutex 又会被这个线程锁定。</p>
 <p>pthread_cond_signal() 函数结束时，必须解锁 mutex，以供 pthread_cond_wait() 锁定mutex。</p>
 <p>当不止一个线程在等待信号时，要用 pthread_cond_broadcast() 代替 pthread_cond_signal() 来告诉所有被该条件变量阻塞的线程结束阻塞状态。</p>
@@ -1123,7 +1101,6 @@ Sum <span class="token operator">=</span>  <span class="token number">400000.000
     <span class="token function">pthread_exit</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>输出结果：</p>
 <pre class="line-numbers language-none"><code class="language-none">inc_count(): thread 3, count = 1, unlocking mutex
 inc_count(): thread 2, count = 2, unlocking mutex
@@ -1153,7 +1130,6 @@ inc_count(): thread 2, count = 143, unlocking mutex
 inc_count(): thread 3, count = 144, unlocking mutex
 inc_count(): thread 2, count = 145, unlocking mutex
 Main(): Waited and joined with 3 threads. Final value of count = 145. Done.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 
                 
             </div>

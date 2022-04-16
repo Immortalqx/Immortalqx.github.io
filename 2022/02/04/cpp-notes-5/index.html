@@ -33,7 +33,7 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.3.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
 </head>
@@ -585,7 +585,6 @@ Single <span class="token operator">*</span>Single<span class="token double-colo
 
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>一个运行结果是：</p>
 <pre class="line-numbers language-none"><code class="language-none">构造函数构造函数
 我的内存地址是:构造函数0x7f6c14000b20
@@ -607,7 +606,6 @@ Single <span class="token operator">*</span>Single<span class="token double-colo
 我的内存地址是:0x7f6bf4000b20
 0x7f6be4000b20
 0x7f6be8000b20<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>可以看到这里的实例并不是唯一的！这种方式会导致两个问题：</p>
 <ol>
 <li><p><strong>线程安全的问题</strong></p>
@@ -707,7 +705,6 @@ std<span class="token double-colon punctuation">::</span>mutex Single<span class
 
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>一个运行结果是：</p>
 <pre class="line-numbers language-none"><code class="language-none">构造函数
 我的内存地址是:0x7f08b4000b20
@@ -721,7 +718,6 @@ std<span class="token double-colon punctuation">::</span>mutex Single<span class
 我的内存地址是:0x7f08b4000b20
 我的内存地址是:0x7f08b4000b20
 析构函数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>shared_ptr和mutex都是C++11的标准，以上这种方法的优点是：</p>
 <ul>
 <li><p>基于shared_ptr，用了C++比较倡导的 RAII思想，用对象管理资源。</p>
@@ -820,7 +816,6 @@ std<span class="token double-colon punctuation">::</span>mutex Single<span class
 
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>一个运行结果是：</p>
 <pre class="line-numbers language-none"><code class="language-none">构造函数
 我的实例内存地址是:我的实例内存地址是:0x55c6ee5541d00x55c6ee5541d0
@@ -834,7 +829,6 @@ std<span class="token double-colon punctuation">::</span>mutex Single<span class
 我的实例内存地址是:0x55c6ee5541d0
 我的实例内存地址是:0x55c6ee5541d0
 析构函数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><strong>这是最推荐的一种单例实现方式：</strong></p>
 <ol>
 <li>通过局部静态变量的特性保证了线程安全 (C++11, GCC &gt; 4.3, VS2015支持该特性)；</li>
@@ -846,7 +840,6 @@ std<span class="token double-colon punctuation">::</span>mutex Single<span class
     <span class="token keyword">static</span> Singleton instance<span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token operator">&amp;</span>instance<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>这样做并不好，理由主要是无法避免用户使用<code>delete instance</code>导致对象被提前销毁。还是建议大家使用返回引用的方式。</p>
 <h3 id="2-2-饿汉式"><a href="#2-2-饿汉式" class="headerlink" title="2.2 饿汉式"></a>2.2 饿汉式</h3><p>饿汉式（Eager Singleton）：指单例实例在程序运行时被立即执行初始化。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
@@ -920,7 +913,6 @@ Single Single<span class="token double-colon punctuation">::</span>instance<span
 
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>一个运行结果是：</p>
 <pre class="line-numbers language-none"><code class="language-none">构造函数
 我的实例内存地址是:我的实例内存地址是:0x55ee2cf391380x55ee2cf39138
@@ -934,7 +926,6 @@ Single Single<span class="token double-colon punctuation">::</span>instance<span
 0x55ee2cf39138
 
 析构函数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>由于在main函数之前初始化，所以没有线程安全的问题。但是潜在问题在于no-local static对象（函数外的static对象）在不同编译单元中的初始化顺序是未定义的。</p>
 <p>也就是说，<code>static Singleton instance</code>和<code>static Singleton&amp; getInstance()</code>二者的初始化顺序不确定，如果在初始化完成之前调用<code>getInstance() </code>方法会返回一个未定义的实例。</p>
 <h2 id="3-何时使用单例模式"><a href="#3-何时使用单例模式" class="headerlink" title="3. 何时使用单例模式"></a>3. 何时使用单例模式</h2><blockquote>

@@ -36,7 +36,7 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.3.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
 </head>
@@ -536,7 +536,6 @@
 input_image <span class="token operator">=</span> Variable<span class="token punctuation">(</span>input_image<span class="token punctuation">)</span>
 
 input_image <span class="token operator">=</span> input_image<span class="token punctuation">.</span>unsqueeze<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>   <span class="token comment"># 1 x 1 x 28 x 28</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="设计FashionCNN类"><a href="#设计FashionCNN类" class="headerlink" title="设计FashionCNN类"></a>设计FashionCNN类</h3><p>如何使用Sequential、如何设计卷积层、各个部分的作用等上课都讲过，这里根据课上讲的来搭建即可。</p>
 <p>但是搭建的时候需要特别注意CNN中的输入输出公式，课上只讲了进过卷积或者池化之后矩阵发生的变化，这个变化具体怎么发生的、哪些因素在影响好像没讲太多，我在实现这个CNN时，因为没有搞清楚CNN的输入输出公式，在搭建网络的时候出了很多的问题。</p>
 <p>在弄清楚这些函数的计算公式，知道输入输出的变化规律之后，搭建模型或者修改模型会方便很多。</p>
@@ -614,7 +613,6 @@ input_image <span class="token operator">=</span> input_image<span class="token 
 
         <span class="token keyword">return</span> out
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="训练CNN"><a href="#训练CNN" class="headerlink" title="训练CNN"></a>训练CNN</h2><h3 id="引入库"><a href="#引入库" class="headerlink" title="引入库"></a>引入库</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> copy
 <span class="token keyword">from</span> itertools <span class="token keyword">import</span> chain
 
@@ -628,11 +626,9 @@ input_image <span class="token operator">=</span> input_image<span class="token 
 <span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>metrics <span class="token keyword">import</span> confusion_matrix
 <span class="token keyword">from</span> torch<span class="token punctuation">.</span>autograd <span class="token keyword">import</span> Variable
 <span class="token keyword">from</span> torch<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>data <span class="token keyword">import</span> Dataset<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>如果GPU可用，则使用</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># 尝试使用GPU</span>
 device <span class="token operator">=</span> torch<span class="token punctuation">.</span>device<span class="token punctuation">(</span><span class="token string">"cuda:0"</span> <span class="token keyword">if</span> torch<span class="token punctuation">.</span>cuda<span class="token punctuation">.</span>is_available<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">else</span> <span class="token string">"cpu"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <h3 id="加载数据集"><a href="#加载数据集" class="headerlink" title="加载数据集"></a>加载数据集</h3><p>虽然提供了.npy格式的数据集，但是里面的图片是整型的，不是浮点数型的，用来训练的话还需要归一化。</p>
 <p>这里我觉得使用torch.utils.data里面的Dataset会方便一些，因此采用了这种方法加载数据集。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># 加载数据集</span>
@@ -642,7 +638,6 @@ test_set <span class="token operator">=</span> torchvision<span class="token pun
                                              transform<span class="token operator">=</span>transforms<span class="token punctuation">.</span>Compose<span class="token punctuation">(</span><span class="token punctuation">[</span>transforms<span class="token punctuation">.</span>ToTensor<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 train_loader <span class="token operator">=</span> torch<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>data<span class="token punctuation">.</span>DataLoader<span class="token punctuation">(</span>train_set<span class="token punctuation">,</span> batch_size<span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">)</span>
 test_loader <span class="token operator">=</span> torch<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>data<span class="token punctuation">.</span>DataLoader<span class="token punctuation">(</span>test_set<span class="token punctuation">,</span> batch_size<span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="加载模型、定义训练变量"><a href="#加载模型、定义训练变量" class="headerlink" title="加载模型、定义训练变量"></a>加载模型、定义训练变量</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># 加载模型</span>
 model <span class="token operator">=</span> FashionCNN<span class="token punctuation">(</span><span class="token punctuation">)</span>
 model<span class="token punctuation">.</span>to<span class="token punctuation">(</span>device<span class="token punctuation">)</span>
@@ -676,7 +671,6 @@ accuracy_list <span class="token operator">=</span> <span class="token punctuati
 <span class="token comment"># Lists for knowing classwise accuracy</span>
 predictions_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
 labels_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="进行训练"><a href="#进行训练" class="headerlink" title="进行训练"></a>进行训练</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">for</span> epoch <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>num_epochs<span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token comment"># 　分批次加载数据集</span>
     <span class="token keyword">for</span> train_images<span class="token punctuation">,</span> train_labels <span class="token keyword">in</span> train_loader<span class="token punctuation">:</span>
@@ -739,7 +733,6 @@ labels_list <span class="token operator">=</span> <span class="token punctuation
             <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"update best model"</span><span class="token punctuation">)</span>
             min_loss <span class="token operator">=</span> loss<span class="token punctuation">.</span>data
             best_model <span class="token operator">=</span> copy<span class="token punctuation">.</span>deepcopy<span class="token punctuation">(</span>model<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>训练过程中的输出：</p>
 <pre class="line-numbers language-none"><code class="language-none">Iteration: 500, Loss: 0.4136478304862976, Accuracy: 88.0999984741211%
 update best model
@@ -762,9 +755,7 @@ Iteration: 2500, Loss: 0.15940940380096436, Accuracy: 89.0%
 update best model
 update best model
 Iteration: 3000, Loss: 0.1301259845495224, Accuracy: 90.20999908447266%<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="保存最优模型"><a href="#保存最优模型" class="headerlink" title="保存最优模型"></a>保存最优模型</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">torch<span class="token punctuation">.</span>save<span class="token punctuation">(</span>best_model<span class="token punctuation">.</span>state_dict<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"best_model.pth"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <h3 id="画出迭代中的损失变化"><a href="#画出迭代中的损失变化" class="headerlink" title="画出迭代中的损失变化"></a>画出迭代中的损失变化</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># 画出迭代中的损失</span>
 plt<span class="token punctuation">.</span>figure<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
 plt<span class="token punctuation">.</span>plot<span class="token punctuation">(</span>iteration_list<span class="token punctuation">,</span> loss_list<span class="token punctuation">)</span>
@@ -772,7 +763,6 @@ plt<span class="token punctuation">.</span>xlabel<span class="token punctuation"
 plt<span class="token punctuation">.</span>ylabel<span class="token punctuation">(</span><span class="token string">"Loss"</span><span class="token punctuation">)</span>
 plt<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token string">"Iterations vs Loss"</span><span class="token punctuation">)</span>
 plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><img src="/images/machine-learning-7/output_20_0.png"></p>
 <h3 id="画出迭代中的准确度变化"><a href="#画出迭代中的准确度变化" class="headerlink" title="画出迭代中的准确度变化"></a>画出迭代中的准确度变化</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">plt<span class="token punctuation">.</span>figure<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
 plt<span class="token punctuation">.</span>plot<span class="token punctuation">(</span>iteration_list<span class="token punctuation">,</span> accuracy_list<span class="token punctuation">)</span>
@@ -780,7 +770,6 @@ plt<span class="token punctuation">.</span>xlabel<span class="token punctuation"
 plt<span class="token punctuation">.</span>ylabel<span class="token punctuation">(</span><span class="token string">"Accuracy"</span><span class="token punctuation">)</span>
 plt<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token string">"Iterations vs Accuracy"</span><span class="token punctuation">)</span>
 plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><img src="/images/machine-learning-7/output_22_0.png"></p>
 <h3 id="画出混淆矩阵"><a href="#画出混淆矩阵" class="headerlink" title="画出混淆矩阵"></a>画出混淆矩阵</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">predictions_l <span class="token operator">=</span> <span class="token punctuation">[</span>predictions_list<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>tolist<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>predictions_list<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
 labels_l <span class="token operator">=</span> <span class="token punctuation">[</span>labels_list<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>tolist<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>labels_list<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
@@ -793,7 +782,6 @@ plt<span class="token punctuation">.</span>title<span class="token punctuation">
 plt<span class="token punctuation">.</span>ylabel<span class="token punctuation">(</span><span class="token string">'Groundtruth'</span><span class="token punctuation">)</span>
 plt<span class="token punctuation">.</span>xlabel<span class="token punctuation">(</span><span class="token string">'Predict'</span><span class="token punctuation">)</span>
 plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><img src="/images/machine-learning-7/output_24_0.png"></p>
 <h2 id="从百度图片爬取图片"><a href="#从百度图片爬取图片" class="headerlink" title="从百度图片爬取图片"></a>从百度图片爬取图片</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> os
 <span class="token keyword">import</span> re
@@ -909,7 +897,6 @@ plt<span class="token punctuation">.</span>show<span class="token punctuation">(
     <span class="token keyword">finally</span><span class="token punctuation">:</span>
         <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"error!"</span><span class="token punctuation">)</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Get images of %s finished.'</span> <span class="token operator">%</span> fashion<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="图片预处理"><a href="#图片预处理" class="headerlink" title="图片预处理"></a>图片预处理</h2><p>FashionMNIST数据集里面的图片是28*28的灰度图，因此我们设计的卷积神经网络FashionCNN第一层的输入就是1*28*28。</p>
 <p>而我们从网上爬取到的图片很难满足这样的要求，因此我们需要进行图片预处理之后才可以让FashionCNN来进行分类。</p>
 <p><strong>预处理步骤:</strong></p>
@@ -935,12 +922,10 @@ plt<span class="token punctuation">.</span>show<span class="token punctuation">(
 image<span class="token operator">=</span>cv<span class="token punctuation">.</span>imread<span class="token punctuation">(</span><span class="token string">"src/test/T-shirt/005.jpg"</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span>
 
 plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>cv<span class="token punctuation">.</span>cvtColor<span class="token punctuation">(</span>image<span class="token punctuation">,</span>cv<span class="token punctuation">.</span>COLOR_BGR2RGB<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><img src="/images/machine-learning-7/output_29_1.png"></p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">_<span class="token punctuation">,</span> img_binary <span class="token operator">=</span> cv<span class="token punctuation">.</span>threshold<span class="token punctuation">(</span>image<span class="token punctuation">,</span> <span class="token number">250</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> cv<span class="token punctuation">.</span>THRESH_BINARY_INV<span class="token punctuation">)</span>
 
 plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>cv<span class="token punctuation">.</span>cvtColor<span class="token punctuation">(</span>img_binary<span class="token punctuation">,</span>cv<span class="token punctuation">.</span>COLOR_BGR2RGB<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p><img src="/images/machine-learning-7/output_30_1.png"></p>
 </li>
 <li><p><strong>进行轮廓检测并且填充轮廓，处理掉轮廓面积过大的图片，利用填充的轮廓作为mask来提取服装</strong></p>
@@ -965,7 +950,6 @@ w<span class="token punctuation">,</span> h <span class="token operator">=</span
     plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>cv<span class="token punctuation">.</span>cvtColor<span class="token punctuation">(</span>img_end<span class="token punctuation">,</span> cv<span class="token punctuation">.</span>COLOR_BGR2RGB<span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token keyword">else</span><span class="token punctuation">:</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"轮廓检测填充方法失败！"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><img src="/images/machine-learning-7/output_32_0.png"></p>
 </li>
 <li><p><strong>调整分辨率并进行归一化处理</strong></p>
@@ -975,7 +959,6 @@ new_image <span class="token operator">=</span> np<span class="token punctuation
 cv<span class="token punctuation">.</span>normalize<span class="token punctuation">(</span>img_end<span class="token punctuation">,</span> new_image<span class="token punctuation">,</span> alpha<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> beta<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> norm_type<span class="token operator">=</span>cv<span class="token punctuation">.</span>NORM_MINMAX<span class="token punctuation">,</span> dtype<span class="token operator">=</span>cv<span class="token punctuation">.</span>CV_32F<span class="token punctuation">)</span>
 
 plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>cv<span class="token punctuation">.</span>cvtColor<span class="token punctuation">(</span>new_image<span class="token punctuation">,</span> cv<span class="token punctuation">.</span>COLOR_BGR2RGB<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><img src="/images/machine-learning-7/output_35_1.png"></p>
 </li>
 <li><p><strong>整合图片处理的过程，并且打上标签</strong></p>
@@ -1011,11 +994,9 @@ plt<span class="token punctuation">.</span>imshow<span class="token punctuation"
             labels<span class="token punctuation">.</span>append<span class="token punctuation">(</span>np<span class="token punctuation">.</span>argmax<span class="token punctuation">(</span>label<span class="token punctuation">)</span><span class="token punctuation">)</span>
     <span class="token comment"># print(labels)</span>
     <span class="token keyword">return</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>labels<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token builtin">sum</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="测试CNN"><a href="#测试CNN" class="headerlink" title="测试CNN"></a>测试CNN</h2><p>首先要引用图像预处理的代码和可视化部分的代码，以及其他库</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> src<span class="token punctuation">.</span>processImage <span class="token keyword">import</span> get_dataset
 <span class="token keyword">from</span> src<span class="token punctuation">.</span>fashion_tools <span class="token keyword">import</span> display_result<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <h3 id="对FashionMNIST测试集进行测试"><a href="#对FashionMNIST测试集进行测试" class="headerlink" title="对FashionMNIST测试集进行测试"></a>对FashionMNIST测试集进行测试</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">display<span class="token operator">=</span><span class="token boolean">True</span>
 
 <span class="token comment"># 加载模型</span>
@@ -1074,11 +1055,9 @@ accuracy <span class="token operator">=</span> correct <span class="token operat
     plt<span class="token punctuation">.</span>xlabel<span class="token punctuation">(</span><span class="token string">'Predict'</span><span class="token punctuation">)</span>
 
     plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>输出结果：</p>
 <pre class="line-numbers language-none"><code class="language-none">Accuracy: 83.73999786376953%
 不支持类别个数: 176<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p><img src="/images/machine-learning-7/output_42_2.png"></p>
 <p><img src="/images/machine-learning-7/output_42_3.png"></p>
 <h3 id="对爬虫得到的数据集进行测试"><a href="#对爬虫得到的数据集进行测试" class="headerlink" title="对爬虫得到的数据集进行测试"></a>对爬虫得到的数据集进行测试</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">display<span class="token operator">=</span><span class="token boolean">True</span>
@@ -1139,11 +1118,9 @@ accuracy <span class="token operator">=</span> correct <span class="token operat
     plt<span class="token punctuation">.</span>xlabel<span class="token punctuation">(</span><span class="token string">'Predict'</span><span class="token punctuation">)</span>
 
     plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>输出结果：</p>
 <pre class="line-numbers language-none"><code class="language-none">Accuracy: 61.000003814697266%
 不支持类别个数: 22    <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p><img src="/images/machine-learning-7/output_44_3.png"></p>
 <p><img src="/images/machine-learning-7/output_44_4.png"></p>
 
