@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="EN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"><title>Quanxiang's Homepage</title><meta name="author"><link rel="shortcut icon" href="/homepage/img/favicon.png"><link rel="stylesheet" href="/homepage/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><meta name="generator" content="Hexo 5.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/homepage/atom.xml" title="Quanxiang's Homepage" type="application/atom+xml">
+</head><body><header id="page_header"><div class="header_wrap"><div id="blog_name"><a class="blog_title" id="site-name" href="/homepage/">Quanxiang's Homepage</a></div><button class="menus_icon"><div class="navicon"></div></button><ul class="menus_items"><li class="menus_item"><a class="site-page" href="/homepage/"> About Me</a></li><li class="menus_item"><a class="site-page" href="/homepage/#News"> News</a></li><li class="menus_item"><a class="site-page" href="/homepage/#Projects"> Projects</a></li><li class="menus_item"><a class="site-page" href="/homepage/#Honors-and-Awards"> Honors and Awards</a></li><li class="menus_item"><a class="site-page" href="/homepage/#Educations"> Educations</a></li><li class="menus_item"><a class="site-page" href="https://immortalqx.github.io"> Blog</a></li></ul></div></header><main id="page_main"><div class="side-card sticky"><div class="card-wrap" itemscope itemtype="http://schema.org/Person"><div class="author-avatar"><img class="avatar-img" src="/homepage/img/avatar.jpg" onerror="this.onerror=null;this.src='/homepage/img/profile.jpg'" alt="avatar"></div><div class="author-discrip"><h3>Quanxiang Liu</h3><p class="author-bio">Undergraduate students at Northwestern Polytechnic University. Focusing on SLAM and robotics.</p></div><div class="author-links"><button class="btn m-social-links">Links</button><ul class="social-icons"><li><a class="social-icon" href="/homepage/img/qq_qrcode.jpg" target="_blank"><i class="fab fa-qq" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/homepage/img/wechat_qrcode.jpg" target="_blank"><i class="fab fa-weixin" aria-hidden="true"></i></a></li><li><a class="social-icon" href="https://github.com/Immortalqx" target="_blank"><i class="fab fa-github" aria-hidden="true"></i></a></li><li><a class="social-icon" href="mailto:immortalqx@gmail.com" target="_blank"><i class="fas fa-envelope" aria-hidden="true"></i></a></li></ul></div><a class="cv-links" href="/homepage/attaches/CV.pdf" target="_blank"><i class="fas fa-file-pdf" aria-hidden="true"><span>CV</span></i></a></div></div><div class="page" itemscope itemtype="http://schema.org/CreativeWork"><h2 class="page-title">Hexo中同时使用多个主题</h2><article><h1 id="Hexo中同时使用多个主题"><a href="#Hexo中同时使用多个主题" class="headerlink" title="Hexo中同时使用多个主题"></a>Hexo中同时使用多个主题</h1><p>最近想在github上搭建一个Homepage，但是我的博客已经把immortalqx.github.io这个坑给占着了。</p>
+<p>一个很自然的想法就是让Hexo同时使用多个主题，一个主题给我的博客，一个主题给我的Homepage，这样就可以在保持博客现状的情况下搭建一个风格严谨的Homepage。</p>
+<h3 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h3><p>类似于<code>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</code>这样的命令，对hexo来说是默认按照<code>_config.yml</code>设定的参数来执行渲染的。而<code>_config.yml</code>文件中指定了网站的url、root、source_dir和public_dir等非常关键的数据。</p>
+<p>所以我们可以写两个config文件，比如<code>_config.yml</code>继续用于博客，然后新建一个<code>_config_homepage.yml</code>用于搭建Homepage。之后，我们可以通过<code>hexo g</code>可以默认使用<code>_config.yml</code>来搭建博客，再通过<code>hexo --config _config_homepage.yml g</code>来指定Homepage的config文件来搭建Homepage。</p>
+<p>在使用<code>hexo --config _config_homepage.yml</code>之前，我们还需要修改<code>_config_homepage.yml</code>文件中的参数，让Homepage依附于博客，即把Homepage的public_dir放到博客的public_dir下，这样就可以通过类似于immortalqx.github.io/homepage的形式来访问Homepage。</p>
+<h3 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h3><h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><ol>
+<li><p>更改博客采用的主题的config文件，将新增Homepage的标签（不同主题设置有区别，这里以<a target="_blank" rel="noopener" href="https://github.com/blinkfox/hexo-theme-matery">matery</a>为例）。</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">menu</span><span class="token punctuation">:</span>
+  <span class="token key atrule">Index</span><span class="token punctuation">:</span>
+    <span class="token key atrule">url</span><span class="token punctuation">:</span> /
+    <span class="token key atrule">icon</span><span class="token punctuation">:</span> fas fa<span class="token punctuation">-</span>home
+<span class="token punctuation">...</span><span class="token punctuation">...</span>
+  <span class="token key atrule">Homepage</span><span class="token punctuation">:</span>
+    <span class="token key atrule">url</span><span class="token punctuation">:</span> /homepage
+    <span class="token key atrule">icon</span><span class="token punctuation">:</span> fas fa<span class="token punctuation">-</span>award<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p>复制root目录下的<code>_config.yml</code>文件，重命名为<code>_config_homepage.yml</code>。</p>
+</li>
+<li><p>安装需要使用的新主题（以<a target="_blank" rel="noopener" href="https://github.com/PhosphorW/hexo-theme-academia">academia</a>为例）。注意要记得安装新主题需要的一些依赖，防止无法进行渲染。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token builtin class-name">cd</span> your-hexo-directory
+<span class="token function">git</span> clone https://github.com/PhosphorW/hexo-theme-academia.git themes/academia<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+<li><p>修改<code>_config_homepage.yml</code>文件，（下面仅列出需要修改的数据，根据使用的主题要修改的数据可能不一样）。</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment"># Site</span>
+<span class="token comment"># 部分选项置空，防止和采用的theme冲突</span>
+<span class="token key atrule">title</span><span class="token punctuation">:</span> Homepage
+<span class="token key atrule">subtitle</span><span class="token punctuation">:</span> <span class="token string">'Homepage'</span>
+<span class="token key atrule">description</span><span class="token punctuation">:</span>
+<span class="token key atrule">keywords</span><span class="token punctuation">:</span>
+<span class="token key atrule">author</span><span class="token punctuation">:</span>
+<span class="token key atrule">language</span><span class="token punctuation">:</span> EN
+<span class="token key atrule">timezone</span><span class="token punctuation">:</span> <span class="token string">''</span>
+
+<span class="token punctuation">...</span><span class="token punctuation">...</span>
+
+<span class="token comment"># URL</span>
+<span class="token comment"># 在原来的基础上增加一个“/homepage”</span>
+<span class="token key atrule">url</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//Immortalqx.github.io/homepage
+<span class="token key atrule">root</span><span class="token punctuation">:</span> /homepage
+
+<span class="token punctuation">...</span><span class="token punctuation">...</span>
+
+<span class="token comment"># Directory</span>
+<span class="token comment"># 新设置一个source文件夹，但是public文件夹要放到博客的public文件夹下(这样才能够在博客中打开Homepage)</span>
+<span class="token key atrule">source_dir</span><span class="token punctuation">:</span> source_homepage
+<span class="token key atrule">public_dir</span><span class="token punctuation">:</span> public/homepage
+
+<span class="token punctuation">...</span><span class="token punctuation">...</span>
+
+<span class="token comment"># Extensions</span>
+<span class="token comment">## Plugins: https://hexo.io/plugins/</span>
+<span class="token comment">## Themes: https://hexo.io/themes/</span>
+<span class="token comment"># 设置成需要使用的新主题</span>
+<span class="token key atrule">theme</span><span class="token punctuation">:</span> academia<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p>修改academia主题的config，更改资源文件目录，icon、favicon等。这里就看个人喜好了，可以在这里新增一个跳转到博客的链接，也可以不写。</p>
+</li>
+<li><p>创建采用新主题的页面：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">hexo --config _config_homepage.yml new <span class="token string">"xxxxx"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li><p>在新页面中增加内容。</p>
+</li>
+</ol>
+<h4 id="开始部署"><a href="#开始部署" class="headerlink" title="开始部署"></a>开始部署</h4><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">hexo cl
+hexo --config _config.yml g
+hexo --config _config_homepage.yml g
+hexo d<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>注意事项：</p>
+<ul>
+<li>由于本博客介绍的方法中，新主题渲染的页面在博客的public文件夹下，所以可以通过<code>hexo cl</code>来清除原来渲染的页面。</li>
+<li>通过<code>hexo --config</code>来指定config文件渲染博客和Homepage。</li>
+<li>由于所有渲染内容都在原博客的public文件夹下，所以这里对应的是同一个github仓库，只需要<code>hexo d</code>就能同时把两个主题渲染的页面推送过去。</li>
+</ul>
+</article></div></main><div class="nav-wrap"><div class="nav"><button class="site-nav"><div class="navicon"></div></button><ul class="nav_items"><li class="nav_item"><a class="nav-page" href="/homepage/"> About Me</a></li><li class="nav_item"><a class="nav-page" href="/homepage/#News"> News</a></li><li class="nav_item"><a class="nav-page" href="/homepage/#Projects"> Projects</a></li><li class="nav_item"><a class="nav-page" href="/homepage/#Honors-and-Awards"> Honors and Awards</a></li><li class="nav_item"><a class="nav-page" href="/homepage/#Educations"> Educations</a></li><li class="nav_item"><a class="nav-page" href="https://immortalqx.github.io"> Blog</a></li></ul></div><div class="cd-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div></div><footer id="page_footer"><div class="footer_wrap"><div class="copyright">&copy;2022 by null</div><div class="theme-info">Powered by <a target="_blank" href="https://hexo.io" rel="nofollow noopener">Hexo</a> & <a target="_blank" href="https://github.com/PhosphorW/hexo-theme-academia" rel="nofollow noopener">Academia Theme</a></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery-pjax@latest/jquery.pjax.min.js"></script><script src="/homepage/js/main.js"></script></body></html>

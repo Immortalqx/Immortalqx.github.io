@@ -6,7 +6,7 @@
   <link href="http://immortalqx.github.io/atom.xml" rel="self"/>
   
   <link href="http://immortalqx.github.io/"/>
-  <updated>2022-04-10T09:34:05.170Z</updated>
+  <updated>2022-04-17T10:05:07.377Z</updated>
   <id>http://immortalqx.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hexo中同时使用多个主题</title>
+    <link href="http://immortalqx.github.io/2022/04/17/hexo-multi-theme/"/>
+    <id>http://immortalqx.github.io/2022/04/17/hexo-multi-theme/</id>
+    <published>2022-04-17T09:19:06.000Z</published>
+    <updated>2022-04-17T10:05:07.377Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Hexo中同时使用多个主题&quot;&gt;&lt;a href=&quot;#Hexo中同时使用多个主题&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="其他" scheme="http://immortalqx.github.io/categories/%E5%85%B6%E4%BB%96/"/>
+    
+    
+    <category term="Hexo" scheme="http://immortalqx.github.io/tags/Hexo/"/>
+    
+  </entry>
   
   <entry>
     <title>C++中的前置声明</title>
@@ -510,31 +535,6 @@
     
     
     <category term="C++基础" scheme="http://immortalqx.github.io/tags/C-%E5%9F%BA%E7%A1%80/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Harris角点检测原理</title>
-    <link href="http://immortalqx.github.io/2021/11/21/opencv-notes-5/"/>
-    <id>http://immortalqx.github.io/2021/11/21/opencv-notes-5/</id>
-    <published>2021-11-21T07:00:17.000Z</published>
-    <updated>2022-01-11T09:10:51.453Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;Harris角点检测原理&quot;&gt;&lt;a href=&quot;#Harris角点检测原理&quot; class=&quot;headerlink&quot; title=&quot;Harris角点检测原理&quot;&gt;&lt;/a&gt;Harris角点检测原理&lt;/h1&gt;&lt;p&gt;Harris角点最早在paper A Combined</summary>
-        
-      
-    
-    
-    
-    <category term="计算机视觉" scheme="http://immortalqx.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/"/>
-    
-    
-    <category term="OpenCV" scheme="http://immortalqx.github.io/tags/OpenCV/"/>
     
   </entry>
   

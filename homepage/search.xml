@@ -805,150 +805,6 @@ geometry_msgs/Transform transform
       </tags>
   </entry>
   <entry>
-    <title>ROS中的URDF</title>
-    <url>/homepage/2021/07/18/ros-notes-5/</url>
-    <content><![CDATA[<h1 id="ROS中的URDF"><a href="#ROS中的URDF" class="headerlink" title="ROS中的URDF"></a>ROS中的URDF</h1><h2 id="什么是URDF"><a href="#什么是URDF" class="headerlink" title="什么是URDF"></a>什么是URDF</h2><ul>
-<li><p>Unified Robot Description Format，统一机器人描述格式，简称为URDF；</p>
-</li>
-<li><p>ROS中一个非常重要的机器人模型描述格式；</p>
-</li>
-<li><p>URDF文件使用XML格式描述机器人模型；</p>
-</li>
-<li><p>ROS中的urdf功能包包含一个URDF的C++解析器。</p>
-</li>
-</ul>
-<h2 id="URDF标签说明"><a href="#URDF标签说明" class="headerlink" title="URDF标签说明"></a>URDF标签说明</h2><h3 id="lt-link-gt"><a href="#lt-link-gt" class="headerlink" title="<link>"></a>&lt;link&gt;</h3><p><strong>作用：</strong></p>
-<ul>
-<li>描述机器人某个刚体部分的外观和物理属性；</li>
-<li>尺寸（size）、颜色（color）、形状（shape）、惯性矩阵（inertial matrix）、碰撞参数（collision properties）等。</li>
-</ul>
-<img src="/images/ros-notes/5-1.png" style="zoom:33%;">
-
-<p><strong>子标签：</strong></p>
-<ul>
-<li>&lt;visual&gt;：描述机器人link部分的外观参数；</li>
-<li>&lt;inertial&gt;：描述link的惯性参数；</li>
-<li>&lt;collision&gt;：描述link的碰撞属性。</li>
-</ul>
-<img src="/images/ros-notes/5-2.png" style="zoom: 67%;">
-
-<h3 id="lt-joint-gt"><a href="#lt-joint-gt" class="headerlink" title="<joint>"></a>&lt;joint&gt;</h3><p><strong>作用：</strong></p>
-<ul>
-<li>描述机器人关节的运动学和动力学属性；</li>
-<li>包括关节运动的位置和速度限制；</li>
-<li>根据关节运动的形式，可以将其分为六种类型。</li>
-</ul>
-<img src="/images/ros-notes/5-3.png" style="zoom:33%;">
-
-<table>
-<thead>
-<tr>
-<th>关节类型</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>continuous</td>
-<td>旋转关节，可以围绕单轴无限旋转</td>
-</tr>
-<tr>
-<td>revolute</td>
-<td>旋转关节，类似于continuous，但有旋转的角度限制</td>
-</tr>
-<tr>
-<td>prismatic</td>
-<td>滑动关节，沿某一轴线移动的关节，带有位置极限</td>
-</tr>
-<tr>
-<td>planar</td>
-<td>平面关节，允许在平面正交方向上平移或者旋转</td>
-</tr>
-<tr>
-<td>floating</td>
-<td>浮动关节，允许进行平移、旋转运动</td>
-</tr>
-<tr>
-<td>fixed</td>
-<td>固定关节，不允许运动的特殊关节</td>
-</tr>
-</tbody></table>
-<p><strong>子标签：</strong></p>
-<ul>
-<li>&lt;calibration&gt;：关节的参考位置，用来校准关节的绝对位置；</li>
-<li>&lt;dynamics&gt;：描述关节的物理属性，例如阻尼值、物理静摩擦力等，经常在动力学仿真中用到；</li>
-<li>&lt;limit&gt;：描述运动的一些极限值，包括关节运动的上下限位置、速度限制、力矩限制等；</li>
-<li>&lt;mimic&gt;：描述该关节与已有关节的关系；</li>
-<li>&lt;safety＿controller&gt;：描述安全控制器参数。 </li>
-</ul>
-<img src="/images/ros-notes/5-4.png" style="zoom:67%;">
-
-<h3 id="lt-robot-gt"><a href="#lt-robot-gt" class="headerlink" title="<robot>"></a>&lt;robot&gt;</h3><ul>
-<li>完整机器人模型的最顶层标签；</li>
-<li>&lt;link&gt;和&lt;joint&gt;标签都必须包含在&lt;robot&gt;标签内。</li>
-</ul>
-<img src="/images/ros-notes/5-5.png" style="zoom:33%;">
-
-<p>一个完整的机器人模型，由一系列&lt;link&gt;和&lt;joint&gt;组成。</p>
-<img src="/images/ros-notes/5-6.png" style="zoom:67%;">
-
-<h2 id="URDF建模优化"><a href="#URDF建模优化" class="headerlink" title="URDF建模优化"></a>URDF建模优化</h2><h3 id="URDF建模存在的问题："><a href="#URDF建模存在的问题：" class="headerlink" title="URDF建模存在的问题："></a>URDF建模存在的问题：</h3><ol>
-<li>模型冗长，重复内容过多；</li>
-<li>参数修改麻烦，不便于二次开发；</li>
-<li>没有参数计算的功能。</li>
-</ol>
-<h3 id="URDF模型的进化版本——xacro模型文件"><a href="#URDF模型的进化版本——xacro模型文件" class="headerlink" title="URDF模型的进化版本——xacro模型文件"></a>URDF模型的进化版本——xacro模型文件</h3><ul>
-<li>精简模型代码<ul>
-<li>创建宏定义</li>
-<li>文件包含</li>
-</ul>
-</li>
-<li>提供可编程接口<ul>
-<li>常量</li>
-<li>变量</li>
-<li>数学计算</li>
-<li>条件语句</li>
-</ul>
-</li>
-</ul>
-<h3 id="常量的定义和使用"><a href="#常量的定义和使用" class="headerlink" title="常量的定义和使用"></a>常量的定义和使用</h3><p>常量定义：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>M_PI<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>3.14159<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>常量使用：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpy</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>${M_PI/2} 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<img src="/images/ros-notes/5-7.png" style="zoom:67%;">
-
-<h3 id="数学计算"><a href="#数学计算" class="headerlink" title="数学计算"></a>数学计算</h3><p>数学计算：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 ${(motor_length+wheel_length)/2} 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpx</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<img src="/images/ros-notes/5-8.png" style="zoom:67%;">
-
-<p>注意：所有的数学运算都会转换成浮点数进行，以保证运算精度。</p>
-<h3 id="宏定义"><a href="#宏定义" class="headerlink" title="宏定义"></a>宏定义</h3><p>宏定义：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>macro</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">params</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A B C<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
-    ......
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">sacro:</span>macros</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>宏调用：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span> <span class="token attr-name">A</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A_value<span class="token punctuation">"</span></span> <span class="token attr-name">B</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>B_value<span class="token punctuation">"</span></span> <span class="token attr-name">C</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>C_value<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<img src="/images/ros-notes/5-9.png" style="zoom:67%;">
-
-<h3 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h3><p>文件包含：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">xacro:</span>include</span> <span class="token attr-name">filename</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find mbot_description)/urdf/xacro/mbot_base.xacro<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<img src="/images/ros-notes/5-10.png" style="zoom:67%;">
-
-<h3 id="模型显示"><a href="#模型显示" class="headerlink" title="模型显示"></a>模型显示</h3><p>方法一：将xacro文件转换成URDF文件后显示</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun xacro xacro.py mbot.xacro<span class="token operator">&gt;</span>mbot.urdf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>方法二：直接调用xacro文件解析器</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>arg</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>model<span class="token punctuation">"</span></span> <span class="token attr-name">default</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find xacro)/xacro --inorder <span class="token punctuation">'</span>$(find mbot_description)/urdf/xacro/mbot.xacro<span class="token punctuation">'</span><span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>robot_description<span class="token punctuation">"</span></span> <span class="token attr-name">command</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(arg model)<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">roslaunch mbot_description display_mbot_base_xacro.launch<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>相关学习资料：<a href="http://wiki.ros.org/urdf/Tutorials">http://wiki.ros.org/urdf/Tutorials</a></p>
-]]></content>
-      <categories>
-        <category>ROS</category>
-      </categories>
-      <tags>
-        <tag>ROS基础</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>PX4 Offboard Control Using MAVROS on Gazebo</title>
     <url>/homepage/2021/07/23/ros-notes-6/</url>
     <content><![CDATA[<h1 id="PX4-Offboard-Control-Using-MAVROS-on-Gazebo"><a href="#PX4-Offboard-Control-Using-MAVROS-on-Gazebo" class="headerlink" title="PX4 Offboard Control Using MAVROS on Gazebo"></a>PX4 Offboard Control Using MAVROS on Gazebo</h1><p>最近在学习PX4和mavros，感觉px4官网的教程总体上讲得不错，但有一些地方不是很友好，比如offboard control这一块儿，讲的比较简单，省略了gazebo的使用，我上网查了一大堆资料才勉强把这个示例代码在gazebo中跑出来。所以这里做一个记录，希望对看到的人有点帮助。</p>
@@ -1165,77 +1021,147 @@ mavros_msgs<span class="token double-colon punctuation">::</span>State current_s
       </tags>
   </entry>
   <entry>
-    <title>航拍笔记（零）：准备、检查与保养</title>
-    <url>/homepage/2021/08/22/aerial-note-0/</url>
-    <content><![CDATA[<h1 id="航拍笔记（零）：准备、检查与保养"><a href="#航拍笔记（零）：准备、检查与保养" class="headerlink" title="航拍笔记（零）：准备、检查与保养"></a>航拍笔记（零）：准备、检查与保养</h1><h2 id="一、前期准备"><a href="#一、前期准备" class="headerlink" title="一、前期准备"></a>一、前期准备</h2><ol>
-<li><strong>查询拍摄城市的无人机禁（限）飞区</strong>，这一点可以去无人机厂家官网、当地政府部门网站等地方查询；</li>
-<li><strong>提前观察飞行环境</strong>，做好航线规划，选择四周及上方空旷、地面平整的场地作为起降点；</li>
-<li><strong>关注天气预报</strong>，确认拍摄当天的天气状况，避免在大风、雨雾、雷电等恶劣天气飞行；</li>
-<li><strong>对无人机所有部件进行详细检查</strong>，确保无损伤，特别要注意检查动力电池的健康状态。</li>
-</ol>
-<h2 id="二、起飞检查"><a href="#二、起飞检查" class="headerlink" title="二、起飞检查"></a>二、起飞检查</h2><ol>
-<li>确认自己已获得飞行许可，或不在禁（限）飞区；</li>
-<li>如果环境温度低于15摄氏度，建议将动力电池预热（可用车载空调）到30摄氏度以上，极寒天气还应对电池做好保温措施；</li>
-<li>设置安全的自动返航高度，同时建议记下一个起降点附近的明显参照物，以备出现紧急情况时快速找到返航点；</li>
-<li>再次检查无人机各部件是否有损伤、连接是否正常、可靠，动力电池、地面站（遥控、图传）电量充足；</li>
-<li>起飞前对无人机做一次指南针校准，并确认无人机已记录返航点；</li>
-<li>飞手精神状态良好，如果近视请带上眼镜；</li>
-<li>起飞前，注意引导围观者（特别是好奇心重的小朋友）远离无人机；</li>
-</ol>
-<h2 id="三、飞行期间的注意事项"><a href="#三、飞行期间的注意事项" class="headerlink" title="三、飞行期间的注意事项"></a>三、飞行期间的注意事项</h2><ol>
-<li><strong>飞行切记炫耀、浮躁，飞手应该保持沉稳冷静的心态；</strong></li>
-<li><strong>避免无人机在人群密集处上空悬停，远离电力线、通信线、移动通信塔等可能的干扰源；</strong></li>
-<li><strong>尽可能保持无人机在视距内飞行</strong>，最好不要绕飞至建筑物背后（远离起飞点的一侧），因为这样容易导致无人机失去遥控（图传）信号；</li>
-<li>航拍时，云台相机视角常常与第一飞行视角不一致，飞手应<strong>留意无人机机头朝向，避免出现误操作</strong>；</li>
-<li><strong>关注监视器上无人机航行仪表信息</strong>，如飞行途中出现异常，应立即查明原因并排除，必要时中止飞行，并立即返航降落；</li>
-<li><strong>随时关注无人机动力电池电量</strong>，切忌低电量贪飞，确保有足够的时间返航。</li>
-</ol>
-<h2 id="四、返航降落"><a href="#四、返航降落" class="headerlink" title="四、返航降落"></a>四、返航降落</h2><ol>
-<li>拍摄结束或电量不足返航时，注意避开障碍物，保持足够的净空安全距离；</li>
-<li><strong>对于旋翼飞行器，下降（竖直）速度不宜过快</strong>，过快的下降速度容易导致无人机姿态失稳，可采用斜向返航的飞行方式增强无人机姿态稳定性；</li>
-<li>着陆前瞬间，俯仰、横滚舵宜归中，无人机不要出现大幅度水平移动，避免侧翻；</li>
-<li>着陆后，无人机螺旋桨完全停止转动前，所有人员不要靠近无人机；</li>
-<li>航拍作业完成，<strong>先关无人机动力电源，再关地面站（遥控、图传）电源</strong>；</li>
-<li>飞行结束，请参照原厂说明书对电池进行保养。</li>
-</ol>
-<h2 id="五、保养"><a href="#五、保养" class="headerlink" title="五、保养"></a>五、保养</h2><h3 id="电池"><a href="#电池" class="headerlink" title="电池"></a>电池</h3><ol>
-<li><p>避免在强静电或者磁场环境中使用电池。</p>
+    <title>ROS中的URDF</title>
+    <url>/homepage/2021/07/18/ros-notes-5/</url>
+    <content><![CDATA[<h1 id="ROS中的URDF"><a href="#ROS中的URDF" class="headerlink" title="ROS中的URDF"></a>ROS中的URDF</h1><h2 id="什么是URDF"><a href="#什么是URDF" class="headerlink" title="什么是URDF"></a>什么是URDF</h2><ul>
+<li><p>Unified Robot Description Format，统一机器人描述格式，简称为URDF；</p>
 </li>
-<li><p>请勿在电池电源打开的状态下插拔电池，若电池接口有污物，可用干布擦拭干净。</p>
+<li><p>ROS中一个非常重要的机器人模型描述格式；</p>
 </li>
-<li><p>电池应在 -10℃ 至 40℃* 的环境下使用，当飞行环境低于 5℃ 时，应提前将电池放置在常温环境下进行预热，充分预热至 20°C 以上。</p>
-<p><em>部分机型如 Mavic Mini 的工作环境为 0℃ 至 40℃；</em> </p>
-<p><em>悟 Inspire 2 可在 -20℃ 至 40℃ 环境下工作 ，且有自加热功能。</em></p>
+<li><p>URDF文件使用XML格式描述机器人模型；</p>
 </li>
-<li><p>如有破损、膨胀、漏液等异常现象，请勿再次使用。</p>
-<p><em>电池内部液体有强腐蚀性，如有泄露，请远离。</em></p>
+<li><p>ROS中的urdf功能包包含一个URDF的C++解析器。</p>
 </li>
-<li><p>电池可充电环境温度为 5℃ - 40℃，理想的充电环境温度（22℃-28℃）可大幅度延长电池寿命，飞行结束后，建议待降至室温后再进行充电。</p>
-</li>
-</ol>
-<p><strong>电池存放建议：</strong></p>
-<ul>
-<li>设备不使用时，电池需单独存放；</li>
-<li>保持存放环境干燥，不可将电池放置于靠近热源、易燃易爆品的区域；</li>
-<li>避免电池长期放置在低温的室外，否则电池活性将大大降低，甚至造成锂电池性能不可逆的下降；</li>
-<li>电池请勿在完全放电状态下长期放置，以免电池进入过放状态造成电芯损害，应将电池放电至 40%-65% 电量进行存放；</li>
-<li>建议 2-3 个月重新充放电一次，以保证电池活性；</li>
-<li>长期存储时，在-10°C~45°C范围内的环境中存放。</li>
 </ul>
-<h3 id="电机"><a href="#电机" class="headerlink" title="电机"></a>电机</h3><p>检查电机无沙尘和水渍，并活动各个电机轴，确认与机臂固定牢固且能顺畅达到最大位置，然后卸下桨叶后开机并启动电机，判断电机有无异响。</p>
-<h3 id="桨叶"><a href="#桨叶" class="headerlink" title="桨叶"></a>桨叶</h3><p>检查桨叶是否有破损、变形，若存在异常，则更换新的桨叶。在飞行时，建议给桨叶安装桨叶保护罩。</p>
-<h3 id="云台相机"><a href="#云台相机" class="headerlink" title="云台相机"></a>云台相机</h3><p>检查镜头无划痕、破损、污垢，云台卡扣是否有异物、排线是否正常连接。必要时，对云台相机做一个自动校准，点选 App 中的云台设置——云台自动校准。</p>
-<h3 id="视觉系统"><a href="#视觉系统" class="headerlink" title="视觉系统"></a>视觉系统</h3><p>检查视觉避障系统与红外传感器镜片是否有划痕、破损或污渍。</p>
-<h3 id="遥控器"><a href="#遥控器" class="headerlink" title="遥控器"></a>遥控器</h3><p>检查遥控器天线是否有损坏，以及按键是否可以正常按压反馈，并且遥控器遥杆等是否正常。</p>
-<h3 id="App和固件版本"><a href="#App和固件版本" class="headerlink" title="App和固件版本"></a>App和固件版本</h3><p>及时更新 app 和固件版本，提升拍摄体验的同时能获得得到更好的拍摄效果。</p>
-<p><strong>附一张无人机飞行检查表</strong></p>
-<p><img src="/images/aerial-notes/0-1.jpg"></p>
+<h2 id="URDF标签说明"><a href="#URDF标签说明" class="headerlink" title="URDF标签说明"></a>URDF标签说明</h2><h3 id="lt-link-gt"><a href="#lt-link-gt" class="headerlink" title="<link>"></a>&lt;link&gt;</h3><p><strong>作用：</strong></p>
+<ul>
+<li>描述机器人某个刚体部分的外观和物理属性；</li>
+<li>尺寸（size）、颜色（color）、形状（shape）、惯性矩阵（inertial matrix）、碰撞参数（collision properties）等。</li>
+</ul>
+<img src="/images/ros-notes/5-1.png" style="zoom:33%;">
+
+<p><strong>子标签：</strong></p>
+<ul>
+<li>&lt;visual&gt;：描述机器人link部分的外观参数；</li>
+<li>&lt;inertial&gt;：描述link的惯性参数；</li>
+<li>&lt;collision&gt;：描述link的碰撞属性。</li>
+</ul>
+<img src="/images/ros-notes/5-2.png" style="zoom: 67%;">
+
+<h3 id="lt-joint-gt"><a href="#lt-joint-gt" class="headerlink" title="<joint>"></a>&lt;joint&gt;</h3><p><strong>作用：</strong></p>
+<ul>
+<li>描述机器人关节的运动学和动力学属性；</li>
+<li>包括关节运动的位置和速度限制；</li>
+<li>根据关节运动的形式，可以将其分为六种类型。</li>
+</ul>
+<img src="/images/ros-notes/5-3.png" style="zoom:33%;">
+
+<table>
+<thead>
+<tr>
+<th>关节类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>continuous</td>
+<td>旋转关节，可以围绕单轴无限旋转</td>
+</tr>
+<tr>
+<td>revolute</td>
+<td>旋转关节，类似于continuous，但有旋转的角度限制</td>
+</tr>
+<tr>
+<td>prismatic</td>
+<td>滑动关节，沿某一轴线移动的关节，带有位置极限</td>
+</tr>
+<tr>
+<td>planar</td>
+<td>平面关节，允许在平面正交方向上平移或者旋转</td>
+</tr>
+<tr>
+<td>floating</td>
+<td>浮动关节，允许进行平移、旋转运动</td>
+</tr>
+<tr>
+<td>fixed</td>
+<td>固定关节，不允许运动的特殊关节</td>
+</tr>
+</tbody></table>
+<p><strong>子标签：</strong></p>
+<ul>
+<li>&lt;calibration&gt;：关节的参考位置，用来校准关节的绝对位置；</li>
+<li>&lt;dynamics&gt;：描述关节的物理属性，例如阻尼值、物理静摩擦力等，经常在动力学仿真中用到；</li>
+<li>&lt;limit&gt;：描述运动的一些极限值，包括关节运动的上下限位置、速度限制、力矩限制等；</li>
+<li>&lt;mimic&gt;：描述该关节与已有关节的关系；</li>
+<li>&lt;safety＿controller&gt;：描述安全控制器参数。 </li>
+</ul>
+<img src="/images/ros-notes/5-4.png" style="zoom:67%;">
+
+<h3 id="lt-robot-gt"><a href="#lt-robot-gt" class="headerlink" title="<robot>"></a>&lt;robot&gt;</h3><ul>
+<li>完整机器人模型的最顶层标签；</li>
+<li>&lt;link&gt;和&lt;joint&gt;标签都必须包含在&lt;robot&gt;标签内。</li>
+</ul>
+<img src="/images/ros-notes/5-5.png" style="zoom:33%;">
+
+<p>一个完整的机器人模型，由一系列&lt;link&gt;和&lt;joint&gt;组成。</p>
+<img src="/images/ros-notes/5-6.png" style="zoom:67%;">
+
+<h2 id="URDF建模优化"><a href="#URDF建模优化" class="headerlink" title="URDF建模优化"></a>URDF建模优化</h2><h3 id="URDF建模存在的问题："><a href="#URDF建模存在的问题：" class="headerlink" title="URDF建模存在的问题："></a>URDF建模存在的问题：</h3><ol>
+<li>模型冗长，重复内容过多；</li>
+<li>参数修改麻烦，不便于二次开发；</li>
+<li>没有参数计算的功能。</li>
+</ol>
+<h3 id="URDF模型的进化版本——xacro模型文件"><a href="#URDF模型的进化版本——xacro模型文件" class="headerlink" title="URDF模型的进化版本——xacro模型文件"></a>URDF模型的进化版本——xacro模型文件</h3><ul>
+<li>精简模型代码<ul>
+<li>创建宏定义</li>
+<li>文件包含</li>
+</ul>
+</li>
+<li>提供可编程接口<ul>
+<li>常量</li>
+<li>变量</li>
+<li>数学计算</li>
+<li>条件语句</li>
+</ul>
+</li>
+</ul>
+<h3 id="常量的定义和使用"><a href="#常量的定义和使用" class="headerlink" title="常量的定义和使用"></a>常量的定义和使用</h3><p>常量定义：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>M_PI<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>3.14159<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>常量使用：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpy</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>${M_PI/2} 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<img src="/images/ros-notes/5-7.png" style="zoom:67%;">
+
+<h3 id="数学计算"><a href="#数学计算" class="headerlink" title="数学计算"></a>数学计算</h3><p>数学计算：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 ${(motor_length+wheel_length)/2} 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpx</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<img src="/images/ros-notes/5-8.png" style="zoom:67%;">
+
+<p>注意：所有的数学运算都会转换成浮点数进行，以保证运算精度。</p>
+<h3 id="宏定义"><a href="#宏定义" class="headerlink" title="宏定义"></a>宏定义</h3><p>宏定义：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>macro</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">params</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A B C<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    ......
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">sacro:</span>macros</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>宏调用：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span> <span class="token attr-name">A</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A_value<span class="token punctuation">"</span></span> <span class="token attr-name">B</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>B_value<span class="token punctuation">"</span></span> <span class="token attr-name">C</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>C_value<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<img src="/images/ros-notes/5-9.png" style="zoom:67%;">
+
+<h3 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h3><p>文件包含：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">xacro:</span>include</span> <span class="token attr-name">filename</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find mbot_description)/urdf/xacro/mbot_base.xacro<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<img src="/images/ros-notes/5-10.png" style="zoom:67%;">
+
+<h3 id="模型显示"><a href="#模型显示" class="headerlink" title="模型显示"></a>模型显示</h3><p>方法一：将xacro文件转换成URDF文件后显示</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun xacro xacro.py mbot.xacro<span class="token operator">&gt;</span>mbot.urdf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>方法二：直接调用xacro文件解析器</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>arg</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>model<span class="token punctuation">"</span></span> <span class="token attr-name">default</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find xacro)/xacro --inorder <span class="token punctuation">'</span>$(find mbot_description)/urdf/xacro/mbot.xacro<span class="token punctuation">'</span><span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>robot_description<span class="token punctuation">"</span></span> <span class="token attr-name">command</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(arg model)<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">roslaunch mbot_description display_mbot_base_xacro.launch<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>相关学习资料：<a href="http://wiki.ros.org/urdf/Tutorials">http://wiki.ros.org/urdf/Tutorials</a></p>
 ]]></content>
       <categories>
-        <category>其他</category>
+        <category>ROS</category>
       </categories>
       <tags>
-        <tag>航拍</tag>
+        <tag>ROS基础</tag>
       </tags>
   </entry>
   <entry>
@@ -1353,6 +1279,80 @@ mavros_msgs<span class="token double-colon punctuation">::</span>State current_s
 <p>如果手不听使唤的话，你可以使用兴趣点环绕或通过智能跟随功能来实现哦！</p>
 <h2 id="六、拍人：要多角度拍摄，不要单一拍摄"><a href="#六、拍人：要多角度拍摄，不要单一拍摄" class="headerlink" title="六、拍人：要多角度拍摄，不要单一拍摄"></a>六、拍人：要多角度拍摄，不要单一拍摄</h2><p>除了沿途风光，我们自己的精彩瞬间也需要被记录。很多新手在拍摄人物的时候，会被局限在固有思维里，用单一镜头展现全部动作。</p>
 <p>其实无论是电影里，还是很多抖音上火爆的旅游视频，都非常习惯用多个角度展现人物的状态。这种表达可以更有效地引导观众进入故事情节，有更沉浸式的体验。</p>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>航拍</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>航拍笔记（零）：准备、检查与保养</title>
+    <url>/homepage/2021/08/22/aerial-note-0/</url>
+    <content><![CDATA[<h1 id="航拍笔记（零）：准备、检查与保养"><a href="#航拍笔记（零）：准备、检查与保养" class="headerlink" title="航拍笔记（零）：准备、检查与保养"></a>航拍笔记（零）：准备、检查与保养</h1><h2 id="一、前期准备"><a href="#一、前期准备" class="headerlink" title="一、前期准备"></a>一、前期准备</h2><ol>
+<li><strong>查询拍摄城市的无人机禁（限）飞区</strong>，这一点可以去无人机厂家官网、当地政府部门网站等地方查询；</li>
+<li><strong>提前观察飞行环境</strong>，做好航线规划，选择四周及上方空旷、地面平整的场地作为起降点；</li>
+<li><strong>关注天气预报</strong>，确认拍摄当天的天气状况，避免在大风、雨雾、雷电等恶劣天气飞行；</li>
+<li><strong>对无人机所有部件进行详细检查</strong>，确保无损伤，特别要注意检查动力电池的健康状态。</li>
+</ol>
+<h2 id="二、起飞检查"><a href="#二、起飞检查" class="headerlink" title="二、起飞检查"></a>二、起飞检查</h2><ol>
+<li>确认自己已获得飞行许可，或不在禁（限）飞区；</li>
+<li>如果环境温度低于15摄氏度，建议将动力电池预热（可用车载空调）到30摄氏度以上，极寒天气还应对电池做好保温措施；</li>
+<li>设置安全的自动返航高度，同时建议记下一个起降点附近的明显参照物，以备出现紧急情况时快速找到返航点；</li>
+<li>再次检查无人机各部件是否有损伤、连接是否正常、可靠，动力电池、地面站（遥控、图传）电量充足；</li>
+<li>起飞前对无人机做一次指南针校准，并确认无人机已记录返航点；</li>
+<li>飞手精神状态良好，如果近视请带上眼镜；</li>
+<li>起飞前，注意引导围观者（特别是好奇心重的小朋友）远离无人机；</li>
+</ol>
+<h2 id="三、飞行期间的注意事项"><a href="#三、飞行期间的注意事项" class="headerlink" title="三、飞行期间的注意事项"></a>三、飞行期间的注意事项</h2><ol>
+<li><strong>飞行切记炫耀、浮躁，飞手应该保持沉稳冷静的心态；</strong></li>
+<li><strong>避免无人机在人群密集处上空悬停，远离电力线、通信线、移动通信塔等可能的干扰源；</strong></li>
+<li><strong>尽可能保持无人机在视距内飞行</strong>，最好不要绕飞至建筑物背后（远离起飞点的一侧），因为这样容易导致无人机失去遥控（图传）信号；</li>
+<li>航拍时，云台相机视角常常与第一飞行视角不一致，飞手应<strong>留意无人机机头朝向，避免出现误操作</strong>；</li>
+<li><strong>关注监视器上无人机航行仪表信息</strong>，如飞行途中出现异常，应立即查明原因并排除，必要时中止飞行，并立即返航降落；</li>
+<li><strong>随时关注无人机动力电池电量</strong>，切忌低电量贪飞，确保有足够的时间返航。</li>
+</ol>
+<h2 id="四、返航降落"><a href="#四、返航降落" class="headerlink" title="四、返航降落"></a>四、返航降落</h2><ol>
+<li>拍摄结束或电量不足返航时，注意避开障碍物，保持足够的净空安全距离；</li>
+<li><strong>对于旋翼飞行器，下降（竖直）速度不宜过快</strong>，过快的下降速度容易导致无人机姿态失稳，可采用斜向返航的飞行方式增强无人机姿态稳定性；</li>
+<li>着陆前瞬间，俯仰、横滚舵宜归中，无人机不要出现大幅度水平移动，避免侧翻；</li>
+<li>着陆后，无人机螺旋桨完全停止转动前，所有人员不要靠近无人机；</li>
+<li>航拍作业完成，<strong>先关无人机动力电源，再关地面站（遥控、图传）电源</strong>；</li>
+<li>飞行结束，请参照原厂说明书对电池进行保养。</li>
+</ol>
+<h2 id="五、保养"><a href="#五、保养" class="headerlink" title="五、保养"></a>五、保养</h2><h3 id="电池"><a href="#电池" class="headerlink" title="电池"></a>电池</h3><ol>
+<li><p>避免在强静电或者磁场环境中使用电池。</p>
+</li>
+<li><p>请勿在电池电源打开的状态下插拔电池，若电池接口有污物，可用干布擦拭干净。</p>
+</li>
+<li><p>电池应在 -10℃ 至 40℃* 的环境下使用，当飞行环境低于 5℃ 时，应提前将电池放置在常温环境下进行预热，充分预热至 20°C 以上。</p>
+<p><em>部分机型如 Mavic Mini 的工作环境为 0℃ 至 40℃；</em> </p>
+<p><em>悟 Inspire 2 可在 -20℃ 至 40℃ 环境下工作 ，且有自加热功能。</em></p>
+</li>
+<li><p>如有破损、膨胀、漏液等异常现象，请勿再次使用。</p>
+<p><em>电池内部液体有强腐蚀性，如有泄露，请远离。</em></p>
+</li>
+<li><p>电池可充电环境温度为 5℃ - 40℃，理想的充电环境温度（22℃-28℃）可大幅度延长电池寿命，飞行结束后，建议待降至室温后再进行充电。</p>
+</li>
+</ol>
+<p><strong>电池存放建议：</strong></p>
+<ul>
+<li>设备不使用时，电池需单独存放；</li>
+<li>保持存放环境干燥，不可将电池放置于靠近热源、易燃易爆品的区域；</li>
+<li>避免电池长期放置在低温的室外，否则电池活性将大大降低，甚至造成锂电池性能不可逆的下降；</li>
+<li>电池请勿在完全放电状态下长期放置，以免电池进入过放状态造成电芯损害，应将电池放电至 40%-65% 电量进行存放；</li>
+<li>建议 2-3 个月重新充放电一次，以保证电池活性；</li>
+<li>长期存储时，在-10°C~45°C范围内的环境中存放。</li>
+</ul>
+<h3 id="电机"><a href="#电机" class="headerlink" title="电机"></a>电机</h3><p>检查电机无沙尘和水渍，并活动各个电机轴，确认与机臂固定牢固且能顺畅达到最大位置，然后卸下桨叶后开机并启动电机，判断电机有无异响。</p>
+<h3 id="桨叶"><a href="#桨叶" class="headerlink" title="桨叶"></a>桨叶</h3><p>检查桨叶是否有破损、变形，若存在异常，则更换新的桨叶。在飞行时，建议给桨叶安装桨叶保护罩。</p>
+<h3 id="云台相机"><a href="#云台相机" class="headerlink" title="云台相机"></a>云台相机</h3><p>检查镜头无划痕、破损、污垢，云台卡扣是否有异物、排线是否正常连接。必要时，对云台相机做一个自动校准，点选 App 中的云台设置——云台自动校准。</p>
+<h3 id="视觉系统"><a href="#视觉系统" class="headerlink" title="视觉系统"></a>视觉系统</h3><p>检查视觉避障系统与红外传感器镜片是否有划痕、破损或污渍。</p>
+<h3 id="遥控器"><a href="#遥控器" class="headerlink" title="遥控器"></a>遥控器</h3><p>检查遥控器天线是否有损坏，以及按键是否可以正常按压反馈，并且遥控器遥杆等是否正常。</p>
+<h3 id="App和固件版本"><a href="#App和固件版本" class="headerlink" title="App和固件版本"></a>App和固件版本</h3><p>及时更新 app 和固件版本，提升拍摄体验的同时能获得得到更好的拍摄效果。</p>
+<p><strong>附一张无人机飞行检查表</strong></p>
+<p><img src="/images/aerial-notes/0-1.jpg"></p>
 ]]></content>
       <categories>
         <category>其他</category>
@@ -2736,6 +2736,86 @@ A<span class="token double-colon punctuation">::</span>size_type num<span class=
       </categories>
       <tags>
         <tag>C++基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo中同时使用多个主题</title>
+    <url>/homepage/2022/04/17/hexo-multi-theme/</url>
+    <content><![CDATA[<h1 id="Hexo中同时使用多个主题"><a href="#Hexo中同时使用多个主题" class="headerlink" title="Hexo中同时使用多个主题"></a>Hexo中同时使用多个主题</h1><p>最近想在github上搭建一个Homepage，但是我的博客已经把immortalqx.github.io这个坑给占着了。</p>
+<p>一个很自然的想法就是让Hexo同时使用多个主题，一个主题给我的博客，一个主题给我的Homepage，这样就可以在保持博客现状的情况下搭建一个风格严谨的Homepage。</p>
+<h3 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h3><p>类似于<code>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</code>这样的命令，对hexo来说是默认按照<code>_config.yml</code>设定的参数来执行渲染的。而<code>_config.yml</code>文件中指定了网站的url、root、source_dir和public_dir等非常关键的数据。</p>
+<p>所以我们可以写两个config文件，比如<code>_config.yml</code>继续用于博客，然后新建一个<code>_config_homepage.yml</code>用于搭建Homepage。之后，我们可以通过<code>hexo g</code>可以默认使用<code>_config.yml</code>来搭建博客，再通过<code>hexo --config _config_homepage.yml g</code>来指定Homepage的config文件来搭建Homepage。</p>
+<p>在使用<code>hexo --config _config_homepage.yml</code>之前，我们还需要修改<code>_config_homepage.yml</code>文件中的参数，让Homepage依附于博客，即把Homepage的public_dir放到博客的public_dir下，这样就可以通过类似于immortalqx.github.io/homepage的形式来访问Homepage。</p>
+<h3 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h3><h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><ol>
+<li><p>更改博客采用的主题的config文件，将新增Homepage的标签（不同主题设置有区别，这里以<a href="https://github.com/blinkfox/hexo-theme-matery">matery</a>为例）。</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">menu</span><span class="token punctuation">:</span>
+  <span class="token key atrule">Index</span><span class="token punctuation">:</span>
+    <span class="token key atrule">url</span><span class="token punctuation">:</span> /
+    <span class="token key atrule">icon</span><span class="token punctuation">:</span> fas fa<span class="token punctuation">-</span>home
+<span class="token punctuation">...</span><span class="token punctuation">...</span>
+  <span class="token key atrule">Homepage</span><span class="token punctuation">:</span>
+    <span class="token key atrule">url</span><span class="token punctuation">:</span> /homepage
+    <span class="token key atrule">icon</span><span class="token punctuation">:</span> fas fa<span class="token punctuation">-</span>award<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p>复制root目录下的<code>_config.yml</code>文件，重命名为<code>_config_homepage.yml</code>。</p>
+</li>
+<li><p>安装需要使用的新主题（以<a href="https://github.com/PhosphorW/hexo-theme-academia">academia</a>为例）。注意要记得安装新主题需要的一些依赖，防止无法进行渲染。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token builtin class-name">cd</span> your-hexo-directory
+<span class="token function">git</span> clone https://github.com/PhosphorW/hexo-theme-academia.git themes/academia<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+<li><p>修改<code>_config_homepage.yml</code>文件，（下面仅列出需要修改的数据，根据使用的主题要修改的数据可能不一样）。</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment"># Site</span>
+<span class="token comment"># 部分选项置空，防止和采用的theme冲突</span>
+<span class="token key atrule">title</span><span class="token punctuation">:</span> Homepage
+<span class="token key atrule">subtitle</span><span class="token punctuation">:</span> <span class="token string">'Homepage'</span>
+<span class="token key atrule">description</span><span class="token punctuation">:</span>
+<span class="token key atrule">keywords</span><span class="token punctuation">:</span>
+<span class="token key atrule">author</span><span class="token punctuation">:</span>
+<span class="token key atrule">language</span><span class="token punctuation">:</span> EN
+<span class="token key atrule">timezone</span><span class="token punctuation">:</span> <span class="token string">''</span>
+
+<span class="token punctuation">...</span><span class="token punctuation">...</span>
+
+<span class="token comment"># URL</span>
+<span class="token comment"># 在原来的基础上增加一个“/homepage”</span>
+<span class="token key atrule">url</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//Immortalqx.github.io/homepage
+<span class="token key atrule">root</span><span class="token punctuation">:</span> /homepage
+
+<span class="token punctuation">...</span><span class="token punctuation">...</span>
+
+<span class="token comment"># Directory</span>
+<span class="token comment"># 新设置一个source文件夹，但是public文件夹要放到博客的public文件夹下(这样才能够在博客中打开Homepage)</span>
+<span class="token key atrule">source_dir</span><span class="token punctuation">:</span> source_homepage
+<span class="token key atrule">public_dir</span><span class="token punctuation">:</span> public/homepage
+
+<span class="token punctuation">...</span><span class="token punctuation">...</span>
+
+<span class="token comment"># Extensions</span>
+<span class="token comment">## Plugins: https://hexo.io/plugins/</span>
+<span class="token comment">## Themes: https://hexo.io/themes/</span>
+<span class="token comment"># 设置成需要使用的新主题</span>
+<span class="token key atrule">theme</span><span class="token punctuation">:</span> academia<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p>修改academia主题的config，更改资源文件目录，icon、favicon等。这里就看个人喜好了，可以在这里新增一个跳转到博客的链接，也可以不写。</p>
+</li>
+<li><p>创建采用新主题的页面：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">hexo --config _config_homepage.yml new <span class="token string">"xxxxx"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li><p>在新页面中增加内容。</p>
+</li>
+</ol>
+<h4 id="开始部署"><a href="#开始部署" class="headerlink" title="开始部署"></a>开始部署</h4><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">hexo cl
+hexo --config _config.yml g
+hexo --config _config_homepage.yml g
+hexo d<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>注意事项：</p>
+<ul>
+<li>由于本博客介绍的方法中，新主题渲染的页面在博客的public文件夹下，所以可以通过<code>hexo cl</code>来清除原来渲染的页面。</li>
+<li>通过<code>hexo --config</code>来指定config文件渲染博客和Homepage。</li>
+<li>由于所有渲染内容都在原博客的public文件夹下，所以这里对应的是同一个github仓库，只需要<code>hexo d</code>就能同时把两个主题渲染的页面推送过去。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -4286,25 +4366,6 @@ Subminor version <span class="token builtin class-name">:</span> <span class="to
       </tags>
   </entry>
   <entry>
-    <title>理解SVM的三层境界</title>
-    <url>/homepage/2021/02/23/opencv-notes-4/</url>
-    <content><![CDATA[<h1 id="理解SVM的三层境界"><a href="#理解SVM的三层境界" class="headerlink" title="理解SVM的三层境界"></a>理解SVM的三层境界</h1><p>SVM是什么? 先来看看维基百科上对<a href="https://link.zhihu.com/?target=https://zh.wikipedia.org/wiki/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA">SVM的定义</a>:</p>
-<blockquote>
-<p>支持向量机（英语：support vector machine，常简称为SVM，又名支持向量网络）是在分类与回归分析中分析数据的监督式学习模型与相关的学习算法。给定一组训练实例，每个训练实例被标记为属于两个类别中的一个或另一个，SVM训练算法创建一个将新的实例分配给两个类别之一的模型，使其成为非概率二元线性分类器。SVM模型是将实例表示为空间中的点，这样映射就使得单独类别的实例被尽可能宽的明显的间隔分开。然后，将新的实例映射到同一空间，并基于它们落在间隔的哪一侧来预测所属类别。</p>
-</blockquote>
-<p>如果从未接触SVM的话，维基的这一大段解释肯定会让你一头雾水。简单点讲，SVM就是一种二类分类模型，他的基本模型是的定义在特征空间上的<strong>间隔最大</strong>的线性分类器，SVM的学习策略就是间隔最大化。</p>
-<p>下面是我从网上找到的一篇讲解SVM比较好的文章：</p>
-<object data="/pdf/理解SVM的三层境界.pdf" type="application/pdf" width="100%" height="1000">
-
-</object>]]></content>
-      <categories>
-        <category>计算机视觉</category>
-      </categories>
-      <tags>
-        <tag>OpenCV</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>创建指定OpenCV版本的ROS工程</title>
     <url>/homepage/2020/12/19/opencv-notes-3/</url>
     <content><![CDATA[<h1 id="创建指定OpenCV版本的ROS工程"><a href="#创建指定OpenCV版本的ROS工程" class="headerlink" title="创建指定OpenCV版本的ROS工程"></a>创建指定OpenCV版本的ROS工程</h1><h3 id="一、创建工作空间和程序包"><a href="#一、创建工作空间和程序包" class="headerlink" title="一、创建工作空间和程序包"></a>一、创建工作空间和程序包</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> -p ~/catkin_cv/src
@@ -4555,6 +4616,25 @@ seek<span class="token double-colon punctuation">::</span><span class="token fun
       </tags>
   </entry>
   <entry>
+    <title>理解SVM的三层境界</title>
+    <url>/homepage/2021/02/23/opencv-notes-4/</url>
+    <content><![CDATA[<h1 id="理解SVM的三层境界"><a href="#理解SVM的三层境界" class="headerlink" title="理解SVM的三层境界"></a>理解SVM的三层境界</h1><p>SVM是什么? 先来看看维基百科上对<a href="https://link.zhihu.com/?target=https://zh.wikipedia.org/wiki/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA">SVM的定义</a>:</p>
+<blockquote>
+<p>支持向量机（英语：support vector machine，常简称为SVM，又名支持向量网络）是在分类与回归分析中分析数据的监督式学习模型与相关的学习算法。给定一组训练实例，每个训练实例被标记为属于两个类别中的一个或另一个，SVM训练算法创建一个将新的实例分配给两个类别之一的模型，使其成为非概率二元线性分类器。SVM模型是将实例表示为空间中的点，这样映射就使得单独类别的实例被尽可能宽的明显的间隔分开。然后，将新的实例映射到同一空间，并基于它们落在间隔的哪一侧来预测所属类别。</p>
+</blockquote>
+<p>如果从未接触SVM的话，维基的这一大段解释肯定会让你一头雾水。简单点讲，SVM就是一种二类分类模型，他的基本模型是的定义在特征空间上的<strong>间隔最大</strong>的线性分类器，SVM的学习策略就是间隔最大化。</p>
+<p>下面是我从网上找到的一篇讲解SVM比较好的文章：</p>
+<object data="/pdf/理解SVM的三层境界.pdf" type="application/pdf" width="100%" height="1000">
+
+</object>]]></content>
+      <categories>
+        <category>计算机视觉</category>
+      </categories>
+      <tags>
+        <tag>OpenCV</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Harris角点检测原理</title>
     <url>/homepage/2021/11/21/opencv-notes-5/</url>
     <content><![CDATA[<h1 id="Harris角点检测原理"><a href="#Harris角点检测原理" class="headerlink" title="Harris角点检测原理"></a>Harris角点检测原理</h1><p>Harris角点最早在paper A Combined Corner and Edge Detector中被Chris Harris &amp; Mike Stephens提出。</p>
@@ -4754,6 +4834,33 @@ seek<span class="token double-colon punctuation">::</span><span class="token fun
       </tags>
   </entry>
   <entry>
+    <title>论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm System in Cluttered Environments</title>
+    <url>/homepage/2021/04/27/paper-reading-4/</url>
+    <content><![CDATA[<h1 id="论文阅读-EGO-Swarm：A-Fully-Autonomous-and-Decentralized-Quadrotor-Swarm"><a href="#论文阅读-EGO-Swarm：A-Fully-Autonomous-and-Decentralized-Quadrotor-Swarm" class="headerlink" title="论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm"></a>论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文提出了一种分散的异步系统解决方案，该解决方案仅使用机载资源即可在未知富含障碍物的场景中实现多机器人自主导航。该计划系统是在基于梯度的局部计划框架下制定的，其中通过将碰撞风险表述为非线性优化问题的代价来实现避免碰撞。为了提高鲁棒性并避免局部极小值，本文采用了一种轻量级的拓扑轨迹生成方法。 然后，无人机使用不可靠的轨迹共享网络，仅在几毫秒内即可生成安全，平滑且动态可行的轨迹。通过使用深度图像中的无人机检测来纠正无人机之间的相对定位漂移。此外，它不需要外部定位和计算，也不需要预先构建的地图。</p>
+<p>本文的贡献概括如下：</p>
+<ol>
+<li>扩展了以前的工作EGO-Planner，提出了一种新颖而健壮的生物学计划方法，几乎不需要额外的计算。</li>
+<li>提出了一种分散式异步四旋翼机群框架，该框架对不可靠的通信和本地化漂移不敏感。</li>
+<li>所提出的方法已集成到完全自主的四旋翼系统中，其硬件和软件已发布，可供社区参考。</li>
+</ol>
+<h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><p>系统架构如图8所示，其中包含单机和多机通信系统的详细架构。</p>
+<p><img src="/images/paper-reading/3_pic1.png"></p>
+<h3 id="单机导航系统"><a href="#单机导航系统" class="headerlink" title="单机导航系统"></a>单机导航系统</h3><p>单机导航系统（包括硬件和软件设置）基于之前的工作EGO Planner，但带有一个额外的模块，用于补偿VIO漂移和移除图像上的代理。所有部件都集成在四轴无人机中，在未知环境下，采用局部规划器生成轨迹。</p>
+<h3 id="通信框架"><a href="#通信框架" class="headerlink" title="通信框架"></a>通信框架</h3><p>两个网络连接系统，即共享轨迹的广播网络和同步时间戳和管理顺序启动的链式网络。当当前轨迹与新发现的障碍物碰撞时，或者代理接近当前轨迹的终点时，规划被激活。</p>
+<p><strong>1） 广播网络：</strong>一旦一个代理生成一个新的无碰撞轨迹，它会立即广播给所有代理。然后，其他代理接收并存储此轨迹，以便在必要时为自己生成安全的轨迹。这种闭环策略在连接稳定且延迟可以忽略的理想情况下正常工作。然而，这在实际中并不能得到保证，因此，本文提出了两种降低碰撞可能性的方法。</p>
+<p>首先，在网络容量下，以给定的频率广播一条轨迹。这不会造成计算负担，因为包含三维航路点和其他参数的典型轨迹的大小小于0.5KB。相比之下，像Bluetooth2这样的现代无线网络可以达到1Mbps以上。然后，每个代理在接收到来自广播网络的轨迹后立即检查碰撞，如果检测到潜在的碰撞，则生成新的无碰撞轨迹。这种策略可以解决当多个代理在一个封闭的时间内生成轨迹时，由于延迟或数据包丢失而不接收其他代理的轨迹的问题。</p>
+<p>此外，本文还考虑了计算复杂度随代理数的增加而增加的问题。在规划之前，每个代理将其当前位置与接收到的代理轨迹进行比较，其中任何超出规划范围的轨迹都将被忽略。</p>
+<p><strong>2） 链式网络：</strong>基于连接的稳定链网络用于时间戳同步和系统启动管理。在系统启动时，代理按预定义的顺序生成代理。每个代理通过链式网络接收到优先级较高的代理的轨迹后，生成初始轨迹。该策略避免了系统启动时由于同时生成轨迹而引起的混沌，因为此时代理没有其他轨迹的信息。</p>
+]]></content>
+      <categories>
+        <category>导航</category>
+      </categories>
+      <tags>
+        <tag>论文阅读</tag>
+        <tag>协同导航</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>论文阅读-Map2DFusion：Real-time Incremental UAV Image Mosaicing based onMonocular SLAM</title>
     <url>/homepage/2021/07/29/paper-reading-5/</url>
     <content><![CDATA[<h1 id="论文阅读-Map2DFusion：Real-time-Incremental-UAV-Image-Mosaicing-based-onMonocular-SLAM"><a href="#论文阅读-Map2DFusion：Real-time-Incremental-UAV-Image-Mosaicing-based-onMonocular-SLAM" class="headerlink" title="论文阅读-Map2DFusion：Real-time Incremental UAV Image Mosaicing based onMonocular SLAM"></a>论文阅读-Map2DFusion：Real-time Incremental UAV Image Mosaicing based onMonocular SLAM</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文提出了一种实时拼接大规模航空图像的方法。利用单目SLAM系统估计摄像机的位置和姿态，同时生成三维点云图，当GPS信息可用时，估计的轨迹在时间同步后自动转换为WGS84坐标。因此，输出正交图像保留全球坐标，而不包含地面控制点。采用自适应加权多波段算法对最终图像进行实时融合和可视化。为了评估该方法的有效性，本文创建了一个具有不同环境序列的公共可用航空图像数据集。实验结果表明，和现有的方法相比，本系统能够实现高效率和高质量。</p>
@@ -4785,33 +4892,6 @@ seek<span class="token double-colon punctuation">::</span><span class="token fun
       </categories>
       <tags>
         <tag>论文阅读</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm System in Cluttered Environments</title>
-    <url>/homepage/2021/04/27/paper-reading-4/</url>
-    <content><![CDATA[<h1 id="论文阅读-EGO-Swarm：A-Fully-Autonomous-and-Decentralized-Quadrotor-Swarm"><a href="#论文阅读-EGO-Swarm：A-Fully-Autonomous-and-Decentralized-Quadrotor-Swarm" class="headerlink" title="论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm"></a>论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文提出了一种分散的异步系统解决方案，该解决方案仅使用机载资源即可在未知富含障碍物的场景中实现多机器人自主导航。该计划系统是在基于梯度的局部计划框架下制定的，其中通过将碰撞风险表述为非线性优化问题的代价来实现避免碰撞。为了提高鲁棒性并避免局部极小值，本文采用了一种轻量级的拓扑轨迹生成方法。 然后，无人机使用不可靠的轨迹共享网络，仅在几毫秒内即可生成安全，平滑且动态可行的轨迹。通过使用深度图像中的无人机检测来纠正无人机之间的相对定位漂移。此外，它不需要外部定位和计算，也不需要预先构建的地图。</p>
-<p>本文的贡献概括如下：</p>
-<ol>
-<li>扩展了以前的工作EGO-Planner，提出了一种新颖而健壮的生物学计划方法，几乎不需要额外的计算。</li>
-<li>提出了一种分散式异步四旋翼机群框架，该框架对不可靠的通信和本地化漂移不敏感。</li>
-<li>所提出的方法已集成到完全自主的四旋翼系统中，其硬件和软件已发布，可供社区参考。</li>
-</ol>
-<h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><p>系统架构如图8所示，其中包含单机和多机通信系统的详细架构。</p>
-<p><img src="/images/paper-reading/3_pic1.png"></p>
-<h3 id="单机导航系统"><a href="#单机导航系统" class="headerlink" title="单机导航系统"></a>单机导航系统</h3><p>单机导航系统（包括硬件和软件设置）基于之前的工作EGO Planner，但带有一个额外的模块，用于补偿VIO漂移和移除图像上的代理。所有部件都集成在四轴无人机中，在未知环境下，采用局部规划器生成轨迹。</p>
-<h3 id="通信框架"><a href="#通信框架" class="headerlink" title="通信框架"></a>通信框架</h3><p>两个网络连接系统，即共享轨迹的广播网络和同步时间戳和管理顺序启动的链式网络。当当前轨迹与新发现的障碍物碰撞时，或者代理接近当前轨迹的终点时，规划被激活。</p>
-<p><strong>1） 广播网络：</strong>一旦一个代理生成一个新的无碰撞轨迹，它会立即广播给所有代理。然后，其他代理接收并存储此轨迹，以便在必要时为自己生成安全的轨迹。这种闭环策略在连接稳定且延迟可以忽略的理想情况下正常工作。然而，这在实际中并不能得到保证，因此，本文提出了两种降低碰撞可能性的方法。</p>
-<p>首先，在网络容量下，以给定的频率广播一条轨迹。这不会造成计算负担，因为包含三维航路点和其他参数的典型轨迹的大小小于0.5KB。相比之下，像Bluetooth2这样的现代无线网络可以达到1Mbps以上。然后，每个代理在接收到来自广播网络的轨迹后立即检查碰撞，如果检测到潜在的碰撞，则生成新的无碰撞轨迹。这种策略可以解决当多个代理在一个封闭的时间内生成轨迹时，由于延迟或数据包丢失而不接收其他代理的轨迹的问题。</p>
-<p>此外，本文还考虑了计算复杂度随代理数的增加而增加的问题。在规划之前，每个代理将其当前位置与接收到的代理轨迹进行比较，其中任何超出规划范围的轨迹都将被忽略。</p>
-<p><strong>2） 链式网络：</strong>基于连接的稳定链网络用于时间戳同步和系统启动管理。在系统启动时，代理按预定义的顺序生成代理。每个代理通过链式网络接收到优先级较高的代理的轨迹后，生成初始轨迹。该策略避免了系统启动时由于同时生成轨迹而引起的混沌，因为此时代理没有其他轨迹的信息。</p>
-]]></content>
-      <categories>
-        <category>导航</category>
-      </categories>
-      <tags>
-        <tag>论文阅读</tag>
-        <tag>协同导航</tag>
       </tags>
   </entry>
   <entry>
@@ -5002,24 +5082,6 @@ python3 RANSAC_3D.py<span aria-hidden="true" class="line-numbers-rows"><span></s
       </tags>
   </entry>
   <entry>
-    <title>罗德里格斯公式推导</title>
-    <url>/homepage/2021/07/08/slam-learning-2/</url>
-    <content><![CDATA[<h1 id="罗德里格斯公式推导"><a href="#罗德里格斯公式推导" class="headerlink" title="罗德里格斯公式推导"></a>罗德里格斯公式推导</h1><blockquote>
-<p>最近博主在重学《视觉SLAM十四讲》，之后可能会陆陆续续的发一些学习笔记或者公式的推导。</p>
-</blockquote>
-<p>书中第53页给出了罗德里格斯公式，这个公式描述了<strong>从旋转向量到旋转矩阵的转换过程。</strong></p>
-<p>虽然作者后面会从李代数层面给出一个证明，但直接从线性代数的层面进行推导也并不麻烦，具体的推导过程如下所示：</p>
-<p><img src="/images/slam-learning/2-1.jpg"></p>
-<p><img src="/images/slam-learning/2-2.jpg"></p>
-]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>视觉SLAM</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>视觉SLAM十四讲笔记</title>
     <url>/homepage/2021/01/27/slam-learning-1/</url>
     <content><![CDATA[<h1 id="《视觉SLAM十四讲》笔记"><a href="#《视觉SLAM十四讲》笔记" class="headerlink" title="《视觉SLAM十四讲》笔记"></a>《视觉SLAM十四讲》笔记</h1><h2 id="第一、二讲-初识SLAM"><a href="#第一、二讲-初识SLAM" class="headerlink" title="第一、二讲    初识SLAM"></a>第一、二讲    <code>初识SLAM</code></h2><h3 id="一、知识总结"><a href="#一、知识总结" class="headerlink" title="一、知识总结"></a>一、知识总结</h3><ol>
@@ -5181,6 +5243,24 @@ python3 RANSAC_3D.py<span aria-hidden="true" class="line-numbers-rows"><span></s
 <p><img src="/images/slam-notes/34.png"></p>
 <p>对于畸变的矫正在实际当中可灵活保留各项系数。通常在视觉SLAM中，考虑先对整张图片进行去畸变，得到去畸变后的图像，然后讨论图像中的点的位置。</p>
 <h2 id="第六讲-非线性优化"><a href="#第六讲-非线性优化" class="headerlink" title="第六讲    非线性优化"></a>第六讲    <code>非线性优化</code></h2><p>待更新~</p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>视觉SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>罗德里格斯公式推导</title>
+    <url>/homepage/2021/07/08/slam-learning-2/</url>
+    <content><![CDATA[<h1 id="罗德里格斯公式推导"><a href="#罗德里格斯公式推导" class="headerlink" title="罗德里格斯公式推导"></a>罗德里格斯公式推导</h1><blockquote>
+<p>最近博主在重学《视觉SLAM十四讲》，之后可能会陆陆续续的发一些学习笔记或者公式的推导。</p>
+</blockquote>
+<p>书中第53页给出了罗德里格斯公式，这个公式描述了<strong>从旋转向量到旋转矩阵的转换过程。</strong></p>
+<p>虽然作者后面会从李代数层面给出一个证明，但直接从线性代数的层面进行推导也并不麻烦，具体的推导过程如下所示：</p>
+<p><img src="/images/slam-learning/2-1.jpg"></p>
+<p><img src="/images/slam-learning/2-2.jpg"></p>
 ]]></content>
       <categories>
         <category>slam</category>
