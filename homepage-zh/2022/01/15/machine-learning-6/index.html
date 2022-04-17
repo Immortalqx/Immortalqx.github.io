@@ -1,0 +1,134 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"><title>个人主页</title><meta name="author" content="刘权祥"><link rel="shortcut icon" href="/homepage-zh/img/favicon.png"><link rel="stylesheet" href="/homepage-zh/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><meta name="generator" content="Hexo 5.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/homepage-zh/atom.xml" title="个人主页" type="application/atom+xml">
+</head><body><header id="page_header"><div class="header_wrap"><div id="blog_name"><a class="blog_title" id="site-name" href="/homepage-zh/">个人主页</a></div><button class="menus_icon"><div class="navicon"></div></button><ul class="menus_items"><li class="menus_item"><a class="site-page" href="/homepage-zh/"> 关于</a></li><li class="menus_item"><a class="site-page" href="/homepage-zh/#News"> 新闻</a></li><li class="menus_item"><a class="site-page" href="/homepage-zh/#Projects"> 项目</a></li><li class="menus_item"><a class="site-page" href="/homepage-zh/#Honors-and-Awards"> 荣誉与奖项</a></li><li class="menus_item"><a class="site-page" href="/homepage-zh/#Educations"> 教育经历</a></li><li class="menus_item"><a class="site-page" href="https://immortalqx.github.io"> 博客</a></li><li class="menus_item"><a class="site-page" href="https://immortalqx.github.io/homepage"> 英文版</a></li></ul></div></header><main id="page_main"><div class="side-card sticky"><div class="card-wrap" itemscope itemtype="http://schema.org/Person"><div class="author-avatar"><img class="avatar-img" src="/homepage-zh/img/avatar.jpg" onerror="this.onerror=null;this.src='/homepage-zh/img/profile.jpg'" alt="avatar"></div><div class="author-discrip"><h3>刘权祥</h3><p class="author-bio">面对热爱，要不遗余力的喜欢！</p></div><div class="author-links"><button class="btn m-social-links">Links</button><ul class="social-icons"><li><a class="social-icon" href="/homepage/img/qq_qrcode.jpg" target="_blank"><i class="fab fa-qq" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/homepage/img/wechat_qrcode.jpg" target="_blank"><i class="fab fa-weixin" aria-hidden="true"></i></a></li><li><a class="social-icon" href="https://github.com/Immortalqx" target="_blank"><i class="fab fa-github" aria-hidden="true"></i></a></li><li><a class="social-icon" href="mailto:immortalqx@gmail.com" target="_blank"><i class="fas fa-envelope" aria-hidden="true"></i></a></li></ul></div><a class="cv-links" href="/homepage-zh/attaches/CV.pdf" target="_blank"><i class="fas fa-file-pdf" aria-hidden="true"><span>CV</span></i></a></div></div><div class="page" itemscope itemtype="http://schema.org/CreativeWork"><h2 class="page-title">机器学习笔记（六）：深入理解卷积神经网络</h2><article><h1 id="机器学习笔记（六）：深入理解卷积神经网络"><a href="#机器学习笔记（六）：深入理解卷积神经网络" class="headerlink" title="机器学习笔记（六）：深入理解卷积神经网络"></a>机器学习笔记（六）：深入理解卷积神经网络</h1><h2 id="一、卷积计算层CONV"><a href="#一、卷积计算层CONV" class="headerlink" title="一、卷积计算层CONV"></a>一、卷积计算层CONV</h2><h3 id="1-1-什么是“卷积”？"><a href="#1-1-什么是“卷积”？" class="headerlink" title="1.1 什么是“卷积”？"></a>1.1 什么是“卷积”？</h3><p>什么是卷积：</p>
+<ul>
+<li><p>图像中<strong>不同数据窗口的数据</strong>和<strong>卷积核（一个滤波矩阵）</strong>作<strong>内积</strong>的操作叫做卷积。</p>
+</li>
+<li><p>简单来说，卷积(或称内积)就是“对应相乘，再结果累加”。</p>
+</li>
+</ul>
+<p>卷积的计算过程又称为滤波（filter)，本质是提取图像不同频段的特征。</p>
+<h3 id="1-2-什么是“卷积核”？"><a href="#1-2-什么是“卷积核”？" class="headerlink" title="1.2 什么是“卷积核”？"></a>1.2 什么是“卷积核”？</h3><p>什么是卷积核：</p>
+<p>卷积核也称为滤波器filter，带着一组固定权重的神经元，通常是n*m二维的矩阵，n和m也是神经元的感受野。n*m 矩阵中存放的是对感受野中数据处理的系数。</p>
+<p>一个卷积核的滤波可以用来提取特定的特征（例如可以提取物体轮廓、颜色深浅等）。</p>
+<p>通过卷积层从原始数据中提取出新的特征的过程，又成为feature map(特征映射)。</p>
+<h4 id="举例说明："><a href="#举例说明：" class="headerlink" title="举例说明："></a>举例说明：</h4><p>【1】比如，我现在要训练一个最简单的CNN，用来识别一张图片里的字母是X还是O</p>
+<p><img src="/images/machine-learning-6/v2-ce4e2ad2cb9919d7e49a66fcd9f7a267_720w.jpg"></p>
+<p>人眼一看，很简单，明显就是X，但是计算机不知道，它不明白什么是X。所以，我们给这张图片加一个标签，也就是俗称的Label，Label=X，就告诉了计算机这张图代表的是X。计算机就记住了X的长相。</p>
+<p>【2】但是并不是所有的X都长这样。</p>
+<p>比如说…</p>
+<p><img src="/images/machine-learning-6/v2-547828bbcc202a030dfc98fcb3cfe5af_720w.jpg"></p>
+<p>这四个都是X，但它们和之前那张X明显不一样，计算机没见过它们，又都不认识了。</p>
+<p>【3】不认识了怎么办？</p>
+<p>当然是计算机‘回忆’是不是见过差不多的。——这时候CNN要做的，就是如何提取内容为X的图片的特征。</p>
+<p>我们都知道，图片在计算机内部以像素值的方式被存储。</p>
+<p>也就是说，两张X在计算机看来，其实是这样子的。其中1代表白色，-1代表黑色</p>
+<p><img src="/images/machine-learning-6/v2-8bc4063deeaf11853fe1f9531b71e50a_720w.jpg"></p>
+<p><img src="/images/machine-learning-6/v2-e216abf6d8042827b1e6de85732f0060_720w.jpg"></p>
+<p>如果按照每像素逐个比较，肯定是不科学，结果不对而且效率低下，因此提出其他匹配方法。</p>
+<p>观察这两张X图，可以发现尽管像素值无法一一对应，但也存在着某些共同点。如下图所示，两张图中三个同色区域的结构完全一致！</p>
+<p><img src="/images/machine-learning-6/v2-df0a51f10a46347704274ee6ddbb614a_720w.jpg"></p>
+<p>Q: 要将这两张图联系起来，无法进行<strong>全体像素对应</strong>，但是否能进行<strong>局部匹配</strong>？</p>
+<p>A：肯定可以！！！</p>
+<p>【4】从标准的X图中我们提取出三个特征（feature）</p>
+<p>1号特征：</p>
+<p><img src="/images/machine-learning-6/v2-2230b625dcbac671af2646ff9d39a7d7_720w.jpg"></p>
+<p>2号特征：</p>
+<p><img src="/images/machine-learning-6/v2-292a36d6fedd82498d406846e6a8fba2_720w.jpg"></p>
+<p>3号特征：</p>
+<p><img src="/images/machine-learning-6/v2-2674d52504845d3fc062fa36a607fff2_720w.jpg"></p>
+<p>发现，只要用这三个feature，便可定位到X图片的某个局部</p>
+<p><img src="/images/machine-learning-6/v2-eaa1665a93ae616abad84971ac09f60d_720w.jpg"></p>
+<p>【5】这样的feature，在CNN中也被成为卷积核或者卷积单元（filter），一般是3X3，或者5X5的大小。而feature里的值，是通过模型学习得到的。</p>
+<h3 id="1-3-CNN中的二维卷积（Convolution2D）"><a href="#1-3-CNN中的二维卷积（Convolution2D）" class="headerlink" title="1.3 CNN中的二维卷积（Convolution2D）"></a>1.3 CNN中的二维卷积（Convolution2D）</h3><p>卷积神经网络（CNN）包括一维卷积神经网络，二维卷积神经网络以及三维卷积神经网络。</p>
+<p>一维卷积神经网络主要用于序列类的数据处理， 二维卷积神经网络常应用于图像类文本的识别， 三维卷积神经网络主要应用于医学图像以及视频类数据识别。</p>
+<p>2D卷积是一个比较简单的操作：</p>
+<p>（1）先从一个 3*3 的权重矩阵，也就是卷积核（filter）开始，让它逐步在二维输入数据上“扫描”。<br>（2）卷积核“滑动”的同时，计算权重矩阵和扫描所得的数据矩阵的乘积，然后把结果汇总成一个输出像素。<br>（3）卷积核会在它经过的所有位置上，都重复以上操作，直到把输入特征矩阵转换为另一个二维的特征矩阵。</p>
+<p>动图的演示：</p>
+<p>这是2D视角的动图：</p>
+<p><img src="/images/machine-learning-6/v2-f35f041aec9cbbf26b98af649536cc90_b.webp"></p>
+<p>这是3D视角的动图：</p>
+<p><img src="/images/machine-learning-6/v2-42f6d50e57aae703f72e290be267d575_b.webp"></p>
+<h3 id="1-4-总结："><a href="#1-4-总结：" class="headerlink" title="1.4 总结："></a>1.4 总结：</h3><p>简而言之，输出的特征，基本上就是原输入特征的加权和（权重是卷积核自带的值），而从像素位置上看，它们所处的地方大致相同。</p>
+<p>那么为什么输出特征，会落入这个“大致区域”呢？</p>
+<p>这取决于卷积核的大小。 卷积核的大小直接决定了在生成输出特征时，它合并了多少输入特征，也就是说：卷积核越小，输入输出的位置越接近；卷积核越大，距离就越远。</p>
+<p>这和全连接层很不一样。</p>
+<p>在上图的例子中，我们的输入有5×5=25个特征，而我们的输出则是3×3=9个特征。<br>如果这是一个全连接层，输入25个特征后，我们会输出包含25×9=225个参数的权重矩阵，每个输出特征都是每个输入特征的加权和。</p>
+<p>这意味着对于每个输入特征，卷积执行的操作是使用9个参数进行转换。</p>
+<h2 id="二、非线性激活层"><a href="#二、非线性激活层" class="headerlink" title="二、非线性激活层"></a>二、非线性激活层</h2><blockquote>
+<p>CNN中非线性激活层通常使用relu函数，所以我们这里先介绍relu，再介绍其他的激活函数</p>
+</blockquote>
+<h3 id="2-1-什么是relu"><a href="#2-1-什么是relu" class="headerlink" title="2.1 什么是relu"></a>2.1 什么是relu</h3><p>官方解释：卷积层对原图运算多个卷积，产生一组线性激活响应，而<strong>非线性激活层</strong>是对之前的结果进行一个非线性的激活响应。</p>
+<p><strong>激活函数的作用</strong>是用来加入非线性因素，把卷积层输出结果做非线性映射。</p>
+<p><img src="/images/machine-learning-6/v2-3436533f80cbb1cc52275ef34a6dd658_720w.jpg"></p>
+<p>在卷积神经网络中用到最多的非线性激活函数是relu函数，</p>
+<p>它的公式定义：f(x)=max(0,x)</p>
+<p>即，保留大于等于0的值，其余所有小于0的数值直接改写为0</p>
+<p>&gt;=0的值全部保持不变：</p>
+<p><img src="/images/machine-learning-6/v2-27938069bbdff1ec7d3e31d35dc0e44f_720w.jpg"></p>
+<p>而&lt;0的值全部改写为0：</p>
+<p><img src="/images/machine-learning-6/v2-c9ab4a0dc54874a747773dd2550eb061_720w.jpg"></p>
+<p>作用后的结果：</p>
+<p><img src="/images/machine-learning-6/v2-1ae057962612ca7a840003152fbfd78e_720w.jpg"></p>
+<h3 id="2-2-其他常见的非线性激活函数"><a href="#2-2-其他常见的非线性激活函数" class="headerlink" title="2.2 其他常见的非线性激活函数"></a>2.2 其他常见的非线性激活函数</h3><p>sigmoid函数：$sigmoid(x)=\frac{1}{1+e^{-x}} $</p>
+<p>tanh函数： $tanh(x)=\frac{e^x-e^{-x}}{e^x+e^{-x}}$</p>
+<p>这两个函数的图像如下所示：</p>
+<p><img src="/images/machine-learning-6/tanh-sigmoid.png"></p>
+<h3 id="2-3-为何使用relu"><a href="#2-3-为何使用relu" class="headerlink" title="2.3 为何使用relu"></a>2.3 为何使用relu</h3><p>实际应用中，特别是深层网络在训练时，tanh和sigmoid会在端值趋于饱和，造成训练速度减慢，故深层网络的激活函数默认大多采用relu函数，浅层网络可以采用sigmoid和tanh函数。</p>
+<p>那么为什么现在这么多网络，都更多地使用relu函数呢？一个重要原因就是上面提到的，其稀疏激活性。</p>
+<ol>
+<li>标准的sigmoid函数输出不具备稀疏性，需要用一些惩罚因子来训练出一大堆接近0的冗余数据来，从而产生稀疏数据</li>
+<li>而relu是线性修正。它的作用是如果计算出的值小于0，就让它等于0，否则保持原来的值不变。<br><strong>这是一种简单粗暴地强制某些数据为0的方法</strong>，然而经实践证明，训练后的网络完全具备适度的稀疏性。而且训练后的可视化效果和传统方式预训练出的效果很相似，这也说明了relu具备引导适度稀疏的能力。<br>因此，relu的使用，使得网络可以自行引入稀疏性，同时大大地提高了训练速度。</li>
+</ol>
+<h2 id="三、池化层pooling"><a href="#三、池化层pooling" class="headerlink" title="三、池化层pooling"></a>三、池化层pooling</h2><h3 id="3-1-池化的作用"><a href="#3-1-池化的作用" class="headerlink" title="3.1 池化的作用"></a>3.1 池化的作用</h3><p><strong>池化操作，最大的作用就是减少数据量。</strong>池化层的引入，是仿照人的视觉系统对视觉输入对象进行降维和抽象。</p>
+<p>在卷积神经网络过去的工作中，研究者普遍认为池化层有如下三个功效：</p>
+<ol>
+<li><p><strong>特征不变形：</strong>池化操作使得模型更加关注是否存在某些特征，而不是特征具体的位置。</p>
+</li>
+<li><p><strong>特征降维：</strong>池化相当于在空间范围内做了维度约减，从而使模型可以抽取更加广范围的特征。同时减小了下一层的输入大小，进而减少计算量和参数个数。</p>
+</li>
+<li><p>在一定程度上<strong>防止过拟合</strong>，更方便优化。由1、2可知，这种池化机制能够有效地原因在于，在发现一个特征之后，它的精确位置远不及它和其他特征的相对位置的关系重要。池化层会不断地减小数据的空间大小，因此参数的数量和计算量也会下降，这在一定程度上也控制了过拟合。</p>
+</li>
+</ol>
+<h3 id="3-2-池化的分类"><a href="#3-2-池化的分类" class="headerlink" title="3.2 池化的分类"></a>3.2 池化的分类</h3><p>池化分为两种，Max Pooling 最大池化、Average Pooling平均池化。</p>
+<p>顾名思义，最大池化就是取最大值，平均池化就是取平均值。其中<strong>“最大池化（Max pooling）”最为常见</strong>。</p>
+<p>当前最常用形式的池化层，是每隔2个元素从图像划分出2*2的区块，然后对每个区块中的4个数取最大值，这将会减少75%的数据量。</p>
+<p><img src="/images/machine-learning-6/v2-bf209e09a438648ea1482ecb90b88e21_720w.jpg"></p>
+<h3 id="3-3-池化操作"><a href="#3-3-池化操作" class="headerlink" title="3.3 池化操作"></a>3.3 池化操作</h3><p>通常，CNN的卷积层之间都会<strong>周期性地插入池化层</strong></p>
+<p>举例说明：</p>
+<p><img src="/images/machine-learning-6/v2-e20252d79fb8589c881f53adb82bb1fe_720w.jpg"></p>
+<p>依据步长，滑动窗口</p>
+<p><img src="/images/machine-learning-6/v2-510ec9e7b789992b242c0ec97be77601_720w.jpg"></p>
+<p>得到池化后的feature map，明显发现数据量减少了很多</p>
+<p><img src="/images/machine-learning-6/v2-761a58554ff71b20f7b78f9bf326ee3b_720w.jpg"></p>
+<h3 id="3-4-池化操作总结"><a href="#3-4-池化操作总结" class="headerlink" title="3.4 池化操作总结"></a>3.4 池化操作总结</h3><p>因为最大池化保留了每一个小块内的最大值，所以它相当于保留了这一块最佳匹配结果。</p>
+<p>这也就意味着：池化操作<strong>不会具体关注</strong>窗口内到底是哪一个地方匹配了，而<strong>只关注</strong>是不是有某个地方匹配上了。</p>
+<p><strong>侧面说明——CNN能够发现图像中是否具有某种特征，而不用在意到底在哪里具有这种特征</strong>。</p>
+<p>这也就帮助解决，之前提到的<strong>计算机逐一像素匹配</strong>的死板做法。</p>
+<h2 id="四、全连接层"><a href="#四、全连接层" class="headerlink" title="四、全连接层"></a>四、全连接层</h2><h3 id="4-1-全连接层的作用"><a href="#4-1-全连接层的作用" class="headerlink" title="4.1 全连接层的作用"></a>4.1 全连接层的作用</h3><ol>
+<li><p>从侧面来理解</p>
+<p>我们知道，<strong>局部连接</strong>与<strong>参数共享</strong>是卷积神经网络最重要的两个性质</p>
+<p><strong>局部连接？</strong>——回忆一下卷积层的操作，是用一个3X3的fliter与原图进行连接操作，很明显原图中只有一个3X3的窗口能够与fliter连接起来。<br><strong>参数共享？</strong>——那窗口之外的、未连接的部分怎么办呢？ 我们知道，采用的是将窗口滑动起来的方法后续进行连接。这个方法的思想就是“参数共享” ，参数指的就是filter，用滑动窗口的方式，将这个filter值共享给原图中的每一块区域，连接进行卷积运算。</p>
+<p><img src="/images/machine-learning-6/v2-2ced3a81d5977a3bf70f9721a2fd725e_720w.jpg"></p>
+</li>
+<li><p>为什么是全连接？</p>
+<p>卷积取的是局部特征，全连接就是把以前的局部特征重新通过权值矩阵，组装成完整的图，因为用到了所有的局部特征，所以叫全连接。</p>
+</li>
+<li><p>全连接层要做的，是什么？</p>
+<p>起到<strong>“分类”的作用</strong>。</p>
+<p>全连接层要做的，就是对之前的所有操作进行一个总结。对特征图进行<strong>维度上的改变</strong>，来<strong>得到每个分类类别对应的概率值</strong>。</p>
+</li>
+</ol>
+<h3 id="4-2-全连接操作"><a href="#4-2-全连接操作" class="headerlink" title="4.2 全连接操作"></a>4.2 全连接操作</h3><p>接着上面的例子，原图片尺寸为9X9，在一系列的卷积、relu、池化操作后，得到尺寸被压缩为2X2的三张特征图。如下图所示：</p>
+<p><img src="/images/machine-learning-6/v2-5054d37bc25a3a838d8533570a969811_720w.jpg"></p>
+<p>将三个特征图改变维度直接变成一维的数据，展开的数据即为属于类别X的概率值，值大小也在对应X的线条粗细中表现出来了。以上所有的操作都是对标准的原图X来进行的，因此最终分类显示即为X。</p>
+<p><img src="/images/machine-learning-6/v2-ed75d8e64864d8b57a63d9a57859c819_720w.jpg"></p>
+<p>如果，对并不标准的图进行分类</p>
+<p><img src="/images/machine-learning-6/v2-61d1f8a642a5f5b225bafd4e77cdc069_720w.jpg"></p>
+<p>进行一系列操作后，0.92表示极其大可能是X，因此对应到X的黄色线条比对应到O的绿色线条要粗很多很多</p>
+<p><img src="/images/machine-learning-6/v2-001a35b937e3eec733e1e4a89507a367_720w.jpg"></p>
+<p>我们对结果进行统计分析后，可判断这张图片里的字母为X。</p>
+<h2 id="五、CNN总结"><a href="#五、CNN总结" class="headerlink" title="五、CNN总结"></a>五、CNN总结</h2><p>卷积神经网络主要由两部分组成，一部分是特征提取（卷积、激活函数、池化），另一部分是分类识别（全连接）</p>
+<p><img src="/images/machine-learning-6/v2-6293c0f53e211e032323c959a7d0e5ad_720w.jpg"></p>
+</article></div></main><div class="nav-wrap"><div class="nav"><button class="site-nav"><div class="navicon"></div></button><ul class="nav_items"><li class="nav_item"><a class="nav-page" href="/homepage-zh/"> 关于</a></li><li class="nav_item"><a class="nav-page" href="/homepage-zh/#News"> 新闻</a></li><li class="nav_item"><a class="nav-page" href="/homepage-zh/#Projects"> 项目</a></li><li class="nav_item"><a class="nav-page" href="/homepage-zh/#Honors-and-Awards"> 荣誉与奖项</a></li><li class="nav_item"><a class="nav-page" href="/homepage-zh/#Educations"> 教育经历</a></li><li class="nav_item"><a class="nav-page" href="https://immortalqx.github.io"> 博客</a></li><li class="nav_item"><a class="nav-page" href="https://immortalqx.github.io/homepage"> 英文版</a></li></ul></div><div class="cd-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div></div><footer id="page_footer"><div class="footer_wrap"><div class="copyright">&copy;2022 by 刘权祥</div><div class="theme-info">Powered by <a target="_blank" href="https://hexo.io" rel="nofollow noopener">Hexo</a> & <a target="_blank" href="https://github.com/PhosphorW/hexo-theme-academia" rel="nofollow noopener">Academia Theme</a></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery-pjax@latest/jquery.pjax.min.js"></script><script src="/homepage-zh/js/main.js"></script></body></html>

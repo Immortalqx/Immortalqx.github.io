@@ -3915,50 +3915,6 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
       </tags>
   </entry>
   <entry>
-    <title>多传感器数据融合入门</title>
-    <url>/homepage/2021/06/07/multi-sensor-information-fusion-1/</url>
-    <content><![CDATA[<h1 id="多传感器数据融合（入门）"><a href="#多传感器数据融合（入门）" class="headerlink" title="多传感器数据融合（入门）"></a>多传感器数据融合（入门）</h1><blockquote>
-<p>分享一个课程大纲，可以用于指导自己后续的学习</p>
-</blockquote>
-<h2 id="一、理论篇"><a href="#一、理论篇" class="headerlink" title="一、理论篇"></a>一、理论篇</h2><h3 id="1、常用传感器硬件介绍"><a href="#1、常用传感器硬件介绍" class="headerlink" title="1、常用传感器硬件介绍"></a>1、常用传感器硬件介绍</h3><ul>
-<li><p><strong>Camera</strong></p>
-</li>
-<li><p><strong>Lidar</strong></p>
-</li>
-<li><p><strong>Radar</strong></p>
-</li>
-<li><p><strong>IMU</strong></p>
-</li>
-<li><p><strong>GNSS与RTK</strong></p>
-</li>
-<li><p><strong>超声波雷达等其他类型传感器</strong></p>
-</li>
-</ul>
-<h3 id="2、多传感器同步理论"><a href="#2、多传感器同步理论" class="headerlink" title="2、多传感器同步理论"></a>2、多传感器同步理论</h3><h4 id="2-1-传感器间时间硬同步"><a href="#2-1-传感器间时间硬同步" class="headerlink" title="2.1 传感器间时间硬同步"></a>2.1 传感器间时间硬同步</h4><p><strong>a）传感器频率</strong> </p>
-<p><strong>b）硬件出发</strong></p>
-<h4 id="2-2-传感器间时间软同步"><a href="#2-2-传感器间时间软同步" class="headerlink" title="2.2 传感器间时间软同步"></a>2.2 传感器间时间软同步</h4><p><strong>a）时间索引</strong> </p>
-<p><strong>b）时间插值</strong></p>
-<h4 id="2-3-传感器间空间同步"><a href="#2-3-传感器间空间同步" class="headerlink" title="2.3 传感器间空间同步"></a>2.3 传感器间空间同步</h4><p><strong>a）运动补偿</strong> </p>
-<p><strong>b）传感器标定</strong> </p>
-<h3 id="3、多传感器信息融合理论"><a href="#3、多传感器信息融合理论" class="headerlink" title="3、多传感器信息融合理论"></a>3、多传感器信息融合理论</h3><h4 id="3-1传感器信息融合基本原理"><a href="#3-1传感器信息融合基本原理" class="headerlink" title="3.1传感器信息融合基本原理"></a>3.1传感器信息融合基本原理</h4><p><strong>a）传感器融合方法</strong></p>
-<p><strong>b）深度学习融合方式介绍</strong></p>
-<h4 id="3-2信息融合的体系架构"><a href="#3-2信息融合的体系架构" class="headerlink" title="3.2信息融合的体系架构"></a>3.2信息融合的体系架构</h4><p><strong>a）集中式</strong></p>
-<p><strong>b）分布式</strong></p>
-<p><strong>c）混合式</strong></p>
-<h4 id="3-3信息融合的级别分类"><a href="#3-3信息融合的级别分类" class="headerlink" title="3.3信息融合的级别分类"></a>3.3信息融合的级别分类</h4><p><strong>a）数据级别融合</strong></p>
-<p><strong>b）特征级别融合</strong></p>
-<p><strong>c）目标级别融合</strong></p>
-<h2 id="二、实践篇"><a href="#二、实践篇" class="headerlink" title="二、实践篇"></a>二、实践篇</h2><h3 id="1、传感器同步"><a href="#1、传感器同步" class="headerlink" title="1、传感器同步"></a>1、传感器同步</h3><h4 id="1-1-多相机同步"><a href="#1-1-多相机同步" class="headerlink" title="1.1 多相机同步"></a>1.1 多相机同步</h4><h4 id="1-2-相机与IMU同步"><a href="#1-2-相机与IMU同步" class="headerlink" title="1.2 相机与IMU同步"></a>1.2 相机与IMU同步</h4><h4 id="1-3-相机与Lidar同步"><a href="#1-3-相机与Lidar同步" class="headerlink" title="1.3 相机与Lidar同步"></a>1.3 相机与Lidar同步</h4><p><strong>a）时间同步</strong></p>
-<p><strong>b）空间同步</strong></p>
-<h4 id="1-4-Lidar与IMU同步"><a href="#1-4-Lidar与IMU同步" class="headerlink" title="1.4 Lidar与IMU同步"></a>1.4 Lidar与IMU同步</h4><h3 id="2、传感器信息融合"><a href="#2、传感器信息融合" class="headerlink" title="2、传感器信息融合"></a>2、传感器信息融合</h3><h4 id="2-1-多相机间的信息融合"><a href="#2-1-多相机间的信息融合" class="headerlink" title="2.1 多相机间的信息融合"></a>2.1 多相机间的信息融合</h4><h4 id="2-2-相机与IMU间的信息融合"><a href="#2-2-相机与IMU间的信息融合" class="headerlink" title="2.2 相机与IMU间的信息融合"></a>2.2 相机与IMU间的信息融合</h4><h4 id="2-2-相机与Lidar间的信息融合"><a href="#2-2-相机与Lidar间的信息融合" class="headerlink" title="2.2 相机与Lidar间的信息融合"></a>2.2 相机与Lidar间的信息融合</h4><h4 id="2-3-多Lidar间的信息融合"><a href="#2-3-多Lidar间的信息融合" class="headerlink" title="2.3 多Lidar间的信息融合"></a>2.3 多Lidar间的信息融合</h4><h4 id="2-4-Lidar与IMU间的信息融合"><a href="#2-4-Lidar与IMU间的信息融合" class="headerlink" title="2.4 Lidar与IMU间的信息融合"></a>2.4 Lidar与IMU间的信息融合</h4>]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>多传感器融合</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>多传感器数据融合进阶</title>
     <url>/homepage/2021/06/11/multi-sensor-information-fusion-2/</url>
     <content><![CDATA[<h1 id="多传感器融合（进阶版）"><a href="#多传感器融合（进阶版）" class="headerlink" title="多传感器融合（进阶版）"></a>多传感器融合（进阶版）</h1><blockquote>
@@ -4026,6 +3982,50 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
 <li><strong>第3节: 时间标定：基于离散时间的标定&amp;基于连续时间的标定</strong></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>多传感器融合</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>多传感器数据融合入门</title>
+    <url>/homepage/2021/06/07/multi-sensor-information-fusion-1/</url>
+    <content><![CDATA[<h1 id="多传感器数据融合（入门）"><a href="#多传感器数据融合（入门）" class="headerlink" title="多传感器数据融合（入门）"></a>多传感器数据融合（入门）</h1><blockquote>
+<p>分享一个课程大纲，可以用于指导自己后续的学习</p>
+</blockquote>
+<h2 id="一、理论篇"><a href="#一、理论篇" class="headerlink" title="一、理论篇"></a>一、理论篇</h2><h3 id="1、常用传感器硬件介绍"><a href="#1、常用传感器硬件介绍" class="headerlink" title="1、常用传感器硬件介绍"></a>1、常用传感器硬件介绍</h3><ul>
+<li><p><strong>Camera</strong></p>
+</li>
+<li><p><strong>Lidar</strong></p>
+</li>
+<li><p><strong>Radar</strong></p>
+</li>
+<li><p><strong>IMU</strong></p>
+</li>
+<li><p><strong>GNSS与RTK</strong></p>
+</li>
+<li><p><strong>超声波雷达等其他类型传感器</strong></p>
+</li>
+</ul>
+<h3 id="2、多传感器同步理论"><a href="#2、多传感器同步理论" class="headerlink" title="2、多传感器同步理论"></a>2、多传感器同步理论</h3><h4 id="2-1-传感器间时间硬同步"><a href="#2-1-传感器间时间硬同步" class="headerlink" title="2.1 传感器间时间硬同步"></a>2.1 传感器间时间硬同步</h4><p><strong>a）传感器频率</strong> </p>
+<p><strong>b）硬件出发</strong></p>
+<h4 id="2-2-传感器间时间软同步"><a href="#2-2-传感器间时间软同步" class="headerlink" title="2.2 传感器间时间软同步"></a>2.2 传感器间时间软同步</h4><p><strong>a）时间索引</strong> </p>
+<p><strong>b）时间插值</strong></p>
+<h4 id="2-3-传感器间空间同步"><a href="#2-3-传感器间空间同步" class="headerlink" title="2.3 传感器间空间同步"></a>2.3 传感器间空间同步</h4><p><strong>a）运动补偿</strong> </p>
+<p><strong>b）传感器标定</strong> </p>
+<h3 id="3、多传感器信息融合理论"><a href="#3、多传感器信息融合理论" class="headerlink" title="3、多传感器信息融合理论"></a>3、多传感器信息融合理论</h3><h4 id="3-1传感器信息融合基本原理"><a href="#3-1传感器信息融合基本原理" class="headerlink" title="3.1传感器信息融合基本原理"></a>3.1传感器信息融合基本原理</h4><p><strong>a）传感器融合方法</strong></p>
+<p><strong>b）深度学习融合方式介绍</strong></p>
+<h4 id="3-2信息融合的体系架构"><a href="#3-2信息融合的体系架构" class="headerlink" title="3.2信息融合的体系架构"></a>3.2信息融合的体系架构</h4><p><strong>a）集中式</strong></p>
+<p><strong>b）分布式</strong></p>
+<p><strong>c）混合式</strong></p>
+<h4 id="3-3信息融合的级别分类"><a href="#3-3信息融合的级别分类" class="headerlink" title="3.3信息融合的级别分类"></a>3.3信息融合的级别分类</h4><p><strong>a）数据级别融合</strong></p>
+<p><strong>b）特征级别融合</strong></p>
+<p><strong>c）目标级别融合</strong></p>
+<h2 id="二、实践篇"><a href="#二、实践篇" class="headerlink" title="二、实践篇"></a>二、实践篇</h2><h3 id="1、传感器同步"><a href="#1、传感器同步" class="headerlink" title="1、传感器同步"></a>1、传感器同步</h3><h4 id="1-1-多相机同步"><a href="#1-1-多相机同步" class="headerlink" title="1.1 多相机同步"></a>1.1 多相机同步</h4><h4 id="1-2-相机与IMU同步"><a href="#1-2-相机与IMU同步" class="headerlink" title="1.2 相机与IMU同步"></a>1.2 相机与IMU同步</h4><h4 id="1-3-相机与Lidar同步"><a href="#1-3-相机与Lidar同步" class="headerlink" title="1.3 相机与Lidar同步"></a>1.3 相机与Lidar同步</h4><p><strong>a）时间同步</strong></p>
+<p><strong>b）空间同步</strong></p>
+<h4 id="1-4-Lidar与IMU同步"><a href="#1-4-Lidar与IMU同步" class="headerlink" title="1.4 Lidar与IMU同步"></a>1.4 Lidar与IMU同步</h4><h3 id="2、传感器信息融合"><a href="#2、传感器信息融合" class="headerlink" title="2、传感器信息融合"></a>2、传感器信息融合</h3><h4 id="2-1-多相机间的信息融合"><a href="#2-1-多相机间的信息融合" class="headerlink" title="2.1 多相机间的信息融合"></a>2.1 多相机间的信息融合</h4><h4 id="2-2-相机与IMU间的信息融合"><a href="#2-2-相机与IMU间的信息融合" class="headerlink" title="2.2 相机与IMU间的信息融合"></a>2.2 相机与IMU间的信息融合</h4><h4 id="2-2-相机与Lidar间的信息融合"><a href="#2-2-相机与Lidar间的信息融合" class="headerlink" title="2.2 相机与Lidar间的信息融合"></a>2.2 相机与Lidar间的信息融合</h4><h4 id="2-3-多Lidar间的信息融合"><a href="#2-3-多Lidar间的信息融合" class="headerlink" title="2.3 多Lidar间的信息融合"></a>2.3 多Lidar间的信息融合</h4><h4 id="2-4-Lidar与IMU间的信息融合"><a href="#2-4-Lidar与IMU间的信息融合" class="headerlink" title="2.4 Lidar与IMU间的信息融合"></a>2.4 Lidar与IMU间的信息融合</h4>]]></content>
       <categories>
         <category>slam</category>
       </categories>

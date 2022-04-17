@@ -1,0 +1,148 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"><title>个人主页</title><meta name="author" content="刘权祥"><link rel="shortcut icon" href="/homepage-zh/img/favicon.png"><link rel="stylesheet" href="/homepage-zh/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><meta name="generator" content="Hexo 5.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/homepage-zh/atom.xml" title="个人主页" type="application/atom+xml">
+</head><body><header id="page_header"><div class="header_wrap"><div id="blog_name"><a class="blog_title" id="site-name" href="/homepage-zh/">个人主页</a></div><button class="menus_icon"><div class="navicon"></div></button><ul class="menus_items"><li class="menus_item"><a class="site-page" href="/homepage-zh/"> 关于</a></li><li class="menus_item"><a class="site-page" href="/homepage-zh/#News"> 新闻</a></li><li class="menus_item"><a class="site-page" href="/homepage-zh/#Projects"> 项目</a></li><li class="menus_item"><a class="site-page" href="/homepage-zh/#Honors-and-Awards"> 荣誉与奖项</a></li><li class="menus_item"><a class="site-page" href="/homepage-zh/#Educations"> 教育经历</a></li><li class="menus_item"><a class="site-page" href="https://immortalqx.github.io"> 博客</a></li><li class="menus_item"><a class="site-page" href="https://immortalqx.github.io/homepage"> 英文版</a></li></ul></div></header><main id="page_main"><div class="side-card sticky"><div class="card-wrap" itemscope itemtype="http://schema.org/Person"><div class="author-avatar"><img class="avatar-img" src="/homepage-zh/img/avatar.jpg" onerror="this.onerror=null;this.src='/homepage-zh/img/profile.jpg'" alt="avatar"></div><div class="author-discrip"><h3>刘权祥</h3><p class="author-bio">面对热爱，要不遗余力的喜欢！</p></div><div class="author-links"><button class="btn m-social-links">Links</button><ul class="social-icons"><li><a class="social-icon" href="/homepage/img/qq_qrcode.jpg" target="_blank"><i class="fab fa-qq" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/homepage/img/wechat_qrcode.jpg" target="_blank"><i class="fab fa-weixin" aria-hidden="true"></i></a></li><li><a class="social-icon" href="https://github.com/Immortalqx" target="_blank"><i class="fab fa-github" aria-hidden="true"></i></a></li><li><a class="social-icon" href="mailto:immortalqx@gmail.com" target="_blank"><i class="fas fa-envelope" aria-hidden="true"></i></a></li></ul></div><a class="cv-links" href="/homepage-zh/attaches/CV.pdf" target="_blank"><i class="fas fa-file-pdf" aria-hidden="true"><span>CV</span></i></a></div></div><div class="page" itemscope itemtype="http://schema.org/CreativeWork"><h2 class="page-title">使用RANSAC算法拟合点云中的平面</h2><article><h1 id="使用RANSAC算法拟合点云中的平面"><a href="#使用RANSAC算法拟合点云中的平面" class="headerlink" title="使用RANSAC算法拟合点云中的平面"></a>使用RANSAC算法拟合点云中的平面</h1><p>最近在写pi-slam-fusion这个项目，需要根据pi-slam计算出来的点云拟合出大地平面的方程，从而让map2dfusion根据这个方程进行地图拼接。</p>
+<p>这一步我使用了ransac算法，并且对ransac算法进行了一点总（ban）结（yun）。</p>
+<h2 id="RANSAC简介"><a href="#RANSAC简介" class="headerlink" title="RANSAC简介"></a>RANSAC简介</h2><p><strong>RANSAC</strong>(RAndom SAmple Consensus,随机采样一致)算法是从一组含有“外点”(outliers)的数据中正确估计数学模型参数的迭代算法。</p>
+<p>“外点”一般指的的数据中的噪声，比如说匹配中的误匹配和估计曲线中的离群点。所以，RANSAC也是一种“外点”检测算法。RANSAC算法是一种不确定算法，它只能在一种概率下产生结果，并且这个概率会随着迭代次数的增加而加大。RANSAC算最早是由Fischler和Bolles在SRI上提出用来解决LDP(Location Determination Proble)问题的。</p>
+<h3 id="RANSAC的基本假设"><a href="#RANSAC的基本假设" class="headerlink" title="RANSAC的基本假设"></a>RANSAC的基本假设</h3><ol>
+<li>“<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=%E5%85%A7%E7%BE%A4&amp;action=edit&amp;redlink=1">内群</a>”(inlier, 似乎译为内点群更加妥当，即正常数据，正确数据)数据可以通过几组模型的参数来叙述其分布，而“<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=%E9%9B%A2%E7%BE%A4&amp;action=edit&amp;redlink=1">离群</a>”(outlier,似乎译为外点群更加妥当，异常数据)数据则是不适合模型化的数据。</li>
+<li>数据会受噪声影响，噪声指的是离群，例如从极端的噪声或错误解释有关数据的测量或不正确的假设。</li>
+<li>RANSAC假定，给定一组（通常很小）的内点群，存在一个程序，这个程序可以估算最佳解释或最适用于这一数据模型的参数。</li>
+</ol>
+<h3 id="范例"><a href="#范例" class="headerlink" title="范例"></a>范例</h3><p>这里用一个简单的例子来说明，在一组数据点中找到一条最适合的线。假设，此有一组集合包含了内点群以及外点群，其中内点群包含可以被拟合到线段上的点，而外点群则是无法被拟合的点。如果我们用简单的最小二乘法来找此线，我们将无法得到一条适合于内点群的直线，因为最小二乘法会受外点群影响而影响其结果。而用RANSAC，可以只由内点群来计算出模型，而且概率还够高。然而，RANSAC无法保证结果一定最好，所以必须小心选择参数，使其能有足够的概率。</p>
+<p><img src="/images/ransac/01.png"></p>
+<h3 id="算法基本思想和流程"><a href="#算法基本思想和流程" class="headerlink" title="算法基本思想和流程"></a>算法基本思想和流程</h3><p>RANSAC是通过反复选择数据集去估计出模型，一直迭代到估计出认为比较好的模型。<br>具体的实现步骤可以分为以下几步：</p>
+<ol>
+<li>选择出可以估计出模型的最小数据集；(对于直线拟合来说就是2个点，对于平面拟合就是3个点)</li>
+<li>使用这个数据集来计算出数据模型；</li>
+<li>将所有数据带入这个模型，计算出“内点”的数目；(累加在一定误差范围内的适合当前迭代推出模型的数据)</li>
+<li>比较当前模型和之前推出的最好的模型的“内点“的数量，记录最大“内点”数的模型参数和“内点”数；</li>
+<li>重复1-4步，直到迭代结束或者当前模型已经足够好了(“内点数目大于一定数量”)。</li>
+</ol>
+<h2 id="编程实现"><a href="#编程实现" class="headerlink" title="编程实现"></a>编程实现</h2><p>以RANSAC算法拟合点云中的平面为例，介绍python实现的核心代码。</p>
+<h3 id="求解平面方程"><a href="#求解平面方程" class="headerlink" title="求解平面方程"></a>求解平面方程</h3><p>这里是根据最小数据集（点A、点B、点C）来计算数据模型（平面方程）的过程，对应上面的1、2步</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">solve_plane</span><span class="token punctuation">(</span>A<span class="token punctuation">,</span> B<span class="token punctuation">,</span> C<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    求解平面方程
+    :param A: 点A
+    :param B: 点B
+    :param C: 点C
+    :return: Point(平面上一点),Quaternion(平面四元数),Nx(平面的法向量)
+    """</span>
+
+    <span class="token comment"># 两个常量</span>
+    N <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    Pi <span class="token operator">=</span> <span class="token number">3.1415926535</span>
+
+    <span class="token comment"># 计算平面的单位法向量，即BC 与 BA的叉积</span>
+    Nx <span class="token operator">=</span> np<span class="token punctuation">.</span>cross<span class="token punctuation">(</span>B <span class="token operator">-</span> C<span class="token punctuation">,</span> B <span class="token operator">-</span> A<span class="token punctuation">)</span>
+    Nx <span class="token operator">=</span> Nx <span class="token operator">/</span> np<span class="token punctuation">.</span>linalg<span class="token punctuation">.</span>norm<span class="token punctuation">(</span>Nx<span class="token punctuation">)</span>
+
+    <span class="token comment"># 计算单位旋转向量与旋转角（范围为0到Pi）</span>
+    Nv <span class="token operator">=</span> np<span class="token punctuation">.</span>cross<span class="token punctuation">(</span>Nx<span class="token punctuation">,</span> N<span class="token punctuation">)</span>
+    angle <span class="token operator">=</span> acos<span class="token punctuation">(</span>np<span class="token punctuation">.</span>dot<span class="token punctuation">(</span>Nx<span class="token punctuation">,</span> N<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># 考虑到两个向量夹角不大于Pi/2，这里需要处理一下</span>
+    <span class="token keyword">if</span> angle <span class="token operator">&gt;</span> Pi <span class="token operator">/</span> <span class="token number">2.0</span><span class="token punctuation">:</span>
+        angle <span class="token operator">=</span> Pi <span class="token operator">-</span> angle
+        Nv <span class="token operator">=</span> <span class="token operator">-</span>Nv
+
+    <span class="token comment"># FIXME: 此处如何确定平面上的一个点？？？</span>
+    <span class="token comment"># Point = (A + B + C) / 3.0</span>
+    Point <span class="token operator">=</span> B
+    <span class="token comment"># 计算单位四元数</span>
+    Quaternion <span class="token operator">=</span> np<span class="token punctuation">.</span>append<span class="token punctuation">(</span>Nv <span class="token operator">*</span> sin<span class="token punctuation">(</span>angle <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span> cos<span class="token punctuation">(</span>angle <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># print("旋转向量:\t", Nv)</span>
+    <span class="token comment"># print("旋转角度:\t", angle)</span>
+    <span class="token comment"># print("对应四元数:\t", Quaternion)</span>
+
+    <span class="token keyword">return</span> Point<span class="token punctuation">,</span> Quaternion<span class="token punctuation">,</span> Nx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="计算点到平面的距离"><a href="#计算点到平面的距离" class="headerlink" title="计算点到平面的距离"></a>计算点到平面的距离</h3><p>我们可以根据点到平面的距离来判断这个点是否为内点。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">solve_distance</span><span class="token punctuation">(</span>M<span class="token punctuation">,</span> P<span class="token punctuation">,</span> N<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    求解点M到平面(P,Q)的距离
+    :param M: 点M
+    :param P: 平面上一点
+    :param N: 平面的法向量
+    :return: 点到平面的距离
+    """</span>
+
+    <span class="token comment"># 从四元数到法向量</span>
+    <span class="token comment"># A = 2 * Q[0] * Q[2] + 2 * Q[1] * Q[3]</span>
+    <span class="token comment"># B = 2 * Q[1] * Q[2] - 2 * Q[0] * Q[3]</span>
+    <span class="token comment"># C = -Q[0] ** 2 - Q[1] ** 2 + Q[2] ** 2 + Q[3] ** 2</span>
+    <span class="token comment"># D = -A * P[0] - B * P[1] - C * P[2]</span>
+
+    <span class="token comment"># 为了计算简便，直接使用求解出的法向量</span>
+    A <span class="token operator">=</span> N<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+    B <span class="token operator">=</span> N<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+    C <span class="token operator">=</span> N<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>
+    D <span class="token operator">=</span> <span class="token operator">-</span>A <span class="token operator">*</span> P<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">-</span> B <span class="token operator">*</span> P<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">-</span> C <span class="token operator">*</span> P<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>
+
+    <span class="token keyword">return</span> fabs<span class="token punctuation">(</span>A <span class="token operator">*</span> M<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> B <span class="token operator">*</span> M<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> C <span class="token operator">*</span> M<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">+</span> D<span class="token punctuation">)</span> <span class="token operator">/</span> sqrt<span class="token punctuation">(</span>A <span class="token operator">**</span> <span class="token number">2</span> <span class="token operator">+</span> B <span class="token operator">**</span> <span class="token number">2</span> <span class="token operator">+</span> C <span class="token operator">**</span> <span class="token number">2</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="通过RANSAC算法进行拟合"><a href="#通过RANSAC算法进行拟合" class="headerlink" title="通过RANSAC算法进行拟合"></a>通过RANSAC算法进行拟合</h3><p>这里是RANSAC算法的主要实现过程。</p>
+<p>下面的函数计算出的P是平面上的一点，Q是平面的四元数，N是平面的法向量。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">RANSAC</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    使用RANSAC算法估算模型
+    """</span>
+    <span class="token comment"># 数据规模</span>
+    SIZE <span class="token operator">=</span> data<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+    <span class="token comment"># 迭代最大次数，每次得到更好的估计会优化iters的数值，默认10000</span>
+    iters <span class="token operator">=</span> <span class="token number">10000</span>
+    <span class="token comment"># 数据和模型之间可接受的差值，默认0.25</span>
+    sigma <span class="token operator">=</span> <span class="token number">0.15</span>
+    <span class="token comment"># 内点数目</span>
+    pretotal <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token comment"># 希望的得到正确模型的概率，默认0.99</span>
+    Per <span class="token operator">=</span> <span class="token number">0.999</span>
+    <span class="token comment"># 初始化一下</span>
+    P <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    Q <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    N <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>iters<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 随机在数据中选出三个点去求解模型</span>
+        sample_index <span class="token operator">=</span> random<span class="token punctuation">.</span>sample<span class="token punctuation">(</span><span class="token builtin">range</span><span class="token punctuation">(</span>SIZE<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
+        P<span class="token punctuation">,</span> Q<span class="token punctuation">,</span> N <span class="token operator">=</span> solve_plane<span class="token punctuation">(</span>data<span class="token punctuation">[</span>sample_index<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span> data<span class="token punctuation">[</span>sample_index<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span> data<span class="token punctuation">[</span>sample_index<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+        <span class="token comment"># 算出内点数目</span>
+        total_inlier <span class="token operator">=</span> <span class="token number">0</span>
+        <span class="token keyword">for</span> index <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>SIZE<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> solve_distance<span class="token punctuation">(</span>data<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">,</span> P<span class="token punctuation">,</span> N<span class="token punctuation">)</span> <span class="token operator">&lt;</span> sigma<span class="token punctuation">:</span>
+                total_inlier <span class="token operator">=</span> total_inlier <span class="token operator">+</span> <span class="token number">1</span>
+
+        <span class="token comment"># 判断当前的模型是否比之前估算的模型好</span>
+        <span class="token keyword">if</span> total_inlier <span class="token operator">&gt;</span> pretotal<span class="token punctuation">:</span>
+            iters <span class="token operator">=</span> log<span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">-</span> Per<span class="token punctuation">)</span> <span class="token operator">/</span> log<span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">-</span> <span class="token builtin">pow</span><span class="token punctuation">(</span>total_inlier <span class="token operator">/</span> SIZE<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            pretotal <span class="token operator">=</span> total_inlier
+
+        <span class="token comment"># 判断是否当前模型已经符合超过一半的点</span>
+        <span class="token keyword">if</span> total_inlier <span class="token operator">&gt;</span> SIZE <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">:</span>
+            <span class="token keyword">break</span>
+    <span class="token keyword">return</span> P<span class="token punctuation">,</span> Q<span class="token punctuation">,</span> N<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="运行项目"><a href="#运行项目" class="headerlink" title="运行项目"></a>运行项目</h2><p>具体的代码（包括C++实现和python实现）都放在<a target="_blank" rel="noopener" href="https://github.com/Immortalqx/RANSAC.git">https://github.com/Immortalqx/RANSAC.git</a></p>
+<p>你可以通过下面的指令运行这篇博客介绍的RANSAC算法。</p>
+<p><strong>克隆本项目：</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/Immortalqx/RANSAC.git<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><strong>运行C++部分的代码：</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> RANSAC
+<span class="token function">mkdir</span> build
+<span class="token builtin class-name">cd</span> build
+cmake <span class="token punctuation">..</span>
+<span class="token function">make</span>
+./RANSAC<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>运行python部分的代码：</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#在平面中用ransac算法拟合直线</span>
+python3 RANSAC_2D.py
+<span class="token comment">#在点云中用ransac算法拟合平面</span>
+python3 RANSAC_3D.py<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>运行结果：</strong></p>
+<p>对2D平面中的直线进行拟合</p>
+<img src="/images/ransac/02.png" style="zoom: 50%;">
+
+<p>对点云中的平面进行拟合</p>
+<img src="/images/ransac/03.png" style="zoom: 67%;">
+</article></div></main><div class="nav-wrap"><div class="nav"><button class="site-nav"><div class="navicon"></div></button><ul class="nav_items"><li class="nav_item"><a class="nav-page" href="/homepage-zh/"> 关于</a></li><li class="nav_item"><a class="nav-page" href="/homepage-zh/#News"> 新闻</a></li><li class="nav_item"><a class="nav-page" href="/homepage-zh/#Projects"> 项目</a></li><li class="nav_item"><a class="nav-page" href="/homepage-zh/#Honors-and-Awards"> 荣誉与奖项</a></li><li class="nav_item"><a class="nav-page" href="/homepage-zh/#Educations"> 教育经历</a></li><li class="nav_item"><a class="nav-page" href="https://immortalqx.github.io"> 博客</a></li><li class="nav_item"><a class="nav-page" href="https://immortalqx.github.io/homepage"> 英文版</a></li></ul></div><div class="cd-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div></div><footer id="page_footer"><div class="footer_wrap"><div class="copyright">&copy;2022 by 刘权祥</div><div class="theme-info">Powered by <a target="_blank" href="https://hexo.io" rel="nofollow noopener">Hexo</a> & <a target="_blank" href="https://github.com/PhosphorW/hexo-theme-academia" rel="nofollow noopener">Academia Theme</a></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery-pjax@latest/jquery.pjax.min.js"></script><script src="/homepage-zh/js/main.js"></script></body></html>

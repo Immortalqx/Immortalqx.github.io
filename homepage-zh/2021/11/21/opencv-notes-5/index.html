@@ -1,0 +1,50 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"><title>个人主页</title><meta name="author" content="刘权祥"><link rel="shortcut icon" href="/homepage-zh/img/favicon.png"><link rel="stylesheet" href="/homepage-zh/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><meta name="generator" content="Hexo 5.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/homepage-zh/atom.xml" title="个人主页" type="application/atom+xml">
+</head><body><header id="page_header"><div class="header_wrap"><div id="blog_name"><a class="blog_title" id="site-name" href="/homepage-zh/">个人主页</a></div><button class="menus_icon"><div class="navicon"></div></button><ul class="menus_items"><li class="menus_item"><a class="site-page" href="/homepage-zh/"> 关于</a></li><li class="menus_item"><a class="site-page" href="/homepage-zh/#News"> 新闻</a></li><li class="menus_item"><a class="site-page" href="/homepage-zh/#Projects"> 项目</a></li><li class="menus_item"><a class="site-page" href="/homepage-zh/#Honors-and-Awards"> 荣誉与奖项</a></li><li class="menus_item"><a class="site-page" href="/homepage-zh/#Educations"> 教育经历</a></li><li class="menus_item"><a class="site-page" href="https://immortalqx.github.io"> 博客</a></li><li class="menus_item"><a class="site-page" href="https://immortalqx.github.io/homepage"> 英文版</a></li></ul></div></header><main id="page_main"><div class="side-card sticky"><div class="card-wrap" itemscope itemtype="http://schema.org/Person"><div class="author-avatar"><img class="avatar-img" src="/homepage-zh/img/avatar.jpg" onerror="this.onerror=null;this.src='/homepage-zh/img/profile.jpg'" alt="avatar"></div><div class="author-discrip"><h3>刘权祥</h3><p class="author-bio">面对热爱，要不遗余力的喜欢！</p></div><div class="author-links"><button class="btn m-social-links">Links</button><ul class="social-icons"><li><a class="social-icon" href="/homepage/img/qq_qrcode.jpg" target="_blank"><i class="fab fa-qq" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/homepage/img/wechat_qrcode.jpg" target="_blank"><i class="fab fa-weixin" aria-hidden="true"></i></a></li><li><a class="social-icon" href="https://github.com/Immortalqx" target="_blank"><i class="fab fa-github" aria-hidden="true"></i></a></li><li><a class="social-icon" href="mailto:immortalqx@gmail.com" target="_blank"><i class="fas fa-envelope" aria-hidden="true"></i></a></li></ul></div><a class="cv-links" href="/homepage-zh/attaches/CV.pdf" target="_blank"><i class="fas fa-file-pdf" aria-hidden="true"><span>CV</span></i></a></div></div><div class="page" itemscope itemtype="http://schema.org/CreativeWork"><h2 class="page-title">Harris角点检测原理</h2><article><h1 id="Harris角点检测原理"><a href="#Harris角点检测原理" class="headerlink" title="Harris角点检测原理"></a>Harris角点检测原理</h1><p>Harris角点最早在paper A Combined Corner and Edge Detector中被Chris Harris &amp; Mike Stephens提出。</p>
+<h2 id="0、Harris角点检测的基本思想："><a href="#0、Harris角点检测的基本思想：" class="headerlink" title="0、Harris角点检测的基本思想："></a>0、Harris角点检测的基本思想：</h2><p>算法基本思想是使用一个固定窗口在图像上进行任意方向上的滑动，比较滑动前与滑动后两种情况，窗口中的像素灰度变化程度，如果存在任意方向上的滑动，都有着较大灰度变化，那么我们可以认为该窗口中存在角点。</p>
+<p><img src="/images/OpenCV-Notes/5-01.png"></p>
+<h2 id="1、灰度变化描述"><a href="#1、灰度变化描述" class="headerlink" title="1、灰度变化描述"></a>1、灰度变化描述</h2><p>当窗口发生$ [u,v] $移动时，那么<strong>滑动前与滑动后对应的窗口中的像素点灰度变化</strong>描述如下：<br>$$<br>E(u,v)=\sum\limits_{(x,y)€W}w(x,y)[I(x+u,y+v)-I(x,y)]^2<br>$$<br>其中</p>
+<ul>
+<li>$[u,v]$是窗口$W$的偏移量；</li>
+<li>$(x,y)$是窗口$W$所对应的像素坐标位置，窗口有多大，就有多少个位置；</li>
+<li>$I(x,y)$是像素坐标位置$(x,y)$的图像灰度值；</li>
+<li>$I(x+u,y+v)$是像素坐标位置$(x+u,y+v)$的图像灰度值；</li>
+<li>$w(x,y)$是窗口函数，最简单情形就是窗口$W$内的所有像素所对应的$w$权重系数均为1.但有时候，我们会将$w(x,y)$函数设置为以窗口$W$中心为原点的二元正太分布。如果窗口$W$中心点是角点时，移动前与移动后，该点在灰度变化贡献最大；而离窗口$W$中心(角点)较远的点，这些点的灰度变化几近平缓，这些点的权重系数，可以设定小值，以示该点对灰度变化贡献较小，那么我们自然而然想到使用二元高斯函数来表示窗口函数；</li>
+</ul>
+<p>根据上述表达式，当窗口在平坦区域上移动灰度不会发生什么变换。如果窗口处在纹理比较丰富的区域上滑动，那么灰度变化会很大。</p>
+<p>算法最终思想就是计算灰度发生较大变化时所对应的位置，当然这个较大是指任意方向上的滑动，并非单指某个方向。</p>
+<h2 id="2、-E-u-v-化简"><a href="#2、-E-u-v-化简" class="headerlink" title="2、 $E(u,v)$化简"></a>2、 $E(u,v)$化简</h2><p>根据泰勒公式:<br>$$<br>f(x+u,y+v)≈f(x,y)+uf_x(x,y)+vf_y(x,y)<br>$$<br>我们可以将上面的公式化简为:<br>$$<br>\sum\limits_{(x,y)€W}w(x,y)[I(x+u,y+v)-I(x,y)]^2\\<br>≈\sum\limits_{(x,y)€W}w(x,y)[I(x,y)+uI_x+vI_y-I(x,y)]^2\\<br>=\sum\limits_{(x,y)€W}w(x,y)[u^2I_x^2+2uvI_xI_y+v^2I_y^2]\\<br>=\sum\limits_{(x,y)€W}w(x,y)\begin{bmatrix}u &amp; v\end{bmatrix}\begin{bmatrix} I_x^2 &amp; I_xIy \   I_xI_y &amp; I_y^2\end{bmatrix}\begin{bmatrix}u \ v\end{bmatrix}\\<br>=\begin{bmatrix}u &amp; v\end{bmatrix}(\sum\limits_{(x,y)€W}w(x,y)\begin{bmatrix} I_x^2 &amp; I_xIy \   I_xI_y &amp; I_y^2\end{bmatrix})\begin{bmatrix}u \ v\end{bmatrix}<br>$$<br>所以$E(u,v)$表达式可以更新为：<br>$$<br>E(u,v)=\begin{bmatrix}u &amp; v\end{bmatrix}M\begin{bmatrix}u \ v\end{bmatrix}<br>$$<br>其中：$M=\sum\limits_{(x,y)€W}w(x,y)\begin{bmatrix} I_x^2 &amp; I_xIy \   I_xI_y &amp; I_y^2\end{bmatrix}$,</p>
+<p>$I_x$,$I_y$分别为窗口内像素点$(x,y)$在$x$方向上和$y$方向上的梯度值。</p>
+<h2 id="3、矩阵-M-的关键性"><a href="#3、矩阵-M-的关键性" class="headerlink" title="3、矩阵$M$的关键性"></a>3、矩阵$M$的关键性</h2><p>Harris角点检测算法并不是直接根据$E(u,v)$来判断角点的，而是通过对窗口内的每个像素的$x$方向上的梯度与$y$方向上的梯度进行统计分析。假设我们这里以$I_x$和$I_y$为坐标轴，则每个像素的梯度坐标可以表示成$(I_x,I_y)$。</p>
+<p>针对平坦区域，边缘区域以及角点区域三种情形进行分析：</p>
+<p><img src="/images/OpenCV-Notes/5-02.png"></p>
+<p>下图是对这三种情况窗口中的对应像素的梯度分布进行绘制：</p>
+<p><img src="/images/OpenCV-Notes/5-03.png"></p>
+<p>我们可以很明显的看出这三种区域的特点:</p>
+<ul>
+<li><p>平坦区域上的每个像素点所对应的$(I_x,I_y)$坐标分布在原点附近。</p>
+<p>其实也很好理解：针对平坦区域的像素点，他们的梯度方向虽然各异，但是其幅值都不是很大，所以均聚集在原点附近。</p>
+</li>
+<li><p>边缘区域有一坐标轴分布较散。</p>
+<p>至于是哪一个坐标上的数据分布较散不能一概而论，这要视边缘在图像上的具体位置而定，如果边缘是水平或者垂直方向，那么$I_y$轴方向或者$I_x$方向上的数据分布就比较散；</p>
+</li>
+<li><p>角点区域的$I_x$、$I_y$方向上的梯度分布都比较散。</p>
+</li>
+</ul>
+<p>所以，我们可以尝试利用这些特征来判断哪些区域存在角点。</p>
+<p>之前我们已经计算出了$M$矩阵：<br>$$<br>M=<br>\sum\limits_{(x,y)€W}w(x,y)\begin{bmatrix} I_x^2 &amp; I_xIy \   I_xI_y &amp; I_y^2\end{bmatrix}=<br>\begin{bmatrix} A &amp; C \   C &amp; B \end{bmatrix}<br>$$<br>我们可以把$E(u,v)$近似为二项函数：$E(u,v)=Au^2+2Cuv+Bv^2$</p>
+<p>其中：<br>$$<br>A=\sum\limits_{(x,y)€W}w(x,y)*I_x^2\<br>B=\sum\limits_{(x,y)€W}w(x,y)*I_y^2\<br>C=\sum\limits_{(x,y)€W}w(x,y)*I_xI_y<br>$$<br>二次项函数本质上就是一个椭圆函数。椭圆的长和宽是由$M$的特征值$λ1,λ2$决定的(椭圆的长短轴正是矩阵$M$特征值平方根的倒数)，椭圆的方向是由$M$的特征向量决定的，椭圆方程为：<br>$$<br>\begin{bmatrix} u &amp; v \end{bmatrix}M\begin{bmatrix} u \ v \end{bmatrix}=1<br>$$</p>
+<p>如果使用椭圆进行数据集表示，则绘制图示如下：</p>
+<p><img src="/images/OpenCV-Notes/5-04.png"></p>
+<p>从上图中我们可以看出：</p>
+<ul>
+<li>如果$λ1,λ2$都很大，并且很接近，就可以认为是一个角点</li>
+<li>如果$λ1,λ2$中只有一个值大，那么这只是一个边缘，不是角点</li>
+<li>如果$λ1,λ2$很接近但是数值比较小，那么这里就是一个平坦区域</li>
+</ul>
+<h2 id="4、角点响应的度量"><a href="#4、角点响应的度量" class="headerlink" title="4、角点响应的度量"></a>4、角点响应的度量</h2><p>通常用下面表达式进行度量，对每一个窗口计算得到一个分数$R$，根据$R$的大小来判定窗口内是否存在harris特征角点。分数$R$根据下面公式计算得到：<br>$$<br>R=det(M)-k(trace(M))^2\<br>det(M)=λ_1λ_2\<br>trace(M)=λ_1+λ_2<br>$$<br>这里$λ1,λ2$是矩阵$M$的2个特征值，$k$是一个指定值，这是一个经验参数，需要实验确定它的合适大小，通常它的值在0.04和0.06之间,它的存在只是调节函数的形状而已。</p>
+<p>$R$取决于$M$的特征值，对于角点$|R|$很大，平坦的区域$|R|$很小，边缘的$R$为负值;</p>
+<p><img src="/images/OpenCV-Notes/5-05.png"></p>
+<p>最后设定R的阈值，进行角点判断即可。</p>
+</article></div></main><div class="nav-wrap"><div class="nav"><button class="site-nav"><div class="navicon"></div></button><ul class="nav_items"><li class="nav_item"><a class="nav-page" href="/homepage-zh/"> 关于</a></li><li class="nav_item"><a class="nav-page" href="/homepage-zh/#News"> 新闻</a></li><li class="nav_item"><a class="nav-page" href="/homepage-zh/#Projects"> 项目</a></li><li class="nav_item"><a class="nav-page" href="/homepage-zh/#Honors-and-Awards"> 荣誉与奖项</a></li><li class="nav_item"><a class="nav-page" href="/homepage-zh/#Educations"> 教育经历</a></li><li class="nav_item"><a class="nav-page" href="https://immortalqx.github.io"> 博客</a></li><li class="nav_item"><a class="nav-page" href="https://immortalqx.github.io/homepage"> 英文版</a></li></ul></div><div class="cd-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div></div><footer id="page_footer"><div class="footer_wrap"><div class="copyright">&copy;2022 by 刘权祥</div><div class="theme-info">Powered by <a target="_blank" href="https://hexo.io" rel="nofollow noopener">Hexo</a> & <a target="_blank" href="https://github.com/PhosphorW/hexo-theme-academia" rel="nofollow noopener">Academia Theme</a></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery-pjax@latest/jquery.pjax.min.js"></script><script src="/homepage-zh/js/main.js"></script></body></html>
