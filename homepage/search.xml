@@ -468,39 +468,6 @@
       </tags>
   </entry>
   <entry>
-    <title>解决source多个ROS工作空间时的覆盖问题</title>
-    <url>/homepage/2021/07/17/ros-notes-3/</url>
-    <content><![CDATA[<h1 id="解决source多个ROS工作空间时的覆盖问题"><a href="#解决source多个ROS工作空间时的覆盖问题" class="headerlink" title="解决source多个ROS工作空间时的覆盖问题"></a>解决source多个ROS工作空间时的覆盖问题</h1><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p><strong>在~/.zshrc或者~/.bashrc中source 了多个工作空间，但有的工作空间并没有被成功source</strong></p>
-<p>使用ros有时需要多个利用多个工作空间，但每打开一个终端就要source一次工作空间比较麻烦。将工作空间的setup.sh脚本写入~/.zshrc或者~/.bashrc中是一种较为方便的做法。</p>
-<p>但有时候，有一些工作空间并不会被成功的source。在这样的情况下，<code>roslaunch</code>也不给自动补全，强行打出全名运行时也会报错，<code>echo $ROS_PACKAGE_PATH </code>输出的信息里面也看不见那几个包。</p>
-<p>可能的原因是因为source 的部分工作空间在写入~/.zshrc或者~/.bashrc时没有编译导致顺序错乱。</p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><h4 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h4><p>比较方便的解决方法是，找到~/.zshrc或者~/.bashrc中最后被source的工作空间，然后修改其devel文件夹下的setup_util.py文件，查找CMAKE_PREFIX_PATH，在其中键入缺少的工作空间的devel路径，保存退出。之后重新打开一个终端时，应该所有工作空间都会被成功source了。</p>
-<p>以下图为例，你需要找到的是<code>/home/lqx/catkin_workspace/catkin_drive</code>这个工作空间。</p>
-<p><img src="/images/ros-notes/3-1.png"></p>
-<p>之后，在其devel文件夹下的setup_util.py文件中查找查找CMAKE_PREFIX_PATH，找到如下图所示的部分。</p>
-<p><img src="/images/ros-notes/3-2.png"></p>
-<p>在其中键入缺少的工作空间的devel路径，具体的操作如下图所示。</p>
-<p><img src="/images/ros-notes/3-3.png"></p>
-<p>修改好之后，重新打开一个终端，或者在现有终端下重新source ~/.zshrc或者~/.bashrc文件即可。</p>
-<p><strong>检验：</strong></p>
-<p>可以查看<code>roslaunch</code>指令是否能自动补全工作空间中的包，并且能否成功的运行；</p>
-<p>也可以检查<code>echo $ROS_PACKAGE_PATH </code>指令输出的信息中是否包含你所有的工作空间。</p>
-<h4 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h4><p>修改~/.zshrc或者~/.bashrc中最后被source的工作空间下的文件并不是一种很合适的方法，毕竟这个工作空间下还放着需要使用的包，对其进行修改、编译等操作难免会产生一些影响。</p>
-<p>因此，我们可以单独建立一个工作空间专门用来管理其他所有的工作空间，我们只需要将其source指令写入~/.zshrc或者~/.bashrc即可，每一次我们想增添新的工作空间，只要修改这个工作空间的devel文件夹下的_setup_util.py就可以了。</p>
-<p>比如这里我建了一个叫做ros_manager的工作空间，修改好_setup_util.py文件之后，写入到~/.zshrc中，把其他工作空间的source指令都注释掉即可，以后添加新的工作空间，只需要修改ros_manager的_setup_util.py文件即可。</p>
-<p><img src="/images/ros-notes/3-4.png"></p>
-<h4 id="方法三："><a href="#方法三：" class="headerlink" title="方法三："></a>方法三：</h4><p>其实还可以将<code>--extend</code>参数传递给setup.sh文件，它只会添加到环境中，而不会设置环境。</p>
-<p>在~/.zshrc或者~/.bashrc中，对应的操作是在source命令后面加上<code>--extend</code>。</p>
-<p>但是这可能是危险的，建议做适当的工作区链接。</p>
-]]></content>
-      <categories>
-        <category>ROS</category>
-      </categories>
-      <tags>
-        <tag>ROS基础</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ROS中nodelet的使用</title>
     <url>/homepage/2020/09/04/ros-notes-2/</url>
     <content><![CDATA[<h1 id="ROS中nodelet的使用"><a href="#ROS中nodelet的使用" class="headerlink" title="ROS中nodelet的使用"></a>ROS中nodelet的使用</h1><h2 id="1-为什么使用nodelet？"><a href="#1-为什么使用nodelet？" class="headerlink" title="1. 为什么使用nodelet？"></a>1. 为什么使用nodelet？</h2><p>Nodelet提供了一种方法，可以在同一台计算机上，在同一个进程内，运行多个算法，且在进程内消息传递时不产生复制成本（zero  copy）。在一个node里面，roscpp利用指针传递可以实现在publish和subscribe调用时的零拷贝。为了实现相似的效果，多个nodelets允许将多个类动态加载到同一个node里，同时还提供独立的命名空间，从而使得这些nodelets尽管运行在同一个进程里，但却仍然像单独的node一样工作。也就实现了“在一个进程（node）里运行多个nodelet”的效果。</p>
@@ -649,6 +616,39 @@ rosrun nodelet nodelet load try_nodelet/try_use nodelet_manager __name:<span cla
 <p>注意，如果这里报错“According to the loaded plugin descriptions the class try_nodelet/try_use with base class type nodelet::Nodelet does not exist.”  一般是因为运行manager的窗口（终端2）没有source</p>
 <p>所以要么一开始就把source写进配置文件中，要么就每个相关的窗口都要source，这样能够避免很多问题，也方便自己找到程序的bug所在。</p>
 <h2 id="4-将已有的ROS工程改写为nodelet"><a href="#4-将已有的ROS工程改写为nodelet" class="headerlink" title="4.将已有的ROS工程改写为nodelet"></a>4.将已有的ROS工程改写为nodelet</h2><p>待补充~</p>
+]]></content>
+      <categories>
+        <category>ROS</category>
+      </categories>
+      <tags>
+        <tag>ROS基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决source多个ROS工作空间时的覆盖问题</title>
+    <url>/homepage/2021/07/17/ros-notes-3/</url>
+    <content><![CDATA[<h1 id="解决source多个ROS工作空间时的覆盖问题"><a href="#解决source多个ROS工作空间时的覆盖问题" class="headerlink" title="解决source多个ROS工作空间时的覆盖问题"></a>解决source多个ROS工作空间时的覆盖问题</h1><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p><strong>在~/.zshrc或者~/.bashrc中source 了多个工作空间，但有的工作空间并没有被成功source</strong></p>
+<p>使用ros有时需要多个利用多个工作空间，但每打开一个终端就要source一次工作空间比较麻烦。将工作空间的setup.sh脚本写入~/.zshrc或者~/.bashrc中是一种较为方便的做法。</p>
+<p>但有时候，有一些工作空间并不会被成功的source。在这样的情况下，<code>roslaunch</code>也不给自动补全，强行打出全名运行时也会报错，<code>echo $ROS_PACKAGE_PATH </code>输出的信息里面也看不见那几个包。</p>
+<p>可能的原因是因为source 的部分工作空间在写入~/.zshrc或者~/.bashrc时没有编译导致顺序错乱。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><h4 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h4><p>比较方便的解决方法是，找到~/.zshrc或者~/.bashrc中最后被source的工作空间，然后修改其devel文件夹下的setup_util.py文件，查找CMAKE_PREFIX_PATH，在其中键入缺少的工作空间的devel路径，保存退出。之后重新打开一个终端时，应该所有工作空间都会被成功source了。</p>
+<p>以下图为例，你需要找到的是<code>/home/lqx/catkin_workspace/catkin_drive</code>这个工作空间。</p>
+<p><img src="/images/ros-notes/3-1.png"></p>
+<p>之后，在其devel文件夹下的setup_util.py文件中查找查找CMAKE_PREFIX_PATH，找到如下图所示的部分。</p>
+<p><img src="/images/ros-notes/3-2.png"></p>
+<p>在其中键入缺少的工作空间的devel路径，具体的操作如下图所示。</p>
+<p><img src="/images/ros-notes/3-3.png"></p>
+<p>修改好之后，重新打开一个终端，或者在现有终端下重新source ~/.zshrc或者~/.bashrc文件即可。</p>
+<p><strong>检验：</strong></p>
+<p>可以查看<code>roslaunch</code>指令是否能自动补全工作空间中的包，并且能否成功的运行；</p>
+<p>也可以检查<code>echo $ROS_PACKAGE_PATH </code>指令输出的信息中是否包含你所有的工作空间。</p>
+<h4 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h4><p>修改~/.zshrc或者~/.bashrc中最后被source的工作空间下的文件并不是一种很合适的方法，毕竟这个工作空间下还放着需要使用的包，对其进行修改、编译等操作难免会产生一些影响。</p>
+<p>因此，我们可以单独建立一个工作空间专门用来管理其他所有的工作空间，我们只需要将其source指令写入~/.zshrc或者~/.bashrc即可，每一次我们想增添新的工作空间，只要修改这个工作空间的devel文件夹下的_setup_util.py就可以了。</p>
+<p>比如这里我建了一个叫做ros_manager的工作空间，修改好_setup_util.py文件之后，写入到~/.zshrc中，把其他工作空间的source指令都注释掉即可，以后添加新的工作空间，只需要修改ros_manager的_setup_util.py文件即可。</p>
+<p><img src="/images/ros-notes/3-4.png"></p>
+<h4 id="方法三："><a href="#方法三：" class="headerlink" title="方法三："></a>方法三：</h4><p>其实还可以将<code>--extend</code>参数传递给setup.sh文件，它只会添加到环境中，而不会设置环境。</p>
+<p>在~/.zshrc或者~/.bashrc中，对应的操作是在source命令后面加上<code>--extend</code>。</p>
+<p>但是这可能是危险的，建议做适当的工作区链接。</p>
 ]]></content>
       <categories>
         <category>ROS</category>
