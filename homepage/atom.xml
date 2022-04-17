@@ -6,13 +6,8 @@
   <link href="http://immortalqx.github.io/homepage/atom.xml" rel="self"/>
   
   <link href="http://immortalqx.github.io/homepage/"/>
-  <updated>2022-04-16T16:33:50.223Z</updated>
+  <updated>2022-04-17T08:50:58.860Z</updated>
   <id>http://immortalqx.github.io/homepage/</id>
-  
-  <author>
-    <name>Quanxiang Liu</name>
-    
-  </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
   
@@ -21,7 +16,7 @@
     <link href="http://immortalqx.github.io/homepage/2022/04/17/post/"/>
     <id>http://immortalqx.github.io/homepage/2022/04/17/post/</id>
     <published>2022-04-16T16:25:22.000Z</published>
-    <updated>2022-04-16T16:33:50.223Z</updated>
+    <updated>2022-04-17T08:50:58.860Z</updated>
     
     
       
@@ -31,6 +26,27 @@
     <summary type="html">&lt;p&gt;Hello Word!&lt;/p&gt;
 &lt;p&gt;This is Quanxiang Liu.&lt;/p&gt;
 &lt;h1 id=&quot;News&quot;&gt;&lt;a href=&quot;#News&quot; class=&quot;headerlink&quot; title=&quot;News&quot;&gt;&lt;/a&gt;News&lt;/h1&gt;&lt;p&gt;This is</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Quanxiang&#39;s Homepage</title>
+    <link href="http://immortalqx.github.io/homepage/2022/04/17/post-zh-cn/"/>
+    <id>http://immortalqx.github.io/homepage/2022/04/17/post-zh-cn/</id>
+    <published>2022-04-16T16:25:22.000Z</published>
+    <updated>2022-04-17T08:56:22.874Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;本页面正在施工中……&quot;&gt;&lt;a href=&quot;#本页面正在施工中……&quot; class=&quot;headerlink&quot; title=&quot;本页面正在施工中……&quot;&gt;&lt;/a&gt;&lt;font color=&quot;red&quot;&gt;本页面正在施工中……&lt;/font&gt;&lt;/h1&gt;&lt;h1</summary>
         
       
     
@@ -508,31 +524,6 @@
     <category term="视觉SLAM" scheme="http://immortalqx.github.io/homepage/tags/%E8%A7%86%E8%A7%89SLAM/"/>
     
     <category term="点云" scheme="http://immortalqx.github.io/homepage/tags/%E7%82%B9%E4%BA%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>C++中的头文件</title>
-    <link href="http://immortalqx.github.io/homepage/2021/11/21/cpp-notes-0/"/>
-    <id>http://immortalqx.github.io/homepage/2021/11/21/cpp-notes-0/</id>
-    <published>2021-11-21T13:10:15.000Z</published>
-    <updated>2022-01-27T13:22:21.227Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;C-中的头文件&quot;&gt;&lt;a href=&quot;#C-中的头文件&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="C++" scheme="http://immortalqx.github.io/homepage/categories/C/"/>
-    
-    
-    <category term="C++基础" scheme="http://immortalqx.github.io/homepage/tags/C-%E5%9F%BA%E7%A1%80/"/>
     
   </entry>
   
