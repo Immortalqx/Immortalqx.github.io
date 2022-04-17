@@ -949,6 +949,33 @@ geometry_msgs/Transform transform
       </tags>
   </entry>
   <entry>
+    <title>区分PIXHAWK、PX4与APM(ardupilot)</title>
+    <url>/homepage/2021/07/27/uav-notes-1/</url>
+    <content><![CDATA[<h1 id="区分PIXHAWK、PX4与APM-ardupilot"><a href="#区分PIXHAWK、PX4与APM-ardupilot" class="headerlink" title="区分PIXHAWK、PX4与APM(ardupilot)"></a>区分PIXHAWK、PX4与APM(ardupilot)</h1><h3 id="一、PIXHAWK介绍"><a href="#一、PIXHAWK介绍" class="headerlink" title="一、PIXHAWK介绍"></a>一、PIXHAWK介绍</h3><p><strong>pixhawk是硬件平台</strong>，PX4是pixhawk的原生固件，专门为pixhawk开发。</p>
+<img src="/images/UAV-notes/1-1.jpg" alt="" style="zoom: 18%;">
+
+<p>Pixhawk是一款由PX4开源项目设计并由3DR公司制造生产的高级自动驾驶仪系统，其前身是APM。APM（Ardupilot Mega）也是硬件，Ardupilot是APM的固件，所以称ArduPilot固件也叫APM。</p>
+<img src="/images/UAV-notes/1-2.png" alt="" style="zoom:30%;">
+
+<p>由于APM的处理器已经接近满负荷，没有办法满足更复杂的运算处理，所以硬件厂商采用了目前新标准的32位ARM处理器，它采用了ST Microelectronic先进的处理器及传感器技术且搭载了NuttX的实时操作系统，在模型自动控制方面有着出色的性能、灵活性和可靠性。</p>
+<p>PIXHAWK的所有硬件都是透明的，它用的是什么芯片和传感器一目了然，所有的总线和外设都进行引出，不但以后可以兼容一些其他外设，而且对于有开发能力的用户提供了方便。 PIXHAWK 是一个双处理器的飞行控制器，一个擅长于强大运算的 32 bit STM32F427 Cortex M4 核心 168 MHz/256 KB RAM/2 MB Flash 处理器，还有一个主要定位于工业用途的协处理器 32 bit STM32F103，它的特点就是安全稳定。所以就算主处理器死机了，还有一个协处理器来保障安全。</p>
+<h3 id="二、PX4介绍"><a href="#二、PX4介绍" class="headerlink" title="二、PX4介绍"></a>二、PX4介绍</h3><p>PX4固件专为PIXHAWK开发的固件。相对封闭，代码体系相对简单清晰，社区相对小，迭代慢一些，但因为相对清晰，适合学习研究。</p>
+<p>PX4地面控制站被称为QGroundControl，（简称QGC）是PX4自驾系统不可分割的一部分，可以运行在Windows，OS X或Linux等多个平台。可以将PX4固件烧写到硬件，设置机器，改变不同的参数，获得实时航班信息，创建和执行完全自主的任务。</p>
+<h3 id="三、APM介绍"><a href="#三、APM介绍" class="headerlink" title="三、APM介绍"></a>三、APM介绍</h3><p>APM固件专为Arduupilot开发的固件，现也用于PIXHAWK。有ArduCopter社区支撑、开放，功能全、迭代升级快，适合直接用。由于有较多的历史兼容性需求，软件代码体系相对杂乱，还封装了PX4的内核，学习起来困难些。</p>
+<p>APM地面控制站被称为Mission Planner，（简称MP）是APM自驾系统不可分割的一部分。可以将APM固件烧写到硬件，设置机器，改变不同的参数，获得实时航班信息，创建和执行完全自主的任务。</p>
+<p>随着APM飞控软件的快速发展，AVR板子的性能已经不能满足需求，所以只能逐步移植到Pixhawk的硬件架构上来进行开发。所以，APM自驾仪软件也就兼容PIXHAWK飞控硬件了。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><strong>PIXHAWK飞控是硬件平台，PX4和APM都是开源固件，均可以烧写到PIXHAWK飞控中。</strong></p>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>PIXHAWK</tag>
+        <tag>PX4</tag>
+        <tag>APM</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>PX4 Offboard Control Using MAVROS on Gazebo</title>
     <url>/homepage/2021/07/23/ros-notes-6/</url>
     <content><![CDATA[<h1 id="PX4-Offboard-Control-Using-MAVROS-on-Gazebo"><a href="#PX4-Offboard-Control-Using-MAVROS-on-Gazebo" class="headerlink" title="PX4 Offboard Control Using MAVROS on Gazebo"></a>PX4 Offboard Control Using MAVROS on Gazebo</h1><p>最近在学习PX4和mavros，感觉px4官网的教程总体上讲得不错，但有一些地方不是很友好，比如offboard control这一块儿，讲的比较简单，省略了gazebo的使用，我上网查了一大堆资料才勉强把这个示例代码在gazebo中跑出来。所以这里做一个记录，希望对看到的人有点帮助。</p>
@@ -1132,36 +1159,9 @@ mavros_msgs<span class="token double-colon punctuation">::</span>State current_s
         <category>ROS</category>
       </categories>
       <tags>
+        <tag>PX4</tag>
         <tag>MAVROS</tag>
-        <tag>PX4</tag>
         <tag>Gazebo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>区分PIXHAWK、PX4与APM(ardupilot)</title>
-    <url>/homepage/2021/07/27/uav-notes-1/</url>
-    <content><![CDATA[<h1 id="区分PIXHAWK、PX4与APM-ardupilot"><a href="#区分PIXHAWK、PX4与APM-ardupilot" class="headerlink" title="区分PIXHAWK、PX4与APM(ardupilot)"></a>区分PIXHAWK、PX4与APM(ardupilot)</h1><h3 id="一、PIXHAWK介绍"><a href="#一、PIXHAWK介绍" class="headerlink" title="一、PIXHAWK介绍"></a>一、PIXHAWK介绍</h3><p><strong>pixhawk是硬件平台</strong>，PX4是pixhawk的原生固件，专门为pixhawk开发。</p>
-<img src="/images/UAV-notes/1-1.jpg" alt="" style="zoom: 18%;">
-
-<p>Pixhawk是一款由PX4开源项目设计并由3DR公司制造生产的高级自动驾驶仪系统，其前身是APM。APM（Ardupilot Mega）也是硬件，Ardupilot是APM的固件，所以称ArduPilot固件也叫APM。</p>
-<img src="/images/UAV-notes/1-2.png" alt="" style="zoom:30%;">
-
-<p>由于APM的处理器已经接近满负荷，没有办法满足更复杂的运算处理，所以硬件厂商采用了目前新标准的32位ARM处理器，它采用了ST Microelectronic先进的处理器及传感器技术且搭载了NuttX的实时操作系统，在模型自动控制方面有着出色的性能、灵活性和可靠性。</p>
-<p>PIXHAWK的所有硬件都是透明的，它用的是什么芯片和传感器一目了然，所有的总线和外设都进行引出，不但以后可以兼容一些其他外设，而且对于有开发能力的用户提供了方便。 PIXHAWK 是一个双处理器的飞行控制器，一个擅长于强大运算的 32 bit STM32F427 Cortex M4 核心 168 MHz/256 KB RAM/2 MB Flash 处理器，还有一个主要定位于工业用途的协处理器 32 bit STM32F103，它的特点就是安全稳定。所以就算主处理器死机了，还有一个协处理器来保障安全。</p>
-<h3 id="二、PX4介绍"><a href="#二、PX4介绍" class="headerlink" title="二、PX4介绍"></a>二、PX4介绍</h3><p>PX4固件专为PIXHAWK开发的固件。相对封闭，代码体系相对简单清晰，社区相对小，迭代慢一些，但因为相对清晰，适合学习研究。</p>
-<p>PX4地面控制站被称为QGroundControl，（简称QGC）是PX4自驾系统不可分割的一部分，可以运行在Windows，OS X或Linux等多个平台。可以将PX4固件烧写到硬件，设置机器，改变不同的参数，获得实时航班信息，创建和执行完全自主的任务。</p>
-<h3 id="三、APM介绍"><a href="#三、APM介绍" class="headerlink" title="三、APM介绍"></a>三、APM介绍</h3><p>APM固件专为Arduupilot开发的固件，现也用于PIXHAWK。有ArduCopter社区支撑、开放，功能全、迭代升级快，适合直接用。由于有较多的历史兼容性需求，软件代码体系相对杂乱，还封装了PX4的内核，学习起来困难些。</p>
-<p>APM地面控制站被称为Mission Planner，（简称MP）是APM自驾系统不可分割的一部分。可以将APM固件烧写到硬件，设置机器，改变不同的参数，获得实时航班信息，创建和执行完全自主的任务。</p>
-<p>随着APM飞控软件的快速发展，AVR板子的性能已经不能满足需求，所以只能逐步移植到Pixhawk的硬件架构上来进行开发。所以，APM自驾仪软件也就兼容PIXHAWK飞控硬件了。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><strong>PIXHAWK飞控是硬件平台，PX4和APM都是开源固件，均可以烧写到PIXHAWK飞控中。</strong></p>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>PX4</tag>
-        <tag>PIXHAWK</tag>
-        <tag>APM</tag>
       </tags>
   </entry>
   <entry>
