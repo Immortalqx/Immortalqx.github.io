@@ -2,14 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/2021/07/17/ros-notes-3/</loc>
+    <loc>http://immortalqx.github.io/homepage/2021/04/24/paper-reading-3/</loc>
     
     <lastmod>2022-04-17</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/2021/04/24/paper-reading-3/</loc>
+    <loc>http://immortalqx.github.io/homepage/2021/07/17/ros-notes-3/</loc>
     
     <lastmod>2022-04-17</lastmod>
     
@@ -317,13 +317,6 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/baidu_verify_code-fJe6tVB0Yt.html</loc>
-    
-    <lastmod>2022-01-11</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://immortalqx.github.io/homepage/google561fc42db74e2484.html</loc>
     
     <lastmod>2022-01-11</lastmod>
@@ -331,7 +324,7 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/categories/index.html</loc>
+    <loc>http://immortalqx.github.io/homepage/baidu_verify_code-fJe6tVB0Yt.html</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -339,6 +332,13 @@
   
   <url>
     <loc>http://immortalqx.github.io/homepage/about/index.html</loc>
+    
+    <lastmod>2022-01-11</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/homepage/categories/index.html</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -620,13 +620,6 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/tags/%E6%BF%80%E5%85%89SLAM/</loc>
-    <lastmod>2022-04-17</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://immortalqx.github.io/homepage/tags/K-Means/</loc>
     <lastmod>2022-04-17</lastmod>
     <changefreq>daily</changefreq>
@@ -635,6 +628,13 @@
   
   <url>
     <loc>http://immortalqx.github.io/homepage/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2022-04-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/homepage/tags/%E6%BF%80%E5%85%89SLAM/</loc>
     <lastmod>2022-04-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
