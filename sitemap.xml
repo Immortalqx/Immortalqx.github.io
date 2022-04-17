@@ -317,20 +317,6 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/about/index.html</loc>
-    
-    <lastmod>2022-01-11</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/categories/index.html</loc>
-    
-    <lastmod>2022-01-11</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://immortalqx.github.io/baidu_verify_code-fJe6tVB0Yt.html</loc>
     
     <lastmod>2022-01-11</lastmod>
@@ -339,6 +325,20 @@
   
   <url>
     <loc>http://immortalqx.github.io/google561fc42db74e2484.html</loc>
+    
+    <lastmod>2022-01-11</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/about/index.html</loc>
+    
+    <lastmod>2022-01-11</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/categories/index.html</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -373,14 +373,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/03/25/hk-universities-requirement/</loc>
+    <loc>http://immortalqx.github.io/2021/03/27/hkust-application/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/03/27/hkust-application/</loc>
+    <loc>http://immortalqx.github.io/2021/03/25/hk-universities-requirement/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -522,6 +522,13 @@
   </url>
   
   <url>
+    <loc>http://immortalqx.github.io/tags/ROS%E5%9F%BA%E7%A1%80/</loc>
+    <lastmod>2022-04-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/</loc>
     <lastmod>2022-04-17</lastmod>
     <changefreq>daily</changefreq>
@@ -530,13 +537,6 @@
   
   <url>
     <loc>http://immortalqx.github.io/tags/OpenVINS/</loc>
-    <lastmod>2022-04-17</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/tags/ROS%E5%9F%BA%E7%A1%80/</loc>
     <lastmod>2022-04-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -734,14 +734,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/categories/slam/</loc>
+    <loc>http://immortalqx.github.io/categories/ROS/</loc>
     <lastmod>2022-04-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/categories/ROS/</loc>
+    <loc>http://immortalqx.github.io/categories/slam/</loc>
     <lastmod>2022-04-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
