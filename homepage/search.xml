@@ -949,33 +949,6 @@ geometry_msgs/Transform transform
       </tags>
   </entry>
   <entry>
-    <title>区分PIXHAWK、PX4与APM(ardupilot)</title>
-    <url>/homepage/2021/07/27/uav-notes-1/</url>
-    <content><![CDATA[<h1 id="区分PIXHAWK、PX4与APM-ardupilot"><a href="#区分PIXHAWK、PX4与APM-ardupilot" class="headerlink" title="区分PIXHAWK、PX4与APM(ardupilot)"></a>区分PIXHAWK、PX4与APM(ardupilot)</h1><h3 id="一、PIXHAWK介绍"><a href="#一、PIXHAWK介绍" class="headerlink" title="一、PIXHAWK介绍"></a>一、PIXHAWK介绍</h3><p><strong>pixhawk是硬件平台</strong>，PX4是pixhawk的原生固件，专门为pixhawk开发。</p>
-<img src="/images/UAV-notes/1-1.jpg" alt="" style="zoom: 18%;">
-
-<p>Pixhawk是一款由PX4开源项目设计并由3DR公司制造生产的高级自动驾驶仪系统，其前身是APM。APM（Ardupilot Mega）也是硬件，Ardupilot是APM的固件，所以称ArduPilot固件也叫APM。</p>
-<img src="/images/UAV-notes/1-2.png" alt="" style="zoom:30%;">
-
-<p>由于APM的处理器已经接近满负荷，没有办法满足更复杂的运算处理，所以硬件厂商采用了目前新标准的32位ARM处理器，它采用了ST Microelectronic先进的处理器及传感器技术且搭载了NuttX的实时操作系统，在模型自动控制方面有着出色的性能、灵活性和可靠性。</p>
-<p>PIXHAWK的所有硬件都是透明的，它用的是什么芯片和传感器一目了然，所有的总线和外设都进行引出，不但以后可以兼容一些其他外设，而且对于有开发能力的用户提供了方便。 PIXHAWK 是一个双处理器的飞行控制器，一个擅长于强大运算的 32 bit STM32F427 Cortex M4 核心 168 MHz/256 KB RAM/2 MB Flash 处理器，还有一个主要定位于工业用途的协处理器 32 bit STM32F103，它的特点就是安全稳定。所以就算主处理器死机了，还有一个协处理器来保障安全。</p>
-<h3 id="二、PX4介绍"><a href="#二、PX4介绍" class="headerlink" title="二、PX4介绍"></a>二、PX4介绍</h3><p>PX4固件专为PIXHAWK开发的固件。相对封闭，代码体系相对简单清晰，社区相对小，迭代慢一些，但因为相对清晰，适合学习研究。</p>
-<p>PX4地面控制站被称为QGroundControl，（简称QGC）是PX4自驾系统不可分割的一部分，可以运行在Windows，OS X或Linux等多个平台。可以将PX4固件烧写到硬件，设置机器，改变不同的参数，获得实时航班信息，创建和执行完全自主的任务。</p>
-<h3 id="三、APM介绍"><a href="#三、APM介绍" class="headerlink" title="三、APM介绍"></a>三、APM介绍</h3><p>APM固件专为Arduupilot开发的固件，现也用于PIXHAWK。有ArduCopter社区支撑、开放，功能全、迭代升级快，适合直接用。由于有较多的历史兼容性需求，软件代码体系相对杂乱，还封装了PX4的内核，学习起来困难些。</p>
-<p>APM地面控制站被称为Mission Planner，（简称MP）是APM自驾系统不可分割的一部分。可以将APM固件烧写到硬件，设置机器，改变不同的参数，获得实时航班信息，创建和执行完全自主的任务。</p>
-<p>随着APM飞控软件的快速发展，AVR板子的性能已经不能满足需求，所以只能逐步移植到Pixhawk的硬件架构上来进行开发。所以，APM自驾仪软件也就兼容PIXHAWK飞控硬件了。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><strong>PIXHAWK飞控是硬件平台，PX4和APM都是开源固件，均可以烧写到PIXHAWK飞控中。</strong></p>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>PIXHAWK</tag>
-        <tag>PX4</tag>
-        <tag>APM</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>PX4 Offboard Control Using MAVROS on Gazebo</title>
     <url>/homepage/2021/07/23/ros-notes-6/</url>
     <content><![CDATA[<h1 id="PX4-Offboard-Control-Using-MAVROS-on-Gazebo"><a href="#PX4-Offboard-Control-Using-MAVROS-on-Gazebo" class="headerlink" title="PX4 Offboard Control Using MAVROS on Gazebo"></a>PX4 Offboard Control Using MAVROS on Gazebo</h1><p>最近在学习PX4和mavros，感觉px4官网的教程总体上讲得不错，但有一些地方不是很友好，比如offboard control这一块儿，讲的比较简单，省略了gazebo的使用，我上网查了一大堆资料才勉强把这个示例代码在gazebo中跑出来。所以这里做一个记录，希望对看到的人有点帮助。</p>
@@ -1159,9 +1132,36 @@ mavros_msgs<span class="token double-colon punctuation">::</span>State current_s
         <category>ROS</category>
       </categories>
       <tags>
-        <tag>PX4</tag>
         <tag>MAVROS</tag>
+        <tag>PX4</tag>
         <tag>Gazebo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>区分PIXHAWK、PX4与APM(ardupilot)</title>
+    <url>/homepage/2021/07/27/uav-notes-1/</url>
+    <content><![CDATA[<h1 id="区分PIXHAWK、PX4与APM-ardupilot"><a href="#区分PIXHAWK、PX4与APM-ardupilot" class="headerlink" title="区分PIXHAWK、PX4与APM(ardupilot)"></a>区分PIXHAWK、PX4与APM(ardupilot)</h1><h3 id="一、PIXHAWK介绍"><a href="#一、PIXHAWK介绍" class="headerlink" title="一、PIXHAWK介绍"></a>一、PIXHAWK介绍</h3><p><strong>pixhawk是硬件平台</strong>，PX4是pixhawk的原生固件，专门为pixhawk开发。</p>
+<img src="/images/UAV-notes/1-1.jpg" alt="" style="zoom: 18%;">
+
+<p>Pixhawk是一款由PX4开源项目设计并由3DR公司制造生产的高级自动驾驶仪系统，其前身是APM。APM（Ardupilot Mega）也是硬件，Ardupilot是APM的固件，所以称ArduPilot固件也叫APM。</p>
+<img src="/images/UAV-notes/1-2.png" alt="" style="zoom:30%;">
+
+<p>由于APM的处理器已经接近满负荷，没有办法满足更复杂的运算处理，所以硬件厂商采用了目前新标准的32位ARM处理器，它采用了ST Microelectronic先进的处理器及传感器技术且搭载了NuttX的实时操作系统，在模型自动控制方面有着出色的性能、灵活性和可靠性。</p>
+<p>PIXHAWK的所有硬件都是透明的，它用的是什么芯片和传感器一目了然，所有的总线和外设都进行引出，不但以后可以兼容一些其他外设，而且对于有开发能力的用户提供了方便。 PIXHAWK 是一个双处理器的飞行控制器，一个擅长于强大运算的 32 bit STM32F427 Cortex M4 核心 168 MHz/256 KB RAM/2 MB Flash 处理器，还有一个主要定位于工业用途的协处理器 32 bit STM32F103，它的特点就是安全稳定。所以就算主处理器死机了，还有一个协处理器来保障安全。</p>
+<h3 id="二、PX4介绍"><a href="#二、PX4介绍" class="headerlink" title="二、PX4介绍"></a>二、PX4介绍</h3><p>PX4固件专为PIXHAWK开发的固件。相对封闭，代码体系相对简单清晰，社区相对小，迭代慢一些，但因为相对清晰，适合学习研究。</p>
+<p>PX4地面控制站被称为QGroundControl，（简称QGC）是PX4自驾系统不可分割的一部分，可以运行在Windows，OS X或Linux等多个平台。可以将PX4固件烧写到硬件，设置机器，改变不同的参数，获得实时航班信息，创建和执行完全自主的任务。</p>
+<h3 id="三、APM介绍"><a href="#三、APM介绍" class="headerlink" title="三、APM介绍"></a>三、APM介绍</h3><p>APM固件专为Arduupilot开发的固件，现也用于PIXHAWK。有ArduCopter社区支撑、开放，功能全、迭代升级快，适合直接用。由于有较多的历史兼容性需求，软件代码体系相对杂乱，还封装了PX4的内核，学习起来困难些。</p>
+<p>APM地面控制站被称为Mission Planner，（简称MP）是APM自驾系统不可分割的一部分。可以将APM固件烧写到硬件，设置机器，改变不同的参数，获得实时航班信息，创建和执行完全自主的任务。</p>
+<p>随着APM飞控软件的快速发展，AVR板子的性能已经不能满足需求，所以只能逐步移植到Pixhawk的硬件架构上来进行开发。所以，APM自驾仪软件也就兼容PIXHAWK飞控硬件了。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><strong>PIXHAWK飞控是硬件平台，PX4和APM都是开源固件，均可以烧写到PIXHAWK飞控中。</strong></p>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>PX4</tag>
+        <tag>PIXHAWK</tag>
+        <tag>APM</tag>
       </tags>
   </entry>
   <entry>
@@ -4716,6 +4716,33 @@ seek<span class="token double-colon punctuation">::</span><span class="token fun
       </tags>
   </entry>
   <entry>
+    <title>论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm System in Cluttered Environments</title>
+    <url>/homepage/2021/04/27/paper-reading-4/</url>
+    <content><![CDATA[<h1 id="论文阅读-EGO-Swarm：A-Fully-Autonomous-and-Decentralized-Quadrotor-Swarm"><a href="#论文阅读-EGO-Swarm：A-Fully-Autonomous-and-Decentralized-Quadrotor-Swarm" class="headerlink" title="论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm"></a>论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文提出了一种分散的异步系统解决方案，该解决方案仅使用机载资源即可在未知富含障碍物的场景中实现多机器人自主导航。该计划系统是在基于梯度的局部计划框架下制定的，其中通过将碰撞风险表述为非线性优化问题的代价来实现避免碰撞。为了提高鲁棒性并避免局部极小值，本文采用了一种轻量级的拓扑轨迹生成方法。 然后，无人机使用不可靠的轨迹共享网络，仅在几毫秒内即可生成安全，平滑且动态可行的轨迹。通过使用深度图像中的无人机检测来纠正无人机之间的相对定位漂移。此外，它不需要外部定位和计算，也不需要预先构建的地图。</p>
+<p>本文的贡献概括如下：</p>
+<ol>
+<li>扩展了以前的工作EGO-Planner，提出了一种新颖而健壮的生物学计划方法，几乎不需要额外的计算。</li>
+<li>提出了一种分散式异步四旋翼机群框架，该框架对不可靠的通信和本地化漂移不敏感。</li>
+<li>所提出的方法已集成到完全自主的四旋翼系统中，其硬件和软件已发布，可供社区参考。</li>
+</ol>
+<h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><p>系统架构如图8所示，其中包含单机和多机通信系统的详细架构。</p>
+<p><img src="/images/paper-reading/3_pic1.png"></p>
+<h3 id="单机导航系统"><a href="#单机导航系统" class="headerlink" title="单机导航系统"></a>单机导航系统</h3><p>单机导航系统（包括硬件和软件设置）基于之前的工作EGO Planner，但带有一个额外的模块，用于补偿VIO漂移和移除图像上的代理。所有部件都集成在四轴无人机中，在未知环境下，采用局部规划器生成轨迹。</p>
+<h3 id="通信框架"><a href="#通信框架" class="headerlink" title="通信框架"></a>通信框架</h3><p>两个网络连接系统，即共享轨迹的广播网络和同步时间戳和管理顺序启动的链式网络。当当前轨迹与新发现的障碍物碰撞时，或者代理接近当前轨迹的终点时，规划被激活。</p>
+<p><strong>1） 广播网络：</strong>一旦一个代理生成一个新的无碰撞轨迹，它会立即广播给所有代理。然后，其他代理接收并存储此轨迹，以便在必要时为自己生成安全的轨迹。这种闭环策略在连接稳定且延迟可以忽略的理想情况下正常工作。然而，这在实际中并不能得到保证，因此，本文提出了两种降低碰撞可能性的方法。</p>
+<p>首先，在网络容量下，以给定的频率广播一条轨迹。这不会造成计算负担，因为包含三维航路点和其他参数的典型轨迹的大小小于0.5KB。相比之下，像Bluetooth2这样的现代无线网络可以达到1Mbps以上。然后，每个代理在接收到来自广播网络的轨迹后立即检查碰撞，如果检测到潜在的碰撞，则生成新的无碰撞轨迹。这种策略可以解决当多个代理在一个封闭的时间内生成轨迹时，由于延迟或数据包丢失而不接收其他代理的轨迹的问题。</p>
+<p>此外，本文还考虑了计算复杂度随代理数的增加而增加的问题。在规划之前，每个代理将其当前位置与接收到的代理轨迹进行比较，其中任何超出规划范围的轨迹都将被忽略。</p>
+<p><strong>2） 链式网络：</strong>基于连接的稳定链网络用于时间戳同步和系统启动管理。在系统启动时，代理按预定义的顺序生成代理。每个代理通过链式网络接收到优先级较高的代理的轨迹后，生成初始轨迹。该策略避免了系统启动时由于同时生成轨迹而引起的混沌，因为此时代理没有其他轨迹的信息。</p>
+]]></content>
+      <categories>
+        <category>导航</category>
+      </categories>
+      <tags>
+        <tag>论文阅读</tag>
+        <tag>协同导航</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>论文阅读-LVI-SAM：Tightly-coupled Lidar-Visual-Inertial Odometryvia Smoothing and Mapping</title>
     <url>/homepage/2021/04/24/paper-reading-3/</url>
     <content><![CDATA[<h1 id="论文阅读-LVI-SAM：Tightly-coupled-Lidar-Visual-Inertial-Odometryvia-Smoothing-and-Mapping"><a href="#论文阅读-LVI-SAM：Tightly-coupled-Lidar-Visual-Inertial-Odometryvia-Smoothing-and-Mapping" class="headerlink" title="论文阅读-LVI-SAM：Tightly-coupled Lidar-Visual-Inertial Odometryvia Smoothing and Mapping"></a>论文阅读-LVI-SAM：Tightly-coupled Lidar-Visual-Inertial Odometryvia Smoothing and Mapping</h1><p>最近，SLAM领域大佬Tixiao Shan（MIT博后，LeGO-LOAM和LIO-SAM作者）开源了最新力作LVI-SAM。这是一个雷达-视觉-惯导的紧耦合的SLAM框架，LVI-SAM分为两个部分：视觉惯性系统（以Vins-Mono为基础）和雷达惯性系统（以LIO-SAM为基础）。</p>
@@ -4751,33 +4778,6 @@ seek<span class="token double-colon punctuation">::</span><span class="token fun
       </categories>
       <tags>
         <tag>论文阅读</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm System in Cluttered Environments</title>
-    <url>/homepage/2021/04/27/paper-reading-4/</url>
-    <content><![CDATA[<h1 id="论文阅读-EGO-Swarm：A-Fully-Autonomous-and-Decentralized-Quadrotor-Swarm"><a href="#论文阅读-EGO-Swarm：A-Fully-Autonomous-and-Decentralized-Quadrotor-Swarm" class="headerlink" title="论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm"></a>论文阅读-EGO-Swarm：A Fully Autonomous and Decentralized Quadrotor Swarm</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文提出了一种分散的异步系统解决方案，该解决方案仅使用机载资源即可在未知富含障碍物的场景中实现多机器人自主导航。该计划系统是在基于梯度的局部计划框架下制定的，其中通过将碰撞风险表述为非线性优化问题的代价来实现避免碰撞。为了提高鲁棒性并避免局部极小值，本文采用了一种轻量级的拓扑轨迹生成方法。 然后，无人机使用不可靠的轨迹共享网络，仅在几毫秒内即可生成安全，平滑且动态可行的轨迹。通过使用深度图像中的无人机检测来纠正无人机之间的相对定位漂移。此外，它不需要外部定位和计算，也不需要预先构建的地图。</p>
-<p>本文的贡献概括如下：</p>
-<ol>
-<li>扩展了以前的工作EGO-Planner，提出了一种新颖而健壮的生物学计划方法，几乎不需要额外的计算。</li>
-<li>提出了一种分散式异步四旋翼机群框架，该框架对不可靠的通信和本地化漂移不敏感。</li>
-<li>所提出的方法已集成到完全自主的四旋翼系统中，其硬件和软件已发布，可供社区参考。</li>
-</ol>
-<h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><p>系统架构如图8所示，其中包含单机和多机通信系统的详细架构。</p>
-<p><img src="/images/paper-reading/3_pic1.png"></p>
-<h3 id="单机导航系统"><a href="#单机导航系统" class="headerlink" title="单机导航系统"></a>单机导航系统</h3><p>单机导航系统（包括硬件和软件设置）基于之前的工作EGO Planner，但带有一个额外的模块，用于补偿VIO漂移和移除图像上的代理。所有部件都集成在四轴无人机中，在未知环境下，采用局部规划器生成轨迹。</p>
-<h3 id="通信框架"><a href="#通信框架" class="headerlink" title="通信框架"></a>通信框架</h3><p>两个网络连接系统，即共享轨迹的广播网络和同步时间戳和管理顺序启动的链式网络。当当前轨迹与新发现的障碍物碰撞时，或者代理接近当前轨迹的终点时，规划被激活。</p>
-<p><strong>1） 广播网络：</strong>一旦一个代理生成一个新的无碰撞轨迹，它会立即广播给所有代理。然后，其他代理接收并存储此轨迹，以便在必要时为自己生成安全的轨迹。这种闭环策略在连接稳定且延迟可以忽略的理想情况下正常工作。然而，这在实际中并不能得到保证，因此，本文提出了两种降低碰撞可能性的方法。</p>
-<p>首先，在网络容量下，以给定的频率广播一条轨迹。这不会造成计算负担，因为包含三维航路点和其他参数的典型轨迹的大小小于0.5KB。相比之下，像Bluetooth2这样的现代无线网络可以达到1Mbps以上。然后，每个代理在接收到来自广播网络的轨迹后立即检查碰撞，如果检测到潜在的碰撞，则生成新的无碰撞轨迹。这种策略可以解决当多个代理在一个封闭的时间内生成轨迹时，由于延迟或数据包丢失而不接收其他代理的轨迹的问题。</p>
-<p>此外，本文还考虑了计算复杂度随代理数的增加而增加的问题。在规划之前，每个代理将其当前位置与接收到的代理轨迹进行比较，其中任何超出规划范围的轨迹都将被忽略。</p>
-<p><strong>2） 链式网络：</strong>基于连接的稳定链网络用于时间戳同步和系统启动管理。在系统启动时，代理按预定义的顺序生成代理。每个代理通过链式网络接收到优先级较高的代理的轨迹后，生成初始轨迹。该策略避免了系统启动时由于同时生成轨迹而引起的混沌，因为此时代理没有其他轨迹的信息。</p>
-]]></content>
-      <categories>
-        <category>导航</category>
-      </categories>
-      <tags>
-        <tag>论文阅读</tag>
-        <tag>协同导航</tag>
       </tags>
   </entry>
   <entry>
