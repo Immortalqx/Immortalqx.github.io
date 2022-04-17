@@ -38,8 +38,8 @@
   
   <entry>
     <title>Quanxiang&#39;s Homepage</title>
-    <link href="http://immortalqx.github.io/homepage/2022/04/17/post-zh-cn/"/>
-    <id>http://immortalqx.github.io/homepage/2022/04/17/post-zh-cn/</id>
+    <link href="http://immortalqx.github.io/homepage/2022/04/17/post/"/>
+    <id>http://immortalqx.github.io/homepage/2022/04/17/post/</id>
     <published>2022-04-16T16:25:22.000Z</published>
     <updated>2022-04-17T14:58:19.672Z</updated>
     
@@ -49,29 +49,6 @@
         
         
     <summary type="html">&lt;h1 id=&quot;正在施工中……&quot;&gt;&lt;a href=&quot;#正在施工中……&quot; class=&quot;headerlink&quot; title=&quot;正在施工中……&quot;&gt;&lt;/a&gt;&lt;font color=&quot;red&quot;&gt;正在施工中……&lt;/font&gt;&lt;/h1&gt;&lt;p&gt;Hello, my name is</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Homepage" scheme="http://immortalqx.github.io/homepage/tags/Homepage/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Quanxiang&#39;s Homepage</title>
-    <link href="http://immortalqx.github.io/homepage/2022/04/17/post/"/>
-    <id>http://immortalqx.github.io/homepage/2022/04/17/post/</id>
-    <published>2022-04-16T16:25:22.000Z</published>
-    <updated>2022-04-17T14:13:42.724Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;Hello, my name is Quanxiang Liu(刘权祥), an undergraduate student majoring in software engineering at Northwestern Polytechnic University.</summary>
         
       
     
@@ -524,6 +501,33 @@
     
     
     <category term="多线程" scheme="http://immortalqx.github.io/homepage/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用RANSAC算法拟合点云中的平面</title>
+    <link href="http://immortalqx.github.io/homepage/2021/11/28/ransac/"/>
+    <id>http://immortalqx.github.io/homepage/2021/11/28/ransac/</id>
+    <published>2021-11-28T12:58:06.000Z</published>
+    <updated>2022-01-11T09:10:51.453Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;使用RANSAC算法拟合点云中的平面&quot;&gt;&lt;a href=&quot;#使用RANSAC算法拟合点云中的平面&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="计算机视觉" scheme="http://immortalqx.github.io/homepage/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/"/>
+    
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/homepage/tags/%E8%A7%86%E8%A7%89SLAM/"/>
+    
+    <category term="点云" scheme="http://immortalqx.github.io/homepage/tags/%E7%82%B9%E4%BA%91/"/>
     
   </entry>
   
