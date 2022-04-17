@@ -9,14 +9,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/2022/04/17/hexo-multi-theme/</loc>
+    <loc>http://immortalqx.github.io/homepage/2022/04/17/post/</loc>
     
     <lastmod>2022-04-17</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/2022/04/17/post/</loc>
+    <loc>http://immortalqx.github.io/homepage/2022/04/17/hexo-multi-theme/</loc>
     
     <lastmod>2022-04-17</lastmod>
     
@@ -352,14 +352,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/categories/index.html</loc>
+    <loc>http://immortalqx.github.io/homepage/contact/index.html</loc>
     
     <lastmod>2022-01-11</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/contact/index.html</loc>
+    <loc>http://immortalqx.github.io/homepage/categories/index.html</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -387,14 +387,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/2021/03/27/hkust-application/</loc>
+    <loc>http://immortalqx.github.io/homepage/2021/03/25/hk-universities-requirement/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/2021/03/25/hk-universities-requirement/</loc>
+    <loc>http://immortalqx.github.io/homepage/2021/03/27/hkust-application/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -536,13 +536,6 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/tags/ROS%E5%9F%BA%E7%A1%80/</loc>
-    <lastmod>2022-04-17</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://immortalqx.github.io/homepage/tags/%E8%A7%86%E8%A7%89SLAM/</loc>
     <lastmod>2022-04-17</lastmod>
     <changefreq>daily</changefreq>
@@ -551,6 +544,13 @@
   
   <url>
     <loc>http://immortalqx.github.io/homepage/tags/OpenVINS/</loc>
+    <lastmod>2022-04-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/homepage/tags/ROS%E5%9F%BA%E7%A1%80/</loc>
     <lastmod>2022-04-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -755,14 +755,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/categories/ROS/</loc>
+    <loc>http://immortalqx.github.io/homepage/categories/slam/</loc>
     <lastmod>2022-04-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/categories/slam/</loc>
+    <loc>http://immortalqx.github.io/homepage/categories/ROS/</loc>
     <lastmod>2022-04-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
