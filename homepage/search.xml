@@ -10039,15 +10039,10 @@ vector<span class="token operator">&lt;</span><span class="token keyword">char</
 <h3 id="Cave-Exploration-UAV"><a href="#Cave-Exploration-UAV" class="headerlink" title="Cave Exploration UAV"></a>Cave Exploration UAV</h3><p><a href="">video</a>/ <a href="">code</a></p>
 <h3 id="Pi-SLAM-Fusion-UAV-Image-Mosaicing-based-on-Pi-SLAM-and-Map2DFusion"><a href="#Pi-SLAM-Fusion-UAV-Image-Mosaicing-based-on-Pi-SLAM-and-Map2DFusion" class="headerlink" title="Pi-SLAM-Fusion: UAV Image Mosaicing based on Pi-SLAM and Map2DFusion"></a>Pi-SLAM-Fusion: UAV Image Mosaicing based on Pi-SLAM and Map2DFusion</h3><p>Source Code: <a href="https://github.com/Immortalqx/pi-slam-fusion">https://github.com/Immortalqx/pi-slam-fusion</a></p>
 <p><a href="">video</a>/ <a href="">code</a></p>
-<h3 id="Logistics-UAV"><a href="#Logistics-UAV" class="headerlink" title="Logistics UAV"></a>Logistics UAV</h3><blockquote>
-<p>TODO: this part should be modified!!!</p>
-<ul>
-<li>change the video link</li>
-<li>change the picture</li>
-<li>describe my work (and what i learned)</li>
-</ul>
-</blockquote>
-<iframe width="80%" src="https://www.youtube.com/embed/qDxkNu6YHjc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+<h3 id="Logistics-UAV"><a href="#Logistics-UAV" class="headerlink" title="Logistics UAV"></a>Logistics UAV</h3><figure class="half" align="center">
+    <img src="../images/4-1.jpg" style="zoom:25%;">
+    <img src="../images/4-2.jpg" style="zoom:25%;">
+</figure>
 
 <p>We designed this logistics drone for the logistics UAV event of the China Robot Competition, This done is light-design and it can carry three stanard small delivery boxes lighter than 500g, and place them in specific locations relied on visual information. The drone have a tracking camera which can help to locate itself indoor, and have a depth camera which can provide obstacles imformation to the navigate program. It can also do other works by disassemble the release gear.</p>
 <p><strong>My Works:</strong></p>
