@@ -10035,8 +10035,36 @@ vector<span class="token operator">&lt;</span><span class="token keyword">char</
 </li>
 </ul>
 <h1 id="Projects"><a href="#Projects" class="headerlink" title="Projects"></a>Projects</h1><p><strong><font color="red">TODO: 上传视频和图片、整理代码链接、调整格式、翻译为英文！</font></strong></p>
-<h3 id="Logistics-UAV"><a href="#Logistics-UAV" class="headerlink" title="Logistics UAV"></a>Logistics UAV</h3><p><strong><font color="red">Notice: 这个项目有迭代版本，两个版本都要介绍！！！</font></strong></p>
+<h3 id="Logistics-UAV"><a href="#Logistics-UAV" class="headerlink" title="Logistics UAV"></a>Logistics UAV</h3><p><strong><font color="red">Notice: 这个项目有迭代版本，两个版本都要介绍！！！先写好中文，慢慢补充好，再翻译为英文！！！</font></strong></p>
 <p>We designed this logistics drone for the logistics UAV event of the China Robot Competition, This done is light-design and it can carry three stanard small delivery boxes lighter than 500g, and place them in specific locations relied on visual information. The drone have a tracking camera which can help to locate itself indoor, and have a depth camera which can provide obstacles imformation to the navigate program. It can also do other works by disassemble the release gear.</p>
+<h4 id="Vision-1-0"><a href="#Vision-1-0" class="headerlink" title="Vision 1.0"></a>Vision 1.0</h4><figure class="half" align="center">
+    <img src="/homepage/images/1-1-1.jpg" style="zoom:25%;">
+    <img src="/homepage/images/1-1-2.jpg" style="zoom:25%;">
+    <img src="/homepage/images/1-1-3.jpg" style="zoom:25%;">
+    <img src="/homepage/images/1-1-4.jpg" style="zoom:25%;">
+</figure>
+这是我们第一代的物流无人机，这款无人机设计于2020年，最初被用于参加中国机器人大赛无人机挑战赛。。。。。。
+
+<p>这款无人机的设计思路是：xxxxxxxx。采用了xxx方法，通过xxxx解决了xxxx问题。</p>
+<p>但是这款无人机还存在一些问题：</p>
+<ul>
+<li><p>定位的精度不够。</p>
+<p>SLAM初始化之后的尺度并不好，比如将5米计算成3米或者6米。这一定程度上影响了无人机投放的准度。</p>
+</li>
+<li><p>只对投放靶进行了识别，没有计算靶心相对于无人机的位置。</p>
+<p>为了保证投放精确，我们通过保持靶心在下视图像中心来确保无人机能够朝靶心投放快递，这样虽然能够解决问题，但是控制难度过高（很难确定无人机应该往哪个方向运动多少米），也影响了无人机投放的准度。</p>
+</li>
+<li><p>无人机设计的过于笨重，飞行控制非常困难。</p>
+<p>在检测到投放靶的时候，我们希望控制无人机下降一定高度来完成更精准的投放，但当无人机携带的快递重量过重时，无人机在下降高度时会远远超出预期，只能够通过减少快递的重量来保证无人机正常工作。</p>
+</li>
+</ul>
+<p><strong>My works:</strong></p>
+<ul>
+<li>为无人机安装了realsense D435i相机和realsense T265相机</li>
+<li>在无人机上部署了open-vins算法和vins-fusion算法，保证无人机能够通过它们获取自己的位姿</li>
+<li>通过构建docker来减少环境配置的工作量，同时加快算法在不同无人机上的部署速度</li>
+</ul>
+<p><a href="https://youtu.be/qDxkNu6YHjc">video</a>/ <a href="https://github.com/Immortalqx/open_vins">code</a></p>
 <h4 id="Vision-2-0"><a href="#Vision-2-0" class="headerlink" title="Vision 2.0"></a>Vision 2.0</h4><figure class="half" align="center">
     <img src="/homepage/images/1-2-1.jpg" style="zoom:20%;">
     <img src="/homepage/images/1-2-2.jpg" style="zoom:20%;">
@@ -10044,28 +10072,25 @@ vector<span class="token operator">&lt;</span><span class="token keyword">char</
 </figure>
 
 <p>这是我们第二代物流无人机，我们在第一代的基础上进行了XXXXX改进，并且用这款无人机参加了中国机器人大赛，但由于疫情，本次比赛线上进行。。。。</p>
-<p><strong>My Works:</strong></p>
+<p>我们做的改进如下：</p>
 <ul>
-<li>相机标定、IMU标定、更准确的定位</li>
-<li>pose-remap</li>
-<li>pnp解算</li>
+<li><p>针对定位精度不够的问题：</p>
+<p>TODO</p>
+</li>
+<li><p>针对投放准度较低的问题：</p>
+<p>TODO</p>
+</li>
+<li><p>针对无人机过重的问题：</p>
+<p>TODO</p>
+</li>
+</ul>
+<p><strong>My works:</strong></p>
+<ul>
+<li>相机标定、IMU标定、更准确的定位【针对第一个问题】</li>
+<li>pose-remap【针对第一个问题】</li>
+<li>pnp解算【针对第二个问题】</li>
 </ul>
 <p><a href="https://youtu.be/qDxkNu6YHjc">video</a>/ <a href="">code_1</a>/ <a href="">code_2</a></p>
-<h4 id="Vision-1-0"><a href="#Vision-1-0" class="headerlink" title="Vision 1.0"></a>Vision 1.0</h4><figure class="half" align="center">
-    <img src="/homepage/images/1-1-1.jpg" style="zoom:25%;">
-    <img src="/homepage/images/1-1-2.jpg" style="zoom:25%;">
-    <img src="/homepage/images/1-1-3.jpg" style="zoom:25%;">
-    <img src="/homepage/images/1-1-4.jpg" style="zoom:25%;">
-</figure>
-
-<p>这是我们第一代的物流无人机，这款无人机设计于2020年，最初被用于参加中国机器人大赛无人机挑战赛。。。。。。</p>
-<p><strong>My Works:</strong></p>
-<ul>
-<li>为无人机安装了realsense D435i相机和realsense T265相机</li>
-<li>在无人机上部署了open-vins算法和vins-fusion算法，保证无人机能够通过它们获取自己的位姿</li>
-<li>通过构建docker来减少环境配置的工作量，同时加快算法在不同无人机上的部署速度</li>
-</ul>
-<p><a href="https://youtu.be/qDxkNu6YHjc">video</a>/ <a href="https://github.com/Immortalqx/open_vins">code</a></p>
 <h3 id="Cave-Exploration-UAV"><a href="#Cave-Exploration-UAV" class="headerlink" title="Cave Exploration UAV"></a>Cave Exploration UAV</h3><figure class="half" align="center">
     <img src="/homepage/images/2-1.jpg" style="zoom:25%;">
     <img src="/homepage/images/2-2.jpg" style="zoom:25%;">
@@ -10083,6 +10108,19 @@ vector<span class="token operator">&lt;</span><span class="token keyword">char</
 <p><a href="">video</a>/ <a href="">code</a></p>
 <h3 id="Pi-SLAM-Fusion-UAV-Image-Mosaicing-based-on-Pi-SLAM-and-Map2DFusion"><a href="#Pi-SLAM-Fusion-UAV-Image-Mosaicing-based-on-Pi-SLAM-and-Map2DFusion" class="headerlink" title="Pi-SLAM-Fusion: UAV Image Mosaicing based on Pi-SLAM and Map2DFusion"></a>Pi-SLAM-Fusion: UAV Image Mosaicing based on Pi-SLAM and Map2DFusion</h3><p><strong>TODO: describe this project and upload the video!!!</strong></p>
 <p><img src="/homepage/images/3-1.png"></p>
+<p>这是一个结合了Pi-SLAM和Map2DFusion的程序。</p>
+<p><strong>My main work is as follows:</strong></p>
+<ul>
+<li><p>阅读了Pi-SLAM和Map2DFusion的核心代码，梳理了两个方案的思路</p>
+</li>
+<li><p>调整Pi-SLAM和Map2DFusion的依赖项，让两个方案能够一起编译通过</p>
+</li>
+<li><p>在Pi-SLAM点云计算的部分插入了RANSAC算法，用于拟合点云中的地平面（默认相机对地拍摄）</p>
+</li>
+<li><p>将Pi-SLAM和Map2DFusion合并。</p>
+<p>Map2DFusion作为Pi-SLAM的一个线程，Pi-SLAM启动之后计算一定帧数的位姿和点云，通过RANSAC算法拟合点云中的地平面，拟合完毕之后发送给Map2DFusion线程来启动该线程，之后Pi-SLAM将计算出位姿的每一帧发送给Map2DFusion，由Map2DFusion进行实时的2D地图拼接。</p>
+</li>
+</ul>
 <p><a href="">video</a>/ <a href="https://github.com/Immortalqx/pi-slam-fusion">code</a></p>
 <h2 id="Qt-based-LIDAR-Mapping-Simulator"><a href="#Qt-based-LIDAR-Mapping-Simulator" class="headerlink" title="Qt-based LIDAR Mapping Simulator"></a>Qt-based LIDAR Mapping Simulator</h2><p><img align="right" src="/homepage/images/4-2.png" style="zoom:15%;">This is a Qt-based LIDAR simulation mapping software that helps people visualize how LIDAR scans things around them. This software also supports adding and removing obstacles from the simulated environment, as well as creating maps, which makes the software even more interesting.</p>
 <p><img align="right" src="/homepage/images/4-1.png" style="zoom:15%;">I developed this software alone, and here is what I learned from the development process:</p>
