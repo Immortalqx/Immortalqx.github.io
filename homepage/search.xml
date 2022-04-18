@@ -10035,7 +10035,10 @@ vector<span class="token operator">&lt;</span><span class="token keyword">char</
 </li>
 </ul>
 <h1 id="Projects"><a href="#Projects" class="headerlink" title="Projects"></a>Projects</h1><p><strong><font color="red">TODO: 上传视频和图片、整理代码链接、调整格式、翻译为英文！</font></strong></p>
-<h3 id="Identification-and-Express-Transportation-UAV"><a href="#Identification-and-Express-Transportation-UAV" class="headerlink" title="Identification and Express Transportation UAV"></a>Identification and Express Transportation UAV</h3><h3 id="Cave-Exploration-UAV"><a href="#Cave-Exploration-UAV" class="headerlink" title="Cave Exploration UAV"></a>Cave Exploration UAV</h3><h3 id="Pi-SLAM-Fusion-UAV-Image-Mosaicing-based-on-Pi-SLAM-and-Map2DFusion"><a href="#Pi-SLAM-Fusion-UAV-Image-Mosaicing-based-on-Pi-SLAM-and-Map2DFusion" class="headerlink" title="Pi-SLAM-Fusion: UAV Image Mosaicing based on Pi-SLAM and Map2DFusion"></a>Pi-SLAM-Fusion: UAV Image Mosaicing based on Pi-SLAM and Map2DFusion</h3><p>Source Code: <a href="https://github.com/Immortalqx/pi-slam-fusion">https://github.com/Immortalqx/pi-slam-fusion</a></p>
+<h3 id="Identification-and-Express-Transportation-UAV"><a href="#Identification-and-Express-Transportation-UAV" class="headerlink" title="Identification and Express Transportation UAV"></a>Identification and Express Transportation UAV</h3><p><a href="">video</a>/ <a href="">code</a>/ <a href="">project page</a></p>
+<h3 id="Cave-Exploration-UAV"><a href="#Cave-Exploration-UAV" class="headerlink" title="Cave Exploration UAV"></a>Cave Exploration UAV</h3><p><a href="">video</a>/ <a href="">code</a>/ <a href="">project page</a></p>
+<h3 id="Pi-SLAM-Fusion-UAV-Image-Mosaicing-based-on-Pi-SLAM-and-Map2DFusion"><a href="#Pi-SLAM-Fusion-UAV-Image-Mosaicing-based-on-Pi-SLAM-and-Map2DFusion" class="headerlink" title="Pi-SLAM-Fusion: UAV Image Mosaicing based on Pi-SLAM and Map2DFusion"></a>Pi-SLAM-Fusion: UAV Image Mosaicing based on Pi-SLAM and Map2DFusion</h3><p>Source Code: <a href="https://github.com/Immortalqx/pi-slam-fusion">https://github.com/Immortalqx/pi-slam-fusion</a></p>
+<p><a href="">video</a>/ <a href="">code</a>/ <a href="">project page</a></p>
 <h3 id="Logistics-UAV"><a href="#Logistics-UAV" class="headerlink" title="Logistics UAV"></a>Logistics UAV</h3><blockquote>
 <p>TODO: this part should be modified!!!</p>
 <ul>
@@ -10047,8 +10050,11 @@ vector<span class="token operator">&lt;</span><span class="token keyword">char</
 <p><a href="https://youtu.be/qDxkNu6YHjc"><img src="https://res.cloudinary.com/marcomontalbano/image/upload/v1626422905/video_to_markdown/images/youtube--qDxkNu6YHjc-c05b58ac6eb4c4700831b2b3070cd403.jpg" alt="NWPU V5++ Team in 2020 China Robot Competition Logistics UAV  Project"></a></p>
 <p>We designed this logistics drone for the logistics UAV event of the China Robot Competition, This done is light-design and it can carry three stanard small delivery boxes lighter than 500g, and place them in specific locations relied on visual information. The drone have a tracking camera which can help to locate itself indoor, and have a depth camera which can provide obstacles imformation to the navigate program. It can also do other works by disassemble the release gear.</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Excitingship/Blog_Asset_CDN/asset/about/DELIV_UAV.jpg" alt="img"></p>
+<p><a href="">video</a>/ <a href="">code</a>/ <a href="">project page</a></p>
 <h2 id="Qt-based-LIDAR-Mapping-Simulator"><a href="#Qt-based-LIDAR-Mapping-Simulator" class="headerlink" title="Qt-based LIDAR Mapping Simulator"></a>Qt-based LIDAR Mapping Simulator</h2><p>Source Code: <a href="https://github.com/Immortalqx/Qt-based-LIDAR-mapping-simulator.git">https://github.com/Immortalqx/Qt-based-LIDAR-mapping-simulator.git</a></p>
+<p><a href="">video</a>/ <a href="">code</a>/ <a href="">project page</a></p>
 <h2 id="NWPU-Soccer-Robot-Base-SLAM-Group-Learning-Tutorial"><a href="#NWPU-Soccer-Robot-Base-SLAM-Group-Learning-Tutorial" class="headerlink" title="NWPU Soccer Robot Base SLAM Group Learning Tutorial"></a>NWPU Soccer Robot Base SLAM Group Learning Tutorial</h2><p>Source Code: <a href="https://github.com/NWPU-Soccer-Robot-Base-SLAM-Group/Learn-SLAM">https://github.com/NWPU-Soccer-Robot-Base-SLAM-Group/Learn-SLAM</a></p>
+<p><a href="">video</a>/ <a href="">code</a>/ <a href="">project page</a></p>
 <h1 id="Honors-and-Awards"><a href="#Honors-and-Awards" class="headerlink" title="Honors and Awards"></a>Honors and Awards</h1><p><strong>Honors:</strong></p>
 <ul>
 <li><em>2021.09</em> 2021 Northwestern Polytechnic University Special Scholarship (rank 4.2%)</li>
