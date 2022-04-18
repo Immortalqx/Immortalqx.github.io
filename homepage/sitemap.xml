@@ -261,13 +261,6 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/2021/11/28/ransac/</loc>
-    
-    <lastmod>2022-01-11</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://immortalqx.github.io/homepage/2021/07/29/paper-reading-5/</loc>
     
     <lastmod>2022-01-11</lastmod>
@@ -275,7 +268,21 @@
   </url>
   
   <url>
+    <loc>http://immortalqx.github.io/homepage/2021/11/28/ransac/</loc>
+    
+    <lastmod>2022-01-11</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://immortalqx.github.io/homepage/2021/02/05/slam-learning-0/</loc>
+    
+    <lastmod>2022-01-11</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/homepage/2021/01/27/slam-learning-1/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -297,13 +304,6 @@
   
   <url>
     <loc>http://immortalqx.github.io/homepage/2021/07/03/slam-notes-1/</loc>
-    
-    <lastmod>2022-01-11</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/homepage/2021/01/27/slam-learning-1/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -352,14 +352,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/categories/index.html</loc>
+    <loc>http://immortalqx.github.io/homepage/friends/index.html</loc>
     
     <lastmod>2022-01-11</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/friends/index.html</loc>
+    <loc>http://immortalqx.github.io/homepage/categories/index.html</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -422,14 +422,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/2021/07/27/uav-notes-1/</loc>
+    <loc>http://immortalqx.github.io/homepage/2021/08/22/aerial-note-0/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/2021/08/22/aerial-note-0/</loc>
+    <loc>http://immortalqx.github.io/homepage/2021/07/27/uav-notes-1/</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -550,6 +550,13 @@
   </url>
   
   <url>
+    <loc>http://immortalqx.github.io/homepage/tags/%E8%88%AA%E6%8B%8D/</loc>
+    <lastmod>2022-04-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://immortalqx.github.io/homepage/tags/MAVROS/</loc>
     <lastmod>2022-04-18</lastmod>
     <changefreq>daily</changefreq>
@@ -579,13 +586,6 @@
   
   <url>
     <loc>http://immortalqx.github.io/homepage/tags/APM/</loc>
-    <lastmod>2022-04-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/homepage/tags/%E8%88%AA%E6%8B%8D/</loc>
     <lastmod>2022-04-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

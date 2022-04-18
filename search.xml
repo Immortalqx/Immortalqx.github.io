@@ -949,6 +949,80 @@ geometry_msgs/Transform transform
       </tags>
   </entry>
   <entry>
+    <title>航拍笔记（零）：准备、检查与保养</title>
+    <url>/2021/08/22/aerial-note-0/</url>
+    <content><![CDATA[<h1 id="航拍笔记（零）：准备、检查与保养"><a href="#航拍笔记（零）：准备、检查与保养" class="headerlink" title="航拍笔记（零）：准备、检查与保养"></a>航拍笔记（零）：准备、检查与保养</h1><h2 id="一、前期准备"><a href="#一、前期准备" class="headerlink" title="一、前期准备"></a>一、前期准备</h2><ol>
+<li><strong>查询拍摄城市的无人机禁（限）飞区</strong>，这一点可以去无人机厂家官网、当地政府部门网站等地方查询；</li>
+<li><strong>提前观察飞行环境</strong>，做好航线规划，选择四周及上方空旷、地面平整的场地作为起降点；</li>
+<li><strong>关注天气预报</strong>，确认拍摄当天的天气状况，避免在大风、雨雾、雷电等恶劣天气飞行；</li>
+<li><strong>对无人机所有部件进行详细检查</strong>，确保无损伤，特别要注意检查动力电池的健康状态。</li>
+</ol>
+<h2 id="二、起飞检查"><a href="#二、起飞检查" class="headerlink" title="二、起飞检查"></a>二、起飞检查</h2><ol>
+<li>确认自己已获得飞行许可，或不在禁（限）飞区；</li>
+<li>如果环境温度低于15摄氏度，建议将动力电池预热（可用车载空调）到30摄氏度以上，极寒天气还应对电池做好保温措施；</li>
+<li>设置安全的自动返航高度，同时建议记下一个起降点附近的明显参照物，以备出现紧急情况时快速找到返航点；</li>
+<li>再次检查无人机各部件是否有损伤、连接是否正常、可靠，动力电池、地面站（遥控、图传）电量充足；</li>
+<li>起飞前对无人机做一次指南针校准，并确认无人机已记录返航点；</li>
+<li>飞手精神状态良好，如果近视请带上眼镜；</li>
+<li>起飞前，注意引导围观者（特别是好奇心重的小朋友）远离无人机；</li>
+</ol>
+<h2 id="三、飞行期间的注意事项"><a href="#三、飞行期间的注意事项" class="headerlink" title="三、飞行期间的注意事项"></a>三、飞行期间的注意事项</h2><ol>
+<li><strong>飞行切记炫耀、浮躁，飞手应该保持沉稳冷静的心态；</strong></li>
+<li><strong>避免无人机在人群密集处上空悬停，远离电力线、通信线、移动通信塔等可能的干扰源；</strong></li>
+<li><strong>尽可能保持无人机在视距内飞行</strong>，最好不要绕飞至建筑物背后（远离起飞点的一侧），因为这样容易导致无人机失去遥控（图传）信号；</li>
+<li>航拍时，云台相机视角常常与第一飞行视角不一致，飞手应<strong>留意无人机机头朝向，避免出现误操作</strong>；</li>
+<li><strong>关注监视器上无人机航行仪表信息</strong>，如飞行途中出现异常，应立即查明原因并排除，必要时中止飞行，并立即返航降落；</li>
+<li><strong>随时关注无人机动力电池电量</strong>，切忌低电量贪飞，确保有足够的时间返航。</li>
+</ol>
+<h2 id="四、返航降落"><a href="#四、返航降落" class="headerlink" title="四、返航降落"></a>四、返航降落</h2><ol>
+<li>拍摄结束或电量不足返航时，注意避开障碍物，保持足够的净空安全距离；</li>
+<li><strong>对于旋翼飞行器，下降（竖直）速度不宜过快</strong>，过快的下降速度容易导致无人机姿态失稳，可采用斜向返航的飞行方式增强无人机姿态稳定性；</li>
+<li>着陆前瞬间，俯仰、横滚舵宜归中，无人机不要出现大幅度水平移动，避免侧翻；</li>
+<li>着陆后，无人机螺旋桨完全停止转动前，所有人员不要靠近无人机；</li>
+<li>航拍作业完成，<strong>先关无人机动力电源，再关地面站（遥控、图传）电源</strong>；</li>
+<li>飞行结束，请参照原厂说明书对电池进行保养。</li>
+</ol>
+<h2 id="五、保养"><a href="#五、保养" class="headerlink" title="五、保养"></a>五、保养</h2><h3 id="电池"><a href="#电池" class="headerlink" title="电池"></a>电池</h3><ol>
+<li><p>避免在强静电或者磁场环境中使用电池。</p>
+</li>
+<li><p>请勿在电池电源打开的状态下插拔电池，若电池接口有污物，可用干布擦拭干净。</p>
+</li>
+<li><p>电池应在 -10℃ 至 40℃* 的环境下使用，当飞行环境低于 5℃ 时，应提前将电池放置在常温环境下进行预热，充分预热至 20°C 以上。</p>
+<p><em>部分机型如 Mavic Mini 的工作环境为 0℃ 至 40℃；</em> </p>
+<p><em>悟 Inspire 2 可在 -20℃ 至 40℃ 环境下工作 ，且有自加热功能。</em></p>
+</li>
+<li><p>如有破损、膨胀、漏液等异常现象，请勿再次使用。</p>
+<p><em>电池内部液体有强腐蚀性，如有泄露，请远离。</em></p>
+</li>
+<li><p>电池可充电环境温度为 5℃ - 40℃，理想的充电环境温度（22℃-28℃）可大幅度延长电池寿命，飞行结束后，建议待降至室温后再进行充电。</p>
+</li>
+</ol>
+<p><strong>电池存放建议：</strong></p>
+<ul>
+<li>设备不使用时，电池需单独存放；</li>
+<li>保持存放环境干燥，不可将电池放置于靠近热源、易燃易爆品的区域；</li>
+<li>避免电池长期放置在低温的室外，否则电池活性将大大降低，甚至造成锂电池性能不可逆的下降；</li>
+<li>电池请勿在完全放电状态下长期放置，以免电池进入过放状态造成电芯损害，应将电池放电至 40%-65% 电量进行存放；</li>
+<li>建议 2-3 个月重新充放电一次，以保证电池活性；</li>
+<li>长期存储时，在-10°C~45°C范围内的环境中存放。</li>
+</ul>
+<h3 id="电机"><a href="#电机" class="headerlink" title="电机"></a>电机</h3><p>检查电机无沙尘和水渍，并活动各个电机轴，确认与机臂固定牢固且能顺畅达到最大位置，然后卸下桨叶后开机并启动电机，判断电机有无异响。</p>
+<h3 id="桨叶"><a href="#桨叶" class="headerlink" title="桨叶"></a>桨叶</h3><p>检查桨叶是否有破损、变形，若存在异常，则更换新的桨叶。在飞行时，建议给桨叶安装桨叶保护罩。</p>
+<h3 id="云台相机"><a href="#云台相机" class="headerlink" title="云台相机"></a>云台相机</h3><p>检查镜头无划痕、破损、污垢，云台卡扣是否有异物、排线是否正常连接。必要时，对云台相机做一个自动校准，点选 App 中的云台设置——云台自动校准。</p>
+<h3 id="视觉系统"><a href="#视觉系统" class="headerlink" title="视觉系统"></a>视觉系统</h3><p>检查视觉避障系统与红外传感器镜片是否有划痕、破损或污渍。</p>
+<h3 id="遥控器"><a href="#遥控器" class="headerlink" title="遥控器"></a>遥控器</h3><p>检查遥控器天线是否有损坏，以及按键是否可以正常按压反馈，并且遥控器遥杆等是否正常。</p>
+<h3 id="App和固件版本"><a href="#App和固件版本" class="headerlink" title="App和固件版本"></a>App和固件版本</h3><p>及时更新 app 和固件版本，提升拍摄体验的同时能获得得到更好的拍摄效果。</p>
+<p><strong>附一张无人机飞行检查表</strong></p>
+<p><img src="/images/aerial-notes/0-1.jpg"></p>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>航拍</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>PX4 Offboard Control Using MAVROS on Gazebo</title>
     <url>/2021/07/23/ros-notes-6/</url>
     <content><![CDATA[<h1 id="PX4-Offboard-Control-Using-MAVROS-on-Gazebo"><a href="#PX4-Offboard-Control-Using-MAVROS-on-Gazebo" class="headerlink" title="PX4 Offboard Control Using MAVROS on Gazebo"></a>PX4 Offboard Control Using MAVROS on Gazebo</h1><p>最近在学习PX4和mavros，感觉px4官网的教程总体上讲得不错，但有一些地方不是很友好，比如offboard control这一块儿，讲的比较简单，省略了gazebo的使用，我上网查了一大堆资料才勉强把这个示例代码在gazebo中跑出来。所以这里做一个记录，希望对看到的人有点帮助。</p>
@@ -1162,80 +1236,6 @@ mavros_msgs<span class="token double-colon punctuation">::</span>State current_s
         <tag>PX4</tag>
         <tag>PIXHAWK</tag>
         <tag>APM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>航拍笔记（零）：准备、检查与保养</title>
-    <url>/2021/08/22/aerial-note-0/</url>
-    <content><![CDATA[<h1 id="航拍笔记（零）：准备、检查与保养"><a href="#航拍笔记（零）：准备、检查与保养" class="headerlink" title="航拍笔记（零）：准备、检查与保养"></a>航拍笔记（零）：准备、检查与保养</h1><h2 id="一、前期准备"><a href="#一、前期准备" class="headerlink" title="一、前期准备"></a>一、前期准备</h2><ol>
-<li><strong>查询拍摄城市的无人机禁（限）飞区</strong>，这一点可以去无人机厂家官网、当地政府部门网站等地方查询；</li>
-<li><strong>提前观察飞行环境</strong>，做好航线规划，选择四周及上方空旷、地面平整的场地作为起降点；</li>
-<li><strong>关注天气预报</strong>，确认拍摄当天的天气状况，避免在大风、雨雾、雷电等恶劣天气飞行；</li>
-<li><strong>对无人机所有部件进行详细检查</strong>，确保无损伤，特别要注意检查动力电池的健康状态。</li>
-</ol>
-<h2 id="二、起飞检查"><a href="#二、起飞检查" class="headerlink" title="二、起飞检查"></a>二、起飞检查</h2><ol>
-<li>确认自己已获得飞行许可，或不在禁（限）飞区；</li>
-<li>如果环境温度低于15摄氏度，建议将动力电池预热（可用车载空调）到30摄氏度以上，极寒天气还应对电池做好保温措施；</li>
-<li>设置安全的自动返航高度，同时建议记下一个起降点附近的明显参照物，以备出现紧急情况时快速找到返航点；</li>
-<li>再次检查无人机各部件是否有损伤、连接是否正常、可靠，动力电池、地面站（遥控、图传）电量充足；</li>
-<li>起飞前对无人机做一次指南针校准，并确认无人机已记录返航点；</li>
-<li>飞手精神状态良好，如果近视请带上眼镜；</li>
-<li>起飞前，注意引导围观者（特别是好奇心重的小朋友）远离无人机；</li>
-</ol>
-<h2 id="三、飞行期间的注意事项"><a href="#三、飞行期间的注意事项" class="headerlink" title="三、飞行期间的注意事项"></a>三、飞行期间的注意事项</h2><ol>
-<li><strong>飞行切记炫耀、浮躁，飞手应该保持沉稳冷静的心态；</strong></li>
-<li><strong>避免无人机在人群密集处上空悬停，远离电力线、通信线、移动通信塔等可能的干扰源；</strong></li>
-<li><strong>尽可能保持无人机在视距内飞行</strong>，最好不要绕飞至建筑物背后（远离起飞点的一侧），因为这样容易导致无人机失去遥控（图传）信号；</li>
-<li>航拍时，云台相机视角常常与第一飞行视角不一致，飞手应<strong>留意无人机机头朝向，避免出现误操作</strong>；</li>
-<li><strong>关注监视器上无人机航行仪表信息</strong>，如飞行途中出现异常，应立即查明原因并排除，必要时中止飞行，并立即返航降落；</li>
-<li><strong>随时关注无人机动力电池电量</strong>，切忌低电量贪飞，确保有足够的时间返航。</li>
-</ol>
-<h2 id="四、返航降落"><a href="#四、返航降落" class="headerlink" title="四、返航降落"></a>四、返航降落</h2><ol>
-<li>拍摄结束或电量不足返航时，注意避开障碍物，保持足够的净空安全距离；</li>
-<li><strong>对于旋翼飞行器，下降（竖直）速度不宜过快</strong>，过快的下降速度容易导致无人机姿态失稳，可采用斜向返航的飞行方式增强无人机姿态稳定性；</li>
-<li>着陆前瞬间，俯仰、横滚舵宜归中，无人机不要出现大幅度水平移动，避免侧翻；</li>
-<li>着陆后，无人机螺旋桨完全停止转动前，所有人员不要靠近无人机；</li>
-<li>航拍作业完成，<strong>先关无人机动力电源，再关地面站（遥控、图传）电源</strong>；</li>
-<li>飞行结束，请参照原厂说明书对电池进行保养。</li>
-</ol>
-<h2 id="五、保养"><a href="#五、保养" class="headerlink" title="五、保养"></a>五、保养</h2><h3 id="电池"><a href="#电池" class="headerlink" title="电池"></a>电池</h3><ol>
-<li><p>避免在强静电或者磁场环境中使用电池。</p>
-</li>
-<li><p>请勿在电池电源打开的状态下插拔电池，若电池接口有污物，可用干布擦拭干净。</p>
-</li>
-<li><p>电池应在 -10℃ 至 40℃* 的环境下使用，当飞行环境低于 5℃ 时，应提前将电池放置在常温环境下进行预热，充分预热至 20°C 以上。</p>
-<p><em>部分机型如 Mavic Mini 的工作环境为 0℃ 至 40℃；</em> </p>
-<p><em>悟 Inspire 2 可在 -20℃ 至 40℃ 环境下工作 ，且有自加热功能。</em></p>
-</li>
-<li><p>如有破损、膨胀、漏液等异常现象，请勿再次使用。</p>
-<p><em>电池内部液体有强腐蚀性，如有泄露，请远离。</em></p>
-</li>
-<li><p>电池可充电环境温度为 5℃ - 40℃，理想的充电环境温度（22℃-28℃）可大幅度延长电池寿命，飞行结束后，建议待降至室温后再进行充电。</p>
-</li>
-</ol>
-<p><strong>电池存放建议：</strong></p>
-<ul>
-<li>设备不使用时，电池需单独存放；</li>
-<li>保持存放环境干燥，不可将电池放置于靠近热源、易燃易爆品的区域；</li>
-<li>避免电池长期放置在低温的室外，否则电池活性将大大降低，甚至造成锂电池性能不可逆的下降；</li>
-<li>电池请勿在完全放电状态下长期放置，以免电池进入过放状态造成电芯损害，应将电池放电至 40%-65% 电量进行存放；</li>
-<li>建议 2-3 个月重新充放电一次，以保证电池活性；</li>
-<li>长期存储时，在-10°C~45°C范围内的环境中存放。</li>
-</ul>
-<h3 id="电机"><a href="#电机" class="headerlink" title="电机"></a>电机</h3><p>检查电机无沙尘和水渍，并活动各个电机轴，确认与机臂固定牢固且能顺畅达到最大位置，然后卸下桨叶后开机并启动电机，判断电机有无异响。</p>
-<h3 id="桨叶"><a href="#桨叶" class="headerlink" title="桨叶"></a>桨叶</h3><p>检查桨叶是否有破损、变形，若存在异常，则更换新的桨叶。在飞行时，建议给桨叶安装桨叶保护罩。</p>
-<h3 id="云台相机"><a href="#云台相机" class="headerlink" title="云台相机"></a>云台相机</h3><p>检查镜头无划痕、破损、污垢，云台卡扣是否有异物、排线是否正常连接。必要时，对云台相机做一个自动校准，点选 App 中的云台设置——云台自动校准。</p>
-<h3 id="视觉系统"><a href="#视觉系统" class="headerlink" title="视觉系统"></a>视觉系统</h3><p>检查视觉避障系统与红外传感器镜片是否有划痕、破损或污渍。</p>
-<h3 id="遥控器"><a href="#遥控器" class="headerlink" title="遥控器"></a>遥控器</h3><p>检查遥控器天线是否有损坏，以及按键是否可以正常按压反馈，并且遥控器遥杆等是否正常。</p>
-<h3 id="App和固件版本"><a href="#App和固件版本" class="headerlink" title="App和固件版本"></a>App和固件版本</h3><p>及时更新 app 和固件版本，提升拍摄体验的同时能获得得到更好的拍摄效果。</p>
-<p><strong>附一张无人机飞行检查表</strong></p>
-<p><img src="/images/aerial-notes/0-1.jpg"></p>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>航拍</tag>
       </tags>
   </entry>
   <entry>
@@ -4861,6 +4861,40 @@ seek<span class="token double-colon punctuation">::</span><span class="token fun
       </tags>
   </entry>
   <entry>
+    <title>论文阅读-Map2DFusion：Real-time Incremental UAV Image Mosaicing based onMonocular SLAM</title>
+    <url>/2021/07/29/paper-reading-5/</url>
+    <content><![CDATA[<h1 id="论文阅读-Map2DFusion：Real-time-Incremental-UAV-Image-Mosaicing-based-onMonocular-SLAM"><a href="#论文阅读-Map2DFusion：Real-time-Incremental-UAV-Image-Mosaicing-based-onMonocular-SLAM" class="headerlink" title="论文阅读-Map2DFusion：Real-time Incremental UAV Image Mosaicing based onMonocular SLAM"></a>论文阅读-Map2DFusion：Real-time Incremental UAV Image Mosaicing based onMonocular SLAM</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文提出了一种实时拼接大规模航空图像的方法。利用单目SLAM系统估计摄像机的位置和姿态，同时生成三维点云图，当GPS信息可用时，估计的轨迹在时间同步后自动转换为WGS84坐标。因此，输出正交图像保留全球坐标，而不包含地面控制点。采用自适应加权多波段算法对最终图像进行实时融合和可视化。为了评估该方法的有效性，本文创建了一个具有不同环境序列的公共可用航空图像数据集。实验结果表明，和现有的方法相比，本系统能够实现高效率和高质量。</p>
+<p>本文的主要贡献如下：</p>
+<ol>
+<li><p><strong>Automatic GPS and video synchronization</strong></p>
+<p>针对大多数视频流不与GPS同步的问题，提出了一种基于图优化的方法，使视频时间与GPS时间从粗到精同步。因此，本文的方法能够获得WGS84坐标，并通过将GPS信息融合到SLAM处理中克服累积漂移，而无需GCPs。</p>
+</li>
+<li><p><strong>Real-time orthoimage blender</strong></p>
+<p>本文提出了一种自适应加权多波段方法来实时增量地融合和可视化图像。与SfM方法相比，该方法效率更高，结果令人满意，且不会因视角有限而产生孔洞和扭曲。</p>
+</li>
+<li><p><strong>A public aerial image dataset</strong></p>
+<p>本文创建了一个具有多个不同序列的航空图像数据集，用于视觉SLAM、正射影像和三维重建评估。</p>
+</li>
+</ol>
+<h2 id="系统框架"><a href="#系统框架" class="headerlink" title="系统框架"></a>系统框架</h2><p>本文的系统概述如图2所示，其中包含五个主要部分，分别运行在不同的线程中：视频准备、跟踪、映射、地图优化和地图融合。</p>
+<p><img src="/images/paper-reading/4_pic0.png"></p>
+<p>各部分概要介绍如下：</p>
+<ol>
+<li>图像不失真为理想的针孔模型，提取具有特征的关键点进行跟踪。</li>
+<li>根据最后一帧跟踪当前帧的初始运动，然后与局部子贴图精确对齐。</li>
+<li>当当前帧和最后一个关键帧之间的距离超过某个阈值时，将向全局贴图添加新的关键帧，然后执行局部绑定以优化局部贴图点和关键帧姿态</li>
+<li>采用全局优化的方法进行检测和闭环，得到一致的映射。利用SIM（3）位姿图对视频和GPS时间戳之间的时差进行从粗到精的在线校准，并对估计的轨迹和地图点应用最终的相似变换。然后，在地图线的局部束优化中考虑了GPS约束，并用采样的地图点拟合镶嵌平面。</li>
+<li>贴图融合单元以增量方式将关键帧混合到马赛克平面中。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>论文阅读</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用RANSAC算法拟合点云中的平面</title>
     <url>/2021/11/28/ransac/</url>
     <content><![CDATA[<h1 id="使用RANSAC算法拟合点云中的平面"><a href="#使用RANSAC算法拟合点云中的平面" class="headerlink" title="使用RANSAC算法拟合点云中的平面"></a>使用RANSAC算法拟合点云中的平面</h1><p>最近在写pi-slam-fusion这个项目，需要根据pi-slam计算出来的点云拟合出大地平面的方程，从而让map2dfusion根据这个方程进行地图拼接。</p>
@@ -5017,40 +5051,6 @@ python3 RANSAC_3D.py<span aria-hidden="true" class="line-numbers-rows"><span></s
       </tags>
   </entry>
   <entry>
-    <title>论文阅读-Map2DFusion：Real-time Incremental UAV Image Mosaicing based onMonocular SLAM</title>
-    <url>/2021/07/29/paper-reading-5/</url>
-    <content><![CDATA[<h1 id="论文阅读-Map2DFusion：Real-time-Incremental-UAV-Image-Mosaicing-based-onMonocular-SLAM"><a href="#论文阅读-Map2DFusion：Real-time-Incremental-UAV-Image-Mosaicing-based-onMonocular-SLAM" class="headerlink" title="论文阅读-Map2DFusion：Real-time Incremental UAV Image Mosaicing based onMonocular SLAM"></a>论文阅读-Map2DFusion：Real-time Incremental UAV Image Mosaicing based onMonocular SLAM</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文提出了一种实时拼接大规模航空图像的方法。利用单目SLAM系统估计摄像机的位置和姿态，同时生成三维点云图，当GPS信息可用时，估计的轨迹在时间同步后自动转换为WGS84坐标。因此，输出正交图像保留全球坐标，而不包含地面控制点。采用自适应加权多波段算法对最终图像进行实时融合和可视化。为了评估该方法的有效性，本文创建了一个具有不同环境序列的公共可用航空图像数据集。实验结果表明，和现有的方法相比，本系统能够实现高效率和高质量。</p>
-<p>本文的主要贡献如下：</p>
-<ol>
-<li><p><strong>Automatic GPS and video synchronization</strong></p>
-<p>针对大多数视频流不与GPS同步的问题，提出了一种基于图优化的方法，使视频时间与GPS时间从粗到精同步。因此，本文的方法能够获得WGS84坐标，并通过将GPS信息融合到SLAM处理中克服累积漂移，而无需GCPs。</p>
-</li>
-<li><p><strong>Real-time orthoimage blender</strong></p>
-<p>本文提出了一种自适应加权多波段方法来实时增量地融合和可视化图像。与SfM方法相比，该方法效率更高，结果令人满意，且不会因视角有限而产生孔洞和扭曲。</p>
-</li>
-<li><p><strong>A public aerial image dataset</strong></p>
-<p>本文创建了一个具有多个不同序列的航空图像数据集，用于视觉SLAM、正射影像和三维重建评估。</p>
-</li>
-</ol>
-<h2 id="系统框架"><a href="#系统框架" class="headerlink" title="系统框架"></a>系统框架</h2><p>本文的系统概述如图2所示，其中包含五个主要部分，分别运行在不同的线程中：视频准备、跟踪、映射、地图优化和地图融合。</p>
-<p><img src="/images/paper-reading/4_pic0.png"></p>
-<p>各部分概要介绍如下：</p>
-<ol>
-<li>图像不失真为理想的针孔模型，提取具有特征的关键点进行跟踪。</li>
-<li>根据最后一帧跟踪当前帧的初始运动，然后与局部子贴图精确对齐。</li>
-<li>当当前帧和最后一个关键帧之间的距离超过某个阈值时，将向全局贴图添加新的关键帧，然后执行局部绑定以优化局部贴图点和关键帧姿态</li>
-<li>采用全局优化的方法进行检测和闭环，得到一致的映射。利用SIM（3）位姿图对视频和GPS时间戳之间的时差进行从粗到精的在线校准，并对估计的轨迹和地图点应用最终的相似变换。然后，在地图线的局部束优化中考虑了GPS约束，并用采样的地图点拟合镶嵌平面。</li>
-<li>贴图融合单元以增量方式将关键帧混合到马赛克平面中。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>论文阅读</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SLAM问题的数学表述</title>
     <url>/2021/02/05/slam-learning-0/</url>
     <content><![CDATA[<h1 id="SLAM问题的数学表述"><a href="#SLAM问题的数学表述" class="headerlink" title="SLAM问题的数学表述"></a>SLAM问题的数学表述</h1><blockquote>
@@ -5073,127 +5073,6 @@ python3 RANSAC_3D.py<span aria-hidden="true" class="line-numbers-rows"><span></s
 <h2 id="对SLAM问题的总结"><a href="#对SLAM问题的总结" class="headerlink" title="对SLAM问题的总结"></a>对SLAM问题的总结</h2><p>通常，由于各种复杂因素的影响，我们无法直接求解机器人实际的运动方程，也无法通过理论上的运动方程精确计算出机器人的位姿，因此我们通过求解观测方程来相对精确地计算机器人的位置信息。</p>
 <p>在视觉SLAM中，这个过程可以表述为：已知相机内参$ K $，相机观测到的目标物坐标$ P_w $，目标物距离相机的距离$ s $以及它在图像上的像素坐标$ P_{uv} $，求解机器人的位姿$ T $。</p>
 <p>当然，由于观测数据同样受噪声影响，最终得到的位姿也不是准确的，还需要通过一些处理来减小误差。</p>
-]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>视觉SLAM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>罗德里格斯公式推导</title>
-    <url>/2021/07/08/slam-learning-2/</url>
-    <content><![CDATA[<h1 id="罗德里格斯公式推导"><a href="#罗德里格斯公式推导" class="headerlink" title="罗德里格斯公式推导"></a>罗德里格斯公式推导</h1><blockquote>
-<p>最近博主在重学《视觉SLAM十四讲》，之后可能会陆陆续续的发一些学习笔记或者公式的推导。</p>
-</blockquote>
-<p>书中第53页给出了罗德里格斯公式，这个公式描述了<strong>从旋转向量到旋转矩阵的转换过程。</strong></p>
-<p>虽然作者后面会从李代数层面给出一个证明，但直接从线性代数的层面进行推导也并不麻烦，具体的推导过程如下所示：</p>
-<p><img src="/images/slam-learning/2-1.jpg"></p>
-<p><img src="/images/slam-learning/2-2.jpg"></p>
-]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>视觉SLAM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>详解四元数</title>
-    <url>/2021/07/10/slam-learning-3/</url>
-    <content><![CDATA[<h1 id="详解四元数"><a href="#详解四元数" class="headerlink" title="详解四元数"></a>详解四元数</h1><blockquote>
-<p>昨天看了《视觉SLAM十四讲》第三讲四元数部分的内容，对里面的一些东西不是很懂，这两天好好地推导了一下。</p>
-</blockquote>
-<p>本文主要介绍：</p>
-<ol>
-<li>四元数几个重要性质、推论的推导</li>
-<li>如何用四元数表示3D旋转</li>
-<li>四元数、旋转向量、旋转矩阵之间的转换关系</li>
-<li>四元数的双倍覆盖（严谨证明暂未给出）</li>
-</ol>
-<p>由于四元数推导这边的公式比较多，手写要方便一些，所以下面直接给出手写的推导证明过程。</p>
-<h3 id="一、四元数几个比较重要的性质"><a href="#一、四元数几个比较重要的性质" class="headerlink" title="一、四元数几个比较重要的性质"></a>一、四元数几个比较重要的性质</h3><p><img src="/images/slam-learning/3-1.JPG"></p>
-<p><img src="/images/slam-learning/3-2.JPG"></p>
-<h3 id="二、四元数与3D旋转"><a href="#二、四元数与3D旋转" class="headerlink" title="二、四元数与3D旋转"></a>二、四元数与3D旋转</h3><p><img src="/images/slam-learning/3-3.JPG"></p>
-<p><img src="/images/slam-learning/3-4.JPG"></p>
-<p><img src="/images/slam-learning/3-5.JPG"></p>
-<p><img src="/images/slam-learning/3-6.JPG"></p>
-<h3 id="三、四元数、旋转向量、旋转矩阵之间的相互表示"><a href="#三、四元数、旋转向量、旋转矩阵之间的相互表示" class="headerlink" title="三、四元数、旋转向量、旋转矩阵之间的相互表示"></a>三、四元数、旋转向量、旋转矩阵之间的相互表示</h3><p><img src="/images/slam-learning/3-7.JPG"></p>
-<p><img src="/images/slam-learning/3-8.JPG"></p>
-<p><img src="/images/slam-learning/3-9.JPG"></p>
-<h3 id="四、关于四元数的双倍覆盖"><a href="#四、关于四元数的双倍覆盖" class="headerlink" title="四、关于四元数的双倍覆盖"></a>四、关于四元数的双倍覆盖</h3><p><img src="/images/slam-learning/3-10.JPG"></p>
-]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>视觉SLAM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SLAM for L515</title>
-    <url>/2021/07/03/slam-notes-1/</url>
-    <content><![CDATA[<h1 id="SLAM-for-L515"><a href="#SLAM-for-L515" class="headerlink" title="SLAM for L515"></a>SLAM for L515</h1><p>本文介绍两种适合Intel RealSense LiDAR Camera L515的SLAM方案，把这两种方案跑起来都非常容易，只要环境没问题，基本上就能跑一个大概的效果出来（效果好还是得费些功夫的）。</p>
-<h2 id="SSL-SLAM"><a href="#SSL-SLAM" class="headerlink" title="SSL_SLAM"></a>SSL_SLAM</h2><p>固态激光雷达的轻量级 3-D 定位和映射（SSL_SLAM）是新加坡南洋理工大学一个博士提出的方案，这套方案基本上就是根据L515设计出来的，拿过来能直接用。</p>
-<h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> ~/catkin_ws/src
-<span class="token function">git</span> clone https://github.com/wh200720041/ssl_slam.git
-<span class="token builtin class-name">cd</span> <span class="token punctuation">..</span>
-catkin_make
-<span class="token builtin class-name">source</span> ~/catkin_ws/devel/setup.bash<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#运行ssl_slam</span>
-roslaunch ssl_slam ssl_slam_mapping.launch
-<span class="token comment">#运行L515</span>
-roslaunch ssl_slam ssl_slam_L515.launch<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>运行效果如下图所示：</p>
-<p><img src="/images/slam-for-L515/0.png"></p>
-<h2 id="RTAB-Map"><a href="#RTAB-Map" class="headerlink" title="RTAB-Map"></a>RTAB-Map</h2><p><strong>RTAB-Map</strong>（基于实时外观的映射）是一种基于 RGB-D、立体和激光雷达图的 SLAM 方法，它基于增量外观闭环检测器。闭环检测器使用词袋方法来确定新图像来自先前位置或新位置的可能性。当一个闭环假设被接受时，一个新的约束被添加到地图的图形中，然后图形优化器最小化地图中的错误。内存管理方法用于限制用于闭环检测和图形优化的位置数量，以便始终遵守对大规模环境的实时约束。RTAB-Map 可以单独与手持 Kinect、立体相机或 3D 激光雷达一起使用，用于 6DoF 映射，或用于配备激光测距仪的机器人进行 3DoF 映射。</p>
-<h3 id="run-L515"><a href="#run-L515" class="headerlink" title="run L515"></a>run L515</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># ISSUE: Use unite_imu_method:="copy" if imu topics keep stopping</span>
-roslaunch realsense2_camera rs_camera.launch <span class="token punctuation">\</span>
-    align_depth:<span class="token operator">=</span>true <span class="token punctuation">\</span>
-    unite_imu_method:<span class="token operator">=</span><span class="token string">"linear_interpolation"</span> <span class="token punctuation">\</span>
-    enable_gyro:<span class="token operator">=</span>true <span class="token punctuation">\</span>
-     enable_accel:<span class="token operator">=</span>true<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun imu_filter_madgwick imu_filter_node <span class="token punctuation">\</span>
-    _use_mag:<span class="token operator">=</span>false <span class="token punctuation">\</span>
-    _publish_tf:<span class="token operator">=</span>false <span class="token punctuation">\</span>
-    _world_frame:<span class="token operator">=</span><span class="token string">"enu"</span> <span class="token punctuation">\</span>
-    /imu/data_raw:<span class="token operator">=</span>/camera/imu <span class="token punctuation">\</span>
-    /imu/data:<span class="token operator">=</span>/rtabmap/imu<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="Run-RTAB-Map"><a href="#Run-RTAB-Map" class="headerlink" title="Run RTAB-Map"></a>Run RTAB-Map</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun nodelet nodelet standalone rtabmap_ros/point_cloud_xyz <span class="token punctuation">\</span>
-    _approx_sync:<span class="token operator">=</span>false  <span class="token punctuation">\</span>
-    /depth/image:<span class="token operator">=</span>/camera/depth/image_rect_raw <span class="token punctuation">\</span>
-    /depth/camera_info:<span class="token operator">=</span>/camera/depth/camera_info <span class="token punctuation">\</span>
-    _decimation:<span class="token operator">=</span><span class="token number">4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">roslaunch rtabmap_ros rtabmap.launch<span class="token punctuation">\</span>
-    rtabmap_args:<span class="token operator">=</span><span class="token string">"\
-      --delete_db_on_start \
-      --Icp/VoxelSize 0.05 \
-      --Icp/PointToPlaneRadius 0 \
-      --Icp/PointToPlaneK 20 \
-      --Icp/CorrespondenceRatio 0.2 \
-      --Icp/PMOutlierRatio 0.65 \
-      --Icp/Epsilon 0.005 \
-      --Icp/PointToPlaneMinComplexity 0 \
-      --Odom/ScanKeyFrameThr 0.7 \
-      --OdomF2M/ScanMaxSize 15000 \
-      --Optimizer/GravitySigma 0.3 \
-      --RGBD/ProximityPathMaxNeighbors 1 \
-      --Reg/Strategy 1"</span> <span class="token punctuation">\</span>
-    icp_odometry:<span class="token operator">=</span>true <span class="token punctuation">\</span>
-    scan_cloud_topic:<span class="token operator">=</span>/cloud <span class="token punctuation">\</span>
-    subscribe_scan_cloud:<span class="token operator">=</span>true <span class="token punctuation">\</span>
-    depth_topic:<span class="token operator">=</span>/camera/aligned_depth_to_color/image_raw <span class="token punctuation">\</span>
-    rgb_topic:<span class="token operator">=</span>/camera/color/image_raw <span class="token punctuation">\</span>
-    camera_info_topic:<span class="token operator">=</span>/camera/color/camera_info <span class="token punctuation">\</span>
-    approx_sync:<span class="token operator">=</span>false <span class="token punctuation">\</span>
-    wait_imu_to_init:<span class="token operator">=</span>true <span class="token punctuation">\</span>
-    imu_topic:<span class="token operator">=</span>/rtabmap/imu<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#delete memory</span>
-rosservice call /rtabmap/reset<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>运行效果如下所示：</p>
-<p><img src="/images/slam-for-L515/1.png"></p>
-<p><img src="/images/slam-for-L515/2.png"></p>
 ]]></content>
       <categories>
         <category>slam</category>
@@ -5364,6 +5243,127 @@ rosservice call /rtabmap/reset<span aria-hidden="true" class="line-numbers-rows"
 <p><img src="/images/slam-notes/34.png"></p>
 <p>对于畸变的矫正在实际当中可灵活保留各项系数。通常在视觉SLAM中，考虑先对整张图片进行去畸变，得到去畸变后的图像，然后讨论图像中的点的位置。</p>
 <h2 id="第六讲-非线性优化"><a href="#第六讲-非线性优化" class="headerlink" title="第六讲    非线性优化"></a>第六讲    <code>非线性优化</code></h2><p>待更新~</p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>视觉SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>罗德里格斯公式推导</title>
+    <url>/2021/07/08/slam-learning-2/</url>
+    <content><![CDATA[<h1 id="罗德里格斯公式推导"><a href="#罗德里格斯公式推导" class="headerlink" title="罗德里格斯公式推导"></a>罗德里格斯公式推导</h1><blockquote>
+<p>最近博主在重学《视觉SLAM十四讲》，之后可能会陆陆续续的发一些学习笔记或者公式的推导。</p>
+</blockquote>
+<p>书中第53页给出了罗德里格斯公式，这个公式描述了<strong>从旋转向量到旋转矩阵的转换过程。</strong></p>
+<p>虽然作者后面会从李代数层面给出一个证明，但直接从线性代数的层面进行推导也并不麻烦，具体的推导过程如下所示：</p>
+<p><img src="/images/slam-learning/2-1.jpg"></p>
+<p><img src="/images/slam-learning/2-2.jpg"></p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>视觉SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>详解四元数</title>
+    <url>/2021/07/10/slam-learning-3/</url>
+    <content><![CDATA[<h1 id="详解四元数"><a href="#详解四元数" class="headerlink" title="详解四元数"></a>详解四元数</h1><blockquote>
+<p>昨天看了《视觉SLAM十四讲》第三讲四元数部分的内容，对里面的一些东西不是很懂，这两天好好地推导了一下。</p>
+</blockquote>
+<p>本文主要介绍：</p>
+<ol>
+<li>四元数几个重要性质、推论的推导</li>
+<li>如何用四元数表示3D旋转</li>
+<li>四元数、旋转向量、旋转矩阵之间的转换关系</li>
+<li>四元数的双倍覆盖（严谨证明暂未给出）</li>
+</ol>
+<p>由于四元数推导这边的公式比较多，手写要方便一些，所以下面直接给出手写的推导证明过程。</p>
+<h3 id="一、四元数几个比较重要的性质"><a href="#一、四元数几个比较重要的性质" class="headerlink" title="一、四元数几个比较重要的性质"></a>一、四元数几个比较重要的性质</h3><p><img src="/images/slam-learning/3-1.JPG"></p>
+<p><img src="/images/slam-learning/3-2.JPG"></p>
+<h3 id="二、四元数与3D旋转"><a href="#二、四元数与3D旋转" class="headerlink" title="二、四元数与3D旋转"></a>二、四元数与3D旋转</h3><p><img src="/images/slam-learning/3-3.JPG"></p>
+<p><img src="/images/slam-learning/3-4.JPG"></p>
+<p><img src="/images/slam-learning/3-5.JPG"></p>
+<p><img src="/images/slam-learning/3-6.JPG"></p>
+<h3 id="三、四元数、旋转向量、旋转矩阵之间的相互表示"><a href="#三、四元数、旋转向量、旋转矩阵之间的相互表示" class="headerlink" title="三、四元数、旋转向量、旋转矩阵之间的相互表示"></a>三、四元数、旋转向量、旋转矩阵之间的相互表示</h3><p><img src="/images/slam-learning/3-7.JPG"></p>
+<p><img src="/images/slam-learning/3-8.JPG"></p>
+<p><img src="/images/slam-learning/3-9.JPG"></p>
+<h3 id="四、关于四元数的双倍覆盖"><a href="#四、关于四元数的双倍覆盖" class="headerlink" title="四、关于四元数的双倍覆盖"></a>四、关于四元数的双倍覆盖</h3><p><img src="/images/slam-learning/3-10.JPG"></p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>视觉SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SLAM for L515</title>
+    <url>/2021/07/03/slam-notes-1/</url>
+    <content><![CDATA[<h1 id="SLAM-for-L515"><a href="#SLAM-for-L515" class="headerlink" title="SLAM for L515"></a>SLAM for L515</h1><p>本文介绍两种适合Intel RealSense LiDAR Camera L515的SLAM方案，把这两种方案跑起来都非常容易，只要环境没问题，基本上就能跑一个大概的效果出来（效果好还是得费些功夫的）。</p>
+<h2 id="SSL-SLAM"><a href="#SSL-SLAM" class="headerlink" title="SSL_SLAM"></a>SSL_SLAM</h2><p>固态激光雷达的轻量级 3-D 定位和映射（SSL_SLAM）是新加坡南洋理工大学一个博士提出的方案，这套方案基本上就是根据L515设计出来的，拿过来能直接用。</p>
+<h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> ~/catkin_ws/src
+<span class="token function">git</span> clone https://github.com/wh200720041/ssl_slam.git
+<span class="token builtin class-name">cd</span> <span class="token punctuation">..</span>
+catkin_make
+<span class="token builtin class-name">source</span> ~/catkin_ws/devel/setup.bash<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#运行ssl_slam</span>
+roslaunch ssl_slam ssl_slam_mapping.launch
+<span class="token comment">#运行L515</span>
+roslaunch ssl_slam ssl_slam_L515.launch<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>运行效果如下图所示：</p>
+<p><img src="/images/slam-for-L515/0.png"></p>
+<h2 id="RTAB-Map"><a href="#RTAB-Map" class="headerlink" title="RTAB-Map"></a>RTAB-Map</h2><p><strong>RTAB-Map</strong>（基于实时外观的映射）是一种基于 RGB-D、立体和激光雷达图的 SLAM 方法，它基于增量外观闭环检测器。闭环检测器使用词袋方法来确定新图像来自先前位置或新位置的可能性。当一个闭环假设被接受时，一个新的约束被添加到地图的图形中，然后图形优化器最小化地图中的错误。内存管理方法用于限制用于闭环检测和图形优化的位置数量，以便始终遵守对大规模环境的实时约束。RTAB-Map 可以单独与手持 Kinect、立体相机或 3D 激光雷达一起使用，用于 6DoF 映射，或用于配备激光测距仪的机器人进行 3DoF 映射。</p>
+<h3 id="run-L515"><a href="#run-L515" class="headerlink" title="run L515"></a>run L515</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># ISSUE: Use unite_imu_method:="copy" if imu topics keep stopping</span>
+roslaunch realsense2_camera rs_camera.launch <span class="token punctuation">\</span>
+    align_depth:<span class="token operator">=</span>true <span class="token punctuation">\</span>
+    unite_imu_method:<span class="token operator">=</span><span class="token string">"linear_interpolation"</span> <span class="token punctuation">\</span>
+    enable_gyro:<span class="token operator">=</span>true <span class="token punctuation">\</span>
+     enable_accel:<span class="token operator">=</span>true<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun imu_filter_madgwick imu_filter_node <span class="token punctuation">\</span>
+    _use_mag:<span class="token operator">=</span>false <span class="token punctuation">\</span>
+    _publish_tf:<span class="token operator">=</span>false <span class="token punctuation">\</span>
+    _world_frame:<span class="token operator">=</span><span class="token string">"enu"</span> <span class="token punctuation">\</span>
+    /imu/data_raw:<span class="token operator">=</span>/camera/imu <span class="token punctuation">\</span>
+    /imu/data:<span class="token operator">=</span>/rtabmap/imu<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="Run-RTAB-Map"><a href="#Run-RTAB-Map" class="headerlink" title="Run RTAB-Map"></a>Run RTAB-Map</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun nodelet nodelet standalone rtabmap_ros/point_cloud_xyz <span class="token punctuation">\</span>
+    _approx_sync:<span class="token operator">=</span>false  <span class="token punctuation">\</span>
+    /depth/image:<span class="token operator">=</span>/camera/depth/image_rect_raw <span class="token punctuation">\</span>
+    /depth/camera_info:<span class="token operator">=</span>/camera/depth/camera_info <span class="token punctuation">\</span>
+    _decimation:<span class="token operator">=</span><span class="token number">4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">roslaunch rtabmap_ros rtabmap.launch<span class="token punctuation">\</span>
+    rtabmap_args:<span class="token operator">=</span><span class="token string">"\
+      --delete_db_on_start \
+      --Icp/VoxelSize 0.05 \
+      --Icp/PointToPlaneRadius 0 \
+      --Icp/PointToPlaneK 20 \
+      --Icp/CorrespondenceRatio 0.2 \
+      --Icp/PMOutlierRatio 0.65 \
+      --Icp/Epsilon 0.005 \
+      --Icp/PointToPlaneMinComplexity 0 \
+      --Odom/ScanKeyFrameThr 0.7 \
+      --OdomF2M/ScanMaxSize 15000 \
+      --Optimizer/GravitySigma 0.3 \
+      --RGBD/ProximityPathMaxNeighbors 1 \
+      --Reg/Strategy 1"</span> <span class="token punctuation">\</span>
+    icp_odometry:<span class="token operator">=</span>true <span class="token punctuation">\</span>
+    scan_cloud_topic:<span class="token operator">=</span>/cloud <span class="token punctuation">\</span>
+    subscribe_scan_cloud:<span class="token operator">=</span>true <span class="token punctuation">\</span>
+    depth_topic:<span class="token operator">=</span>/camera/aligned_depth_to_color/image_raw <span class="token punctuation">\</span>
+    rgb_topic:<span class="token operator">=</span>/camera/color/image_raw <span class="token punctuation">\</span>
+    camera_info_topic:<span class="token operator">=</span>/camera/color/camera_info <span class="token punctuation">\</span>
+    approx_sync:<span class="token operator">=</span>false <span class="token punctuation">\</span>
+    wait_imu_to_init:<span class="token operator">=</span>true <span class="token punctuation">\</span>
+    imu_topic:<span class="token operator">=</span>/rtabmap/imu<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#delete memory</span>
+rosservice call /rtabmap/reset<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>运行效果如下所示：</p>
+<p><img src="/images/slam-for-L515/1.png"></p>
+<p><img src="/images/slam-for-L515/2.png"></p>
 ]]></content>
       <categories>
         <category>slam</category>
