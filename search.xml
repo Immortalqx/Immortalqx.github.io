@@ -345,129 +345,6 @@
       </tags>
   </entry>
   <entry>
-    <title>ROS中使用ddynamicReconfigure</title>
-    <url>/2020/09/05/ros-notes-1/</url>
-    <content><![CDATA[<h1 id="ROS中使用ddynamicReconfigure"><a href="#ROS中使用ddynamicReconfigure" class="headerlink" title="ROS中使用ddynamicReconfigure"></a>ROS中使用ddynamicReconfigure</h1><h2 id="关于ddynamicReconfigure类"><a href="#关于ddynamicReconfigure类" class="headerlink" title="关于ddynamicReconfigure类"></a>关于ddynamicReconfigure类</h2><p>The DDynamicReconfigure class allows to use ROS dynamic reconfigure without the need to write a custom cpf file, <strong>variables are registered and exposed at run time</strong>.  Modification of the variables is done through a variable pointer or through a callback function.</p>
-<p>The <a href="http://docs.ros.org/kinetic/api/ddynamic_reconfigure/html/classddynamic__reconfigure_1_1DDynamicReconfigure.html">DDynamicReconfigure</a> class is the main class responsible for keeping track of parameters basic properties, values, descriptions, etc. </p>
-<p>It is also responsible of handling callbacks, config change requests, description setup and config setup, and the ROS publishers and  services.</p>
-<p>To operate a DDynamic instance, you must go through the following procedure:</p>
-<ol>
-<li>Construct a <a href="http://docs.ros.org/kinetic/api/ddynamic_reconfigure/html/classddynamic__reconfigure_1_1DDynamicReconfigure.html">DDynamicReconfigure</a> instance with proper handling.</li>
-<li>Add parameters to the instance as needed with any of the “add” methods.</li>
-<li>Start the ROS services with any of the “start” methods.</li>
-<li>If you need to change the callback after startup you may do so using “setCallback”.</li>
-<li>When you need to get any of the stored parameters, call either “get” or “at” on this instance, rather than through the callback. </li>
-</ol>
-<h2 id="常用函数原型-amp-解析"><a href="#常用函数原型-amp-解析" class="headerlink" title="常用函数原型&amp;解析"></a>常用函数原型&amp;解析</h2><p>registerVariable register a variable to be modified via the dynamic_reconfigure API. </p>
-<p>When a change is made, <strong>it will be reflected in the variable directly.</strong></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
-  <span class="token keyword">void</span> <span class="token function">registerVariable</span><span class="token punctuation">(</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
-  T <span class="token operator">*</span>variable<span class="token punctuation">,</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span> 
-  T min <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMin</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
-  T max <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMax</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
-  <span class="token keyword">void</span> <span class="token function">registerEnumVariable</span><span class="token punctuation">(</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
-  T <span class="token operator">*</span>variable<span class="token punctuation">,</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span>
-  std<span class="token double-colon punctuation">::</span>map<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token punctuation">,</span> T<span class="token operator">&gt;</span> enum_dict <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>enum_description <span class="token operator">=</span> <span class="token string">""</span>
-  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<hr>
-<p>registerVariable register a variable to be modified via the dynamic_reconfigure API. </p>
-<p>When a change is made, <strong>the callback will be called with the new value.</strong></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
-  <span class="token keyword">void</span> <span class="token function">registerVariable</span><span class="token punctuation">(</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
-  T current_value<span class="token punctuation">,</span>
-  <span class="token keyword">const</span> boost<span class="token double-colon punctuation">::</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span>T value<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token operator">&amp;</span>callback<span class="token punctuation">,</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span> 
-  T min <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMin</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
-  T max <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMax</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
-  <span class="token keyword">void</span> <span class="token function">registerEnumVariable</span><span class="token punctuation">(</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
-  T current_value<span class="token punctuation">,</span>
-  <span class="token keyword">const</span> boost<span class="token double-colon punctuation">::</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span>T<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token operator">&amp;</span>callback<span class="token punctuation">,</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description<span class="token punctuation">,</span>
-  std<span class="token double-colon punctuation">::</span>map<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token punctuation">,</span> T<span class="token operator">&gt;</span> enum_dict <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>enum_description <span class="token operator">=</span> <span class="token string">""</span>
-  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<hr>
-<p>publishServicesTopics <strong>starts the server</strong> once all the needed variables are registered.</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">publishServicesTopics</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>关于getMin()与getMax()</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
-<span class="token keyword">inline</span> T <span class="token function">getMin</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">return</span> std<span class="token double-colon punctuation">::</span><span class="token class-name">numeric_limits</span><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span><span class="token double-colon punctuation">::</span><span class="token function">min</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
-<span class="token keyword">inline</span> <span class="token keyword">bool</span> <span class="token function">getMin</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
-<span class="token keyword">inline</span> std<span class="token double-colon punctuation">::</span>string <span class="token generic-function"><span class="token function">getMin</span><span class="token generic class-name"><span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
-<span class="token keyword">inline</span> T <span class="token function">getMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">return</span> std<span class="token double-colon punctuation">::</span><span class="token class-name">numeric_limits</span><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span><span class="token double-colon punctuation">::</span><span class="token function">min</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
-<span class="token keyword">inline</span> <span class="token keyword">bool</span> <span class="token function">getMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
-<span class="token keyword">inline</span> std<span class="token double-colon punctuation">::</span>string <span class="token function">getMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h&gt;</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ddynamic_reconfigure/ddynamic_reconfigure.h&gt;</span></span>
-
-<span class="token keyword">int</span> global_int<span class="token punctuation">;</span>
-
-<span class="token keyword">void</span> <span class="token function">paramCb</span><span class="token punctuation">(</span><span class="token keyword">int</span> new_value<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-   global_int <span class="token operator">=</span> new_value<span class="token punctuation">;</span>
-   <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"Param modified: %d"</span><span class="token punctuation">,</span> global_int<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment">// ROS init stage</span>
-    ros<span class="token double-colon punctuation">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"ddynamic_tutorials"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token double-colon punctuation">::</span>NodeHandle nh<span class="token punctuation">;</span>
-    ddynamic_reconfigure<span class="token double-colon punctuation">::</span>DDynamicReconfigure ddr<span class="token punctuation">;</span>
-    
-    ddr<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">registerVariable</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token string">"int_param"</span><span class="token punctuation">,</span><span class="token number">124</span><span class="token punctuation">,</span> boost<span class="token double-colon punctuation">::</span><span class="token function">bind</span><span class="token punctuation">(</span>paramCb<span class="token punctuation">,</span> _1<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"param description"</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1000</span><span class="token punctuation">,</span><span class="token number">2357</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ddr<span class="token punctuation">.</span><span class="token function">publishServicesTopics</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// Now parameter can be modified from the dynamic_reconfigure GUI or other tools and the callback is called on each update</span>
-    ros<span class="token double-colon punctuation">::</span><span class="token function">spin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
- <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-]]></content>
-      <categories>
-        <category>ROS</category>
-      </categories>
-      <tags>
-        <tag>ROS基础</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ROS中nodelet的使用</title>
     <url>/2020/09/04/ros-notes-2/</url>
     <content><![CDATA[<h1 id="ROS中nodelet的使用"><a href="#ROS中nodelet的使用" class="headerlink" title="ROS中nodelet的使用"></a>ROS中nodelet的使用</h1><h2 id="1-为什么使用nodelet？"><a href="#1-为什么使用nodelet？" class="headerlink" title="1. 为什么使用nodelet？"></a>1. 为什么使用nodelet？</h2><p>Nodelet提供了一种方法，可以在同一台计算机上，在同一个进程内，运行多个算法，且在进程内消息传递时不产生复制成本（zero  copy）。在一个node里面，roscpp利用指针传递可以实现在publish和subscribe调用时的零拷贝。为了实现相似的效果，多个nodelets允许将多个类动态加载到同一个node里，同时还提供独立的命名空间，从而使得这些nodelets尽管运行在同一个进程里，但却仍然像单独的node一样工作。也就实现了“在一个进程（node）里运行多个nodelet”的效果。</p>
@@ -940,6 +817,129 @@ geometry_msgs/Transform transform
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>robot_description<span class="token punctuation">"</span></span> <span class="token attr-name">command</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(arg model)<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">roslaunch mbot_description display_mbot_base_xacro.launch<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>相关学习资料：<a href="http://wiki.ros.org/urdf/Tutorials">http://wiki.ros.org/urdf/Tutorials</a></p>
+]]></content>
+      <categories>
+        <category>ROS</category>
+      </categories>
+      <tags>
+        <tag>ROS基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ROS中使用ddynamicReconfigure</title>
+    <url>/2020/09/05/ros-notes-1/</url>
+    <content><![CDATA[<h1 id="ROS中使用ddynamicReconfigure"><a href="#ROS中使用ddynamicReconfigure" class="headerlink" title="ROS中使用ddynamicReconfigure"></a>ROS中使用ddynamicReconfigure</h1><h2 id="关于ddynamicReconfigure类"><a href="#关于ddynamicReconfigure类" class="headerlink" title="关于ddynamicReconfigure类"></a>关于ddynamicReconfigure类</h2><p>The DDynamicReconfigure class allows to use ROS dynamic reconfigure without the need to write a custom cpf file, <strong>variables are registered and exposed at run time</strong>.  Modification of the variables is done through a variable pointer or through a callback function.</p>
+<p>The <a href="http://docs.ros.org/kinetic/api/ddynamic_reconfigure/html/classddynamic__reconfigure_1_1DDynamicReconfigure.html">DDynamicReconfigure</a> class is the main class responsible for keeping track of parameters basic properties, values, descriptions, etc. </p>
+<p>It is also responsible of handling callbacks, config change requests, description setup and config setup, and the ROS publishers and  services.</p>
+<p>To operate a DDynamic instance, you must go through the following procedure:</p>
+<ol>
+<li>Construct a <a href="http://docs.ros.org/kinetic/api/ddynamic_reconfigure/html/classddynamic__reconfigure_1_1DDynamicReconfigure.html">DDynamicReconfigure</a> instance with proper handling.</li>
+<li>Add parameters to the instance as needed with any of the “add” methods.</li>
+<li>Start the ROS services with any of the “start” methods.</li>
+<li>If you need to change the callback after startup you may do so using “setCallback”.</li>
+<li>When you need to get any of the stored parameters, call either “get” or “at” on this instance, rather than through the callback. </li>
+</ol>
+<h2 id="常用函数原型-amp-解析"><a href="#常用函数原型-amp-解析" class="headerlink" title="常用函数原型&amp;解析"></a>常用函数原型&amp;解析</h2><p>registerVariable register a variable to be modified via the dynamic_reconfigure API. </p>
+<p>When a change is made, <strong>it will be reflected in the variable directly.</strong></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+  <span class="token keyword">void</span> <span class="token function">registerVariable</span><span class="token punctuation">(</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
+  T <span class="token operator">*</span>variable<span class="token punctuation">,</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span> 
+  T min <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMin</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+  T max <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMax</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+  <span class="token keyword">void</span> <span class="token function">registerEnumVariable</span><span class="token punctuation">(</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
+  T <span class="token operator">*</span>variable<span class="token punctuation">,</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span>
+  std<span class="token double-colon punctuation">::</span>map<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token punctuation">,</span> T<span class="token operator">&gt;</span> enum_dict <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>enum_description <span class="token operator">=</span> <span class="token string">""</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<p>registerVariable register a variable to be modified via the dynamic_reconfigure API. </p>
+<p>When a change is made, <strong>the callback will be called with the new value.</strong></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+  <span class="token keyword">void</span> <span class="token function">registerVariable</span><span class="token punctuation">(</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
+  T current_value<span class="token punctuation">,</span>
+  <span class="token keyword">const</span> boost<span class="token double-colon punctuation">::</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span>T value<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token operator">&amp;</span>callback<span class="token punctuation">,</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span> 
+  T min <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMin</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+  T max <span class="token operator">=</span> <span class="token generic-function"><span class="token function">getMax</span><span class="token generic class-name"><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+  <span class="token keyword">void</span> <span class="token function">registerEnumVariable</span><span class="token punctuation">(</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> 
+  T current_value<span class="token punctuation">,</span>
+  <span class="token keyword">const</span> boost<span class="token double-colon punctuation">::</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span>T<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token operator">&amp;</span>callback<span class="token punctuation">,</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>description<span class="token punctuation">,</span>
+  std<span class="token double-colon punctuation">::</span>map<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token punctuation">,</span> T<span class="token operator">&gt;</span> enum_dict <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>enum_description <span class="token operator">=</span> <span class="token string">""</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<p>publishServicesTopics <strong>starts the server</strong> once all the needed variables are registered.</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">publishServicesTopics</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>关于getMin()与getMax()</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+<span class="token keyword">inline</span> T <span class="token function">getMin</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> std<span class="token double-colon punctuation">::</span><span class="token class-name">numeric_limits</span><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span><span class="token double-colon punctuation">::</span><span class="token function">min</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
+<span class="token keyword">inline</span> <span class="token keyword">bool</span> <span class="token function">getMin</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
+<span class="token keyword">inline</span> std<span class="token double-colon punctuation">::</span>string <span class="token generic-function"><span class="token function">getMin</span><span class="token generic class-name"><span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+<span class="token keyword">inline</span> T <span class="token function">getMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> std<span class="token double-colon punctuation">::</span><span class="token class-name">numeric_limits</span><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span><span class="token double-colon punctuation">::</span><span class="token function">min</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
+<span class="token keyword">inline</span> <span class="token keyword">bool</span> <span class="token function">getMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
+<span class="token keyword">inline</span> std<span class="token double-colon punctuation">::</span>string <span class="token function">getMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ddynamic_reconfigure/ddynamic_reconfigure.h&gt;</span></span>
+
+<span class="token keyword">int</span> global_int<span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">paramCb</span><span class="token punctuation">(</span><span class="token keyword">int</span> new_value<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   global_int <span class="token operator">=</span> new_value<span class="token punctuation">;</span>
+   <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"Param modified: %d"</span><span class="token punctuation">,</span> global_int<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// ROS init stage</span>
+    ros<span class="token double-colon punctuation">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"ddynamic_tutorials"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ros<span class="token double-colon punctuation">::</span>NodeHandle nh<span class="token punctuation">;</span>
+    ddynamic_reconfigure<span class="token double-colon punctuation">::</span>DDynamicReconfigure ddr<span class="token punctuation">;</span>
+    
+    ddr<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">registerVariable</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token string">"int_param"</span><span class="token punctuation">,</span><span class="token number">124</span><span class="token punctuation">,</span> boost<span class="token double-colon punctuation">::</span><span class="token function">bind</span><span class="token punctuation">(</span>paramCb<span class="token punctuation">,</span> _1<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"param description"</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1000</span><span class="token punctuation">,</span><span class="token number">2357</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ddr<span class="token punctuation">.</span><span class="token function">publishServicesTopics</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// Now parameter can be modified from the dynamic_reconfigure GUI or other tools and the callback is called on each update</span>
+    ros<span class="token double-colon punctuation">::</span><span class="token function">spin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 ]]></content>
       <categories>
         <category>ROS</category>
@@ -1525,6 +1525,167 @@ mavros_msgs<span class="token double-colon punctuation">::</span>State current_s
       </tags>
   </entry>
   <entry>
+    <title>C++描述符delete与override</title>
+    <url>/2020/08/21/cpp-notes-2/</url>
+    <content><![CDATA[<h1 id="delete与override"><a href="#delete与override" class="headerlink" title="delete与override"></a>delete与override</h1><h2 id="优先使用delete关键字删除函数而非private却又不实现的函数"><a href="#优先使用delete关键字删除函数而非private却又不实现的函数" class="headerlink" title="优先使用delete关键字删除函数而非private却又不实现的函数"></a>优先使用delete关键字删除函数而非private却又不实现的函数</h2><h3 id="为什么使用delete？"><a href="#为什么使用delete？" class="headerlink" title="为什么使用delete？"></a>为什么使用delete？</h3><p>​    不想让别的开发者调用特定的函数,你只需要不声明这个函数就可以了。但有时候 C++为你声明了一些函数,如果你想阻止客户调用这些函数,就不是那么容易的事了。</p>
+<p>​    这种情况只有对“特殊的成员函数”才会出现,即这个成员函数是需要的时候C++自动生成的。    </p>
+<p>在C++98中阻止这类函数被使用的方法是将这些函数声明为private,并且不定义它们。</p>
+<p>​    将这些函数声明为私有来阻止客户调用他们。故意不定义它们是因为,如果有函数访问这些<br>函数(通过成员函数或者友好类)在链接的时候会导致没有定义而触发的错误。</p>
+<p>​    在C++11中,有一个更好的方法可以基本上实现同样的功能:用 =delete标识拷贝复制函数<br>和拷贝赋值函数为删除的函数deleted functions 。</p>
+<h3 id="delete的优点"><a href="#delete的优点" class="headerlink" title="delete的优点"></a>delete的优点</h3><p>​    删除函数一个重要的优势是任何函数都可以是删除的,然而仅有成员函数才可以是私有的。</p>
+<h4 id="防止普通非成员函数中的隐式转化"><a href="#防止普通非成员函数中的隐式转化" class="headerlink" title="防止普通非成员函数中的隐式转化"></a>防止普通非成员函数中的隐式转化</h4><p>​    C++继承于C意味着,很多其他类型被隐式的转换为in 类型,但是有些调用可以编译但是没有任何意义.</p>
+<p>​    举个例子,加入我们有个非成员函数,以一个整数位参数,然后返回这个参数是不是幸运数字:</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">bool</span> <span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token keyword">int</span> number<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token char">'a'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token number">3.5</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>​    如果幸运数字一定要是一个整数,我们希望能到阻止上面那种形式的调用。</p>
+<p>​    完成这个任务的一个方法是为想被排除出去的类型的重载函数声明为删除的:</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">bool</span> <span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token keyword">int</span> number<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">bool</span> <span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token keyword">delete</span><span class="token punctuation">;</span>
+<span class="token keyword">bool</span> <span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token keyword">bool</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token keyword">delete</span><span class="token punctuation">;</span>
+<span class="token keyword">bool</span> <span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token keyword">delete</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>​    如果给float一个转换为int或者double的可能性, C++总是倾向于转化为double的。以float类型调用isLucky总是调用对应的double重载,而不是int类型的那个重载。结果就是将double类型的重载删除将会阻止float类型的调用编译。</p>
+<h4 id="阻止应该被禁用的模板实现"><a href="#阻止应该被禁用的模板实现" class="headerlink" title="阻止应该被禁用的模板实现"></a>阻止应该被禁用的模板实现</h4><p>​    假设你需要使用一个内嵌指针的模板：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+<span class="token keyword">void</span> <span class="token function">processPointer</span><span class="token punctuation">(</span>T<span class="token operator">*</span> ptr<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>​    但是在指针家族中，有两个特殊的指针。</p>
+<p>一个是 void* 指针，因为没有办法对它们解析引用，递增或者递减。</p>
+<p>另一个是 char* 指针，因为它们往往表示指向C类型的字符串，而不是指向独立字符的指针。</p>
+<p>​    这些特殊情况经常需要特殊处理。如果希望不能以 void* 或者 char* 为参数调用该函数，只需要删除这些实现：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token operator">&gt;</span>
+<span class="token keyword">void</span> <span class="token generic-function"><span class="token function">processPointer</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token keyword">delete</span><span class="token punctuation">;</span>
+
+<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token operator">&gt;</span>
+<span class="token keyword">void</span> <span class="token generic-function"><span class="token function">processPointer</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token keyword">delete</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>现在，使用 void* 或者 char* 调用该函数都是无效的，但使用 const void* 或者 const char* 调用也需要是无效的， 所以这些实现也需要被删除。（略）</p>
+<p>如果类内部有一个函数模板，想通过声明它们为私有来禁止某些实现，是做不到的，因为赋予一个成员函数模板的某种特殊情况下的拥有不同于模板主体的访问权限是不可能的。</p>
+<p>（可以声明 void* 和 char* 的版本却不实现它们 ）</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">MyClass</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+	<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+	<span class="token keyword">void</span> <span class="token function">function</span><span class="token punctuation">(</span>T t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+	<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token operator">&gt;</span>				<span class="token comment">//错误！！！</span>
+	<span class="token keyword">void</span> <span class="token function">function</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>并且模板的特殊情况必须要写在命名空间的作用域内，而不是类的作用域内。</p>
+<p>不过，这个问题对于删除函数是不存在的，它们也可以在类外被声明为是被删除的（也就是在命名空间的作用域内）</p>
+<h3 id="delete的注意事项"><a href="#delete的注意事项" class="headerlink" title="delete的注意事项"></a>delete的注意事项</h3><p>​    删除的函数不能通过任何方式被使用</p>
+<p>​    方便起见,删除函数被声明为公有的,而不是私有的。这样设计的原因是,当客户端程序尝试使用一个成员函数的时候, C++会在检查删除状态之前检查可访问权限。当客户端代码尝试访问一个删除的私有函数时,一些编译器仅仅会警报该函数为私有,尽管这里函数的可访问性并不本质上影响它是否可以被使用。当把私有未定义的函数改为对应的删除函数时,牢记这一点是很有意义的,因为使这个函数为公有的可以产生更易读的错误信息。</p>
+<h3 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h3><ol>
+<li>优先使用删除函数而不是私有而不定义的函数</li>
+<li>任何函数都可以被声明为删除，包括非成员函数和模板实现</li>
+</ol>
+<h3 id="扩展："><a href="#扩展：" class="headerlink" title="扩展："></a>扩展：</h3><h4 id="对于成员函数："><a href="#对于成员函数：" class="headerlink" title="对于成员函数："></a>对于成员函数：</h4><ol>
+<li>被delete了还是可以重载的</li>
+<li>被delete了，里面写个默认参数没问题</li>
+<li>delete函数可以被继承的！！！（看IDE的报错）(但不能用)</li>
+<li>私有的delete函数被类用户使用了会以“使用私有成员函数”的名义报错</li>
+<li>delete函数不能够被定义，只能够被声明</li>
+</ol>
+<h4 id="对于普通函数："><a href="#对于普通函数：" class="headerlink" title="对于普通函数："></a>对于普通函数：</h4><ol>
+<li>可以防止不想要的隐式转化</li>
+<li>但删除一种类型的，可能会影响不止一种类型的隐式转化（会导致其他类型的不明确，ambiguous）</li>
+<li>模板类的删除方式有两种，一种使用template，一种直接写出（暂时没发现会出啥问题）</li>
+</ol>
+<h2 id="使用override关键字声明覆盖的函数"><a href="#使用override关键字声明覆盖的函数" class="headerlink" title="使用override关键字声明覆盖的函数"></a>使用override关键字声明覆盖的函数</h2><p>在C++98中，如果要发生函数的覆盖，必须满足以下几个条件：</p>
+<ul>
+<li>基类中的函数必须是虚函数</li>
+<li>基类和派生类中函数的名字必须完全相同（析构函数除外）</li>
+<li>基类和派生类中的函数形参类型必须完全一样</li>
+<li>基类和派生类中的函数的常量特性必须完全一样</li>
+<li>基类和派生类中的函数返回值和异常声明必须是兼容的</li>
+</ul>
+<p>在C++11中，还有一条：</p>
+<ul>
+<li><p>基类和派生类的引用修饰符必须完全一样</p>
+<p>（引用修饰符是为了实现限制成员函数仅用于左值或者右值）</p>
+</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Widget</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">void</span> <span class="token function">doWork</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token punctuation">;</span>	<span class="token comment">//只有*this为左值时，这个版本才会被调用</span>
+    <span class="token keyword">void</span> <span class="token function">doWork</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span><span class="token punctuation">;</span>	<span class="token comment">//只有*this为右值时，这个函数才会被调用</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+Widget <span class="token function">makeWidget</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//工厂函数，返回右值</span>
+Widget w<span class="token punctuation">;</span>				<span class="token comment">//正常对象（左值）</span>
+
+w<span class="token punctuation">.</span><span class="token function">doWork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>				<span class="token comment">//调用了Widget::doWork &amp;</span>
+<span class="token function">makeWidget</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">doWork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//调用了Widget::doWork &amp;&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>正是因为覆盖有这么多的要求，所以一个很小的错误都可以造成很大的偏差。并且覆盖函数中出现的错误通常还是合法的，，但它导致的结果并不是你想要的。所以当你犯了某些错误的时候，你并不能依赖于编译器对你的通知。</p>
+<p>例如下面这个例子，这些代码是完全合法的，但它一个虚函数都没有被覆盖——没有任何一个派生类的函数是和基类的对应函数绑定的。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span>	<span class="token class-name">Base</span><span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span>	<span class="token keyword">void</span>	<span class="token function">mf1</span><span class="token punctuation">(</span><span class="token punctuation">)</span>	<span class="token keyword">const</span><span class="token punctuation">;</span>
+    <span class="token keyword">virtual</span>	<span class="token keyword">void</span>	<span class="token function">mf2</span><span class="token punctuation">(</span><span class="token keyword">int</span>	x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">virtual</span>	<span class="token keyword">void</span>	<span class="token function">mf3</span><span class="token punctuation">(</span><span class="token punctuation">)</span>	<span class="token operator">&amp;</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span>	<span class="token function">mf4</span><span class="token punctuation">(</span><span class="token punctuation">)</span>	<span class="token keyword">const</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span>	<span class="token class-name">Derived</span><span class="token operator">:</span>	<span class="token base-clause"><span class="token keyword">public</span>	<span class="token class-name">Base</span></span>	<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span>	<span class="token keyword">void</span>	<span class="token function">mf1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">virtual</span>	<span class="token keyword">void</span>	<span class="token function">mf2</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span>	<span class="token keyword">int</span>	x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">virtual</span>	<span class="token keyword">void</span>	<span class="token function">mf3</span><span class="token punctuation">(</span><span class="token punctuation">)</span>	<span class="token operator">&amp;&amp;</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span>	<span class="token function">mf4</span><span class="token punctuation">(</span><span class="token punctuation">)</span>	<span class="token keyword">const</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>提示：</p>
+<ul>
+<li>mf1在Base中声明常成员函数,但是在Derived中没有</li>
+<li>mf2在Base中以int为参数,但是在Derived中以unsigned int为参数</li>
+<li>mf3在Base中有左值修饰符,但是在Derived中是右值修饰符</li>
+<li>mf4没有继承Base中的虚函数</li>
+</ul>
+<p>因为声明派生类的覆盖函数很重要，又如此容易出错，所以C++11提供了一种方法来显示的标明派生类中的函数是为了改写基类的版本，为其加上override声明即可。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span>	<span class="token class-name">Derived</span><span class="token operator">:</span>	<span class="token base-clause"><span class="token keyword">public</span>	<span class="token class-name">Base</span></span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">mf1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">override</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">mf2</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token keyword">override</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">mf3</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token keyword">override</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">mf4</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token keyword">override</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这样，上面这些代码就无法通过编译了，并且编译器会把覆盖函数所有的问题揭露出来。</p>
+<h3 id="扩展：-1"><a href="#扩展：-1" class="headerlink" title="扩展："></a>扩展：</h3><h4 id="与成员函数有关的几个描述符："><a href="#与成员函数有关的几个描述符：" class="headerlink" title="与成员函数有关的几个描述符："></a>与成员函数有关的几个描述符：</h4><ol>
+<li>成员函数前面使用const 表示返回值为const</li>
+<li>成员函数后面加 const表示函数不可以修改class的成员</li>
+<li>如果<strong>派生类</strong>在虚函数声明时使用了override描述符，那么该函数必须重载其基类中的同名函数，否则代码将无法通过编译。</li>
+<li>当不希望某个类被继承，或不希望某个虚函数被重写，可以在类名和虚函数后添加final关键字，添加final关键字后被继承或重写，编译器会报错</li>
+</ol>
+<h4 id="重载与覆盖"><a href="#重载与覆盖" class="headerlink" title="重载与覆盖"></a>重载与覆盖</h4><p>​    覆盖是指派生类中如果存在重新定义的函数，其函数名、参数列、返回值类型必须同父类中的相对应被覆盖的函数严格一致。覆盖函数和被覆盖函数只有函数体不同，当派生类对象调用子类中该同名函数时会自动调用子类中的覆盖版本，而不是父类中的被覆盖函数版本。</p>
+<h5 id="成员函数被重载的特征："><a href="#成员函数被重载的特征：" class="headerlink" title="成员函数被重载的特征："></a>成员函数被重载的特征：</h5><p>（1）相同的范围（在同一个类中）；</p>
+<p>（2）函数名字相同（必须的，否则属于不同的函数了，更谈不上重载）；</p>
+<p>（3）参数类型或个数，至少有一种不同（如果都相同的话，就是函数的重定义了；还要注意的是：如果函数参数相同，仅返回值不同的话，不是重载函数，编译时会报“有歧义”的错误）；</p>
+<p>（4）virtual关键字可有可无（这个重载函数与虚函数一点关系没有，即使加上了也不是虚函数。如果在面试题中遇到了，纯粹是为了混淆你的思维，考察你对概念的理解）。</p>
+<h5 id="覆盖是指派生类函数覆盖基类函数，特征是："><a href="#覆盖是指派生类函数覆盖基类函数，特征是：" class="headerlink" title="覆盖是指派生类函数覆盖基类函数，特征是："></a>覆盖是指派生类函数覆盖基类函数，特征是：</h5><p><strong>（1）不同的范围（分别位于派生类与基类）；</strong></p>
+<p><strong>（2）函数名字相同；</strong></p>
+<p><strong>（3）参数相同（这就属于重定义函数了）；</strong></p>
+<p><strong>（4）基类函数必须有virtual关键字（这就是虚函数了）。</strong></p>
+<h4 id="令人迷惑的隐藏规则"><a href="#令人迷惑的隐藏规则" class="headerlink" title="令人迷惑的隐藏规则"></a>令人迷惑的隐藏规则</h4><p>本来仅仅区别重载与覆盖并不算困难，但是C++的隐藏规则使问题复杂性陡然增加。这里“隐藏”是指派生类的函数屏蔽了与其同名的基类函数，规则如下： </p>
+<p><strong>（1）如果派生类的函数与基类的函数同名，但是参数不同。此时，不论有无virtual关键字，基类的函数将被隐藏（注意别与重载混淆）。</strong></p>
+<p><strong>（2）如果派生类的函数与基类的函数同名，并且参数也相同，但是基类函数没有virtual关键字。此时，基类的函数被隐藏（注意别与覆盖混淆；如果基类函数有virtual关键字，就属于函数的覆盖了）。</strong></p>
+<h4 id="关于虚函数与纯虚函数："><a href="#关于虚函数与纯虚函数：" class="headerlink" title="关于虚函数与纯虚函数："></a>关于虚函数与纯虚函数：</h4><p>定义一个函数为虚函数，不代表函数为不被实现的函数。</p>
+<p>定义它为虚函数是为了允许用基类的指针来调用子类的这个函数。</p>
+<p>定义一个函数为纯虚函数，才代表函数没有被实现。（这里好像有问题。。。）</p>
+<p>定义纯虚函数是为了实现一个接口，起到一个规范的作用，规范继承这个类的程序员必须实现这个函数。</p>
+<p>虚函数只能借助于指针或者引用来达到多态的效果</p>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++基础</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>C++ 多线程编程（一）：std::thread的使用</title>
     <url>/2021/12/04/cpp-notes-3/</url>
     <content><![CDATA[<h1 id="C-多线程编程（一）：std-thread的使用"><a href="#C-多线程编程（一）：std-thread的使用" class="headerlink" title="C++ 多线程编程（一）：std::thread的使用"></a>C++ 多线程编程（一）：std::thread的使用</h1><h2 id="多线程编程简介"><a href="#多线程编程简介" class="headerlink" title="多线程编程简介"></a>多线程编程简介</h2><p>说到多线程编程，就不得不提<strong>并行</strong>和<strong>并发</strong>，多线程是实现并发和并行的一种手段。</p>
@@ -1787,167 +1948,6 @@ thread <span class="token function">t3</span><span class="token punctuation">(</
       </categories>
       <tags>
         <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C++描述符delete与override</title>
-    <url>/2020/08/21/cpp-notes-2/</url>
-    <content><![CDATA[<h1 id="delete与override"><a href="#delete与override" class="headerlink" title="delete与override"></a>delete与override</h1><h2 id="优先使用delete关键字删除函数而非private却又不实现的函数"><a href="#优先使用delete关键字删除函数而非private却又不实现的函数" class="headerlink" title="优先使用delete关键字删除函数而非private却又不实现的函数"></a>优先使用delete关键字删除函数而非private却又不实现的函数</h2><h3 id="为什么使用delete？"><a href="#为什么使用delete？" class="headerlink" title="为什么使用delete？"></a>为什么使用delete？</h3><p>​    不想让别的开发者调用特定的函数,你只需要不声明这个函数就可以了。但有时候 C++为你声明了一些函数,如果你想阻止客户调用这些函数,就不是那么容易的事了。</p>
-<p>​    这种情况只有对“特殊的成员函数”才会出现,即这个成员函数是需要的时候C++自动生成的。    </p>
-<p>在C++98中阻止这类函数被使用的方法是将这些函数声明为private,并且不定义它们。</p>
-<p>​    将这些函数声明为私有来阻止客户调用他们。故意不定义它们是因为,如果有函数访问这些<br>函数(通过成员函数或者友好类)在链接的时候会导致没有定义而触发的错误。</p>
-<p>​    在C++11中,有一个更好的方法可以基本上实现同样的功能:用 =delete标识拷贝复制函数<br>和拷贝赋值函数为删除的函数deleted functions 。</p>
-<h3 id="delete的优点"><a href="#delete的优点" class="headerlink" title="delete的优点"></a>delete的优点</h3><p>​    删除函数一个重要的优势是任何函数都可以是删除的,然而仅有成员函数才可以是私有的。</p>
-<h4 id="防止普通非成员函数中的隐式转化"><a href="#防止普通非成员函数中的隐式转化" class="headerlink" title="防止普通非成员函数中的隐式转化"></a>防止普通非成员函数中的隐式转化</h4><p>​    C++继承于C意味着,很多其他类型被隐式的转换为in 类型,但是有些调用可以编译但是没有任何意义.</p>
-<p>​    举个例子,加入我们有个非成员函数,以一个整数位参数,然后返回这个参数是不是幸运数字:</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">bool</span> <span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token keyword">int</span> number<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token char">'a'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token number">3.5</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>​    如果幸运数字一定要是一个整数,我们希望能到阻止上面那种形式的调用。</p>
-<p>​    完成这个任务的一个方法是为想被排除出去的类型的重载函数声明为删除的:</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">bool</span> <span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token keyword">int</span> number<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token keyword">bool</span> <span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token keyword">delete</span><span class="token punctuation">;</span>
-<span class="token keyword">bool</span> <span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token keyword">bool</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token keyword">delete</span><span class="token punctuation">;</span>
-<span class="token keyword">bool</span> <span class="token function">isLucky</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token keyword">delete</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>​    如果给float一个转换为int或者double的可能性, C++总是倾向于转化为double的。以float类型调用isLucky总是调用对应的double重载,而不是int类型的那个重载。结果就是将double类型的重载删除将会阻止float类型的调用编译。</p>
-<h4 id="阻止应该被禁用的模板实现"><a href="#阻止应该被禁用的模板实现" class="headerlink" title="阻止应该被禁用的模板实现"></a>阻止应该被禁用的模板实现</h4><p>​    假设你需要使用一个内嵌指针的模板：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
-<span class="token keyword">void</span> <span class="token function">processPointer</span><span class="token punctuation">(</span>T<span class="token operator">*</span> ptr<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>​    但是在指针家族中，有两个特殊的指针。</p>
-<p>一个是 void* 指针，因为没有办法对它们解析引用，递增或者递减。</p>
-<p>另一个是 char* 指针，因为它们往往表示指向C类型的字符串，而不是指向独立字符的指针。</p>
-<p>​    这些特殊情况经常需要特殊处理。如果希望不能以 void* 或者 char* 为参数调用该函数，只需要删除这些实现：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token operator">&gt;</span>
-<span class="token keyword">void</span> <span class="token generic-function"><span class="token function">processPointer</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token keyword">delete</span><span class="token punctuation">;</span>
-
-<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token operator">&gt;</span>
-<span class="token keyword">void</span> <span class="token generic-function"><span class="token function">processPointer</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token keyword">delete</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>现在，使用 void* 或者 char* 调用该函数都是无效的，但使用 const void* 或者 const char* 调用也需要是无效的， 所以这些实现也需要被删除。（略）</p>
-<p>如果类内部有一个函数模板，想通过声明它们为私有来禁止某些实现，是做不到的，因为赋予一个成员函数模板的某种特殊情况下的拥有不同于模板主体的访问权限是不可能的。</p>
-<p>（可以声明 void* 和 char* 的版本却不实现它们 ）</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">MyClass</span>
-<span class="token punctuation">{</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-	<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
-	<span class="token keyword">void</span> <span class="token function">function</span><span class="token punctuation">(</span>T t<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">private</span><span class="token operator">:</span>
-	<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token operator">&gt;</span>				<span class="token comment">//错误！！！</span>
-	<span class="token keyword">void</span> <span class="token function">function</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	
-<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>并且模板的特殊情况必须要写在命名空间的作用域内，而不是类的作用域内。</p>
-<p>不过，这个问题对于删除函数是不存在的，它们也可以在类外被声明为是被删除的（也就是在命名空间的作用域内）</p>
-<h3 id="delete的注意事项"><a href="#delete的注意事项" class="headerlink" title="delete的注意事项"></a>delete的注意事项</h3><p>​    删除的函数不能通过任何方式被使用</p>
-<p>​    方便起见,删除函数被声明为公有的,而不是私有的。这样设计的原因是,当客户端程序尝试使用一个成员函数的时候, C++会在检查删除状态之前检查可访问权限。当客户端代码尝试访问一个删除的私有函数时,一些编译器仅仅会警报该函数为私有,尽管这里函数的可访问性并不本质上影响它是否可以被使用。当把私有未定义的函数改为对应的删除函数时,牢记这一点是很有意义的,因为使这个函数为公有的可以产生更易读的错误信息。</p>
-<h3 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h3><ol>
-<li>优先使用删除函数而不是私有而不定义的函数</li>
-<li>任何函数都可以被声明为删除，包括非成员函数和模板实现</li>
-</ol>
-<h3 id="扩展："><a href="#扩展：" class="headerlink" title="扩展："></a>扩展：</h3><h4 id="对于成员函数："><a href="#对于成员函数：" class="headerlink" title="对于成员函数："></a>对于成员函数：</h4><ol>
-<li>被delete了还是可以重载的</li>
-<li>被delete了，里面写个默认参数没问题</li>
-<li>delete函数可以被继承的！！！（看IDE的报错）(但不能用)</li>
-<li>私有的delete函数被类用户使用了会以“使用私有成员函数”的名义报错</li>
-<li>delete函数不能够被定义，只能够被声明</li>
-</ol>
-<h4 id="对于普通函数："><a href="#对于普通函数：" class="headerlink" title="对于普通函数："></a>对于普通函数：</h4><ol>
-<li>可以防止不想要的隐式转化</li>
-<li>但删除一种类型的，可能会影响不止一种类型的隐式转化（会导致其他类型的不明确，ambiguous）</li>
-<li>模板类的删除方式有两种，一种使用template，一种直接写出（暂时没发现会出啥问题）</li>
-</ol>
-<h2 id="使用override关键字声明覆盖的函数"><a href="#使用override关键字声明覆盖的函数" class="headerlink" title="使用override关键字声明覆盖的函数"></a>使用override关键字声明覆盖的函数</h2><p>在C++98中，如果要发生函数的覆盖，必须满足以下几个条件：</p>
-<ul>
-<li>基类中的函数必须是虚函数</li>
-<li>基类和派生类中函数的名字必须完全相同（析构函数除外）</li>
-<li>基类和派生类中的函数形参类型必须完全一样</li>
-<li>基类和派生类中的函数的常量特性必须完全一样</li>
-<li>基类和派生类中的函数返回值和异常声明必须是兼容的</li>
-</ul>
-<p>在C++11中，还有一条：</p>
-<ul>
-<li><p>基类和派生类的引用修饰符必须完全一样</p>
-<p>（引用修饰符是为了实现限制成员函数仅用于左值或者右值）</p>
-</li>
-</ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Widget</span>
-<span class="token punctuation">{</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">void</span> <span class="token function">doWork</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token punctuation">;</span>	<span class="token comment">//只有*this为左值时，这个版本才会被调用</span>
-    <span class="token keyword">void</span> <span class="token function">doWork</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span><span class="token punctuation">;</span>	<span class="token comment">//只有*this为右值时，这个函数才会被调用</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-Widget <span class="token function">makeWidget</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//工厂函数，返回右值</span>
-Widget w<span class="token punctuation">;</span>				<span class="token comment">//正常对象（左值）</span>
-
-w<span class="token punctuation">.</span><span class="token function">doWork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>				<span class="token comment">//调用了Widget::doWork &amp;</span>
-<span class="token function">makeWidget</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">doWork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//调用了Widget::doWork &amp;&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>正是因为覆盖有这么多的要求，所以一个很小的错误都可以造成很大的偏差。并且覆盖函数中出现的错误通常还是合法的，，但它导致的结果并不是你想要的。所以当你犯了某些错误的时候，你并不能依赖于编译器对你的通知。</p>
-<p>例如下面这个例子，这些代码是完全合法的，但它一个虚函数都没有被覆盖——没有任何一个派生类的函数是和基类的对应函数绑定的。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span>	<span class="token class-name">Base</span><span class="token punctuation">{</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">virtual</span>	<span class="token keyword">void</span>	<span class="token function">mf1</span><span class="token punctuation">(</span><span class="token punctuation">)</span>	<span class="token keyword">const</span><span class="token punctuation">;</span>
-    <span class="token keyword">virtual</span>	<span class="token keyword">void</span>	<span class="token function">mf2</span><span class="token punctuation">(</span><span class="token keyword">int</span>	x<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">virtual</span>	<span class="token keyword">void</span>	<span class="token function">mf3</span><span class="token punctuation">(</span><span class="token punctuation">)</span>	<span class="token operator">&amp;</span><span class="token punctuation">;</span>
-    <span class="token keyword">void</span>	<span class="token function">mf4</span><span class="token punctuation">(</span><span class="token punctuation">)</span>	<span class="token keyword">const</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-<span class="token keyword">class</span>	<span class="token class-name">Derived</span><span class="token operator">:</span>	<span class="token base-clause"><span class="token keyword">public</span>	<span class="token class-name">Base</span></span>	<span class="token punctuation">{</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">virtual</span>	<span class="token keyword">void</span>	<span class="token function">mf1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">virtual</span>	<span class="token keyword">void</span>	<span class="token function">mf2</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span>	<span class="token keyword">int</span>	x<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">virtual</span>	<span class="token keyword">void</span>	<span class="token function">mf3</span><span class="token punctuation">(</span><span class="token punctuation">)</span>	<span class="token operator">&amp;&amp;</span><span class="token punctuation">;</span>
-    <span class="token keyword">void</span>	<span class="token function">mf4</span><span class="token punctuation">(</span><span class="token punctuation">)</span>	<span class="token keyword">const</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>提示：</p>
-<ul>
-<li>mf1在Base中声明常成员函数,但是在Derived中没有</li>
-<li>mf2在Base中以int为参数,但是在Derived中以unsigned int为参数</li>
-<li>mf3在Base中有左值修饰符,但是在Derived中是右值修饰符</li>
-<li>mf4没有继承Base中的虚函数</li>
-</ul>
-<p>因为声明派生类的覆盖函数很重要，又如此容易出错，所以C++11提供了一种方法来显示的标明派生类中的函数是为了改写基类的版本，为其加上override声明即可。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span>	<span class="token class-name">Derived</span><span class="token operator">:</span>	<span class="token base-clause"><span class="token keyword">public</span>	<span class="token class-name">Base</span></span> <span class="token punctuation">{</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">mf1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">override</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">mf2</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token keyword">override</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">mf3</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token keyword">override</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">mf4</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token keyword">override</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这样，上面这些代码就无法通过编译了，并且编译器会把覆盖函数所有的问题揭露出来。</p>
-<h3 id="扩展：-1"><a href="#扩展：-1" class="headerlink" title="扩展："></a>扩展：</h3><h4 id="与成员函数有关的几个描述符："><a href="#与成员函数有关的几个描述符：" class="headerlink" title="与成员函数有关的几个描述符："></a>与成员函数有关的几个描述符：</h4><ol>
-<li>成员函数前面使用const 表示返回值为const</li>
-<li>成员函数后面加 const表示函数不可以修改class的成员</li>
-<li>如果<strong>派生类</strong>在虚函数声明时使用了override描述符，那么该函数必须重载其基类中的同名函数，否则代码将无法通过编译。</li>
-<li>当不希望某个类被继承，或不希望某个虚函数被重写，可以在类名和虚函数后添加final关键字，添加final关键字后被继承或重写，编译器会报错</li>
-</ol>
-<h4 id="重载与覆盖"><a href="#重载与覆盖" class="headerlink" title="重载与覆盖"></a>重载与覆盖</h4><p>​    覆盖是指派生类中如果存在重新定义的函数，其函数名、参数列、返回值类型必须同父类中的相对应被覆盖的函数严格一致。覆盖函数和被覆盖函数只有函数体不同，当派生类对象调用子类中该同名函数时会自动调用子类中的覆盖版本，而不是父类中的被覆盖函数版本。</p>
-<h5 id="成员函数被重载的特征："><a href="#成员函数被重载的特征：" class="headerlink" title="成员函数被重载的特征："></a>成员函数被重载的特征：</h5><p>（1）相同的范围（在同一个类中）；</p>
-<p>（2）函数名字相同（必须的，否则属于不同的函数了，更谈不上重载）；</p>
-<p>（3）参数类型或个数，至少有一种不同（如果都相同的话，就是函数的重定义了；还要注意的是：如果函数参数相同，仅返回值不同的话，不是重载函数，编译时会报“有歧义”的错误）；</p>
-<p>（4）virtual关键字可有可无（这个重载函数与虚函数一点关系没有，即使加上了也不是虚函数。如果在面试题中遇到了，纯粹是为了混淆你的思维，考察你对概念的理解）。</p>
-<h5 id="覆盖是指派生类函数覆盖基类函数，特征是："><a href="#覆盖是指派生类函数覆盖基类函数，特征是：" class="headerlink" title="覆盖是指派生类函数覆盖基类函数，特征是："></a>覆盖是指派生类函数覆盖基类函数，特征是：</h5><p><strong>（1）不同的范围（分别位于派生类与基类）；</strong></p>
-<p><strong>（2）函数名字相同；</strong></p>
-<p><strong>（3）参数相同（这就属于重定义函数了）；</strong></p>
-<p><strong>（4）基类函数必须有virtual关键字（这就是虚函数了）。</strong></p>
-<h4 id="令人迷惑的隐藏规则"><a href="#令人迷惑的隐藏规则" class="headerlink" title="令人迷惑的隐藏规则"></a>令人迷惑的隐藏规则</h4><p>本来仅仅区别重载与覆盖并不算困难，但是C++的隐藏规则使问题复杂性陡然增加。这里“隐藏”是指派生类的函数屏蔽了与其同名的基类函数，规则如下： </p>
-<p><strong>（1）如果派生类的函数与基类的函数同名，但是参数不同。此时，不论有无virtual关键字，基类的函数将被隐藏（注意别与重载混淆）。</strong></p>
-<p><strong>（2）如果派生类的函数与基类的函数同名，并且参数也相同，但是基类函数没有virtual关键字。此时，基类的函数被隐藏（注意别与覆盖混淆；如果基类函数有virtual关键字，就属于函数的覆盖了）。</strong></p>
-<h4 id="关于虚函数与纯虚函数："><a href="#关于虚函数与纯虚函数：" class="headerlink" title="关于虚函数与纯虚函数："></a>关于虚函数与纯虚函数：</h4><p>定义一个函数为虚函数，不代表函数为不被实现的函数。</p>
-<p>定义它为虚函数是为了允许用基类的指针来调用子类的这个函数。</p>
-<p>定义一个函数为纯虚函数，才代表函数没有被实现。（这里好像有问题。。。）</p>
-<p>定义纯虚函数是为了实现一个接口，起到一个规范的作用，规范继承这个类的程序员必须实现这个函数。</p>
-<p>虚函数只能借助于指针或者引用来达到多态的效果</p>
-]]></content>
-      <categories>
-        <category>C++</category>
-      </categories>
-      <tags>
-        <tag>C++基础</tag>
       </tags>
   </entry>
   <entry>
@@ -6645,216 +6645,6 @@ string tableName<span class="token punctuation">;</span>  <span class="token com
       </tags>
   </entry>
   <entry>
-    <title>机器学习笔记（三）：多层神经网络</title>
-    <url>/2022/01/09/machine-learning-3/</url>
-    <content><![CDATA[<h1 id="机器学习笔记（三）：多层神经网络"><a href="#机器学习笔记（三）：多层神经网络" class="headerlink" title="机器学习笔记（三）：多层神经网络"></a>机器学习笔记（三）：多层神经网络</h1><p>基于生物神经元模型可得到多层感知器（Multi-layer Perceptron, MLP)的基本结构，最典型的MLP包括包括三层：输入层(Input Layer)、隐层(Hidden Layer)和输出层(Output Layer)，MLP神经网络不同层之间是全连接的（全连接的意思就是：上一层的任何一个神经元与下一层的所有神经元都有连接）。</p>
-<p><img src="/images/neural-network/mlp_theory.gif"></p>
-<h2 id="1-神经元"><a href="#1-神经元" class="headerlink" title="1. 神经元"></a>1. 神经元</h2><p>神经元和感知器本质上是一样的，感知器的激活函数是阶跃函数；而神经元的激活函数往往选择为sigmoid函数或tanh函数。如下图所示：</p>
-<p><img src="/images/neural-network/neuron.gif"></p>
-<p>计算一个神经元的输出的方法和计算一个感知器的输出是一样的。假设神经元的输入是向量$\vec{x}$，权重向量是$\vec{w}$(偏置项是$w_0$)，激活函数是sigmoid函数，则其输出$y$：<br>$$<br>y = sigmoid(\vec{w}^T \cdot \vec{x})<br>$$</p>
-<p>sigmoid函数的定义如下：<br>$$<br>sigmoid(x) = \frac{1}{1+e^{-x}}<br>$$<br>将其带入前面的式子，得到<br>$$<br>y = \frac{1}{1+e^{-\vec{w}^T \cdot \vec{x}}}<br>$$</p>
-<p>sigmoid函数是一个非线性函数，值域是(0,1)。函数图像如下图所示</p>
-<p><img src="/images/neural-network/sigmod.jpg"></p>
-<p>sigmoid函数的导数是：<br>$$<br>\begin{eqnarray}<br>y &amp; = &amp; sigmod(x) \tag{1} \<br>y’ &amp; = &amp; y(1-y)<br>\end{eqnarray}<br>$$<br>可以看到，sigmoid函数的导数可以用sigmoid函数自身来表示。这样，一旦计算出sigmoid函数的值，计算它的导数的值就非常方便。</p>
-<h2 id="2-神经网络的结构"><a href="#2-神经网络的结构" class="headerlink" title="2. 神经网络的结构"></a>2. 神经网络的结构</h2><p><img src="/images/neural-network/nn1.jpeg"></p>
-<p>神经网络就是按照一定规则连接起来的多个神经元。上图展示了一个全连接(Full Connected, FC)神经网络，通过观察上面的图，可以发现它的规则包括：</p>
-<ul>
-<li>神经元按照层来布局<ul>
-<li>最左边的层叫做输入层，负责接收输入数据；</li>
-<li>最右边的层叫输出层，可以从这层获取神经网络输出数据;</li>
-<li>输入层和输出层之间的层叫做隐藏层，因为它们对于外部来说是不可见的。</li>
-</ul>
-</li>
-<li>同一层的神经元之间没有连接</li>
-<li>第N层的每个神经元和第N-1层的所有神经元相连(这就是full connected的含义)，第N-1层神经元的输出就是第N层神经元的输入</li>
-<li>每个连接都有一个权值</li>
-</ul>
-<p>由此可知，神经网络主要有三个基本要素：权重、偏置和激活函数</p>
-<ul>
-<li>权重：神经元之间的连接强度由权重控制，权重的大小表示可能性的大小</li>
-<li>偏置：偏置的设置是为了正确分类样本，是模型中一个重要的参数，即保证通过输入算出的输出值不能随便激活。</li>
-<li>激活函数：起非线性映射的作用，其可将神经元的输出幅度限制在一定范围内，一般限制在（-1~1）或（0~1）之间。最常用的激活函数是Sigmoid函数，可将（-∞，+∞）的数映射到（0~1）的范围内。</li>
-</ul>
-<p>上面这些规则定义了全连接神经网络的结构。事实上还存在很多其它结构的神经网络，比如卷积神经网络(CNN)、循环神经网络(RNN)，他们都具有不同的连接规则。</p>
-<h2 id="3-计算神经网络的输出"><a href="#3-计算神经网络的输出" class="headerlink" title="3. 计算神经网络的输出"></a>3. 计算神经网络的输出</h2><p>神经网络实际上就是一个输入向量$\vec{x}$到输出向量$\vec{y}$的函数，即：</p>
-<p>$$<br>\vec{y} = f_{network}(\vec{x})<br>$$<br>根据输入计算神经网络的输出</p>
-<ul>
-<li>首先将输入向量$\vec{x}$的每个元素的值$x_i$赋给神经网络的输入层的对应神经元</li>
-<li>然后根据式（1）依次向前计算每一层的每个神经元的值，直到最后一层输出层的所有神经元的值计算完毕</li>
-<li>最后，将输出层每个神经元的值串在一起就得到了输出向量$\vec{y}$。</li>
-</ul>
-<p>接下来举一个例子来说明这个过程，我们先给神经网络的每个单元写上编号。</p>
-<p><img src="/images/neural-network/nn2.png"></p>
-<ul>
-<li>输入层有三个节点，我们将其依次编号为1、2、3；</li>
-<li>隐藏层的4个节点，编号依次为4、5、6、7；</li>
-<li>最后输出层的两个节点编号为8、9。</li>
-</ul>
-<p>因为这个神经网络是全连接网络，所以可以看到每个节点都和上一层的所有节点有连接。比如，隐藏层的节点4，它和输入层的三个节点1、2、3之间都有连接，其连接上的权重分别为$w_{41}$,$w_{42}$,$w_{43}$。那么，怎样计算节点4的输出值$a_4$呢？</p>
-<p>为了计算节点4的输出值，必须先得到其所有上游节点（也就是节点1、2、3）的输出值。节点1、2、3是输入层的节点，所以，他们的输出值就是输入向量$\vec{x}$本身。按照上图画出的对应关系，可以看到节点1、2、3的输出值分别是$x_1$,$x_2$,$x_3$。要求输入向量的维度和输入层神经元个数相同，而输入向量的某个元素对应到哪个输入节点是可以自由决定的。</p>
-<p>一旦有了节点1、2、3的输出值，就可以根据式1计算节点4的输出值$a_4$：</p>
-<p><img src="/images/neural-network/eqn_3_4.png"></p>
-<p>上式的$w_{4b}$是节点4的偏置项，图中没有画出来。而$w_{41}$,$w_{42}$,$w_{43}$分别为节点1、2、3到节点4连接的权重，在给权重$w_{ji}$编号时，目标节点的编号$j$放在前面，把源节点的编号$i$放在后面。</p>
-<p>同样，可以继续计算出节点5、6、7的输出值$a_5$,$a_6$,$a_7$。这样，隐藏层的4个节点的输出值就计算完成了，就可以接着计算输出层的节点8的输出值$y_1$：</p>
-<p><img src="/images/neural-network/eqn_5_6.png"></p>
-<p>同理，我们还可以计算出$y_2$的值。这样输出层所有节点的输出值计算完毕，就得到了在输入向量$\vec{x} = (x_1, x_2, x_3)^T$时，神经网络的输出向量$\vec{y} = (y_1, y_2)^T$。可以看出：输出向量的维度和输出层神经元个数相同。</p>
-<h2 id="4-神经网络的矩阵表示"><a href="#4-神经网络的矩阵表示" class="headerlink" title="4. 神经网络的矩阵表示"></a>4. 神经网络的矩阵表示</h2><p>神经网络的计算如果用矩阵来表示会很方便，此外可以用优化加速算法提高计算速度。</p>
-<p>隐藏层4个节点的计算依次排列出来：</p>
-<p><img src="/images/neural-network/eqn_hidden_units.png"></p>
-<p>接着，定义网络的输入向量$\vec{x}$和隐藏层每个节点的权重向量$\vec{w}$。令</p>
-<p><img src="/images/neural-network/eqn_7_12.png"></p>
-<p>代入到前面的一组式子，得到：</p>
-<p><img src="/images/neural-network/eqn_13_16.png"></p>
-<p>现在，把上述计算$a_4$, $a_5$,$a_6$,$a_7$的四个式子写到一个矩阵里面，每个式子作为矩阵的一行，就可以利用矩阵来表示它们的计算了。令</p>
-<p><img src="/images/neural-network/eqn_matrix1.png"></p>
-<p>带入前面的一组式子，得到</p>
-<p><img src="/images/neural-network/formular_2.png"></p>
-<p>在（式2）中，</p>
-<ul>
-<li>$f$是激活函数，在本例中是$sigmod$函数；</li>
-<li>$W$是某一层的权重矩阵；</li>
-<li>$\vec{x}$是某层的输入向量；</li>
-<li>$\vec{a}$是某层的输出向量。</li>
-</ul>
-<p>（式2）说明神经网络的每一层的作用实际上就是先将输入向量左乘一个数组进行线性变换，得到一个新的向量，然后再对这个向量逐元素应用一个激活函数。</p>
-<p>每一层的算法都是一样的。比如，对于包含一个输入层，一个输出层和三个隐藏层的神经网络，我们假设其权重矩阵分别为$W_1$,$W_2$,$W_3$,$W_4$，每个隐藏层的输出分别是$\vec{a}_1$,$\vec{a}_2$,$\vec{a}_3$，神经网络的输入为$\vec{x}$，神经网络的输出为$\vec{y}$，如下图所示：</p>
-<p><img src="/images/neural-network/nn_parameters_demo.png"></p>
-<p>则每一层的输出向量的计算可以表示为：</p>
-<p><img src="/images/neural-network/eqn_17_20.png"></p>
-<p>这就是神经网络输出值的矩阵计算方法。</p>
-<p>如果写成一个公式：<br>$$<br>\vec{y} = f(W4 \cdot f(W3 \cdot f(W2 \cdot f(W1 \cdot \vec{x}))))<br>$$<br>神经网络正向计算的过程比较简单，就是一层一层不断做运算，动态的演示如下图所示：<br><img src="/images/neural-network/neural_network_demo.gif"></p>
-<h2 id="5-神经网络的训练-反向传播算法"><a href="#5-神经网络的训练-反向传播算法" class="headerlink" title="5. 神经网络的训练 - 反向传播算法"></a>5. 神经网络的训练 - 反向传播算法</h2><p>神经网络的每个连接上的权值如果知道，那么就可以将输入数据代入得到希望的结果。神经网络是一个模型，那么这些权值就是<strong>模型的参数</strong>，也就是模型要学习的东西。然而，一个神经网络的连接方式、网络的层数、每层的节点数这些参数，则不是学习出来的，而是人为事先设置的。对于这些人为设置的参数，我们称之为**超参数(Hyper-Parameters)**。</p>
-<p>前面课程中所学的最小二乘、逻辑回归等可以直接优化损失函数来求解模型参数的更新值。在多层神经网络中：</p>
-<ul>
-<li>最后一层的参数可以用这样的方式求解得到；</li>
-<li>隐层节点没有输出的真值，因此无法直接构建损失函数来求解</li>
-</ul>
-<p>如何化解这个难题？</p>
-<p>反向传播算法其实就是链式求导法则的应用。然而，这个如此简单且显而易见的方法，却是在Roseblatt提出感知器算法将近30年之后才被发明和普及的。对此，Bengio这样回应道：</p>
-<blockquote>
-<p>很多看似显而易见的想法只有在事后才变得显而易见。</p>
-</blockquote>
-<p>按照机器学习的通用套路，我们先确定神经网络的目标函数，然后用随机梯度下降优化算法去求目标函数最小值时的参数值。</p>
-<p>我们取网络所有输出层节点的误差平方和作为目标函数：</p>
-<p><img src="/images/neural-network/bp_loss.png"></p>
-<p>其中，$E_d$表示是样本$d$的误差, <strong>t是样本的标签值</strong>，<strong>y是神经网络的输出值</strong>。</p>
-<p>然后，使用随机梯度下降算法对目标函数进行优化：</p>
-<p><img src="/images/neural-network/bp_weight_update.png"></p>
-<p>随机梯度下降算法也就是需要求出误差$E_d$对于每个权重$w_{ji}$的偏导数（也就是梯度），如何求解？</p>
-<p><img src="/images/neural-network/nn3.png"></p>
-<p>观察上图，我们发现权重$w_{ji}$仅能通过影响节点$j$的输入值影响网络的其它部分，设$net_j$是节点$j$的加权输入，即</p>
-<p><img src="/images/neural-network/eqn_21_22.png"></p>
-<p>$E_d$是$net_j$的函数，而$net_j$是$w_{ji}$的函数。根据链式求导法则，可以得到：</p>
-<p><img src="/images/neural-network/eqn_23_25.png"></p>
-<p>上式中，$x_{ji}$是节点传递给节点$j$的输入值，也就是节点$i$的输出值。</p>
-<p>对于的$\frac{\partial E_d}{\partial net_j}$推导，需要区分输出层和隐藏层两种情况。</p>
-<h3 id="5-1-输出层权值训练"><a href="#5-1-输出层权值训练" class="headerlink" title="5.1 输出层权值训练"></a>5.1 输出层权值训练</h3><p><img src="/images/neural-network/nn3.png"></p>
-<p>对于输出层来说，$net_j$仅能通过节点$j$的输出值$y_j$来影响网络其它部分，也就是说$E_d$是$y_j$的函数，而$y_j$是$net_j$的函数，其中$y_j = sigmod(net_j)$。所以我们可以再次使用链式求导法则：</p>
-<p><img src="/images/neural-network/eqn_26.png"></p>
-<p>考虑上式第一项:</p>
-<p><img src="/images/neural-network/eqn_27_29.png"></p>
-<p>考虑上式第二项：</p>
-<p><img src="/images/neural-network/eqn_30_31.png"></p>
-<p>将第一项和第二项带入，得到：</p>
-<p><img src="/images/neural-network/eqn_ed_net_j.png"></p>
-<p>如果令$\delta_j = - \frac{\partial E_d}{\partial net_j}$，也就是一个节点的误差项$\delta$是网络误差对这个节点输入的偏导数的相反数。带入上式，得到：</p>
-<p><img src="/images/neural-network/eqn_delta_j.png"></p>
-<p>将上述推导带入随机梯度下降公式，得到：</p>
-<p><img src="/images/neural-network/eqn_32_34.png"></p>
-<h3 id="5-2-隐藏层权值训练"><a href="#5-2-隐藏层权值训练" class="headerlink" title="5.2 隐藏层权值训练"></a>5.2 隐藏层权值训练</h3><p>现在我们要推导出隐藏层的$\frac{\partial E_d}{\partial net_j}$。</p>
-<p><img src="/images/neural-network/nn3.png"></p>
-<p>首先，我们需要定义节点$j$的所有直接下游节点的集合$Downstream(j)$。例如，对于节点4来说，它的直接下游节点是节点8、节点9。可以看到$net_j$只能通过影响$Downstream(j)$再影响$E_d$。设$net_k$是节点$j$的下游节点的输入，则$E_d$是$net_k$的函数，而$net_k$是$net_j$的函数。因为$net_k$有多个，我们应用全导数公式，可以做出如下推导：</p>
-<p><img src="/images/neural-network/eqn_35_40.png"></p>
-<p>因为$\delta_j = - \frac{\partial E_d}{\partial net_j}$，带入上式得到：</p>
-<p><img src="/images/neural-network/eqn_delta_hidden.png"></p>
-<p>至此，我们已经推导出了反向传播算法。需要注意的是，我们刚刚推导出的训练规则是根据激活函数是sigmoid函数、平方和误差、全连接网络、随机梯度下降优化算法。如果激活函数不同、误差计算方式不同、网络连接结构不同、优化算法不同，则具体的训练规则也会不一样。但是无论怎样，训练规则的推导方式都是一样的，应用链式求导法则进行推导即可。</p>
-<h3 id="5-3-具体解释"><a href="#5-3-具体解释" class="headerlink" title="5.3 具体解释"></a>5.3 具体解释</h3><p>假设每个训练样本为$(\vec{x}, \vec{t})$，其中向量$\vec{x}$是训练样本的特征，而$\vec{t}$是样本的目标值。</p>
-<p><img src="/images/neural-network/nn3.png"></p>
-<p>首先，根据上一节介绍的算法，用样本的特征$\vec{x}$，计算出神经网络中每个隐藏层节点的输出$a_i$，以及输出层每个节点的输出$y_i$。</p>
-<p>然后，按照下面的方法计算出每个节点的误差项$\delta_i$：</p>
-<ul>
-<li><strong>对于输出层节点$i$</strong></li>
-</ul>
-<p><img src="/images/neural-network/formular_3.png"></p>
-<p>其中，$\delta_i$是节点$i$的误差项，$y_i$是节点$i$的输出值，$t_i$是样本对应于节点$i$的目标值。举个例子，根据上图，对于输出层节点8来说，它的输出值是$y_1$，而样本的目标值是$t_1$，带入上面的公式得到节点8的误差项应该是：</p>
-<p><img src="/images/neural-network/forumlar_delta8.png"></p>
-<ul>
-<li><strong>对于隐藏层节点</strong></li>
-</ul>
-<p><img src="/images/neural-network/formular_4.png"></p>
-<p>其中，$a_i$是节点$i$的输出值，$w_{ki}$是节点$i$到它的下一层节点$k$的连接的权重，$\delta_k$是节点$i$的下一层节点$k$的误差项。例如，对于隐藏层节点4来说，计算方法如下：</p>
-<p><img src="/images/neural-network/forumlar_delta4.png"></p>
-<p>最后，更新每个连接上的权值：</p>
-<p><img src="/images/neural-network/formular_5.png"></p>
-<p>其中，$w_{ji}$是节点$i$到节点$j$的权重，$\eta$是一个成为学习速率的常数，$\delta_j$是节点$j$的误差项，$x_{ji}$是节点$i$传递给节点$j$的输入。例如，权重$w_{84}$的更新方法如下：</p>
-<p><img src="/images/neural-network/eqn_w84_update.png"></p>
-<p>类似的，权重$w_{41}$的更新方法如下：</p>
-<p><img src="/images/neural-network/eqn_w41_update.png"></p>
-<p>偏置项的输入值永远为1。例如，节点4的偏置项$w_{4b}$应该按照下面的方法计算：</p>
-<p><img src="/images/neural-network/eqn_w4b_update.png"></p>
-<p>计算一个节点的误差项，需要先计算每个与其相连的下一层节点的误差项，这就要求误差项的计算顺序必须是从输出层开始，然后反向依次计算每个隐藏层的误差项，直到与输入层相连的那个隐藏层，这就是反向传播算法的名字的含义。当所有节点的误差项计算完毕后，就可以根据式5来更新所有的权重。</p>
-<h2 id="6-为什么要使用激活函数"><a href="#6-为什么要使用激活函数" class="headerlink" title="6. 为什么要使用激活函数"></a>6. 为什么要使用激活函数</h2><p>激活函数在神经网络中非常重要，使用激活函数也是非常必要的，前面我们从人脑神经元的角度理解了激活函数，因为神经元需要通过激活才能往后传播，所以神经网络中需要激活函数，下面我们从数学的角度理解一下激活函数的必要性。</p>
-<p>比如一个两层的神经网络，使用 f 表示激活函数，那么</p>
-<p>$$<br>y = f( w_2  f(w_1 x) )<br>$$</p>
-<p>如果不使用激活函数，那么神经网络的结果就是</p>
-<p>$$<br>y = w_2 (w_1 x) = (w_2 w_1) x = \bar{w} x<br>$$</p>
-<p>可以看到，将两层神经网络的参数合在一起，用 $\bar{w}$ 来表示，两层的神经网络其实就变成了一层神经网络，只不过参数变成了新的 $\bar{w}$，所以如果不使用激活函数，那么不管多少层的神经网络，$y = w_n \cdots w_2 w_1 x = \bar{w} x$，就都变成了单层神经网络，所以在每一层都必须使用激活函数。</p>
-<p>最后看看激活函数对神经网络的影响</p>
-<p><img src="/images/neural-network/nn-activation-function.gif"></p>
-<p>可以看到使用了激活函数之后，神经网络可以通过改变权重实现任意形状，越是复杂的神经网络能拟合的形状越复杂，这就是著名的神经网络万有逼近定理。神经网络使用的激活函数都是非线性的，每个激活函数都输入一个值，然后做一种特定的数学运算得到一个结果。</p>
-<h3 id="6-1-sigmoid-激活函数"><a href="#6-1-sigmoid-激活函数" class="headerlink" title="6.1 sigmoid 激活函数"></a>6.1 sigmoid 激活函数</h3><p>$$\sigma(x) = \frac{1}{1 + e^{-x}}$$</p>
-<p><img src="/images/neural-network/act-sigmoid.jpg"></p>
-<h3 id="6-2-tanh-激活函数"><a href="#6-2-tanh-激活函数" class="headerlink" title="6.2 tanh 激活函数"></a>6.2 tanh 激活函数</h3><p>$$tanh(x) = 2 \sigma(2x) - 1$$</p>
-<p><img src="/images/neural-network/act-tanh.jpg"></p>
-<h3 id="6-3-ReLU-激活函数"><a href="#6-3-ReLU-激活函数" class="headerlink" title="6.3 ReLU 激活函数"></a>6.3 ReLU 激活函数</h3><p>$$ReLU(x) = max(0, x)$$</p>
-<p><img src="/images/neural-network/act-relu.jpg"></p>
-<p>当输入 $x&lt;0$ 时，输出为 $0$，当 $x&gt; 0$ 时，输出为 $x$。该激活函数使网络更快速地收敛。它不会饱和，即它可以对抗梯度消失问题，至少在正区域（$x&gt; 0$ 时）可以这样，因此神经元至少在一半区域中不会把所有零进行反向传播。由于使用了简单的阈值化（thresholding），ReLU 计算效率很高。</p>
-<p>在网络中，不同的输入可能包含着大小不同关键特征，使用大小可变的数据结构去做容器，则更加灵活。假如神经元激活具有稀疏性，那么不同激活路径上：不同数量（选择性不激活）、不同功能（分布式激活）。两种可优化的结构生成的激活路径，可以更好地从有效的数据的维度上，学习到相对稀疏的特征，起到自动化解离效果。</p>
-<p><img src="/images/neural-network/nn-sparse.png"></p>
-<p>稀疏特征并不需要网络具有很强的处理线性不可分机制，因此在深度学习模型中，使用简单、速度快的线性激活函数可能更为合适。如图，一旦神经元与神经元之间改为线性激活，网络的非线性部分仅仅来自于神经元部分选择性激活。</p>
-<p>更倾向于使用线性神经激活函数的另外一个原因是，减轻梯度法训练深度网络时的Vanishing Gradient Problem。</p>
-<p>看过BP推导的人都知道，误差从输出层反向传播算梯度时，在各层都要乘当前层的输入神经元值，激活函数的一阶导数。<br>$$<br>grad = error ⋅ sigmoid’(x) ⋅ x<br>$$</p>
-<p>使用双端饱和(即值域被限制)Sigmoid系函数会有两个问题：</p>
-<ol>
-<li>sigmoid’(x) ∈ (0,1)  导数缩放</li>
-<li>x∈(0,1)或x∈(-1,1)  饱和值缩放</li>
-</ol>
-<p>这样，经过每一层时，误差都是成倍的衰减，一旦进行递推式的多层的反向传播，梯度就会不停的衰减，消失，使得网络学习变慢。而校正激活函数的梯度是1，且只有一端饱和，梯度很好的在反向传播中流动，训练速度得到了很大的提高。</p>
-<h2 id="7-算法与处理步骤"><a href="#7-算法与处理步骤" class="headerlink" title="7. 算法与处理步骤"></a>7. 算法与处理步骤</h2><pre class="line-numbers language-none"><code class="language-none">W = random
-
-# 每次训练
-for k in range(epoch)
-    # 正向计算
-    for j in range(NN_depth):
-        # 式2 ( a = xxx)
-        X_j = f( W_{j, j-1} X_{j-1})
-
-    ＃ 反向误差计算
-    for j in range(NN_depth, 0, -1):
-        # 式3， 式4
-        delta = y_i(1-y_i)(t_i-y_i)
-        or 
-        delta = a_i(1-a_i) \sum w_ki delta_k
-
-        # 式5
-        w_ji = w_j + epsilon delta_j x_ji<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="7-1-正向计算："><a href="#7-1-正向计算：" class="headerlink" title="7.1 正向计算："></a>7.1 正向计算：</h3><p><img src="/images/neural-network/formular_2.png"></p>
-<h3 id="7-2-反向传播："><a href="#7-2-反向传播：" class="headerlink" title="7.2 反向传播："></a>7.2 反向传播：</h3><p>输出层的误差计算：</p>
-<p><img src="/images/neural-network/formular_3.png"></p>
-<p>隐层的误差计算：</p>
-<p><img src="/images/neural-network/formular_4.png"></p>
-<p>权值更新：</p>
-<p><img src="/images/neural-network/formular_5.png"></p>
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>机器学习笔记</tag>
-        <tag>多层神经网络</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>机器学习笔记（四）：手写多层神经网络并应用</title>
     <url>/2022/01/10/machine-learning-4/</url>
     <content><![CDATA[<h1 id="机器学习笔记（四）：手写多层神经网络并应用"><a href="#机器学习笔记（四）：手写多层神经网络并应用" class="headerlink" title="机器学习笔记（四）：手写多层神经网络并应用"></a>机器学习笔记（四）：手写多层神经网络并应用</h1><p>在上一篇文章中，我们已经学习了多层神经网络的基本原理，并且对正向传播、反向传播和激活函数都有了一定的了解。</p>
@@ -7393,6 +7183,216 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
 
     plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习笔记</tag>
+        <tag>多层神经网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>机器学习笔记（三）：多层神经网络</title>
+    <url>/2022/01/09/machine-learning-3/</url>
+    <content><![CDATA[<h1 id="机器学习笔记（三）：多层神经网络"><a href="#机器学习笔记（三）：多层神经网络" class="headerlink" title="机器学习笔记（三）：多层神经网络"></a>机器学习笔记（三）：多层神经网络</h1><p>基于生物神经元模型可得到多层感知器（Multi-layer Perceptron, MLP)的基本结构，最典型的MLP包括包括三层：输入层(Input Layer)、隐层(Hidden Layer)和输出层(Output Layer)，MLP神经网络不同层之间是全连接的（全连接的意思就是：上一层的任何一个神经元与下一层的所有神经元都有连接）。</p>
+<p><img src="/images/neural-network/mlp_theory.gif"></p>
+<h2 id="1-神经元"><a href="#1-神经元" class="headerlink" title="1. 神经元"></a>1. 神经元</h2><p>神经元和感知器本质上是一样的，感知器的激活函数是阶跃函数；而神经元的激活函数往往选择为sigmoid函数或tanh函数。如下图所示：</p>
+<p><img src="/images/neural-network/neuron.gif"></p>
+<p>计算一个神经元的输出的方法和计算一个感知器的输出是一样的。假设神经元的输入是向量$\vec{x}$，权重向量是$\vec{w}$(偏置项是$w_0$)，激活函数是sigmoid函数，则其输出$y$：<br>$$<br>y = sigmoid(\vec{w}^T \cdot \vec{x})<br>$$</p>
+<p>sigmoid函数的定义如下：<br>$$<br>sigmoid(x) = \frac{1}{1+e^{-x}}<br>$$<br>将其带入前面的式子，得到<br>$$<br>y = \frac{1}{1+e^{-\vec{w}^T \cdot \vec{x}}}<br>$$</p>
+<p>sigmoid函数是一个非线性函数，值域是(0,1)。函数图像如下图所示</p>
+<p><img src="/images/neural-network/sigmod.jpg"></p>
+<p>sigmoid函数的导数是：<br>$$<br>\begin{eqnarray}<br>y &amp; = &amp; sigmod(x) \tag{1} \<br>y’ &amp; = &amp; y(1-y)<br>\end{eqnarray}<br>$$<br>可以看到，sigmoid函数的导数可以用sigmoid函数自身来表示。这样，一旦计算出sigmoid函数的值，计算它的导数的值就非常方便。</p>
+<h2 id="2-神经网络的结构"><a href="#2-神经网络的结构" class="headerlink" title="2. 神经网络的结构"></a>2. 神经网络的结构</h2><p><img src="/images/neural-network/nn1.jpeg"></p>
+<p>神经网络就是按照一定规则连接起来的多个神经元。上图展示了一个全连接(Full Connected, FC)神经网络，通过观察上面的图，可以发现它的规则包括：</p>
+<ul>
+<li>神经元按照层来布局<ul>
+<li>最左边的层叫做输入层，负责接收输入数据；</li>
+<li>最右边的层叫输出层，可以从这层获取神经网络输出数据;</li>
+<li>输入层和输出层之间的层叫做隐藏层，因为它们对于外部来说是不可见的。</li>
+</ul>
+</li>
+<li>同一层的神经元之间没有连接</li>
+<li>第N层的每个神经元和第N-1层的所有神经元相连(这就是full connected的含义)，第N-1层神经元的输出就是第N层神经元的输入</li>
+<li>每个连接都有一个权值</li>
+</ul>
+<p>由此可知，神经网络主要有三个基本要素：权重、偏置和激活函数</p>
+<ul>
+<li>权重：神经元之间的连接强度由权重控制，权重的大小表示可能性的大小</li>
+<li>偏置：偏置的设置是为了正确分类样本，是模型中一个重要的参数，即保证通过输入算出的输出值不能随便激活。</li>
+<li>激活函数：起非线性映射的作用，其可将神经元的输出幅度限制在一定范围内，一般限制在（-1~1）或（0~1）之间。最常用的激活函数是Sigmoid函数，可将（-∞，+∞）的数映射到（0~1）的范围内。</li>
+</ul>
+<p>上面这些规则定义了全连接神经网络的结构。事实上还存在很多其它结构的神经网络，比如卷积神经网络(CNN)、循环神经网络(RNN)，他们都具有不同的连接规则。</p>
+<h2 id="3-计算神经网络的输出"><a href="#3-计算神经网络的输出" class="headerlink" title="3. 计算神经网络的输出"></a>3. 计算神经网络的输出</h2><p>神经网络实际上就是一个输入向量$\vec{x}$到输出向量$\vec{y}$的函数，即：</p>
+<p>$$<br>\vec{y} = f_{network}(\vec{x})<br>$$<br>根据输入计算神经网络的输出</p>
+<ul>
+<li>首先将输入向量$\vec{x}$的每个元素的值$x_i$赋给神经网络的输入层的对应神经元</li>
+<li>然后根据式（1）依次向前计算每一层的每个神经元的值，直到最后一层输出层的所有神经元的值计算完毕</li>
+<li>最后，将输出层每个神经元的值串在一起就得到了输出向量$\vec{y}$。</li>
+</ul>
+<p>接下来举一个例子来说明这个过程，我们先给神经网络的每个单元写上编号。</p>
+<p><img src="/images/neural-network/nn2.png"></p>
+<ul>
+<li>输入层有三个节点，我们将其依次编号为1、2、3；</li>
+<li>隐藏层的4个节点，编号依次为4、5、6、7；</li>
+<li>最后输出层的两个节点编号为8、9。</li>
+</ul>
+<p>因为这个神经网络是全连接网络，所以可以看到每个节点都和上一层的所有节点有连接。比如，隐藏层的节点4，它和输入层的三个节点1、2、3之间都有连接，其连接上的权重分别为$w_{41}$,$w_{42}$,$w_{43}$。那么，怎样计算节点4的输出值$a_4$呢？</p>
+<p>为了计算节点4的输出值，必须先得到其所有上游节点（也就是节点1、2、3）的输出值。节点1、2、3是输入层的节点，所以，他们的输出值就是输入向量$\vec{x}$本身。按照上图画出的对应关系，可以看到节点1、2、3的输出值分别是$x_1$,$x_2$,$x_3$。要求输入向量的维度和输入层神经元个数相同，而输入向量的某个元素对应到哪个输入节点是可以自由决定的。</p>
+<p>一旦有了节点1、2、3的输出值，就可以根据式1计算节点4的输出值$a_4$：</p>
+<p><img src="/images/neural-network/eqn_3_4.png"></p>
+<p>上式的$w_{4b}$是节点4的偏置项，图中没有画出来。而$w_{41}$,$w_{42}$,$w_{43}$分别为节点1、2、3到节点4连接的权重，在给权重$w_{ji}$编号时，目标节点的编号$j$放在前面，把源节点的编号$i$放在后面。</p>
+<p>同样，可以继续计算出节点5、6、7的输出值$a_5$,$a_6$,$a_7$。这样，隐藏层的4个节点的输出值就计算完成了，就可以接着计算输出层的节点8的输出值$y_1$：</p>
+<p><img src="/images/neural-network/eqn_5_6.png"></p>
+<p>同理，我们还可以计算出$y_2$的值。这样输出层所有节点的输出值计算完毕，就得到了在输入向量$\vec{x} = (x_1, x_2, x_3)^T$时，神经网络的输出向量$\vec{y} = (y_1, y_2)^T$。可以看出：输出向量的维度和输出层神经元个数相同。</p>
+<h2 id="4-神经网络的矩阵表示"><a href="#4-神经网络的矩阵表示" class="headerlink" title="4. 神经网络的矩阵表示"></a>4. 神经网络的矩阵表示</h2><p>神经网络的计算如果用矩阵来表示会很方便，此外可以用优化加速算法提高计算速度。</p>
+<p>隐藏层4个节点的计算依次排列出来：</p>
+<p><img src="/images/neural-network/eqn_hidden_units.png"></p>
+<p>接着，定义网络的输入向量$\vec{x}$和隐藏层每个节点的权重向量$\vec{w}$。令</p>
+<p><img src="/images/neural-network/eqn_7_12.png"></p>
+<p>代入到前面的一组式子，得到：</p>
+<p><img src="/images/neural-network/eqn_13_16.png"></p>
+<p>现在，把上述计算$a_4$, $a_5$,$a_6$,$a_7$的四个式子写到一个矩阵里面，每个式子作为矩阵的一行，就可以利用矩阵来表示它们的计算了。令</p>
+<p><img src="/images/neural-network/eqn_matrix1.png"></p>
+<p>带入前面的一组式子，得到</p>
+<p><img src="/images/neural-network/formular_2.png"></p>
+<p>在（式2）中，</p>
+<ul>
+<li>$f$是激活函数，在本例中是$sigmod$函数；</li>
+<li>$W$是某一层的权重矩阵；</li>
+<li>$\vec{x}$是某层的输入向量；</li>
+<li>$\vec{a}$是某层的输出向量。</li>
+</ul>
+<p>（式2）说明神经网络的每一层的作用实际上就是先将输入向量左乘一个数组进行线性变换，得到一个新的向量，然后再对这个向量逐元素应用一个激活函数。</p>
+<p>每一层的算法都是一样的。比如，对于包含一个输入层，一个输出层和三个隐藏层的神经网络，我们假设其权重矩阵分别为$W_1$,$W_2$,$W_3$,$W_4$，每个隐藏层的输出分别是$\vec{a}_1$,$\vec{a}_2$,$\vec{a}_3$，神经网络的输入为$\vec{x}$，神经网络的输出为$\vec{y}$，如下图所示：</p>
+<p><img src="/images/neural-network/nn_parameters_demo.png"></p>
+<p>则每一层的输出向量的计算可以表示为：</p>
+<p><img src="/images/neural-network/eqn_17_20.png"></p>
+<p>这就是神经网络输出值的矩阵计算方法。</p>
+<p>如果写成一个公式：<br>$$<br>\vec{y} = f(W4 \cdot f(W3 \cdot f(W2 \cdot f(W1 \cdot \vec{x}))))<br>$$<br>神经网络正向计算的过程比较简单，就是一层一层不断做运算，动态的演示如下图所示：<br><img src="/images/neural-network/neural_network_demo.gif"></p>
+<h2 id="5-神经网络的训练-反向传播算法"><a href="#5-神经网络的训练-反向传播算法" class="headerlink" title="5. 神经网络的训练 - 反向传播算法"></a>5. 神经网络的训练 - 反向传播算法</h2><p>神经网络的每个连接上的权值如果知道，那么就可以将输入数据代入得到希望的结果。神经网络是一个模型，那么这些权值就是<strong>模型的参数</strong>，也就是模型要学习的东西。然而，一个神经网络的连接方式、网络的层数、每层的节点数这些参数，则不是学习出来的，而是人为事先设置的。对于这些人为设置的参数，我们称之为**超参数(Hyper-Parameters)**。</p>
+<p>前面课程中所学的最小二乘、逻辑回归等可以直接优化损失函数来求解模型参数的更新值。在多层神经网络中：</p>
+<ul>
+<li>最后一层的参数可以用这样的方式求解得到；</li>
+<li>隐层节点没有输出的真值，因此无法直接构建损失函数来求解</li>
+</ul>
+<p>如何化解这个难题？</p>
+<p>反向传播算法其实就是链式求导法则的应用。然而，这个如此简单且显而易见的方法，却是在Roseblatt提出感知器算法将近30年之后才被发明和普及的。对此，Bengio这样回应道：</p>
+<blockquote>
+<p>很多看似显而易见的想法只有在事后才变得显而易见。</p>
+</blockquote>
+<p>按照机器学习的通用套路，我们先确定神经网络的目标函数，然后用随机梯度下降优化算法去求目标函数最小值时的参数值。</p>
+<p>我们取网络所有输出层节点的误差平方和作为目标函数：</p>
+<p><img src="/images/neural-network/bp_loss.png"></p>
+<p>其中，$E_d$表示是样本$d$的误差, <strong>t是样本的标签值</strong>，<strong>y是神经网络的输出值</strong>。</p>
+<p>然后，使用随机梯度下降算法对目标函数进行优化：</p>
+<p><img src="/images/neural-network/bp_weight_update.png"></p>
+<p>随机梯度下降算法也就是需要求出误差$E_d$对于每个权重$w_{ji}$的偏导数（也就是梯度），如何求解？</p>
+<p><img src="/images/neural-network/nn3.png"></p>
+<p>观察上图，我们发现权重$w_{ji}$仅能通过影响节点$j$的输入值影响网络的其它部分，设$net_j$是节点$j$的加权输入，即</p>
+<p><img src="/images/neural-network/eqn_21_22.png"></p>
+<p>$E_d$是$net_j$的函数，而$net_j$是$w_{ji}$的函数。根据链式求导法则，可以得到：</p>
+<p><img src="/images/neural-network/eqn_23_25.png"></p>
+<p>上式中，$x_{ji}$是节点传递给节点$j$的输入值，也就是节点$i$的输出值。</p>
+<p>对于的$\frac{\partial E_d}{\partial net_j}$推导，需要区分输出层和隐藏层两种情况。</p>
+<h3 id="5-1-输出层权值训练"><a href="#5-1-输出层权值训练" class="headerlink" title="5.1 输出层权值训练"></a>5.1 输出层权值训练</h3><p><img src="/images/neural-network/nn3.png"></p>
+<p>对于输出层来说，$net_j$仅能通过节点$j$的输出值$y_j$来影响网络其它部分，也就是说$E_d$是$y_j$的函数，而$y_j$是$net_j$的函数，其中$y_j = sigmod(net_j)$。所以我们可以再次使用链式求导法则：</p>
+<p><img src="/images/neural-network/eqn_26.png"></p>
+<p>考虑上式第一项:</p>
+<p><img src="/images/neural-network/eqn_27_29.png"></p>
+<p>考虑上式第二项：</p>
+<p><img src="/images/neural-network/eqn_30_31.png"></p>
+<p>将第一项和第二项带入，得到：</p>
+<p><img src="/images/neural-network/eqn_ed_net_j.png"></p>
+<p>如果令$\delta_j = - \frac{\partial E_d}{\partial net_j}$，也就是一个节点的误差项$\delta$是网络误差对这个节点输入的偏导数的相反数。带入上式，得到：</p>
+<p><img src="/images/neural-network/eqn_delta_j.png"></p>
+<p>将上述推导带入随机梯度下降公式，得到：</p>
+<p><img src="/images/neural-network/eqn_32_34.png"></p>
+<h3 id="5-2-隐藏层权值训练"><a href="#5-2-隐藏层权值训练" class="headerlink" title="5.2 隐藏层权值训练"></a>5.2 隐藏层权值训练</h3><p>现在我们要推导出隐藏层的$\frac{\partial E_d}{\partial net_j}$。</p>
+<p><img src="/images/neural-network/nn3.png"></p>
+<p>首先，我们需要定义节点$j$的所有直接下游节点的集合$Downstream(j)$。例如，对于节点4来说，它的直接下游节点是节点8、节点9。可以看到$net_j$只能通过影响$Downstream(j)$再影响$E_d$。设$net_k$是节点$j$的下游节点的输入，则$E_d$是$net_k$的函数，而$net_k$是$net_j$的函数。因为$net_k$有多个，我们应用全导数公式，可以做出如下推导：</p>
+<p><img src="/images/neural-network/eqn_35_40.png"></p>
+<p>因为$\delta_j = - \frac{\partial E_d}{\partial net_j}$，带入上式得到：</p>
+<p><img src="/images/neural-network/eqn_delta_hidden.png"></p>
+<p>至此，我们已经推导出了反向传播算法。需要注意的是，我们刚刚推导出的训练规则是根据激活函数是sigmoid函数、平方和误差、全连接网络、随机梯度下降优化算法。如果激活函数不同、误差计算方式不同、网络连接结构不同、优化算法不同，则具体的训练规则也会不一样。但是无论怎样，训练规则的推导方式都是一样的，应用链式求导法则进行推导即可。</p>
+<h3 id="5-3-具体解释"><a href="#5-3-具体解释" class="headerlink" title="5.3 具体解释"></a>5.3 具体解释</h3><p>假设每个训练样本为$(\vec{x}, \vec{t})$，其中向量$\vec{x}$是训练样本的特征，而$\vec{t}$是样本的目标值。</p>
+<p><img src="/images/neural-network/nn3.png"></p>
+<p>首先，根据上一节介绍的算法，用样本的特征$\vec{x}$，计算出神经网络中每个隐藏层节点的输出$a_i$，以及输出层每个节点的输出$y_i$。</p>
+<p>然后，按照下面的方法计算出每个节点的误差项$\delta_i$：</p>
+<ul>
+<li><strong>对于输出层节点$i$</strong></li>
+</ul>
+<p><img src="/images/neural-network/formular_3.png"></p>
+<p>其中，$\delta_i$是节点$i$的误差项，$y_i$是节点$i$的输出值，$t_i$是样本对应于节点$i$的目标值。举个例子，根据上图，对于输出层节点8来说，它的输出值是$y_1$，而样本的目标值是$t_1$，带入上面的公式得到节点8的误差项应该是：</p>
+<p><img src="/images/neural-network/forumlar_delta8.png"></p>
+<ul>
+<li><strong>对于隐藏层节点</strong></li>
+</ul>
+<p><img src="/images/neural-network/formular_4.png"></p>
+<p>其中，$a_i$是节点$i$的输出值，$w_{ki}$是节点$i$到它的下一层节点$k$的连接的权重，$\delta_k$是节点$i$的下一层节点$k$的误差项。例如，对于隐藏层节点4来说，计算方法如下：</p>
+<p><img src="/images/neural-network/forumlar_delta4.png"></p>
+<p>最后，更新每个连接上的权值：</p>
+<p><img src="/images/neural-network/formular_5.png"></p>
+<p>其中，$w_{ji}$是节点$i$到节点$j$的权重，$\eta$是一个成为学习速率的常数，$\delta_j$是节点$j$的误差项，$x_{ji}$是节点$i$传递给节点$j$的输入。例如，权重$w_{84}$的更新方法如下：</p>
+<p><img src="/images/neural-network/eqn_w84_update.png"></p>
+<p>类似的，权重$w_{41}$的更新方法如下：</p>
+<p><img src="/images/neural-network/eqn_w41_update.png"></p>
+<p>偏置项的输入值永远为1。例如，节点4的偏置项$w_{4b}$应该按照下面的方法计算：</p>
+<p><img src="/images/neural-network/eqn_w4b_update.png"></p>
+<p>计算一个节点的误差项，需要先计算每个与其相连的下一层节点的误差项，这就要求误差项的计算顺序必须是从输出层开始，然后反向依次计算每个隐藏层的误差项，直到与输入层相连的那个隐藏层，这就是反向传播算法的名字的含义。当所有节点的误差项计算完毕后，就可以根据式5来更新所有的权重。</p>
+<h2 id="6-为什么要使用激活函数"><a href="#6-为什么要使用激活函数" class="headerlink" title="6. 为什么要使用激活函数"></a>6. 为什么要使用激活函数</h2><p>激活函数在神经网络中非常重要，使用激活函数也是非常必要的，前面我们从人脑神经元的角度理解了激活函数，因为神经元需要通过激活才能往后传播，所以神经网络中需要激活函数，下面我们从数学的角度理解一下激活函数的必要性。</p>
+<p>比如一个两层的神经网络，使用 f 表示激活函数，那么</p>
+<p>$$<br>y = f( w_2  f(w_1 x) )<br>$$</p>
+<p>如果不使用激活函数，那么神经网络的结果就是</p>
+<p>$$<br>y = w_2 (w_1 x) = (w_2 w_1) x = \bar{w} x<br>$$</p>
+<p>可以看到，将两层神经网络的参数合在一起，用 $\bar{w}$ 来表示，两层的神经网络其实就变成了一层神经网络，只不过参数变成了新的 $\bar{w}$，所以如果不使用激活函数，那么不管多少层的神经网络，$y = w_n \cdots w_2 w_1 x = \bar{w} x$，就都变成了单层神经网络，所以在每一层都必须使用激活函数。</p>
+<p>最后看看激活函数对神经网络的影响</p>
+<p><img src="/images/neural-network/nn-activation-function.gif"></p>
+<p>可以看到使用了激活函数之后，神经网络可以通过改变权重实现任意形状，越是复杂的神经网络能拟合的形状越复杂，这就是著名的神经网络万有逼近定理。神经网络使用的激活函数都是非线性的，每个激活函数都输入一个值，然后做一种特定的数学运算得到一个结果。</p>
+<h3 id="6-1-sigmoid-激活函数"><a href="#6-1-sigmoid-激活函数" class="headerlink" title="6.1 sigmoid 激活函数"></a>6.1 sigmoid 激活函数</h3><p>$$\sigma(x) = \frac{1}{1 + e^{-x}}$$</p>
+<p><img src="/images/neural-network/act-sigmoid.jpg"></p>
+<h3 id="6-2-tanh-激活函数"><a href="#6-2-tanh-激活函数" class="headerlink" title="6.2 tanh 激活函数"></a>6.2 tanh 激活函数</h3><p>$$tanh(x) = 2 \sigma(2x) - 1$$</p>
+<p><img src="/images/neural-network/act-tanh.jpg"></p>
+<h3 id="6-3-ReLU-激活函数"><a href="#6-3-ReLU-激活函数" class="headerlink" title="6.3 ReLU 激活函数"></a>6.3 ReLU 激活函数</h3><p>$$ReLU(x) = max(0, x)$$</p>
+<p><img src="/images/neural-network/act-relu.jpg"></p>
+<p>当输入 $x&lt;0$ 时，输出为 $0$，当 $x&gt; 0$ 时，输出为 $x$。该激活函数使网络更快速地收敛。它不会饱和，即它可以对抗梯度消失问题，至少在正区域（$x&gt; 0$ 时）可以这样，因此神经元至少在一半区域中不会把所有零进行反向传播。由于使用了简单的阈值化（thresholding），ReLU 计算效率很高。</p>
+<p>在网络中，不同的输入可能包含着大小不同关键特征，使用大小可变的数据结构去做容器，则更加灵活。假如神经元激活具有稀疏性，那么不同激活路径上：不同数量（选择性不激活）、不同功能（分布式激活）。两种可优化的结构生成的激活路径，可以更好地从有效的数据的维度上，学习到相对稀疏的特征，起到自动化解离效果。</p>
+<p><img src="/images/neural-network/nn-sparse.png"></p>
+<p>稀疏特征并不需要网络具有很强的处理线性不可分机制，因此在深度学习模型中，使用简单、速度快的线性激活函数可能更为合适。如图，一旦神经元与神经元之间改为线性激活，网络的非线性部分仅仅来自于神经元部分选择性激活。</p>
+<p>更倾向于使用线性神经激活函数的另外一个原因是，减轻梯度法训练深度网络时的Vanishing Gradient Problem。</p>
+<p>看过BP推导的人都知道，误差从输出层反向传播算梯度时，在各层都要乘当前层的输入神经元值，激活函数的一阶导数。<br>$$<br>grad = error ⋅ sigmoid’(x) ⋅ x<br>$$</p>
+<p>使用双端饱和(即值域被限制)Sigmoid系函数会有两个问题：</p>
+<ol>
+<li>sigmoid’(x) ∈ (0,1)  导数缩放</li>
+<li>x∈(0,1)或x∈(-1,1)  饱和值缩放</li>
+</ol>
+<p>这样，经过每一层时，误差都是成倍的衰减，一旦进行递推式的多层的反向传播，梯度就会不停的衰减，消失，使得网络学习变慢。而校正激活函数的梯度是1，且只有一端饱和，梯度很好的在反向传播中流动，训练速度得到了很大的提高。</p>
+<h2 id="7-算法与处理步骤"><a href="#7-算法与处理步骤" class="headerlink" title="7. 算法与处理步骤"></a>7. 算法与处理步骤</h2><pre class="line-numbers language-none"><code class="language-none">W = random
+
+# 每次训练
+for k in range(epoch)
+    # 正向计算
+    for j in range(NN_depth):
+        # 式2 ( a = xxx)
+        X_j = f( W_{j, j-1} X_{j-1})
+
+    ＃ 反向误差计算
+    for j in range(NN_depth, 0, -1):
+        # 式3， 式4
+        delta = y_i(1-y_i)(t_i-y_i)
+        or 
+        delta = a_i(1-a_i) \sum w_ki delta_k
+
+        # 式5
+        w_ji = w_j + epsilon delta_j x_ji<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="7-1-正向计算："><a href="#7-1-正向计算：" class="headerlink" title="7.1 正向计算："></a>7.1 正向计算：</h3><p><img src="/images/neural-network/formular_2.png"></p>
+<h3 id="7-2-反向传播："><a href="#7-2-反向传播：" class="headerlink" title="7.2 反向传播："></a>7.2 反向传播：</h3><p>输出层的误差计算：</p>
+<p><img src="/images/neural-network/formular_3.png"></p>
+<p>隐层的误差计算：</p>
+<p><img src="/images/neural-network/formular_4.png"></p>
+<p>权值更新：</p>
+<p><img src="/images/neural-network/formular_5.png"></p>
 ]]></content>
       <categories>
         <category>机器学习</category>
