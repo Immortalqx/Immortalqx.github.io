@@ -345,14 +345,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/contact/index.html</loc>
+    <loc>http://immortalqx.github.io/friends/index.html</loc>
     
     <lastmod>2022-01-11</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/friends/index.html</loc>
+    <loc>http://immortalqx.github.io/contact/index.html</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -515,13 +515,6 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/tags/ROS%E5%9F%BA%E7%A1%80/</loc>
-    <lastmod>2022-04-19</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://immortalqx.github.io/tags/IELTS/</loc>
     <lastmod>2022-04-19</lastmod>
     <changefreq>daily</changefreq>
@@ -543,21 +536,7 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/tags/PIXHAWK/</loc>
-    <lastmod>2022-04-19</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/tags/PX4/</loc>
-    <lastmod>2022-04-19</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/tags/APM/</loc>
+    <loc>http://immortalqx.github.io/tags/ROS%E5%9F%BA%E7%A1%80/</loc>
     <lastmod>2022-04-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -571,7 +550,28 @@
   </url>
   
   <url>
+    <loc>http://immortalqx.github.io/tags/PX4/</loc>
+    <lastmod>2022-04-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://immortalqx.github.io/tags/Gazebo/</loc>
+    <lastmod>2022-04-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/tags/PIXHAWK/</loc>
+    <lastmod>2022-04-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/tags/APM/</loc>
     <lastmod>2022-04-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -734,14 +734,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/categories/ROS/</loc>
+    <loc>http://immortalqx.github.io/categories/slam/</loc>
     <lastmod>2022-04-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/categories/slam/</loc>
+    <loc>http://immortalqx.github.io/categories/ROS/</loc>
     <lastmod>2022-04-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

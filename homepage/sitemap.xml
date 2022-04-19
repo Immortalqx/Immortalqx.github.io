@@ -352,14 +352,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/contact/index.html</loc>
+    <loc>http://immortalqx.github.io/homepage/friends/index.html</loc>
     
     <lastmod>2022-01-11</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/friends/index.html</loc>
+    <loc>http://immortalqx.github.io/homepage/contact/index.html</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -522,13 +522,6 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/tags/ROS%E5%9F%BA%E7%A1%80/</loc>
-    <lastmod>2022-04-19</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://immortalqx.github.io/homepage/tags/IELTS/</loc>
     <lastmod>2022-04-19</lastmod>
     <changefreq>daily</changefreq>
@@ -550,21 +543,7 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/tags/PIXHAWK/</loc>
-    <lastmod>2022-04-19</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/homepage/tags/PX4/</loc>
-    <lastmod>2022-04-19</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/homepage/tags/APM/</loc>
+    <loc>http://immortalqx.github.io/homepage/tags/ROS%E5%9F%BA%E7%A1%80/</loc>
     <lastmod>2022-04-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -578,7 +557,28 @@
   </url>
   
   <url>
+    <loc>http://immortalqx.github.io/homepage/tags/PX4/</loc>
+    <lastmod>2022-04-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://immortalqx.github.io/homepage/tags/Gazebo/</loc>
+    <lastmod>2022-04-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/homepage/tags/PIXHAWK/</loc>
+    <lastmod>2022-04-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/homepage/tags/APM/</loc>
     <lastmod>2022-04-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -748,14 +748,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/categories/ROS/</loc>
+    <loc>http://immortalqx.github.io/homepage/categories/slam/</loc>
     <lastmod>2022-04-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/homepage/categories/slam/</loc>
+    <loc>http://immortalqx.github.io/homepage/categories/ROS/</loc>
     <lastmod>2022-04-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
