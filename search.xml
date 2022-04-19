@@ -30,6 +30,47 @@
       </tags>
   </entry>
   <entry>
+    <title>2D碰撞检测</title>
+    <url>/2021/05/16/2d-collision-detection/</url>
+    <content><![CDATA[<h1 id="2D碰撞检测"><a href="#2D碰撞检测" class="headerlink" title="2D碰撞检测"></a>2D碰撞检测</h1><p>2D游戏中，通常使用矩形、圆形等来代替复杂图形的相交检测，因为这两种形状的碰撞检测速度是最快的。</p>
+<p>其中矩形包围盒又可以分为轴对齐包围盒（AABB, Axis Aligned Bounding Box）与转向包围盒（OBB, Oriented Bounding Box）。AABB与OBB的区别在于，AABB中的矩形的其中一条边和坐标轴平行，OBB的计算复杂度要高于AABB。根据不同的使用场景，可以用不同的方案。</p>
+<h3 id="圆形之间的碰撞检测"><a href="#圆形之间的碰撞检测" class="headerlink" title="圆形之间的碰撞检测"></a>圆形之间的碰撞检测</h3><p>圆形之间的碰撞检测比较简单，只需判断两圆心之间的距离是否小于两圆的半径之和即可，如下图所示。</p>
+<img src="/images/2D-Collision-Detection/1.jpg" style="zoom: 33%;">
+
+<h3 id="圆形与矩形的碰撞检测"><a href="#圆形与矩形的碰撞检测" class="headerlink" title="圆形与矩形的碰撞检测"></a>圆形与矩形的碰撞检测</h3><p>涉及到矩形的碰撞检测问题都先要判断是否轴对称。</p>
+<h4 id="矩形轴对称"><a href="#矩形轴对称" class="headerlink" title="矩形轴对称"></a>矩形轴对称</h4><p>如下图所示，设$c$为矩形中心，$h$为矩形半长，$p$为圆心，$r$为半径。</p>
+<p>检测碰撞的方法是计算圆心与矩形的最短距离$ u$，若$ u $的长度小于$ r $则两者相碰撞。</p>
+<p><img src="/images/2D-Collision-Detection/2.jpg"></p>
+<p>为了计算$u$，我们首先利用$p – c$ 将圆心平移到矩形坐标系的第一象限，这不影响碰撞检测的结果：</p>
+<img src="/images/2D-Collision-Detection/3.jpg" style="zoom: 67%;">
+
+
+
+<p>然后，计算向量 $v-h$，如果$v-h$的分量为负数则设置为0，最后得到圆心与矩形最短距离的矢量 $u$。</p>
+<p>下图展示了4种情况，红色的$u$是结果。</p>
+<p><img src="/images/2D-Collision-Detection/4.jpg"></p>
+<p>最后比较 $u$ 和 $r$ 模长的大小，如果$u$的模长小则两者相交。</p>
+<h4 id="矩形非轴对称"><a href="#矩形非轴对称" class="headerlink" title="矩形非轴对称"></a>矩形非轴对称</h4><p>将矩形的中心视为旋转中心，将矩形和圆形一起反向旋转将矩形转为轴对称，然后就可以套用上面的解法。</p>
+<img src="/images/2D-Collision-Detection/5.jpg" style="zoom:33%;">
+
+<h3 id="两矩形都轴对称AABB"><a href="#两矩形都轴对称AABB" class="headerlink" title="两矩形都轴对称AABB"></a>两矩形都轴对称AABB</h3><p>想象一下两个矩形A和B，B紧贴着A的边走了一圈，B的矩形中心的轨迹是一个新的矩形，这样就简化成新矩形与B中心点这一点的相交问题，又因为点可以看成是半径为0的圆，所以问题又转换为圆形和矩形相交。</p>
+<img src="/images/2D-Collision-Detection/6.jpg" style="zoom:33%;">
+
+
+
+<h3 id="两矩形相交非轴对称OBB"><a href="#两矩形相交非轴对称OBB" class="headerlink" title="两矩形相交非轴对称OBB"></a>两矩形相交非轴对称OBB</h3><p>两个矩形的OBB检测使用<strong>分离轴定理（Separating Axis Theorem）</strong></p>
+<p>分离轴定理：通过判断任意两个矩形在任意角度下的投影是否均存在重叠，来判断是否发生碰撞。若在某一角度光源下，两物体的投影存在间隙，则为不碰撞，否则为发生碰撞。</p>
+<p>因为矩形的对边平行，所以只要判断四条对称轴上两个矩阵的投影即可。如果四条对称轴上的投影均有重合部分，则矩阵发生碰撞，否则矩阵之间不发生碰撞。</p>
+<img src="/images/2D-Collision-Detection/7.jpg" style="zoom:33%;">
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>碰撞检测</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>香港各大学申请要求整理</title>
     <url>/2021/03/25/hk-universities-requirement/</url>
     <content><![CDATA[<h1 id="香港各大学申请要求整理"><a href="#香港各大学申请要求整理" class="headerlink" title="香港各大学申请要求整理"></a>香港各大学申请要求整理</h1><h2 id="港八大整体的申请要求："><a href="#港八大整体的申请要求：" class="headerlink" title="港八大整体的申请要求："></a>港八大整体的申请要求：</h2><p><strong>背景</strong>：不卡院校背景，但是优先录取国内985/211</p>
@@ -72,47 +113,6 @@
       </categories>
       <tags>
         <tag>出国留学</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2D碰撞检测</title>
-    <url>/2021/05/16/2d-collision-detection/</url>
-    <content><![CDATA[<h1 id="2D碰撞检测"><a href="#2D碰撞检测" class="headerlink" title="2D碰撞检测"></a>2D碰撞检测</h1><p>2D游戏中，通常使用矩形、圆形等来代替复杂图形的相交检测，因为这两种形状的碰撞检测速度是最快的。</p>
-<p>其中矩形包围盒又可以分为轴对齐包围盒（AABB, Axis Aligned Bounding Box）与转向包围盒（OBB, Oriented Bounding Box）。AABB与OBB的区别在于，AABB中的矩形的其中一条边和坐标轴平行，OBB的计算复杂度要高于AABB。根据不同的使用场景，可以用不同的方案。</p>
-<h3 id="圆形之间的碰撞检测"><a href="#圆形之间的碰撞检测" class="headerlink" title="圆形之间的碰撞检测"></a>圆形之间的碰撞检测</h3><p>圆形之间的碰撞检测比较简单，只需判断两圆心之间的距离是否小于两圆的半径之和即可，如下图所示。</p>
-<img src="/images/2D-Collision-Detection/1.jpg" style="zoom: 33%;">
-
-<h3 id="圆形与矩形的碰撞检测"><a href="#圆形与矩形的碰撞检测" class="headerlink" title="圆形与矩形的碰撞检测"></a>圆形与矩形的碰撞检测</h3><p>涉及到矩形的碰撞检测问题都先要判断是否轴对称。</p>
-<h4 id="矩形轴对称"><a href="#矩形轴对称" class="headerlink" title="矩形轴对称"></a>矩形轴对称</h4><p>如下图所示，设$c$为矩形中心，$h$为矩形半长，$p$为圆心，$r$为半径。</p>
-<p>检测碰撞的方法是计算圆心与矩形的最短距离$ u$，若$ u $的长度小于$ r $则两者相碰撞。</p>
-<p><img src="/images/2D-Collision-Detection/2.jpg"></p>
-<p>为了计算$u$，我们首先利用$p – c$ 将圆心平移到矩形坐标系的第一象限，这不影响碰撞检测的结果：</p>
-<img src="/images/2D-Collision-Detection/3.jpg" style="zoom: 67%;">
-
-
-
-<p>然后，计算向量 $v-h$，如果$v-h$的分量为负数则设置为0，最后得到圆心与矩形最短距离的矢量 $u$。</p>
-<p>下图展示了4种情况，红色的$u$是结果。</p>
-<p><img src="/images/2D-Collision-Detection/4.jpg"></p>
-<p>最后比较 $u$ 和 $r$ 模长的大小，如果$u$的模长小则两者相交。</p>
-<h4 id="矩形非轴对称"><a href="#矩形非轴对称" class="headerlink" title="矩形非轴对称"></a>矩形非轴对称</h4><p>将矩形的中心视为旋转中心，将矩形和圆形一起反向旋转将矩形转为轴对称，然后就可以套用上面的解法。</p>
-<img src="/images/2D-Collision-Detection/5.jpg" style="zoom:33%;">
-
-<h3 id="两矩形都轴对称AABB"><a href="#两矩形都轴对称AABB" class="headerlink" title="两矩形都轴对称AABB"></a>两矩形都轴对称AABB</h3><p>想象一下两个矩形A和B，B紧贴着A的边走了一圈，B的矩形中心的轨迹是一个新的矩形，这样就简化成新矩形与B中心点这一点的相交问题，又因为点可以看成是半径为0的圆，所以问题又转换为圆形和矩形相交。</p>
-<img src="/images/2D-Collision-Detection/6.jpg" style="zoom:33%;">
-
-
-
-<h3 id="两矩形相交非轴对称OBB"><a href="#两矩形相交非轴对称OBB" class="headerlink" title="两矩形相交非轴对称OBB"></a>两矩形相交非轴对称OBB</h3><p>两个矩形的OBB检测使用<strong>分离轴定理（Separating Axis Theorem）</strong></p>
-<p>分离轴定理：通过判断任意两个矩形在任意角度下的投影是否均存在重叠，来判断是否发生碰撞。若在某一角度光源下，两物体的投影存在间隙，则为不碰撞，否则为发生碰撞。</p>
-<p>因为矩形的对边平行，所以只要判断四条对称轴上两个矩阵的投影即可。如果四条对称轴上的投影均有重合部分，则矩阵发生碰撞，否则矩阵之间不发生碰撞。</p>
-<img src="/images/2D-Collision-Detection/7.jpg" style="zoom:33%;">
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>碰撞检测</tag>
       </tags>
   </entry>
   <entry>
@@ -2819,6 +2819,64 @@ hexo d<span aria-hidden="true" class="line-numbers-rows"><span></span><span></sp
       </tags>
   </entry>
   <entry>
+    <title>事件相机介绍</title>
+    <url>/2021/04/17/introduce-event-based-camera/</url>
+    <content><![CDATA[<h1 id="Event-based-Camera"><a href="#Event-based-Camera" class="headerlink" title="Event-based Camera"></a>Event-based Camera</h1><blockquote>
+<p>本文将网上的相关资料整理到了一起，方便阅读</p>
+</blockquote>
+<p><strong>前言</strong></p>
+<p>事件相机英文名为：Event-based Camera，或简称为Event Camera，缩写为EB。有时也称作DVS（Dynamic Vision Sensor “动态视觉传感器”）、DAVIS（Dynamic and Active-Pixel Vision Sensor）等。 </p>
+<p>不同于传统相机拍摄一幅完整的图像，事件相机拍摄的是“事件”，可以简单理解为“像素亮度的变化”，即事件相机输出的是像素亮度的变化情况。相比于以固定的帧率采集图像，这种相机通多测量每个像素的亮度变化来输出异步信号（包括事件，位置和亮度变化的符号）。</p>
+<p>事件相机与传统相机相比具有很多的优点: 高的动态测量范围（140dB vs. 60dB）， 高时间分辨率， 低功耗，不受运动模糊的影响。在高速、高动态范围的场景下有着广阔的应用空间。</p>
+<h2 id="零、传统相机的缺点"><a href="#零、传统相机的缺点" class="headerlink" title="零、传统相机的缺点"></a>零、传统相机的缺点</h2><p>传统相机，无论是CMOS传感器，还是CCD传感器，亦或是RGBD相机，都有一个参数：帧率。它们是以恒定的频率拍摄获取图像。这样，即使帧率能够达到1KHz，那也具有1ms的延时。所以传统相机存在一定的延迟问题。</p>
+<p>除此之外，传统相机需要通过一定时间的曝光，使感光器件积累一定的光子，那么在曝光时间之内如果物体在高速运动，则会产生模糊，这也是传统相机的一个问题。</p>
+<p>另外，传统相机的动态范围较低，具体表现为在光线极差或者亮度极高时，相机获取的信息有限。</p>
+<p>以上三点，是由于相机自身硬件的限制，即使高性能相机能够一定程度减小这些问题，但由于相机原理，这些问题无法避免。这些问题极大地限制了一些应用场景。而事件相机完全不存在这些问题。 </p>
+<h2 id="一、事件相机的介绍"><a href="#一、事件相机的介绍" class="headerlink" title="一、事件相机的介绍"></a>一、事件相机的介绍</h2><p>事件相机具有优势的典型场景包括实时交互系统，比如机器人与可穿戴设备，因为这些场景下的光照条件不可控，并且对于延时以及功率敏感。事件相机可以用于物体跟踪、识别以及手势控制，也可以应用在三维重建、光流估计、图像HDR和SLAM中，随着事件相机的发展，图像去模糊以及恒星跟踪也成为新的应用范围。</p>
+<h2 id="二、事件相机的原理"><a href="#二、事件相机的原理" class="headerlink" title="二、事件相机的原理"></a>二、事件相机的原理</h2><p><strong>基本原理</strong></p>
+<p>事件相机的最基本的原理，即：当某个像素的亮度变化累计达到一定阈值后，输出一个事件。这里强调几个概念：</p>
+<p>a） 亮度变化：说明事件相机的输出和变化有关，而与亮度的绝对值没有关系；</p>
+<p>b） 阈值：当亮度变化达到一定程度时，将输出数据，这个阈值是相机的固有参数。</p>
+<p>下面重点解释什么是一个“事件”。事件具有三要素：时间戳、像素坐标与极性。一个事件表达的是“在什么时间，哪个像素点，发生了亮度的增加或减小”。</p>
+<p>当场景中由物体运动或光照改变造成大量像素变化时，会产生一系列的事件，这些事件以事件流（Events stream）方式输出。事件流的数据量远小于传统相机传输的数据，且事件流没有最小时间单位，所以不像传统相机定时输出数据，具有低延迟特性。下面的动图揭示了事件相机与传统相机的成像的不同。</p>
+<p><img src="/images/Event-Camera/001.gif"></p>
+<p><em>（动图：左侧为有一个黑色斑块的圆盘，匀速旋转时，右上方的传统相机会定时拍摄完整的图像，下方事件相机的输出会仅输出变化，即黑斑的运动。当圆盘不转时，传统相机依旧傻傻的拍摄图像，而事件相机不会产生任何输出）</em></p>
+<p>由于事件相机的成像原理，我们可以发现只要亮度一有变化就会输出，且仅输出变化的数据占用了很小的带宽，同时由于事件相机更擅长捕捉亮度变化，所以在较暗和强光场景下也能输出有效数据。事件相机具有低延迟（&lt;𝟏𝝁𝒔）、高动态范围（𝟏𝟒𝟎𝒅𝑩）、极低功耗（𝟏𝒎𝑾）等特性。</p>
+<p><strong>深入了解</strong></p>
+<p>事件相机是对每一个像素下面有一个计算电路，左边的光电转换电路将光强转换为电压值，中间是一个差分电路，结果达到触发阈值之后会触发信号。信号从片上到USB是采用一种AER（Address Event Representation）编码的方式，国内有人将这种编码用于二值图像的压缩，具体的结果就是USB传输过来的数据不是前文所说的$(x, y, polarity, timestamp)$的形式，而是需要解码之后才能得到，常见的解码程序有:</p>
+<blockquote>
+<p><a href="https://github.com/inivation/libcaer">https://github.com/inivation/libcaer</a></p>
+<p><a href="https://github.com/SensorsINI/jaer">https://github.com/SensorsINI/jaer</a></p>
+</blockquote>
+<p>这些开源代码往往已经包含在了事件相机厂商提供的SDK中了。</p>
+<p><img src="/images/Event-Camera/002.jpg" alt="简化事件相机的硬件电路"></p>
+<p>虽然事件相机很好用，但有的时候还是有人想要使用绝对的灰度值。ATIS就实现了这样的一种相机，它通过触发事件后将电容器设置为高电压，然后在用另一个二极管从电容器中放电，光强越大放电越快，ATIS对放电事件进行编码得到强度值。但这样就导致在较暗的环境下放电速度不够快会导致新的事件打断放电过程（算法见<a href="https://github.com/SensorsINI/jaer/blob/master/src/eu/seebetter/ini/chips/davis/DavisAutoShooter.java">jaer</a>）。DAVIS是另一种使用广泛的将DVS（Dynamic Vision Sensor）和APS（Active Pixel Sensor）结合在一起的传感器，它将二者的光电二极管进行共享，不同在加装了一个读出电路，因此可以在输出事件的同时输出强度帧（来自APS）。</p>
+<p>事件相机的理想模型很简单：<br>$$<br>\Delta L(x_k,t_k)=p_kC<br>$$<br>等式左边是对数灰度的变化，右边是输出的极性以及阈值，一般而言$C$会设置在 $15%-50%$。但是实际中事件相机会受到噪声以及像素错配的影响，所以一般会在该模型加上高斯随机噪声，这一点在事件相机的仿真器中有体现：</p>
+<blockquote>
+<p><a href="http://rpg.ifi.uzh.ch/esim.html">http://rpg.ifi.uzh.ch/esim.html</a></p>
+</blockquote>
+<p>跟普通相机一样，事件相机也有需要一个<a href="https://en.wikipedia.org/wiki/Fixed-pattern_noise">FPN</a>（Fixed Pixel Noise），即相机灰度的初始bias，对于事件相机而言，bias的定义就是指阈值 $C$ ，一般而言不同像素之间的 $C$ 可能相差 $2.5%-4%$，现在不存在事件相机的FPN标定计算方案，这是一个能做的研究方向。</p>
+<p>BSI（back-side illumination）技术是广泛应用于智能手机相机上的增大填充系数的技术，目前事件相机上的光电芯片的FSI方法会阻碍光线到达像素，意味着必须增大像素面积才能获取足够的光强，使用BSI技术可以使得相机模块更薄、更小，但由于这项技术的难度与花费，现在只有少数的验证用的事件相机。</p>
+<p>下面是一些现有的商业化的事件相机比较，最后一列是来自中国上海的芯仑科技的事件相机，最新的Celex-V相机是世界上第一台百万级像素的事件相机。（但是CeleX-IV的填充系数只有9per…）</p>
+<p><img src="/images/Event-Camera/003.jpg" alt="现有的商业化的事件相机比较"></p>
+<h2 id="三、事件相机的处理范式"><a href="#三、事件相机的处理范式" class="headerlink" title="三、事件相机的处理范式"></a>三、事件相机的处理范式</h2><p>事件相机的输出是事件流，主要有三种常见的处理范式，分别是：</p>
+<h3 id="A-Event-by-Event"><a href="#A-Event-by-Event" class="headerlink" title="A. Event-by-Event"></a>A. Event-by-Event</h3><p>Event-by-Event的方法常常用于许多任务中，如SLAM里面的特征追踪、位姿追踪和图像重建。一类的方法是依赖于模型的（模型可以从其它类型的传感器数据中获得，如获得一个半稠密的深度图），然后再通过处理一个一个的事件来更新系统的状态。另一类方法是不依赖于模型的（数据驱动即机器学习）。</p>
+<h3 id="B-Groups-of-Events"><a href="#B-Groups-of-Events" class="headerlink" title="B. Groups of Events"></a>B. Groups of Events</h3><p>由于每个事件的携带的信息很少，并且容易受到噪声的影响，因此将几个事件一起处理，能够为需要解决的问题产生足够的信噪比。基于模型的方法往往是将事件转化为frame，然后运用传统的视觉方法来解决问题。而另外一种就是基于数据驱动的事件组方法，其已经用在了分类、光流估计、深度估计等任务中。经典的CNN网络使用张量作为输入，因此事件组必须转为类似的形式。现有的一些转换方法有：事件的像素直方图、最近时间戳表面（SAE）、插值体素网格。在网络架构方面，这些任务往往都会使用流形的Encoder-Decoder架构，具体网络中的其它细节可以在引文中查找对应的引用。</p>
+<p><img src="/images/Event-Camera/004.jpg" alt="流形的Encoder-Decoder架构"></p>
+<h3 id="C-SNN"><a href="#C-SNN" class="headerlink" title="C. SNN"></a>C. SNN</h3><p>事件相机是受到生物学启发的传感器，SNN也是一种受到生物学启发的网络。SNN 使用脉冲（发生在时间点上的离散事件）进行连接。一个神经元从视觉空间的一个小区域（一个感受野）接受输入事件，在状态超过阈值时产生输出事件。神经元以分层的方式连接，形成一个网络，事件从输入到SNN的第一层一直往后传播。所以SNN跟事件相机搭配在一起就跟珍珠配奶茶一样自然。</p>
+<h2 id="四、事件相机的发展与研究现状"><a href="#四、事件相机的发展与研究现状" class="headerlink" title="四、事件相机的发展与研究现状"></a>四、事件相机的发展与研究现状</h2><p>事件相机诞生于1990年，那个时间许多研究人员探讨动物感知环境的方式，发现对变化更为敏感，所以设计出了实验室用的事件相机。</p>
+<p>2008年，诞生了第一款商用的事件相机。这么看来，事件相机从商用到现在也刚刚过了十来年。目前，许多商业公司致力于事件相机的发展，有韩国Samsung、法国prophesee、瑞士iniVation、中国CelePixel（芯仑科技）等。</p>
+<p>在学术上，苏黎世联邦理工学院（ETH）的机器人与感知团队对事件相机有着系统深入的研究，其他高校例如帝国理工、慕尼黑大学等也开始相关研究。</p>
+<p>事件相机，目前在在特征提取与跟踪、光流、三维重建、SLAM、模式识别、控制等方向正在不断进行着研究，具有广泛的应用前景。</p>
+]]></content>
+      <categories>
+        <category>计算机视觉</category>
+      </categories>
+      <tags>
+        <tag>Camera</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Qt速成指南</title>
     <url>/2021/04/06/introduce-qt/</url>
     <content><![CDATA[<h1 id="Qt速成指南"><a href="#Qt速成指南" class="headerlink" title="Qt速成指南"></a>Qt速成指南</h1><p>Qt Creator是使用Qt开发的IDE。Qt支持Windows、Linux/Unix、Mac OS X、Android、BlackBerry、QNX等多种平台，Qt Creator为不同平台提供了统一的开发环境。</p>
@@ -2981,64 +3039,6 @@ hexo d<span aria-hidden="true" class="line-numbers-rows"><span></span><span></sp
       </categories>
       <tags>
         <tag>Qt</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>事件相机介绍</title>
-    <url>/2021/04/17/introduce-event-based-camera/</url>
-    <content><![CDATA[<h1 id="Event-based-Camera"><a href="#Event-based-Camera" class="headerlink" title="Event-based Camera"></a>Event-based Camera</h1><blockquote>
-<p>本文将网上的相关资料整理到了一起，方便阅读</p>
-</blockquote>
-<p><strong>前言</strong></p>
-<p>事件相机英文名为：Event-based Camera，或简称为Event Camera，缩写为EB。有时也称作DVS（Dynamic Vision Sensor “动态视觉传感器”）、DAVIS（Dynamic and Active-Pixel Vision Sensor）等。 </p>
-<p>不同于传统相机拍摄一幅完整的图像，事件相机拍摄的是“事件”，可以简单理解为“像素亮度的变化”，即事件相机输出的是像素亮度的变化情况。相比于以固定的帧率采集图像，这种相机通多测量每个像素的亮度变化来输出异步信号（包括事件，位置和亮度变化的符号）。</p>
-<p>事件相机与传统相机相比具有很多的优点: 高的动态测量范围（140dB vs. 60dB）， 高时间分辨率， 低功耗，不受运动模糊的影响。在高速、高动态范围的场景下有着广阔的应用空间。</p>
-<h2 id="零、传统相机的缺点"><a href="#零、传统相机的缺点" class="headerlink" title="零、传统相机的缺点"></a>零、传统相机的缺点</h2><p>传统相机，无论是CMOS传感器，还是CCD传感器，亦或是RGBD相机，都有一个参数：帧率。它们是以恒定的频率拍摄获取图像。这样，即使帧率能够达到1KHz，那也具有1ms的延时。所以传统相机存在一定的延迟问题。</p>
-<p>除此之外，传统相机需要通过一定时间的曝光，使感光器件积累一定的光子，那么在曝光时间之内如果物体在高速运动，则会产生模糊，这也是传统相机的一个问题。</p>
-<p>另外，传统相机的动态范围较低，具体表现为在光线极差或者亮度极高时，相机获取的信息有限。</p>
-<p>以上三点，是由于相机自身硬件的限制，即使高性能相机能够一定程度减小这些问题，但由于相机原理，这些问题无法避免。这些问题极大地限制了一些应用场景。而事件相机完全不存在这些问题。 </p>
-<h2 id="一、事件相机的介绍"><a href="#一、事件相机的介绍" class="headerlink" title="一、事件相机的介绍"></a>一、事件相机的介绍</h2><p>事件相机具有优势的典型场景包括实时交互系统，比如机器人与可穿戴设备，因为这些场景下的光照条件不可控，并且对于延时以及功率敏感。事件相机可以用于物体跟踪、识别以及手势控制，也可以应用在三维重建、光流估计、图像HDR和SLAM中，随着事件相机的发展，图像去模糊以及恒星跟踪也成为新的应用范围。</p>
-<h2 id="二、事件相机的原理"><a href="#二、事件相机的原理" class="headerlink" title="二、事件相机的原理"></a>二、事件相机的原理</h2><p><strong>基本原理</strong></p>
-<p>事件相机的最基本的原理，即：当某个像素的亮度变化累计达到一定阈值后，输出一个事件。这里强调几个概念：</p>
-<p>a） 亮度变化：说明事件相机的输出和变化有关，而与亮度的绝对值没有关系；</p>
-<p>b） 阈值：当亮度变化达到一定程度时，将输出数据，这个阈值是相机的固有参数。</p>
-<p>下面重点解释什么是一个“事件”。事件具有三要素：时间戳、像素坐标与极性。一个事件表达的是“在什么时间，哪个像素点，发生了亮度的增加或减小”。</p>
-<p>当场景中由物体运动或光照改变造成大量像素变化时，会产生一系列的事件，这些事件以事件流（Events stream）方式输出。事件流的数据量远小于传统相机传输的数据，且事件流没有最小时间单位，所以不像传统相机定时输出数据，具有低延迟特性。下面的动图揭示了事件相机与传统相机的成像的不同。</p>
-<p><img src="/images/Event-Camera/001.gif"></p>
-<p><em>（动图：左侧为有一个黑色斑块的圆盘，匀速旋转时，右上方的传统相机会定时拍摄完整的图像，下方事件相机的输出会仅输出变化，即黑斑的运动。当圆盘不转时，传统相机依旧傻傻的拍摄图像，而事件相机不会产生任何输出）</em></p>
-<p>由于事件相机的成像原理，我们可以发现只要亮度一有变化就会输出，且仅输出变化的数据占用了很小的带宽，同时由于事件相机更擅长捕捉亮度变化，所以在较暗和强光场景下也能输出有效数据。事件相机具有低延迟（&lt;𝟏𝝁𝒔）、高动态范围（𝟏𝟒𝟎𝒅𝑩）、极低功耗（𝟏𝒎𝑾）等特性。</p>
-<p><strong>深入了解</strong></p>
-<p>事件相机是对每一个像素下面有一个计算电路，左边的光电转换电路将光强转换为电压值，中间是一个差分电路，结果达到触发阈值之后会触发信号。信号从片上到USB是采用一种AER（Address Event Representation）编码的方式，国内有人将这种编码用于二值图像的压缩，具体的结果就是USB传输过来的数据不是前文所说的$(x, y, polarity, timestamp)$的形式，而是需要解码之后才能得到，常见的解码程序有:</p>
-<blockquote>
-<p><a href="https://github.com/inivation/libcaer">https://github.com/inivation/libcaer</a></p>
-<p><a href="https://github.com/SensorsINI/jaer">https://github.com/SensorsINI/jaer</a></p>
-</blockquote>
-<p>这些开源代码往往已经包含在了事件相机厂商提供的SDK中了。</p>
-<p><img src="/images/Event-Camera/002.jpg" alt="简化事件相机的硬件电路"></p>
-<p>虽然事件相机很好用，但有的时候还是有人想要使用绝对的灰度值。ATIS就实现了这样的一种相机，它通过触发事件后将电容器设置为高电压，然后在用另一个二极管从电容器中放电，光强越大放电越快，ATIS对放电事件进行编码得到强度值。但这样就导致在较暗的环境下放电速度不够快会导致新的事件打断放电过程（算法见<a href="https://github.com/SensorsINI/jaer/blob/master/src/eu/seebetter/ini/chips/davis/DavisAutoShooter.java">jaer</a>）。DAVIS是另一种使用广泛的将DVS（Dynamic Vision Sensor）和APS（Active Pixel Sensor）结合在一起的传感器，它将二者的光电二极管进行共享，不同在加装了一个读出电路，因此可以在输出事件的同时输出强度帧（来自APS）。</p>
-<p>事件相机的理想模型很简单：<br>$$<br>\Delta L(x_k,t_k)=p_kC<br>$$<br>等式左边是对数灰度的变化，右边是输出的极性以及阈值，一般而言$C$会设置在 $15%-50%$。但是实际中事件相机会受到噪声以及像素错配的影响，所以一般会在该模型加上高斯随机噪声，这一点在事件相机的仿真器中有体现：</p>
-<blockquote>
-<p><a href="http://rpg.ifi.uzh.ch/esim.html">http://rpg.ifi.uzh.ch/esim.html</a></p>
-</blockquote>
-<p>跟普通相机一样，事件相机也有需要一个<a href="https://en.wikipedia.org/wiki/Fixed-pattern_noise">FPN</a>（Fixed Pixel Noise），即相机灰度的初始bias，对于事件相机而言，bias的定义就是指阈值 $C$ ，一般而言不同像素之间的 $C$ 可能相差 $2.5%-4%$，现在不存在事件相机的FPN标定计算方案，这是一个能做的研究方向。</p>
-<p>BSI（back-side illumination）技术是广泛应用于智能手机相机上的增大填充系数的技术，目前事件相机上的光电芯片的FSI方法会阻碍光线到达像素，意味着必须增大像素面积才能获取足够的光强，使用BSI技术可以使得相机模块更薄、更小，但由于这项技术的难度与花费，现在只有少数的验证用的事件相机。</p>
-<p>下面是一些现有的商业化的事件相机比较，最后一列是来自中国上海的芯仑科技的事件相机，最新的Celex-V相机是世界上第一台百万级像素的事件相机。（但是CeleX-IV的填充系数只有9per…）</p>
-<p><img src="/images/Event-Camera/003.jpg" alt="现有的商业化的事件相机比较"></p>
-<h2 id="三、事件相机的处理范式"><a href="#三、事件相机的处理范式" class="headerlink" title="三、事件相机的处理范式"></a>三、事件相机的处理范式</h2><p>事件相机的输出是事件流，主要有三种常见的处理范式，分别是：</p>
-<h3 id="A-Event-by-Event"><a href="#A-Event-by-Event" class="headerlink" title="A. Event-by-Event"></a>A. Event-by-Event</h3><p>Event-by-Event的方法常常用于许多任务中，如SLAM里面的特征追踪、位姿追踪和图像重建。一类的方法是依赖于模型的（模型可以从其它类型的传感器数据中获得，如获得一个半稠密的深度图），然后再通过处理一个一个的事件来更新系统的状态。另一类方法是不依赖于模型的（数据驱动即机器学习）。</p>
-<h3 id="B-Groups-of-Events"><a href="#B-Groups-of-Events" class="headerlink" title="B. Groups of Events"></a>B. Groups of Events</h3><p>由于每个事件的携带的信息很少，并且容易受到噪声的影响，因此将几个事件一起处理，能够为需要解决的问题产生足够的信噪比。基于模型的方法往往是将事件转化为frame，然后运用传统的视觉方法来解决问题。而另外一种就是基于数据驱动的事件组方法，其已经用在了分类、光流估计、深度估计等任务中。经典的CNN网络使用张量作为输入，因此事件组必须转为类似的形式。现有的一些转换方法有：事件的像素直方图、最近时间戳表面（SAE）、插值体素网格。在网络架构方面，这些任务往往都会使用流形的Encoder-Decoder架构，具体网络中的其它细节可以在引文中查找对应的引用。</p>
-<p><img src="/images/Event-Camera/004.jpg" alt="流形的Encoder-Decoder架构"></p>
-<h3 id="C-SNN"><a href="#C-SNN" class="headerlink" title="C. SNN"></a>C. SNN</h3><p>事件相机是受到生物学启发的传感器，SNN也是一种受到生物学启发的网络。SNN 使用脉冲（发生在时间点上的离散事件）进行连接。一个神经元从视觉空间的一个小区域（一个感受野）接受输入事件，在状态超过阈值时产生输出事件。神经元以分层的方式连接，形成一个网络，事件从输入到SNN的第一层一直往后传播。所以SNN跟事件相机搭配在一起就跟珍珠配奶茶一样自然。</p>
-<h2 id="四、事件相机的发展与研究现状"><a href="#四、事件相机的发展与研究现状" class="headerlink" title="四、事件相机的发展与研究现状"></a>四、事件相机的发展与研究现状</h2><p>事件相机诞生于1990年，那个时间许多研究人员探讨动物感知环境的方式，发现对变化更为敏感，所以设计出了实验室用的事件相机。</p>
-<p>2008年，诞生了第一款商用的事件相机。这么看来，事件相机从商用到现在也刚刚过了十来年。目前，许多商业公司致力于事件相机的发展，有韩国Samsung、法国prophesee、瑞士iniVation、中国CelePixel（芯仑科技）等。</p>
-<p>在学术上，苏黎世联邦理工学院（ETH）的机器人与感知团队对事件相机有着系统深入的研究，其他高校例如帝国理工、慕尼黑大学等也开始相关研究。</p>
-<p>事件相机，目前在在特征提取与跟踪、光流、三维重建、SLAM、模式识别、控制等方向正在不断进行着研究，具有广泛的应用前景。</p>
-]]></content>
-      <categories>
-        <category>计算机视觉</category>
-      </categories>
-      <tags>
-        <tag>Camera</tag>
       </tags>
   </entry>
   <entry>
