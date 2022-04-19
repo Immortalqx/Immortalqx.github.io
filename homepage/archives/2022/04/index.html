@@ -28,7 +28,7 @@ This is our first generation logistics UAV, we participated in 2020 China Robot 
 <p>In order to ensure the accuracy of delivery, we ensure that the UAV can deliver express to the delivery target center by keeping the delivery target center in the down view image center. Although this can solve the problem, it is too difficult to control (it is difficult to determine which direction and how many meters the UAV should move), which also affects the accuracy of UAV delivery.</p>
 </li>
 <li><p>The design of UAV is too bulky and difficult to control in flight.</p>
-<p>When the drop target is detected, we want to control the drone to drop a certain height to complete a more accurate drop, but when the weight of the courier carried by the drone is too heavy, the drone will be far more than expected in the drop height, only by reducing the weight of the courier to ensure that the drone works properly.</p>
+<p>When the target is detected, we want to control the drone to drop a certain height to complete a more accurate drop, but when the weight of the courier carried by the drone is too heavy, the drone will be far more than expected in the drop height, only by reducing the weight of the courier to ensure that the drone works properly.</p>
 </li>
 </ul>
 <p><strong>My works:</strong></p>
@@ -51,7 +51,7 @@ This is our first generation logistics UAV, we participated in 2020 China Robot 
 <ul>
 <li><p>For the problem of low localization accuracy:</p>
 <ul>
-<li>Before I just calibrated the camera, the imu parameter in open-vins used the default value. But this time I did a joint calibration of the camera and imu, which allows the UAV to get more accurate localization.</li>
+<li>Previously I just calibrated the camera and used the default values for the imu parameter in open-vins. But this time I did a joint calibration of the camera and imu, which allows the UAV to get more accurate localization.</li>
 <li>open-vins is only able to obtain the pose in the camera coordinate system, and a coordinate transformation is required for the UAV. So I created a ROS program called “pose remap” for converting a pose into the desired pose for the robot. </li>
 </ul>
 </li>
@@ -102,7 +102,7 @@ This is our first generation logistics UAV, we participated in 2020 China Robot 
 <li>2D collision detection algorithm</li>
 </ol>
 <p>video/ <a target="_blank" rel="noopener" href="https://github.com/Immortalqx/Qt-based-LIDAR-mapping-simulator.git">code</a></p>
-<h2 id="NWPU-Soccer-Robot-Base-SLAM-Group-Learning-Tutorial"><a href="#NWPU-Soccer-Robot-Base-SLAM-Group-Learning-Tutorial" class="headerlink" title="NWPU Soccer Robot Base SLAM Group Learning Tutorial"></a>NWPU Soccer Robot Base SLAM Group Learning Tutorial</h2><p>This project was initiated by the NWPU Soccer Robot Base SLAM Group, with Quanxiang Liu as the main leader.</p>
+<h2 id="NWPU-Soccer-Robot-Base-SLAM-Group-Learning-Tutorial"><a href="#NWPU-Soccer-Robot-Base-SLAM-Group-Learning-Tutorial" class="headerlink" title="NWPU Soccer Robot Base SLAM Group Learning Tutorial"></a>NWPU Soccer Robot Base SLAM Group Learning Tutorial</h2><p>This project was initiated by the NWPU Soccer Robot Base SLAM Group, and I am the main leader.</p>
 <div align="center">
 <img src="/homepage/images/5-1.png" alt="" style="zoom: 50%;">
 </div>
