@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="EN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"><title>Quanxiang's Homepage</title><meta name="author"><link rel="shortcut icon" href="/homepage/img/favicon.png"><link rel="stylesheet" href="/homepage/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><meta name="generator" content="Hexo 5.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/homepage/atom.xml" title="Quanxiang's Homepage" type="application/atom+xml">
+</head><body><header id="page_header"><div class="header_wrap"><div id="blog_name"><a class="blog_title" id="site-name" href="/homepage/">Quanxiang's Homepage</a></div><button class="menus_icon"><div class="navicon"></div></button><ul class="menus_items"><li class="menus_item"><a class="site-page" href="/homepage/"> About Me</a></li><li class="menus_item"><a class="site-page" href="/homepage/#News"> News</a></li><li class="menus_item"><a class="site-page" href="/homepage/#Projects"> Projects</a></li><li class="menus_item"><a class="site-page" href="/homepage/#Honors-and-Awards"> Honors and Awards</a></li><li class="menus_item"><a class="site-page" href="/homepage/#Educations"> Educations</a></li><li class="menus_item"><a class="site-page" href="https://immortalqx.github.io"> Blog</a></li></ul></div></header><main id="page_main"><div class="side-card sticky"><div class="card-wrap" itemscope itemtype="http://schema.org/Person"><div class="author-avatar"><img class="avatar-img" src="/homepage/img/avatar.jpg" onerror="this.onerror=null;this.src='/homepage/img/profile.jpg'" alt="avatar"></div><div class="author-discrip"><h3>Quanxiang Liu</h3><p class="author-bio">Undergraduate students at Northwestern Polytechnic University. Focusing on computer vision, SLAM and robotics.</p></div><div class="author-links"><button class="btn m-social-links">Links</button><ul class="social-icons"><li><a class="social-icon" href="/homepage/img/qq_qrcode.jpg" target="_blank"><i class="fab fa-qq" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/homepage/img/wechat_qrcode.jpg" target="_blank"><i class="fab fa-weixin" aria-hidden="true"></i></a></li><li><a class="social-icon" href="https://github.com/Immortalqx" target="_blank"><i class="fab fa-github" aria-hidden="true"></i></a></li><li><a class="social-icon" href="mailto:immortalqx@gmail.com" target="_blank"><i class="fas fa-envelope" aria-hidden="true"></i></a></li></ul></div><a class="cv-links" href="/homepage/attaches/CV.pdf" target="_blank"><i class="fas fa-file-pdf" aria-hidden="true"><span>CV</span></i></a></div></div><div class="page" itemscope itemtype="http://schema.org/CreativeWork"><h2 class="page-title">类的六个默认的成员函数</h2><article><h1 id="类的六个默认的成员函数"><a href="#类的六个默认的成员函数" class="headerlink" title="类的六个默认的成员函数"></a>类的六个默认的成员函数</h1><h2 id="类的6个默认的成员函数包括："><a href="#类的6个默认的成员函数包括：" class="headerlink" title="类的6个默认的成员函数包括："></a>类的6个默认的成员函数包括：</h2><p>构造函数、析构函数、拷贝构造函数、赋值运算符重载函数、取地址操作符重载、const修饰的取地址操作符重载。</p>
+<h3 id="（一）构造函数"><a href="#（一）构造函数" class="headerlink" title="（一）构造函数"></a>（一）构造函数</h3><p>构造函数，顾名思义，为对象分配空间，进行初始化。它是一种特殊的成员函数，具有以下特点:</p>
+<ol>
+<li><p>函数名与类名相同。</p>
+</li>
+<li><p>无返回值。</p>
+</li>
+<li><p>构造对象的时候系统会自动调用构造函数。</p>
+</li>
+<li><p>可以重载。</p>
+</li>
+<li><p>可以在类中定义，也可以在类外定义。</p>
+</li>
+<li><p>如果类中没有给出构造函数，编译器会自动产生一个缺省的构造函数，如果类中有构造函数，编译器就不会产生缺省构造函数。</p>
+</li>
+<li><p>全缺省的构造函数和无参的构造函数只能有一个，否则调用的时候就会产生冲突。</p>
+</li>
+<li><p>没有this指针。因为构造函数才是创建对象的，没有创建对象就不会有对象的首地址。</p>
+</li>
+</ol>
+<p>构造函数，说来就是给成员变量进行初始化。而初始化却有两种方法：初始化列表、构造函数函数体内赋值。尽量使用初始化列表，因为它更高效。</p>
+<h4 id="有些成员变量必须再初始化列表中初始化，比如："><a href="#有些成员变量必须再初始化列表中初始化，比如：" class="headerlink" title="有些成员变量必须再初始化列表中初始化，比如："></a>有些成员变量必须再初始化列表中初始化，比如：</h4><ol>
+<li><p>常量成员变量。（常量创建时必须初始化，因为对于一个常量，我们给它赋值，是不对的）</p>
+</li>
+<li><p>引用类型成员变量。（引用创建时必须初始化）</p>
+</li>
+<li><p>没有缺省构造函数的类成员变量。（如果构造函数的参数列表中有一个类的对象，并且该对象的类里没有缺省参数的构造函数时，要是不使用初始化列表，参数中会调用无参或者全缺省的构造函数，而那个类中又没有。）</p>
+</li>
+</ol>
+<h3 id="（二）析构函数"><a href="#（二）析构函数" class="headerlink" title="（二）析构函数"></a>（二）析构函数</h3><h4 id="析构函数是一种特殊的成员函数，具有以下特点："><a href="#析构函数是一种特殊的成员函数，具有以下特点：" class="headerlink" title="析构函数是一种特殊的成员函数，具有以下特点："></a>析构函数是一种特殊的成员函数，具有以下特点：</h4><ol>
+<li><p>析构函数函数名是在类名加上字符 ~ 。</p>
+</li>
+<li><p>无参数无返回值（但有this指针）。</p>
+</li>
+<li><p>一个类有且只有一个析构函数，所以肯定不能重载。若未显示定义，系统会自动生成缺省的析构函数。</p>
+</li>
+<li><p>对象生命周期结束时，C++编译系统系统自动调用析构函数。</p>
+</li>
+<li><p>注意析构函数体内并不是删除对象，而是做一些清理工作。（比如我们在构造函数中动态开辟过一段空间，函数结束后需要释放，而系统自动生成的析构函数才不管内存释放呢，所以需要人为地写出析构函数）</p>
+</li>
+</ol>
+<p>注意：对象生命周期结束后，后构造的对象先释放。</p>
+<h3 id="（三）拷贝构造函数"><a href="#（三）拷贝构造函数" class="headerlink" title="（三）拷贝构造函数"></a>（三）拷贝构造函数</h3><p>用已有的对象创建一个新的对象。</p>
+<p>创建对象时使用同类对象来进行初始化，这时所用的构造函数就是拷贝构造函数（Copy  Constructor）。拷贝构造函数也是构造函数，但它只有一个参数，这个参数只能是本类的一个对象，而且采用对象的常引用形式。拷贝构造函数的作用就是将实参对象的各成员值一一赋给新的对象中对应的成员。</p>
+<p>该函数的参数是一个常引用，如果不是引用，形参是实参的一份临时拷贝，由于两者都是对象，此时就会调用自己的拷贝构造函数，陷入无限递归中…….</p>
+<h4 id="拷贝构造函数的特征"><a href="#拷贝构造函数的特征" class="headerlink" title="拷贝构造函数的特征"></a>拷贝构造函数的特征</h4><p> （1）拷贝构造函数其实是一个构造函数的重载。<br> （2）拷贝构造函数的参数必须使用引用传参，使用传参方式会引发无穷递归调用。<br> （3）若为显示定义，系统默认生成缺省的拷贝构造函数，缺省的拷贝构造函数会按照成员的声明顺序依次拷贝类成员进行初始化</p>
+<h4 id="调用拷贝构造函数的两种方法："><a href="#调用拷贝构造函数的两种方法：" class="headerlink" title="调用拷贝构造函数的两种方法："></a>调用拷贝构造函数的两种方法：</h4><ol>
+<li><p>代入法：</p>
+<p>Person p2(p1);</p>
+</li>
+<li><p>赋值法：</p>
+<p>Person p2 = p1;</p>
+</li>
+</ol>
+<h4 id="为什么这里的对象可以直接访问私有成员变量？"><a href="#为什么这里的对象可以直接访问私有成员变量？" class="headerlink" title="为什么这里的对象可以直接访问私有成员变量？"></a>为什么这里的对象可以直接访问私有成员变量？</h4><p> 1）在类的成员函数里可以直接访问同类对象的私有或保护的成员。<br> 2）C++的访问限定符是以类为单位的，即：在这个单位内的成员可以互相访问。</p>
+<h3 id="（四）赋值运算符重载函数"><a href="#（四）赋值运算符重载函数" class="headerlink" title="（四）赋值运算符重载函数"></a>（四）赋值运算符重载函数</h3><p>用一个对象修改已经存在对象的内容，不是去创建新的对象，修改之后，两个对象的内容一致</p>
+<blockquote>
+<ol>
+<li>可以通过检查是否给自己赋值，进行优化</li>
+<li><strong>如果需要连续赋值，返回值不能是void，一般为引用类型</strong></li>
+<li>*<em>返回值一般是 <em>this</em></em></li>
+<li>编译器默认生成的赋值运算符为字节拷贝，即浅拷贝，如果资源需要拷贝，需要显示定义，完成深拷贝</li>
+</ol>
+<p>=调用：如果对象都存在，调用赋值运算符重载函数</p>
+<p>​              如果左边对象不存在，调用拷贝构造创建左边对象</p>
+</blockquote>
+<p><em>赋值是从右向左进行的</em></p>
+<p>如果不写，编译器会自动生成，默认生成的也是字节拷贝，浅拷贝</p>
+<p>如果当前类中有资源，则必须显示定义运算符重载函数，完成深拷贝</p>
+<h4 id="普通运算符重载函数"><a href="#普通运算符重载函数" class="headerlink" title="普通运算符重载函数"></a>普通运算符重载函数</h4><blockquote>
+<ol>
+<li>不能创建新的操作符，如operator@</li>
+<li>重载操作符必须有一个类类型或者枚举类型的操作符</li>
+<li>用于内置类型的操作符，其含义不能改变</li>
+<li>运算符重载函数如果是成员函数，则参数的个数比运算符需要的个数少一个，这里编译器会传入this指针作为第一个参数</li>
+<li>普通的运算符重载函数，参数的个数和运算符需要的个数一致</li>
+</ol>
+</blockquote>
+<p><strong>.*（成员指针访问运算符） ,  ::  ,  sizeof  ,  ? :  ,  .   五个运算符不能被重载</strong></p>
+<h3 id="（五）取地址运算符重载函数-const取地址运算符重载函数：获取对象的地址"><a href="#（五）取地址运算符重载函数-const取地址运算符重载函数：获取对象的地址" class="headerlink" title="（五）取地址运算符重载函数 / const取地址运算符重载函数：获取对象的地址**"></a>（五）取地址运算符重载函数 / const取地址运算符重载函数：获取对象的地址**</h3><p>一般不需要显示定义，直接使用编译器自动生成的即可</p>
+</article></div></main><div class="nav-wrap"><div class="nav"><button class="site-nav"><div class="navicon"></div></button><ul class="nav_items"><li class="nav_item"><a class="nav-page" href="/homepage/"> About Me</a></li><li class="nav_item"><a class="nav-page" href="/homepage/#News"> News</a></li><li class="nav_item"><a class="nav-page" href="/homepage/#Projects"> Projects</a></li><li class="nav_item"><a class="nav-page" href="/homepage/#Honors-and-Awards"> Honors and Awards</a></li><li class="nav_item"><a class="nav-page" href="/homepage/#Educations"> Educations</a></li><li class="nav_item"><a class="nav-page" href="https://immortalqx.github.io"> Blog</a></li></ul></div><div class="cd-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div></div><footer id="page_footer"><div class="footer_wrap"><div class="copyright">&copy;2022 by null</div><div class="theme-info">Powered by <a target="_blank" href="https://hexo.io" rel="nofollow noopener">Hexo</a> & <a target="_blank" href="https://github.com/PhosphorW/hexo-theme-academia" rel="nofollow noopener">Academia Theme</a></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery-pjax@latest/jquery.pjax.min.js"></script><script src="/homepage/js/main.js"></script></body></html>

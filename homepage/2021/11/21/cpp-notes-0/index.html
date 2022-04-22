@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="EN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"><title>Quanxiang's Homepage</title><meta name="author"><link rel="shortcut icon" href="/homepage/img/favicon.png"><link rel="stylesheet" href="/homepage/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><meta name="generator" content="Hexo 5.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/homepage/atom.xml" title="Quanxiang's Homepage" type="application/atom+xml">
+</head><body><header id="page_header"><div class="header_wrap"><div id="blog_name"><a class="blog_title" id="site-name" href="/homepage/">Quanxiang's Homepage</a></div><button class="menus_icon"><div class="navicon"></div></button><ul class="menus_items"><li class="menus_item"><a class="site-page" href="/homepage/"> About Me</a></li><li class="menus_item"><a class="site-page" href="/homepage/#News"> News</a></li><li class="menus_item"><a class="site-page" href="/homepage/#Projects"> Projects</a></li><li class="menus_item"><a class="site-page" href="/homepage/#Honors-and-Awards"> Honors and Awards</a></li><li class="menus_item"><a class="site-page" href="/homepage/#Educations"> Educations</a></li><li class="menus_item"><a class="site-page" href="https://immortalqx.github.io"> Blog</a></li></ul></div></header><main id="page_main"><div class="side-card sticky"><div class="card-wrap" itemscope itemtype="http://schema.org/Person"><div class="author-avatar"><img class="avatar-img" src="/homepage/img/avatar.jpg" onerror="this.onerror=null;this.src='/homepage/img/profile.jpg'" alt="avatar"></div><div class="author-discrip"><h3>Quanxiang Liu</h3><p class="author-bio">Undergraduate students at Northwestern Polytechnic University. Focusing on computer vision, SLAM and robotics.</p></div><div class="author-links"><button class="btn m-social-links">Links</button><ul class="social-icons"><li><a class="social-icon" href="/homepage/img/qq_qrcode.jpg" target="_blank"><i class="fab fa-qq" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/homepage/img/wechat_qrcode.jpg" target="_blank"><i class="fab fa-weixin" aria-hidden="true"></i></a></li><li><a class="social-icon" href="https://github.com/Immortalqx" target="_blank"><i class="fab fa-github" aria-hidden="true"></i></a></li><li><a class="social-icon" href="mailto:immortalqx@gmail.com" target="_blank"><i class="fas fa-envelope" aria-hidden="true"></i></a></li></ul></div><a class="cv-links" href="/homepage/attaches/CV.pdf" target="_blank"><i class="fas fa-file-pdf" aria-hidden="true"><span>CV</span></i></a></div></div><div class="page" itemscope itemtype="http://schema.org/CreativeWork"><h2 class="page-title">C++中的头文件</h2><article><h1 id="C-中的头文件"><a href="#C-中的头文件" class="headerlink" title="C++中的头文件"></a>C++中的头文件</h1><blockquote>
+<p>最近在写pi-slam-fusion，遇到的问题比较多，最离谱的问题可能就是和头文件有关的这部分了。</p>
+</blockquote>
+<h3 id="1-关于为什么C-需要“在头文件中声明，在源文件中定义”？"><a href="#1-关于为什么C-需要“在头文件中声明，在源文件中定义”？" class="headerlink" title="1. 关于为什么C++需要“在头文件中声明，在源文件中定义”？"></a>1. 关于为什么C++需要“在头文件中声明，在源文件中定义”？</h3><blockquote>
+<p>当时为了把pislam和map2dfusion弄到一个程序里面，想出了#include “main.cpp” 和把 “main.cpp”重命名为”pislam.h”再进行#include的操作，这样肯定是有问题的！</p>
+<p>实际上当时一编译就会跟我报“重定义”的错误，然后我居然还以为是CMakeList没写好</p>
+</blockquote>
+<ul>
+<li><p>第一，<strong>预编译指令#include的作用是将所包含的文件全文复制到#include的位置</strong>，相当于是个展开为一个文件的宏。</p>
+<p>c++的预处理器在编译之前执行，它看到#include指令，就会把那个文件的内容替换到当前位置。其它的预处理指令例如#define, #ifdef, ##等也在这个阶段被执行、并产生相应的内容。</p>
+<p>预处理器执行完成后，所有的预处理指令都会被移除。其结果是一个单个头的大文件（我猜测这文件只存在于内存里），这个文件才会被进一步传给编译器做编译。</p>
+</li>
+<li><p>第二，<strong>C++允许多次声明，但只允许一次实现。</strong>比如int foo();就是一次声明，而int foo(){}就是一次实现。</p>
+<p>如果编译时有多个.cpp文件中#include了同一个含有函数实现的.h，这时候链接器就会在多个目标文件中找到这个函数的实现，而这在C++中是不允许的，此时就会引爆<strong>LNK1169错误:找到一个或多个重定义的符号。</strong></p>
+<p>因此为了让函数可以在各个.cpp中共享，正确的做法就是在.h中只声明函数，并在另【 一个（重点）】.cpp中实现这个函数。这样就不会冲突了。</p>
+<blockquote>
+<p>所以#include一个.cpp文件也是不可以的，这和#include一个含有函数实现的.h文件效果一样糟糕。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="2-头文件中应该写什么内容？"><a href="#2-头文件中应该写什么内容？" class="headerlink" title="2. 头文件中应该写什么内容？"></a>2. 头文件中应该写什么内容？</h3><blockquote>
+<p>因为问题一的存在，现在我其实对头文件里面应该写什么也不太清楚了，所以又查了一些内容。。。</p>
+</blockquote>
+<p><strong>头文件中应该只放变量和函数的声明，而不能放它们的定义。</strong>不过这样的规则有三个例外：</p>
+<ol>
+<li><p><strong>头文件中可以写 const 对象的定义。</strong></p>
+<p>因为全局的 const 对象默认是没有 extern 的声明的，所以它只在当前文件中有效。</p>
+<p>同理，static 对象的定义也可以放进头文件。</p>
+</li>
+<li><p><strong>头文件中可以写内联函数（inline）的定义。</strong></p>
+<p>C++ 规定，内联函数可以在程序中定义多次，只要内联函数在一个 .cpp 文件中只出现一次，并且在所有的 .cpp 文件中，这个内联函数的定义是一样的，就能通过编译。</p>
+<p>那么显然，把内联函数的定义放进一个头文件中是非常明智的做法。</p>
+</li>
+<li><p><strong>头文件中可以写类（class）的定义。</strong></p>
+<p>编译器只有在这个类的定义完全可见的情况下，才能知道这个类的对象应该如何布局，所以，关于类的定义的要求，跟内联函数是基本一样的。</p>
+<p>我们可以把类的定义放在头文件中，而把函数成员的实现代码放在一个 .cpp 文件中。</p>
+<p>也可以直接把函数成员的实现代码也写进类定义里面。<strong>在 C++ 的类中，如果函数成员在类的定义体中被定义，那么编译器会视这个函数为内联的。</strong>因此，把函数成员的定义写进类定义体，一起放进头文件中，是合法的。</p>
+<blockquote>
+<p>注意一下，如果把函数成员的定义写在类定义的头文件中，而没有写进类定义中，这是不合法的，因为这个函数成员此时就不是内联的了。一旦头文件被两个或两个以上的 .cpp 文件包含，这个函数成员就被重定义了。</p>
+</blockquote>
+</li>
+</ol>
+<p><strong>头文件中的保护措施：</strong></p>
+<p>设想一下，如果 a.h 中含有类 A 的定义，b.h 中含有类 B 的定义，由于类B的定义依赖了类 A，所以 b.h 中也 #include了a.h。现在有一个源文件，它同时用到了类A和类B，于是程序员在这个源文件中既把 a.h 包含进来了，也把 b.h 包含进来了。这时，问题就来了：类A的定义在这个源文件中出现了两次！于是整个程序就不能通过编译了。</p>
+<p>使用 “#define” 配合条件编译可以很好地解决这个问题。在一个头文件中，通过 #define 定义一个名字，并且通过条件编译 #ifndef…#endif 使得编译器可以根据这个名字是否被定义，再决定要不要继续编译该头文中后续的内容。这个方法虽然简单，但是写头文件时一定记得写进去。</p>
+<p><strong>综上所诉</strong></p>
+<p>.h文件中能包含：</p>
+<ul>
+<li>类成员数据的声明，但不能赋值</li>
+<li>类静态数据成员的定义和赋值，但不建议，只是个声明就好。</li>
+<li>类的成员函数的声明</li>
+<li>非类成员函数的声明</li>
+<li>常数的定义：如：constint a=5;</li>
+<li>静态函数的定义</li>
+<li>类的内联函数的定义</li>
+</ul>
+<p>不能包含：</p>
+<ul>
+<li>所有非静态变量（不是类的数据成员）的声明</li>
+<li>默认命名空间声明不要放在头文件，using namespace std;等应放在.cpp中，在 .h 文件中使用 std::string</li>
+</ul>
+</article></div></main><div class="nav-wrap"><div class="nav"><button class="site-nav"><div class="navicon"></div></button><ul class="nav_items"><li class="nav_item"><a class="nav-page" href="/homepage/"> About Me</a></li><li class="nav_item"><a class="nav-page" href="/homepage/#News"> News</a></li><li class="nav_item"><a class="nav-page" href="/homepage/#Projects"> Projects</a></li><li class="nav_item"><a class="nav-page" href="/homepage/#Honors-and-Awards"> Honors and Awards</a></li><li class="nav_item"><a class="nav-page" href="/homepage/#Educations"> Educations</a></li><li class="nav_item"><a class="nav-page" href="https://immortalqx.github.io"> Blog</a></li></ul></div><div class="cd-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div></div><footer id="page_footer"><div class="footer_wrap"><div class="copyright">&copy;2022 by null</div><div class="theme-info">Powered by <a target="_blank" href="https://hexo.io" rel="nofollow noopener">Hexo</a> & <a target="_blank" href="https://github.com/PhosphorW/hexo-theme-academia" rel="nofollow noopener">Academia Theme</a></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery-pjax@latest/jquery.pjax.min.js"></script><script src="/homepage/js/main.js"></script></body></html>

@@ -1,0 +1,427 @@
+<!DOCTYPE html><html lang="EN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"><title>Quanxiang's Homepage</title><meta name="author"><link rel="shortcut icon" href="/homepage/img/favicon.png"><link rel="stylesheet" href="/homepage/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><meta name="generator" content="Hexo 5.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/homepage/atom.xml" title="Quanxiang's Homepage" type="application/atom+xml">
+</head><body><header id="page_header"><div class="header_wrap"><div id="blog_name"><a class="blog_title" id="site-name" href="/homepage/">Quanxiang's Homepage</a></div><button class="menus_icon"><div class="navicon"></div></button><ul class="menus_items"><li class="menus_item"><a class="site-page" href="/homepage/"> About Me</a></li><li class="menus_item"><a class="site-page" href="/homepage/#News"> News</a></li><li class="menus_item"><a class="site-page" href="/homepage/#Projects"> Projects</a></li><li class="menus_item"><a class="site-page" href="/homepage/#Honors-and-Awards"> Honors and Awards</a></li><li class="menus_item"><a class="site-page" href="/homepage/#Educations"> Educations</a></li><li class="menus_item"><a class="site-page" href="https://immortalqx.github.io"> Blog</a></li></ul></div></header><main id="page_main"><div class="side-card sticky"><div class="card-wrap" itemscope itemtype="http://schema.org/Person"><div class="author-avatar"><img class="avatar-img" src="/homepage/img/avatar.jpg" onerror="this.onerror=null;this.src='/homepage/img/profile.jpg'" alt="avatar"></div><div class="author-discrip"><h3>Quanxiang Liu</h3><p class="author-bio">Undergraduate students at Northwestern Polytechnic University. Focusing on computer vision, SLAM and robotics.</p></div><div class="author-links"><button class="btn m-social-links">Links</button><ul class="social-icons"><li><a class="social-icon" href="/homepage/img/qq_qrcode.jpg" target="_blank"><i class="fab fa-qq" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/homepage/img/wechat_qrcode.jpg" target="_blank"><i class="fab fa-weixin" aria-hidden="true"></i></a></li><li><a class="social-icon" href="https://github.com/Immortalqx" target="_blank"><i class="fab fa-github" aria-hidden="true"></i></a></li><li><a class="social-icon" href="mailto:immortalqx@gmail.com" target="_blank"><i class="fas fa-envelope" aria-hidden="true"></i></a></li></ul></div><a class="cv-links" href="/homepage/attaches/CV.pdf" target="_blank"><i class="fas fa-file-pdf" aria-hidden="true"><span>CV</span></i></a></div></div><div class="page" itemscope itemtype="http://schema.org/CreativeWork"><h2 class="page-title">基于SIFT的图像拼接（融合）实现</h2><article><h1 id="基于SIFT的图像拼接（融合）实现"><a href="#基于SIFT的图像拼接（融合）实现" class="headerlink" title="基于SIFT的图像拼接（融合）实现"></a>基于SIFT的图像拼接（融合）实现</h1><p><strong>要求：</strong></p>
+<ol>
+<li>给出你用手机拍摄两张有重叠视野的照片（建议两幅图像打光不同，以体现融合的效果）。</li>
+<li>用sift特征或者任意你熟悉的特征进行匹配。</li>
+<li>给出变换矩阵，并完成拼接，给出拼接后的图像。</li>
+<li>对拼接后的图像进行融合，附融合后的图像。</li>
+</ol>
+<h3 id="加载图片并进行预处理"><a href="#加载图片并进行预处理" class="headerlink" title="加载图片并进行预处理"></a>加载图片并进行预处理</h3><p>第一步肯定是图片的加载和预处理。这里我的想法是：</p>
+<ul>
+<li>先加载图片，然后调整第一张图片的分辨率，强制宽度为600；</li>
+<li>之后再调整第二张图片的分辨率，让这两张图片的分辨率一样。</li>
+</ul>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">load_image</span><span class="token punctuation">(</span>img1_path<span class="token punctuation">,</span> img2_path<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    加载两张图片，并进行预处理
+    :param img1_path: 图片1的路径
+    :param img2_path: 图片2的路径
+    :return: 处理后的图片1与图片2
+    """</span>
+    <span class="token comment"># ================ 图片加载 ================</span>
+    img1 <span class="token operator">=</span> cv<span class="token punctuation">.</span>imread<span class="token punctuation">(</span>img1_path<span class="token punctuation">)</span>
+    img2 <span class="token operator">=</span> cv<span class="token punctuation">.</span>imread<span class="token punctuation">(</span>img2_path<span class="token punctuation">)</span>
+    <span class="token comment"># ================ 分辨率调整 ================</span>
+    rate <span class="token operator">=</span> <span class="token number">600</span> <span class="token operator">/</span> img1<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+    img1 <span class="token operator">=</span> cv<span class="token punctuation">.</span>resize<span class="token punctuation">(</span>img1<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span>rate <span class="token operator">*</span> img1<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token builtin">int</span><span class="token punctuation">(</span>rate <span class="token operator">*</span> img1<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    img2 <span class="token operator">=</span> cv<span class="token punctuation">.</span>resize<span class="token punctuation">(</span>img2<span class="token punctuation">,</span> <span class="token punctuation">(</span>img1<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> img1<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token comment"># FIXME:</span>
+    <span class="token comment">#  - 使用边界填充：特征点匹配的结果图带有很大的黑域</span>
+    <span class="token comment">#  - 不使用边界填充：最后图像拼接和融合不方便，还是需要新建一张更大的图或者提前算好图的大小</span>
+    <span class="token comment"># ================ 边界填充 ================</span>
+    top<span class="token punctuation">,</span> bot<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right <span class="token operator">=</span> <span class="token number">250</span><span class="token punctuation">,</span> <span class="token number">250</span><span class="token punctuation">,</span> <span class="token number">250</span><span class="token punctuation">,</span> <span class="token number">250</span>
+    img1 <span class="token operator">=</span> cv<span class="token punctuation">.</span>copyMakeBorder<span class="token punctuation">(</span>img1<span class="token punctuation">,</span> top<span class="token punctuation">,</span> bot<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right<span class="token punctuation">,</span> cv<span class="token punctuation">.</span>BORDER_CONSTANT<span class="token punctuation">,</span> value<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    img2 <span class="token operator">=</span> cv<span class="token punctuation">.</span>copyMakeBorder<span class="token punctuation">(</span>img2<span class="token punctuation">,</span> top<span class="token punctuation">,</span> bot<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right<span class="token punctuation">,</span> cv<span class="token punctuation">.</span>BORDER_CONSTANT<span class="token punctuation">,</span> value<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">return</span> img1<span class="token punctuation">,</span> img2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>下面是预处理之后的两张图片（第二张图片亮度明显比第一张低）</p>
+<p><img src="/images/OpenCV-Notes/6-01.png"></p>
+<h3 id="特征点计算与匹配"><a href="#特征点计算与匹配" class="headerlink" title="特征点计算与匹配"></a>特征点计算与匹配</h3><p>得到处理好的两张图片之后，我使用OpenCV的SIFT特征点进行匹配。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">match_feather_point</span><span class="token punctuation">(</span>img1<span class="token punctuation">,</span> img2<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    计算特征点并进行匹配
+    :param img1: 第一张图片
+    :param img2: 第二张图片
+    :return: 匹配的特征点
+    """</span>
+    <span class="token comment"># ================ 计算SIFT特征 ================</span>
+    sift <span class="token operator">=</span> cv<span class="token punctuation">.</span>SIFT_create<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    kp1<span class="token punctuation">,</span> des1 <span class="token operator">=</span> sift<span class="token punctuation">.</span>detectAndCompute<span class="token punctuation">(</span>img1<span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">)</span>
+    kp2<span class="token punctuation">,</span> des2 <span class="token operator">=</span> sift<span class="token punctuation">.</span>detectAndCompute<span class="token punctuation">(</span>img2<span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># ================ FLANN特征匹配 ================</span>
+    FLANN_INDEX_KDTREE <span class="token operator">=</span> <span class="token number">1</span>
+    index_params <span class="token operator">=</span> <span class="token builtin">dict</span><span class="token punctuation">(</span>algorithm<span class="token operator">=</span>FLANN_INDEX_KDTREE<span class="token punctuation">,</span> trees<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">)</span>
+    search_params <span class="token operator">=</span> <span class="token builtin">dict</span><span class="token punctuation">(</span>checks<span class="token operator">=</span><span class="token number">50</span><span class="token punctuation">)</span>
+    flann <span class="token operator">=</span> cv<span class="token punctuation">.</span>FlannBasedMatcher<span class="token punctuation">(</span>index_params<span class="token punctuation">,</span> search_params<span class="token punctuation">)</span>
+    matches <span class="token operator">=</span> flann<span class="token punctuation">.</span>knnMatch<span class="token punctuation">(</span>des1<span class="token punctuation">,</span> des2<span class="token punctuation">,</span> k<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">return</span> kp1<span class="token punctuation">,</span> kp2<span class="token punctuation">,</span> matches<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="计算变换矩阵并完成拼接"><a href="#计算变换矩阵并完成拼接" class="headerlink" title="计算变换矩阵并完成拼接"></a>计算变换矩阵并完成拼接</h3><p>这部分的思路：</p>
+<ul>
+<li><p>根据匹配点间的距离选择了一些好的匹配点对；</p>
+</li>
+<li><p>利用OpenCV的findHomography函数计算得到了变换矩阵（所以这里使用的是投射模型）；</p>
+</li>
+<li><p>根据变换矩阵和OpenCV的warpPerspective函数对第二张图片进行了配准（这里是前向映射）；</p>
+<blockquote>
+<p>前向映射就是根据原图用变换公式直接算出输出图像相应像素的空间位置</p>
+<p>反向映射（Inverse Mapping）：扫描输出图像的位置(x,y)，通过 Image （为T的逆矩阵）计算输入图像对应的位置 (v,w)，通过插值方法决定输出图像该位置的灰度值。</p>
+</blockquote>
+</li>
+<li><p>之后使用拷贝的方法完成了一个非常简单的拼接。</p>
+</li>
+</ul>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">get_good_match</span><span class="token punctuation">(</span>img1<span class="token punctuation">,</span> img2<span class="token punctuation">,</span> kp1<span class="token punctuation">,</span> kp2<span class="token punctuation">,</span> matches<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    提取好的匹配点对、计算变换矩阵并拼接图像
+    :param img1: 第一张图片
+    :param img2: 第二张图片
+    :param kp1: 第一张图片特征点
+    :param kp2: 第二张图片特征点
+    :param matches: 匹配结果
+    :return: 第一张图片，配准的第二张图片，匹配结果，拼接图片，变换矩阵
+    """</span>
+    <span class="token comment"># TODO 使用RANSAC方法去除错误匹配点对</span>
+    matches_mask <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span> <span class="token keyword">for</span> _ <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>matches<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+    good_match <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> i<span class="token punctuation">,</span> <span class="token punctuation">(</span>m<span class="token punctuation">,</span> n<span class="token punctuation">)</span> <span class="token keyword">in</span> <span class="token builtin">enumerate</span><span class="token punctuation">(</span>matches<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> m<span class="token punctuation">.</span>distance <span class="token operator">&lt;</span> <span class="token number">0.5</span> <span class="token operator">*</span> n<span class="token punctuation">.</span>distance<span class="token punctuation">:</span>
+            good_match<span class="token punctuation">.</span>append<span class="token punctuation">(</span>m<span class="token punctuation">)</span>
+            matches_mask<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span>
+    <span class="token comment"># ================ 画出匹配结果图 ================</span>
+    draw_params <span class="token operator">=</span> <span class="token builtin">dict</span><span class="token punctuation">(</span>matchColor<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                       singlePointColor<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                       matchesMask<span class="token operator">=</span>matches_mask<span class="token punctuation">,</span>
+                       flags<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>
+    img3 <span class="token operator">=</span> cv<span class="token punctuation">.</span>drawMatchesKnn<span class="token punctuation">(</span>img1<span class="token punctuation">,</span> kp1<span class="token punctuation">,</span> img2<span class="token punctuation">,</span> kp2<span class="token punctuation">,</span> matches<span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">,</span> <span class="token operator">**</span>draw_params<span class="token punctuation">)</span>
+
+    <span class="token comment"># ================ 图像配准，对第二幅图像进行变换 ================</span>
+    MIN_MATCH_COUNT <span class="token operator">=</span> <span class="token number">10</span>
+    <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>good_match<span class="token punctuation">)</span> <span class="token operator">&lt;</span> MIN_MATCH_COUNT<span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Not enough matches are found - {}/{}"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>good_match<span class="token punctuation">)</span><span class="token punctuation">,</span> MIN_MATCH_COUNT<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token boolean">None</span>
+
+    src_pts <span class="token operator">=</span> np<span class="token punctuation">.</span>float32<span class="token punctuation">(</span><span class="token punctuation">[</span>kp1<span class="token punctuation">[</span>m<span class="token punctuation">.</span>queryIdx<span class="token punctuation">]</span><span class="token punctuation">.</span>pt <span class="token keyword">for</span> m <span class="token keyword">in</span> good_match<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+    dst_pts <span class="token operator">=</span> np<span class="token punctuation">.</span>float32<span class="token punctuation">(</span><span class="token punctuation">[</span>kp2<span class="token punctuation">[</span>m<span class="token punctuation">.</span>trainIdx<span class="token punctuation">]</span><span class="token punctuation">.</span>pt <span class="token keyword">for</span> m <span class="token keyword">in</span> good_match<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+
+    M<span class="token punctuation">,</span> mask <span class="token operator">=</span> cv<span class="token punctuation">.</span>findHomography<span class="token punctuation">(</span>src_pts<span class="token punctuation">,</span> dst_pts<span class="token punctuation">,</span> cv<span class="token punctuation">.</span>RANSAC<span class="token punctuation">,</span> <span class="token number">5.0</span><span class="token punctuation">)</span>
+    img2 <span class="token operator">=</span> cv<span class="token punctuation">.</span>warpPerspective<span class="token punctuation">(</span>img2<span class="token punctuation">,</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>M<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>img2<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> img2<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                              flags<span class="token operator">=</span>cv<span class="token punctuation">.</span>WARP_INVERSE_MAP<span class="token punctuation">)</span>
+
+    <span class="token comment"># ================ 图像拼接（拷贝拼接，效果不好） ================</span>
+    dst <span class="token operator">=</span> img1<span class="token punctuation">.</span>copy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>img2<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>img2<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            pix <span class="token operator">=</span> img2<span class="token punctuation">[</span>i<span class="token punctuation">,</span> j<span class="token punctuation">]</span>
+            <span class="token keyword">if</span> pix<span class="token punctuation">.</span><span class="token builtin">any</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                dst<span class="token punctuation">[</span>i<span class="token punctuation">,</span> j<span class="token punctuation">]</span> <span class="token operator">=</span> pix
+
+    <span class="token keyword">return</span> img1<span class="token punctuation">,</span> img2<span class="token punctuation">,</span> img3<span class="token punctuation">,</span> dst<span class="token punctuation">,</span> M<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>初始匹配的结果：</p>
+<p><img src="/images/OpenCV-Notes/6-02.png"></p>
+<p>去除错误匹配之后的结果：</p>
+<p><img src="/images/OpenCV-Notes/6-03.png"></p>
+<p>计算得到的变换矩阵：</p>
+<pre class="line-numbers language-none"><code class="language-none">变换矩阵：
+[[ 2.73415935e-01  4.12585718e-01  2.88797035e+02]
+ [-2.82455289e-01  1.26241598e+00 -2.13730468e+02]
+ [-1.02250262e-03  7.60354200e-04  1.00000000e+00]]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>图片拼接的结果：（拼接痕迹明显）</p>
+<p><img src="/images/OpenCV-Notes/6-04.png"></p>
+<h3 id="进行图像融合"><a href="#进行图像融合" class="headerlink" title="进行图像融合"></a>进行图像融合</h3><p>这部分的思路：</p>
+<ul>
+<li><p>主要是根据某种权重来进行融合；</p>
+</li>
+<li><p>这里很自然的想到计算左右重叠的部分，然后根据重叠部分某个点到左右边界的距离来计算权重；</p>
+<blockquote>
+<p>由于上面仅仅是计算左右重叠的部分，所以最后得到的结果可能会有横向拼接痕迹；</p>
+<p>我后面尝试了上下左右都考虑进去，但是考虑的方法不是很好，没有取得比较好的效果。</p>
+</blockquote>
+</li>
+</ul>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">blend_image</span><span class="token punctuation">(</span>src_img<span class="token punctuation">,</span> warp_img<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    图像融合
+    :param src_img: 第一张图片
+    :param warp_img:  第二张图片
+    :return:  融合后的图片
+    """</span>
+    <span class="token comment"># ================ 基本变量定义 ================</span>
+    rows<span class="token punctuation">,</span> cols <span class="token operator">=</span> src_img<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span>
+    result <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">[</span>rows<span class="token punctuation">,</span> cols<span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> np<span class="token punctuation">.</span>uint8<span class="token punctuation">)</span>
+
+    left <span class="token operator">=</span> <span class="token number">0</span>
+    right <span class="token operator">=</span> <span class="token number">0</span>
+    up <span class="token operator">=</span> <span class="token number">0</span>
+    down <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token comment"># ================ 找到左右重叠区域 ================</span>
+    <span class="token keyword">for</span> col <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> cols<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> src_img<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> col<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">any</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">and</span> warp_img<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> col<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">any</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            left <span class="token operator">=</span> col
+            <span class="token keyword">break</span>
+    <span class="token keyword">for</span> col <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>cols <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> src_img<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> col<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">any</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">and</span> warp_img<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> col<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">any</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            right <span class="token operator">=</span> col
+            <span class="token keyword">break</span>
+    <span class="token comment"># ================ 找到上下重叠区域 ================</span>
+    <span class="token comment"># for row in range(0, rows):</span>
+    <span class="token comment">#     if src_img[row, :].any() and warp_img[row, :].any():</span>
+    <span class="token comment">#         up = row</span>
+    <span class="token comment">#         break</span>
+    <span class="token comment"># for row in range(rows - 1, 0, -1):</span>
+    <span class="token comment">#     if src_img[row, :].any() and warp_img[row, :].any():</span>
+    <span class="token comment">#         down = row</span>
+    <span class="token comment">#         break</span>
+
+    <span class="token comment"># ================ 根据权重进行图像融合 ================</span>
+    <span class="token comment"># FIXME:</span>
+    <span class="token comment">#  - 根据左右重叠区域进行融合会导致图片中有横向的拼接痕迹</span>
+    <span class="token comment">#  - 利用上下与左右重叠的区域进行简单融合的效果并不好，需要一些别的办法</span>
+    <span class="token keyword">for</span> row <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> rows<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> col <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> cols<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> <span class="token keyword">not</span> src_img<span class="token punctuation">[</span>row<span class="token punctuation">,</span> col<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">any</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment"># src不存在</span>
+                result<span class="token punctuation">[</span>row<span class="token punctuation">,</span> col<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token operator">=</span> warp_img<span class="token punctuation">[</span>row<span class="token punctuation">,</span> col<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span>
+            <span class="token keyword">elif</span> <span class="token keyword">not</span> warp_img<span class="token punctuation">[</span>row<span class="token punctuation">,</span> col<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">any</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment"># warp_img 不存在</span>
+                result<span class="token punctuation">[</span>row<span class="token punctuation">,</span> col<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token operator">=</span> src_img<span class="token punctuation">[</span>row<span class="token punctuation">,</span> col<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>  <span class="token comment"># src 和warp都存在，就是交叉区域</span>
+                src_len <span class="token operator">=</span> <span class="token builtin">float</span><span class="token punctuation">(</span><span class="token builtin">abs</span><span class="token punctuation">(</span>col <span class="token operator">-</span> left<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                test_len <span class="token operator">=</span> <span class="token builtin">float</span><span class="token punctuation">(</span><span class="token builtin">abs</span><span class="token punctuation">(</span>col <span class="token operator">-</span> right<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token comment"># src_width = float(abs(row - down))</span>
+                <span class="token comment"># test_width = float(abs(row - up))</span>
+                alpha_1 <span class="token operator">=</span> src_len <span class="token operator">/</span> <span class="token punctuation">(</span>src_len <span class="token operator">+</span> test_len<span class="token punctuation">)</span>
+                <span class="token comment"># alpha_2 = src_width / (src_width + test_width)</span>
+                result<span class="token punctuation">[</span>row<span class="token punctuation">,</span> col<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token operator">=</span> src_img<span class="token punctuation">[</span>row<span class="token punctuation">,</span> col<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token operator">*</span> alpha_1 <span class="token operator">+</span> \
+                                      warp_img<span class="token punctuation">[</span>row<span class="token punctuation">,</span> col<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">-</span> alpha_1<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> result<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>最后得到的融合结果：</p>
+<p><img src="/images/OpenCV-Notes/6-05.png"></p>
+<h2 id="其他运行结果"><a href="#其他运行结果" class="headerlink" title="其他运行结果"></a>其他运行结果</h2><h3 id="测试一"><a href="#测试一" class="headerlink" title="测试一"></a>测试一</h3><p><img src="/images/OpenCV-Notes/6-06.png"></p>
+<p><img src="/images/OpenCV-Notes/6-07.png"></p>
+<p><img src="/images/OpenCV-Notes/6-08.png"></p>
+<h3 id="测试二"><a href="#测试二" class="headerlink" title="测试二"></a>测试二</h3><p><img src="/images/OpenCV-Notes/6-09.png"></p>
+<p><img src="/images/OpenCV-Notes/6-10.png"></p>
+<p><img src="/images/OpenCV-Notes/6-11.png"></p>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token triple-quoted-string string">"""
+TODO
+ 要求：
+    1.给出你用手机拍摄两张有重叠视野的照片（建议两幅图像打光不同，以体现第五步融合的效果）。
+    2.用sift特征或者任意你熟悉的特征进行匹配。（附特征点图）
+    3.用RANSAC方法去除误匹配点对。（附筛除后的特征点图）
+    4.给出变换矩阵（仿射模型或投射模型都可以，需注明），并完成拼接（前向映射或反向映射都可以，需注明），给出拼接后的图像。
+    5.对拼接后的图像进行融合（任意你喜欢的融合方法），附融合后的图像。
+ 注意：
+    尽量描述清楚每一步的思路，并附上对应代码。
+    完成任意四步就可以拿到满分（即可以不筛除离群点，或不进行融合）。
+    网上代码较多，可以参考。
+"""</span>
+<span class="token keyword">import</span> time
+
+<span class="token keyword">import</span> cv2<span class="token punctuation">.</span>cv2 <span class="token keyword">as</span> cv
+<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+
+
+<span class="token comment"># 1.给出你用手机拍摄两张有重叠视野的照片（建议两幅图像打光不同，以体现第五步融合的效果）。</span>
+<span class="token keyword">def</span> <span class="token function">load_image</span><span class="token punctuation">(</span>img1_path<span class="token punctuation">,</span> img2_path<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    加载两张图片，并进行预处理
+    :param img1_path: 图片1的路径
+    :param img2_path: 图片2的路径
+    :return: 处理后的图片1与图片2
+    """</span>
+    <span class="token comment"># ================ 图片加载 ================</span>
+    img1 <span class="token operator">=</span> cv<span class="token punctuation">.</span>imread<span class="token punctuation">(</span>img1_path<span class="token punctuation">)</span>
+    img2 <span class="token operator">=</span> cv<span class="token punctuation">.</span>imread<span class="token punctuation">(</span>img2_path<span class="token punctuation">)</span>
+    <span class="token comment"># ================ 分辨率调整 ================</span>
+    rate <span class="token operator">=</span> <span class="token number">600</span> <span class="token operator">/</span> img1<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+    img1 <span class="token operator">=</span> cv<span class="token punctuation">.</span>resize<span class="token punctuation">(</span>img1<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span>rate <span class="token operator">*</span> img1<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token builtin">int</span><span class="token punctuation">(</span>rate <span class="token operator">*</span> img1<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    img2 <span class="token operator">=</span> cv<span class="token punctuation">.</span>resize<span class="token punctuation">(</span>img2<span class="token punctuation">,</span> <span class="token punctuation">(</span>img1<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> img1<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token comment"># FIXME:</span>
+    <span class="token comment">#  - 使用边界填充：特征点匹配的结果图带有很大的黑域</span>
+    <span class="token comment">#  - 不使用边界填充：最后图像拼接和融合不方便，还是需要新建一张更大的图或者提前算好图的大小</span>
+    <span class="token comment"># ================ 边界填充 ================</span>
+    top<span class="token punctuation">,</span> bot<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right <span class="token operator">=</span> <span class="token number">250</span><span class="token punctuation">,</span> <span class="token number">250</span><span class="token punctuation">,</span> <span class="token number">250</span><span class="token punctuation">,</span> <span class="token number">250</span>
+    img1 <span class="token operator">=</span> cv<span class="token punctuation">.</span>copyMakeBorder<span class="token punctuation">(</span>img1<span class="token punctuation">,</span> top<span class="token punctuation">,</span> bot<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right<span class="token punctuation">,</span> cv<span class="token punctuation">.</span>BORDER_CONSTANT<span class="token punctuation">,</span> value<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    img2 <span class="token operator">=</span> cv<span class="token punctuation">.</span>copyMakeBorder<span class="token punctuation">(</span>img2<span class="token punctuation">,</span> top<span class="token punctuation">,</span> bot<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right<span class="token punctuation">,</span> cv<span class="token punctuation">.</span>BORDER_CONSTANT<span class="token punctuation">,</span> value<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">return</span> img1<span class="token punctuation">,</span> img2
+
+
+<span class="token comment"># 2.用sift特征或者任意你熟悉的特征进行匹配。（附特征点图）</span>
+<span class="token keyword">def</span> <span class="token function">match_feather_point</span><span class="token punctuation">(</span>img1<span class="token punctuation">,</span> img2<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    计算特征点并进行匹配
+    :param img1: 第一张图片
+    :param img2: 第二张图片
+    :return: 匹配的特征点
+    """</span>
+    <span class="token comment"># ================ 计算SIFT特征 ================</span>
+    sift <span class="token operator">=</span> cv<span class="token punctuation">.</span>SIFT_create<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    kp1<span class="token punctuation">,</span> des1 <span class="token operator">=</span> sift<span class="token punctuation">.</span>detectAndCompute<span class="token punctuation">(</span>img1<span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">)</span>
+    kp2<span class="token punctuation">,</span> des2 <span class="token operator">=</span> sift<span class="token punctuation">.</span>detectAndCompute<span class="token punctuation">(</span>img2<span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># ================ FLANN特征匹配 ================</span>
+    FLANN_INDEX_KDTREE <span class="token operator">=</span> <span class="token number">1</span>
+    index_params <span class="token operator">=</span> <span class="token builtin">dict</span><span class="token punctuation">(</span>algorithm<span class="token operator">=</span>FLANN_INDEX_KDTREE<span class="token punctuation">,</span> trees<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">)</span>
+    search_params <span class="token operator">=</span> <span class="token builtin">dict</span><span class="token punctuation">(</span>checks<span class="token operator">=</span><span class="token number">50</span><span class="token punctuation">)</span>
+    flann <span class="token operator">=</span> cv<span class="token punctuation">.</span>FlannBasedMatcher<span class="token punctuation">(</span>index_params<span class="token punctuation">,</span> search_params<span class="token punctuation">)</span>
+    matches <span class="token operator">=</span> flann<span class="token punctuation">.</span>knnMatch<span class="token punctuation">(</span>des1<span class="token punctuation">,</span> des2<span class="token punctuation">,</span> k<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">return</span> kp1<span class="token punctuation">,</span> kp2<span class="token punctuation">,</span> matches
+
+
+<span class="token comment"># 3.用RANSAC方法去除误匹配点对。（附筛除后的特征点图）</span>
+<span class="token comment"># 4.给出变换矩阵（仿射模型或投射模型都可以，需注明），并且进行图像配准，完成拼接（前向映射或反向映射都可以，需注明），给出拼接后的图像。</span>
+<span class="token keyword">def</span> <span class="token function">get_good_match</span><span class="token punctuation">(</span>img1<span class="token punctuation">,</span> img2<span class="token punctuation">,</span> kp1<span class="token punctuation">,</span> kp2<span class="token punctuation">,</span> matches<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    提取好的匹配点对、计算变换矩阵并拼接图像
+    :param img1: 第一张图片
+    :param img2: 第二张图片
+    :param kp1: 第一张图片特征点
+    :param kp2: 第二张图片特征点
+    :param matches: 匹配结果
+    :return: 第一张图片，配准的第二张图片，匹配结果，拼接图片，变换矩阵
+    """</span>
+    <span class="token comment"># TODO 使用RANSAC方法去除错误匹配点对</span>
+    matches_mask <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span> <span class="token keyword">for</span> _ <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>matches<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+    good_match <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> i<span class="token punctuation">,</span> <span class="token punctuation">(</span>m<span class="token punctuation">,</span> n<span class="token punctuation">)</span> <span class="token keyword">in</span> <span class="token builtin">enumerate</span><span class="token punctuation">(</span>matches<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> m<span class="token punctuation">.</span>distance <span class="token operator">&lt;</span> <span class="token number">0.5</span> <span class="token operator">*</span> n<span class="token punctuation">.</span>distance<span class="token punctuation">:</span>
+            good_match<span class="token punctuation">.</span>append<span class="token punctuation">(</span>m<span class="token punctuation">)</span>
+            matches_mask<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span>
+    <span class="token comment"># ================ 画出匹配结果图 ================</span>
+    <span class="token comment"># # 　这是没去除的部分</span>
+    <span class="token comment"># draw_params = dict(matchColor=(0, 255, 0),</span>
+    <span class="token comment">#                    singlePointColor=(255, 0, 0),</span>
+    <span class="token comment">#                    matchesMask=None,</span>
+    <span class="token comment">#                    flags=0)</span>
+    <span class="token comment"># img3 = cv.drawMatchesKnn(img1, kp1, img2, kp2, matches, None, **draw_params)</span>
+    <span class="token comment"># cv.imshow("test", img3)</span>
+    <span class="token comment"># 这是去除后的部分</span>
+    draw_params <span class="token operator">=</span> <span class="token builtin">dict</span><span class="token punctuation">(</span>matchColor<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                       singlePointColor<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                       matchesMask<span class="token operator">=</span>matches_mask<span class="token punctuation">,</span>
+                       flags<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>
+    img3 <span class="token operator">=</span> cv<span class="token punctuation">.</span>drawMatchesKnn<span class="token punctuation">(</span>img1<span class="token punctuation">,</span> kp1<span class="token punctuation">,</span> img2<span class="token punctuation">,</span> kp2<span class="token punctuation">,</span> matches<span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">,</span> <span class="token operator">**</span>draw_params<span class="token punctuation">)</span>
+
+    <span class="token comment"># ================ 图像配准，对第二幅图像进行变换 ================</span>
+    MIN_MATCH_COUNT <span class="token operator">=</span> <span class="token number">10</span>
+    <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>good_match<span class="token punctuation">)</span> <span class="token operator">&lt;</span> MIN_MATCH_COUNT<span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Not enough matches are found - {}/{}"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>good_match<span class="token punctuation">)</span><span class="token punctuation">,</span> MIN_MATCH_COUNT<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token boolean">None</span>
+
+    src_pts <span class="token operator">=</span> np<span class="token punctuation">.</span>float32<span class="token punctuation">(</span><span class="token punctuation">[</span>kp1<span class="token punctuation">[</span>m<span class="token punctuation">.</span>queryIdx<span class="token punctuation">]</span><span class="token punctuation">.</span>pt <span class="token keyword">for</span> m <span class="token keyword">in</span> good_match<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+    dst_pts <span class="token operator">=</span> np<span class="token punctuation">.</span>float32<span class="token punctuation">(</span><span class="token punctuation">[</span>kp2<span class="token punctuation">[</span>m<span class="token punctuation">.</span>trainIdx<span class="token punctuation">]</span><span class="token punctuation">.</span>pt <span class="token keyword">for</span> m <span class="token keyword">in</span> good_match<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+
+    M<span class="token punctuation">,</span> mask <span class="token operator">=</span> cv<span class="token punctuation">.</span>findHomography<span class="token punctuation">(</span>src_pts<span class="token punctuation">,</span> dst_pts<span class="token punctuation">,</span> cv<span class="token punctuation">.</span>RANSAC<span class="token punctuation">,</span> <span class="token number">5.0</span><span class="token punctuation">)</span>
+    img2 <span class="token operator">=</span> cv<span class="token punctuation">.</span>warpPerspective<span class="token punctuation">(</span>img2<span class="token punctuation">,</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>M<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>img2<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> img2<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                              flags<span class="token operator">=</span>cv<span class="token punctuation">.</span>WARP_INVERSE_MAP<span class="token punctuation">)</span>
+
+    <span class="token comment"># ================ 图像拼接（拷贝拼接，效果不好） ================</span>
+    dst <span class="token operator">=</span> img1<span class="token punctuation">.</span>copy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>img2<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>img2<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            pix <span class="token operator">=</span> img2<span class="token punctuation">[</span>i<span class="token punctuation">,</span> j<span class="token punctuation">]</span>
+            <span class="token keyword">if</span> pix<span class="token punctuation">.</span><span class="token builtin">any</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                dst<span class="token punctuation">[</span>i<span class="token punctuation">,</span> j<span class="token punctuation">]</span> <span class="token operator">=</span> pix
+
+    <span class="token keyword">return</span> img1<span class="token punctuation">,</span> img2<span class="token punctuation">,</span> img3<span class="token punctuation">,</span> dst<span class="token punctuation">,</span> M
+
+
+<span class="token comment"># 5.对拼接后的图像进行融合（任意你喜欢的融合方法），附融合后的图像。</span>
+<span class="token keyword">def</span> <span class="token function">blend_image</span><span class="token punctuation">(</span>src_img<span class="token punctuation">,</span> warp_img<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    图像融合
+    :param src_img: 第一张图片
+    :param warp_img:  第二张图片
+    :return:  融合后的图片
+    """</span>
+    <span class="token comment"># ================ 基本变量定义 ================</span>
+    rows<span class="token punctuation">,</span> cols <span class="token operator">=</span> src_img<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span>
+    result <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">[</span>rows<span class="token punctuation">,</span> cols<span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> np<span class="token punctuation">.</span>uint8<span class="token punctuation">)</span>
+
+    left <span class="token operator">=</span> <span class="token number">0</span>
+    right <span class="token operator">=</span> <span class="token number">0</span>
+    up <span class="token operator">=</span> <span class="token number">0</span>
+    down <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token comment"># ================ 找到左右重叠区域 ================</span>
+    <span class="token keyword">for</span> col <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> cols<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> src_img<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> col<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">any</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">and</span> warp_img<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> col<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">any</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            left <span class="token operator">=</span> col
+            <span class="token keyword">break</span>
+    <span class="token keyword">for</span> col <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>cols <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> src_img<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> col<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">any</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">and</span> warp_img<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> col<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">any</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            right <span class="token operator">=</span> col
+            <span class="token keyword">break</span>
+    <span class="token comment"># ================ 找到上下重叠区域 ================</span>
+    <span class="token comment"># for row in range(0, rows):</span>
+    <span class="token comment">#     if src_img[row, :].any() and warp_img[row, :].any():</span>
+    <span class="token comment">#         up = row</span>
+    <span class="token comment">#         break</span>
+    <span class="token comment"># for row in range(rows - 1, 0, -1):</span>
+    <span class="token comment">#     if src_img[row, :].any() and warp_img[row, :].any():</span>
+    <span class="token comment">#         down = row</span>
+    <span class="token comment">#         break</span>
+
+    <span class="token comment"># ================ 根据权重进行图像融合 ================</span>
+    <span class="token comment"># FIXME:</span>
+    <span class="token comment">#  - 根据左右重叠区域进行融合会导致图片中有横向的拼接痕迹</span>
+    <span class="token comment">#  - 利用上下与左右重叠的区域进行简单融合的效果并不好，需要一些别的办法</span>
+    <span class="token keyword">for</span> row <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> rows<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> col <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> cols<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> <span class="token keyword">not</span> src_img<span class="token punctuation">[</span>row<span class="token punctuation">,</span> col<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">any</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment"># src不存在</span>
+                result<span class="token punctuation">[</span>row<span class="token punctuation">,</span> col<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token operator">=</span> warp_img<span class="token punctuation">[</span>row<span class="token punctuation">,</span> col<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span>
+            <span class="token keyword">elif</span> <span class="token keyword">not</span> warp_img<span class="token punctuation">[</span>row<span class="token punctuation">,</span> col<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">any</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment"># warp_img 不存在</span>
+                result<span class="token punctuation">[</span>row<span class="token punctuation">,</span> col<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token operator">=</span> src_img<span class="token punctuation">[</span>row<span class="token punctuation">,</span> col<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>  <span class="token comment"># src 和warp都存在，就是交叉区域</span>
+                src_len <span class="token operator">=</span> <span class="token builtin">float</span><span class="token punctuation">(</span><span class="token builtin">abs</span><span class="token punctuation">(</span>col <span class="token operator">-</span> left<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                test_len <span class="token operator">=</span> <span class="token builtin">float</span><span class="token punctuation">(</span><span class="token builtin">abs</span><span class="token punctuation">(</span>col <span class="token operator">-</span> right<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token comment"># src_width = float(abs(row - down))</span>
+                <span class="token comment"># test_width = float(abs(row - up))</span>
+                alpha_1 <span class="token operator">=</span> src_len <span class="token operator">/</span> <span class="token punctuation">(</span>src_len <span class="token operator">+</span> test_len<span class="token punctuation">)</span>
+                <span class="token comment"># alpha_2 = src_width / (src_width + test_width)</span>
+                result<span class="token punctuation">[</span>row<span class="token punctuation">,</span> col<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token operator">=</span> src_img<span class="token punctuation">[</span>row<span class="token punctuation">,</span> col<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token operator">*</span> alpha_1 <span class="token operator">+</span> \
+                                      warp_img<span class="token punctuation">[</span>row<span class="token punctuation">,</span> col<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">-</span> alpha_1<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> result
+
+
+<span class="token keyword">def</span> <span class="token function">main_process</span><span class="token punctuation">(</span>path1<span class="token operator">=</span><span class="token string">'./images/testA_1.jpg'</span><span class="token punctuation">,</span> path2<span class="token operator">=</span><span class="token string">'./images/testA_2.jpg'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">""""""</span>
+    <span class="token comment"># ================ 加载图片 ================</span>
+    src_img<span class="token punctuation">,</span> warp_img <span class="token operator">=</span> load_image<span class="token punctuation">(</span>path1<span class="token punctuation">,</span> path2<span class="token punctuation">)</span>
+
+    <span class="token comment"># ================ 特征点计算与匹配 ================</span>
+    start <span class="token operator">=</span> time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    kp1<span class="token punctuation">,</span> kp2<span class="token punctuation">,</span> matches <span class="token operator">=</span> match_feather_point<span class="token punctuation">(</span>src_img<span class="token punctuation">,</span> warp_img<span class="token punctuation">)</span>
+    end <span class="token operator">=</span> time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'特征点计算以及匹配的时间：'</span><span class="token punctuation">,</span> end <span class="token operator">-</span> start<span class="token punctuation">)</span>
+
+    <span class="token comment"># ================ 去除误匹配点、计算变换矩阵并进行拼接 ================</span>
+    start <span class="token operator">=</span> time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    img1<span class="token punctuation">,</span> img2<span class="token punctuation">,</span> img3<span class="token punctuation">,</span> dst<span class="token punctuation">,</span> M <span class="token operator">=</span> get_good_match<span class="token punctuation">(</span>src_img<span class="token punctuation">,</span> warp_img<span class="token punctuation">,</span> kp1<span class="token punctuation">,</span> kp2<span class="token punctuation">,</span> matches<span class="token punctuation">)</span>
+    end <span class="token operator">=</span> time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'去除误匹配点、计算变换矩阵并进行拼接的时间：'</span><span class="token punctuation">,</span> end <span class="token operator">-</span> start<span class="token punctuation">)</span>
+    <span class="token comment"># ================ 图像融合 ================</span>
+    start <span class="token operator">=</span> time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    res <span class="token operator">=</span> blend_image<span class="token punctuation">(</span>img1<span class="token punctuation">,</span> img2<span class="token punctuation">)</span>
+    end <span class="token operator">=</span> time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'图像融合时间：'</span><span class="token punctuation">,</span> end <span class="token operator">-</span> start<span class="token punctuation">)</span>
+
+    <span class="token comment"># ================ 打印最后的结果 ================</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"变换矩阵"</span><span class="token punctuation">,</span> M<span class="token punctuation">)</span>
+    cv<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span><span class="token string">"splicing"</span><span class="token punctuation">,</span> dst<span class="token punctuation">)</span>
+    cv<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span><span class="token string">"sift_match"</span><span class="token punctuation">,</span> img3<span class="token punctuation">)</span>
+    cv<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span><span class="token string">"blend_result"</span><span class="token punctuation">,</span> res<span class="token punctuation">)</span>
+    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> cv<span class="token punctuation">.</span>waitKey<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">27</span><span class="token punctuation">:</span>
+            <span class="token keyword">break</span>
+
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">"__main__"</span><span class="token punctuation">:</span>
+    path1 <span class="token operator">=</span> <span class="token string">"./images/testD_2.jpg"</span>
+    path2 <span class="token operator">=</span> <span class="token string">"./images/testX_1.jpg"</span>
+    main_process<span class="token punctuation">(</span>path1<span class="token punctuation">,</span> path2<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</article></div></main><div class="nav-wrap"><div class="nav"><button class="site-nav"><div class="navicon"></div></button><ul class="nav_items"><li class="nav_item"><a class="nav-page" href="/homepage/"> About Me</a></li><li class="nav_item"><a class="nav-page" href="/homepage/#News"> News</a></li><li class="nav_item"><a class="nav-page" href="/homepage/#Projects"> Projects</a></li><li class="nav_item"><a class="nav-page" href="/homepage/#Honors-and-Awards"> Honors and Awards</a></li><li class="nav_item"><a class="nav-page" href="/homepage/#Educations"> Educations</a></li><li class="nav_item"><a class="nav-page" href="https://immortalqx.github.io"> Blog</a></li></ul></div><div class="cd-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div></div><footer id="page_footer"><div class="footer_wrap"><div class="copyright">&copy;2022 by null</div><div class="theme-info">Powered by <a target="_blank" href="https://hexo.io" rel="nofollow noopener">Hexo</a> & <a target="_blank" href="https://github.com/PhosphorW/hexo-theme-academia" rel="nofollow noopener">Academia Theme</a></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery-pjax@latest/jquery.pjax.min.js"></script><script src="/homepage/js/main.js"></script></body></html>
