@@ -658,150 +658,6 @@ rosrun nodelet nodelet load try_nodelet/try_use nodelet_manager __name:<span cla
       </tags>
   </entry>
   <entry>
-    <title>ROS中的URDF</title>
-    <url>/2021/07/18/ros-notes-5/</url>
-    <content><![CDATA[<h1 id="ROS中的URDF"><a href="#ROS中的URDF" class="headerlink" title="ROS中的URDF"></a>ROS中的URDF</h1><h2 id="什么是URDF"><a href="#什么是URDF" class="headerlink" title="什么是URDF"></a>什么是URDF</h2><ul>
-<li><p>Unified Robot Description Format，统一机器人描述格式，简称为URDF；</p>
-</li>
-<li><p>ROS中一个非常重要的机器人模型描述格式；</p>
-</li>
-<li><p>URDF文件使用XML格式描述机器人模型；</p>
-</li>
-<li><p>ROS中的urdf功能包包含一个URDF的C++解析器。</p>
-</li>
-</ul>
-<h2 id="URDF标签说明"><a href="#URDF标签说明" class="headerlink" title="URDF标签说明"></a>URDF标签说明</h2><h3 id="lt-link-gt"><a href="#lt-link-gt" class="headerlink" title="<link>"></a>&lt;link&gt;</h3><p><strong>作用：</strong></p>
-<ul>
-<li>描述机器人某个刚体部分的外观和物理属性；</li>
-<li>尺寸（size）、颜色（color）、形状（shape）、惯性矩阵（inertial matrix）、碰撞参数（collision properties）等。</li>
-</ul>
-<img src="/images/ros-notes/5-1.png" style="zoom:33%;">
-
-<p><strong>子标签：</strong></p>
-<ul>
-<li>&lt;visual&gt;：描述机器人link部分的外观参数；</li>
-<li>&lt;inertial&gt;：描述link的惯性参数；</li>
-<li>&lt;collision&gt;：描述link的碰撞属性。</li>
-</ul>
-<img src="/images/ros-notes/5-2.png" style="zoom: 67%;">
-
-<h3 id="lt-joint-gt"><a href="#lt-joint-gt" class="headerlink" title="<joint>"></a>&lt;joint&gt;</h3><p><strong>作用：</strong></p>
-<ul>
-<li>描述机器人关节的运动学和动力学属性；</li>
-<li>包括关节运动的位置和速度限制；</li>
-<li>根据关节运动的形式，可以将其分为六种类型。</li>
-</ul>
-<img src="/images/ros-notes/5-3.png" style="zoom:33%;">
-
-<table>
-<thead>
-<tr>
-<th>关节类型</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>continuous</td>
-<td>旋转关节，可以围绕单轴无限旋转</td>
-</tr>
-<tr>
-<td>revolute</td>
-<td>旋转关节，类似于continuous，但有旋转的角度限制</td>
-</tr>
-<tr>
-<td>prismatic</td>
-<td>滑动关节，沿某一轴线移动的关节，带有位置极限</td>
-</tr>
-<tr>
-<td>planar</td>
-<td>平面关节，允许在平面正交方向上平移或者旋转</td>
-</tr>
-<tr>
-<td>floating</td>
-<td>浮动关节，允许进行平移、旋转运动</td>
-</tr>
-<tr>
-<td>fixed</td>
-<td>固定关节，不允许运动的特殊关节</td>
-</tr>
-</tbody></table>
-<p><strong>子标签：</strong></p>
-<ul>
-<li>&lt;calibration&gt;：关节的参考位置，用来校准关节的绝对位置；</li>
-<li>&lt;dynamics&gt;：描述关节的物理属性，例如阻尼值、物理静摩擦力等，经常在动力学仿真中用到；</li>
-<li>&lt;limit&gt;：描述运动的一些极限值，包括关节运动的上下限位置、速度限制、力矩限制等；</li>
-<li>&lt;mimic&gt;：描述该关节与已有关节的关系；</li>
-<li>&lt;safety＿controller&gt;：描述安全控制器参数。 </li>
-</ul>
-<img src="/images/ros-notes/5-4.png" style="zoom:67%;">
-
-<h3 id="lt-robot-gt"><a href="#lt-robot-gt" class="headerlink" title="<robot>"></a>&lt;robot&gt;</h3><ul>
-<li>完整机器人模型的最顶层标签；</li>
-<li>&lt;link&gt;和&lt;joint&gt;标签都必须包含在&lt;robot&gt;标签内。</li>
-</ul>
-<img src="/images/ros-notes/5-5.png" style="zoom:33%;">
-
-<p>一个完整的机器人模型，由一系列&lt;link&gt;和&lt;joint&gt;组成。</p>
-<img src="/images/ros-notes/5-6.png" style="zoom:67%;">
-
-<h2 id="URDF建模优化"><a href="#URDF建模优化" class="headerlink" title="URDF建模优化"></a>URDF建模优化</h2><h3 id="URDF建模存在的问题："><a href="#URDF建模存在的问题：" class="headerlink" title="URDF建模存在的问题："></a>URDF建模存在的问题：</h3><ol>
-<li>模型冗长，重复内容过多；</li>
-<li>参数修改麻烦，不便于二次开发；</li>
-<li>没有参数计算的功能。</li>
-</ol>
-<h3 id="URDF模型的进化版本——xacro模型文件"><a href="#URDF模型的进化版本——xacro模型文件" class="headerlink" title="URDF模型的进化版本——xacro模型文件"></a>URDF模型的进化版本——xacro模型文件</h3><ul>
-<li>精简模型代码<ul>
-<li>创建宏定义</li>
-<li>文件包含</li>
-</ul>
-</li>
-<li>提供可编程接口<ul>
-<li>常量</li>
-<li>变量</li>
-<li>数学计算</li>
-<li>条件语句</li>
-</ul>
-</li>
-</ul>
-<h3 id="常量的定义和使用"><a href="#常量的定义和使用" class="headerlink" title="常量的定义和使用"></a>常量的定义和使用</h3><p>常量定义：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>M_PI<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>3.14159<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>常量使用：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpy</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>${M_PI/2} 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<img src="/images/ros-notes/5-7.png" style="zoom:67%;">
-
-<h3 id="数学计算"><a href="#数学计算" class="headerlink" title="数学计算"></a>数学计算</h3><p>数学计算：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 ${(motor_length+wheel_length)/2} 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpx</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<img src="/images/ros-notes/5-8.png" style="zoom:67%;">
-
-<p>注意：所有的数学运算都会转换成浮点数进行，以保证运算精度。</p>
-<h3 id="宏定义"><a href="#宏定义" class="headerlink" title="宏定义"></a>宏定义</h3><p>宏定义：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>macro</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">params</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A B C<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
-    ......
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">sacro:</span>macros</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>宏调用：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span> <span class="token attr-name">A</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A_value<span class="token punctuation">"</span></span> <span class="token attr-name">B</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>B_value<span class="token punctuation">"</span></span> <span class="token attr-name">C</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>C_value<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<img src="/images/ros-notes/5-9.png" style="zoom:67%;">
-
-<h3 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h3><p>文件包含：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">xacro:</span>include</span> <span class="token attr-name">filename</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find mbot_description)/urdf/xacro/mbot_base.xacro<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<img src="/images/ros-notes/5-10.png" style="zoom:67%;">
-
-<h3 id="模型显示"><a href="#模型显示" class="headerlink" title="模型显示"></a>模型显示</h3><p>方法一：将xacro文件转换成URDF文件后显示</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun xacro xacro.py mbot.xacro<span class="token operator">&gt;</span>mbot.urdf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>方法二：直接调用xacro文件解析器</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>arg</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>model<span class="token punctuation">"</span></span> <span class="token attr-name">default</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find xacro)/xacro --inorder <span class="token punctuation">'</span>$(find mbot_description)/urdf/xacro/mbot.xacro<span class="token punctuation">'</span><span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>robot_description<span class="token punctuation">"</span></span> <span class="token attr-name">command</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(arg model)<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">roslaunch mbot_description display_mbot_base_xacro.launch<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>相关学习资料：<a href="http://wiki.ros.org/urdf/Tutorials">http://wiki.ros.org/urdf/Tutorials</a></p>
-]]></content>
-      <categories>
-        <category>ROS</category>
-      </categories>
-      <tags>
-        <tag>ROS基础</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ROS中的TF</title>
     <url>/2021/07/18/ros-notes-4/</url>
     <content><![CDATA[<h1 id="ROS中的TF"><a href="#ROS中的TF" class="headerlink" title="ROS中的TF"></a>ROS中的TF</h1><h2 id="TF介绍"><a href="#TF介绍" class="headerlink" title="TF介绍"></a>TF介绍</h2><p>TF(TransForm)，就是坐标转换，包括了位置和姿态两个方面的变换。这里需要注意<strong>区分坐标转换和坐标系转换</strong>，坐标转换是一个坐标在不同坐标系下的表示，而坐标系转换不同坐标系的相对位姿关系。</p>
@@ -940,6 +796,150 @@ geometry_msgs/Transform transform
 </li>
 </ol>
 <p>相关学习资料：<a href="http://wiki.ros.org/tf/Tutorials">http://wiki.ros.org/tf/Tutorials</a></p>
+]]></content>
+      <categories>
+        <category>ROS</category>
+      </categories>
+      <tags>
+        <tag>ROS基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ROS中的URDF</title>
+    <url>/2021/07/18/ros-notes-5/</url>
+    <content><![CDATA[<h1 id="ROS中的URDF"><a href="#ROS中的URDF" class="headerlink" title="ROS中的URDF"></a>ROS中的URDF</h1><h2 id="什么是URDF"><a href="#什么是URDF" class="headerlink" title="什么是URDF"></a>什么是URDF</h2><ul>
+<li><p>Unified Robot Description Format，统一机器人描述格式，简称为URDF；</p>
+</li>
+<li><p>ROS中一个非常重要的机器人模型描述格式；</p>
+</li>
+<li><p>URDF文件使用XML格式描述机器人模型；</p>
+</li>
+<li><p>ROS中的urdf功能包包含一个URDF的C++解析器。</p>
+</li>
+</ul>
+<h2 id="URDF标签说明"><a href="#URDF标签说明" class="headerlink" title="URDF标签说明"></a>URDF标签说明</h2><h3 id="lt-link-gt"><a href="#lt-link-gt" class="headerlink" title="<link>"></a>&lt;link&gt;</h3><p><strong>作用：</strong></p>
+<ul>
+<li>描述机器人某个刚体部分的外观和物理属性；</li>
+<li>尺寸（size）、颜色（color）、形状（shape）、惯性矩阵（inertial matrix）、碰撞参数（collision properties）等。</li>
+</ul>
+<img src="/images/ros-notes/5-1.png" style="zoom:33%;">
+
+<p><strong>子标签：</strong></p>
+<ul>
+<li>&lt;visual&gt;：描述机器人link部分的外观参数；</li>
+<li>&lt;inertial&gt;：描述link的惯性参数；</li>
+<li>&lt;collision&gt;：描述link的碰撞属性。</li>
+</ul>
+<img src="/images/ros-notes/5-2.png" style="zoom: 67%;">
+
+<h3 id="lt-joint-gt"><a href="#lt-joint-gt" class="headerlink" title="<joint>"></a>&lt;joint&gt;</h3><p><strong>作用：</strong></p>
+<ul>
+<li>描述机器人关节的运动学和动力学属性；</li>
+<li>包括关节运动的位置和速度限制；</li>
+<li>根据关节运动的形式，可以将其分为六种类型。</li>
+</ul>
+<img src="/images/ros-notes/5-3.png" style="zoom:33%;">
+
+<table>
+<thead>
+<tr>
+<th>关节类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>continuous</td>
+<td>旋转关节，可以围绕单轴无限旋转</td>
+</tr>
+<tr>
+<td>revolute</td>
+<td>旋转关节，类似于continuous，但有旋转的角度限制</td>
+</tr>
+<tr>
+<td>prismatic</td>
+<td>滑动关节，沿某一轴线移动的关节，带有位置极限</td>
+</tr>
+<tr>
+<td>planar</td>
+<td>平面关节，允许在平面正交方向上平移或者旋转</td>
+</tr>
+<tr>
+<td>floating</td>
+<td>浮动关节，允许进行平移、旋转运动</td>
+</tr>
+<tr>
+<td>fixed</td>
+<td>固定关节，不允许运动的特殊关节</td>
+</tr>
+</tbody></table>
+<p><strong>子标签：</strong></p>
+<ul>
+<li>&lt;calibration&gt;：关节的参考位置，用来校准关节的绝对位置；</li>
+<li>&lt;dynamics&gt;：描述关节的物理属性，例如阻尼值、物理静摩擦力等，经常在动力学仿真中用到；</li>
+<li>&lt;limit&gt;：描述运动的一些极限值，包括关节运动的上下限位置、速度限制、力矩限制等；</li>
+<li>&lt;mimic&gt;：描述该关节与已有关节的关系；</li>
+<li>&lt;safety＿controller&gt;：描述安全控制器参数。 </li>
+</ul>
+<img src="/images/ros-notes/5-4.png" style="zoom:67%;">
+
+<h3 id="lt-robot-gt"><a href="#lt-robot-gt" class="headerlink" title="<robot>"></a>&lt;robot&gt;</h3><ul>
+<li>完整机器人模型的最顶层标签；</li>
+<li>&lt;link&gt;和&lt;joint&gt;标签都必须包含在&lt;robot&gt;标签内。</li>
+</ul>
+<img src="/images/ros-notes/5-5.png" style="zoom:33%;">
+
+<p>一个完整的机器人模型，由一系列&lt;link&gt;和&lt;joint&gt;组成。</p>
+<img src="/images/ros-notes/5-6.png" style="zoom:67%;">
+
+<h2 id="URDF建模优化"><a href="#URDF建模优化" class="headerlink" title="URDF建模优化"></a>URDF建模优化</h2><h3 id="URDF建模存在的问题："><a href="#URDF建模存在的问题：" class="headerlink" title="URDF建模存在的问题："></a>URDF建模存在的问题：</h3><ol>
+<li>模型冗长，重复内容过多；</li>
+<li>参数修改麻烦，不便于二次开发；</li>
+<li>没有参数计算的功能。</li>
+</ol>
+<h3 id="URDF模型的进化版本——xacro模型文件"><a href="#URDF模型的进化版本——xacro模型文件" class="headerlink" title="URDF模型的进化版本——xacro模型文件"></a>URDF模型的进化版本——xacro模型文件</h3><ul>
+<li>精简模型代码<ul>
+<li>创建宏定义</li>
+<li>文件包含</li>
+</ul>
+</li>
+<li>提供可编程接口<ul>
+<li>常量</li>
+<li>变量</li>
+<li>数学计算</li>
+<li>条件语句</li>
+</ul>
+</li>
+</ul>
+<h3 id="常量的定义和使用"><a href="#常量的定义和使用" class="headerlink" title="常量的定义和使用"></a>常量的定义和使用</h3><p>常量定义：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>M_PI<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>3.14159<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>常量使用：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpy</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>${M_PI/2} 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<img src="/images/ros-notes/5-7.png" style="zoom:67%;">
+
+<h3 id="数学计算"><a href="#数学计算" class="headerlink" title="数学计算"></a>数学计算</h3><p>数学计算：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 ${(motor_length+wheel_length)/2} 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpx</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<img src="/images/ros-notes/5-8.png" style="zoom:67%;">
+
+<p>注意：所有的数学运算都会转换成浮点数进行，以保证运算精度。</p>
+<h3 id="宏定义"><a href="#宏定义" class="headerlink" title="宏定义"></a>宏定义</h3><p>宏定义：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>macro</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">params</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A B C<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    ......
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">sacro:</span>macros</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>宏调用：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span> <span class="token attr-name">A</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A_value<span class="token punctuation">"</span></span> <span class="token attr-name">B</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>B_value<span class="token punctuation">"</span></span> <span class="token attr-name">C</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>C_value<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<img src="/images/ros-notes/5-9.png" style="zoom:67%;">
+
+<h3 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h3><p>文件包含：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">xacro:</span>include</span> <span class="token attr-name">filename</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find mbot_description)/urdf/xacro/mbot_base.xacro<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<img src="/images/ros-notes/5-10.png" style="zoom:67%;">
+
+<h3 id="模型显示"><a href="#模型显示" class="headerlink" title="模型显示"></a>模型显示</h3><p>方法一：将xacro文件转换成URDF文件后显示</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun xacro xacro.py mbot.xacro<span class="token operator">&gt;</span>mbot.urdf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>方法二：直接调用xacro文件解析器</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>arg</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>model<span class="token punctuation">"</span></span> <span class="token attr-name">default</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find xacro)/xacro --inorder <span class="token punctuation">'</span>$(find mbot_description)/urdf/xacro/mbot.xacro<span class="token punctuation">'</span><span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>robot_description<span class="token punctuation">"</span></span> <span class="token attr-name">command</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(arg model)<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">roslaunch mbot_description display_mbot_base_xacro.launch<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>相关学习资料：<a href="http://wiki.ros.org/urdf/Tutorials">http://wiki.ros.org/urdf/Tutorials</a></p>
 ]]></content>
       <categories>
         <category>ROS</category>
@@ -1434,6 +1434,97 @@ mavros_msgs<span class="token double-colon punctuation">::</span>State current_s
       </tags>
   </entry>
   <entry>
+    <title>类的六个默认的成员函数</title>
+    <url>/2020/08/22/cpp-notes-1/</url>
+    <content><![CDATA[<h1 id="类的六个默认的成员函数"><a href="#类的六个默认的成员函数" class="headerlink" title="类的六个默认的成员函数"></a>类的六个默认的成员函数</h1><h2 id="类的6个默认的成员函数包括："><a href="#类的6个默认的成员函数包括：" class="headerlink" title="类的6个默认的成员函数包括："></a>类的6个默认的成员函数包括：</h2><p>构造函数、析构函数、拷贝构造函数、赋值运算符重载函数、取地址操作符重载、const修饰的取地址操作符重载。</p>
+<h3 id="（一）构造函数"><a href="#（一）构造函数" class="headerlink" title="（一）构造函数"></a>（一）构造函数</h3><p>构造函数，顾名思义，为对象分配空间，进行初始化。它是一种特殊的成员函数，具有以下特点:</p>
+<ol>
+<li><p>函数名与类名相同。</p>
+</li>
+<li><p>无返回值。</p>
+</li>
+<li><p>构造对象的时候系统会自动调用构造函数。</p>
+</li>
+<li><p>可以重载。</p>
+</li>
+<li><p>可以在类中定义，也可以在类外定义。</p>
+</li>
+<li><p>如果类中没有给出构造函数，编译器会自动产生一个缺省的构造函数，如果类中有构造函数，编译器就不会产生缺省构造函数。</p>
+</li>
+<li><p>全缺省的构造函数和无参的构造函数只能有一个，否则调用的时候就会产生冲突。</p>
+</li>
+<li><p>没有this指针。因为构造函数才是创建对象的，没有创建对象就不会有对象的首地址。</p>
+</li>
+</ol>
+<p>构造函数，说来就是给成员变量进行初始化。而初始化却有两种方法：初始化列表、构造函数函数体内赋值。尽量使用初始化列表，因为它更高效。</p>
+<h4 id="有些成员变量必须再初始化列表中初始化，比如："><a href="#有些成员变量必须再初始化列表中初始化，比如：" class="headerlink" title="有些成员变量必须再初始化列表中初始化，比如："></a>有些成员变量必须再初始化列表中初始化，比如：</h4><ol>
+<li><p>常量成员变量。（常量创建时必须初始化，因为对于一个常量，我们给它赋值，是不对的）</p>
+</li>
+<li><p>引用类型成员变量。（引用创建时必须初始化）</p>
+</li>
+<li><p>没有缺省构造函数的类成员变量。（如果构造函数的参数列表中有一个类的对象，并且该对象的类里没有缺省参数的构造函数时，要是不使用初始化列表，参数中会调用无参或者全缺省的构造函数，而那个类中又没有。）</p>
+</li>
+</ol>
+<h3 id="（二）析构函数"><a href="#（二）析构函数" class="headerlink" title="（二）析构函数"></a>（二）析构函数</h3><h4 id="析构函数是一种特殊的成员函数，具有以下特点："><a href="#析构函数是一种特殊的成员函数，具有以下特点：" class="headerlink" title="析构函数是一种特殊的成员函数，具有以下特点："></a>析构函数是一种特殊的成员函数，具有以下特点：</h4><ol>
+<li><p>析构函数函数名是在类名加上字符 ~ 。</p>
+</li>
+<li><p>无参数无返回值（但有this指针）。</p>
+</li>
+<li><p>一个类有且只有一个析构函数，所以肯定不能重载。若未显示定义，系统会自动生成缺省的析构函数。</p>
+</li>
+<li><p>对象生命周期结束时，C++编译系统系统自动调用析构函数。</p>
+</li>
+<li><p>注意析构函数体内并不是删除对象，而是做一些清理工作。（比如我们在构造函数中动态开辟过一段空间，函数结束后需要释放，而系统自动生成的析构函数才不管内存释放呢，所以需要人为地写出析构函数）</p>
+</li>
+</ol>
+<p>注意：对象生命周期结束后，后构造的对象先释放。</p>
+<h3 id="（三）拷贝构造函数"><a href="#（三）拷贝构造函数" class="headerlink" title="（三）拷贝构造函数"></a>（三）拷贝构造函数</h3><p>用已有的对象创建一个新的对象。</p>
+<p>创建对象时使用同类对象来进行初始化，这时所用的构造函数就是拷贝构造函数（Copy  Constructor）。拷贝构造函数也是构造函数，但它只有一个参数，这个参数只能是本类的一个对象，而且采用对象的常引用形式。拷贝构造函数的作用就是将实参对象的各成员值一一赋给新的对象中对应的成员。</p>
+<p>该函数的参数是一个常引用，如果不是引用，形参是实参的一份临时拷贝，由于两者都是对象，此时就会调用自己的拷贝构造函数，陷入无限递归中…….</p>
+<h4 id="拷贝构造函数的特征"><a href="#拷贝构造函数的特征" class="headerlink" title="拷贝构造函数的特征"></a>拷贝构造函数的特征</h4><p> （1）拷贝构造函数其实是一个构造函数的重载。<br> （2）拷贝构造函数的参数必须使用引用传参，使用传参方式会引发无穷递归调用。<br> （3）若为显示定义，系统默认生成缺省的拷贝构造函数，缺省的拷贝构造函数会按照成员的声明顺序依次拷贝类成员进行初始化</p>
+<h4 id="调用拷贝构造函数的两种方法："><a href="#调用拷贝构造函数的两种方法：" class="headerlink" title="调用拷贝构造函数的两种方法："></a>调用拷贝构造函数的两种方法：</h4><ol>
+<li><p>代入法：</p>
+<p>Person p2(p1);</p>
+</li>
+<li><p>赋值法：</p>
+<p>Person p2 = p1;</p>
+</li>
+</ol>
+<h4 id="为什么这里的对象可以直接访问私有成员变量？"><a href="#为什么这里的对象可以直接访问私有成员变量？" class="headerlink" title="为什么这里的对象可以直接访问私有成员变量？"></a>为什么这里的对象可以直接访问私有成员变量？</h4><p> 1）在类的成员函数里可以直接访问同类对象的私有或保护的成员。<br> 2）C++的访问限定符是以类为单位的，即：在这个单位内的成员可以互相访问。</p>
+<h3 id="（四）赋值运算符重载函数"><a href="#（四）赋值运算符重载函数" class="headerlink" title="（四）赋值运算符重载函数"></a>（四）赋值运算符重载函数</h3><p>用一个对象修改已经存在对象的内容，不是去创建新的对象，修改之后，两个对象的内容一致</p>
+<blockquote>
+<ol>
+<li>可以通过检查是否给自己赋值，进行优化</li>
+<li><strong>如果需要连续赋值，返回值不能是void，一般为引用类型</strong></li>
+<li>*<em>返回值一般是 <em>this</em></em></li>
+<li>编译器默认生成的赋值运算符为字节拷贝，即浅拷贝，如果资源需要拷贝，需要显示定义，完成深拷贝</li>
+</ol>
+<p>=调用：如果对象都存在，调用赋值运算符重载函数</p>
+<p>​              如果左边对象不存在，调用拷贝构造创建左边对象</p>
+</blockquote>
+<p><em>赋值是从右向左进行的</em></p>
+<p>如果不写，编译器会自动生成，默认生成的也是字节拷贝，浅拷贝</p>
+<p>如果当前类中有资源，则必须显示定义运算符重载函数，完成深拷贝</p>
+<h4 id="普通运算符重载函数"><a href="#普通运算符重载函数" class="headerlink" title="普通运算符重载函数"></a>普通运算符重载函数</h4><blockquote>
+<ol>
+<li>不能创建新的操作符，如operator@</li>
+<li>重载操作符必须有一个类类型或者枚举类型的操作符</li>
+<li>用于内置类型的操作符，其含义不能改变</li>
+<li>运算符重载函数如果是成员函数，则参数的个数比运算符需要的个数少一个，这里编译器会传入this指针作为第一个参数</li>
+<li>普通的运算符重载函数，参数的个数和运算符需要的个数一致</li>
+</ol>
+</blockquote>
+<p><strong>.*（成员指针访问运算符） ,  ::  ,  sizeof  ,  ? :  ,  .   五个运算符不能被重载</strong></p>
+<h3 id="（五）取地址运算符重载函数-const取地址运算符重载函数：获取对象的地址"><a href="#（五）取地址运算符重载函数-const取地址运算符重载函数：获取对象的地址" class="headerlink" title="（五）取地址运算符重载函数 / const取地址运算符重载函数：获取对象的地址**"></a>（五）取地址运算符重载函数 / const取地址运算符重载函数：获取对象的地址**</h3><p>一般不需要显示定义，直接使用编译器自动生成的即可</p>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++基础</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>C++描述符delete与override</title>
     <url>/2020/08/21/cpp-notes-2/</url>
     <content><![CDATA[<h1 id="delete与override"><a href="#delete与override" class="headerlink" title="delete与override"></a>delete与override</h1><h2 id="优先使用delete关键字删除函数而非private却又不实现的函数"><a href="#优先使用delete关键字删除函数而非private却又不实现的函数" class="headerlink" title="优先使用delete关键字删除函数而非private却又不实现的函数"></a>优先使用delete关键字删除函数而非private却又不实现的函数</h2><h3 id="为什么使用delete？"><a href="#为什么使用delete？" class="headerlink" title="为什么使用delete？"></a>为什么使用delete？</h3><p>​    不想让别的开发者调用特定的函数,你只需要不声明这个函数就可以了。但有时候 C++为你声明了一些函数,如果你想阻止客户调用这些函数,就不是那么容易的事了。</p>
@@ -1586,97 +1677,6 @@ w<span class="token punctuation">.</span><span class="token function">doWork</sp
 <p>定义一个函数为纯虚函数，才代表函数没有被实现。（这里好像有问题。。。）</p>
 <p>定义纯虚函数是为了实现一个接口，起到一个规范的作用，规范继承这个类的程序员必须实现这个函数。</p>
 <p>虚函数只能借助于指针或者引用来达到多态的效果</p>
-]]></content>
-      <categories>
-        <category>C++</category>
-      </categories>
-      <tags>
-        <tag>C++基础</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>类的六个默认的成员函数</title>
-    <url>/2020/08/22/cpp-notes-1/</url>
-    <content><![CDATA[<h1 id="类的六个默认的成员函数"><a href="#类的六个默认的成员函数" class="headerlink" title="类的六个默认的成员函数"></a>类的六个默认的成员函数</h1><h2 id="类的6个默认的成员函数包括："><a href="#类的6个默认的成员函数包括：" class="headerlink" title="类的6个默认的成员函数包括："></a>类的6个默认的成员函数包括：</h2><p>构造函数、析构函数、拷贝构造函数、赋值运算符重载函数、取地址操作符重载、const修饰的取地址操作符重载。</p>
-<h3 id="（一）构造函数"><a href="#（一）构造函数" class="headerlink" title="（一）构造函数"></a>（一）构造函数</h3><p>构造函数，顾名思义，为对象分配空间，进行初始化。它是一种特殊的成员函数，具有以下特点:</p>
-<ol>
-<li><p>函数名与类名相同。</p>
-</li>
-<li><p>无返回值。</p>
-</li>
-<li><p>构造对象的时候系统会自动调用构造函数。</p>
-</li>
-<li><p>可以重载。</p>
-</li>
-<li><p>可以在类中定义，也可以在类外定义。</p>
-</li>
-<li><p>如果类中没有给出构造函数，编译器会自动产生一个缺省的构造函数，如果类中有构造函数，编译器就不会产生缺省构造函数。</p>
-</li>
-<li><p>全缺省的构造函数和无参的构造函数只能有一个，否则调用的时候就会产生冲突。</p>
-</li>
-<li><p>没有this指针。因为构造函数才是创建对象的，没有创建对象就不会有对象的首地址。</p>
-</li>
-</ol>
-<p>构造函数，说来就是给成员变量进行初始化。而初始化却有两种方法：初始化列表、构造函数函数体内赋值。尽量使用初始化列表，因为它更高效。</p>
-<h4 id="有些成员变量必须再初始化列表中初始化，比如："><a href="#有些成员变量必须再初始化列表中初始化，比如：" class="headerlink" title="有些成员变量必须再初始化列表中初始化，比如："></a>有些成员变量必须再初始化列表中初始化，比如：</h4><ol>
-<li><p>常量成员变量。（常量创建时必须初始化，因为对于一个常量，我们给它赋值，是不对的）</p>
-</li>
-<li><p>引用类型成员变量。（引用创建时必须初始化）</p>
-</li>
-<li><p>没有缺省构造函数的类成员变量。（如果构造函数的参数列表中有一个类的对象，并且该对象的类里没有缺省参数的构造函数时，要是不使用初始化列表，参数中会调用无参或者全缺省的构造函数，而那个类中又没有。）</p>
-</li>
-</ol>
-<h3 id="（二）析构函数"><a href="#（二）析构函数" class="headerlink" title="（二）析构函数"></a>（二）析构函数</h3><h4 id="析构函数是一种特殊的成员函数，具有以下特点："><a href="#析构函数是一种特殊的成员函数，具有以下特点：" class="headerlink" title="析构函数是一种特殊的成员函数，具有以下特点："></a>析构函数是一种特殊的成员函数，具有以下特点：</h4><ol>
-<li><p>析构函数函数名是在类名加上字符 ~ 。</p>
-</li>
-<li><p>无参数无返回值（但有this指针）。</p>
-</li>
-<li><p>一个类有且只有一个析构函数，所以肯定不能重载。若未显示定义，系统会自动生成缺省的析构函数。</p>
-</li>
-<li><p>对象生命周期结束时，C++编译系统系统自动调用析构函数。</p>
-</li>
-<li><p>注意析构函数体内并不是删除对象，而是做一些清理工作。（比如我们在构造函数中动态开辟过一段空间，函数结束后需要释放，而系统自动生成的析构函数才不管内存释放呢，所以需要人为地写出析构函数）</p>
-</li>
-</ol>
-<p>注意：对象生命周期结束后，后构造的对象先释放。</p>
-<h3 id="（三）拷贝构造函数"><a href="#（三）拷贝构造函数" class="headerlink" title="（三）拷贝构造函数"></a>（三）拷贝构造函数</h3><p>用已有的对象创建一个新的对象。</p>
-<p>创建对象时使用同类对象来进行初始化，这时所用的构造函数就是拷贝构造函数（Copy  Constructor）。拷贝构造函数也是构造函数，但它只有一个参数，这个参数只能是本类的一个对象，而且采用对象的常引用形式。拷贝构造函数的作用就是将实参对象的各成员值一一赋给新的对象中对应的成员。</p>
-<p>该函数的参数是一个常引用，如果不是引用，形参是实参的一份临时拷贝，由于两者都是对象，此时就会调用自己的拷贝构造函数，陷入无限递归中…….</p>
-<h4 id="拷贝构造函数的特征"><a href="#拷贝构造函数的特征" class="headerlink" title="拷贝构造函数的特征"></a>拷贝构造函数的特征</h4><p> （1）拷贝构造函数其实是一个构造函数的重载。<br> （2）拷贝构造函数的参数必须使用引用传参，使用传参方式会引发无穷递归调用。<br> （3）若为显示定义，系统默认生成缺省的拷贝构造函数，缺省的拷贝构造函数会按照成员的声明顺序依次拷贝类成员进行初始化</p>
-<h4 id="调用拷贝构造函数的两种方法："><a href="#调用拷贝构造函数的两种方法：" class="headerlink" title="调用拷贝构造函数的两种方法："></a>调用拷贝构造函数的两种方法：</h4><ol>
-<li><p>代入法：</p>
-<p>Person p2(p1);</p>
-</li>
-<li><p>赋值法：</p>
-<p>Person p2 = p1;</p>
-</li>
-</ol>
-<h4 id="为什么这里的对象可以直接访问私有成员变量？"><a href="#为什么这里的对象可以直接访问私有成员变量？" class="headerlink" title="为什么这里的对象可以直接访问私有成员变量？"></a>为什么这里的对象可以直接访问私有成员变量？</h4><p> 1）在类的成员函数里可以直接访问同类对象的私有或保护的成员。<br> 2）C++的访问限定符是以类为单位的，即：在这个单位内的成员可以互相访问。</p>
-<h3 id="（四）赋值运算符重载函数"><a href="#（四）赋值运算符重载函数" class="headerlink" title="（四）赋值运算符重载函数"></a>（四）赋值运算符重载函数</h3><p>用一个对象修改已经存在对象的内容，不是去创建新的对象，修改之后，两个对象的内容一致</p>
-<blockquote>
-<ol>
-<li>可以通过检查是否给自己赋值，进行优化</li>
-<li><strong>如果需要连续赋值，返回值不能是void，一般为引用类型</strong></li>
-<li>*<em>返回值一般是 <em>this</em></em></li>
-<li>编译器默认生成的赋值运算符为字节拷贝，即浅拷贝，如果资源需要拷贝，需要显示定义，完成深拷贝</li>
-</ol>
-<p>=调用：如果对象都存在，调用赋值运算符重载函数</p>
-<p>​              如果左边对象不存在，调用拷贝构造创建左边对象</p>
-</blockquote>
-<p><em>赋值是从右向左进行的</em></p>
-<p>如果不写，编译器会自动生成，默认生成的也是字节拷贝，浅拷贝</p>
-<p>如果当前类中有资源，则必须显示定义运算符重载函数，完成深拷贝</p>
-<h4 id="普通运算符重载函数"><a href="#普通运算符重载函数" class="headerlink" title="普通运算符重载函数"></a>普通运算符重载函数</h4><blockquote>
-<ol>
-<li>不能创建新的操作符，如operator@</li>
-<li>重载操作符必须有一个类类型或者枚举类型的操作符</li>
-<li>用于内置类型的操作符，其含义不能改变</li>
-<li>运算符重载函数如果是成员函数，则参数的个数比运算符需要的个数少一个，这里编译器会传入this指针作为第一个参数</li>
-<li>普通的运算符重载函数，参数的个数和运算符需要的个数一致</li>
-</ol>
-</blockquote>
-<p><strong>.*（成员指针访问运算符） ,  ::  ,  sizeof  ,  ? :  ,  .   五个运算符不能被重载</strong></p>
-<h3 id="（五）取地址运算符重载函数-const取地址运算符重载函数：获取对象的地址"><a href="#（五）取地址运算符重载函数-const取地址运算符重载函数：获取对象的地址" class="headerlink" title="（五）取地址运算符重载函数 / const取地址运算符重载函数：获取对象的地址**"></a>（五）取地址运算符重载函数 / const取地址运算符重载函数：获取对象的地址**</h3><p>一般不需要显示定义，直接使用编译器自动生成的即可</p>
 ]]></content>
       <categories>
         <category>C++</category>
