@@ -1,0 +1,15 @@
+@media (min-width: 34em) {
+  .side-card {
+    width: 15.25424%;
+    min-width: 165px;
+    float: left;
+    margin-right: 1.69492%;
+    opacity: 0.75;
+    -webkit-transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out;
+  }
+  .side-card .card-wrap {
+    padding: 10px 10px 10px 17px;
+    text-align: center;
+  }
+}

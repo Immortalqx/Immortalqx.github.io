@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>所念皆星河</title>
+  
+  <subtitle>克服己身，叫身服我</subtitle>
+  <link href="http://immortalqx.github.io/atom.xml" rel="self"/>
+  
+  <link href="http://immortalqx.github.io/"/>
+  <updated>2023-11-06T02:33:09.145Z</updated>
+  <id>http://immortalqx.github.io/</id>
+  
+  <author>
+    <name>Immortalqx</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Neural Implicit Representations in SLAM</title>
+    <link href="http://immortalqx.github.io/2023/07/15/meeting-5/"/>
+    <id>http://immortalqx.github.io/2023/07/15/meeting-5/</id>
+    <published>2023-07-15T09:53:02.000Z</published>
+    <updated>2023-11-06T02:33:09.145Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Neural-Implicit-Representations-in-SLAM&quot;&gt;&lt;a href=&quot;#Neural-Implicit-Representations-in-SLAM&quot; class=&quot;headerlink&quot; title=&quot;Neural</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="NeRF SLAM" scheme="http://immortalqx.github.io/tags/NeRF-SLAM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SEAMLESS MAP MERGING in ORBSLAM-Atlas</title>
+    <link href="http://immortalqx.github.io/2023/05/27/paper-reading-orbslam-atlas/"/>
+    <id>http://immortalqx.github.io/2023/05/27/paper-reading-orbslam-atlas/</id>
+    <published>2023-05-27T11:36:08.000Z</published>
+    <updated>2023-11-06T02:33:09.149Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;SEAMLESS-MAP-MERGING-in-ORBSLAM-Atlas&quot;&gt;&lt;a href=&quot;#SEAMLESS-MAP-MERGING-in-ORBSLAM-Atlas&quot; class=&quot;headerlink&quot; title=&quot;SEAMLESS MAP</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Exploring NeRF-My Journey Through Research and Code</title>
+    <link href="http://immortalqx.github.io/2023/04/26/meeting-4/"/>
+    <id>http://immortalqx.github.io/2023/04/26/meeting-4/</id>
+    <published>2023-04-26T13:41:38.000Z</published>
+    <updated>2023-11-06T02:33:09.145Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Exploring-NeRF-My-Journey-Through-Research-and-Code&quot;&gt;&lt;a href=&quot;#Exploring-NeRF-My-Journey-Through-Research-and-Code&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="其他" scheme="http://immortalqx.github.io/categories/%E5%85%B6%E4%BB%96/"/>
+    
+    
+    <category term="经验分享" scheme="http://immortalqx.github.io/tags/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基于神经网络的三维重建</title>
+    <link href="http://immortalqx.github.io/2023/04/25/3d-reconstruction-1/"/>
+    <id>http://immortalqx.github.io/2023/04/25/3d-reconstruction-1/</id>
+    <published>2023-04-25T05:55:26.000Z</published>
+    <updated>2023-11-06T02:33:09.133Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;基于神经网络的3D重建&quot;&gt;&lt;a href=&quot;#基于神经网络的3D重建&quot; class=&quot;headerlink&quot; title=&quot;基于神经网络的3D重建&quot;&gt;&lt;/a&gt;基于神经网络的3D重建&lt;/h1&gt;&lt;h2 id=&quot;1-对NeRF的思考&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
+    
+    <category term="深度学习" scheme="http://immortalqx.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>读博的选择、过程、出路</title>
+    <link href="http://immortalqx.github.io/2023/04/06/meeting-3/"/>
+    <id>http://immortalqx.github.io/2023/04/06/meeting-3/</id>
+    <published>2023-04-06T09:21:54.000Z</published>
+    <updated>2023-11-06T02:33:09.145Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;读博的选择、过程、出路&quot;&gt;&lt;a href=&quot;#读博的选择、过程、出路&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="其他" scheme="http://immortalqx.github.io/categories/%E5%85%B6%E4%BB%96/"/>
+    
+    
+    <category term="经验分享" scheme="http://immortalqx.github.io/tags/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SLAM论文从零到一</title>
+    <link href="http://immortalqx.github.io/2023/03/26/meeting-2/"/>
+    <id>http://immortalqx.github.io/2023/03/26/meeting-2/</id>
+    <published>2023-03-26T14:59:03.000Z</published>
+    <updated>2023-11-06T02:33:09.145Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;SLAM论文从零到一&quot;&gt;&lt;a href=&quot;#SLAM论文从零到一&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="经验分享" scheme="http://immortalqx.github.io/tags/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>几种关键帧选择方案</title>
+    <link href="http://immortalqx.github.io/2023/03/25/slam-learning-5/"/>
+    <id>http://immortalqx.github.io/2023/03/25/slam-learning-5/</id>
+    <published>2023-03-25T13:18:30.000Z</published>
+    <updated>2023-11-06T02:33:09.149Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;几种关键帧选择方案&quot;&gt;&lt;a href=&quot;#几种关键帧选择方案&quot; class=&quot;headerlink&quot; title=&quot;几种关键帧选择方案&quot;&gt;&lt;/a&gt;几种关键帧选择方案&lt;/h1&gt;&lt;h2 id=&quot;ORB-SLAM&quot;&gt;&lt;a href=&quot;#ORB-SLAM&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>视觉里程计总结</title>
+    <link href="http://immortalqx.github.io/2023/03/24/slam-learning-4/"/>
+    <id>http://immortalqx.github.io/2023/03/24/slam-learning-4/</id>
+    <published>2023-03-24T10:00:27.000Z</published>
+    <updated>2023-11-06T02:33:09.149Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;视觉里程计总结&quot;&gt;&lt;a href=&quot;#视觉里程计总结&quot; class=&quot;headerlink&quot; title=&quot;视觉里程计总结&quot;&gt;&lt;/a&gt;视觉里程计总结&lt;/h1&gt;&lt;h2 id=&quot;任务目标&quot;&gt;&lt;a href=&quot;#任务目标&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>论文阅读《DENSE RGB SLAM WITH NEURAL IMPLICIT MAPS》</title>
+    <link href="http://immortalqx.github.io/2023/03/19/paper-reading-dim-slam/"/>
+    <id>http://immortalqx.github.io/2023/03/19/paper-reading-dim-slam/</id>
+    <published>2023-03-19T09:25:14.000Z</published>
+    <updated>2023-11-06T02:33:09.149Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;论文阅读《DENSE-RGB-SLAM-WITH-NEURAL-IMPLICIT-MAPS》&quot;&gt;&lt;a href=&quot;#论文阅读《DENSE-RGB-SLAM-WITH-NEURAL-IMPLICIT-MAPS》&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="隐式神经表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E7%A5%9E%E7%BB%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>论文阅读《ORB-SLAM2：an Open-Source SLAM System for Monocular, Stereo and RGB-D Cameras》</title>
+    <link href="http://immortalqx.github.io/2023/03/07/paper-reading-orb-slam2/"/>
+    <id>http://immortalqx.github.io/2023/03/07/paper-reading-orb-slam2/</id>
+    <published>2023-03-07T08:47:39.000Z</published>
+    <updated>2023-11-06T02:33:09.149Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;论文阅读《ORB-SLAM2-an-Open-Source-SLAM-System-for-Monocular-Stereo-and-RGB-D-Cameras》&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>论文阅读《Feature-Realistic Neural Fusion for Real-Time, Open Set Scene Understanding》</title>
+    <link href="http://immortalqx.github.io/2023/03/06/paper-reading-feature-realistic-neural-fusion-for-real-time-open-set-scene-understanding/"/>
+    <id>http://immortalqx.github.io/2023/03/06/paper-reading-feature-realistic-neural-fusion-for-real-time-open-set-scene-understanding/</id>
+    <published>2023-03-06T12:34:33.000Z</published>
+    <updated>2023-11-06T02:33:09.149Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Feature-Realistic-Neural-Fusion-for-Real-Time-Open-Set-Scene-Understanding&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="隐式神经表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E7%A5%9E%E7%BB%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS231A Lecture 9：Fitting and Matching</title>
+    <link href="http://immortalqx.github.io/2022/11/23/cs231a-lecture9/"/>
+    <id>http://immortalqx.github.io/2022/11/23/cs231a-lecture9/</id>
+    <published>2022-11-23T12:25:59.000Z</published>
+    <updated>2023-11-06T02:33:09.141Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;CS231A-Lecture-9：Fitting-and-Matching&quot;&gt;&lt;a href=&quot;#CS231A-Lecture-9：Fitting-and-Matching&quot; class=&quot;headerlink&quot; title=&quot;CS231A Lecture</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="CS231A" scheme="http://immortalqx.github.io/tags/CS231A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS231A Lecture 7：Multi-view geometry (2)</title>
+    <link href="http://immortalqx.github.io/2022/11/21/cs231a-lecture7-2/"/>
+    <id>http://immortalqx.github.io/2022/11/21/cs231a-lecture7-2/</id>
+    <published>2022-11-21T14:09:28.000Z</published>
+    <updated>2023-11-06T02:33:09.141Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;CS231A-Lecture-7：Multi-view-geometry-2&quot;&gt;&lt;a href=&quot;#CS231A-Lecture-7：Multi-view-geometry-2&quot; class=&quot;headerlink&quot; title=&quot;CS231A Lecture</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="CS231A" scheme="http://immortalqx.github.io/tags/CS231A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS231A Lecture 7：Multi-view geometry (1)</title>
+    <link href="http://immortalqx.github.io/2022/11/12/cs231a-lecture7-1/"/>
+    <id>http://immortalqx.github.io/2022/11/12/cs231a-lecture7-1/</id>
+    <published>2022-11-12T03:07:05.000Z</published>
+    <updated>2023-11-06T02:33:09.141Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;CS231A-Lecture-7：Multi-view-geometry-1&quot;&gt;&lt;a href=&quot;#CS231A-Lecture-7：Multi-view-geometry-1&quot; class=&quot;headerlink&quot; title=&quot;CS231A Lecture</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="CS231A" scheme="http://immortalqx.github.io/tags/CS231A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS231A Lecture 6：Stereo Systems</title>
+    <link href="http://immortalqx.github.io/2022/11/05/cs231a-lecture6/"/>
+    <id>http://immortalqx.github.io/2022/11/05/cs231a-lecture6/</id>
+    <published>2022-11-05T11:57:19.000Z</published>
+    <updated>2023-11-06T02:33:09.141Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;CS231A-Lecture-6：Stereo-Systems&quot;&gt;&lt;a href=&quot;#CS231A-Lecture-6：Stereo-Systems&quot; class=&quot;headerlink&quot; title=&quot;CS231A Lecture 6：Stereo</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="CS231A" scheme="http://immortalqx.github.io/tags/CS231A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS231A Lecture 5：Epipolar Geometry</title>
+    <link href="http://immortalqx.github.io/2022/11/01/cs231a-lecture5/"/>
+    <id>http://immortalqx.github.io/2022/11/01/cs231a-lecture5/</id>
+    <published>2022-11-01T08:50:42.000Z</published>
+    <updated>2023-11-06T02:33:09.141Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;CS231A-Lecture-5：Epipolar-Geometry&quot;&gt;&lt;a href=&quot;#CS231A-Lecture-5：Epipolar-Geometry&quot; class=&quot;headerlink&quot; title=&quot;CS231A Lecture</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="CS231A" scheme="http://immortalqx.github.io/tags/CS231A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS231A Lecture 4：Single View Metrology</title>
+    <link href="http://immortalqx.github.io/2022/10/28/cs231a-lecture4/"/>
+    <id>http://immortalqx.github.io/2022/10/28/cs231a-lecture4/</id>
+    <published>2022-10-28T13:13:43.000Z</published>
+    <updated>2023-11-06T02:33:09.141Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;CS231A-Lecture-4：Single-View-Metrology&quot;&gt;&lt;a href=&quot;#CS231A-Lecture-4：Single-View-Metrology&quot; class=&quot;headerlink&quot; title=&quot;CS231A Lecture</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="CS231A" scheme="http://immortalqx.github.io/tags/CS231A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS231A Lecture 3：Camera Calibration</title>
+    <link href="http://immortalqx.github.io/2022/10/14/cs231a-lecture3/"/>
+    <id>http://immortalqx.github.io/2022/10/14/cs231a-lecture3/</id>
+    <published>2022-10-14T03:11:11.000Z</published>
+    <updated>2023-11-06T02:33:09.141Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;CS231A-Lecture-3：Camera-Calibration&quot;&gt;&lt;a href=&quot;#CS231A-Lecture-3：Camera-Calibration&quot; class=&quot;headerlink&quot; title=&quot;CS231A Lecture</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="CS231A" scheme="http://immortalqx.github.io/tags/CS231A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS231A Lecture 2：Camera Models</title>
+    <link href="http://immortalqx.github.io/2022/10/12/cs231a-lecture2/"/>
+    <id>http://immortalqx.github.io/2022/10/12/cs231a-lecture2/</id>
+    <published>2022-10-12T09:21:05.000Z</published>
+    <updated>2023-11-06T02:33:09.141Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;CS231A-Lecture-2-Camera-Models&quot;&gt;&lt;a href=&quot;#CS231A-Lecture-2-Camera-Models&quot; class=&quot;headerlink&quot; title=&quot;CS231A Lecture 2: Camera</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="CS231A" scheme="http://immortalqx.github.io/tags/CS231A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>论文阅读《iMAP：Implicit Mapping and Positioning in Real-Time 》</title>
+    <link href="http://immortalqx.github.io/2022/08/31/paper-reading-imap/"/>
+    <id>http://immortalqx.github.io/2022/08/31/paper-reading-imap/</id>
+    <published>2022-08-30T16:36:08.000Z</published>
+    <updated>2023-11-06T02:33:09.149Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;论文阅读《iMAP-Implicit-Mapping-and-Positioning-in-Real-Time-》&quot;&gt;&lt;a href=&quot;#论文阅读《iMAP-Implicit-Mapping-and-Positioning-in-Real-Time-》&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="隐式神经表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E7%A5%9E%E7%BB%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
+    
+  </entry>
+  
+</feed>
