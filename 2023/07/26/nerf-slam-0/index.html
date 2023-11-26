@@ -4,11 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="CS231A Lecture 4：Single View Metrology, 所念皆星河">
-    <meta name="description" content="CS231A Lecture 4：Single View Metrology
-Reading:
-[HZ] Chapter 2 “Projective Geometry and Transformation in 2D”
-[HZ] Chapt">
+    <meta name="keywords" content="NeRF based SLAM学习笔记（1）, 所念皆星河">
+    <meta name="description" content="NeRF based SLAM学习笔记（1）NeRF
+
+论文链接：https://arxiv.org/abs/2003.08934
+项目主页：https://www.matthewtancik.com/nerf
+开源代码：https://g">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -20,7 +21,7 @@ Reading:
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>CS231A Lecture 4：Single View Metrology | 所念皆星河</title>
+    <title>NeRF based SLAM学习笔记（1） | 所念皆星河</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -318,12 +319,12 @@ Reading:
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/27.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">CS231A Lecture 4：Single View Metrology</h1>
+                    <h1 class="description center-align post-title">NeRF based SLAM学习笔记（1）</h1>
                 </div>
             </div>
         </div>
@@ -347,8 +348,12 @@ Reading:
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/CS231A/">
-                                <span class="chip bg-color">CS231A</span>
+                            <a href="/tags/NeRF/">
+                                <span class="chip bg-color">NeRF</span>
+                            </a>
+                        
+                            <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                                <span class="chip bg-color">视觉SLAM</span>
                             </a>
                         
                     </div>
@@ -372,7 +377,7 @@ Reading:
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-10-28
+                    2023-07-26
                 </div>
                 
 
@@ -381,14 +386,14 @@ Reading:
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1k
+                    328
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    1 分
                 </div>
                 
 
@@ -411,126 +416,55 @@ Reading:
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="CS231A-Lecture-4：Single-View-Metrology"><a href="#CS231A-Lecture-4：Single-View-Metrology" class="headerlink" title="CS231A Lecture 4：Single View Metrology"></a>CS231A Lecture 4：Single View Metrology</h1><blockquote>
-<p><strong>Reading:</strong></p>
-<p>[HZ] Chapter 2 “Projective Geometry and Transformation in 2D”</p>
-<p>[HZ] Chapter 3 “Projective Geometry and Transformation in 3D”</p>
-<p>[HZ] Chapter 8 “More Single View Geometry”</p>
-<p>[Hoeim &amp; Savarese] Chapter 2</p>
-</blockquote>
-<h2 id="2D-transformations"><a href="#2D-transformations" class="headerlink" title="2D transformations"></a>2D transformations</h2><p>这部分介绍了四种2D变换：Isometries、Similarities、Affinity、Projective</p>
-<h3 id="Isometries"><a href="#Isometries" class="headerlink" title="Isometries"></a>Isometries</h3><p>等距变换（Isometries），旋转+平移。</p>
-<img src="/images/cs231a-lecture4/image-20221027210229618.png" style="zoom: 50%;">
-
-<h3 id="Similarities"><a href="#Similarities" class="headerlink" title="Similarities"></a>Similarities</h3><p>相似变换（Similarities），相当于是等距变换与均匀缩放的结合。</p>
-<img src="/images/cs231a-lecture4/image-20221027210243854.png" style="zoom:50%;">
-
-<h3 id="Affinity"><a href="#Affinity" class="headerlink" title="Affinity"></a>Affinity</h3><p>仿射变换（Affine），是一个平移变换与一个非奇异线性变换的结合。</p>
-<p>其中的A矩阵可以理解成旋转与非均匀缩放的结合。</p>
-<img src="/images/cs231a-lecture4/image-20221027210255599.png" style="zoom:50%;">
-
-<img src="/images/cs231a-lecture4/image-20221027210325706.png" style="zoom:50%;">
-
-<img src="/images/cs231a-lecture4/image-20221027210342130.png" style="zoom:50%;">
-
-<h3 id="Projective"><a href="#Projective" class="headerlink" title="Projective"></a>Projective</h3><p>射影变换（Projective），是齐次坐标的一般非奇异线性变换，扩展了仿射变换，是非齐次坐标的一般非奇异线性变换和一个平移的复合。</p>
-<p><strong>定义：</strong>由有限次中心射影的积定义的两条直线间的一一对应变换称为一维射影变换。由有限次中心射影的积定义的两个平面之间的一一对应变换称为二维射影变换。</p>
-<p><strong>性质：</strong>交比不变性</p>
-<p>如果平面上点场的点建立了一个一一对应，并且满足：</p>
-<p>（1）任何共线三点的象仍是共线三点；</p>
-<p>（2）共线四点的交比不变。</p>
-<p>则这个一一对应叫做点场的射影变换，简称射影变换。</p>
-<img src="/images/cs231a-lecture4/image-20221027210358442.png" style="zoom:50%;">
-
-<p><strong>The cross ratio：</strong></p>
-<img src="/images/cs231a-lecture4/image-20221027210443284.png" style="zoom:50%;">
-
-
-
-
-
-<p><strong>与其他变换的关系：</strong></p>
+                <h1 id="NeRF-based-SLAM学习笔记（1）"><a href="#NeRF-based-SLAM学习笔记（1）" class="headerlink" title="NeRF based SLAM学习笔记（1）"></a>NeRF based SLAM学习笔记（1）</h1><p><strong>NeRF</strong></p>
 <ul>
-<li><p>$H$矩阵是可逆实矩阵，当$v$等于0则变成了仿射变换；在仿射变换的前提下，左上角的$2 \times 2$矩阵正交时为相似变换；左上角矩阵行列式为1时为等距变换。</p>
-</li>
-<li><p>射影变换可以分解成一串交换链的复合。<br>$$<br>H = H_{S}H_{A}H_{P} =<br>\begin{bmatrix} sR&amp;t \\ 0^{T} &amp; 1 \end{bmatrix}<br>\begin{bmatrix} K&amp;0 \\ 0^{T} &amp; 1 \end{bmatrix}<br>\begin{bmatrix} I&amp;0 \\ V^{T} &amp; v \end{bmatrix} =<br>\begin{bmatrix} A &amp; Vt\\ V^{T} &amp; v \end{bmatrix}<br>$$<br>可以看出上式中，$H_S$表示相似变换，$H_A$表示仿射变换，$H_P$表示射影变换。</p>
-</li>
+<li><strong>论文链接</strong>：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2003.08934">https://arxiv.org/abs/2003.08934</a></li>
+<li><strong>项目主页</strong>：<a target="_blank" rel="noopener" href="https://www.matthewtancik.com/nerf">https://www.matthewtancik.com/nerf</a></li>
+<li><strong>开源代码</strong>：<a target="_blank" rel="noopener" href="https://github.com/bmild/nerf">https://github.com/bmild/nerf</a></li>
+<li><strong>演示视频</strong>：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=JuH79E8rdKc">https://www.youtube.com/watch?v=JuH79E8rdKc</a></li>
 </ul>
-<h3 id="Questions"><a href="#Questions" class="headerlink" title="Questions"></a>Questions</h3><p><strong>Q：射影变换与仿射变换的根本区别在于射影变换中向量$v$不为0，如何理解？</strong></p>
-<p><strong>A：</strong>对于理想点$(x_{1},x_{2},0)^{T}$在仿射变换与射影变换下面的映射：</p>
+<p><strong>iMAP</strong></p>
 <ul>
-<li><p>在仿射变换下：<br>$$<br>\begin{bmatrix} A &amp;t \\ 0^{T} &amp; 1 \end{bmatrix}<br>\begin{pmatrix} x_{1}\\ x_{2}\\ 0 \end{pmatrix} =<br>\begin{pmatrix} A\begin{pmatrix} x_{1}\\ x_{2} \end{pmatrix} \\ 0 \end{pmatrix}<br>$$</p>
-</li>
-<li><p>在射影变换下：<br>$$<br>\begin{bmatrix} A &amp;t \\ V^{T} &amp; v \end{bmatrix}<br>\begin{pmatrix} x_{1}\\ x_{2}\\ 0 \end{pmatrix} =<br>\begin{pmatrix} A\begin{pmatrix} x_{1}\\ x_{2} \end{pmatrix} \\ v_{1}x_{1}+v_{2}x_{2}<br>\end{pmatrix}<br>$$</p>
-</li>
+<li><strong>论文链接</strong>：<a target="_blank" rel="noopener" href="http://arxiv.org/abs/2103.12352">http://arxiv.org/abs/2103.12352</a></li>
+<li><strong>项目主页</strong>：<a target="_blank" rel="noopener" href="https://edgarsucar.github.io/iMAP">https://edgarsucar.github.io/iMAP</a></li>
+<li><strong>演示视频</strong>：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=c-zkKGArl5Y">https://www.youtube.com/watch?v=c-zkKGArl5Y</a></li>
 </ul>
-<p>可以看出，<strong>对于仿射变换，理想点变换后还是理想点；对于射影变换，理想点被映射到有限点。说明射影变换能对消影点建模</strong>。</p>
-<h2 id="Vanishing-points-and-lines"><a href="#Vanishing-points-and-lines" class="headerlink" title="Vanishing points and lines"></a>Vanishing points and lines</h2><h3 id="Lines-in-a-2D-plane"><a href="#Lines-in-a-2D-plane" class="headerlink" title="Lines in a 2D plane"></a>Lines in a 2D plane</h3><img src="/images/cs231a-lecture4/image-20221028161446651.png" style="zoom:50%;">
-
-<h4 id="Intersecting-lines"><a href="#Intersecting-lines" class="headerlink" title="Intersecting lines"></a>Intersecting lines</h4><img src="/images/cs231a-lecture4/image-20221028161704759.png" style="zoom:50%;">
-
-<h4 id="2D-Points-at-infinity-ideal-points"><a href="#2D-Points-at-infinity-ideal-points" class="headerlink" title="2D Points at infinity (ideal points)"></a>2D Points at infinity (ideal points)</h4><img src="/images/cs231a-lecture4/image-20221028162147134.png" style="zoom:50%;">
-
-<img src="/images/cs231a-lecture4/image-20221028162226539.png" style="zoom:50%;">
-
-<h4 id="Lines-infinity-l-infty"><a href="#Lines-infinity-l-infty" class="headerlink" title="Lines infinity $l_\infty$"></a>Lines infinity $l_\infty$</h4><img src="/images/cs231a-lecture4/image-20221028162718069.png" style="zoom:50%;">
-
-<h4 id="Projective-transformation"><a href="#Projective-transformation" class="headerlink" title="Projective transformation"></a>Projective transformation</h4><p>这部分和2D transformations-Questions是对应的。</p>
-<h5 id="a-point-at-infinity"><a href="#a-point-at-infinity" class="headerlink" title="a point at infinity"></a>a point at infinity</h5><img src="/images/cs231a-lecture4/image-20221028163811252.png" style="zoom:50%;">
-
-<h5 id="a-line-in-2D"><a href="#a-line-in-2D" class="headerlink" title="a line (in 2D)"></a>a line (in 2D)</h5><img src="/images/cs231a-lecture4/image-20221028163842739.png" style="zoom:50%;">
-
-<h3 id="Points-and-planes-in-3D"><a href="#Points-and-planes-in-3D" class="headerlink" title="Points and planes in 3D"></a>Points and planes in 3D</h3><p><strong>3D空间中的点与平面：</strong></p>
-<img src="/images/cs231a-lecture4/image-20221028164728893.png" style="zoom:50%;">
-
-<p><strong>3D空间中的直线：</strong></p>
-<img src="/images/cs231a-lecture4/image-20221028164740978.png" style="zoom:50%;">
-
-<p><img src="/images/cs231a-lecture4/image-20221028165448251.png"></p>
-<p><strong>Points at infinity in 3D</strong></p>
-<img src="/images/cs231a-lecture4/image-20221028164857067.png" style="zoom:50%;">
-
-<h4 id="Vanishing-points"><a href="#Vanishing-points" class="headerlink" title="Vanishing points"></a>Vanishing points</h4><img src="/images/cs231a-lecture4/image-20221028164924250.png" style="zoom:50%;">
-
-<h4 id="Vanishing-points-and-directions"><a href="#Vanishing-points-and-directions" class="headerlink" title="Vanishing points and directions"></a>Vanishing points and directions</h4><img src="/images/cs231a-lecture4/image-20221028174039533.png" style="zoom:50%;">
-
-<h4 id="Vanishing-horizon-line"><a href="#Vanishing-horizon-line" class="headerlink" title="Vanishing (horizon) line"></a>Vanishing (horizon) line</h4><img src="/images/cs231a-lecture4/image-20221028173200919.png" style="zoom:50%;">
-
-<p><strong>Example: Are these two lines parallel or not?</strong></p>
-<img src="/images/cs231a-lecture4/image-20221028174055129.png" style="zoom:50%;">
-
-<h4 id="Vanishing-points-and-planes"><a href="#Vanishing-points-and-planes" class="headerlink" title="Vanishing points and planes"></a>Vanishing points and planes</h4><p>Furthermore, the horizon line allows us to compute useful properties about the world. For example, we can derive an interesting relationship between the the normal n of a plane in 3D with the corresponding horizon line $l_{horiz}$ in an image:</p>
-<img src="/images/cs231a-lecture4/image-20221028174710565.png" style="zoom:50%;">
-
-<p>This means that if we can recognize the horizon line associated with a plane, and if our camera is calibrated, then we can estimate the orientation of that plane.</p>
-<h4 id="Planes-at-infinity"><a href="#Planes-at-infinity" class="headerlink" title="Planes at infinity"></a>Planes at infinity</h4><img src="/images/cs231a-lecture4/image-20221028174817317.png" style="zoom:50%;">
-
-<h4 id="Angle-between-2-vanishing-points"><a href="#Angle-between-2-vanishing-points" class="headerlink" title="Angle between 2 vanishing points"></a>Angle between 2 vanishing points</h4><img src="/images/cs231a-lecture4/image-20221028174939830.png" style="zoom:50%;">
-
-<h4 id="Properties-of-omega"><a href="#Properties-of-omega" class="headerlink" title="Properties of $\omega$"></a>Properties of $\omega$</h4><img src="/images/cs231a-lecture4/image-20221028175128501.png" style="zoom:50%;">
-
-<h4 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h4><img src="/images/cs231a-lecture4/image-20221028175208575.png" style="zoom:50%;">
-
-<h3 id="Questions-1"><a href="#Questions-1" class="headerlink" title="Questions"></a>Questions</h3><p><strong>Q：为什么无穷远处的线$l_\infty=\begin{bmatrix} 0 \\ 0 \\ 1 \end{bmatrix}$</strong></p>
-<p><strong>A：</strong>有穷点显然不在$l_\infty$上，因此$\begin{bmatrix} x \\ y \\ 1 \end{bmatrix} l_\infty \neq 0$；无穷点显然应该在$l_\infty$上，因此$\begin{bmatrix} x \\ y \\ 0 \end{bmatrix} l_\infty = 0$。</p>
-<p><strong>Q：为什么3D中两条平行直线的交点与直线的方向向量是相同的</strong></p>
-<p><strong>A：</strong>TODO（不过把两条直线的一般方程摆出来，确实就应该是直线的方向向量才满足条件）</p>
-<h2 id="Estimating-geometry-from-a-single-image"><a href="#Estimating-geometry-from-a-single-image" class="headerlink" title="Estimating geometry from a single image"></a>Estimating geometry from a single image</h2><h3 id="Single-view-calibration-example"><a href="#Single-view-calibration-example" class="headerlink" title="Single view calibration - example"></a>Single view calibration - example</h3><img src="/images/cs231a-lecture4/image-20221028175618266.png" style="zoom:50%;">
-
-<img src="/images/cs231a-lecture4/image-20221028175656737.png" style="zoom:50%;">
-
-<img src="/images/cs231a-lecture4/image-20221028175725632.png" style="zoom:50%;">
-
-<img src="/images/cs231a-lecture4/image-20221028175740607.png" style="zoom:50%;">
-
-<img src="/images/cs231a-lecture4/image-20221028175753728.png" style="zoom:50%;">
-
-<h3 id="Single-view-reconstruction-example"><a href="#Single-view-reconstruction-example" class="headerlink" title="Single view reconstruction - example"></a>Single view reconstruction - example</h3><img src="/images/cs231a-lecture4/image-20221028175836046.png" style="zoom:50%;">
-
-<img src="/images/cs231a-lecture4/image-20221028175847411.png" style="zoom:50%;">
-
-<h3 id="Single-view-reconstruction-drawbacks"><a href="#Single-view-reconstruction-drawbacks" class="headerlink" title="Single view reconstruction - drawbacks"></a>Single view reconstruction - drawbacks</h3><img src="/images/cs231a-lecture4/image-20221028175939406-16677053070291.png" style="zoom:50%;">
-
+<p><strong>NICE-SLAM</strong></p>
+<ul>
+<li><strong>论文链接</strong>：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2112.12130">https://arxiv.org/abs/2112.12130</a></li>
+<li><strong>项目主页</strong>：<a target="_blank" rel="noopener" href="https://pengsongyou.github.io/nice-slam">https://pengsongyou.github.io/nice-slam</a></li>
+<li><strong>开源代码</strong>：<a target="_blank" rel="noopener" href="https://github.com/cvg/nice-slam">https://github.com/cvg/nice-slam</a></li>
+<li><strong>演示视频</strong>：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=V5hYTz5os0M">https://www.youtube.com/watch?v=V5hYTz5os0M</a></li>
+</ul>
+<p><strong>Co-SLAM</strong></p>
+<ul>
+<li><strong>论文链接</strong>：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2304.14377">https://arxiv.org/abs/2304.14377</a></li>
+<li><strong>项目主页</strong>：<a target="_blank" rel="noopener" href="https://hengyiwang.github.io/projects/CoSLAM">https://hengyiwang.github.io/projects/CoSLAM</a></li>
+<li><strong>开源代码</strong>：<a target="_blank" rel="noopener" href="https://github.com/HengyiWang/Co-SLAM">https://github.com/HengyiWang/Co-SLAM</a></li>
+<li><strong>演示视频</strong>：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=DJ3RkNiZQZE&amp;feature=youtu.be">https://www.youtube.com/watch?v=DJ3RkNiZQZE&amp;feature=youtu.be</a></li>
+</ul>
+<p><strong>相关工作</strong></p>
+<p><strong>Convolutional Occupancy Networks</strong></p>
+<ul>
+<li><strong>论文链接</strong>：<a target="_blank" rel="noopener" href="https://www.cvlibs.net/publications/Peng2020ECCV.pdf">https://www.cvlibs.net/publications/Peng2020ECCV.pdf</a></li>
+<li><strong>项目主页</strong>：<a target="_blank" rel="noopener" href="https://pengsongyou.github.io/conv_onet">https://pengsongyou.github.io/conv_onet</a></li>
+<li><strong>开源代码</strong>：<a target="_blank" rel="noopener" href="https://github.com/autonomousvision/convolutional_occupancy_networks">https://github.com/autonomousvision/convolutional_occupancy_networks</a></li>
+<li><strong>演示视频</strong>：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=EmauovgrDSM">https://www.youtube.com/watch?v=EmauovgrDSM</a></li>
+</ul>
+<p><font color="red"><strong>Instant Neural Graphics Primitives with a Multiresolution Hash Encoding</strong></font></p>
+<ul>
+<li><strong>论文链接</strong>：<a target="_blank" rel="noopener" href="https://nvlabs.github.io/instant-ngp/assets/mueller2022instant.pdf">https://nvlabs.github.io/instant-ngp/assets/mueller2022instant.pdf</a></li>
+<li><strong>项目主页</strong>：<a target="_blank" rel="noopener" href="https://nvlabs.github.io/instant-ngp/">https://nvlabs.github.io/instant-ngp/</a></li>
+<li><strong>开源代码</strong>：<a target="_blank" rel="noopener" href="https://github.com/NVlabs/instant-ngp">https://github.com/NVlabs/instant-ngp</a></li>
+<li><strong>演示视频</strong>：<a target="_blank" rel="noopener" href="https://nvlabs.github.io/instant-ngp/assets/mueller2022instant.mp4">https://nvlabs.github.io/instant-ngp/assets/mueller2022instant.mp4</a></li>
+</ul>
+<p><font color="red"><strong>3D Gaussian Splatting for Real-Time Radiance Field Rendering</strong></font></p>
+<ul>
+<li><strong>论文链接</strong>：<a target="_blank" rel="noopener" href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/3d_gaussian_splatting_low.pdf">https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/3d_gaussian_splatting_low.pdf</a></li>
+<li><strong>项目主页</strong>：<a target="_blank" rel="noopener" href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/">https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/</a></li>
+<li><strong>开源代码</strong>：<a target="_blank" rel="noopener" href="https://github.com/graphdeco-inria/gaussian-splatting">https://github.com/graphdeco-inria/gaussian-splatting</a></li>
+<li><strong>演示视频</strong>：<a target="_blank" rel="noopener" href="https://youtu.be/T_kXY43VZnk">https://youtu.be/T_kXY43VZnk</a></li>
+</ul>
 
                 
             </div>
@@ -557,7 +491,7 @@ Reading:
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://Immortalqx.github.io/2022/10/28/cs231a-lecture4/">http://Immortalqx.github.io/2022/10/28/cs231a-lecture4/</a>
+                    <a href="http://Immortalqx.github.io/2023/07/26/nerf-slam-0/">http://Immortalqx.github.io/2023/07/26/nerf-slam-0/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -595,8 +529,12 @@ Reading:
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/CS231A/">
-                                    <span class="chip bg-color">CS231A</span>
+                                <a href="/tags/NeRF/">
+                                    <span class="chip bg-color">NeRF</span>
+                                </a>
+                            
+                                <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                                    <span class="chip bg-color">视觉SLAM</span>
                                 </a>
                             
                         </div>
@@ -942,17 +880,18 @@ Reading:
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2022/11/01/cs231a-lecture5/">
+                <a href="/2023/07/26/nerf-slam-0/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="CS231A Lecture 5：Epipolar Geometry">
+                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="NeRF based SLAM学习笔记（1）">
                         
-                        <span class="card-title">CS231A Lecture 5：Epipolar Geometry</span>
+                        <span class="card-title">NeRF based SLAM学习笔记（1）</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -962,9 +901,9 @@ Reading:
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-01
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-07-26
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -977,11 +916,16 @@ Reading:
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/CS231A/">
-                        <span class="chip bg-color">CS231A</span>
+                    <a href="/tags/NeRF/">
+                        <span class="chip bg-color">NeRF</span>
+                    </a>
+                    
+                    <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                        <span class="chip bg-color">视觉SLAM</span>
                     </a>
                     
                 </div>
@@ -995,13 +939,13 @@ Reading:
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/10/14/cs231a-lecture3/">
+                <a href="/2023/07/15/meeting-5/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="CS231A Lecture 3：Camera Calibration">
+                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="Neural Implicit Representations in SLAM">
                         
-                        <span class="card-title">CS231A Lecture 3：Camera Calibration</span>
+                        <span class="card-title">Neural Implicit Representations in SLAM</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1012,7 +956,7 @@ Reading:
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-14
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-07-15
                             </span>
                         <span class="publish-author">
                             
@@ -1029,8 +973,8 @@ Reading:
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/CS231A/">
-                        <span class="chip bg-color">CS231A</span>
+                    <a href="/tags/NeRF-SLAM/">
+                        <span class="chip bg-color">NeRF SLAM</span>
                     </a>
                     
                 </div>
@@ -1154,13 +1098,6 @@ Reading:
 
 </main>
 
-
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
-    });
-</script>
 
 
 

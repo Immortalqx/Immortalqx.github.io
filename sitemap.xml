@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://immortalqx.github.io/2023/07/26/nerf-slam-0/</loc>
+    
+    <lastmod>2023-11-26</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://immortalqx.github.io/tags/index.html</loc>
     
     <lastmod>2023-11-06</lastmod>
@@ -485,14 +492,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/07/18/ros-notes-5/</loc>
+    <loc>http://immortalqx.github.io/2021/07/23/ros-notes-6/</loc>
     
     <lastmod>2023-11-06</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/07/23/ros-notes-6/</loc>
+    <loc>http://immortalqx.github.io/2021/07/18/ros-notes-5/</loc>
     
     <lastmod>2023-11-06</lastmod>
     
@@ -571,7 +578,7 @@
 
   <url>
     <loc>http://immortalqx.github.io/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -579,224 +586,224 @@
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/NeRF/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/ROS%E5%9F%BA%E7%A1%80/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/MAVROS/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/PX4/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/Gazebo/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/PIXHAWK/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/APM/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/C-%E5%9F%BA%E7%A1%80/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/CS231A/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E5%87%A0%E4%BD%95%E4%B8%8E%E5%9B%BE%E5%BD%A2/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/Hexo/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E7%A5%9E%E7%BB%8F%E8%A1%A8%E7%A4%BA/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/Camera/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/Qt/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E7%9B%B8%E6%9C%BA%E6%A0%87%E5%AE%9A/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E6%BF%80%E5%85%89SLAM/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/K-Means/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E5%A4%9A%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/CNN/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/RNN/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E5%AD%A6%E6%9C%AF%E4%BC%9A%E8%AE%AE/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/NeRF-SLAM/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/OpenCV/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E7%82%B9%E4%BA%91/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -805,42 +812,42 @@
   
   <url>
     <loc>http://immortalqx.github.io/categories/%E5%85%B6%E4%BB%96/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/categories/slam/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/categories/ROS/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/categories/C/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://immortalqx.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2023-11-06</lastmod>
+    <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
