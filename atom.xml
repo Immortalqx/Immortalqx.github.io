@@ -6,7 +6,7 @@
   <link href="http://immortalqx.github.io/atom.xml" rel="self"/>
   
   <link href="http://immortalqx.github.io/"/>
-  <updated>2023-11-26T03:33:24.172Z</updated>
+  <updated>2023-11-26T03:41:43.026Z</updated>
   <id>http://immortalqx.github.io/</id>
   
   <author>
@@ -17,18 +17,45 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>NeRF based SLAM学习笔记（1）</title>
+    <title>NeRF based SLAM学习笔记（2）：NeRF与iMap</title>
+    <link href="http://immortalqx.github.io/2023/07/30/nerf-slam-1/"/>
+    <id>http://immortalqx.github.io/2023/07/30/nerf-slam-1/</id>
+    <published>2023-07-30T10:06:00.000Z</published>
+    <updated>2023-11-26T03:41:43.026Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;NeRF-based-SLAM学习笔记（2）：NeRF与iMap&quot;&gt;&lt;a href=&quot;#NeRF-based-SLAM学习笔记（2）：NeRF与iMap&quot; class=&quot;headerlink&quot; title=&quot;NeRF based</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>NeRF based SLAM学习笔记（1）：相关工作整理</title>
     <link href="http://immortalqx.github.io/2023/07/26/nerf-slam-0/"/>
     <id>http://immortalqx.github.io/2023/07/26/nerf-slam-0/</id>
     <published>2023-07-26T03:29:15.000Z</published>
-    <updated>2023-11-26T03:33:24.172Z</updated>
+    <updated>2023-11-26T03:36:11.440Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h1 id=&quot;NeRF-based-SLAM学习笔记（1）&quot;&gt;&lt;a href=&quot;#NeRF-based-SLAM学习笔记（1）&quot; class=&quot;headerlink&quot; title=&quot;NeRF based SLAM学习笔记（1）&quot;&gt;&lt;/a&gt;NeRF based</summary>
+    <summary type="html">&lt;h1 id=&quot;NeRF-based-SLAM学习笔记（1）：相关工作整理&quot;&gt;&lt;a href=&quot;#NeRF-based-SLAM学习笔记（1）：相关工作整理&quot; class=&quot;headerlink&quot; title=&quot;NeRF based</summary>
         
       
     
@@ -487,31 +514,6 @@
         
         
     <summary type="html">&lt;h1 id=&quot;CS231A-Lecture-3：Camera-Calibration&quot;&gt;&lt;a href=&quot;#CS231A-Lecture-3：Camera-Calibration&quot; class=&quot;headerlink&quot; title=&quot;CS231A Lecture</summary>
-        
-      
-    
-    
-    
-    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
-    
-    
-    <category term="CS231A" scheme="http://immortalqx.github.io/tags/CS231A/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CS231A Lecture 2：Camera Models</title>
-    <link href="http://immortalqx.github.io/2022/10/12/cs231a-lecture2/"/>
-    <id>http://immortalqx.github.io/2022/10/12/cs231a-lecture2/</id>
-    <published>2022-10-12T09:21:05.000Z</published>
-    <updated>2023-11-06T02:33:09.141Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;CS231A-Lecture-2-Camera-Models&quot;&gt;&lt;a href=&quot;#CS231A-Lecture-2-Camera-Models&quot; class=&quot;headerlink&quot; title=&quot;CS231A Lecture 2: Camera</summary>
         
       
     

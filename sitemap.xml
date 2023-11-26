@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://immortalqx.github.io/2023/07/30/nerf-slam-1/</loc>
+    
+    <lastmod>2023-11-26</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://immortalqx.github.io/2023/07/26/nerf-slam-0/</loc>
     
     <lastmod>2023-11-26</lastmod>
@@ -198,6 +205,13 @@
   </url>
   
   <url>
+    <loc>http://immortalqx.github.io/categories/index.html</loc>
+    
+    <lastmod>2023-11-06</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://immortalqx.github.io/google561fc42db74e2484.html</loc>
     
     <lastmod>2023-11-06</lastmod>
@@ -206,13 +220,6 @@
   
   <url>
     <loc>http://immortalqx.github.io/about/index.html</loc>
-    
-    <lastmod>2023-11-06</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/categories/index.html</loc>
     
     <lastmod>2023-11-06</lastmod>
     
@@ -422,14 +429,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2022/11/23/cs231a-lecture9/</loc>
+    <loc>http://immortalqx.github.io/2022/08/17/geometry-notes-1/</loc>
     
     <lastmod>2023-11-06</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2022/08/17/geometry-notes-1/</loc>
+    <loc>http://immortalqx.github.io/2022/11/23/cs231a-lecture9/</loc>
     
     <lastmod>2023-11-06</lastmod>
     
@@ -492,14 +499,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/07/23/ros-notes-6/</loc>
+    <loc>http://immortalqx.github.io/2021/07/18/ros-notes-5/</loc>
     
     <lastmod>2023-11-06</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/07/18/ros-notes-5/</loc>
+    <loc>http://immortalqx.github.io/2021/07/23/ros-notes-6/</loc>
     
     <lastmod>2023-11-06</lastmod>
     
@@ -520,14 +527,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/11/21/cpp-notes-0/</loc>
+    <loc>http://immortalqx.github.io/2020/08/22/cpp-notes-1/</loc>
     
     <lastmod>2023-11-06</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2020/08/22/cpp-notes-1/</loc>
+    <loc>http://immortalqx.github.io/2021/11/21/cpp-notes-0/</loc>
     
     <lastmod>2023-11-06</lastmod>
     
@@ -592,6 +599,13 @@
   </url>
   
   <url>
+    <loc>http://immortalqx.github.io/tags/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/</loc>
+    <lastmod>2023-11-26</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://immortalqx.github.io/tags/NeRF/</loc>
     <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
@@ -600,13 +614,6 @@
   
   <url>
     <loc>http://immortalqx.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2023-11-26</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/tags/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/</loc>
     <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
