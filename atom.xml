@@ -6,7 +6,7 @@
   <link href="http://immortalqx.github.io/atom.xml" rel="self"/>
   
   <link href="http://immortalqx.github.io/"/>
-  <updated>2023-11-26T04:02:07.821Z</updated>
+  <updated>2023-11-26T04:07:25.576Z</updated>
   <id>http://immortalqx.github.io/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>NeRF based SLAM学习笔记（5）：NICE-SLAM源码阅读笔记（1）</title>
+    <link href="http://immortalqx.github.io/2023/08/16/nerf-slam-4/"/>
+    <id>http://immortalqx.github.io/2023/08/16/nerf-slam-4/</id>
+    <published>2023-08-16T04:04:06.000Z</published>
+    <updated>2023-11-26T04:07:25.576Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;strong&gt;内容：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;系统架构：NICE-SLAM是如何运行的&lt;/li&gt;
+&lt;li&gt;网络模型：网络是如何具体实现的&lt;/li&gt;
+&lt;li&gt;渲染：网络输出是怎么渲染得到图像和深度图的&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;代码：&lt;</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
+    
+  </entry>
   
   <entry>
     <title>NeRF based SLAM学习笔记（4）：Nice-SLAM（2）</title>
@@ -493,31 +526,6 @@
         
         
     <summary type="html">&lt;h1 id=&quot;CS231A-Lecture-6：Stereo-Systems&quot;&gt;&lt;a href=&quot;#CS231A-Lecture-6：Stereo-Systems&quot; class=&quot;headerlink&quot; title=&quot;CS231A Lecture 6：Stereo</summary>
-        
-      
-    
-    
-    
-    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
-    
-    
-    <category term="CS231A" scheme="http://immortalqx.github.io/tags/CS231A/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CS231A Lecture 5：Epipolar Geometry</title>
-    <link href="http://immortalqx.github.io/2022/11/01/cs231a-lecture5/"/>
-    <id>http://immortalqx.github.io/2022/11/01/cs231a-lecture5/</id>
-    <published>2022-11-01T08:50:42.000Z</published>
-    <updated>2023-11-06T02:33:09.141Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;CS231A-Lecture-5：Epipolar-Geometry&quot;&gt;&lt;a href=&quot;#CS231A-Lecture-5：Epipolar-Geometry&quot; class=&quot;headerlink&quot; title=&quot;CS231A Lecture</summary>
         
       
     

@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://immortalqx.github.io/2023/08/16/nerf-slam-4/</loc>
+    
+    <lastmod>2023-11-26</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://immortalqx.github.io/2023/08/10/nerf-slam-3/</loc>
     
     <lastmod>2023-11-26</lastmod>
@@ -520,7 +527,7 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/07/23/ros-notes-6/</loc>
+    <loc>http://immortalqx.github.io/2021/07/27/uav-notes-1/</loc>
     
     <lastmod>2023-11-06</lastmod>
     
@@ -534,7 +541,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/07/27/uav-notes-1/</loc>
+    <loc>http://immortalqx.github.io/2020/08/22/cpp-notes-1/</loc>
+    
+    <lastmod>2023-11-06</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/2021/07/23/ros-notes-6/</loc>
     
     <lastmod>2023-11-06</lastmod>
     
@@ -542,13 +556,6 @@
   
   <url>
     <loc>http://immortalqx.github.io/2021/11/21/cpp-notes-0/</loc>
-    
-    <lastmod>2023-11-06</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/2020/08/22/cpp-notes-1/</loc>
     
     <lastmod>2023-11-06</lastmod>
     
@@ -641,7 +648,7 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/tags/MAVROS/</loc>
+    <loc>http://immortalqx.github.io/tags/PIXHAWK/</loc>
     <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -649,20 +656,6 @@
   
   <url>
     <loc>http://immortalqx.github.io/tags/PX4/</loc>
-    <lastmod>2023-11-26</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/tags/Gazebo/</loc>
-    <lastmod>2023-11-26</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/tags/PIXHAWK/</loc>
     <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -677,6 +670,20 @@
   
   <url>
     <loc>http://immortalqx.github.io/tags/C-%E5%9F%BA%E7%A1%80/</loc>
+    <lastmod>2023-11-26</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/tags/MAVROS/</loc>
+    <lastmod>2023-11-26</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/tags/Gazebo/</loc>
     <lastmod>2023-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
