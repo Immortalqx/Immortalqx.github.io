@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://Immortalqx.github.io/2023/08/10/nerf-slam-3/</loc>
+    <lastmod>2023-11-26</lastmod>
+  </url>
+  <url>
     <loc>http://Immortalqx.github.io/2023/08/02/nerf-slam-2/</loc>
     <lastmod>2023-11-26</lastmod>
   </url>
@@ -73,11 +77,11 @@
     <lastmod>2023-11-06</lastmod>
   </url>
   <url>
-    <loc>http://Immortalqx.github.io/2022/08/30/paper-reading-nice-slam/</loc>
+    <loc>http://Immortalqx.github.io/2023/03/07/paper-reading-orb-slam2/</loc>
     <lastmod>2023-11-06</lastmod>
   </url>
   <url>
-    <loc>http://Immortalqx.github.io/2023/03/07/paper-reading-orb-slam2/</loc>
+    <loc>http://Immortalqx.github.io/2022/08/30/paper-reading-nice-slam/</loc>
     <lastmod>2023-11-06</lastmod>
   </url>
   <url>

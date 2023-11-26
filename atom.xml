@@ -6,7 +6,7 @@
   <link href="http://immortalqx.github.io/atom.xml" rel="self"/>
   
   <link href="http://immortalqx.github.io/"/>
-  <updated>2023-11-26T03:48:33.983Z</updated>
+  <updated>2023-11-26T04:02:07.821Z</updated>
   <id>http://immortalqx.github.io/</id>
   
   <author>
@@ -17,18 +17,45 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>NeRF based SLAM学习笔记（3）：Nice-SLAM</title>
+    <title>NeRF based SLAM学习笔记（4）：Nice-SLAM（2）</title>
+    <link href="http://immortalqx.github.io/2023/08/10/nerf-slam-3/"/>
+    <id>http://immortalqx.github.io/2023/08/10/nerf-slam-3/</id>
+    <published>2023-08-10T03:52:06.000Z</published>
+    <updated>2023-11-26T04:02:07.821Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;NeRF-based-SLAM学习笔记（4）：Nice-SLAM（2）&quot;&gt;&lt;a href=&quot;#NeRF-based-SLAM学习笔记（4）：Nice-SLAM（2）&quot; class=&quot;headerlink&quot; title=&quot;NeRF based</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>NeRF based SLAM学习笔记（3）：Nice-SLAM（1）</title>
     <link href="http://immortalqx.github.io/2023/08/02/nerf-slam-2/"/>
     <id>http://immortalqx.github.io/2023/08/02/nerf-slam-2/</id>
     <published>2023-08-02T13:42:50.000Z</published>
-    <updated>2023-11-26T03:48:33.983Z</updated>
+    <updated>2023-11-26T03:55:38.707Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h1 id=&quot;NeRF-based-SLAM学习笔记（3）：Nice-SLAM&quot;&gt;&lt;a href=&quot;#NeRF-based-SLAM学习笔记（3）：Nice-SLAM&quot; class=&quot;headerlink&quot; title=&quot;NeRF based</summary>
+    <summary type="html">&lt;h1 id=&quot;NeRF-based-SLAM学习笔记（3）：Nice-SLAM（1）&quot;&gt;&lt;a href=&quot;#NeRF-based-SLAM学习笔记（3）：Nice-SLAM（1）&quot; class=&quot;headerlink&quot; title=&quot;NeRF based</summary>
         
       
     
@@ -491,31 +518,6 @@
         
         
     <summary type="html">&lt;h1 id=&quot;CS231A-Lecture-5：Epipolar-Geometry&quot;&gt;&lt;a href=&quot;#CS231A-Lecture-5：Epipolar-Geometry&quot; class=&quot;headerlink&quot; title=&quot;CS231A Lecture</summary>
-        
-      
-    
-    
-    
-    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
-    
-    
-    <category term="CS231A" scheme="http://immortalqx.github.io/tags/CS231A/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CS231A Lecture 4：Single View Metrology</title>
-    <link href="http://immortalqx.github.io/2022/10/28/cs231a-lecture4/"/>
-    <id>http://immortalqx.github.io/2022/10/28/cs231a-lecture4/</id>
-    <published>2022-10-28T13:13:43.000Z</published>
-    <updated>2023-11-06T02:33:09.141Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;CS231A-Lecture-4：Single-View-Metrology&quot;&gt;&lt;a href=&quot;#CS231A-Lecture-4：Single-View-Metrology&quot; class=&quot;headerlink&quot; title=&quot;CS231A Lecture</summary>
         
       
     
