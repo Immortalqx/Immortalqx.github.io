@@ -6,7 +6,7 @@
   <link href="http://immortalqx.github.io/atom.xml" rel="self"/>
   
   <link href="http://immortalqx.github.io/"/>
-  <updated>2023-11-26T04:07:25.576Z</updated>
+  <updated>2023-12-22T07:30:39.285Z</updated>
   <id>http://immortalqx.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>3D Gaussian Splatting学习笔记</title>
+    <link href="http://immortalqx.github.io/2023/12/21/paper-reading-3d-gaussian-splatting/"/>
+    <id>http://immortalqx.github.io/2023/12/21/paper-reading-3d-gaussian-splatting/</id>
+    <published>2023-12-21T07:28:15.000Z</published>
+    <updated>2023-12-22T07:30:39.285Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;3D-Gaussian-Splatting学习笔记&quot;&gt;&lt;a href=&quot;#3D-Gaussian-Splatting学习笔记&quot; class=&quot;headerlink&quot; title=&quot;3D Gaussian Splatting学习笔记&quot;&gt;&lt;/a&gt;3D</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="隐式神经表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E7%A5%9E%E7%BB%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
+    
+  </entry>
   
   <entry>
     <title>NeRF based SLAM学习笔记（5）：NICE-SLAM源码阅读笔记（1）</title>
@@ -501,31 +528,6 @@
         
         
     <summary type="html">&lt;h1 id=&quot;CS231A-Lecture-7：Multi-view-geometry-1&quot;&gt;&lt;a href=&quot;#CS231A-Lecture-7：Multi-view-geometry-1&quot; class=&quot;headerlink&quot; title=&quot;CS231A Lecture</summary>
-        
-      
-    
-    
-    
-    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
-    
-    
-    <category term="CS231A" scheme="http://immortalqx.github.io/tags/CS231A/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CS231A Lecture 6：Stereo Systems</title>
-    <link href="http://immortalqx.github.io/2022/11/05/cs231a-lecture6/"/>
-    <id>http://immortalqx.github.io/2022/11/05/cs231a-lecture6/</id>
-    <published>2022-11-05T11:57:19.000Z</published>
-    <updated>2023-11-06T02:33:09.141Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;CS231A-Lecture-6：Stereo-Systems&quot;&gt;&lt;a href=&quot;#CS231A-Lecture-6：Stereo-Systems&quot; class=&quot;headerlink&quot; title=&quot;CS231A Lecture 6：Stereo</summary>
         
       
     
