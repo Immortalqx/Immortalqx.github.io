@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="基于神经网络的三维重建, 所念皆星河">
-    <meta name="description" content="基于神经网络的3D重建1 对NeRF的思考NeRF的核心是场景的隐式表示，给定一组影像，网络去学习这个三维场景，然后当指定任意一个位姿的时候，就输出它对应的图片。这其实和传统的SfM的流程是一样的，没什么新鲜的。唯一不同的是SfM构建的是场">
+    <meta name="description" content="基于神经网络的三维重建1 对NeRF的思考NeRF的核心是场景的隐式表示，给定一组影像，网络去学习这个三维场景，然后当指定任意一个位姿的时候，就输出它对应的图片。这其实和传统的SfM的流程是一样的，没什么新鲜的。唯一不同的是SfM构建的是场">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -348,8 +348,8 @@
                                 <span class="chip bg-color">NeRF</span>
                             </a>
                         
-                            <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
-                                <span class="chip bg-color">深度学习</span>
+                            <a href="/tags/%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA/">
+                                <span class="chip bg-color">三维重建</span>
                             </a>
                         
                     </div>
@@ -360,8 +360,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/slam/" class="post-category">
-                                slam
+                            <a href="/categories/NeRF/" class="post-category">
+                                NeRF
                             </a>
                         
                     </div>
@@ -412,7 +412,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="基于神经网络的3D重建"><a href="#基于神经网络的3D重建" class="headerlink" title="基于神经网络的3D重建"></a>基于神经网络的3D重建</h1><h2 id="1-对NeRF的思考"><a href="#1-对NeRF的思考" class="headerlink" title="1 对NeRF的思考"></a>1 对NeRF的思考</h2><p>NeRF的核心是场景的隐式表示，给定一组影像，网络去学习这个三维场景，然后当指定任意一个位姿的时候，就输出它对应的图片。这其实和传统的SfM的流程是一样的，没什么新鲜的。唯一不同的是SfM构建的是场景的显式表达，而NeRF是通过神经网络进行了表达。现在很多NeRF的宣传都是一张静态图片搭配小幅度移动视角的动图，比如下面这样。</p>
+                <h1 id="基于神经网络的三维重建"><a href="#基于神经网络的三维重建" class="headerlink" title="基于神经网络的三维重建"></a>基于神经网络的三维重建</h1><h2 id="1-对NeRF的思考"><a href="#1-对NeRF的思考" class="headerlink" title="1 对NeRF的思考"></a>1 对NeRF的思考</h2><p>NeRF的核心是场景的隐式表示，给定一组影像，网络去学习这个三维场景，然后当指定任意一个位姿的时候，就输出它对应的图片。这其实和传统的SfM的流程是一样的，没什么新鲜的。唯一不同的是SfM构建的是场景的显式表达，而NeRF是通过神经网络进行了表达。现在很多NeRF的宣传都是一张静态图片搭配小幅度移动视角的动图，比如下面这样。</p>
 <p><img src="/images/3D-Reconstruction-1/2022-05-14-44.gif"></p>
 <p>但这样宣传有些误导性。下面简单描述。</p>
 <h3 id="1-1-NeRF并非只利用单张影像"><a href="#1-1-NeRF并非只利用单张影像" class="headerlink" title="1.1 NeRF并非只利用单张影像"></a>1.1 NeRF并非只利用单张影像</h3><p>第一点，NeRF不是由单张影像得到的。上面这样宣传，很容易让人以为是单张图片得到了可以小幅移动视角的三维场景。这是不对的。如果从单张影像生成三维场景，这就是一个玄学问题了。NeRF并不是只利用单张影像估计三维场景。</p>
@@ -595,8 +595,8 @@
                                     <span class="chip bg-color">NeRF</span>
                                 </a>
                             
-                                <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
-                                    <span class="chip bg-color">深度学习</span>
+                                <a href="/tags/%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA/">
+                                    <span class="chip bg-color">三维重建</span>
                                 </a>
                             
                         </div>
