@@ -922,33 +922,6 @@ mavros_msgs<span class="token double-colon punctuation">::</span>State current_s
       </tags>
   </entry>
   <entry>
-    <title>区分PIXHAWK、PX4与APM(ardupilot)</title>
-    <url>/2021/07/27/uav-notes-1/</url>
-    <content><![CDATA[<h1 id="区分PIXHAWK、PX4与APM-ardupilot"><a href="#区分PIXHAWK、PX4与APM-ardupilot" class="headerlink" title="区分PIXHAWK、PX4与APM(ardupilot)"></a>区分PIXHAWK、PX4与APM(ardupilot)</h1><h3 id="一、PIXHAWK介绍"><a href="#一、PIXHAWK介绍" class="headerlink" title="一、PIXHAWK介绍"></a>一、PIXHAWK介绍</h3><p><strong>pixhawk是硬件平台</strong>，PX4是pixhawk的原生固件，专门为pixhawk开发。</p>
-<img src="/images/UAV-notes/1-1.jpg" alt="" style="zoom: 18%;">
-
-<p>Pixhawk是一款由PX4开源项目设计并由3DR公司制造生产的高级自动驾驶仪系统，其前身是APM。APM（Ardupilot Mega）也是硬件，Ardupilot是APM的固件，所以称ArduPilot固件也叫APM。</p>
-<img src="/images/UAV-notes/1-2.png" alt="" style="zoom:30%;">
-
-<p>由于APM的处理器已经接近满负荷，没有办法满足更复杂的运算处理，所以硬件厂商采用了目前新标准的32位ARM处理器，它采用了ST Microelectronic先进的处理器及传感器技术且搭载了NuttX的实时操作系统，在模型自动控制方面有着出色的性能、灵活性和可靠性。</p>
-<p>PIXHAWK的所有硬件都是透明的，它用的是什么芯片和传感器一目了然，所有的总线和外设都进行引出，不但以后可以兼容一些其他外设，而且对于有开发能力的用户提供了方便。 PIXHAWK 是一个双处理器的飞行控制器，一个擅长于强大运算的 32 bit STM32F427 Cortex M4 核心 168 MHz/256 KB RAM/2 MB Flash 处理器，还有一个主要定位于工业用途的协处理器 32 bit STM32F103，它的特点就是安全稳定。所以就算主处理器死机了，还有一个协处理器来保障安全。</p>
-<h3 id="二、PX4介绍"><a href="#二、PX4介绍" class="headerlink" title="二、PX4介绍"></a>二、PX4介绍</h3><p>PX4固件专为PIXHAWK开发的固件。相对封闭，代码体系相对简单清晰，社区相对小，迭代慢一些，但因为相对清晰，适合学习研究。</p>
-<p>PX4地面控制站被称为QGroundControl，（简称QGC）是PX4自驾系统不可分割的一部分，可以运行在Windows，OS X或Linux等多个平台。可以将PX4固件烧写到硬件，设置机器，改变不同的参数，获得实时航班信息，创建和执行完全自主的任务。</p>
-<h3 id="三、APM介绍"><a href="#三、APM介绍" class="headerlink" title="三、APM介绍"></a>三、APM介绍</h3><p>APM固件专为Arduupilot开发的固件，现也用于PIXHAWK。有ArduCopter社区支撑、开放，功能全、迭代升级快，适合直接用。由于有较多的历史兼容性需求，软件代码体系相对杂乱，还封装了PX4的内核，学习起来困难些。</p>
-<p>APM地面控制站被称为Mission Planner，（简称MP）是APM自驾系统不可分割的一部分。可以将APM固件烧写到硬件，设置机器，改变不同的参数，获得实时航班信息，创建和执行完全自主的任务。</p>
-<p>随着APM飞控软件的快速发展，AVR板子的性能已经不能满足需求，所以只能逐步移植到Pixhawk的硬件架构上来进行开发。所以，APM自驾仪软件也就兼容PIXHAWK飞控硬件了。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><strong>PIXHAWK飞控是硬件平台，PX4和APM都是开源固件，均可以烧写到PIXHAWK飞控中。</strong></p>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>PX4</tag>
-        <tag>PIXHAWK</tag>
-        <tag>APM</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Richard Hamming &quot;You and Your Research&quot;</title>
     <url>/2022/08/29/richard-hamming-you-and-your-research/</url>
     <content><![CDATA[<h1 id="Richard-Hamming-“You-and-Your-Research”"><a href="#Richard-Hamming-“You-and-Your-Research”" class="headerlink" title="Richard Hamming “You and Your Research”"></a>Richard Hamming “You and Your Research”</h1><blockquote>
@@ -1078,6 +1051,33 @@ mavros_msgs<span class="token double-colon punctuation">::</span>State current_s
       </categories>
       <tags>
         <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>区分PIXHAWK、PX4与APM(ardupilot)</title>
+    <url>/2021/07/27/uav-notes-1/</url>
+    <content><![CDATA[<h1 id="区分PIXHAWK、PX4与APM-ardupilot"><a href="#区分PIXHAWK、PX4与APM-ardupilot" class="headerlink" title="区分PIXHAWK、PX4与APM(ardupilot)"></a>区分PIXHAWK、PX4与APM(ardupilot)</h1><h3 id="一、PIXHAWK介绍"><a href="#一、PIXHAWK介绍" class="headerlink" title="一、PIXHAWK介绍"></a>一、PIXHAWK介绍</h3><p><strong>pixhawk是硬件平台</strong>，PX4是pixhawk的原生固件，专门为pixhawk开发。</p>
+<img src="/images/UAV-notes/1-1.jpg" alt="" style="zoom: 18%;">
+
+<p>Pixhawk是一款由PX4开源项目设计并由3DR公司制造生产的高级自动驾驶仪系统，其前身是APM。APM（Ardupilot Mega）也是硬件，Ardupilot是APM的固件，所以称ArduPilot固件也叫APM。</p>
+<img src="/images/UAV-notes/1-2.png" alt="" style="zoom:30%;">
+
+<p>由于APM的处理器已经接近满负荷，没有办法满足更复杂的运算处理，所以硬件厂商采用了目前新标准的32位ARM处理器，它采用了ST Microelectronic先进的处理器及传感器技术且搭载了NuttX的实时操作系统，在模型自动控制方面有着出色的性能、灵活性和可靠性。</p>
+<p>PIXHAWK的所有硬件都是透明的，它用的是什么芯片和传感器一目了然，所有的总线和外设都进行引出，不但以后可以兼容一些其他外设，而且对于有开发能力的用户提供了方便。 PIXHAWK 是一个双处理器的飞行控制器，一个擅长于强大运算的 32 bit STM32F427 Cortex M4 核心 168 MHz/256 KB RAM/2 MB Flash 处理器，还有一个主要定位于工业用途的协处理器 32 bit STM32F103，它的特点就是安全稳定。所以就算主处理器死机了，还有一个协处理器来保障安全。</p>
+<h3 id="二、PX4介绍"><a href="#二、PX4介绍" class="headerlink" title="二、PX4介绍"></a>二、PX4介绍</h3><p>PX4固件专为PIXHAWK开发的固件。相对封闭，代码体系相对简单清晰，社区相对小，迭代慢一些，但因为相对清晰，适合学习研究。</p>
+<p>PX4地面控制站被称为QGroundControl，（简称QGC）是PX4自驾系统不可分割的一部分，可以运行在Windows，OS X或Linux等多个平台。可以将PX4固件烧写到硬件，设置机器，改变不同的参数，获得实时航班信息，创建和执行完全自主的任务。</p>
+<h3 id="三、APM介绍"><a href="#三、APM介绍" class="headerlink" title="三、APM介绍"></a>三、APM介绍</h3><p>APM固件专为Arduupilot开发的固件，现也用于PIXHAWK。有ArduCopter社区支撑、开放，功能全、迭代升级快，适合直接用。由于有较多的历史兼容性需求，软件代码体系相对杂乱，还封装了PX4的内核，学习起来困难些。</p>
+<p>APM地面控制站被称为Mission Planner，（简称MP）是APM自驾系统不可分割的一部分。可以将APM固件烧写到硬件，设置机器，改变不同的参数，获得实时航班信息，创建和执行完全自主的任务。</p>
+<p>随着APM飞控软件的快速发展，AVR板子的性能已经不能满足需求，所以只能逐步移植到Pixhawk的硬件架构上来进行开发。所以，APM自驾仪软件也就兼容PIXHAWK飞控硬件了。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><strong>PIXHAWK飞控是硬件平台，PX4和APM都是开源固件，均可以烧写到PIXHAWK飞控中。</strong></p>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>PX4</tag>
+        <tag>PIXHAWK</tag>
+        <tag>APM</tag>
       </tags>
   </entry>
   <entry>
@@ -1623,6 +1623,221 @@ thread <span class="token function">t3</span><span class="token punctuation">(</
       </tags>
   </entry>
   <entry>
+    <title>C++ 多线程编程（四）：生产者消费者模型</title>
+    <url>/2022/02/08/cpp-notes-6/</url>
+    <content><![CDATA[<h1 id="C-多线程编程（四）：生产者消费者模型"><a href="#C-多线程编程（四）：生产者消费者模型" class="headerlink" title="C++ 多线程编程（四）：生产者消费者模型"></a>C++ 多线程编程（四）：生产者消费者模型</h1><h2 id="1-生产者消费者模型简介"><a href="#1-生产者消费者模型简介" class="headerlink" title="1. 生产者消费者模型简介"></a>1. 生产者消费者模型简介</h2><p><strong>生产者和消费者问题是线程模型中的经典问题：</strong>生产者和消费者在同一时间段内共用同一个存储空间，生产者往存储空间中添加产品，消费者从存储空间中取走产品；当存储空间为空时，消费者阻塞，当存储空间满时，生产者阻塞。</p>
+<p><strong>简单来说，这个模型是由两类线程构成：</strong></p>
+<ul>
+<li>生产者线程：“生产”产品，并把产品放到一个队列里；</li>
+<li>消费者线程：“消费”产品，具体是从队列中取出产品。</li>
+</ul>
+<p><strong>为什么使用生产者消费者模型？</strong></p>
+<p>在多线程开发当中，如果生产者处理速度很快，而消费者处理速度很慢，那么生产者就必须等待消费者处理完，才能继续生产数据，否则新生产的数据也没有地方存放；同样的道理，如果消费者的处理能力大于生产者，那么消费者就必须等待生产者，不然没有数据消费者也没办法消费。</p>
+<p>为了达到生产者生产数据和消费者消费数据之间的<strong>平衡</strong>，就需要一个缓冲区用来存储生产者生产的数据，所以就引入了生产者-消费者模式。</p>
+<h2 id="2-实现生产者消费者模型"><a href="#2-实现生产者消费者模型" class="headerlink" title="2. 实现生产者消费者模型"></a>2. 实现生产者消费者模型</h2><p>生产者消费者模型可以分为：单生产者-单消费者模型，单生产者-多消费者模型，多生产者-单消费者模型，多生产者-多消费者模型。我这里主要介绍单生产者-单消费者模型，其他模型可以参考下面几个网址：</p>
+<ul>
+<li><a href="https://blog.csdn.net/chenxun_2010/article/details/49848865">c++ 11 多线线程系列———–生产者消费者</a></li>
+<li><a href="https://blog.51cto.com/u_15357586/3790039">C++多线程——生产者/消费者模式/条件变量(Condition Variable)</a></li>
+</ul>
+<p>顾名思义，单生产者-单消费者模型就是只有一个生产者、一个消费者的情况，这是最简单的生产者消费者模型。实现代码如下所示：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;deque&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;thread&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;mutex&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;condition_variable&gt;</span></span>
+
+std<span class="token double-colon punctuation">::</span>deque<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span> q<span class="token punctuation">;</span>
+std<span class="token double-colon punctuation">::</span>mutex mu<span class="token punctuation">;</span>
+std<span class="token double-colon punctuation">::</span>condition_variable cond<span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">function_1</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> count <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>count <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        std<span class="token double-colon punctuation">::</span>unique_lock<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>mutex<span class="token operator">&gt;</span> <span class="token function">locker</span><span class="token punctuation">(</span>mu<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        q<span class="token punctuation">.</span><span class="token function">push_front</span><span class="token punctuation">(</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        locker<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        cond<span class="token punctuation">.</span><span class="token function">notify_one</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// Notify one waiting thread, if there is one.</span>
+        count<span class="token operator">--</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">function_2</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> data <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>data <span class="token operator">!=</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        std<span class="token double-colon punctuation">::</span>unique_lock<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>mutex<span class="token operator">&gt;</span> <span class="token function">locker</span><span class="token punctuation">(</span>mu<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>q<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            cond<span class="token punctuation">.</span><span class="token function">wait</span><span class="token punctuation">(</span>locker<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Unlock mu and wait to be notified</span>
+        data <span class="token operator">=</span> q<span class="token punctuation">.</span><span class="token function">back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        q<span class="token punctuation">.</span><span class="token function">pop_back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        locker<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"t2 got a value from t1: "</span> <span class="token operator">&lt;&lt;</span> data <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    std<span class="token double-colon punctuation">::</span>thread <span class="token function">t1</span><span class="token punctuation">(</span>function_1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    std<span class="token double-colon punctuation">::</span>thread <span class="token function">t2</span><span class="token punctuation">(</span>function_2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    t1<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    t2<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>上面的代码有三个注意事项：</p>
+<ol>
+<li><p>在function_2中，在判断队列是否为空的时候，使用的是<code>while(q.empty())</code>，而不是<code>if(q.empty())</code>.</p>
+<p>这是因为wait()从阻塞到返回，不一定就是由于notify_one()函数造成的，还有可能由于系统的不确定原因唤醒（可能和条件变量的实现机制有关），这个的时机和频率都是不确定的，被称作伪唤醒，如果在错误的时候被唤醒了，执行后面的语句就会错误，所以需要再次判断队列是否为空，如果还是为空，就继续wait()阻塞。</p>
+</li>
+<li><p>在管理互斥锁的时候，使用的是<code>std::unique_lock</code>而不是<code>std::lock_guard</code>，而且事实上也不能使用<code>std::lock_guard</code>。</p>
+<p>这需要先解释下wait()函数所做的事情。可以看到，在wait()函数之前，使用互斥锁保护了，如果wait的时候什么都没做，岂不是一直持有互斥锁？那生产者也会一直卡住，不能够将数据放入队列中了。所以，wait()函数会先调用互斥锁的unlock()函数，然后再将自己睡眠，在被唤醒后，又会继续持有锁，保护后面的队列操作。而lock_guard没有lock和unlock接口，而unique_lock提供了。这就是必须使用unique_lock的原因。</p>
+</li>
+<li><p>使用细粒度锁，尽量减小锁的范围。</p>
+<p>在notify_one()的时候，不需要处于互斥锁的保护范围内，所以在唤醒条件变量之前可以将锁unlock()。还可以将<code>cond.wait(locker);</code>换一种写法，wait()的第二个参数可以传入一个函数表示检查条件，这里使用lambda函数最为简单，如果这个函数返回的是true，wait()函数不会阻塞会直接返回，如果这个函数返回的是false，wait()函数就会阻塞着等待唤醒，如果被伪唤醒，会继续判断函数返回值。</p>
+</li>
+</ol>
+<h2 id="3-实际应用生产者消费者模型"><a href="#3-实际应用生产者消费者模型" class="headerlink" title="3. 实际应用生产者消费者模型"></a>3. 实际应用生产者消费者模型</h2><blockquote>
+<p>这里介绍一个个人认为比较好用的编程方法。</p>
+</blockquote>
+<p>在我们的实际开发中，比如在SLAM中，可能是定位一个线程，建图一个线程，定位线程会计算出目前的位置，而建图线程需要根据这个位置来建立地图。</p>
+<p>如果采用上面这样的方式，代码就不是很简洁，并且你需要保证一些变量是全局的，两个线程都能够接触到，这样零零碎碎的变量比较多，管理起来很麻烦。</p>
+<p>这里我推荐构建一个生产者消费者模型的类，并且最好是使用单例模式的模板类。这样的话就可以非常简单的在两个线程中通信，并且后续如果要对通信方式进行修改，也不需要修改到定位和建图的代码，封装性更好！</p>
+<p>下面是一个简单的例子：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">THREAD_TEST_DATATRANS_H</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">THREAD_TEST_DATATRANS_H</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;list&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;mutex&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;condition_variable&gt;</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">Trans</span> <span class="token expression"><span class="token class-name">DataTrans</span><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span><span class="token double-colon punctuation">::</span><span class="token function">Instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span></span>
+
+<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
+<span class="token keyword">class</span> <span class="token class-name">DataTrans</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    std<span class="token double-colon punctuation">::</span>list<span class="token operator">&lt;</span>T<span class="token operator">&gt;</span> m_queue<span class="token punctuation">;</span><span class="token comment">//队列</span>
+    std<span class="token double-colon punctuation">::</span>mutex m_mutex<span class="token punctuation">;</span><span class="token comment">//全局互斥锁</span>
+    std<span class="token double-colon punctuation">::</span>condition_variable_any m_notEmpty<span class="token punctuation">;</span><span class="token comment">//全局条件变量（不为空）</span>
+    std<span class="token double-colon punctuation">::</span>condition_variable_any m_notFull<span class="token punctuation">;</span><span class="token comment">//全局条件变量（不为满）</span>
+    <span class="token keyword">int</span> m_maxSize<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span><span class="token comment">//队列最大容量</span>
+
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token comment">//队列为空</span>
+    <span class="token keyword">bool</span> <span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> m_queue<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">//队列已满</span>
+    <span class="token keyword">bool</span> <span class="token function">isFull</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> m_queue<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> m_maxSize<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">//构造函数</span>
+    <span class="token function">DataTrans</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token operator">-&gt;</span>m_maxSize <span class="token operator">=</span> <span class="token number">30</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token keyword">public</span><span class="token operator">:</span>
+
+    <span class="token comment">// 获取单实例对象</span>
+    <span class="token keyword">static</span> DataTrans <span class="token operator">&amp;</span><span class="token function">Instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">/**
+         * 局部静态特性的方式实现单实例。
+         * 静态局部变量只在当前函数内有效，其他函数无法访问。
+         * 静态局部变量只在第一次被调用的时候初始化，也存储在静态存储区，生命周期从第一次被初始化起至程序结束止。
+         */</span>
+        <span class="token keyword">static</span> DataTrans instance<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">void</span> <span class="token function">product</span><span class="token punctuation">(</span><span class="token keyword">const</span> T <span class="token operator">&amp;</span>v<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        std<span class="token double-colon punctuation">::</span>unique_lock<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>mutex<span class="token operator">&gt;</span> <span class="token function">locker</span><span class="token punctuation">(</span>m_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token function">isFull</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token comment">//生产者等待"产品队列缓冲区不为满"这一条件发生.</span>
+            m_notFull<span class="token punctuation">.</span><span class="token function">wait</span><span class="token punctuation">(</span>m_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        m_queue<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        locker<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        m_notEmpty<span class="token punctuation">.</span><span class="token function">notify_one</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">void</span> <span class="token function">consumption</span><span class="token punctuation">(</span>T <span class="token operator">&amp;</span>v<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        std<span class="token double-colon punctuation">::</span>unique_lock<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>mutex<span class="token operator">&gt;</span> <span class="token function">locker</span><span class="token punctuation">(</span>m_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token comment">// 消费者等待"产品队列缓冲区不为空"这一条件发生.</span>
+            m_notEmpty<span class="token punctuation">.</span><span class="token function">wait</span><span class="token punctuation">(</span>m_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment">//在队列里面消费一个元素,同时通知队列不满这个信号量</span>
+        v <span class="token operator">=</span> m_queue<span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        m_queue<span class="token punctuation">.</span><span class="token function">pop_front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        locker<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        m_notFull<span class="token punctuation">.</span><span class="token function">notify_one</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span> <span class="token comment">//THREAD_TEST_DATATRANS_H</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>使用上面这个类的简单示例：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;thread&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"DataTrans.h"</span></span>
+
+<span class="token keyword">void</span> <span class="token function">function_1</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> count <span class="token operator">=</span> <span class="token number">300</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>count <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        std<span class="token double-colon punctuation">::</span>this_thread<span class="token double-colon punctuation">::</span><span class="token function">sleep_for</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>chrono<span class="token double-colon punctuation">::</span><span class="token function">milliseconds</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        Trans<span class="token punctuation">.</span><span class="token function">product</span><span class="token punctuation">(</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"product:\t"</span> <span class="token operator">&lt;&lt;</span> count <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
+        count<span class="token operator">--</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">function_2</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> data <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>data <span class="token operator">!=</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        std<span class="token double-colon punctuation">::</span>this_thread<span class="token double-colon punctuation">::</span><span class="token function">sleep_for</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>chrono<span class="token double-colon punctuation">::</span><span class="token function">milliseconds</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Trans<span class="token punctuation">.</span><span class="token function">consumption</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> data <span class="token operator">&lt;&lt;</span> <span class="token string">"\tis consumed!"</span> <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    std<span class="token double-colon punctuation">::</span>thread <span class="token function">t1</span><span class="token punctuation">(</span>function_1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    std<span class="token double-colon punctuation">::</span>thread <span class="token function">t2</span><span class="token punctuation">(</span>function_2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    t1<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    t2<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+]]></content>
+      <categories>
+        <category>编程基础</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>C++ 多线程编程（三）：单例模式</title>
     <url>/2022/02/04/cpp-notes-5/</url>
     <content><![CDATA[<h1 id="C-多线程编程（三）：单例模式"><a href="#C-多线程编程（三）：单例模式" class="headerlink" title="C++ 多线程编程（三）：单例模式"></a>C++ 多线程编程（三）：单例模式</h1><h2 id="1-单例模式介绍"><a href="#1-单例模式介绍" class="headerlink" title="1. 单例模式介绍"></a>1. 单例模式介绍</h2><p>单例模式(Singleton Pattern)是设计模式的一种，其特点是只提供<strong>唯一</strong>一个类的实例，并提供一个访问它的全局访问点，该实例被所有程序模块共享。</p>
@@ -2113,221 +2328,6 @@ Single Single<span class="token double-colon punctuation">::</span>instance<span
       </tags>
   </entry>
   <entry>
-    <title>C++ 多线程编程（四）：生产者消费者模型</title>
-    <url>/2022/02/08/cpp-notes-6/</url>
-    <content><![CDATA[<h1 id="C-多线程编程（四）：生产者消费者模型"><a href="#C-多线程编程（四）：生产者消费者模型" class="headerlink" title="C++ 多线程编程（四）：生产者消费者模型"></a>C++ 多线程编程（四）：生产者消费者模型</h1><h2 id="1-生产者消费者模型简介"><a href="#1-生产者消费者模型简介" class="headerlink" title="1. 生产者消费者模型简介"></a>1. 生产者消费者模型简介</h2><p><strong>生产者和消费者问题是线程模型中的经典问题：</strong>生产者和消费者在同一时间段内共用同一个存储空间，生产者往存储空间中添加产品，消费者从存储空间中取走产品；当存储空间为空时，消费者阻塞，当存储空间满时，生产者阻塞。</p>
-<p><strong>简单来说，这个模型是由两类线程构成：</strong></p>
-<ul>
-<li>生产者线程：“生产”产品，并把产品放到一个队列里；</li>
-<li>消费者线程：“消费”产品，具体是从队列中取出产品。</li>
-</ul>
-<p><strong>为什么使用生产者消费者模型？</strong></p>
-<p>在多线程开发当中，如果生产者处理速度很快，而消费者处理速度很慢，那么生产者就必须等待消费者处理完，才能继续生产数据，否则新生产的数据也没有地方存放；同样的道理，如果消费者的处理能力大于生产者，那么消费者就必须等待生产者，不然没有数据消费者也没办法消费。</p>
-<p>为了达到生产者生产数据和消费者消费数据之间的<strong>平衡</strong>，就需要一个缓冲区用来存储生产者生产的数据，所以就引入了生产者-消费者模式。</p>
-<h2 id="2-实现生产者消费者模型"><a href="#2-实现生产者消费者模型" class="headerlink" title="2. 实现生产者消费者模型"></a>2. 实现生产者消费者模型</h2><p>生产者消费者模型可以分为：单生产者-单消费者模型，单生产者-多消费者模型，多生产者-单消费者模型，多生产者-多消费者模型。我这里主要介绍单生产者-单消费者模型，其他模型可以参考下面几个网址：</p>
-<ul>
-<li><a href="https://blog.csdn.net/chenxun_2010/article/details/49848865">c++ 11 多线线程系列———–生产者消费者</a></li>
-<li><a href="https://blog.51cto.com/u_15357586/3790039">C++多线程——生产者/消费者模式/条件变量(Condition Variable)</a></li>
-</ul>
-<p>顾名思义，单生产者-单消费者模型就是只有一个生产者、一个消费者的情况，这是最简单的生产者消费者模型。实现代码如下所示：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;deque&gt;</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;thread&gt;</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;mutex&gt;</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;condition_variable&gt;</span></span>
-
-std<span class="token double-colon punctuation">::</span>deque<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span> q<span class="token punctuation">;</span>
-std<span class="token double-colon punctuation">::</span>mutex mu<span class="token punctuation">;</span>
-std<span class="token double-colon punctuation">::</span>condition_variable cond<span class="token punctuation">;</span>
-
-<span class="token keyword">void</span> <span class="token function">function_1</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">int</span> count <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>count <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        std<span class="token double-colon punctuation">::</span>unique_lock<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>mutex<span class="token operator">&gt;</span> <span class="token function">locker</span><span class="token punctuation">(</span>mu<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        q<span class="token punctuation">.</span><span class="token function">push_front</span><span class="token punctuation">(</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        locker<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        cond<span class="token punctuation">.</span><span class="token function">notify_one</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// Notify one waiting thread, if there is one.</span>
-        count<span class="token operator">--</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">void</span> <span class="token function">function_2</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">int</span> data <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>data <span class="token operator">!=</span> <span class="token number">1</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        std<span class="token double-colon punctuation">::</span>unique_lock<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>mutex<span class="token operator">&gt;</span> <span class="token function">locker</span><span class="token punctuation">(</span>mu<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">while</span> <span class="token punctuation">(</span>q<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-            cond<span class="token punctuation">.</span><span class="token function">wait</span><span class="token punctuation">(</span>locker<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Unlock mu and wait to be notified</span>
-        data <span class="token operator">=</span> q<span class="token punctuation">.</span><span class="token function">back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        q<span class="token punctuation">.</span><span class="token function">pop_back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        locker<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"t2 got a value from t1: "</span> <span class="token operator">&lt;&lt;</span> data <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    std<span class="token double-colon punctuation">::</span>thread <span class="token function">t1</span><span class="token punctuation">(</span>function_1<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    std<span class="token double-colon punctuation">::</span>thread <span class="token function">t2</span><span class="token punctuation">(</span>function_2<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    t1<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    t2<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>上面的代码有三个注意事项：</p>
-<ol>
-<li><p>在function_2中，在判断队列是否为空的时候，使用的是<code>while(q.empty())</code>，而不是<code>if(q.empty())</code>.</p>
-<p>这是因为wait()从阻塞到返回，不一定就是由于notify_one()函数造成的，还有可能由于系统的不确定原因唤醒（可能和条件变量的实现机制有关），这个的时机和频率都是不确定的，被称作伪唤醒，如果在错误的时候被唤醒了，执行后面的语句就会错误，所以需要再次判断队列是否为空，如果还是为空，就继续wait()阻塞。</p>
-</li>
-<li><p>在管理互斥锁的时候，使用的是<code>std::unique_lock</code>而不是<code>std::lock_guard</code>，而且事实上也不能使用<code>std::lock_guard</code>。</p>
-<p>这需要先解释下wait()函数所做的事情。可以看到，在wait()函数之前，使用互斥锁保护了，如果wait的时候什么都没做，岂不是一直持有互斥锁？那生产者也会一直卡住，不能够将数据放入队列中了。所以，wait()函数会先调用互斥锁的unlock()函数，然后再将自己睡眠，在被唤醒后，又会继续持有锁，保护后面的队列操作。而lock_guard没有lock和unlock接口，而unique_lock提供了。这就是必须使用unique_lock的原因。</p>
-</li>
-<li><p>使用细粒度锁，尽量减小锁的范围。</p>
-<p>在notify_one()的时候，不需要处于互斥锁的保护范围内，所以在唤醒条件变量之前可以将锁unlock()。还可以将<code>cond.wait(locker);</code>换一种写法，wait()的第二个参数可以传入一个函数表示检查条件，这里使用lambda函数最为简单，如果这个函数返回的是true，wait()函数不会阻塞会直接返回，如果这个函数返回的是false，wait()函数就会阻塞着等待唤醒，如果被伪唤醒，会继续判断函数返回值。</p>
-</li>
-</ol>
-<h2 id="3-实际应用生产者消费者模型"><a href="#3-实际应用生产者消费者模型" class="headerlink" title="3. 实际应用生产者消费者模型"></a>3. 实际应用生产者消费者模型</h2><blockquote>
-<p>这里介绍一个个人认为比较好用的编程方法。</p>
-</blockquote>
-<p>在我们的实际开发中，比如在SLAM中，可能是定位一个线程，建图一个线程，定位线程会计算出目前的位置，而建图线程需要根据这个位置来建立地图。</p>
-<p>如果采用上面这样的方式，代码就不是很简洁，并且你需要保证一些变量是全局的，两个线程都能够接触到，这样零零碎碎的变量比较多，管理起来很麻烦。</p>
-<p>这里我推荐构建一个生产者消费者模型的类，并且最好是使用单例模式的模板类。这样的话就可以非常简单的在两个线程中通信，并且后续如果要对通信方式进行修改，也不需要修改到定位和建图的代码，封装性更好！</p>
-<p>下面是一个简单的例子：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">THREAD_TEST_DATATRANS_H</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">THREAD_TEST_DATATRANS_H</span></span>
-
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;list&gt;</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;mutex&gt;</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;condition_variable&gt;</span></span>
-
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">Trans</span> <span class="token expression"><span class="token class-name">DataTrans</span><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span><span class="token double-colon punctuation">::</span><span class="token function">Instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span></span>
-
-<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">&gt;</span>
-<span class="token keyword">class</span> <span class="token class-name">DataTrans</span>
-<span class="token punctuation">{</span>
-<span class="token keyword">private</span><span class="token operator">:</span>
-    std<span class="token double-colon punctuation">::</span>list<span class="token operator">&lt;</span>T<span class="token operator">&gt;</span> m_queue<span class="token punctuation">;</span><span class="token comment">//队列</span>
-    std<span class="token double-colon punctuation">::</span>mutex m_mutex<span class="token punctuation">;</span><span class="token comment">//全局互斥锁</span>
-    std<span class="token double-colon punctuation">::</span>condition_variable_any m_notEmpty<span class="token punctuation">;</span><span class="token comment">//全局条件变量（不为空）</span>
-    std<span class="token double-colon punctuation">::</span>condition_variable_any m_notFull<span class="token punctuation">;</span><span class="token comment">//全局条件变量（不为满）</span>
-    <span class="token keyword">int</span> m_maxSize<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span><span class="token comment">//队列最大容量</span>
-
-<span class="token keyword">private</span><span class="token operator">:</span>
-    <span class="token comment">//队列为空</span>
-    <span class="token keyword">bool</span> <span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> m_queue<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token comment">//队列已满</span>
-    <span class="token keyword">bool</span> <span class="token function">isFull</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> m_queue<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> m_maxSize<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token comment">//构造函数</span>
-    <span class="token function">DataTrans</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token operator">-&gt;</span>m_maxSize <span class="token operator">=</span> <span class="token number">30</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-<span class="token keyword">public</span><span class="token operator">:</span>
-
-    <span class="token comment">// 获取单实例对象</span>
-    <span class="token keyword">static</span> DataTrans <span class="token operator">&amp;</span><span class="token function">Instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token comment">/**
-         * 局部静态特性的方式实现单实例。
-         * 静态局部变量只在当前函数内有效，其他函数无法访问。
-         * 静态局部变量只在第一次被调用的时候初始化，也存储在静态存储区，生命周期从第一次被初始化起至程序结束止。
-         */</span>
-        <span class="token keyword">static</span> DataTrans instance<span class="token punctuation">;</span>
-        <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">void</span> <span class="token function">product</span><span class="token punctuation">(</span><span class="token keyword">const</span> T <span class="token operator">&amp;</span>v<span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        std<span class="token double-colon punctuation">::</span>unique_lock<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>mutex<span class="token operator">&gt;</span> <span class="token function">locker</span><span class="token punctuation">(</span>m_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token function">isFull</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            <span class="token comment">//生产者等待"产品队列缓冲区不为满"这一条件发生.</span>
-            m_notFull<span class="token punctuation">.</span><span class="token function">wait</span><span class="token punctuation">(</span>m_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        m_queue<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        locker<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        m_notEmpty<span class="token punctuation">.</span><span class="token function">notify_one</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">void</span> <span class="token function">consumption</span><span class="token punctuation">(</span>T <span class="token operator">&amp;</span>v<span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        std<span class="token double-colon punctuation">::</span>unique_lock<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>mutex<span class="token operator">&gt;</span> <span class="token function">locker</span><span class="token punctuation">(</span>m_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            <span class="token comment">// 消费者等待"产品队列缓冲区不为空"这一条件发生.</span>
-            m_notEmpty<span class="token punctuation">.</span><span class="token function">wait</span><span class="token punctuation">(</span>m_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token comment">//在队列里面消费一个元素,同时通知队列不满这个信号量</span>
-        v <span class="token operator">=</span> m_queue<span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        m_queue<span class="token punctuation">.</span><span class="token function">pop_front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        locker<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        m_notFull<span class="token punctuation">.</span><span class="token function">notify_one</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span> <span class="token comment">//THREAD_TEST_DATATRANS_H</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>使用上面这个类的简单示例：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;thread&gt;</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"DataTrans.h"</span></span>
-
-<span class="token keyword">void</span> <span class="token function">function_1</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">int</span> count <span class="token operator">=</span> <span class="token number">300</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>count <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        std<span class="token double-colon punctuation">::</span>this_thread<span class="token double-colon punctuation">::</span><span class="token function">sleep_for</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>chrono<span class="token double-colon punctuation">::</span><span class="token function">milliseconds</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        Trans<span class="token punctuation">.</span><span class="token function">product</span><span class="token punctuation">(</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"product:\t"</span> <span class="token operator">&lt;&lt;</span> count <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
-        count<span class="token operator">--</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">void</span> <span class="token function">function_2</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">int</span> data <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>data <span class="token operator">!=</span> <span class="token number">1</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        std<span class="token double-colon punctuation">::</span>this_thread<span class="token double-colon punctuation">::</span><span class="token function">sleep_for</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>chrono<span class="token double-colon punctuation">::</span><span class="token function">milliseconds</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        Trans<span class="token punctuation">.</span><span class="token function">consumption</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> data <span class="token operator">&lt;&lt;</span> <span class="token string">"\tis consumed!"</span> <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    std<span class="token double-colon punctuation">::</span>thread <span class="token function">t1</span><span class="token punctuation">(</span>function_1<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    std<span class="token double-colon punctuation">::</span>thread <span class="token function">t2</span><span class="token punctuation">(</span>function_2<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    t1<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    t2<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-]]></content>
-      <categories>
-        <category>编程基础</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-        <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>C++中的前置声明</title>
     <url>/2022/04/10/cpp-notes-9/</url>
     <content><![CDATA[<h1 id="C-中的前置声明"><a href="#C-中的前置声明" class="headerlink" title="C++中的前置声明"></a>C++中的前置声明</h1><blockquote>
@@ -2427,6 +2427,81 @@ A<span class="token double-colon punctuation">::</span>size_type num<span class=
       </categories>
       <tags>
         <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CS231A Lecture 3：Camera Calibration</title>
+    <url>/2022/10/14/cs231a-lecture3/</url>
+    <content><![CDATA[<h1 id="CS231A-Lecture-3：Camera-Calibration"><a href="#CS231A-Lecture-3：Camera-Calibration" class="headerlink" title="CS231A Lecture 3：Camera Calibration"></a>CS231A Lecture 3：Camera Calibration</h1><blockquote>
+<p>Reading: </p>
+<p>[FP] Chapter 1 “Geometric Camera Calibration”</p>
+<p>[HZ] Chapter 7 “Computation of Camera Matrix P”</p>
+</blockquote>
+<h2 id="Internal-and-External-parameters"><a href="#Internal-and-External-parameters" class="headerlink" title="Internal and External parameters"></a>Internal and External parameters</h2><img src="/images/cs231a-lecture3/image-20221012202055469.png" style="zoom:67%;">
+
+<h2 id="Calibration-Problem"><a href="#Calibration-Problem" class="headerlink" title="Calibration Problem"></a>Calibration Problem</h2><h3 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h3><p>Estimate intrinsic and extrinsic parameters from 1 or multiple images</p>
+<h3 id="Mathematical-Expression"><a href="#Mathematical-Expression" class="headerlink" title="Mathematical Expression"></a>Mathematical Expression</h3><img src="/images/cs231a-lecture3/image-20221012203045100.png" style="zoom:67%;">
+
+<h3 id="How-many-correspondences-do-we-need"><a href="#How-many-correspondences-do-we-need" class="headerlink" title="How many correspondences do we need?"></a>How many correspondences do we need?</h3><ul>
+<li><p>M has 11 unknowns</p>
+</li>
+<li><p>We need 11 equations</p>
+</li>
+<li><p>6 correspondences would do it</p>
+<p>In practice, using more than 6 correspondences enables more robust results</p>
+</li>
+</ul>
+<h3 id="How-to-list-equations"><a href="#How-to-list-equations" class="headerlink" title="How to list equations?"></a>How to list equations?</h3><img src="/images/cs231a-lecture3/image-20221012204246691.png" style="zoom:67%;">
+
+<img src="/images/cs231a-lecture3/image-20221012204259709.png" style="zoom:67%;">
+
+<img src="/images/cs231a-lecture3/image-20221012204424235.png" style="zoom:67%;">
+
+<img src="/images/cs231a-lecture3/image-20221012204530383.png" style="zoom:67%;">
+
+<h2 id="Homogeneous-M-x-N-Linear-Systems"><a href="#Homogeneous-M-x-N-Linear-Systems" class="headerlink" title="Homogeneous M x N Linear Systems"></a>Homogeneous M x N Linear Systems</h2><img src="/images/cs231a-lecture3/image-20221012204646720.png" style="zoom:80%;">
+
+<h2 id="Solve-calibration-problem-via-SVD-decomposition"><a href="#Solve-calibration-problem-via-SVD-decomposition" class="headerlink" title="Solve calibration problem via SVD decomposition"></a>Solve calibration problem via SVD decomposition</h2><h3 id="Calibration-Problem-1"><a href="#Calibration-Problem-1" class="headerlink" title="Calibration Problem"></a>Calibration Problem</h3><img src="/images/cs231a-lecture3/image-20221012210709319.png" style="zoom: 67%;">
+
+<h3 id="Extracting-camera-parameters"><a href="#Extracting-camera-parameters" class="headerlink" title="Extracting camera parameters"></a>Extracting camera parameters</h3><img src="/images/cs231a-lecture3/image-20221014100728333.png" style="zoom:67%;">
+
+<img src="/images/cs231a-lecture3/image-20221014100740977.png" style="zoom:67%;">
+
+<img src="/images/cs231a-lecture3/image-20221014100751444.png" style="zoom:67%;">
+
+<h3 id="Degenerate-cases"><a href="#Degenerate-cases" class="headerlink" title="Degenerate cases"></a>Degenerate cases</h3><img src="/images/cs231a-lecture3/image-20221014100820747.png" style="zoom:67%;">
+
+<h3 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h3><p><strong>Q：为什么标定相机使用的点不能够在同一个平面或者两个二次曲面的相交曲线上？</strong></p>
+<p><strong>A：</strong>TODO</p>
+<p><strong>Q：常用的棋盘格标定法，使用的点应该是在同一个平面上的？它如何解决这个问题？</strong></p>
+<p><strong>A：</strong>TODO</p>
+<h2 id="Camera-calibration-with-radial-distortion"><a href="#Camera-calibration-with-radial-distortion" class="headerlink" title="Camera calibration with radial distortion"></a>Camera calibration with radial distortion</h2><h3 id="Review-radial-distortion"><a href="#Review-radial-distortion" class="headerlink" title="Review radial distortion"></a>Review radial distortion</h3><img src="/images/cs231a-lecture3/image-20221014104001784.png" style="zoom:67%;">
+
+<h3 id="Calibration-Problem-2"><a href="#Calibration-Problem-2" class="headerlink" title="Calibration Problem"></a>Calibration Problem</h3><p>根据上一篇博客提到的径向畸变公式，给出下面的方程。</p>
+<img src="/images/cs231a-lecture3/image-20221014104752131.png" style="zoom:67%;">
+
+<img src="/images/cs231a-lecture3/image-20221014104818934.png" style="zoom:67%;">
+
+<h3 id="General-Calibration-Problem"><a href="#General-Calibration-Problem" class="headerlink" title="General Calibration Problem"></a>General Calibration Problem</h3><img src="/images/cs231a-lecture3/image-20221014105054200.png" style="zoom:67%;">
+
+<img src="/images/cs231a-lecture3/image-20221014105109014.png" style="zoom:67%;">
+
+<img src="/images/cs231a-lecture3/image-20221014105124962.png" style="zoom:67%;">
+
+<h3 id="Estimate-m1-and-m2-and-ignore-the-radial-distortion"><a href="#Estimate-m1-and-m2-and-ignore-the-radial-distortion" class="headerlink" title="Estimate m1 and m2 and ignore the radial distortion"></a>Estimate m1 and m2 and ignore the radial distortion</h3><img src="/images/cs231a-lecture3/image-20221014110141419.png" style="zoom:67%;">
+
+<img src="/images/cs231a-lecture3/image-20221014110231133.png" style="zoom:67%;">
+
+<img src="/images/cs231a-lecture3/image-20221014110243031.png" style="zoom:67%;">
+
+<h3 id="Question-1"><a href="#Question-1" class="headerlink" title="Question"></a>Question</h3><p><strong>Q：本课程只提到了在考虑径向畸变的情况下进行相机标定，如果把切向畸变也考虑进来，整个过程是什么样的？</strong></p>
+<p><strong>A：</strong>TODO</p>
+]]></content>
+      <categories>
+        <category>三维视觉</category>
+      </categories>
+      <tags>
+        <tag>CS231A</tag>
       </tags>
   </entry>
   <entry>
@@ -2548,81 +2623,6 @@ A<span class="token double-colon punctuation">::</span>size_type num<span class=
 <p><img src="/images/cs231a-lecture2/distort1.png"></p>
 <p>一般切向畸变对于二维平面上的坐标(x,y)的影响可以使用如下公式进行表述：<br>$$<br>x_{distorted} = x + 2p_1xy + p_2(r^2+2x^2)<br>\\<br>y_{distorted} = y + p_1(r^2+ 2y^2)+ 2p_2xy<br>$$</p>
 <h3 id="Radial-and-tangential-distortion"><a href="#Radial-and-tangential-distortion" class="headerlink" title="Radial and tangential distortion"></a>Radial and tangential distortion</h3><p>结合上面两种径向畸变和切向畸变的公式，可以得到综合的去畸变公式，也就是说我们通过五个畸变系数就可以确定点在像素平面的正确位置。<br>$$<br>x_{distorted} = x( 1 + k_1 r^2 + k_2 r^4 + k_3 r^6) + 2p_1xy + p_2(r^2+2x^2)<br>\\<br>y_{distorted} = y( 1 + k_1 r^2 + k_2 r^4 + k_3 r^6) + p_1(r^2+ 2y^2)+ 2p_2xy<br>$$</p>
-]]></content>
-      <categories>
-        <category>三维视觉</category>
-      </categories>
-      <tags>
-        <tag>CS231A</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CS231A Lecture 3：Camera Calibration</title>
-    <url>/2022/10/14/cs231a-lecture3/</url>
-    <content><![CDATA[<h1 id="CS231A-Lecture-3：Camera-Calibration"><a href="#CS231A-Lecture-3：Camera-Calibration" class="headerlink" title="CS231A Lecture 3：Camera Calibration"></a>CS231A Lecture 3：Camera Calibration</h1><blockquote>
-<p>Reading: </p>
-<p>[FP] Chapter 1 “Geometric Camera Calibration”</p>
-<p>[HZ] Chapter 7 “Computation of Camera Matrix P”</p>
-</blockquote>
-<h2 id="Internal-and-External-parameters"><a href="#Internal-and-External-parameters" class="headerlink" title="Internal and External parameters"></a>Internal and External parameters</h2><img src="/images/cs231a-lecture3/image-20221012202055469.png" style="zoom:67%;">
-
-<h2 id="Calibration-Problem"><a href="#Calibration-Problem" class="headerlink" title="Calibration Problem"></a>Calibration Problem</h2><h3 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h3><p>Estimate intrinsic and extrinsic parameters from 1 or multiple images</p>
-<h3 id="Mathematical-Expression"><a href="#Mathematical-Expression" class="headerlink" title="Mathematical Expression"></a>Mathematical Expression</h3><img src="/images/cs231a-lecture3/image-20221012203045100.png" style="zoom:67%;">
-
-<h3 id="How-many-correspondences-do-we-need"><a href="#How-many-correspondences-do-we-need" class="headerlink" title="How many correspondences do we need?"></a>How many correspondences do we need?</h3><ul>
-<li><p>M has 11 unknowns</p>
-</li>
-<li><p>We need 11 equations</p>
-</li>
-<li><p>6 correspondences would do it</p>
-<p>In practice, using more than 6 correspondences enables more robust results</p>
-</li>
-</ul>
-<h3 id="How-to-list-equations"><a href="#How-to-list-equations" class="headerlink" title="How to list equations?"></a>How to list equations?</h3><img src="/images/cs231a-lecture3/image-20221012204246691.png" style="zoom:67%;">
-
-<img src="/images/cs231a-lecture3/image-20221012204259709.png" style="zoom:67%;">
-
-<img src="/images/cs231a-lecture3/image-20221012204424235.png" style="zoom:67%;">
-
-<img src="/images/cs231a-lecture3/image-20221012204530383.png" style="zoom:67%;">
-
-<h2 id="Homogeneous-M-x-N-Linear-Systems"><a href="#Homogeneous-M-x-N-Linear-Systems" class="headerlink" title="Homogeneous M x N Linear Systems"></a>Homogeneous M x N Linear Systems</h2><img src="/images/cs231a-lecture3/image-20221012204646720.png" style="zoom:80%;">
-
-<h2 id="Solve-calibration-problem-via-SVD-decomposition"><a href="#Solve-calibration-problem-via-SVD-decomposition" class="headerlink" title="Solve calibration problem via SVD decomposition"></a>Solve calibration problem via SVD decomposition</h2><h3 id="Calibration-Problem-1"><a href="#Calibration-Problem-1" class="headerlink" title="Calibration Problem"></a>Calibration Problem</h3><img src="/images/cs231a-lecture3/image-20221012210709319.png" style="zoom: 67%;">
-
-<h3 id="Extracting-camera-parameters"><a href="#Extracting-camera-parameters" class="headerlink" title="Extracting camera parameters"></a>Extracting camera parameters</h3><img src="/images/cs231a-lecture3/image-20221014100728333.png" style="zoom:67%;">
-
-<img src="/images/cs231a-lecture3/image-20221014100740977.png" style="zoom:67%;">
-
-<img src="/images/cs231a-lecture3/image-20221014100751444.png" style="zoom:67%;">
-
-<h3 id="Degenerate-cases"><a href="#Degenerate-cases" class="headerlink" title="Degenerate cases"></a>Degenerate cases</h3><img src="/images/cs231a-lecture3/image-20221014100820747.png" style="zoom:67%;">
-
-<h3 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h3><p><strong>Q：为什么标定相机使用的点不能够在同一个平面或者两个二次曲面的相交曲线上？</strong></p>
-<p><strong>A：</strong>TODO</p>
-<p><strong>Q：常用的棋盘格标定法，使用的点应该是在同一个平面上的？它如何解决这个问题？</strong></p>
-<p><strong>A：</strong>TODO</p>
-<h2 id="Camera-calibration-with-radial-distortion"><a href="#Camera-calibration-with-radial-distortion" class="headerlink" title="Camera calibration with radial distortion"></a>Camera calibration with radial distortion</h2><h3 id="Review-radial-distortion"><a href="#Review-radial-distortion" class="headerlink" title="Review radial distortion"></a>Review radial distortion</h3><img src="/images/cs231a-lecture3/image-20221014104001784.png" style="zoom:67%;">
-
-<h3 id="Calibration-Problem-2"><a href="#Calibration-Problem-2" class="headerlink" title="Calibration Problem"></a>Calibration Problem</h3><p>根据上一篇博客提到的径向畸变公式，给出下面的方程。</p>
-<img src="/images/cs231a-lecture3/image-20221014104752131.png" style="zoom:67%;">
-
-<img src="/images/cs231a-lecture3/image-20221014104818934.png" style="zoom:67%;">
-
-<h3 id="General-Calibration-Problem"><a href="#General-Calibration-Problem" class="headerlink" title="General Calibration Problem"></a>General Calibration Problem</h3><img src="/images/cs231a-lecture3/image-20221014105054200.png" style="zoom:67%;">
-
-<img src="/images/cs231a-lecture3/image-20221014105109014.png" style="zoom:67%;">
-
-<img src="/images/cs231a-lecture3/image-20221014105124962.png" style="zoom:67%;">
-
-<h3 id="Estimate-m1-and-m2-and-ignore-the-radial-distortion"><a href="#Estimate-m1-and-m2-and-ignore-the-radial-distortion" class="headerlink" title="Estimate m1 and m2 and ignore the radial distortion"></a>Estimate m1 and m2 and ignore the radial distortion</h3><img src="/images/cs231a-lecture3/image-20221014110141419.png" style="zoom:67%;">
-
-<img src="/images/cs231a-lecture3/image-20221014110231133.png" style="zoom:67%;">
-
-<img src="/images/cs231a-lecture3/image-20221014110243031.png" style="zoom:67%;">
-
-<h3 id="Question-1"><a href="#Question-1" class="headerlink" title="Question"></a>Question</h3><p><strong>Q：本课程只提到了在考虑径向畸变的情况下进行相机标定，如果把切向畸变也考虑进来，整个过程是什么样的？</strong></p>
-<p><strong>A：</strong>TODO</p>
 ]]></content>
       <categories>
         <category>三维视觉</category>
@@ -4833,80 +4833,6 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
       </tags>
   </entry>
   <entry>
-    <title>读博的选择、过程、出路</title>
-    <url>/2023/04/06/meeting-3/</url>
-    <content><![CDATA[<h1 id="读博的选择、过程、出路"><a href="#读博的选择、过程、出路" class="headerlink" title="读博的选择、过程、出路"></a>读博的选择、过程、出路</h1><blockquote>
-<p>中科院博士，程小六</p>
-</blockquote>
-<p><strong>为什么读博？</strong></p>
-<img src="/images/meeting-3/image-20230406155514725.png" style="zoom:50%;">
-
-<ul>
-<li><p>去高校、研究所、企业的研究院，必须要读博，这是个门槛</p>
-</li>
-<li><p>海归，特别是知名学校，优势非常大</p>
-</li>
-<li><p>需要做博后，去好几个地方做博后，去积累一些人脉、项目、经验，最后才能去当一个老师</p>
-<p>读博28，博士后30，可能稳定下来都是30以上了</p>
-</li>
-</ul>
-<p><strong>选老师：</strong></p>
-<img src="/images/meeting-3/image-20230406160242078.png" style="zoom:50%;">
-
-<p>导师、团队都很重要：导师基本决定了读博期间能干出什么事。</p>
-<p>尽量选择年轻有冲劲的导师：</p>
-<ul>
-<li>比如张富，短短几年时间，从领域内没人知道，到整个领域内都知道。</li>
-<li>老师都非常拼，年轻老师要打响自己的名声。</li>
-<li>老师本身能力也很强，知名实验室出来的。</li>
-<li>指导非常多，对第一个学生基本是手把手指导，也非常push。</li>
-</ul>
-<p>挂名巨佬导师：</p>
-<ul>
-<li>很多都不带学生，都是做行政的</li>
-<li>很有可能小老师带学生，甚至是组里面的师兄带</li>
-<li>可能已经躺平了，自己啥都有了，不会那么负责了</li>
-</ul>
-<p><strong>读博的过程：</strong></p>
-<img src="/images/meeting-3/image-20230406153243562.png" style="zoom:50%;">
-
-<ul>
-<li><p>第一年基本是看论文找思路。</p>
-<p>看领域内比较新的，学校比较好的硕博论文，会看比较久；</p>
-<p>多看英文文献，越看越多的时候，直接就看懂。</p>
-</li>
-<li><p>写代码对SLAM方向是非常重要的；（读代码，给开源的代码写注释也是很重要的，复现代码更重要）</p>
-<p>新手写论文的时候，可能发现很多的东西都没办法写成公式，但实际上很多理论需要用数学公式去表达，一个是没有歧义，一个是数学公式是相通的，大家一看公式就知道作者的水平怎么样。一篇小论文里面没什么公式，大概率也会被拒。</p>
-<blockquote>
-<p>推公式指的是把自己做的工作变成公式的能力，或者说是对自己具体的工作抽象表达的能力</p>
-</blockquote>
-</li>
-<li><p>期刊投稿可能要半年多，长的有一年，要给自己留好足够的时间！</p>
-</li>
-<li><p>学术交流会议，能去的尽量去，争取在上面作报告。</p>
-<p>交流非常重要，比如问一问别人的思路是怎么来的。</p>
-</li>
-<li><p>读博的时候要把事情尽早搞定，不要去拖，包括结婚、找工作、发论文等等。</p>
-</li>
-</ul>
-<p><strong>最后，最重要的一点：</strong></p>
-<p>如果博士期间没有做出什么成果，不要想着博士毕业后能做出什么学术成果，这些大牛基本都是博士期间做出了非常厉害的成果。如果博士期间非常平庸，等毕业之后想一飞冲天，基本没有可能。</p>
-<p>博士期间真的是在给自己干，大家都是为了毕业、拿论文、找更好的工作、去更好的学校，都是在给自己拼命。等毕业之后，自己的身份已经变了，去高校是普通老师，去企业是员工，动力不一样了、氛围也不一样了。</p>
-<p>读书的时候可以一心一意研究这个东西，而到了公司到了学校到了社会上之后，会有各种乱七八糟的事情。</p>
-<p>想做成什么事情，最好的其实就是读书的这几年，这几年的环境是最理想的。</p>
-<blockquote>
-<p>博士是你脱产搞科研的时间，这时候你的脑力已经使用到了极限。将来你要养家糊口带小孩，又要教书做项目甚至兼职行政，更没有时间和精力去搞学问。</p>
-<p>十成力都做不成的事，不要相信靠七成力能成功！</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>经验分享</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Exploring NeRF-My Journey Through Research and Code</title>
     <url>/2023/04/26/meeting-4/</url>
     <content><![CDATA[<h1 id="Exploring-NeRF-My-Journey-Through-Research-and-Code"><a href="#Exploring-NeRF-My-Journey-Through-Research-and-Code" class="headerlink" title="Exploring NeRF: My Journey Through Research and Code"></a>Exploring NeRF: My Journey Through Research and Code</h1><blockquote>
@@ -5046,6 +4972,80 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
       </tags>
   </entry>
   <entry>
+    <title>读博的选择、过程、出路</title>
+    <url>/2023/04/06/meeting-3/</url>
+    <content><![CDATA[<h1 id="读博的选择、过程、出路"><a href="#读博的选择、过程、出路" class="headerlink" title="读博的选择、过程、出路"></a>读博的选择、过程、出路</h1><blockquote>
+<p>中科院博士，程小六</p>
+</blockquote>
+<p><strong>为什么读博？</strong></p>
+<img src="/images/meeting-3/image-20230406155514725.png" style="zoom:50%;">
+
+<ul>
+<li><p>去高校、研究所、企业的研究院，必须要读博，这是个门槛</p>
+</li>
+<li><p>海归，特别是知名学校，优势非常大</p>
+</li>
+<li><p>需要做博后，去好几个地方做博后，去积累一些人脉、项目、经验，最后才能去当一个老师</p>
+<p>读博28，博士后30，可能稳定下来都是30以上了</p>
+</li>
+</ul>
+<p><strong>选老师：</strong></p>
+<img src="/images/meeting-3/image-20230406160242078.png" style="zoom:50%;">
+
+<p>导师、团队都很重要：导师基本决定了读博期间能干出什么事。</p>
+<p>尽量选择年轻有冲劲的导师：</p>
+<ul>
+<li>比如张富，短短几年时间，从领域内没人知道，到整个领域内都知道。</li>
+<li>老师都非常拼，年轻老师要打响自己的名声。</li>
+<li>老师本身能力也很强，知名实验室出来的。</li>
+<li>指导非常多，对第一个学生基本是手把手指导，也非常push。</li>
+</ul>
+<p>挂名巨佬导师：</p>
+<ul>
+<li>很多都不带学生，都是做行政的</li>
+<li>很有可能小老师带学生，甚至是组里面的师兄带</li>
+<li>可能已经躺平了，自己啥都有了，不会那么负责了</li>
+</ul>
+<p><strong>读博的过程：</strong></p>
+<img src="/images/meeting-3/image-20230406153243562.png" style="zoom:50%;">
+
+<ul>
+<li><p>第一年基本是看论文找思路。</p>
+<p>看领域内比较新的，学校比较好的硕博论文，会看比较久；</p>
+<p>多看英文文献，越看越多的时候，直接就看懂。</p>
+</li>
+<li><p>写代码对SLAM方向是非常重要的；（读代码，给开源的代码写注释也是很重要的，复现代码更重要）</p>
+<p>新手写论文的时候，可能发现很多的东西都没办法写成公式，但实际上很多理论需要用数学公式去表达，一个是没有歧义，一个是数学公式是相通的，大家一看公式就知道作者的水平怎么样。一篇小论文里面没什么公式，大概率也会被拒。</p>
+<blockquote>
+<p>推公式指的是把自己做的工作变成公式的能力，或者说是对自己具体的工作抽象表达的能力</p>
+</blockquote>
+</li>
+<li><p>期刊投稿可能要半年多，长的有一年，要给自己留好足够的时间！</p>
+</li>
+<li><p>学术交流会议，能去的尽量去，争取在上面作报告。</p>
+<p>交流非常重要，比如问一问别人的思路是怎么来的。</p>
+</li>
+<li><p>读博的时候要把事情尽早搞定，不要去拖，包括结婚、找工作、发论文等等。</p>
+</li>
+</ul>
+<p><strong>最后，最重要的一点：</strong></p>
+<p>如果博士期间没有做出什么成果，不要想着博士毕业后能做出什么学术成果，这些大牛基本都是博士期间做出了非常厉害的成果。如果博士期间非常平庸，等毕业之后想一飞冲天，基本没有可能。</p>
+<p>博士期间真的是在给自己干，大家都是为了毕业、拿论文、找更好的工作、去更好的学校，都是在给自己拼命。等毕业之后，自己的身份已经变了，去高校是普通老师，去企业是员工，动力不一样了、氛围也不一样了。</p>
+<p>读书的时候可以一心一意研究这个东西，而到了公司到了学校到了社会上之后，会有各种乱七八糟的事情。</p>
+<p>想做成什么事情，最好的其实就是读书的这几年，这几年的环境是最理想的。</p>
+<blockquote>
+<p>博士是你脱产搞科研的时间，这时候你的脑力已经使用到了极限。将来你要养家糊口带小孩，又要教书做项目甚至兼职行政，更没有时间和精力去搞学问。</p>
+<p>十成力都做不成的事，不要相信靠七成力能成功！</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>经验分享</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Neural Implicit Representations in SLAM</title>
     <url>/2023/07/15/meeting-5/</url>
     <content><![CDATA[<h1 id="Neural-Implicit-Representations-in-SLAM"><a href="#Neural-Implicit-Representations-in-SLAM" class="headerlink" title="Neural Implicit Representations in SLAM"></a>Neural Implicit Representations in SLAM</h1><blockquote>
@@ -5101,6 +5101,63 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
       <tags>
         <tag>NeRF</tag>
         <tag>视觉SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>NeRF学习笔记（二）：论文阅读与思考</title>
+    <url>/2022/08/21/nerf-notes-2/</url>
+    <content><![CDATA[<h1 id="NeRF学习笔记（二）：论文阅读与思考"><a href="#NeRF学习笔记（二）：论文阅读与思考" class="headerlink" title="NeRF学习笔记（二）：论文阅读与思考"></a>NeRF学习笔记（二）：论文阅读与思考</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p><strong>Q：如何理解稀疏的输入视图集</strong></p>
+<p><strong>A：</strong> a sparse set of input views 稀疏的输入视图集。也就是输入视图并不是连续的，可能就是在若干个方向或者角度拍几张照片，就能合成一个连续的360度环绕的场景</p>
+<p><strong>Q：如何理解volume density</strong></p>
+<p>volume density字面意思是体积密度，实际上理解为<strong>不透明度</strong>会更好，不透明度对应对光的吸收能力，volume density越大，不透明度越高，对光的吸收能力越强。</p>
+<p>这个在后面的公式有所涉及。</p>
+<p><strong>Q：为什么要输入这么五个坐标？</strong></p>
+<p><strong>A：</strong>因为考虑到不同视角上某一点的颜色是不一样的。正因如此，原文用了view-dependent，即某点的颜色是跟视角相关的</p>
+<p><strong>Q：如何理解5D坐标（空间位置$(x，y，z)$和观察方向$(θ，φ)$)？</strong></p>
+<p><strong>A：</strong>作者应该是确定了某个坐标系，空间位置$(x,y,z)$就是被观察物体某个点在这个坐标系中的坐标，而观察方向$(θ，φ)$就是相机指向被观察物体这个点的射线，通过两个角度可以表示三维下的一条射线。</p>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1 Introduction"></a>1 Introduction</h2><p><strong>Q：什么是MLP网络？</strong></p>
+<p><strong>A：</strong>多层感知器（Multilayer Perceptron，缩写MLP）是一种前向结构的人工神经网络，映射一组输入向量到一组输出向量。MLP可以被看作是一个有向图，由多个的节点层所组成，每一层都全连接到下一层。除了输入节点，每个节点都是一个带有非线性激活函数的神经元（或称处理单元）。一种被称为反向传播算法的监督学习方法常被用来训练MLP。</p>
+<p><strong>Q：还有什么想说的？</strong></p>
+<blockquote>
+<p>这里是搬运的，目前并不了解PINN</p>
+</blockquote>
+<p><strong>A：</strong>这篇论文的思想非常像流体力学的PINN，也是使用一个神经网络拟合某一个对象。PINN是用网络输出尽可能拟合离散点的函数值，而NERF就是用神经网络的输出拟合稀疏的相机拍摄图像。而且，与一般的问题不同，PINN和NERF都是尽可能过拟合标签值，因为它们都是应用于某一个特定的对象，如前者应用于某一个偏微分方程（组），后者应用于某一个场景。但是这引出了另一个问题：网络的泛化性很差，即不能通过微调将网络迁移适应于另一个不同的场景。</p>
+<p>另外有很多优点也是PINN和NERF所共通的。比如，流体力学求解方程的数值方法，需要采样大量的点才能逼近真实解，而且天然的时序特征导致了求解效率的低下；NERF以前的存储离散化体网络也需要耗费大量存储成本。</p>
+<p>更一般地说，PINN全称是physical-informed neural network，NERF本质上也是一种物理理论与神经网络的融合。流体力学的PINN和NERF有天然的近似性自然也就不奇怪了。</p>
+<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2 Related Work"></a>2 Related Work</h2><p>暂时没有问题</p>
+<h2 id="3-Neural-Radiance-Field-Scene-Representation"><a href="#3-Neural-Radiance-Field-Scene-Representation" class="headerlink" title="3 Neural Radiance Field Scene Representation"></a>3 Neural Radiance Field Scene Representation</h2><p><strong>Q：如何理解”We encourage the representation to be multiview consistent by restricting the network to predict the volume density σ as a function of only the location x, while allowing the RGB color c to be predicted as a function of both location and viewing direction. “即，这里为什么要限制体积密度σ作为位置x的函数，而让颜色c作为位置x和观看方向(θ，φ)的函数？观看方向(θ，φ)为什么会影响多视图的一致性？</strong></p>
+<p><strong>思考：</strong>从论文里面看，它这里的操作是先用8个完全连接层处理输入的3D坐标$(x，y，z)$，得到一个体积密度$σ$和256维的特征向量。然后特征向量和观看方向$(θ，φ)$连接起来，得到一个256+2维的向量，再给到最后的全连接层里面，从而输出与试图相关的颜色$c$。</p>
+<p>这样处理虽然是为了限制体积密度σ作为位置x的函数，但会不会也导致颜色$c$和观察方向$(θ，φ)$的关系不是很大了（毕竟只占了两个维度）？这样的话，如何设计并优化针对特定物理问题的网络？</p>
+<p>在知乎上看到一个很有趣的探讨：我们直觉理解空间点和颜色是没有任何关系的，在一个空间点放什么东西完全是人为确定。但是这篇文章可以通过MLP硬拟合这种关系，其中一个前提是MLP只用于某一特定场景的渲染，只是学习这种拟合关系而不是学会推理。所以，如果要使得网络具备迁移泛化能力，必须解除坐标与RGB这种不合逻辑的映射关系。</p>
+<p><strong>A：</strong>TODO</p>
+<h2 id="4-Volume-Rendering-with-Radiance-Fields"><a href="#4-Volume-Rendering-with-Radiance-Fields" class="headerlink" title="4 Volume Rendering with Radiance Fields"></a>4 Volume Rendering with Radiance Fields</h2><p><strong>Q：如何理解“The volume density σ(x) can be interpreted as the diﬀerential probability of a ray terminating at an inﬁnitesimal particle at location x. ”</strong></p>
+<p><strong>A：</strong>我认为这里应该和<strong>Abstract</strong>部分的问题<strong>“如何理解volume density”</strong>是一样的。这句话翻译过来就是“体积密度$σ(x)$可以解释为一条射线在$x$位置的无穷小粒子处终止的微分概率”，比较拗口，不过很明显关键部分是“射线在某个位置终止的微分概率”。这看起来应该和之前解释的不透明度差不多，光在这里终止（被吸收）的概率越大就说明这里越不透明。而之所以是微分概率，应该是体积密度$σ(x)$表示的只是某个点的不透明率。</p>
+<p><strong>Q：前面定义的网络已经计算出了从某个视角看到的某点颜色$c=(r，g，b)$和体积密度$σ$，为什么这里仍然需要通过公式1把预期颜色$C$计算出来？它们有什么区别？为什么不直接拟合？</strong></p>
+<p><strong>A：</strong>$C$是最终渲染时需要计算的值，$c$是RGB颜色值。拟合的只是空间单点的颜色$c$，只有通过离散积分一条光线上所有采样单点的颜色$c$，才能得到从某个视角看过去的2D图像上某个点的最终渲染颜色。如果硬要拟合整条光线所有点的$C$且使它们一样，那就只是angle-dependent而非view-dependent了，RGB和xyz坐标参数还是有关系的。</p>
+<p><strong>PS：这部分公式1到公式3是连续积分离散化的推导，这是最基本的数值方法，需要好好回顾一下！！！另外一个就是，目前没有学习图形学相关的一些知识，这方面知识欠缺比较多。</strong></p>
+<h2 id="5-Optimizing-a-Neural-Radiance-Field"><a href="#5-Optimizing-a-Neural-Radiance-Field" class="headerlink" title="5 Optimizing a Neural Radiance Field"></a>5 Optimizing a Neural Radiance Field</h2><h3 id="5-1-Positional-encoding"><a href="#5-1-Positional-encoding" class="headerlink" title="5.1 Positional encoding"></a>5.1 Positional encoding</h3><p><strong>Q：为什么第一段说使用高频函数将输入映射到更高维空间，能够更好地拟合包含高频变化的数据？</strong></p>
+<p><strong>思考：</strong>这种数据高频变化的思想不仅仅局限在三维重建中。我觉得可以泛化到具有剧烈域变化的数据集，此时可以对输入数据进行高维映射，以获得对数据更好的表征，更好地实现数据域适应。</p>
+<p><strong>A：</strong>TODO</p>
+<p><strong>Q：如何理解此处的编码函数？</strong></p>
+<p><strong>A：</strong>TODO</p>
+<h3 id="5-2-Hierarchical-volume-sampling"><a href="#5-2-Hierarchical-volume-sampling" class="headerlink" title="5.2 Hierarchical volume sampling"></a>5.2 Hierarchical volume sampling</h3><p><strong>Q：为什么通过同时优化两个网络（粗网络和细网络）可以解决自由空间和遮挡区域被重复采样的问题？</strong></p>
+<p><strong>A：</strong>TODO</p>
+<h3 id="5-3-Implementation-details"><a href="#5-3-Implementation-details" class="headerlink" title="5.3 Implementation details"></a>5.3 Implementation details</h3><p>暂时没有问题</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
+<li><a href="https://zhuanlan.zhihu.com/p/542200751">NeRF论文阅读</a></li>
+<li><a href="http://www.liuxiao.org/2021/11/%e8%ae%ba%e6%96%87%e7%ac%94%e8%ae%b0%ef%bc%9anerf-representing-scenes-as-neural-radiance-fields-for-view-synthesis/">论文笔记：NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/360365941">【NeRF论文笔记】用于视图合成的神经辐射场技术</a></li>
+<li><a href="https://blog.csdn.net/YuhsiHu/article/details/124318473">【论文精读】NeRF中的数学公式推导</a></li>
+<li><a href="https://raymondkevin.top/2021/07/22/neural-radiance-fields-volume-rendering-%E5%85%AC%E5%BC%8F%E5%88%86%E6%9E%90/">Neural Radiance Field’s Volume Rendering 公式分析</a></li>
+<li><a href="https://zh.m.wikipedia.org/zh-hans/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8">多层感知器</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>NeRF</category>
+      </categories>
+      <tags>
+        <tag>NeRF</tag>
+        <tag>深度学习</tag>
       </tags>
   </entry>
   <entry>
@@ -5190,63 +5247,6 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
 <p><strong>A：</strong>TODO</p>
 <p><strong>Q：为什么NeRF只用没有空间信息的MLP？</strong></p>
 <p><strong>A：</strong>TODO</p>
-]]></content>
-      <categories>
-        <category>NeRF</category>
-      </categories>
-      <tags>
-        <tag>NeRF</tag>
-        <tag>深度学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>NeRF学习笔记（二）：论文阅读与思考</title>
-    <url>/2022/08/21/nerf-notes-2/</url>
-    <content><![CDATA[<h1 id="NeRF学习笔记（二）：论文阅读与思考"><a href="#NeRF学习笔记（二）：论文阅读与思考" class="headerlink" title="NeRF学习笔记（二）：论文阅读与思考"></a>NeRF学习笔记（二）：论文阅读与思考</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p><strong>Q：如何理解稀疏的输入视图集</strong></p>
-<p><strong>A：</strong> a sparse set of input views 稀疏的输入视图集。也就是输入视图并不是连续的，可能就是在若干个方向或者角度拍几张照片，就能合成一个连续的360度环绕的场景</p>
-<p><strong>Q：如何理解volume density</strong></p>
-<p>volume density字面意思是体积密度，实际上理解为<strong>不透明度</strong>会更好，不透明度对应对光的吸收能力，volume density越大，不透明度越高，对光的吸收能力越强。</p>
-<p>这个在后面的公式有所涉及。</p>
-<p><strong>Q：为什么要输入这么五个坐标？</strong></p>
-<p><strong>A：</strong>因为考虑到不同视角上某一点的颜色是不一样的。正因如此，原文用了view-dependent，即某点的颜色是跟视角相关的</p>
-<p><strong>Q：如何理解5D坐标（空间位置$(x，y，z)$和观察方向$(θ，φ)$)？</strong></p>
-<p><strong>A：</strong>作者应该是确定了某个坐标系，空间位置$(x,y,z)$就是被观察物体某个点在这个坐标系中的坐标，而观察方向$(θ，φ)$就是相机指向被观察物体这个点的射线，通过两个角度可以表示三维下的一条射线。</p>
-<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1 Introduction"></a>1 Introduction</h2><p><strong>Q：什么是MLP网络？</strong></p>
-<p><strong>A：</strong>多层感知器（Multilayer Perceptron，缩写MLP）是一种前向结构的人工神经网络，映射一组输入向量到一组输出向量。MLP可以被看作是一个有向图，由多个的节点层所组成，每一层都全连接到下一层。除了输入节点，每个节点都是一个带有非线性激活函数的神经元（或称处理单元）。一种被称为反向传播算法的监督学习方法常被用来训练MLP。</p>
-<p><strong>Q：还有什么想说的？</strong></p>
-<blockquote>
-<p>这里是搬运的，目前并不了解PINN</p>
-</blockquote>
-<p><strong>A：</strong>这篇论文的思想非常像流体力学的PINN，也是使用一个神经网络拟合某一个对象。PINN是用网络输出尽可能拟合离散点的函数值，而NERF就是用神经网络的输出拟合稀疏的相机拍摄图像。而且，与一般的问题不同，PINN和NERF都是尽可能过拟合标签值，因为它们都是应用于某一个特定的对象，如前者应用于某一个偏微分方程（组），后者应用于某一个场景。但是这引出了另一个问题：网络的泛化性很差，即不能通过微调将网络迁移适应于另一个不同的场景。</p>
-<p>另外有很多优点也是PINN和NERF所共通的。比如，流体力学求解方程的数值方法，需要采样大量的点才能逼近真实解，而且天然的时序特征导致了求解效率的低下；NERF以前的存储离散化体网络也需要耗费大量存储成本。</p>
-<p>更一般地说，PINN全称是physical-informed neural network，NERF本质上也是一种物理理论与神经网络的融合。流体力学的PINN和NERF有天然的近似性自然也就不奇怪了。</p>
-<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2 Related Work"></a>2 Related Work</h2><p>暂时没有问题</p>
-<h2 id="3-Neural-Radiance-Field-Scene-Representation"><a href="#3-Neural-Radiance-Field-Scene-Representation" class="headerlink" title="3 Neural Radiance Field Scene Representation"></a>3 Neural Radiance Field Scene Representation</h2><p><strong>Q：如何理解”We encourage the representation to be multiview consistent by restricting the network to predict the volume density σ as a function of only the location x, while allowing the RGB color c to be predicted as a function of both location and viewing direction. “即，这里为什么要限制体积密度σ作为位置x的函数，而让颜色c作为位置x和观看方向(θ，φ)的函数？观看方向(θ，φ)为什么会影响多视图的一致性？</strong></p>
-<p><strong>思考：</strong>从论文里面看，它这里的操作是先用8个完全连接层处理输入的3D坐标$(x，y，z)$，得到一个体积密度$σ$和256维的特征向量。然后特征向量和观看方向$(θ，φ)$连接起来，得到一个256+2维的向量，再给到最后的全连接层里面，从而输出与试图相关的颜色$c$。</p>
-<p>这样处理虽然是为了限制体积密度σ作为位置x的函数，但会不会也导致颜色$c$和观察方向$(θ，φ)$的关系不是很大了（毕竟只占了两个维度）？这样的话，如何设计并优化针对特定物理问题的网络？</p>
-<p>在知乎上看到一个很有趣的探讨：我们直觉理解空间点和颜色是没有任何关系的，在一个空间点放什么东西完全是人为确定。但是这篇文章可以通过MLP硬拟合这种关系，其中一个前提是MLP只用于某一特定场景的渲染，只是学习这种拟合关系而不是学会推理。所以，如果要使得网络具备迁移泛化能力，必须解除坐标与RGB这种不合逻辑的映射关系。</p>
-<p><strong>A：</strong>TODO</p>
-<h2 id="4-Volume-Rendering-with-Radiance-Fields"><a href="#4-Volume-Rendering-with-Radiance-Fields" class="headerlink" title="4 Volume Rendering with Radiance Fields"></a>4 Volume Rendering with Radiance Fields</h2><p><strong>Q：如何理解“The volume density σ(x) can be interpreted as the diﬀerential probability of a ray terminating at an inﬁnitesimal particle at location x. ”</strong></p>
-<p><strong>A：</strong>我认为这里应该和<strong>Abstract</strong>部分的问题<strong>“如何理解volume density”</strong>是一样的。这句话翻译过来就是“体积密度$σ(x)$可以解释为一条射线在$x$位置的无穷小粒子处终止的微分概率”，比较拗口，不过很明显关键部分是“射线在某个位置终止的微分概率”。这看起来应该和之前解释的不透明度差不多，光在这里终止（被吸收）的概率越大就说明这里越不透明。而之所以是微分概率，应该是体积密度$σ(x)$表示的只是某个点的不透明率。</p>
-<p><strong>Q：前面定义的网络已经计算出了从某个视角看到的某点颜色$c=(r，g，b)$和体积密度$σ$，为什么这里仍然需要通过公式1把预期颜色$C$计算出来？它们有什么区别？为什么不直接拟合？</strong></p>
-<p><strong>A：</strong>$C$是最终渲染时需要计算的值，$c$是RGB颜色值。拟合的只是空间单点的颜色$c$，只有通过离散积分一条光线上所有采样单点的颜色$c$，才能得到从某个视角看过去的2D图像上某个点的最终渲染颜色。如果硬要拟合整条光线所有点的$C$且使它们一样，那就只是angle-dependent而非view-dependent了，RGB和xyz坐标参数还是有关系的。</p>
-<p><strong>PS：这部分公式1到公式3是连续积分离散化的推导，这是最基本的数值方法，需要好好回顾一下！！！另外一个就是，目前没有学习图形学相关的一些知识，这方面知识欠缺比较多。</strong></p>
-<h2 id="5-Optimizing-a-Neural-Radiance-Field"><a href="#5-Optimizing-a-Neural-Radiance-Field" class="headerlink" title="5 Optimizing a Neural Radiance Field"></a>5 Optimizing a Neural Radiance Field</h2><h3 id="5-1-Positional-encoding"><a href="#5-1-Positional-encoding" class="headerlink" title="5.1 Positional encoding"></a>5.1 Positional encoding</h3><p><strong>Q：为什么第一段说使用高频函数将输入映射到更高维空间，能够更好地拟合包含高频变化的数据？</strong></p>
-<p><strong>思考：</strong>这种数据高频变化的思想不仅仅局限在三维重建中。我觉得可以泛化到具有剧烈域变化的数据集，此时可以对输入数据进行高维映射，以获得对数据更好的表征，更好地实现数据域适应。</p>
-<p><strong>A：</strong>TODO</p>
-<p><strong>Q：如何理解此处的编码函数？</strong></p>
-<p><strong>A：</strong>TODO</p>
-<h3 id="5-2-Hierarchical-volume-sampling"><a href="#5-2-Hierarchical-volume-sampling" class="headerlink" title="5.2 Hierarchical volume sampling"></a>5.2 Hierarchical volume sampling</h3><p><strong>Q：为什么通过同时优化两个网络（粗网络和细网络）可以解决自由空间和遮挡区域被重复采样的问题？</strong></p>
-<p><strong>A：</strong>TODO</p>
-<h3 id="5-3-Implementation-details"><a href="#5-3-Implementation-details" class="headerlink" title="5.3 Implementation details"></a>5.3 Implementation details</h3><p>暂时没有问题</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
-<li><a href="https://zhuanlan.zhihu.com/p/542200751">NeRF论文阅读</a></li>
-<li><a href="http://www.liuxiao.org/2021/11/%e8%ae%ba%e6%96%87%e7%ac%94%e8%ae%b0%ef%bc%9anerf-representing-scenes-as-neural-radiance-fields-for-view-synthesis/">论文笔记：NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/360365941">【NeRF论文笔记】用于视图合成的神经辐射场技术</a></li>
-<li><a href="https://blog.csdn.net/YuhsiHu/article/details/124318473">【论文精读】NeRF中的数学公式推导</a></li>
-<li><a href="https://raymondkevin.top/2021/07/22/neural-radiance-fields-volume-rendering-%E5%85%AC%E5%BC%8F%E5%88%86%E6%9E%90/">Neural Radiance Field’s Volume Rendering 公式分析</a></li>
-<li><a href="https://zh.m.wikipedia.org/zh-hans/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8">多层感知器</a></li>
-</ol>
 ]]></content>
       <categories>
         <category>NeRF</category>
