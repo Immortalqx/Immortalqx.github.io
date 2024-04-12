@@ -130,17 +130,6 @@
     
   </li>
   
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/homepage" class="waves-effect waves-light">
-      
-      <i class="fas fa-award" style="zoom: 0.6;"></i>
-      
-      <span>Homepage</span>
-    </a>
-    
-  </li>
-  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
@@ -221,17 +210,6 @@
 			    <i class="fa-fw fas fa-user-circle"></i>
 			
 			关于
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/homepage" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-award"></i>
-			
-			Homepage
 		</a>
           
         </li>
@@ -383,20 +361,20 @@
                 
                 
                 
-                <a href="/categories/%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" title="编程基础: 16">
+                <a href="/categories/%E5%85%B6%E4%BB%96/" title="其他: 10">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #F9EBEA;">编程基础
-                        <span class="tag-length">16</span>
+                            style="background-color: #F9EBEA;">其他
+                        <span class="tag-length">10</span>
                     </span>
                 </a>
                 
                 
-                <a href="/categories/%E5%85%B6%E4%BB%96/" title="其他: 10">
+                <a href="/categories/%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" title="编程基础: 16">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #F5EEF8;">其他
-                        <span class="tag-length">10</span>
+                            style="background-color: #F5EEF8;">编程基础
+                        <span class="tag-length">16</span>
                     </span>
                 </a>
                 
@@ -479,7 +457,7 @@
                     color: '#3C4858'
                 }
             },
-            indicator: [{"name":"编程基础","max":27},{"name":"其他","max":27},{"name":"三维视觉","max":27},{"name":"slam","max":27},{"name":"机器学习","max":27},{"name":"NeRF","max":27}],
+            indicator: [{"name":"其他","max":27},{"name":"编程基础","max":27},{"name":"三维视觉","max":27},{"name":"slam","max":27},{"name":"机器学习","max":27},{"name":"NeRF","max":27}],
             nameGap: 5,
             center: ['50%','55%'],
             radius: '66%'
@@ -490,7 +468,7 @@
             itemStyle: {normal: {areaStyle: {type: 'default'}}},
             data : [
                 {
-                    value : [16,10,19,19,9,8],
+                    value : [10,16,19,19,9,8],
                     name : '文章分类数量'
                 }
             ]
@@ -773,6 +751,15 @@ $(function () {
     
     
     
+        
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/sakura.js"><\/script>');
+            }
+        </script>
+    
 
     <!-- 雪花特效 -->
     
@@ -800,6 +787,8 @@ $(function () {
     })();
 </script>
 
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
     
     
     <script async src="/libs/others/busuanzi.pure.mini.js"></script>

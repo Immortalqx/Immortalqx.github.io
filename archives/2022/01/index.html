@@ -130,17 +130,6 @@
     
   </li>
   
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/homepage" class="waves-effect waves-light">
-      
-      <i class="fas fa-award" style="zoom: 0.6;"></i>
-      
-      <span>Homepage</span>
-    </a>
-    
-  </li>
-  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
@@ -221,17 +210,6 @@
 			    <i class="fa-fw fas fa-user-circle"></i>
 			
 			关于
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/homepage" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-award"></i>
-			
-			Homepage
 		</a>
           
         </li>
@@ -916,9 +894,9 @@
                         
                         <div class="card-action article-tags">
                             
-                            <a href="/tags/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/"><span class="chip bg-color">逻辑回归</span></a>
-                            
                             <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"><span class="chip bg-color">机器学习</span></a>
+                            
+                            <a href="/tags/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/"><span class="chip bg-color">逻辑回归</span></a>
                             
                         </div>
                         
@@ -981,9 +959,9 @@
                         
                         <div class="card-action article-tags">
                             
-                            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"><span class="chip bg-color">机器学习</span></a>
-                            
                             <a href="/tags/K-Means/"><span class="chip bg-color">K-Means</span></a>
+                            
+                            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"><span class="chip bg-color">机器学习</span></a>
                             
                         </div>
                         
@@ -1329,6 +1307,15 @@ $(function () {
     
     
     
+        
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/sakura.js"><\/script>');
+            }
+        </script>
+    
 
     <!-- 雪花特效 -->
     
@@ -1356,6 +1343,8 @@ $(function () {
     })();
 </script>
 
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
     
     
     <script async src="/libs/others/busuanzi.pure.mini.js"></script>

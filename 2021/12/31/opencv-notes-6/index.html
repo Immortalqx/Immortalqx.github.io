@@ -135,17 +135,6 @@
     
   </li>
   
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/homepage" class="waves-effect waves-light">
-      
-      <i class="fas fa-award" style="zoom: 0.6;"></i>
-      
-      <span>Homepage</span>
-    </a>
-    
-  </li>
-  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
@@ -226,17 +215,6 @@
 			    <i class="fa-fw fas fa-user-circle"></i>
 			
 			关于
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/homepage" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-award"></i>
-			
-			Homepage
 		</a>
           
         </li>
@@ -1740,6 +1718,15 @@ $(function () {
     
     
     
+        
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/sakura.js"><\/script>');
+            }
+        </script>
+    
 
     <!-- 雪花特效 -->
     
@@ -1767,6 +1754,8 @@ $(function () {
     })();
 </script>
 
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
     
     
     <script async src="/libs/others/busuanzi.pure.mini.js"></script>

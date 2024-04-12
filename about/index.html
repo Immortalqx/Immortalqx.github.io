@@ -130,17 +130,6 @@
     
   </li>
   
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/homepage" class="waves-effect waves-light">
-      
-      <i class="fas fa-award" style="zoom: 0.6;"></i>
-      
-      <span>Homepage</span>
-    </a>
-    
-  </li>
-  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
@@ -221,17 +210,6 @@
 			    <i class="fa-fw fas fa-user-circle"></i>
 			
 			关于
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/homepage" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-award"></i>
-			
-			Homepage
 		</a>
           
         </li>
@@ -615,7 +593,7 @@
                 type: 'pie',
                 radius: '50%',
                 color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
-                data: [{"name":"编程基础","value":16},{"name":"其他","value":10},{"name":"三维视觉","value":19},{"name":"slam","value":19},{"name":"机器学习","value":9},{"name":"NeRF","value":8}],
+                data: [{"name":"其他","value":10},{"name":"编程基础","value":16},{"name":"三维视觉","value":19},{"name":"slam","value":19},{"name":"机器学习","value":9},{"name":"NeRF","value":8}],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -639,7 +617,7 @@
         xAxis: [
             {
                 type: 'category',
-                data: ["视觉SLAM","NeRF","C++","隐式表示","CS231A","机器学习","OpenCV","ROS","经验分享","多线程"]
+                data: ["视觉SLAM","NeRF","C++","隐式表示","CS231A","机器学习","OpenCV","经验分享","ROS","多线程"]
             }
         ],
         yAxis: [
@@ -964,6 +942,15 @@ $(function () {
     
     
     
+        
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/sakura.js"><\/script>');
+            }
+        </script>
+    
 
     <!-- 雪花特效 -->
     
@@ -991,6 +978,8 @@ $(function () {
     })();
 </script>
 
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
     
     
     <script async src="/libs/others/busuanzi.pure.mini.js"></script>
