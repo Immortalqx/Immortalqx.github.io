@@ -982,6 +982,33 @@ mavros_msgs<span class="token double-colon punctuation">::</span>State current_s
       </tags>
   </entry>
   <entry>
+    <title>区分PIXHAWK、PX4与APM(ardupilot)</title>
+    <url>/2021/07/27/uav-notes-1/</url>
+    <content><![CDATA[<h1 id="区分PIXHAWK、PX4与APM-ardupilot"><a href="#区分PIXHAWK、PX4与APM-ardupilot" class="headerlink" title="区分PIXHAWK、PX4与APM(ardupilot)"></a>区分PIXHAWK、PX4与APM(ardupilot)</h1><h3 id="一、PIXHAWK介绍"><a href="#一、PIXHAWK介绍" class="headerlink" title="一、PIXHAWK介绍"></a>一、PIXHAWK介绍</h3><p><strong>pixhawk是硬件平台</strong>，PX4是pixhawk的原生固件，专门为pixhawk开发。</p>
+<img src="/images/UAV-notes/1-1.jpg" alt="" style="zoom: 18%;">
+
+<p>Pixhawk是一款由PX4开源项目设计并由3DR公司制造生产的高级自动驾驶仪系统，其前身是APM。APM（Ardupilot Mega）也是硬件，Ardupilot是APM的固件，所以称ArduPilot固件也叫APM。</p>
+<img src="/images/UAV-notes/1-2.png" alt="" style="zoom:30%;">
+
+<p>由于APM的处理器已经接近满负荷，没有办法满足更复杂的运算处理，所以硬件厂商采用了目前新标准的32位ARM处理器，它采用了ST Microelectronic先进的处理器及传感器技术且搭载了NuttX的实时操作系统，在模型自动控制方面有着出色的性能、灵活性和可靠性。</p>
+<p>PIXHAWK的所有硬件都是透明的，它用的是什么芯片和传感器一目了然，所有的总线和外设都进行引出，不但以后可以兼容一些其他外设，而且对于有开发能力的用户提供了方便。 PIXHAWK 是一个双处理器的飞行控制器，一个擅长于强大运算的 32 bit STM32F427 Cortex M4 核心 168 MHz/256 KB RAM/2 MB Flash 处理器，还有一个主要定位于工业用途的协处理器 32 bit STM32F103，它的特点就是安全稳定。所以就算主处理器死机了，还有一个协处理器来保障安全。</p>
+<h3 id="二、PX4介绍"><a href="#二、PX4介绍" class="headerlink" title="二、PX4介绍"></a>二、PX4介绍</h3><p>PX4固件专为PIXHAWK开发的固件。相对封闭，代码体系相对简单清晰，社区相对小，迭代慢一些，但因为相对清晰，适合学习研究。</p>
+<p>PX4地面控制站被称为QGroundControl，（简称QGC）是PX4自驾系统不可分割的一部分，可以运行在Windows，OS X或Linux等多个平台。可以将PX4固件烧写到硬件，设置机器，改变不同的参数，获得实时航班信息，创建和执行完全自主的任务。</p>
+<h3 id="三、APM介绍"><a href="#三、APM介绍" class="headerlink" title="三、APM介绍"></a>三、APM介绍</h3><p>APM固件专为Arduupilot开发的固件，现也用于PIXHAWK。有ArduCopter社区支撑、开放，功能全、迭代升级快，适合直接用。由于有较多的历史兼容性需求，软件代码体系相对杂乱，还封装了PX4的内核，学习起来困难些。</p>
+<p>APM地面控制站被称为Mission Planner，（简称MP）是APM自驾系统不可分割的一部分。可以将APM固件烧写到硬件，设置机器，改变不同的参数，获得实时航班信息，创建和执行完全自主的任务。</p>
+<p>随着APM飞控软件的快速发展，AVR板子的性能已经不能满足需求，所以只能逐步移植到Pixhawk的硬件架构上来进行开发。所以，APM自驾仪软件也就兼容PIXHAWK飞控硬件了。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><strong>PIXHAWK飞控是硬件平台，PX4和APM都是开源固件，均可以烧写到PIXHAWK飞控中。</strong></p>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>PX4</tag>
+        <tag>PIXHAWK</tag>
+        <tag>APM</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>C++中的头文件</title>
     <url>/2021/11/21/cpp-notes-0/</url>
     <content><![CDATA[<h1 id="C-中的头文件"><a href="#C-中的头文件" class="headerlink" title="C++中的头文件"></a>C++中的头文件</h1><blockquote>
@@ -1051,33 +1078,6 @@ mavros_msgs<span class="token double-colon punctuation">::</span>State current_s
       </categories>
       <tags>
         <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>区分PIXHAWK、PX4与APM(ardupilot)</title>
-    <url>/2021/07/27/uav-notes-1/</url>
-    <content><![CDATA[<h1 id="区分PIXHAWK、PX4与APM-ardupilot"><a href="#区分PIXHAWK、PX4与APM-ardupilot" class="headerlink" title="区分PIXHAWK、PX4与APM(ardupilot)"></a>区分PIXHAWK、PX4与APM(ardupilot)</h1><h3 id="一、PIXHAWK介绍"><a href="#一、PIXHAWK介绍" class="headerlink" title="一、PIXHAWK介绍"></a>一、PIXHAWK介绍</h3><p><strong>pixhawk是硬件平台</strong>，PX4是pixhawk的原生固件，专门为pixhawk开发。</p>
-<img src="/images/UAV-notes/1-1.jpg" alt="" style="zoom: 18%;">
-
-<p>Pixhawk是一款由PX4开源项目设计并由3DR公司制造生产的高级自动驾驶仪系统，其前身是APM。APM（Ardupilot Mega）也是硬件，Ardupilot是APM的固件，所以称ArduPilot固件也叫APM。</p>
-<img src="/images/UAV-notes/1-2.png" alt="" style="zoom:30%;">
-
-<p>由于APM的处理器已经接近满负荷，没有办法满足更复杂的运算处理，所以硬件厂商采用了目前新标准的32位ARM处理器，它采用了ST Microelectronic先进的处理器及传感器技术且搭载了NuttX的实时操作系统，在模型自动控制方面有着出色的性能、灵活性和可靠性。</p>
-<p>PIXHAWK的所有硬件都是透明的，它用的是什么芯片和传感器一目了然，所有的总线和外设都进行引出，不但以后可以兼容一些其他外设，而且对于有开发能力的用户提供了方便。 PIXHAWK 是一个双处理器的飞行控制器，一个擅长于强大运算的 32 bit STM32F427 Cortex M4 核心 168 MHz/256 KB RAM/2 MB Flash 处理器，还有一个主要定位于工业用途的协处理器 32 bit STM32F103，它的特点就是安全稳定。所以就算主处理器死机了，还有一个协处理器来保障安全。</p>
-<h3 id="二、PX4介绍"><a href="#二、PX4介绍" class="headerlink" title="二、PX4介绍"></a>二、PX4介绍</h3><p>PX4固件专为PIXHAWK开发的固件。相对封闭，代码体系相对简单清晰，社区相对小，迭代慢一些，但因为相对清晰，适合学习研究。</p>
-<p>PX4地面控制站被称为QGroundControl，（简称QGC）是PX4自驾系统不可分割的一部分，可以运行在Windows，OS X或Linux等多个平台。可以将PX4固件烧写到硬件，设置机器，改变不同的参数，获得实时航班信息，创建和执行完全自主的任务。</p>
-<h3 id="三、APM介绍"><a href="#三、APM介绍" class="headerlink" title="三、APM介绍"></a>三、APM介绍</h3><p>APM固件专为Arduupilot开发的固件，现也用于PIXHAWK。有ArduCopter社区支撑、开放，功能全、迭代升级快，适合直接用。由于有较多的历史兼容性需求，软件代码体系相对杂乱，还封装了PX4的内核，学习起来困难些。</p>
-<p>APM地面控制站被称为Mission Planner，（简称MP）是APM自驾系统不可分割的一部分。可以将APM固件烧写到硬件，设置机器，改变不同的参数，获得实时航班信息，创建和执行完全自主的任务。</p>
-<p>随着APM飞控软件的快速发展，AVR板子的性能已经不能满足需求，所以只能逐步移植到Pixhawk的硬件架构上来进行开发。所以，APM自驾仪软件也就兼容PIXHAWK飞控硬件了。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><strong>PIXHAWK飞控是硬件平台，PX4和APM都是开源固件，均可以烧写到PIXHAWK飞控中。</strong></p>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>PX4</tag>
-        <tag>PIXHAWK</tag>
-        <tag>APM</tag>
       </tags>
   </entry>
   <entry>
@@ -2430,81 +2430,6 @@ A<span class="token double-colon punctuation">::</span>size_type num<span class=
       </tags>
   </entry>
   <entry>
-    <title>CS231A Lecture 3：Camera Calibration</title>
-    <url>/2022/10/14/cs231a-lecture3/</url>
-    <content><![CDATA[<h1 id="CS231A-Lecture-3：Camera-Calibration"><a href="#CS231A-Lecture-3：Camera-Calibration" class="headerlink" title="CS231A Lecture 3：Camera Calibration"></a>CS231A Lecture 3：Camera Calibration</h1><blockquote>
-<p>Reading: </p>
-<p>[FP] Chapter 1 “Geometric Camera Calibration”</p>
-<p>[HZ] Chapter 7 “Computation of Camera Matrix P”</p>
-</blockquote>
-<h2 id="Internal-and-External-parameters"><a href="#Internal-and-External-parameters" class="headerlink" title="Internal and External parameters"></a>Internal and External parameters</h2><img src="/images/cs231a-lecture3/image-20221012202055469.png" style="zoom:67%;">
-
-<h2 id="Calibration-Problem"><a href="#Calibration-Problem" class="headerlink" title="Calibration Problem"></a>Calibration Problem</h2><h3 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h3><p>Estimate intrinsic and extrinsic parameters from 1 or multiple images</p>
-<h3 id="Mathematical-Expression"><a href="#Mathematical-Expression" class="headerlink" title="Mathematical Expression"></a>Mathematical Expression</h3><img src="/images/cs231a-lecture3/image-20221012203045100.png" style="zoom:67%;">
-
-<h3 id="How-many-correspondences-do-we-need"><a href="#How-many-correspondences-do-we-need" class="headerlink" title="How many correspondences do we need?"></a>How many correspondences do we need?</h3><ul>
-<li><p>M has 11 unknowns</p>
-</li>
-<li><p>We need 11 equations</p>
-</li>
-<li><p>6 correspondences would do it</p>
-<p>In practice, using more than 6 correspondences enables more robust results</p>
-</li>
-</ul>
-<h3 id="How-to-list-equations"><a href="#How-to-list-equations" class="headerlink" title="How to list equations?"></a>How to list equations?</h3><img src="/images/cs231a-lecture3/image-20221012204246691.png" style="zoom:67%;">
-
-<img src="/images/cs231a-lecture3/image-20221012204259709.png" style="zoom:67%;">
-
-<img src="/images/cs231a-lecture3/image-20221012204424235.png" style="zoom:67%;">
-
-<img src="/images/cs231a-lecture3/image-20221012204530383.png" style="zoom:67%;">
-
-<h2 id="Homogeneous-M-x-N-Linear-Systems"><a href="#Homogeneous-M-x-N-Linear-Systems" class="headerlink" title="Homogeneous M x N Linear Systems"></a>Homogeneous M x N Linear Systems</h2><img src="/images/cs231a-lecture3/image-20221012204646720.png" style="zoom:80%;">
-
-<h2 id="Solve-calibration-problem-via-SVD-decomposition"><a href="#Solve-calibration-problem-via-SVD-decomposition" class="headerlink" title="Solve calibration problem via SVD decomposition"></a>Solve calibration problem via SVD decomposition</h2><h3 id="Calibration-Problem-1"><a href="#Calibration-Problem-1" class="headerlink" title="Calibration Problem"></a>Calibration Problem</h3><img src="/images/cs231a-lecture3/image-20221012210709319.png" style="zoom: 67%;">
-
-<h3 id="Extracting-camera-parameters"><a href="#Extracting-camera-parameters" class="headerlink" title="Extracting camera parameters"></a>Extracting camera parameters</h3><img src="/images/cs231a-lecture3/image-20221014100728333.png" style="zoom:67%;">
-
-<img src="/images/cs231a-lecture3/image-20221014100740977.png" style="zoom:67%;">
-
-<img src="/images/cs231a-lecture3/image-20221014100751444.png" style="zoom:67%;">
-
-<h3 id="Degenerate-cases"><a href="#Degenerate-cases" class="headerlink" title="Degenerate cases"></a>Degenerate cases</h3><img src="/images/cs231a-lecture3/image-20221014100820747.png" style="zoom:67%;">
-
-<h3 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h3><p><strong>Q：为什么标定相机使用的点不能够在同一个平面或者两个二次曲面的相交曲线上？</strong></p>
-<p><strong>A：</strong>TODO</p>
-<p><strong>Q：常用的棋盘格标定法，使用的点应该是在同一个平面上的？它如何解决这个问题？</strong></p>
-<p><strong>A：</strong>TODO</p>
-<h2 id="Camera-calibration-with-radial-distortion"><a href="#Camera-calibration-with-radial-distortion" class="headerlink" title="Camera calibration with radial distortion"></a>Camera calibration with radial distortion</h2><h3 id="Review-radial-distortion"><a href="#Review-radial-distortion" class="headerlink" title="Review radial distortion"></a>Review radial distortion</h3><img src="/images/cs231a-lecture3/image-20221014104001784.png" style="zoom:67%;">
-
-<h3 id="Calibration-Problem-2"><a href="#Calibration-Problem-2" class="headerlink" title="Calibration Problem"></a>Calibration Problem</h3><p>根据上一篇博客提到的径向畸变公式，给出下面的方程。</p>
-<img src="/images/cs231a-lecture3/image-20221014104752131.png" style="zoom:67%;">
-
-<img src="/images/cs231a-lecture3/image-20221014104818934.png" style="zoom:67%;">
-
-<h3 id="General-Calibration-Problem"><a href="#General-Calibration-Problem" class="headerlink" title="General Calibration Problem"></a>General Calibration Problem</h3><img src="/images/cs231a-lecture3/image-20221014105054200.png" style="zoom:67%;">
-
-<img src="/images/cs231a-lecture3/image-20221014105109014.png" style="zoom:67%;">
-
-<img src="/images/cs231a-lecture3/image-20221014105124962.png" style="zoom:67%;">
-
-<h3 id="Estimate-m1-and-m2-and-ignore-the-radial-distortion"><a href="#Estimate-m1-and-m2-and-ignore-the-radial-distortion" class="headerlink" title="Estimate m1 and m2 and ignore the radial distortion"></a>Estimate m1 and m2 and ignore the radial distortion</h3><img src="/images/cs231a-lecture3/image-20221014110141419.png" style="zoom:67%;">
-
-<img src="/images/cs231a-lecture3/image-20221014110231133.png" style="zoom:67%;">
-
-<img src="/images/cs231a-lecture3/image-20221014110243031.png" style="zoom:67%;">
-
-<h3 id="Question-1"><a href="#Question-1" class="headerlink" title="Question"></a>Question</h3><p><strong>Q：本课程只提到了在考虑径向畸变的情况下进行相机标定，如果把切向畸变也考虑进来，整个过程是什么样的？</strong></p>
-<p><strong>A：</strong>TODO</p>
-]]></content>
-      <categories>
-        <category>三维视觉</category>
-      </categories>
-      <tags>
-        <tag>CS231A</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CS231A Lecture 2：Camera Models</title>
     <url>/2022/10/12/cs231a-lecture2/</url>
     <content><![CDATA[<h1 id="CS231A-Lecture-2-Camera-Models"><a href="#CS231A-Lecture-2-Camera-Models" class="headerlink" title="CS231A Lecture 2: Camera Models"></a>CS231A Lecture 2: Camera Models</h1><blockquote>
@@ -2623,6 +2548,81 @@ A<span class="token double-colon punctuation">::</span>size_type num<span class=
 <p><img src="/images/cs231a-lecture2/distort1.png"></p>
 <p>一般切向畸变对于二维平面上的坐标(x,y)的影响可以使用如下公式进行表述：<br>$$<br>x_{distorted} = x + 2p_1xy + p_2(r^2+2x^2)<br>\\<br>y_{distorted} = y + p_1(r^2+ 2y^2)+ 2p_2xy<br>$$</p>
 <h3 id="Radial-and-tangential-distortion"><a href="#Radial-and-tangential-distortion" class="headerlink" title="Radial and tangential distortion"></a>Radial and tangential distortion</h3><p>结合上面两种径向畸变和切向畸变的公式，可以得到综合的去畸变公式，也就是说我们通过五个畸变系数就可以确定点在像素平面的正确位置。<br>$$<br>x_{distorted} = x( 1 + k_1 r^2 + k_2 r^4 + k_3 r^6) + 2p_1xy + p_2(r^2+2x^2)<br>\\<br>y_{distorted} = y( 1 + k_1 r^2 + k_2 r^4 + k_3 r^6) + p_1(r^2+ 2y^2)+ 2p_2xy<br>$$</p>
+]]></content>
+      <categories>
+        <category>三维视觉</category>
+      </categories>
+      <tags>
+        <tag>CS231A</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CS231A Lecture 3：Camera Calibration</title>
+    <url>/2022/10/14/cs231a-lecture3/</url>
+    <content><![CDATA[<h1 id="CS231A-Lecture-3：Camera-Calibration"><a href="#CS231A-Lecture-3：Camera-Calibration" class="headerlink" title="CS231A Lecture 3：Camera Calibration"></a>CS231A Lecture 3：Camera Calibration</h1><blockquote>
+<p>Reading: </p>
+<p>[FP] Chapter 1 “Geometric Camera Calibration”</p>
+<p>[HZ] Chapter 7 “Computation of Camera Matrix P”</p>
+</blockquote>
+<h2 id="Internal-and-External-parameters"><a href="#Internal-and-External-parameters" class="headerlink" title="Internal and External parameters"></a>Internal and External parameters</h2><img src="/images/cs231a-lecture3/image-20221012202055469.png" style="zoom:67%;">
+
+<h2 id="Calibration-Problem"><a href="#Calibration-Problem" class="headerlink" title="Calibration Problem"></a>Calibration Problem</h2><h3 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h3><p>Estimate intrinsic and extrinsic parameters from 1 or multiple images</p>
+<h3 id="Mathematical-Expression"><a href="#Mathematical-Expression" class="headerlink" title="Mathematical Expression"></a>Mathematical Expression</h3><img src="/images/cs231a-lecture3/image-20221012203045100.png" style="zoom:67%;">
+
+<h3 id="How-many-correspondences-do-we-need"><a href="#How-many-correspondences-do-we-need" class="headerlink" title="How many correspondences do we need?"></a>How many correspondences do we need?</h3><ul>
+<li><p>M has 11 unknowns</p>
+</li>
+<li><p>We need 11 equations</p>
+</li>
+<li><p>6 correspondences would do it</p>
+<p>In practice, using more than 6 correspondences enables more robust results</p>
+</li>
+</ul>
+<h3 id="How-to-list-equations"><a href="#How-to-list-equations" class="headerlink" title="How to list equations?"></a>How to list equations?</h3><img src="/images/cs231a-lecture3/image-20221012204246691.png" style="zoom:67%;">
+
+<img src="/images/cs231a-lecture3/image-20221012204259709.png" style="zoom:67%;">
+
+<img src="/images/cs231a-lecture3/image-20221012204424235.png" style="zoom:67%;">
+
+<img src="/images/cs231a-lecture3/image-20221012204530383.png" style="zoom:67%;">
+
+<h2 id="Homogeneous-M-x-N-Linear-Systems"><a href="#Homogeneous-M-x-N-Linear-Systems" class="headerlink" title="Homogeneous M x N Linear Systems"></a>Homogeneous M x N Linear Systems</h2><img src="/images/cs231a-lecture3/image-20221012204646720.png" style="zoom:80%;">
+
+<h2 id="Solve-calibration-problem-via-SVD-decomposition"><a href="#Solve-calibration-problem-via-SVD-decomposition" class="headerlink" title="Solve calibration problem via SVD decomposition"></a>Solve calibration problem via SVD decomposition</h2><h3 id="Calibration-Problem-1"><a href="#Calibration-Problem-1" class="headerlink" title="Calibration Problem"></a>Calibration Problem</h3><img src="/images/cs231a-lecture3/image-20221012210709319.png" style="zoom: 67%;">
+
+<h3 id="Extracting-camera-parameters"><a href="#Extracting-camera-parameters" class="headerlink" title="Extracting camera parameters"></a>Extracting camera parameters</h3><img src="/images/cs231a-lecture3/image-20221014100728333.png" style="zoom:67%;">
+
+<img src="/images/cs231a-lecture3/image-20221014100740977.png" style="zoom:67%;">
+
+<img src="/images/cs231a-lecture3/image-20221014100751444.png" style="zoom:67%;">
+
+<h3 id="Degenerate-cases"><a href="#Degenerate-cases" class="headerlink" title="Degenerate cases"></a>Degenerate cases</h3><img src="/images/cs231a-lecture3/image-20221014100820747.png" style="zoom:67%;">
+
+<h3 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h3><p><strong>Q：为什么标定相机使用的点不能够在同一个平面或者两个二次曲面的相交曲线上？</strong></p>
+<p><strong>A：</strong>TODO</p>
+<p><strong>Q：常用的棋盘格标定法，使用的点应该是在同一个平面上的？它如何解决这个问题？</strong></p>
+<p><strong>A：</strong>TODO</p>
+<h2 id="Camera-calibration-with-radial-distortion"><a href="#Camera-calibration-with-radial-distortion" class="headerlink" title="Camera calibration with radial distortion"></a>Camera calibration with radial distortion</h2><h3 id="Review-radial-distortion"><a href="#Review-radial-distortion" class="headerlink" title="Review radial distortion"></a>Review radial distortion</h3><img src="/images/cs231a-lecture3/image-20221014104001784.png" style="zoom:67%;">
+
+<h3 id="Calibration-Problem-2"><a href="#Calibration-Problem-2" class="headerlink" title="Calibration Problem"></a>Calibration Problem</h3><p>根据上一篇博客提到的径向畸变公式，给出下面的方程。</p>
+<img src="/images/cs231a-lecture3/image-20221014104752131.png" style="zoom:67%;">
+
+<img src="/images/cs231a-lecture3/image-20221014104818934.png" style="zoom:67%;">
+
+<h3 id="General-Calibration-Problem"><a href="#General-Calibration-Problem" class="headerlink" title="General Calibration Problem"></a>General Calibration Problem</h3><img src="/images/cs231a-lecture3/image-20221014105054200.png" style="zoom:67%;">
+
+<img src="/images/cs231a-lecture3/image-20221014105109014.png" style="zoom:67%;">
+
+<img src="/images/cs231a-lecture3/image-20221014105124962.png" style="zoom:67%;">
+
+<h3 id="Estimate-m1-and-m2-and-ignore-the-radial-distortion"><a href="#Estimate-m1-and-m2-and-ignore-the-radial-distortion" class="headerlink" title="Estimate m1 and m2 and ignore the radial distortion"></a>Estimate m1 and m2 and ignore the radial distortion</h3><img src="/images/cs231a-lecture3/image-20221014110141419.png" style="zoom:67%;">
+
+<img src="/images/cs231a-lecture3/image-20221014110231133.png" style="zoom:67%;">
+
+<img src="/images/cs231a-lecture3/image-20221014110243031.png" style="zoom:67%;">
+
+<h3 id="Question-1"><a href="#Question-1" class="headerlink" title="Question"></a>Question</h3><p><strong>Q：本课程只提到了在考虑径向畸变的情况下进行相机标定，如果把切向畸变也考虑进来，整个过程是什么样的？</strong></p>
+<p><strong>A：</strong>TODO</p>
 ]]></content>
       <categories>
         <category>三维视觉</category>
@@ -3636,6 +3636,82 @@ hexo d<span aria-hidden="true" class="line-numbers-rows"><span></span><span></sp
       </tags>
   </entry>
   <entry>
+    <title>cartographer探索记录</title>
+    <url>/2021/03/28/learning-cartographer/</url>
+    <content><![CDATA[<h1 id="Cartographer探索笔记"><a href="#Cartographer探索笔记" class="headerlink" title="Cartographer探索笔记"></a>Cartographer探索笔记</h1><h2 id="Lua配置文件参数解析"><a href="#Lua配置文件参数解析" class="headerlink" title="Lua配置文件参数解析"></a>Lua配置文件参数解析</h2><table border="1" cellpadding="1" cellspacing="1"><tbody><tr><td style="width:153px;">参数</td><td style="width:590px;">解析</td><td>常用值</td></tr><tr><td style="width:153px;">map_frame</td><td style="width:590px;">用于发布submaps的ROS坐标系ID，位姿的父坐标系，通常使用“map”</td><td>“map”</td></tr><tr><td style="width:153px;">tracking_frame</td><td style="width:590px;">由SLAM算法追踪的ROS坐标系ID，如果使用IMU，应该使用其坐标系，通常选择是 “imu_link”</td><td>"base_footprint"</td></tr><tr><td style="width:153px;">published_frame</td><td style="width:590px;">用于发布位姿子坐标系的ROS坐标系ID，例如“odom”坐标系，如果一个“odom”坐标系由系统的不同部分提供，在这种情况下，map_frame中的“odom”姿势将被发布。 否则，将其设置为“base_link”可能是合适的</td><td>"odom"</td></tr><tr><td style="width:153px;">odom_frame</td><td style="width:590px;">在provide_odom_frame为真才启用，坐标系在published_frame和map_frame之间用于发布局部SLAM结果，通常是“odom”</td><td>"odom"</td></tr><tr><td style="width:153px;">provide_odom_frame</td><td style="width:590px;">如果启用，局部，非闭环，持续位姿会作为odom_frame发布在map_frame中发布。</td><td>true</td></tr><tr><td style="width:153px;">use_odometry</td><td style="width:590px;">如果启用，订阅关于“odom”话题的nav_msgs/Odometry消息。里程信息会提供，这些信息包含在SLAM里</td><td>false</td></tr><tr><td style="width:153px;">num_laser_scans</td><td style="width:590px;"> <p style="margin-left:0pt;">订阅的激光扫描话题数量。</p> <p style="margin-left:0pt;">在一个激光扫描仪的“scan”话题上订阅sensor_msgs/LaserScan</p> <p style="margin-left:0pt;">或在多个激光扫描仪上订阅话题“scan_1”，“scan_2”等</p> </td><td>1</td></tr><tr><td style="width:153px;">num_multi_echo_laser_scans</td><td style="width:590px;"> <p style="margin-left:0pt;">订阅的多回波激光扫描主题的数量。</p> <p style="margin-left:0pt;">在一个激光扫描仪的“echoes”话题上订阅sensor_msgs/MultiEchoLaserScan</p> <p style="margin-left:0pt;">或者为多个激光扫描仪订阅话题“echoes_1”，“echoes_2”等。</p> </td><td>0</td></tr><tr><td style="width:153px;">num_subdivisions_per_laser_scan</td><td style="width:590px;"> <p style="margin-left:0pt;">将每个接收到的（多回波）激光扫描分成的点云数。</p> <p style="margin-left:0pt;">细分扫描可以在扫描仪移动时取消扫描获取的扫描。</p> <p style="margin-left:0pt;">有一个相应的轨迹构建器选项可将细分扫描累积到将用于扫描匹配的点云中。</p> </td><td>1</td></tr><tr><td style="width:153px;">num_point_clouds</td><td style="width:590px;"> <p style="margin-left:0pt;">要订阅的点云话题的数量。</p> <p style="margin-left:0pt;">在一个测距仪的“points2”话题上订阅sensor_msgs/PointCloud2</p> <p style="margin-left:0pt;">或者为多个测距仪订阅话题“points2_1”，“points2_2”等。</p> </td><td>0</td></tr><tr><td style="width:153px;"> <p style="margin-left:0pt;">lookup_transform_timeout_sec</p> </td><td style="width:590px;">使用tf2查找变换的超时秒数</td><td>0.2</td></tr><tr><td style="width:153px;">submap_publish_period_sec</td><td style="width:590px;">发布submap的间隔（以秒为单位），例如， 0.3秒</td><td>0.3</td></tr><tr><td style="width:153px;">pose_publish_period_sec</td><td style="width:590px;">发布姿势的间隔（以秒为单位），例如 5e-3，频率为200 Hz。</td><td>5e-3</td></tr><tr><td style="width:153px;"> <p style="margin-left:0pt;">trajectory_publish_period_sec</p> </td><td style="width:590px;">以秒为单位发布轨迹标记的时间间隔，例如， 30e-3持续30毫秒</td><td>30e-3</td></tr></tbody></table>
+
+<h2 id="urdf文件中的一些问题"><a href="#urdf文件中的一些问题" class="headerlink" title="urdf文件中的一些问题"></a>urdf文件中的一些问题</h2><ul>
+<li><p><strong>把所有的坐标系转化到一起去没用，相机和雷达本身的坐标系是什么样子的，就应该在urdf中描述成什么样子。</strong></p>
+</li>
+<li><p><strong>urdf中的rpy是绕xyz轴旋转，并且是定轴！！！</strong></p>
+<p>绕动轴z-y-x旋转的是Euler角(ypr)</p>
+</li>
+<li><p><strong>imu和雷达是绑定的，转一个的坐标系，另外一个也会跟着转</strong></p>
+</li>
+</ul>
+<h2 id="使用cartographer建图"><a href="#使用cartographer建图" class="headerlink" title="使用cartographer建图"></a>使用cartographer建图</h2><blockquote>
+<p>建图、导入保存本地的地图、导入地图时带入初始的位姿</p>
+</blockquote>
+<h4 id="保存地图到本地"><a href="#保存地图到本地" class="headerlink" title="保存地图到本地"></a>保存地图到本地</h4><p>1、Finish the first trajectory. No further data will be accepted on it.</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosservice call /finish_trajectory <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>2、Ask Cartographer to serialize its current state.</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosservice call /write_state <span class="token string">"{filename: '<span class="token variable">${<span class="token environment constant">HOME</span>}</span>/Downloads/mapName.pbstream'}"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>3、transform pbstream to pgm and yaml</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">roslaunch cartographer_ros assets_writer_ros_map.launch bag_filenames:<span class="token operator">=</span><span class="token variable">${<span class="token environment constant">HOME</span>}</span>/Downloads/***.bag pose_graph_filename:<span class="token operator">=</span><span class="token variable">${<span class="token environment constant">HOME</span>}</span>/Downloads/***.pbstream<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>or</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun cartographer_ros cartographer_pbstream_to_ros_map -map_filestem<span class="token operator">=</span>/home/lqx/Downloads/savemap -pbstream_filename<span class="token operator">=</span>/home/lqx/Downloads/***.pbstream -resolution<span class="token operator">=</span><span class="token number">0.05</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h4 id="从本地导入地图"><a href="#从本地导入地图" class="headerlink" title="从本地导入地图"></a>从本地导入地图</h4><blockquote>
+<p>cartographer pure localization</p>
+</blockquote>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>node</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>cartographer_node<span class="token punctuation">"</span></span> <span class="token attr-name">pkg</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>cartographer_ros<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>cartographer_node<span class="token punctuation">"</span></span> <span class="token attr-name">args</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-load_state_filename $MAP_NAME.pbstream<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>下面这个不太清楚，似乎不需要</p>
+<pre class="line-numbers language-lua" data-language="lua"><code class="language-lua">TRAJECTORY_BUILDER<span class="token punctuation">.</span>pure_localization <span class="token operator">=</span> <span class="token keyword">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h4 id="带入初始位姿信息"><a href="#带入初始位姿信息" class="headerlink" title="带入初始位姿信息"></a>带入初始位姿信息</h4><blockquote>
+<p>cartographer pure localization initial pose</p>
+</blockquote>
+<p>在launch文件中加入 <code>        -start_trajectory_with_default_topics=false</code>，最后的效果如下所示：</p>
+<pre class="line-numbers language-none"><code class="language-none">  &lt;node name="cartographer_node"
+        pkg="cartographer_ros"
+        type="cartographer_node"
+        args="
+-configuration_directory $(find cartographer_ros_launcher)/configuration_files 
+-configuration_basename cartographer.lua 
+-load_state_filename /home/lqx/Downloads/2021_map.pbstream 
+-start_trajectory_with_default_topics=false
+"
+        output="screen"&gt;
+  &lt;/node&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>设置初始位姿时，需要注意四元数的归一化，并且map坐标是建图的时候就确定了的。使用的指令如下：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosservice call /start_trajectory <span class="token string">"configuration_directory: '/home/lqx/catkin_cv/src/cartographer_ros_launcher/configuration_files'
+configuration_basename: 'cartographer.lua'
+use_initial_pose: true
+initial_pose:
+  position: {x: 1.0, y: -1.5, z: 0.0}
+  orientation: {x: 0, y: 0, z: 0, w: 1}
+relative_to_trajectory_id: 0"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="多机协同，共用一张地图"><a href="#多机协同，共用一张地图" class="headerlink" title="多机协同，共用一张地图"></a>多机协同，共用一张地图</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><ul>
+<li>单机器人的闭环检测，修正误差累计，保证地图一致性</li>
+<li>实现场景识别，从而建立多机器人间的约束</li>
+<li>压缩地图数据，使其满足带宽有限的机器人间的数据共享</li>
+</ul>
+<p><strong>To be continued……</strong></p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>激光SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Qt速成指南</title>
     <url>/2021/04/06/introduce-qt/</url>
     <content><![CDATA[<h1 id="Qt速成指南"><a href="#Qt速成指南" class="headerlink" title="Qt速成指南"></a>Qt速成指南</h1><p>Qt Creator是使用Qt开发的IDE。Qt支持Windows、Linux/Unix、Mac OS X、Android、BlackBerry、QNX等多种平台，Qt Creator为不同平台提供了统一的开发环境。</p>
@@ -3801,82 +3877,6 @@ hexo d<span aria-hidden="true" class="line-numbers-rows"><span></span><span></sp
       </categories>
       <tags>
         <tag>Qt</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>cartographer探索记录</title>
-    <url>/2021/03/28/learning-cartographer/</url>
-    <content><![CDATA[<h1 id="Cartographer探索笔记"><a href="#Cartographer探索笔记" class="headerlink" title="Cartographer探索笔记"></a>Cartographer探索笔记</h1><h2 id="Lua配置文件参数解析"><a href="#Lua配置文件参数解析" class="headerlink" title="Lua配置文件参数解析"></a>Lua配置文件参数解析</h2><table border="1" cellpadding="1" cellspacing="1"><tbody><tr><td style="width:153px;">参数</td><td style="width:590px;">解析</td><td>常用值</td></tr><tr><td style="width:153px;">map_frame</td><td style="width:590px;">用于发布submaps的ROS坐标系ID，位姿的父坐标系，通常使用“map”</td><td>“map”</td></tr><tr><td style="width:153px;">tracking_frame</td><td style="width:590px;">由SLAM算法追踪的ROS坐标系ID，如果使用IMU，应该使用其坐标系，通常选择是 “imu_link”</td><td>"base_footprint"</td></tr><tr><td style="width:153px;">published_frame</td><td style="width:590px;">用于发布位姿子坐标系的ROS坐标系ID，例如“odom”坐标系，如果一个“odom”坐标系由系统的不同部分提供，在这种情况下，map_frame中的“odom”姿势将被发布。 否则，将其设置为“base_link”可能是合适的</td><td>"odom"</td></tr><tr><td style="width:153px;">odom_frame</td><td style="width:590px;">在provide_odom_frame为真才启用，坐标系在published_frame和map_frame之间用于发布局部SLAM结果，通常是“odom”</td><td>"odom"</td></tr><tr><td style="width:153px;">provide_odom_frame</td><td style="width:590px;">如果启用，局部，非闭环，持续位姿会作为odom_frame发布在map_frame中发布。</td><td>true</td></tr><tr><td style="width:153px;">use_odometry</td><td style="width:590px;">如果启用，订阅关于“odom”话题的nav_msgs/Odometry消息。里程信息会提供，这些信息包含在SLAM里</td><td>false</td></tr><tr><td style="width:153px;">num_laser_scans</td><td style="width:590px;"> <p style="margin-left:0pt;">订阅的激光扫描话题数量。</p> <p style="margin-left:0pt;">在一个激光扫描仪的“scan”话题上订阅sensor_msgs/LaserScan</p> <p style="margin-left:0pt;">或在多个激光扫描仪上订阅话题“scan_1”，“scan_2”等</p> </td><td>1</td></tr><tr><td style="width:153px;">num_multi_echo_laser_scans</td><td style="width:590px;"> <p style="margin-left:0pt;">订阅的多回波激光扫描主题的数量。</p> <p style="margin-left:0pt;">在一个激光扫描仪的“echoes”话题上订阅sensor_msgs/MultiEchoLaserScan</p> <p style="margin-left:0pt;">或者为多个激光扫描仪订阅话题“echoes_1”，“echoes_2”等。</p> </td><td>0</td></tr><tr><td style="width:153px;">num_subdivisions_per_laser_scan</td><td style="width:590px;"> <p style="margin-left:0pt;">将每个接收到的（多回波）激光扫描分成的点云数。</p> <p style="margin-left:0pt;">细分扫描可以在扫描仪移动时取消扫描获取的扫描。</p> <p style="margin-left:0pt;">有一个相应的轨迹构建器选项可将细分扫描累积到将用于扫描匹配的点云中。</p> </td><td>1</td></tr><tr><td style="width:153px;">num_point_clouds</td><td style="width:590px;"> <p style="margin-left:0pt;">要订阅的点云话题的数量。</p> <p style="margin-left:0pt;">在一个测距仪的“points2”话题上订阅sensor_msgs/PointCloud2</p> <p style="margin-left:0pt;">或者为多个测距仪订阅话题“points2_1”，“points2_2”等。</p> </td><td>0</td></tr><tr><td style="width:153px;"> <p style="margin-left:0pt;">lookup_transform_timeout_sec</p> </td><td style="width:590px;">使用tf2查找变换的超时秒数</td><td>0.2</td></tr><tr><td style="width:153px;">submap_publish_period_sec</td><td style="width:590px;">发布submap的间隔（以秒为单位），例如， 0.3秒</td><td>0.3</td></tr><tr><td style="width:153px;">pose_publish_period_sec</td><td style="width:590px;">发布姿势的间隔（以秒为单位），例如 5e-3，频率为200 Hz。</td><td>5e-3</td></tr><tr><td style="width:153px;"> <p style="margin-left:0pt;">trajectory_publish_period_sec</p> </td><td style="width:590px;">以秒为单位发布轨迹标记的时间间隔，例如， 30e-3持续30毫秒</td><td>30e-3</td></tr></tbody></table>
-
-<h2 id="urdf文件中的一些问题"><a href="#urdf文件中的一些问题" class="headerlink" title="urdf文件中的一些问题"></a>urdf文件中的一些问题</h2><ul>
-<li><p><strong>把所有的坐标系转化到一起去没用，相机和雷达本身的坐标系是什么样子的，就应该在urdf中描述成什么样子。</strong></p>
-</li>
-<li><p><strong>urdf中的rpy是绕xyz轴旋转，并且是定轴！！！</strong></p>
-<p>绕动轴z-y-x旋转的是Euler角(ypr)</p>
-</li>
-<li><p><strong>imu和雷达是绑定的，转一个的坐标系，另外一个也会跟着转</strong></p>
-</li>
-</ul>
-<h2 id="使用cartographer建图"><a href="#使用cartographer建图" class="headerlink" title="使用cartographer建图"></a>使用cartographer建图</h2><blockquote>
-<p>建图、导入保存本地的地图、导入地图时带入初始的位姿</p>
-</blockquote>
-<h4 id="保存地图到本地"><a href="#保存地图到本地" class="headerlink" title="保存地图到本地"></a>保存地图到本地</h4><p>1、Finish the first trajectory. No further data will be accepted on it.</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosservice call /finish_trajectory <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>2、Ask Cartographer to serialize its current state.</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosservice call /write_state <span class="token string">"{filename: '<span class="token variable">${<span class="token environment constant">HOME</span>}</span>/Downloads/mapName.pbstream'}"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>3、transform pbstream to pgm and yaml</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">roslaunch cartographer_ros assets_writer_ros_map.launch bag_filenames:<span class="token operator">=</span><span class="token variable">${<span class="token environment constant">HOME</span>}</span>/Downloads/***.bag pose_graph_filename:<span class="token operator">=</span><span class="token variable">${<span class="token environment constant">HOME</span>}</span>/Downloads/***.pbstream<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>or</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun cartographer_ros cartographer_pbstream_to_ros_map -map_filestem<span class="token operator">=</span>/home/lqx/Downloads/savemap -pbstream_filename<span class="token operator">=</span>/home/lqx/Downloads/***.pbstream -resolution<span class="token operator">=</span><span class="token number">0.05</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h4 id="从本地导入地图"><a href="#从本地导入地图" class="headerlink" title="从本地导入地图"></a>从本地导入地图</h4><blockquote>
-<p>cartographer pure localization</p>
-</blockquote>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>node</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>cartographer_node<span class="token punctuation">"</span></span> <span class="token attr-name">pkg</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>cartographer_ros<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>cartographer_node<span class="token punctuation">"</span></span> <span class="token attr-name">args</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-load_state_filename $MAP_NAME.pbstream<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>下面这个不太清楚，似乎不需要</p>
-<pre class="line-numbers language-lua" data-language="lua"><code class="language-lua">TRAJECTORY_BUILDER<span class="token punctuation">.</span>pure_localization <span class="token operator">=</span> <span class="token keyword">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h4 id="带入初始位姿信息"><a href="#带入初始位姿信息" class="headerlink" title="带入初始位姿信息"></a>带入初始位姿信息</h4><blockquote>
-<p>cartographer pure localization initial pose</p>
-</blockquote>
-<p>在launch文件中加入 <code>        -start_trajectory_with_default_topics=false</code>，最后的效果如下所示：</p>
-<pre class="line-numbers language-none"><code class="language-none">  &lt;node name="cartographer_node"
-        pkg="cartographer_ros"
-        type="cartographer_node"
-        args="
--configuration_directory $(find cartographer_ros_launcher)/configuration_files 
--configuration_basename cartographer.lua 
--load_state_filename /home/lqx/Downloads/2021_map.pbstream 
--start_trajectory_with_default_topics=false
-"
-        output="screen"&gt;
-  &lt;/node&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>设置初始位姿时，需要注意四元数的归一化，并且map坐标是建图的时候就确定了的。使用的指令如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosservice call /start_trajectory <span class="token string">"configuration_directory: '/home/lqx/catkin_cv/src/cartographer_ros_launcher/configuration_files'
-configuration_basename: 'cartographer.lua'
-use_initial_pose: true
-initial_pose:
-  position: {x: 1.0, y: -1.5, z: 0.0}
-  orientation: {x: 0, y: 0, z: 0, w: 1}
-relative_to_trajectory_id: 0"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="多机协同，共用一张地图"><a href="#多机协同，共用一张地图" class="headerlink" title="多机协同，共用一张地图"></a>多机协同，共用一张地图</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><ul>
-<li>单机器人的闭环检测，修正误差累计，保证地图一致性</li>
-<li>实现场景识别，从而建立多机器人间的约束</li>
-<li>压缩地图数据，使其满足带宽有限的机器人间的数据共享</li>
-</ul>
-<p><strong>To be continued……</strong></p>
-]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>激光SLAM</tag>
       </tags>
   </entry>
   <entry>
@@ -4833,6 +4833,80 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
       </tags>
   </entry>
   <entry>
+    <title>读博的选择、过程、出路</title>
+    <url>/2023/04/06/meeting-3/</url>
+    <content><![CDATA[<h1 id="读博的选择、过程、出路"><a href="#读博的选择、过程、出路" class="headerlink" title="读博的选择、过程、出路"></a>读博的选择、过程、出路</h1><blockquote>
+<p>中科院博士，程小六</p>
+</blockquote>
+<p><strong>为什么读博？</strong></p>
+<img src="/images/meeting-3/image-20230406155514725.png" style="zoom:50%;">
+
+<ul>
+<li><p>去高校、研究所、企业的研究院，必须要读博，这是个门槛</p>
+</li>
+<li><p>海归，特别是知名学校，优势非常大</p>
+</li>
+<li><p>需要做博后，去好几个地方做博后，去积累一些人脉、项目、经验，最后才能去当一个老师</p>
+<p>读博28，博士后30，可能稳定下来都是30以上了</p>
+</li>
+</ul>
+<p><strong>选老师：</strong></p>
+<img src="/images/meeting-3/image-20230406160242078.png" style="zoom:50%;">
+
+<p>导师、团队都很重要：导师基本决定了读博期间能干出什么事。</p>
+<p>尽量选择年轻有冲劲的导师：</p>
+<ul>
+<li>比如张富，短短几年时间，从领域内没人知道，到整个领域内都知道。</li>
+<li>老师都非常拼，年轻老师要打响自己的名声。</li>
+<li>老师本身能力也很强，知名实验室出来的。</li>
+<li>指导非常多，对第一个学生基本是手把手指导，也非常push。</li>
+</ul>
+<p>挂名巨佬导师：</p>
+<ul>
+<li>很多都不带学生，都是做行政的</li>
+<li>很有可能小老师带学生，甚至是组里面的师兄带</li>
+<li>可能已经躺平了，自己啥都有了，不会那么负责了</li>
+</ul>
+<p><strong>读博的过程：</strong></p>
+<img src="/images/meeting-3/image-20230406153243562.png" style="zoom:50%;">
+
+<ul>
+<li><p>第一年基本是看论文找思路。</p>
+<p>看领域内比较新的，学校比较好的硕博论文，会看比较久；</p>
+<p>多看英文文献，越看越多的时候，直接就看懂。</p>
+</li>
+<li><p>写代码对SLAM方向是非常重要的；（读代码，给开源的代码写注释也是很重要的，复现代码更重要）</p>
+<p>新手写论文的时候，可能发现很多的东西都没办法写成公式，但实际上很多理论需要用数学公式去表达，一个是没有歧义，一个是数学公式是相通的，大家一看公式就知道作者的水平怎么样。一篇小论文里面没什么公式，大概率也会被拒。</p>
+<blockquote>
+<p>推公式指的是把自己做的工作变成公式的能力，或者说是对自己具体的工作抽象表达的能力</p>
+</blockquote>
+</li>
+<li><p>期刊投稿可能要半年多，长的有一年，要给自己留好足够的时间！</p>
+</li>
+<li><p>学术交流会议，能去的尽量去，争取在上面作报告。</p>
+<p>交流非常重要，比如问一问别人的思路是怎么来的。</p>
+</li>
+<li><p>读博的时候要把事情尽早搞定，不要去拖，包括结婚、找工作、发论文等等。</p>
+</li>
+</ul>
+<p><strong>最后，最重要的一点：</strong></p>
+<p>如果博士期间没有做出什么成果，不要想着博士毕业后能做出什么学术成果，这些大牛基本都是博士期间做出了非常厉害的成果。如果博士期间非常平庸，等毕业之后想一飞冲天，基本没有可能。</p>
+<p>博士期间真的是在给自己干，大家都是为了毕业、拿论文、找更好的工作、去更好的学校，都是在给自己拼命。等毕业之后，自己的身份已经变了，去高校是普通老师，去企业是员工，动力不一样了、氛围也不一样了。</p>
+<p>读书的时候可以一心一意研究这个东西，而到了公司到了学校到了社会上之后，会有各种乱七八糟的事情。</p>
+<p>想做成什么事情，最好的其实就是读书的这几年，这几年的环境是最理想的。</p>
+<blockquote>
+<p>博士是你脱产搞科研的时间，这时候你的脑力已经使用到了极限。将来你要养家糊口带小孩，又要教书做项目甚至兼职行政，更没有时间和精力去搞学问。</p>
+<p>十成力都做不成的事，不要相信靠七成力能成功！</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>经验分享</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Exploring NeRF-My Journey Through Research and Code</title>
     <url>/2023/04/26/meeting-4/</url>
     <content><![CDATA[<h1 id="Exploring-NeRF-My-Journey-Through-Research-and-Code"><a href="#Exploring-NeRF-My-Journey-Through-Research-and-Code" class="headerlink" title="Exploring NeRF: My Journey Through Research and Code"></a>Exploring NeRF: My Journey Through Research and Code</h1><blockquote>
@@ -4972,80 +5046,6 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
       </tags>
   </entry>
   <entry>
-    <title>读博的选择、过程、出路</title>
-    <url>/2023/04/06/meeting-3/</url>
-    <content><![CDATA[<h1 id="读博的选择、过程、出路"><a href="#读博的选择、过程、出路" class="headerlink" title="读博的选择、过程、出路"></a>读博的选择、过程、出路</h1><blockquote>
-<p>中科院博士，程小六</p>
-</blockquote>
-<p><strong>为什么读博？</strong></p>
-<img src="/images/meeting-3/image-20230406155514725.png" style="zoom:50%;">
-
-<ul>
-<li><p>去高校、研究所、企业的研究院，必须要读博，这是个门槛</p>
-</li>
-<li><p>海归，特别是知名学校，优势非常大</p>
-</li>
-<li><p>需要做博后，去好几个地方做博后，去积累一些人脉、项目、经验，最后才能去当一个老师</p>
-<p>读博28，博士后30，可能稳定下来都是30以上了</p>
-</li>
-</ul>
-<p><strong>选老师：</strong></p>
-<img src="/images/meeting-3/image-20230406160242078.png" style="zoom:50%;">
-
-<p>导师、团队都很重要：导师基本决定了读博期间能干出什么事。</p>
-<p>尽量选择年轻有冲劲的导师：</p>
-<ul>
-<li>比如张富，短短几年时间，从领域内没人知道，到整个领域内都知道。</li>
-<li>老师都非常拼，年轻老师要打响自己的名声。</li>
-<li>老师本身能力也很强，知名实验室出来的。</li>
-<li>指导非常多，对第一个学生基本是手把手指导，也非常push。</li>
-</ul>
-<p>挂名巨佬导师：</p>
-<ul>
-<li>很多都不带学生，都是做行政的</li>
-<li>很有可能小老师带学生，甚至是组里面的师兄带</li>
-<li>可能已经躺平了，自己啥都有了，不会那么负责了</li>
-</ul>
-<p><strong>读博的过程：</strong></p>
-<img src="/images/meeting-3/image-20230406153243562.png" style="zoom:50%;">
-
-<ul>
-<li><p>第一年基本是看论文找思路。</p>
-<p>看领域内比较新的，学校比较好的硕博论文，会看比较久；</p>
-<p>多看英文文献，越看越多的时候，直接就看懂。</p>
-</li>
-<li><p>写代码对SLAM方向是非常重要的；（读代码，给开源的代码写注释也是很重要的，复现代码更重要）</p>
-<p>新手写论文的时候，可能发现很多的东西都没办法写成公式，但实际上很多理论需要用数学公式去表达，一个是没有歧义，一个是数学公式是相通的，大家一看公式就知道作者的水平怎么样。一篇小论文里面没什么公式，大概率也会被拒。</p>
-<blockquote>
-<p>推公式指的是把自己做的工作变成公式的能力，或者说是对自己具体的工作抽象表达的能力</p>
-</blockquote>
-</li>
-<li><p>期刊投稿可能要半年多，长的有一年，要给自己留好足够的时间！</p>
-</li>
-<li><p>学术交流会议，能去的尽量去，争取在上面作报告。</p>
-<p>交流非常重要，比如问一问别人的思路是怎么来的。</p>
-</li>
-<li><p>读博的时候要把事情尽早搞定，不要去拖，包括结婚、找工作、发论文等等。</p>
-</li>
-</ul>
-<p><strong>最后，最重要的一点：</strong></p>
-<p>如果博士期间没有做出什么成果，不要想着博士毕业后能做出什么学术成果，这些大牛基本都是博士期间做出了非常厉害的成果。如果博士期间非常平庸，等毕业之后想一飞冲天，基本没有可能。</p>
-<p>博士期间真的是在给自己干，大家都是为了毕业、拿论文、找更好的工作、去更好的学校，都是在给自己拼命。等毕业之后，自己的身份已经变了，去高校是普通老师，去企业是员工，动力不一样了、氛围也不一样了。</p>
-<p>读书的时候可以一心一意研究这个东西，而到了公司到了学校到了社会上之后，会有各种乱七八糟的事情。</p>
-<p>想做成什么事情，最好的其实就是读书的这几年，这几年的环境是最理想的。</p>
-<blockquote>
-<p>博士是你脱产搞科研的时间，这时候你的脑力已经使用到了极限。将来你要养家糊口带小孩，又要教书做项目甚至兼职行政，更没有时间和精力去搞学问。</p>
-<p>十成力都做不成的事，不要相信靠七成力能成功！</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>经验分享</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Neural Implicit Representations in SLAM</title>
     <url>/2023/07/15/meeting-5/</url>
     <content><![CDATA[<h1 id="Neural-Implicit-Representations-in-SLAM"><a href="#Neural-Implicit-Representations-in-SLAM" class="headerlink" title="Neural Implicit Representations in SLAM"></a>Neural Implicit Representations in SLAM</h1><blockquote>
@@ -5101,63 +5101,6 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
       <tags>
         <tag>NeRF</tag>
         <tag>视觉SLAM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>NeRF学习笔记（二）：论文阅读与思考</title>
-    <url>/2022/08/21/nerf-notes-2/</url>
-    <content><![CDATA[<h1 id="NeRF学习笔记（二）：论文阅读与思考"><a href="#NeRF学习笔记（二）：论文阅读与思考" class="headerlink" title="NeRF学习笔记（二）：论文阅读与思考"></a>NeRF学习笔记（二）：论文阅读与思考</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p><strong>Q：如何理解稀疏的输入视图集</strong></p>
-<p><strong>A：</strong> a sparse set of input views 稀疏的输入视图集。也就是输入视图并不是连续的，可能就是在若干个方向或者角度拍几张照片，就能合成一个连续的360度环绕的场景</p>
-<p><strong>Q：如何理解volume density</strong></p>
-<p>volume density字面意思是体积密度，实际上理解为<strong>不透明度</strong>会更好，不透明度对应对光的吸收能力，volume density越大，不透明度越高，对光的吸收能力越强。</p>
-<p>这个在后面的公式有所涉及。</p>
-<p><strong>Q：为什么要输入这么五个坐标？</strong></p>
-<p><strong>A：</strong>因为考虑到不同视角上某一点的颜色是不一样的。正因如此，原文用了view-dependent，即某点的颜色是跟视角相关的</p>
-<p><strong>Q：如何理解5D坐标（空间位置$(x，y，z)$和观察方向$(θ，φ)$)？</strong></p>
-<p><strong>A：</strong>作者应该是确定了某个坐标系，空间位置$(x,y,z)$就是被观察物体某个点在这个坐标系中的坐标，而观察方向$(θ，φ)$就是相机指向被观察物体这个点的射线，通过两个角度可以表示三维下的一条射线。</p>
-<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1 Introduction"></a>1 Introduction</h2><p><strong>Q：什么是MLP网络？</strong></p>
-<p><strong>A：</strong>多层感知器（Multilayer Perceptron，缩写MLP）是一种前向结构的人工神经网络，映射一组输入向量到一组输出向量。MLP可以被看作是一个有向图，由多个的节点层所组成，每一层都全连接到下一层。除了输入节点，每个节点都是一个带有非线性激活函数的神经元（或称处理单元）。一种被称为反向传播算法的监督学习方法常被用来训练MLP。</p>
-<p><strong>Q：还有什么想说的？</strong></p>
-<blockquote>
-<p>这里是搬运的，目前并不了解PINN</p>
-</blockquote>
-<p><strong>A：</strong>这篇论文的思想非常像流体力学的PINN，也是使用一个神经网络拟合某一个对象。PINN是用网络输出尽可能拟合离散点的函数值，而NERF就是用神经网络的输出拟合稀疏的相机拍摄图像。而且，与一般的问题不同，PINN和NERF都是尽可能过拟合标签值，因为它们都是应用于某一个特定的对象，如前者应用于某一个偏微分方程（组），后者应用于某一个场景。但是这引出了另一个问题：网络的泛化性很差，即不能通过微调将网络迁移适应于另一个不同的场景。</p>
-<p>另外有很多优点也是PINN和NERF所共通的。比如，流体力学求解方程的数值方法，需要采样大量的点才能逼近真实解，而且天然的时序特征导致了求解效率的低下；NERF以前的存储离散化体网络也需要耗费大量存储成本。</p>
-<p>更一般地说，PINN全称是physical-informed neural network，NERF本质上也是一种物理理论与神经网络的融合。流体力学的PINN和NERF有天然的近似性自然也就不奇怪了。</p>
-<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2 Related Work"></a>2 Related Work</h2><p>暂时没有问题</p>
-<h2 id="3-Neural-Radiance-Field-Scene-Representation"><a href="#3-Neural-Radiance-Field-Scene-Representation" class="headerlink" title="3 Neural Radiance Field Scene Representation"></a>3 Neural Radiance Field Scene Representation</h2><p><strong>Q：如何理解”We encourage the representation to be multiview consistent by restricting the network to predict the volume density σ as a function of only the location x, while allowing the RGB color c to be predicted as a function of both location and viewing direction. “即，这里为什么要限制体积密度σ作为位置x的函数，而让颜色c作为位置x和观看方向(θ，φ)的函数？观看方向(θ，φ)为什么会影响多视图的一致性？</strong></p>
-<p><strong>思考：</strong>从论文里面看，它这里的操作是先用8个完全连接层处理输入的3D坐标$(x，y，z)$，得到一个体积密度$σ$和256维的特征向量。然后特征向量和观看方向$(θ，φ)$连接起来，得到一个256+2维的向量，再给到最后的全连接层里面，从而输出与试图相关的颜色$c$。</p>
-<p>这样处理虽然是为了限制体积密度σ作为位置x的函数，但会不会也导致颜色$c$和观察方向$(θ，φ)$的关系不是很大了（毕竟只占了两个维度）？这样的话，如何设计并优化针对特定物理问题的网络？</p>
-<p>在知乎上看到一个很有趣的探讨：我们直觉理解空间点和颜色是没有任何关系的，在一个空间点放什么东西完全是人为确定。但是这篇文章可以通过MLP硬拟合这种关系，其中一个前提是MLP只用于某一特定场景的渲染，只是学习这种拟合关系而不是学会推理。所以，如果要使得网络具备迁移泛化能力，必须解除坐标与RGB这种不合逻辑的映射关系。</p>
-<p><strong>A：</strong>TODO</p>
-<h2 id="4-Volume-Rendering-with-Radiance-Fields"><a href="#4-Volume-Rendering-with-Radiance-Fields" class="headerlink" title="4 Volume Rendering with Radiance Fields"></a>4 Volume Rendering with Radiance Fields</h2><p><strong>Q：如何理解“The volume density σ(x) can be interpreted as the diﬀerential probability of a ray terminating at an inﬁnitesimal particle at location x. ”</strong></p>
-<p><strong>A：</strong>我认为这里应该和<strong>Abstract</strong>部分的问题<strong>“如何理解volume density”</strong>是一样的。这句话翻译过来就是“体积密度$σ(x)$可以解释为一条射线在$x$位置的无穷小粒子处终止的微分概率”，比较拗口，不过很明显关键部分是“射线在某个位置终止的微分概率”。这看起来应该和之前解释的不透明度差不多，光在这里终止（被吸收）的概率越大就说明这里越不透明。而之所以是微分概率，应该是体积密度$σ(x)$表示的只是某个点的不透明率。</p>
-<p><strong>Q：前面定义的网络已经计算出了从某个视角看到的某点颜色$c=(r，g，b)$和体积密度$σ$，为什么这里仍然需要通过公式1把预期颜色$C$计算出来？它们有什么区别？为什么不直接拟合？</strong></p>
-<p><strong>A：</strong>$C$是最终渲染时需要计算的值，$c$是RGB颜色值。拟合的只是空间单点的颜色$c$，只有通过离散积分一条光线上所有采样单点的颜色$c$，才能得到从某个视角看过去的2D图像上某个点的最终渲染颜色。如果硬要拟合整条光线所有点的$C$且使它们一样，那就只是angle-dependent而非view-dependent了，RGB和xyz坐标参数还是有关系的。</p>
-<p><strong>PS：这部分公式1到公式3是连续积分离散化的推导，这是最基本的数值方法，需要好好回顾一下！！！另外一个就是，目前没有学习图形学相关的一些知识，这方面知识欠缺比较多。</strong></p>
-<h2 id="5-Optimizing-a-Neural-Radiance-Field"><a href="#5-Optimizing-a-Neural-Radiance-Field" class="headerlink" title="5 Optimizing a Neural Radiance Field"></a>5 Optimizing a Neural Radiance Field</h2><h3 id="5-1-Positional-encoding"><a href="#5-1-Positional-encoding" class="headerlink" title="5.1 Positional encoding"></a>5.1 Positional encoding</h3><p><strong>Q：为什么第一段说使用高频函数将输入映射到更高维空间，能够更好地拟合包含高频变化的数据？</strong></p>
-<p><strong>思考：</strong>这种数据高频变化的思想不仅仅局限在三维重建中。我觉得可以泛化到具有剧烈域变化的数据集，此时可以对输入数据进行高维映射，以获得对数据更好的表征，更好地实现数据域适应。</p>
-<p><strong>A：</strong>TODO</p>
-<p><strong>Q：如何理解此处的编码函数？</strong></p>
-<p><strong>A：</strong>TODO</p>
-<h3 id="5-2-Hierarchical-volume-sampling"><a href="#5-2-Hierarchical-volume-sampling" class="headerlink" title="5.2 Hierarchical volume sampling"></a>5.2 Hierarchical volume sampling</h3><p><strong>Q：为什么通过同时优化两个网络（粗网络和细网络）可以解决自由空间和遮挡区域被重复采样的问题？</strong></p>
-<p><strong>A：</strong>TODO</p>
-<h3 id="5-3-Implementation-details"><a href="#5-3-Implementation-details" class="headerlink" title="5.3 Implementation details"></a>5.3 Implementation details</h3><p>暂时没有问题</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
-<li><a href="https://zhuanlan.zhihu.com/p/542200751">NeRF论文阅读</a></li>
-<li><a href="http://www.liuxiao.org/2021/11/%e8%ae%ba%e6%96%87%e7%ac%94%e8%ae%b0%ef%bc%9anerf-representing-scenes-as-neural-radiance-fields-for-view-synthesis/">论文笔记：NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/360365941">【NeRF论文笔记】用于视图合成的神经辐射场技术</a></li>
-<li><a href="https://blog.csdn.net/YuhsiHu/article/details/124318473">【论文精读】NeRF中的数学公式推导</a></li>
-<li><a href="https://raymondkevin.top/2021/07/22/neural-radiance-fields-volume-rendering-%E5%85%AC%E5%BC%8F%E5%88%86%E6%9E%90/">Neural Radiance Field’s Volume Rendering 公式分析</a></li>
-<li><a href="https://zh.m.wikipedia.org/zh-hans/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8">多层感知器</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>NeRF</category>
-      </categories>
-      <tags>
-        <tag>NeRF</tag>
-        <tag>深度学习</tag>
       </tags>
   </entry>
   <entry>
@@ -5247,6 +5190,63 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
 <p><strong>A：</strong>TODO</p>
 <p><strong>Q：为什么NeRF只用没有空间信息的MLP？</strong></p>
 <p><strong>A：</strong>TODO</p>
+]]></content>
+      <categories>
+        <category>NeRF</category>
+      </categories>
+      <tags>
+        <tag>NeRF</tag>
+        <tag>深度学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>NeRF学习笔记（二）：论文阅读与思考</title>
+    <url>/2022/08/21/nerf-notes-2/</url>
+    <content><![CDATA[<h1 id="NeRF学习笔记（二）：论文阅读与思考"><a href="#NeRF学习笔记（二）：论文阅读与思考" class="headerlink" title="NeRF学习笔记（二）：论文阅读与思考"></a>NeRF学习笔记（二）：论文阅读与思考</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p><strong>Q：如何理解稀疏的输入视图集</strong></p>
+<p><strong>A：</strong> a sparse set of input views 稀疏的输入视图集。也就是输入视图并不是连续的，可能就是在若干个方向或者角度拍几张照片，就能合成一个连续的360度环绕的场景</p>
+<p><strong>Q：如何理解volume density</strong></p>
+<p>volume density字面意思是体积密度，实际上理解为<strong>不透明度</strong>会更好，不透明度对应对光的吸收能力，volume density越大，不透明度越高，对光的吸收能力越强。</p>
+<p>这个在后面的公式有所涉及。</p>
+<p><strong>Q：为什么要输入这么五个坐标？</strong></p>
+<p><strong>A：</strong>因为考虑到不同视角上某一点的颜色是不一样的。正因如此，原文用了view-dependent，即某点的颜色是跟视角相关的</p>
+<p><strong>Q：如何理解5D坐标（空间位置$(x，y，z)$和观察方向$(θ，φ)$)？</strong></p>
+<p><strong>A：</strong>作者应该是确定了某个坐标系，空间位置$(x,y,z)$就是被观察物体某个点在这个坐标系中的坐标，而观察方向$(θ，φ)$就是相机指向被观察物体这个点的射线，通过两个角度可以表示三维下的一条射线。</p>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1 Introduction"></a>1 Introduction</h2><p><strong>Q：什么是MLP网络？</strong></p>
+<p><strong>A：</strong>多层感知器（Multilayer Perceptron，缩写MLP）是一种前向结构的人工神经网络，映射一组输入向量到一组输出向量。MLP可以被看作是一个有向图，由多个的节点层所组成，每一层都全连接到下一层。除了输入节点，每个节点都是一个带有非线性激活函数的神经元（或称处理单元）。一种被称为反向传播算法的监督学习方法常被用来训练MLP。</p>
+<p><strong>Q：还有什么想说的？</strong></p>
+<blockquote>
+<p>这里是搬运的，目前并不了解PINN</p>
+</blockquote>
+<p><strong>A：</strong>这篇论文的思想非常像流体力学的PINN，也是使用一个神经网络拟合某一个对象。PINN是用网络输出尽可能拟合离散点的函数值，而NERF就是用神经网络的输出拟合稀疏的相机拍摄图像。而且，与一般的问题不同，PINN和NERF都是尽可能过拟合标签值，因为它们都是应用于某一个特定的对象，如前者应用于某一个偏微分方程（组），后者应用于某一个场景。但是这引出了另一个问题：网络的泛化性很差，即不能通过微调将网络迁移适应于另一个不同的场景。</p>
+<p>另外有很多优点也是PINN和NERF所共通的。比如，流体力学求解方程的数值方法，需要采样大量的点才能逼近真实解，而且天然的时序特征导致了求解效率的低下；NERF以前的存储离散化体网络也需要耗费大量存储成本。</p>
+<p>更一般地说，PINN全称是physical-informed neural network，NERF本质上也是一种物理理论与神经网络的融合。流体力学的PINN和NERF有天然的近似性自然也就不奇怪了。</p>
+<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2 Related Work"></a>2 Related Work</h2><p>暂时没有问题</p>
+<h2 id="3-Neural-Radiance-Field-Scene-Representation"><a href="#3-Neural-Radiance-Field-Scene-Representation" class="headerlink" title="3 Neural Radiance Field Scene Representation"></a>3 Neural Radiance Field Scene Representation</h2><p><strong>Q：如何理解”We encourage the representation to be multiview consistent by restricting the network to predict the volume density σ as a function of only the location x, while allowing the RGB color c to be predicted as a function of both location and viewing direction. “即，这里为什么要限制体积密度σ作为位置x的函数，而让颜色c作为位置x和观看方向(θ，φ)的函数？观看方向(θ，φ)为什么会影响多视图的一致性？</strong></p>
+<p><strong>思考：</strong>从论文里面看，它这里的操作是先用8个完全连接层处理输入的3D坐标$(x，y，z)$，得到一个体积密度$σ$和256维的特征向量。然后特征向量和观看方向$(θ，φ)$连接起来，得到一个256+2维的向量，再给到最后的全连接层里面，从而输出与试图相关的颜色$c$。</p>
+<p>这样处理虽然是为了限制体积密度σ作为位置x的函数，但会不会也导致颜色$c$和观察方向$(θ，φ)$的关系不是很大了（毕竟只占了两个维度）？这样的话，如何设计并优化针对特定物理问题的网络？</p>
+<p>在知乎上看到一个很有趣的探讨：我们直觉理解空间点和颜色是没有任何关系的，在一个空间点放什么东西完全是人为确定。但是这篇文章可以通过MLP硬拟合这种关系，其中一个前提是MLP只用于某一特定场景的渲染，只是学习这种拟合关系而不是学会推理。所以，如果要使得网络具备迁移泛化能力，必须解除坐标与RGB这种不合逻辑的映射关系。</p>
+<p><strong>A：</strong>TODO</p>
+<h2 id="4-Volume-Rendering-with-Radiance-Fields"><a href="#4-Volume-Rendering-with-Radiance-Fields" class="headerlink" title="4 Volume Rendering with Radiance Fields"></a>4 Volume Rendering with Radiance Fields</h2><p><strong>Q：如何理解“The volume density σ(x) can be interpreted as the diﬀerential probability of a ray terminating at an inﬁnitesimal particle at location x. ”</strong></p>
+<p><strong>A：</strong>我认为这里应该和<strong>Abstract</strong>部分的问题<strong>“如何理解volume density”</strong>是一样的。这句话翻译过来就是“体积密度$σ(x)$可以解释为一条射线在$x$位置的无穷小粒子处终止的微分概率”，比较拗口，不过很明显关键部分是“射线在某个位置终止的微分概率”。这看起来应该和之前解释的不透明度差不多，光在这里终止（被吸收）的概率越大就说明这里越不透明。而之所以是微分概率，应该是体积密度$σ(x)$表示的只是某个点的不透明率。</p>
+<p><strong>Q：前面定义的网络已经计算出了从某个视角看到的某点颜色$c=(r，g，b)$和体积密度$σ$，为什么这里仍然需要通过公式1把预期颜色$C$计算出来？它们有什么区别？为什么不直接拟合？</strong></p>
+<p><strong>A：</strong>$C$是最终渲染时需要计算的值，$c$是RGB颜色值。拟合的只是空间单点的颜色$c$，只有通过离散积分一条光线上所有采样单点的颜色$c$，才能得到从某个视角看过去的2D图像上某个点的最终渲染颜色。如果硬要拟合整条光线所有点的$C$且使它们一样，那就只是angle-dependent而非view-dependent了，RGB和xyz坐标参数还是有关系的。</p>
+<p><strong>PS：这部分公式1到公式3是连续积分离散化的推导，这是最基本的数值方法，需要好好回顾一下！！！另外一个就是，目前没有学习图形学相关的一些知识，这方面知识欠缺比较多。</strong></p>
+<h2 id="5-Optimizing-a-Neural-Radiance-Field"><a href="#5-Optimizing-a-Neural-Radiance-Field" class="headerlink" title="5 Optimizing a Neural Radiance Field"></a>5 Optimizing a Neural Radiance Field</h2><h3 id="5-1-Positional-encoding"><a href="#5-1-Positional-encoding" class="headerlink" title="5.1 Positional encoding"></a>5.1 Positional encoding</h3><p><strong>Q：为什么第一段说使用高频函数将输入映射到更高维空间，能够更好地拟合包含高频变化的数据？</strong></p>
+<p><strong>思考：</strong>这种数据高频变化的思想不仅仅局限在三维重建中。我觉得可以泛化到具有剧烈域变化的数据集，此时可以对输入数据进行高维映射，以获得对数据更好的表征，更好地实现数据域适应。</p>
+<p><strong>A：</strong>TODO</p>
+<p><strong>Q：如何理解此处的编码函数？</strong></p>
+<p><strong>A：</strong>TODO</p>
+<h3 id="5-2-Hierarchical-volume-sampling"><a href="#5-2-Hierarchical-volume-sampling" class="headerlink" title="5.2 Hierarchical volume sampling"></a>5.2 Hierarchical volume sampling</h3><p><strong>Q：为什么通过同时优化两个网络（粗网络和细网络）可以解决自由空间和遮挡区域被重复采样的问题？</strong></p>
+<p><strong>A：</strong>TODO</p>
+<h3 id="5-3-Implementation-details"><a href="#5-3-Implementation-details" class="headerlink" title="5.3 Implementation details"></a>5.3 Implementation details</h3><p>暂时没有问题</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
+<li><a href="https://zhuanlan.zhihu.com/p/542200751">NeRF论文阅读</a></li>
+<li><a href="http://www.liuxiao.org/2021/11/%e8%ae%ba%e6%96%87%e7%ac%94%e8%ae%b0%ef%bc%9anerf-representing-scenes-as-neural-radiance-fields-for-view-synthesis/">论文笔记：NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/360365941">【NeRF论文笔记】用于视图合成的神经辐射场技术</a></li>
+<li><a href="https://blog.csdn.net/YuhsiHu/article/details/124318473">【论文精读】NeRF中的数学公式推导</a></li>
+<li><a href="https://raymondkevin.top/2021/07/22/neural-radiance-fields-volume-rendering-%E5%85%AC%E5%BC%8F%E5%88%86%E6%9E%90/">Neural Radiance Field’s Volume Rendering 公式分析</a></li>
+<li><a href="https://zh.m.wikipedia.org/zh-hans/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8">多层感知器</a></li>
+</ol>
 ]]></content>
       <categories>
         <category>NeRF</category>
@@ -5929,6 +5929,197 @@ pointsf <span class="token operator">=</span> pts<span class="token punctuation"
       </tags>
   </entry>
   <entry>
+    <title>NeRF based SLAM学习笔记（6）：关于co-slam中提到的one-blob编码</title>
+    <url>/2024/03/01/nerf-slam-5/</url>
+    <content><![CDATA[<h1 id="NeRF-based-SLAM学习笔记（6）：关于co-slam中提到的one-blob编码"><a href="#NeRF-based-SLAM学习笔记（6）：关于co-slam中提到的one-blob编码" class="headerlink" title="NeRF based SLAM学习笔记（6）：关于co-slam中提到的one-blob编码"></a>NeRF based SLAM学习笔记（6）：关于co-slam中提到的one-blob编码</h1><p><strong>one-blob编码对应的论文链接为：</strong><a href="https://arxiv.org/pdf/1808.03856.pdf">https://arxiv.org/pdf/1808.03856.pdf</a></p>
+<p><img src="/images/nerf-slam-5/image-20240301204831569.png"></p>
+<p><strong>GPT4对one-blob编码的总结：</strong></p>
+<p>以下是对 “one-blob encoding” 的一个总结：</p>
+<p>“One-blob encoding” 是一种连续输入数据的编码方法，它是 one-hot encoding 的一个泛化。在标准的 one-hot encoding 中，一个分类变量的每个可能值都被映射到一个独立的维度，并在相应维度的位置标记为 1，其他所有位置都是 0。这种编码是离散的、无上下文的，并且很“尖锐”，因为它不表达值之间的任何邻近关系或连续性。</p>
+<p>与之相对的 “one-blob encoding”，在某个标量值 s 的位置放置一个 kernel——在这个案例中，是高斯核——然后将这个 kernel 离散化到一个单位区间内的 k 个 bin 上。这种方法不仅在 s 对应的 bin 上激活值，还根据高斯核的形状在相邻的 bin 中产生较小的激活。标准差 σ 控制了这种激活的扩散程度。</p>
+<p>总的来说，“one-blob encoding”：</p>
+<ol>
+<li>提供了一种连续的、非二值的表示方式，可以捕捉相邻值之间的关系。</li>
+<li>保持了某种形式的稀疏性，因为只有 kernel 覆盖的小区域内的 bin 会被激活。</li>
+<li>允许神经网络利用输入数据的连续性和上下文信息，提高了模型处理连续输入的灵活性和精度。</li>
+<li>通过变化的输入激活，可以影响网络的线性路径，允许网络专门化处理输入的不同子域。<br>具体到那篇论文的应用背景，“one-blob encoding” 用于提升光线追踪中重要性采样的精度，通过提供一种更精细的输入数据表示方法，改进神经网络对场景中不同区域光照分布的学习和预测。</li>
+</ol>
+<p><strong>one-blob编码与原始NeRF位置编码的区别：</strong></p>
+<p>在神经辐射场（Neural Radiance Fields，简称NeRF）的上下文中，输入的坐标通常会通过位置编码(Positional Encoding)进行处理，从而允许模型可以学习到场景中高频的细节。位置编码的目的是允许模型在低维输入空间中捕捉和表达复杂的、高频的函数。</p>
+<p>NeRF 的位置编码通常通过一系列正弦和余弦函数来编码坐标，这些函数具有不同的频率。这种编码方式有效增加了输入坐标的维度，从而帮助模型捕获和表示复杂的几何结构和纹理细节。</p>
+<p>如果在 NeRF 中使用 “one-blob encoding” 替代标准的正弦余弦位置编码，则可以预期以下几点变化：</p>
+<ol>
+<li><p>缓和的空间变化：由于 “one-blob encoding” 倾向于在给定位置周围的邻近区域产生激活，它可能会引入更缓和的表示，相比于正弦余弦编码，对于高频变化可能不那么敏感。</p>
+</li>
+<li><p>神经网络结构调整：“one-blob encoding” 能够启用或关闭网络中特定路径的概念说明了，如果使用这种编码，可能需要对神经网络的结构进行调整来适应这种新的输入表示方式。</p>
+</li>
+<li><p>潜在的泛化改进：理论上，“one-blob encoding” 可能有助于提高模型泛化能力，因为它会在输入编码中引入更连续的特性。</p>
+</li>
+<li><p>纹理和细节的表达：由于 “one-blob encoding” 没有位置编码那样的高频振荡模式，它可能导致纹理和细节的表示能力下降，特别是如果场景依赖于捕捉细微的空间变化。</p>
+</li>
+</ol>
+<p>综上所述，虽然 “one-blob encoding” 提供了一种不同于位置编码的视角，并可能在特定条件下有所帮助，但也有可能不适用于需求捕捉高频细节的 NeRF 场景。在任何情况下，理论推测都需要通过实验来验证其影响。在实际应用中，可能需要对 “one-blob encoding” 加以修改或与其他技术结合以优化 NeRF 的性能。</p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>NeRF</tag>
+        <tag>视觉SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>NeRF based SLAM学习笔记（7）：从Point NeRF到Loopy SLAM</title>
+    <url>/2024/04/02/nerf-slam-6/</url>
+    <content><![CDATA[<h1 id="NeRF-based-SLAM学习笔记（7）：从Point-NeRF到Loopy-SLAM"><a href="#NeRF-based-SLAM学习笔记（7）：从Point-NeRF到Loopy-SLAM" class="headerlink" title="NeRF based SLAM学习笔记（7）：从Point NeRF到Loopy SLAM"></a>NeRF based SLAM学习笔记（7）：从Point NeRF到Loopy SLAM</h1><h2 id="Point-NeRF"><a href="#Point-NeRF" class="headerlink" title="Point NeRF"></a>Point NeRF</h2><h3 id="System-Overview"><a href="#System-Overview" class="headerlink" title="System Overview"></a>System Overview</h3><img src="/images/nerf-slam-6/image-20240402145508974.png" style="zoom:67%;">
+
+<h3 id="场景表征"><a href="#场景表征" class="headerlink" title="场景表征"></a>场景表征</h3><p>使用neural point cloud表示场景<br>$$<br>P = {(p_i, f_i, r_i)|i = 1,…,N}<br>$$<br>p表示坐标，f是feature vector，r是scale confidence value，表示位于实际场景表面附近的可能性。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><img src="/images/nerf-slam-6/image-20231220204200344.png" style="zoom:67%;">
+
+<img src="/images/nerf-slam-6/image-20231220164344891.png" style="zoom:67%;">
+
+<img src="/images/nerf-slam-6/image-20231220164600991.png" style="zoom:67%;">
+
+<p><strong>问题：</strong></p>
+<ul>
+<li><p>查询MLP的次数和原版NeRF差不多，拖慢了渲染速度；</p>
+<p>比如，这里可以用上SNeRG[20] Baking Neural Radiance Fields for Real-Time View Synthesis. ICCV 2021. 这样的延迟渲染模型来加速，把一条射线上的采样点的特征融合之后再拿去解码，从而减少MLP查询次数；</p>
+</li>
+<li><p>点云密度和渲染质量之间需要平衡；</p>
+<ul>
+<li>点云密度高，显存占用增加</li>
+<li>降低点云密度，会降低渲染质量</li>
+</ul>
+<p>小模型这样的问题不明显，但是场景扩大就有问题了；</p>
+</li>
+</ul>
+<h2 id="Point-SLAM"><a href="#Point-SLAM" class="headerlink" title="Point SLAM"></a>Point SLAM</h2><h3 id="System-Overview-1"><a href="#System-Overview-1" class="headerlink" title="System Overview"></a>System Overview</h3><img src="/images/nerf-slam-6/image-20240409142122665.png" style="zoom: 67%;">
+
+<h3 id="场景表示"><a href="#场景表示" class="headerlink" title="场景表示"></a>场景表示</h3><img src="/images/nerf-slam-6/image-20240409143848241.png" style="zoom:67%;">
+
+<p>一系列的点云，每个点包括：位置、geometric特征向量、color特征向量</p>
+<h3 id="Point-Adding-Strategy"><a href="#Point-Adding-Strategy" class="headerlink" title="Point Adding Strategy"></a>Point Adding Strategy</h3><ol>
+<li><strong>采样阶段</strong>：<ul>
+<li>对于每个映射阶段和给定的估计相机姿态，从图像平面均匀采样X个像素和在具有最高颜色梯度幅度的前10Y个像素中采样Y个像素。</li>
+</ul>
+</li>
+<li><strong>像素转换到3D空间</strong>：<ul>
+<li>利用可用的深度信息，将这些像素转换到三维空间。在三维空间中搜索半径为r内的邻居点。</li>
+</ul>
+</li>
+<li><strong>点的添加</strong>：<ul>
+<li>如果在搜索半径r内没有找到邻居点，则沿着光线添加三个神经点。这些点以深度读数D为中心，并且偏移量分别为(1 − ρ)D和(1 + ρ)D，其中ρ ∈ (0, 1)是一个超参数，用于考虑期望深度噪声。</li>
+</ul>
+</li>
+<li><strong>初始化</strong>：<ul>
+<li>使用特征向量的正态分布初始化这些点。这三个点作为有限的更新带，其深度依赖性可用于建模深度相机的常见噪声特性。</li>
+</ul>
+</li>
+<li><strong>点云的增长和收敛</strong>：<ul>
+<li>随着处理更多帧，神经点云逐渐增长以表示场景的探索，但当不再访问新的场景部分时，它会收敛到有限的点集。与许多基于体素的表示不同，不需要在重建之前指定任何场景边界。</li>
+</ul>
+</li>
+</ol>
+<p>该策略的关键思想是在SLAM过程中根据当前相机姿态和深度信息动态地添加特征点，以捕获场景中的重要结构并适应深度相机的噪声。这种方法允许在不提前知道场景边界的情况下进行建图，并且可以在场景探索过程中动态地调整特征点的分布。</p>
+<h3 id="Dynamic-Resolution"><a href="#Dynamic-Resolution" class="headerlink" title="Dynamic Resolution"></a>Dynamic Resolution</h3><p>简单说就是每个区域点的数量、密度都是动态调整的。这样可以在保持建图精度的同时，节省计算和内存资源。</p>
+<p>颜色梯度比较大的地方，可能信息比较丰富，就需要更大的点密度，Point Adding Strategy添加点的半径就可以设置的小一些；</p>
+<p>反过来，颜色梯度非常小的地方，那说明信息很少，可以更低的点密度，Point Adding Strategy添加点的半径可以更大一些。</p>
+<img src="/images/nerf-slam-6/image-20240409150606209.png" style="zoom:67%;">
+
+<h3 id="Rendering"><a href="#Rendering" class="headerlink" title="Rendering"></a>Rendering</h3><p>如果像素点有观测深度，就在深度前后采样5个点，按照距离计算权重；如果没有观测深度，就采样25个点，按照占用率计算权重。</p>
+<p>其他的部分比较常见，这里不记录。</p>
+<h3 id="Mapping"><a href="#Mapping" class="headerlink" title="Mapping"></a>Mapping</h3><p>损失函数很简单，这里有一个细节，对于每个mapping phase，首先只使用深度进行优化，论文认为这样可以更好的初始化颜色的优化过程。</p>
+<blockquote>
+<p>但是最近也有研究深度噪声对重建影响的工作，这里就完全依赖深度了。</p>
+<p>如果给的深度误差比较大，可能对重建的结果有不小的影响。</p>
+</blockquote>
+<h3 id="Tracking"><a href="#Tracking" class="headerlink" title="Tracking"></a>Tracking</h3><p>和NICE-SLAM的Tracking非常相似。</p>
+<h3 id="Exposure-Compensation"><a href="#Exposure-Compensation" class="headerlink" title="Exposure Compensation"></a>Exposure Compensation</h3><p>居然还有exposure MLP来处理不同帧之间曝光变化的问题。</p>
+<h3 id="实验部分"><a href="#实验部分" class="headerlink" title="实验部分"></a>实验部分</h3><p>主要在Replica、TUM-RGBD和ScanNet上面测试。mesh是通过marching cubes算法获取的。</p>
+<p>提到了对于motion blur和specularities（镜面反射）非常敏感。</p>
+<h2 id="Loopy-SLAM"><a href="#Loopy-SLAM" class="headerlink" title="Loopy SLAM"></a>Loopy SLAM</h2><blockquote>
+<p>还是Point SLAM那个组做的工作</p>
+</blockquote>
+<h3 id="论文的贡献"><a href="#论文的贡献" class="headerlink" title="论文的贡献"></a>论文的贡献</h3><ul>
+<li>我们提出了 Loopy-SLAM，这是一种密集的 RGBD SLAM 方法，它将神经特征锚定在点云子图中，这些子图在场景探索过程中以数据驱动的方式迭代增长。 我们根据相机运动动态创建子图，并逐步在子图关键帧之间构建姿势图。 全局位置识别用于在线检测循环闭合，并直接在场景表示上通过简单有效的刚性校正来全局对齐轨迹和子图。</li>
+<li>我们提出了一种直接实现密集神经 SLAM 闭环的方法，与之前的工作相反，不需要场景表示的任何梯度更新或重新集成策略</li>
+<li><strong>传统上，严格的子图配准可能会在重叠区域中产生可见的接缝。</strong> 我们基于神经点云的方法避免了这种情况，并且我们在轨迹捕获结束时应用颜色和几何的特征细化。 我们进一步引入了重叠区域中子图的特征融合策略，以避免过多的内存使用并提高渲染性能。</li>
+</ul>
+<h3 id="论文提到的观点"><a href="#论文提到的观点" class="headerlink" title="论文提到的观点"></a>论文提到的观点</h3><ul>
+<li><p>作者认为SLAM可以分为耦合的方法和解耦合的方法，其中<strong>耦合的方法指的是使用相同的场景表示来进行tracking和mapping，解耦的方法对每个任务都使用独立的框架</strong>。</p>
+<ul>
+<li><p>目前解耦的方法能够实现更好的跟踪精度，但是会产生不期望的数据冗余和独立性；</p>
+</li>
+<li><p>作者认为tracking和mapping是耦合的任务，可以用相同的场景表示；</p>
+</li>
+</ul>
+<blockquote>
+<p>这里不是很懂，作者提到的解耦的方法我刚好都没有好好的去看过，不过Orbeez-slam是使用传统方法tracking，再用instant-ngp做mapping的。</p>
+<p>作者引用的解耦的方法：</p>
+<ul>
+<li>Orbeez-slam</li>
+<li>Newton: Neural view-centric mapping for on-the-fly large-scale slam.</li>
+<li>NeRF-SLAM: Real-Time Dense Monocular SLAM with Neural Radiance Fields</li>
+<li>Go-slam: Global optimization for consistent 3d instant reconstruction.</li>
+</ul>
+<p>作者引用的耦合的方法：</p>
+<ul>
+<li>Eslam: Efficient dense slam system based on hybrid representation of signed distance fields</li>
+<li>Point-slam: Dense neural point cloud-based slam.</li>
+<li>iMAP: Implicit Mapping and Positioning in Real-Time.</li>
+<li>Co-slam: Joint coordinate and sparse parametric encodings for neural real-time slam</li>
+<li>Vox-fusion: Dense tracking and mapping with voxel-based neural implicit representation.</li>
+<li>Nice-slam: Neural implicit scalable encoding for slam.</li>
+</ul>
+</blockquote>
+</li>
+<li><p><strong>耦合方法中，除了MIPS_Fusion之外，其他所有方法都是实现的frame-to-model tracking，这会导致位姿出现显著的漂移。</strong></p>
+</li>
+<li><p><strong>解耦方法都使用多分辨率哈希网格，这样不容易进行地图校正。而基于点的表示方法特别适合进行地图校正。</strong></p>
+</li>
+</ul>
+<h3 id="对其他回环检测方法的评价"><a href="#对其他回环检测方法的评价" class="headerlink" title="对其他回环检测方法的评价"></a>对其他回环检测方法的评价</h3><p>略，直接看论文的Loop Closure on Dense Maps.部分</p>
+<h3 id="System-Overview-2"><a href="#System-Overview-2" class="headerlink" title="System Overview"></a>System Overview</h3><img src="/images/nerf-slam-6/image-20240409193805630.png" style="zoom:67%;">
+
+<p>大部分流程都和Point SLAM一样，需要注意的是<strong>Keyframe Selection and Submap Initialization</strong>部分：论文认为过于频繁的创建子图也会增加姿态漂移，因此他们没有使用固定间隔等方法，而是根据相机运动去动态的创建全局关键帧。然后，在子图构建完成的时候进行闭环检测。</p>
+<p>对于<strong>Building Submaps Progressively</strong>部分，提到了子图的第一帧作为全局关键帧，但是没有具体说明如何创建一个新的子图。。。不过Figure 2下面的描述倒是说创建新的全局关键帧的时候，会开始初始化一个新子图。</p>
+<blockquote>
+<p>那估计这个系统的全局关键帧会挺少的，不然子图会比较多。。。</p>
+</blockquote>
+<h3 id="Loop-Closure-and-Refinement"><a href="#Loop-Closure-and-Refinement" class="headerlink" title="Loop Closure and Refinement"></a>Loop Closure and Refinement</h3><p>与MIPS-Fusion相比的话，这里的loop closure比较功利，每次开始新的submap就检测一次回环，MIPS-Fusion是开启新的submap之后，如果再回到之前submap的subvolume中才会检测，而且还有额外的条件。</p>
+<p><strong>Global Place Recognition</strong>    每个全局关键帧都被添加到Bow数据库中用于位置识别。这里论文cue了一下MIPS-Fusion，认为MIPS-Fusion这种通过重叠的submap去检测回环，只适合较小漂移的校正。</p>
+<blockquote>
+<p>有点像ORB-SLAM的做法，这里我需要再好好了解一下</p>
+<p>但是这里即使全局位置识别做得很好，自己用的还是子地图，而且还是每次开始新的子地图就检测一次回环，真不一定能比过MIPS-Fusion吧。。。</p>
+<p>而且后面的实验也没有和人家MIPS-Fusion用过的数据集比较。。。</p>
+</blockquote>
+<p><strong>Pose Graph Optimization</strong>    下面是GPT的一个总结</p>
+<img src="/images/nerf-slam-6/image-20240412103921609.png" style="zoom: 80%;">
+
+<blockquote>
+<p>这部分看不太懂，以后再好好研究一下吧。。。</p>
+</blockquote>
+<p><strong>Loop Edge Constraints</strong>    下面也是GPT的一个介绍</p>
+<img src="/images/nerf-slam-6/image-20240412104304511.png">
+
+<p><strong>Feature Fusion and Refinement</strong>    在tracking结束之后才会开始连接所有子图来构成一个全局的神经点云，首先是进行特征融合来压缩模型，由于Loopy SLAM是基于Point SLAM的工作，本质上还是feature point+decoder的结构，这里论文选择的是特征融合之后固定decoder，然后把color 和 geometry feature再进行一个优化。</p>
+<h3 id="实验部分-1"><a href="#实验部分-1" class="headerlink" title="实验部分"></a>实验部分</h3><p>Replica、TUM-RGBD数据集都用了，但是没有专门去找那种大场景、回环的。</p>
+<p>不过论文在ScanNet上做了一些实验，倒是也有说服力的证明了自己的回环是有效果的。</p>
+<blockquote>
+<p>但是我最近看的这些做回环检测的论文，实验都做的不太够。。</p>
+<p>一方面，在经典的几个数据集上比较自己的性能；</p>
+<p>另外一方面，只在某个能体现回环的数据集上证明自己回环有效果。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>NeRF</tag>
+        <tag>视觉SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Ubuntu配置OpenCV及多版本OpenCV共存</title>
     <url>/2021/07/06/opencv-notes-0/</url>
     <content><![CDATA[<h1 id="Ubuntu配置OpenCV及多版本OpenCV共存"><a href="#Ubuntu配置OpenCV及多版本OpenCV共存" class="headerlink" title="Ubuntu配置OpenCV及多版本OpenCV共存"></a>Ubuntu配置OpenCV及多版本OpenCV共存</h1><p>本文主要介绍ubuntu下OpenCV的安装，以及如何实现多个OpenCV版本共存。</p>
@@ -6538,6 +6729,277 @@ seek<span class="token double-colon punctuation">::</span><span class="token fun
       </tags>
   </entry>
   <entry>
+    <title>3DGS SLAM泛读（一）</title>
+    <url>/2024/03/06/paper-reading-3dgs-slam-1/</url>
+    <content><![CDATA[<h1 id="3DGS-SLAM泛读（一）"><a href="#3DGS-SLAM泛读（一）" class="headerlink" title="3DGS SLAM泛读（一）"></a>3DGS SLAM泛读（一）</h1><h2 id="GS-SLAM"><a href="#GS-SLAM" class="headerlink" title="GS-SLAM"></a>GS-SLAM</h2><p><strong>贡献：</strong></p>
+<ul>
+<li>第一个3D高斯的稠密RGB-D SLAM方法</li>
+<li>自适应3D高斯扩展策略，coarse to fine的选择可靠的3D高斯</li>
+<li>8FPS的速度，平衡效率与精度</li>
+</ul>
+<p><strong>Overview：</strong></p>
+<img src="/images/3dgs-slam-1/image-20240306193920492.png" style="zoom:67%;">
+
+<p><strong>场景表示：</strong></p>
+<p>与3dgs一模一样的表示方法</p>
+<img src="/images/3dgs-slam-1/image-20240315150752115.png" style="zoom:67%;">
+
+<p><strong>个人观点：</strong></p>
+<p>做的比较粗糙，没有特别亮眼的地方，感觉就是按照之前NeRF SLAM的思路，简单的用3DGS又做了一遍。不过可以基于这篇论文，了解一下3DGS SLAM应该是怎么样去做的，这篇论文比较好理解。</p>
+<p>实验部分能看到受益于3DGS，渲染做得很好、速度也很快，但是跟踪和建图的精度以及速度却和之前NeRF SLAM的方法却差距不大（甚至不如ESLAM和COSLAM），这里个人感觉是有问题的。</p>
+<h2 id="Gaussian-SLAM"><a href="#Gaussian-SLAM" class="headerlink" title="Gaussian-SLAM"></a>Gaussian-SLAM</h2><p><strong>贡献：</strong></p>
+<ul>
+<li>3D高斯表示场景的RGB-D SLAM方法</li>
+<li>扩展了Gaussian splatting，更好的编码几何形状</li>
+<li>高斯分布的在线学习策略，将场景分成很多子场景，并且引入了seeding和优化的策略</li>
+<li>通过最小化光度误差，实现了frame-to-model的tracking，并且和现有的frame-to-frame的方法作了比较</li>
+</ul>
+<p><strong>Limitations of Gaussian Splatting for SLAM：</strong></p>
+<p>这篇论文讲了Gaussian Splatting运用到SLAM算法中的局限性，个人认为是比较值得参考的。这里讲了几点问题：</p>
+<ul>
+<li><p><strong>Seeding strategy for online SLAM</strong></p>
+<p>原始3DGS的自适应密度控制策略是iterative dynamic behavior的，可能会导致mapping的迭代和计算时间发生剧烈的变化，这种方式不适合SLAM。</p>
+<blockquote>
+<p>因为SLAM既要建图又要跟踪吧，如果建图时间过长，或者地图更新太大，会对跟踪造成很不好的影响</p>
+</blockquote>
+</li>
+<li><p><strong>Online optimization</strong></p>
+<p>对于较长的序列来说，在线优化所有帧太慢了</p>
+<blockquote>
+<p>这个，就好像sfm和slam</p>
+</blockquote>
+</li>
+<li><p><strong>Catastrophic forgetting in online optimization</strong></p>
+<p>为了避免每个新帧带来地图的线性增长，一种候选的方案是使用当前帧去优化高斯场景表示。但是这种方法会导致之前mapped views严重退化。</p>
+<blockquote>
+<p>这里我不理解，为什么会导致之前优化的结果严重退化？</p>
+<p>是因为当前帧和前面的帧有重复的内容，而这个候选的方案只考虑当前帧，优化之后的3D高斯只能和当前帧“合得来”，而和之前的帧就“合不来”了？</p>
+</blockquote>
+</li>
+<li><p><strong>Highly randomized solutions</strong></p>
+<p>提到了splatting优化的结果高度依赖于高斯的初始化。并且优化过程中，会受到相邻高斯的影响，高斯可能会向不同的方向增长。</p>
+<p>3D高斯固有的对称性导致了不影响损失函数（损失不变）的情况下，3D高斯的参数可以被改动，就是说存在不唯一的解，而这种情况是优化过程不希望出现的。</p>
+<blockquote>
+<p>这可能会导致有时候优化了，损失函数没有被改变？</p>
+</blockquote>
+</li>
+<li><p><strong>Poor extrapolation capabilities</strong></p>
+<p>高斯函数经常不受控制的生长到未观察到的区域。原始3DGS的方法因为良好的视图覆盖，可以约束大多数高斯模型；但是稀疏视图的SLAM中，新视图往往包含由于先前约束不足的高斯模型产生的伪影，这对于model-based tracking影响很致命。</p>
+<blockquote>
+<p>因为存在伪影，使用color或者depth计算的损失都会有一些影响？</p>
+</blockquote>
+</li>
+<li><p><strong>Limited geometric accuracy</strong></p>
+<p>单目的情况下，3DGS不擅长编码精确的几何形状。</p>
+</li>
+</ul>
+<blockquote>
+<p>其实根据这里所讲的几个问题，我认为对于3D高斯来说，SLAM似乎是这样的一个问题：稀疏视角（我们可能不会mapping每一帧，每次对于新的观测区域也都可以算是稀疏视角的）、位姿未知（需要tracking每一帧）、在线（数据是一帧一帧来的，不是一次性给到位的）的重建问题</p>
+<p>另外，这篇论文是我见过，提出问题最多的论文。</p>
+</blockquote>
+<p><strong>Overview：</strong></p>
+<img src="/images/3dgs-slam-1/image-20240306205206830.png" style="zoom:67%;">
+
+<blockquote>
+<p>看起来是借鉴了ORB-SLAM3的思路，用sub-map的方式去尝试解决3DGS在SLAM中的一些问题。</p>
+</blockquote>
+<p><strong>场景表示：</strong></p>
+<p>看起来也是用的原版的3dgs，没有做什么改动？？？</p>
+<p><strong>实验部分：</strong></p>
+<img src="/images/3dgs-slam-1/image-20240306215736766.png" style="zoom:67%;">
+
+<blockquote>
+<p>实验部分很有意思，展示了一个比较关键的问题：<strong>纯3DGS的tracking性能不好，加入pre-mapped效果会好很多</strong></p>
+<p>但是也反映了一个和GS-SLAM一样存在的问题：<strong>Rendering的速度很快，但Mapping的速度并不快</strong></p>
+</blockquote>
+<p><strong>个人观点：</strong></p>
+<p>对于3DGS应用到SLAM中可能存在的问题，做了一个很好的介绍，很有参考价值。</p>
+<p>实验中体现了两个值得关注的问题：</p>
+<ul>
+<li>纯粹的依靠3DGS的tracking，性能不好，但是加入pre-mapped之后效果会好很多；</li>
+<li>目前的3DGS SLAM，Rendering速度都很快，但是Mapping和Tracking的速度普遍与之前NeRF-SLAM的方法差距不大。</li>
+</ul>
+<h2 id="SplaTAM"><a href="#SplaTAM" class="headerlink" title="SplaTAM"></a>SplaTAM</h2><p><strong>贡献：</strong></p>
+<p>SplaTAM解决了之前基于辐射场表示的局限性，包括：快速渲染和优化、<strong>确定区域先前是否已建图的能力、通过添加更多高斯函数进行结构化地图扩展</strong>。</p>
+<p><strong>对显示3D Gaussian用于SLAM的优点做了分析：</strong></p>
+<ul>
+<li><p>Fast rendering and rich optimization</p>
+<blockquote>
+<p>能够实时使用dense photometric loss进行SLAM</p>
+</blockquote>
+</li>
+<li><p>具有明确空间范围的地图，可以轻松控制现有地图的边界</p>
+<blockquote>
+<p>但是我认为它主要是和用MLP表示场景的方法相比，而feature grid+mlp的方法其实已经可以控制地图的边界了，不过也没有3dgs这么灵活。</p>
+</blockquote>
+</li>
+<li><p>显示的地图</p>
+<blockquote>
+<p>目前来看，显示的地图更好编辑和增加容量</p>
+</blockquote>
+</li>
+<li><p>到参数的直接梯度流</p>
+<blockquote>
+<p>不太懂这个。。。</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>SLAM System</strong></p>
+<img src="/images/3dgs-slam-1/image-20240315152612755.png" style="zoom:67%;">
+
+<img src="/images/3dgs-slam-1/image-20240315151501208.png" style="zoom:67%;">
+
+<ul>
+<li><p><strong>Initialization</strong></p>
+<img src="/images/3dgs-slam-1/image-20240315160040041.png" style="zoom:67%;">
+</li>
+<li><p><strong>Tracking</strong></p>
+<img src="/images/3dgs-slam-1/image-20240315160108994.png" style="zoom:67%;">
+
+<img src="/images/3dgs-slam-1/image-20240315160120508.png" style="zoom:67%;">
+</li>
+<li><p><strong>Gaussian Densification</strong></p>
+<img src="/images/3dgs-slam-1/image-20240315160207865.png" style="zoom:67%;">
+</li>
+<li><p><strong>Gaussian Map Updating</strong></p>
+<img src="/images/3dgs-slam-1/image-20240315160237644.png" style="zoom:67%;">
+
+</li>
+</ul>
+<p><strong>场景表示：</strong></p>
+<p>与原始的3dgs相比，使用了与视图无关的颜色，强制高斯分布为各向同性。</p>
+<blockquote>
+<p>与视图无关的颜色指的是没有用球谐函数了？？？从论文的说法看确实是这样的</p>
+</blockquote>
+<p>每个高斯对应了8个值：颜色R、G、B，中心位置x、y、z，半径r，不透明度o</p>
+<p><strong>实验部分：</strong></p>
+<p>这里我主要关注耗时，SplaTAM其实并没有在Tracking和Mapping的耗时上彻底优于之前基于NeRF的SLAM方法，只能说在渲染的速率上快了很多。</p>
+<img src="/images/3dgs-slam-1/image-20240315160602090.png" style="zoom: 67%;">
+
+<p><strong>Limitations and Future Work</strong></p>
+<img src="/images/3dgs-slam-1/image-20240315160722944.png" style="zoom:67%;">
+
+<p><strong>个人观点：</strong></p>
+<p>感觉不是非常有特色，和其他3dgs slam相比，最大的不同可能只是场景的表示不一样了，放弃了球谐函数，每个3dgs都只有8个参数。有一个博士评价这个工作拼凑感太强。</p>
+<p>不过这篇论文是第一个开源的，而且也把工作的流程讲的很清楚，可以拿来好好学习。</p>
+<h2 id="Gaussian-Splatting-SLAM"><a href="#Gaussian-Splatting-SLAM" class="headerlink" title="Gaussian Splatting SLAM"></a>Gaussian Splatting SLAM</h2><p><strong>贡献：</strong></p>
+<img src="/images/3dgs-slam-1/image-20240310145931259.png" style="zoom:67%;">
+
+
+
+<p><strong>论文提及的一些观点：</strong></p>
+<ul>
+<li>NeRF近期的发展都引入了显示的体积结构，从这些工作中可以推断出：<strong>高质量新视图合成的关键不是神经网络，而是可微分体积渲染</strong>。以Plenoxels为例，可以避免使用MLP就实现与NeRF相当的渲染质量。</li>
+</ul>
+<p><strong>场景表示：</strong></p>
+<p>anisotropic（各向异性）的3DGS，但是省略了球谐函数相关的部分</p>
+<img src="/images/3dgs-slam-1/image-20240319153804529.png" style="zoom: 67%;">
+
+
+
+<p><strong>部分公式推导、理解</strong></p>
+<img src="/images/3dgs-slam-1/image-20240320171441720.png" style="zoom: 67%;">
+
+<p>公式3：回顾《视觉SLAM十四讲》，可以比较简单的推导出来。但是对于这里面表示反对称的符号为什么有两种，个人不太理解。</p>
+<p>公式4：我好像对雅可比矩阵等内容非常不熟悉，还需要好好了解一下才能继续写这部分！！！</p>
+<p><strong>System Overview</strong></p>
+<img src="/images/3dgs-slam-1/image-20240320180342588.png" style="zoom:67%;">
+
+<p>Tracking部分还是老样子的感觉，毕竟无论NeRF SLAM还是3DGS SLAM基本都是用frame-to-model优化位姿，玩不出新花样来。</p>
+<p>Keyframing有点传统slam的意思了，通过共视关系选择关键帧，并且使用DSO的方式管理关键帧。同时3DGS也遵循可见性排序，考虑Gaussian Covisibility又进一步简化了关键帧的选择与管理。另外，看起来3DGS场景也只能由keyframe去加入点，同时也会看这些高斯函数是否被其他关键帧看到，没看到就会被修剪掉。</p>
+<blockquote>
+<p>关键帧选择对mono slam来说应该是很重要的，因为只有只有multiple-view observations才能够决定场景的几何结构！</p>
+</blockquote>
+<p>Mapping部分之前的工作我也没好好了解，但是这部分其实才是3dgs slam中最重要的部分。这里详细记录一下：</p>
+<ul>
+<li><p>基于共视关系选择一系列的关键帧，用于优化当前的可见区域；</p>
+<p>另外每次迭代优化都随机选择两个过往关键帧，防止遗忘全局地图。</p>
+<blockquote>
+<p>3dgs这种表示为什么会担心遗忘全局地图呢？</p>
+<p>最近刚好自己写了一个简单的3dgs slam，一帧进来优化位姿、优化场景，这种的最后也就学出来了一个几何结构，但是颜色、视图很差，我这里用的RGB各16维的球谐系数，不过场景是各向同性的3dgs，我认为是球谐函数被影响的问题。</p>
+<p>但是放到这里，mono GS放弃了球谐函数，但是选择了各向异性的3dgs，会不会是各向异性的问题？</p>
+</blockquote>
+</li>
+<li><p>引入了一个各向同性正则化，减少伪影，方便SLAM的tracking</p>
+<blockquote>
+<p>为什么不干脆用各向同性的3dgs呢？？？</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>实验部分</strong></p>
+<p>略，懒得记了，到时候直接看论文！</p>
+<h2 id="Photo-SLAM"><a href="#Photo-SLAM" class="headerlink" title="Photo-SLAM"></a>Photo-SLAM</h2><p><strong>Motivation：</strong>Our proposed Photo-SLAM seeks to recover a concise representation of the observed environment <strong>for immersive exploration rather than reconstructing a dense mesh</strong>.</p>
+<p><strong>贡献：</strong></p>
+<img src="/images/3dgs-slam-1/image-20240326153452403.png" style="zoom:67%;">
+
+<p><strong>Overview：</strong></p>
+<img src="/images/3dgs-slam-1/image-20240326154856204.png" style="zoom: 80%;">
+
+<p>根据论文的描述，photo-SLAM包括：localization、geometry mapping、photorealistic mapping、loop closure，并且每一个组件都有一个单独的线程，而且他们共同维护了一个hyper primitives map。</p>
+<blockquote>
+<p>ORB-SLAM3分为tracking、local mapping、loop and map merging这三个线程</p>
+<p>ORB-SLAM2分为tracking、local mapping、loop closing这三个线程</p>
+<p>个人感觉photo slam是基于orb slam2或3的工作，在上面加了一个3DGS的photorealistic mapping线程。</p>
+</blockquote>
+<p><strong>Hyper Primitives Map</strong>【场景表征】</p>
+<p>Hyper Primitives由一系列的点云组成，而这些点云包括了：ORB特征、旋转、缩放、密度、球谐系数</p>
+<blockquote>
+<p>point cloud: 3维</p>
+<p>ORB features: 256维</p>
+<p>rotation: 3维, SO(3)</p>
+<p>scaling: 3维</p>
+<p>density: 1维</p>
+<p>SH: 16维</p>
+<p>个人观点：在原始的3DGS上加入了ORB特征，而3DGS点云的添加来自于ORB-SLAM产生的地图点（ORB特征点），<strong>ORB特征用传统方法得到，而其他的都是原汁原味的3DGS</strong></p>
+<p>这样做对于传统SLAM方法而言，还是非常自然的，但是photorealistic mapping真的能够实时运行吗？</p>
+</blockquote>
+<p><strong>Localization and Geometry Mapping</strong></p>
+<p>作用：实时的位姿估计、稀疏的3D点云，创建所谓的Hyper Primitives</p>
+<blockquote>
+<p>感觉很经典，，，先不仔细看，后面和ORB-SLAM比较一下</p>
+</blockquote>
+<p><strong>Photorealisitc Mapping</strong></p>
+<p>作用：负责优化geometry mapping thread线程创建的Hyper Primitives</p>
+<blockquote>
+<p> 这部分就放了个损失函数欸</p>
+</blockquote>
+<p><strong>Geometry-based Densification</strong></p>
+<p>这部分说为了保证实时性，只生成了稀疏的Hyper Primitives，后面还需要致密化。他们额外设计了一个基于几何结构的致密化方法。</p>
+<p>他们做的实验表明：只有不到30%的特征点是active的并且有对应的3D点。而他们认为2D几何特征点的分布表示这些区域有更复杂的纹理，因此需要更多的Hyper Primitives，他们会把inactive的特征点主动创建成额外的临时Hyper Primitives。</p>
+<img src="/images/3dgs-slam-1/image-20240329154831969.png" style="zoom:80%;">
+
+<blockquote>
+<p>这个也不太像是基于几何结构的致密化方法，感觉做的很简单。</p>
+<p>不过思路很不错，特征点多的区域确实是纹理复杂的区域，但是如果我想重建场景的话，特征点少的区域、纹理弱的区域也是很重要的，这部分应该怎么去处理呢？</p>
+<p>是不是可以特征点多、纹理丰富的区域做一种处理方法，多放小的3DGS点；</p>
+<p>在特征点少、纹理弱的区域另外处理，比如放一些大的3DGS点</p>
+</blockquote>
+<p><strong>Gaussian-Pyramid-Based Learning</strong></p>
+<p><img src="/images/3dgs-slam-1/image-20240329154856803.png"></p>
+<p>论文在这里介绍了一些Progressive training的方法，比如NSVF、NVGO是训练中逐步增加特征网格的分辨率，较低分辨率的decoder用来初始化较高分辨率的decoder；NGLoD是逐步训练多个MLP做编码器解码器，最后只保留最终的那个解码器；Neuralangelo是在训练过程中只保持一个MLP；BungeeNeRF是用不同模型处理不同分辨率的图像，算是一种显示的方法。</p>
+<p>论文提出的方法是基于高斯金字塔的学习方法，分辨率逐渐增加。</p>
+<img src="/images/3dgs-slam-1/image-20240329154905950.png" style="zoom:67%;">
+
+<blockquote>
+<p>看起来其实也是很好地利用了ORB-SLAM提供的一些东西</p>
+</blockquote>
+<p><strong>Loop Closure</strong></p>
+<p>论文这里写的很简洁，个人认为就是套用ORB-SLAM的回环检测。</p>
+<p>这里只是提到了检测到闭环之后，通过相似变换矫正关键帧和Hyper Primitives，然后还需要优化来消除一些重影。</p>
+<p><strong>实验部分</strong></p>
+<p>论文提到Photo-SLAM是用C++和CUDA写的，使用了ORB-SLAM3、3D Gaussian Splatting和LibTorch的框架。</p>
+<p>实验部分略过，但是有一个很大的疑惑：既然说了用了英伟达的Jetson平台，为什么没有指明到底用的什么平台？而且看Table 1，这种方法即使在Jetson上也需要4GB的显存，Laptop也是4GB，然后桌面端显存需要6GB。这个Jetson跑的效果也还行，渲染速率也是100fps左右。</p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>隐式表示</tag>
+        <tag>视觉SLAM</tag>
+        <tag>3D Gaussian Splatting</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>论文阅读《DENSE RGB SLAM WITH NEURAL IMPLICIT MAPS》</title>
     <url>/2023/03/19/paper-reading-dim-slam/</url>
     <content><![CDATA[<h1 id="论文阅读《DENSE-RGB-SLAM-WITH-NEURAL-IMPLICIT-MAPS》"><a href="#论文阅读《DENSE-RGB-SLAM-WITH-NEURAL-IMPLICIT-MAPS》" class="headerlink" title="论文阅读《DENSE RGB SLAM WITH NEURAL IMPLICIT MAPS》"></a>论文阅读《DENSE RGB SLAM WITH NEURAL IMPLICIT MAPS》</h1><p>本论文提出了一种具有神经隐式映射表示的稠密RGB SLAM。该方案不需要深度输入，并且不需要任何预训练模型。为了实现这一目标，本文引入了一个分层的特征体积来辅助隐式地图解码器，有效地融合不同尺度的形状线索以促进地图重建。同时，通过匹配渲染和输入视频帧来同时解决相机运动和神经隐式地图。为了更好地约束相机姿态和场景几何，本文进一步在损失函数中应用了光度曲翘损失（sophisticated warping loss）。</p>
@@ -6613,6 +7075,91 @@ seek<span class="token double-colon punctuation">::</span><span class="token fun
 <li>深度学习之单目深度估计 (Chapter.1)：基础篇 - 桔子毛的文章 - 知乎 <a href="https://zhuanlan.zhihu.com/p/29864012">https://zhuanlan.zhihu.com/p/29864012</a></li>
 <li>深度学习之单目深度估计 (Chapter.2)：无监督学习篇 - 桔子毛的文章 - 知乎 <a href="https://zhuanlan.zhihu.com/p/29968267">https://zhuanlan.zhihu.com/p/29968267</a></li>
 </ul>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>隐式表示</tag>
+        <tag>视觉SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文阅读《ESLAM Efficient Dense SLAM System Based on Hybrid Representation of Signed Distance Fields》</title>
+    <url>/2024/03/15/paper-reading-eslam/</url>
+    <content><![CDATA[<h1 id="论文阅读《ESLAM-Efficient-Dense-SLAM-System-Based-on-Hybrid-Representation-of-Signed-Distance-Fields》"><a href="#论文阅读《ESLAM-Efficient-Dense-SLAM-System-Based-on-Hybrid-Representation-of-Signed-Distance-Fields》" class="headerlink" title="论文阅读《ESLAM Efficient Dense SLAM System Based on Hybrid Representation of Signed Distance Fields》"></a>论文阅读《ESLAM Efficient Dense SLAM System Based on Hybrid Representation of Signed Distance Fields》</h1><p>和co-slam同时期的工作，他们都使用了TSDF来表示场景。</p>
+<blockquote>
+<p>似乎E-SLAM不知道有co-slam，但是co-slam知道E-SLAM。</p>
+</blockquote>
+<p>宣称：</p>
+<ul>
+<li>比iMAP和NICE-SLAM准确度高了50%</li>
+<li>比他们快了10倍</li>
+</ul>
+<h3 id="System-Overview"><a href="#System-Overview" class="headerlink" title="System Overview"></a>System Overview</h3><img src="/images/paper-reading-eslam/image-20240303163742495.png" style="zoom:67%;">
+
+<h4 id="Axis-Aligned-Feature-Planes"><a href="#Axis-Aligned-Feature-Planes" class="headerlink" title="Axis-Aligned Feature Planes"></a>Axis-Aligned Feature Planes</h4><p>上图左边是他们的<strong>Axis-Aligned Feature Planes</strong>，他们宣称基于体素网格的NeRF能快速收敛，但是对于更大的场景表示还是有困难的，内存消耗会越来越大。而他们这种三平面结构可以环节这样的问题。他们在垂直轴对齐的平面上存储和优化特征。</p>
+<p><strong>feature plane的细节：</strong></p>
+<ul>
+<li><p>coarse to fine</p>
+</li>
+<li><p>单独的feature plane表示几何和外观。考虑到外观（颜色）是经常变化的，而几何体比较稳定，所以把它们分开表示了。</p>
+<blockquote>
+<p>这样的话，又回到了iMAP的问题了，容易遗忘。</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>如何进行采样：</strong></p>
+<ul>
+<li><p>对于空间中某一个点，通过双线性插值获取每个特征平面上的特征</p>
+</li>
+<li><p>对于几何和颜色特征平面，都是：</p>
+<p>coarse平面的三个特征向量求和，fine平面的三个特征向量求和</p>
+<p>最后，coarse和fine求和的特征向量拼接到一起。</p>
+<blockquote>
+<p>求和是不是太简单了？</p>
+</blockquote>
+</li>
+<li><p>通过两层的MLP进行解码，拿到TSDF和颜色</p>
+</li>
+</ul>
+<blockquote>
+<p>根据上面的说法，我猜测特征平面的初始化会比较重要，也比较难处理，容易导致错误的重建。</p>
+<p>在看E-SLAM运行的过程中，发现他对于相机后没有观测到的的部分，会给重建成相机前观察到的部分，比如展示在replica数据集中重建结果时：</p>
+<img src="/images/paper-reading-eslam/image-20240303165343425.png" style="zoom:67%;">
+</blockquote>
+<h4 id="SDF-Based-Volume-Rendering"><a href="#SDF-Based-Volume-Rendering" class="headerlink" title="SDF-Based Volume Rendering"></a>SDF-Based Volume Rendering</h4><p>与NICE-SLAM几乎一致的流程，不过考虑到了某些像素点不一定有深度信息的情况：</p>
+<ul>
+<li>采样N_start点</li>
+<li>对于有深度信息的，深度前后截断距离T内，采样N_imp个</li>
+<li>对于没有深度信息的，类似iMAP用N_start计算一个权重再采样N_imp个</li>
+</ul>
+<p>对于TSDF值，E-SLAM是将其处理成了体密度，再根据体密度去计算权重等等，其他部分和NICE-SLAM没有区别。</p>
+<blockquote>
+<p>在看了co-slam之后再来看E-SLAM，发现E-SLAM在处理TSDF的时候还是太过于保守了。</p>
+<p>在E-SLAM中，是先将TSDF值转换成体密度，再根据体渲染的公式去计算权重，这样还是太麻烦了；</p>
+<p>而co-slam中，是直接通过sigmoid(tsdf)*sigmoid(-tsdf)拿到权重了。</p>
+<p>个人认为，毕竟我们是在做一个隐式神经表示的SLAM，过程都是可学习的，在权重这个部分，保证越接近表面的点权重越大的趋势就行了，其他的都是可以学习到的。</p>
+</blockquote>
+<h4 id="Loss-Functions"><a href="#Loss-Functions" class="headerlink" title="Loss Functions"></a>Loss Functions</h4><p>除了和NICE-SLAM相似的颜色、深度损失外，由于使用了TSDF，可以考虑采样点的损失：</p>
+<p><strong>free space loss</strong>    鼓励TSDF在free space中具有1的数值，在这个公式中，看起来是鼓励相机中心到物体表面之间被采样的点应当TSDF=1</p>
+<img src="/images/paper-reading-eslam/image-20240303172754222.png" style="zoom: 67%;">
+
+<p><strong>signed distance objective</strong>    看起来是希望靠近物体表面的那些被采样的点，能够拥有正确的SDF值。</p>
+<img src="/images/paper-reading-eslam/image-20240303173330015.png" style="zoom:67%;">
+
+<blockquote>
+<p>最中心的公式含义为：</p>
+<p>采样点沿射线的深度 + tsdf * 截断距离 - 深度真值</p>
+</blockquote>
+<p>根据距离物体表面的远近，E-SLAM把接近物体表面的点分成了两批去计算损失（方便用不同的权重）</p>
+<img src="/images/paper-reading-eslam/image-20240303173527906.png" style="zoom:67%;">
+
+<h4 id="Mapping-and-Tracking"><a href="#Mapping-and-Tracking" class="headerlink" title="Mapping and Tracking"></a>Mapping and Tracking</h4><p>Mapping和NICE-SLAM差不多，特征平面和MLP都是随机初始化的。</p>
+<p>Tracking看起来也没有什么特殊的地方。</p>
+<h4 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h4><p>与NICE-SLAM和iMAP比较，效果确实好一些</p>
+<h4 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h4><p>这部分提到了<strong>E-SLAM接受并处理遗忘问题，以此来换取更小的内存开销</strong>。E-SLAM像iMAP一样，更新特征会影响之前重建的几何形状，因此还需要不断地学习之前的关键帧。如果能够更有效地处理遗忘问题，可以进一步加快运行速度。</p>
+<h4 id="Supplementary-Materials"><a href="#Supplementary-Materials" class="headerlink" title="Supplementary Materials"></a>Supplementary Materials</h4><p>这里提到E-SLAM使用marching cubes算法获取mesh，并且没有进行任何的后处理。</p>
 ]]></content>
       <categories>
         <category>slam</category>
