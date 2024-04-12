@@ -4,8 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="论文阅读《iMAP：Implicit Mapping and Positioning in Real-Time 》, 所念皆星河">
-    <meta name="description" content="论文阅读《iMAP: Implicit Mapping and Positioning in Real-Time 》Abstract我们首次展示了多层感知器 (MLP) 可以作为手持 RGB-D 相机的实时 SLAM 系统中唯一的场景表示。">
+    <meta name="keywords" content="论文阅读《MIPS-Fusion Multi-Implicit-Submaps for Scalable and Robust Online Neural RGB-D 》, 所念皆星河">
+    <meta name="description" content="论文阅读《MIPS-Fusion: Multi-Implicit-Submaps for Scalable and Robust Online Neural RGB-D 》ReconstructionSystem Pipeline
+
+Mul">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +19,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>论文阅读《iMAP：Implicit Mapping and Positioning in Real-Time 》 | 所念皆星河</title>
+    <title>论文阅读《MIPS-Fusion Multi-Implicit-Submaps for Scalable and Robust Online Neural RGB-D 》 | 所念皆星河</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -293,12 +295,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/48.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">论文阅读《iMAP：Implicit Mapping and Positioning in Real-Time 》</h1>
+                    <h1 class="description center-align post-title">论文阅读《MIPS-Fusion Multi-Implicit-Submaps for Scalable and Robust Online Neural RGB-D 》</h1>
                 </div>
             </div>
         </div>
@@ -351,7 +353,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-08-31
+                    2024-04-10
                 </div>
                 
 
@@ -360,14 +362,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    6k
+                    2.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    21 分
+                    8 分
                 </div>
                 
 
@@ -390,92 +392,120 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="论文阅读《iMAP-Implicit-Mapping-and-Positioning-in-Real-Time-》"><a href="#论文阅读《iMAP-Implicit-Mapping-and-Positioning-in-Real-Time-》" class="headerlink" title="论文阅读《iMAP: Implicit Mapping and Positioning in Real-Time 》"></a>论文阅读《iMAP: Implicit Mapping and Positioning in Real-Time 》</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>我们首次展示了多层感知器 (MLP) 可以作为手持 RGB-D 相机的实时 SLAM 系统中唯一的场景表示。 我们的网络在没有先验数据的情况下进行实时操作训练，构建了一个稠密的、特定场景的隐式 3D 占用和颜色模型，该模型也可立即用于跟踪。</p>
-<p>通过针对实时图像流持续训练神经网络来实现实时 SLAM 需要重大创新。 我们的 iMAP 算法使用关键帧结构和多处理计算流程，采用动态信息引导像素采样提高速度，跟踪频率为 10 Hz，全局地图更新频率为 2 Hz。 与标准稠密 SLAM 技术相比，隐式 MLP 的优势包括具有自动细节控制的高效几何表示以及对未观察区域（例如对象的后表面）的平滑、合理填充。</p>
-<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>用于智能体现设备的实时同步定位和映射 (SLAM) 系统必须逐步构建 3D 世界的表示，以实现定位和场景理解。理想的表示应该精确地编码几何图形，但也应该是高效的，可用的内存容量可以根据场景大小和复杂性自适应地使用； 预测性的，能够合理地估计未直接观察到的区域的形状； 灵活，无需大量训练数据或手动调整即可在新场景下运行。</p>
-<p>隐式神经表示是离线重建的一个有前途的最新进展，它使用多层感知器 (MLP) 将 3D 点映射到占用或颜色，并从头开始对其进行优化以适应特定场景。  MLP 是一种通用的隐式函数逼近器，能够用很少的参数表示可变细节并且没有量化伪影。即使没有事先的训练，网络结构中存在的固有先验也允许它从部分数据中做出稠密的几何估计，并合理地完成未观察到的区域。</p>
-<p>在本文中，我们首次展示了 MLP 可以用作使用手持 RGB-D 相机的实时 SLAM 系统中的唯一场景表示。 我们随机初始化的网络是在实时操作中训练的，我们不需要任何先前的训练数据。 我们的 iMAP 系统设计有关键帧结构和多处理计算流程，让人想起 PTAM 。 在以超过 10 Hz 运行的跟踪过程中，我们将实时 RGB-D 观察与来自 MLP 场景地图的渲染深度和颜色预测对齐。 同时，映射过程选择并维护一组视点跨越场景的历史关键帧，并使用这些关键帧不断训练和改进 MLP，同时联合优化关键帧姿势。</p>
-<p>在跟踪和映射中，我们动态地对信息量最大的 RGB-D 像素进行采样，以减少几何不确定性，实现实时速度。 我们的系统在 Python 中运行，所有优化都是通过单个桌面 CPU/GPU 系统上的标准 PyTorch 框架。</p>
-<p>通过将 SLAM 视为一个持续学习问题，我们实现了一种表示，该表示可以有效地表示具有连续和自适应分辨率的场景，并且具有出色的平滑插值能力以实现完整的、无懈可击的重建（图 1）。 使用大约 10~20 个关键帧和一个只有 1 MB 参数的 MLP，我们可以准确地映射整个房间。 我们的场景表示没有固定的分辨率； 关键帧的分布自动实现高效的多尺度映射。</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830223022639.png" alt="图 1：使用 Azure Kinect RGB-D 摄像头从实时 iMAP 重建房间，显示稠密场景模型、摄像头跟踪和自动关键帧集。"></p>
-<p>我们在各种真实世界序列上展示了我们的系统，并对来自房间规模的副本数据集的 8 个场景进行了详尽的评估和烧蚀分析。 我们表明，与标准稠密 SLAM 系统相比，iMAP 可以进行更完整的场景重建，并且内存占用明显更小。 我们在 TUM RGB-D 数据集上展示了与最先进的 SLAM 系统相比具有竞争力的跟踪性能。</p>
-<p>总而言之，这篇论文的主要贡献是：</p>
+                <h1 id="论文阅读《MIPS-Fusion-Multi-Implicit-Submaps-for-Scalable-and-Robust-Online-Neural-RGB-D-》Reconstruction"><a href="#论文阅读《MIPS-Fusion-Multi-Implicit-Submaps-for-Scalable-and-Robust-Online-Neural-RGB-D-》Reconstruction" class="headerlink" title="论文阅读《MIPS-Fusion: Multi-Implicit-Submaps for Scalable and Robust Online Neural RGB-D 》Reconstruction"></a>论文阅读《MIPS-Fusion: Multi-Implicit-Submaps for Scalable and Robust Online Neural RGB-D 》Reconstruction</h1><h3 id="System-Pipeline"><a href="#System-Pipeline" class="headerlink" title="System Pipeline"></a>System Pipeline</h3><img src="/images/paper-reading-MIPS-Fusion/image-20240410131638745.png" style="zoom: 80%;">
+
+<h3 id="Multi-Implicit-Submap-Representation"><a href="#Multi-Implicit-Submap-Representation" class="headerlink" title="Multi-Implicit-Submap Representation"></a>Multi-Implicit-Submap Representation</h3><p>对于每一个子地图，表示为：TSDF（MLP分类器）、radiance filed（MLP场景表示or解码器）、第一个关键帧在全局地图中的姿态、关联的关键帧集合、axis-aligned长方体体素。</p>
+<p><strong>这里提到一个观点：</strong>构建子地图比较灵活，每一个子地图都可以作为一个整体进行转换。同时，由于子地图局部坐标分布导致low data bias，这样更容易学习。</p>
+<p><strong>Classification-based neural TSDF</strong></p>
+<p>区域内不重叠的点就直接查询MLP分类器拿到TSDF值了，而对于重叠部分的点，会使用如下公式，根据不确定性计算权重，再求一个加权和：</p>
+<img src="/images/paper-reading-MIPS-Fusion/image-20240410132325671.png" style="zoom:67%;">
+
+<p>论文把TSDF值分成了5类，如下：</p>
+<img src="/images/paper-reading-MIPS-Fusion/image-20240410133057662.png" style="zoom:67%;">
+
+<p>查询MLP分类器的话，就会得到该点处于这五个类别的概率，然后使用soft argmax函数就能拿到该点的TSDF值。</p>
+<blockquote>
+<p>这一步还挺妙的，用分类器。看论文的Fig.6. 分类器的方法收敛的速度更快。</p>
+<p>好像有一些深度估计的方法也是按照分类器的思路去做的。</p>
+</blockquote>
+<img src="/images/paper-reading-MIPS-Fusion/image-20240410133527668.png" style="zoom: 67%;">
+
+<p>这个所谓的soft argmax函数加了一个额外的参数，这个参数论文说是用来调整平滑度和梯度的。</p>
+<p>另外由于用这种分类器的方式，还可以计算出来TSDF的不确定度，而且对类别数量不敏感。下面这张图说明，至少Shannon entropy低的情况下，TSDF error极大概率也很低，所以可以只晒选Shannon entropy低的点。（主要是很多情况下Shannon entropy高，但实际上TSDF error又很低，存在假阳性的情况）</p>
+<img src="/images/paper-reading-MIPS-Fusion/image-20240410134542128.png" style="zoom: 67%;">
+
+<p><strong>Neural radiance field</strong></p>
+<p>上面的TSDF分类器表示了场景的几何结构，但是对于外观，这篇论文还是沿用了神经辐射场的方法，这部分看起来是主要参考的iMAP，省略了视线方向的编码。</p>
+<p><strong>Color and depth map rendering</strong></p>
+<p>这部分就是根据TSDF值去计算权重了，权重的计算方法和Co-SLAM比较相似。</p>
+<p>本文的：</p>
+<img src="/images/paper-reading-MIPS-Fusion/image-20240410214104301.png" style="zoom: 67%;">
+
+<p>Co-SLAM的：</p>
+<img src="/images/paper-reading-MIPS-Fusion/image-20240410214120538.png" style="zoom:67%;">
+
+<p>另外，Co-SLAM应该是沿着射线进行采样了一系列的点；MIPS-Fusion声称他们是截断区域内进行采样。</p>
+<blockquote>
+<p><strong>疑问：如何做到截断区域内进行采样？</strong>应该是NICE-SLAM那种，在深度值前后一定区域进行采样？</p>
+</blockquote>
+<h3 id="Optimization-Losses-for-Mapping-and-Tracking"><a href="#Optimization-Losses-for-Mapping-and-Tracking" class="headerlink" title="Optimization Losses for Mapping and Tracking"></a>Optimization Losses for Mapping and Tracking</h3><p>包括四种损失：</p>
 <ul>
-<li>第一个使用隐式神经场景表示并能够联合优化完整 3D 地图和相机姿势的稠密实时 SLAM 系统。</li>
-<li>通过自动关键帧选择和损失引导稀疏主动采样实现实时增量训练隐式场景网络的能力。</li>
-<li>我们提出的SLAM公式的并行实现（完全在PyTorch中多处理），它与手持RGB-D相机联机工作。</li>
+<li>depth to TSDT loss，d2t</li>
+<li>TSDF truncation-region loss，tr</li>
+<li>TSDF free-space loss，fs</li>
+<li>RGB rendering loss，rgb</li>
 </ul>
-<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2. Related Work"></a>2. Related Work</h2><p><strong>视觉 SLAM 系统 Visual SLAM Systems</strong>    用于建模环境的实时视觉 SLAM 系统通常以分层方式构建，其中稀疏表示用于定位，更详细的几何或语义分层。 然而，在这里，我们在“稠密 SLAM”范式中工作，其中统一的稠密场景表示也是相机跟踪的基础。 稠密表示避免了任意抽象，例如关键点，能够以稳健的不变方式进行跟踪和重新定位，并且作为与传感器无关的、统一的、完整的空间表示具有长期吸引力。</p>
-<p>稠密 SLAM 中的一些方法明确表示表面，但需要直接表示体积以实现全面的应用，例如规划。 如果使用固定分辨率，则使用占用或有符号距离函数的体积标准表示在内存方面代价很大。 分层方法更有效，但实现起来很复杂，并且通常只提供小范围的详细信息。 在任何一种情况下，表示都是相当严格的，并且由于它们使用了大量的参数，因此不适合与相机姿势进行联合优化。</p>
-<p>机器学习可以发现密集结构的低维嵌入，从而实现高效、联合优化的表示。  CodeSLAM就是一个例子，但使用深度图视图表示而不是完整的体积 3D。 学习技术也被用于改进密集重建，但需要现有的扫描或先验的训练数据。</p>
-<p><strong>使用 MLP 进行隐式场景表示 Implicit Scene Representation with MLPs</strong>    在利用隐式MLP神经模型进行目标重建、目标压缩、新的视图合成和场景完成方面，场景表示和图形显示取得了很大进展。最近的两篇论文 [35,39] 也探讨了相机姿态优化。但是到目前为止，这些方法被认为是一个离线工具，计算要求是几小时、几天或几周。结果表明，当深度图像可用时，利用引导稀疏采样进行渲染和训练时，这些方法适用于实时SLAM。</p>
-<p><strong>持续学习 Continual Learning</strong>    通过使用单个 MLP 作为主场景模型，我们将实时 SLAM 视为在线持续学习。 一个有效的持续学习系统应该展示可塑性（获取新知识的能力）和稳定性（保留旧知识）。 灾难性遗忘是神经网络的一个众所周知的特性，并且是稳定性的失败，新的经历会覆盖记忆。</p>
-<p>减轻灾难性遗忘的一项工作重点是使用相对权重来保护表示免受新数据的影响。 这让人想起 SLAM 中的经典过滤方法，例如 EKF，值得未来研究。 在对每个单独的任务进行训练后冻结或合并子网络的方法对于 SLAM 来说可能过于简单和离散。</p>
-<p>相反，我们将注意力转向基于重放的持续学习方法，其中先前的知识要么直接存储在缓冲区中，要么压缩在生成模型中。 我们使用一种简单的方法，自动选择关键帧来存储和压缩过去的记忆。 我们在持续运行的地图更新过程中使用这些关键帧的损失引导随机抽样来定期重播和加强先前观察到的场景区域，同时继续通过新的关键帧添加信息。 在 SLAM 术语中，这种方法类似于 PTAM 开创的方法，其中历史关键帧集和重复的全局束调整作为长期场景表示。</p>
-<h2 id="3-iMAP-A-Real-Time-Implicit-SLAM-System"><a href="#3-iMAP-A-Real-Time-Implicit-SLAM-System" class="headerlink" title="3. iMAP: A Real-Time Implicit SLAM System"></a>3. iMAP: A Real-Time Implicit SLAM System</h2><h3 id="3-1-System-Overview"><a href="#3-1-System-Overview" class="headerlink" title="3.1. System Overview"></a>3.1. System Overview</h3><p>图2概述了iMAP的工作原理。使用将3D坐标映射到颜色和体积密度的全连接神经网络$ F_\theta $来表示3D体积图 (第3.2节)。给定相机的姿态，我们可以通过累积来自反向投影射线中的样本的网络查询来渲染像素的颜色和深度 (第3.3节)。</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830225347891.png" alt="图2：iMAP system pipeline."></p>
-<p>我们通过相对于一组稀疏的主动采样测量值（第 3.6 节）逐步优化网络权重和相机位姿，从深度和彩色视频中映射场景。 两个进程同时运行：跟踪（第 3.4 节），它优化当前帧相对于锁定网络的位姿； 和映射（第 3.4 节），它联合优化所选关键帧的网络和相机位姿，根据信息增益增量选择（第 3.5 节）。</p>
-<h3 id="3-2-Implicit-Scene-Neural-Network"><a href="#3-2-Implicit-Scene-Neural-Network" class="headerlink" title="3.2. Implicit Scene Neural Network"></a>3.2. Implicit Scene Neural Network</h3><p>遵循 NeRF 中的网络架构，我们使用具有 4 个特征大小为 256 的隐藏层的 MLP，以及将 3D 坐标$ \mathrm p = (x, y, z) $映射到颜色和体积密度值的两个输出头：$ F_\theta{\mathrm p} = (\mathrm c , \rho)$。 与 NeRF 不同，我们不考虑观察方向，因为我们对镜面反射建模不感兴趣。</p>
-<p>我们应用傅里叶特征网络中提出的高斯位置嵌入将输入 3D 坐标提升到 n 维空间：sin(<strong>Bp</strong>)，其中 <strong>B</strong> 是从具有标准偏差$ \sigma $的正态分布采样的 [n×3] 矩阵。 该嵌入用作 MLP 的输入，也连接到网络的第二个激活层。 从 SIREN [27] 中汲取灵感，我们允许优化嵌入矩阵 <strong>B</strong>，实现为具有正弦激活的单个全连接层。</p>
-<h3 id="3-3-Depth-and-Colour-Rendering"><a href="#3-3-Depth-and-Colour-Rendering" class="headerlink" title="3.3. Depth and Colour Rendering"></a>3.3. Depth and Colour Rendering</h3><p>我们的新可微渲染引擎受 NeRF 和 NodeSLAM 的启发，查询场景网络以从给定视图获取深度和彩色图像。</p>
-<p>给定一个相机位姿$ T_{WC} $和一个像素坐标$ [u, v] $，我们首先反向投影一个归一化的观察方向并将其转换为世界坐标：$ r = T_{WC}K^{−1}[u, v]$，相机内在矩阵$ K $。 我们沿着射线$ \mathrm p_i = d_i\mathrm r $取一组$ N $个样本，具有相应的深度值$ {d_1,····, d_N}$，并在网络中查询颜色和体积密度$ (\mathrm c_i, \rho_i) = F_\theta(\mathrm p_i)$。我们遵循 NeRF 的分层和分层体积采样策略。</p>
-<p>体积密度通过乘以样本间距离$ \delta_i = d_{i+1} - d_i $并通过激活函数$ o_i = 1 - exp(-\rho_i \delta_i) $转换为占用概率。然后每个样本的射线终止概率可以 计算为$\omega_i = o_i \prod_{j = 1}^{i - 1}(1 - o_j)$。 最后，深度和颜色被渲染为期望值：</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830225234185.png"></p>
-<p>我们可以将沿射线的深度方差计算为：</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830225300639.png"></p>
-<h3 id="3-4-Joint-optimisation"><a href="#3-4-Joint-optimisation" class="headerlink" title="3.4. Joint optimisation"></a>3.4. Joint optimisation</h3><p>我们联合优化了隐式场景网络参数$ \theta $和不断增长的$ W $关键帧集的相机姿态，每个关键帧都有相关的颜色和深度测量以及初始姿态估计：${I_i,D_i,T_i}$。</p>
-<p>我们的渲染函数对于这些变量是可微的，因此我们执行迭代优化以最小化每个关键帧中选定数量的渲染像素$ s_i $的几何和光度误差。</p>
-<p>光度损失是渲染和测量颜色值$ e_i^p[u,v] = \left| I_i[u,v] - \hat I_i[u,v] \right| $之间的 L1 范数，用于$ M $个像素样本：</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830225657705.png"></p>
-<p>几何损失测量深度差异$ e_i^g[u,v] = \left| D_i[u,v] - \hat D_i[u,v] \right| $并使用深度方差作为归一化因子，在对象边界等不确定区域降低损失：</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830225809862.png"></p>
-<p>我们将 Adam优化器应用于两个损失的加权和，因子$ \lambda_p $调整赋予光度误差的权重：</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830225854970.png"></p>
-<p><strong>相机追踪 Camera Tracking</strong>    在在线 SLAM 中，接近帧率的摄像机跟踪很重要，因为对较小位移的优化更加稳健。 我们运行一个并行跟踪过程，在使用相同的损失和优化器的同时，以比联合优化高得多的帧速率连续优化最新帧相对于固定场景网络的位姿。 跟踪的姿势初始化在选定关键帧的映射过程中被细化。</p>
-<h3 id="3-5-Keyframe-Selection"><a href="#3-5-Keyframe-Selection" class="headerlink" title="3.5. Keyframe Selection"></a>3.5. Keyframe Selection</h3><p>使用来自视频流的所有图像联合优化网络参数和相机位姿在计算上是不可行的。 然而，由于视频图像中存在巨大的冗余，我们可以用一组稀疏的代表性关键帧来表示一个场景，这些关键帧是根据信息增益增量选择的。 始终选择第一帧来初始化网络并固定世界坐标系。 每次添加新的关键帧时，我们都会锁定我们网络的副本以表示我们在那个时间点的 3D 地图的快照。 随后的帧将根据该副本进行检查，如果它们看到一个显着的新区域，则选择它们。</p>
-<p>为此，我们渲染一组统一的像素样本$ s $并计算归一化深度误差小于阈值$ t_D = 0.1 $的比例$ P $，以测量我们的地图快照已经解释的帧的比例：</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830230036340.png"></p>
-<p>当该比例低于阈值$ P &lt; t_P $（我们将$ t_P $设置为0.65）时，该帧将添加到关键帧集。归一化深度误差会产生自适应关键帧选择，当相机更靠近物体时，需要更高的精度，因此需要更紧密的关键帧。</p>
-<p>在映射过程中接收到的每一帧都用于联合优化几次迭代（10 到 20 次之间），因此我们的关键帧集总是由所选集以及不断变化的最新帧组成。</p>
-<h3 id="3-6-Active-Sampling"><a href="#3-6-Active-Sampling" class="headerlink" title="3.6. Active Sampling"></a>3.6. Active Sampling</h3><p><strong>图像主动采样 Image Active Sampling</strong>    渲染和优化所有图像像素在计算和内存方面代价很大。 我们利用图像规律性在每次迭代中仅渲染和优化一组非常稀疏的随机像素（每张图像 200 个）。 此外，我们使用渲染损失来指导在具有更高细节的信息区域或重建尚不精确的信息区域中的主动采样。</p>
-<p>每次联合优化迭代分为两个阶段。首先，我们采样一组$ s_i $像素，均匀分布在每个关键帧的深度和颜色图像上。这些像素用于更新网络和相机位姿，并计算损失统计。 为此，我们将每张图像划分为 [8×8] 网格，并计算每个正方形区域$ R_j $内的平均损失，其中$ j = {1, 2, · · · , 64} $：</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830230713156.png"></p>
-<p>其中$ r_j = s_i \cap R_j $是从$ R_j $均匀采样的像素。 我们将这些统计数据归一化为概率分布：</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830230837596.png"></p>
-<p>我们使用这个分布对每个区域重新采样一组新的$ n_i \cdot f_i[j] $个均匀样本（$ n_i $是每个关键帧中的总样本），将更多样本分配到具有高损失的区域。 场景网络使用来自活动样本的损失进行更新（在相机跟踪中仅使用统一采样）。 图像主动采样如图 3 所示。</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830230953670.png" alt="图 3：图像主动采样。 左：使用一组均匀样本的几何损失计算整个图像网格的损失分布。 右图：根据损失分布进一步分配活动样本。"></p>
-<p><strong>关键帧主动采样 Keyframe Active Sampling</strong>    在 iMAP 中，我们使用一组选定的关键帧不断优化我们的场景地图，作为记忆库来避免网络遗忘。 我们希望将更多样本分配给具有更高损失的关键帧，因为它们与新探索的、高度详细的或网络开始忘记的区域相关。 我们遵循类似于图像主动采样的过程，并将 ni 个样本分配给每个关键帧，与关键帧之间的损失分布成比例，见图 4。</p>
-<p><strong>有界关键帧选择 Bounded Keyframe Selection</strong>    随着相机移动到新的和未探索的区域，我们的关键帧集不断增长。 为了绑定联合优化计算，我们在每次迭代中选择一个固定数量的关键帧（实时系统中为 3 个），根据损失分布随机采样。 我们总是在联合优化中包含最后一个关键帧和当前实时帧，以组成一个$ W = 5 $不断变化的帧的有界窗口。 参见图 4。</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830231107081-16618741509601.png" alt="图4: 关键帧主动采样。我们在注册的关键帧上保持损耗分布。该分布用于对关键帧 (红色框) 的有界窗口进行采样，并用于在每个关键帧中分配像素样本。"></p>
-<h2 id="4-Experimental-Results"><a href="#4-Experimental-Results" class="headerlink" title="4. Experimental Results"></a>4. Experimental Results</h2><p>通过综合实验，我们评估了 iMAP 的 3D 重建和跟踪，并对设计选择的准确性和速度进行了详细的烧蚀分析。</p>
-<h3 id="4-1-Experimental-Setup"><a href="#4-1-Experimental-Setup" class="headerlink" title="4.1. Experimental Setup"></a>4.1. Experimental Setup</h3><p><strong>数据集</strong>    我们在模拟和真实序列上进行实验。 对于重建评估，我们使用 Replica 数据集，这是对真实房间规模环境的高质量 3D 重建，有 5 个办公室和 3 个公寓。 对于每个 Replica 场景，我们渲染 2000 个 RGB-D 帧的随机轨迹。 对于原始摄像机记录，我们使用手持式 Microsoft Azure Kinect 在各种环境中捕获 RGB-D 视频，并在 TUM RGB-D 数据集上进行测试以评估摄像机跟踪。</p>
-<p><strong>实施细节</strong>    对于所有实验，我们设置以下默认参数：关键帧配准阈值$ t_P = 0.65 $，光度损失加权$ \lambda_p = 5 $，关键帧窗口大小$ W = 5 $，像素样本$ |s_i|  = 200 $，位置嵌入大小$ m = 93 $和$ \sigma = 25$，以及 32 个粗分类和 12 个细分类用于渲染。  3D 点坐标通过$\frac {1}{10}$归一化以接近 [0, 1] 范围。</p>
-<p>在手持相机的在线操作中，到达处理帧之间的流式图像被丢弃。 对于此处介绍的实验，每个捕获的帧都被处理，以 10 Hz 运行。 如果需要，我们通过在统一体素网格中从网络查询占用值，然后运行行进立方体来恢复网格重建。 网格化用于可视化和评估目的，不构成我们的 SLAM 系统的一部分。</p>
-<h3 id="4-2-Scene-Reconstruction-Evaluation"><a href="#4-2-Scene-Reconstruction-Evaluation" class="headerlink" title="4.2. Scene Reconstruction Evaluation"></a>4.2. Scene Reconstruction Evaluation</h3><p><strong>尺度</strong>    我们从地面实况和重建网格中采样了200000个点，并计算了三个定量指标：精度（cm）：重建网格中的采样点与最近地面实况点之间的平均距离；完成度（cm）：采样点与地面真实网格和最近重建点之间的平均距离；和完成率（&lt;5cm%）：重建网格中完成小于5cm的点的百分比。</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830233300102.png" alt="图 5：Replica room-0 的重建和跟踪结果以及注册的关键帧。"></p>
-<p><img src="/images/paper-reading-iMAP/image-20220830233317768.png" alt="图 6：iMAP（左）设法填充未观察到的区域，这些区域可被视为 TSDF 融合中的漏洞（右）。"></p>
-<p>联合优化 3D 地图和相机位姿的能力使我们的系统能够构建完整的全局连贯场景重建，如图 1 和 7 所示，以及准确的相机跟踪，如图 5 所示。iMAP 的鲁棒性和多功能性 通过图 9 和 8 中的重建，在各种真实世界的录音中得到了证明，这些重建显示了它在从整个房间到小物体和薄结构的规模上工作的能力。</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830233059436.png" alt="图 7：副本重建，突出显示 iMAP 如何填充未观察到的区域，这些区域是 TSDF 融合中的白洞。"></p>
-<p><img src="/images/paper-reading-iMAP/image-20220830233041963.png" alt="图 8：使用 Azure Kinect 映射的各种真实场景的对比重建结果。  TDSF 融合结果中的白洞似乎由 iMAP 填充。"></p>
-<p><img src="/images/paper-reading-iMAP/image-20220830233021258.png" alt="图 9：iMAP 在各种现实世界设置中的实时重建结果。"></p>
-<p>我们将iMAP中的场景重建与TSDF fusion进行了比较，后者是基于融合的密集SLAM方法的代表。为了隔离重建，我们使用iMAP生成的摄像机跟踪进行TSDF fusion。我们的隐式表示最显著的优势是能够在未观察到的区域填充，如图7和图8所示。iMAP在所有8个复制场景中平均实现了4%的高完成率，如表1所示，office-3的完成率提高了11%。</p>
-<p>具有不同配置设置的 iMAP 和 TSDF 融合的内存消耗如表 2 所示。在 TSDF 融合中默认值为 2563 体素分辨率和 iMAP 中的网络宽度为 256 时，我们的系统可以表示内存使用量减少 60 倍的场景，同时获得相似的 重建精度如表 1 所示。</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830233129794.png" alt="表1：8个室内复制场景的重建结果。我们报告了每个场景中最高的完成率，以及相应的准确性和完成率值。"></p>
-<p><img src="/images/paper-reading-iMAP/image-20220830232944402.png" alt="表 2：内存消耗：对于 iMAP 作为网络大小的函数，对于体素分辨率的 TSDF 融合。"></p>
-<p>当使用真实相机时，除了更好地完成外，我们的方法在深度相机无法提供准确读数的地方（如黑色物体（图8d）和反射或透明表面（图6））优于TSDF融合。这种性能可归因于重建的光度损失以及地图网络的插值能力。</p>
-<h3 id="4-3-TUM-Evaluation"><a href="#4-3-TUM-Evaluation" class="headerlink" title="4.3. TUM Evaluation"></a>4.3. TUM Evaluation</h3><p>我们在来自 TUM RGB-D 的三个序列上运行 iMAP。 跟踪 ATE RMSE 如表 3 所示。我们与基于面元的 BAD-SLAM、TSDF 融合 Kintinuous和稀疏 ORB-SLAM2 等最先进的 SLAM 系统进行了比较。 在姿势准确性方面，iMAP 的表现并不优于它们，但在 2 到 6 厘米的误差方面具有竞争力。 网格重建如图 10 所示。在图 11 中，我们强调了 iMAP 如何填充未观察区域中的孔，这与 BAD-SLAM 不同。</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830232831812.png" alt="表 3：在 TUM RGB-D 数据集上以厘米为单位的 ATE RMSE。"></p>
-<p><img src="/images/paper-reading-iMAP/image-20220830232809469.png" alt="图 10：TUM 数据集的 iMAP 重建结果。"></p>
-<p><img src="/images/paper-reading-iMAP/image-20220830232904051.png" alt="图 11：iMAP（顶部）对 BAD-SLAM（底部）的孔填充能力。"></p>
-<h3 id="4-4-Ablative-Analysis"><a href="#4-4-Ablative-Analysis" class="headerlink" title="4.4. Ablative Analysis"></a>4.4. Ablative Analysis</h3><p>我们使用最大的 Replica 场景分析影响我们系统的设计选择：office-2 和三个不同的随机种子。 完成率结果和时序如表 4 所示。我们发现网络$ width = 256 $，关键帧窗口大小限制为$ W = 5 $，每帧 200 像素样本提供了收敛速度和准确性的最佳折衷。我们在图 12 中进一步表明，主动采样比随机采样能够实现更快的精度收敛和更高的场景完成度。</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830232727343.png" alt="表 4：跟踪（6 次迭代）和映射（10 次迭代）的时序结果，在同一 GPU 上同时运行。 默认配置：网络宽度 256，窗口大小 5，每个关键帧 200 个样本。 最后一行：副本 office-2 的完成率。"></p>
-<p>这些设计选择使我们的在线隐式SLAM系统能够以10Hz的频率运行以进行跟踪，以2Hz的频率进行映射。我们的实验证明了随机抽样在优化中的作用，并强调了关键发现，即使用随机变化的信息进行快速迭代比使用密集和缓慢迭代更好。</p>
-<p>将几何和光度损失结合起来，使我们的系统能够从几个关键帧获得全房间尺度的重建；对于表1中的8个复制场景，平均为13。如表5所示，使用更多关键帧对进一步提高场景完成率几乎没有作用。</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830232657552.png" alt="表 5：Replica office-2 中不同选择阈值的关键帧数和完成率结果。"></p>
-<p>隐式场景网络具有在添加高频场景细节之前快速收敛到低频形状的特性。 图 13 显示了来自静态摄像机的网络训练，平均超过 5 个不同的真实场景。 深度损失在一秒钟内降至 5 厘米以下； 在 4 秒内低于 2 厘米； 然后继续缓慢下降。当映射一个新场景时，我们的系统需要几秒钟来进行粗略的重建，并需要几分钟来添加精细的细节。 在图 14 中，我们展示了系统如何从粗略重建开始，并随着网络训练和相机靠近物体而添加细节。 这是 SLAM 中的一个有用属性，因为它使实时跟踪即使在移动到未探索区域时也能正常工作。</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830232622823.png" alt="图 13：达到 5cm、2cm、1cm 和 0.75cm 深度误差分别需要大约 1、4、20、43 秒。"></p>
-<p><img src="/images/paper-reading-iMAP/image-20220830232552221.png" alt="图 14：重建细节的演变。"></p>
-<h2 id="5-Conclusions"><a href="#5-Conclusions" class="headerlink" title="5. Conclusions"></a>5. Conclusions</h2><p>我们将密集 SLAM 视为实时持续学习，并表明 MLP 可以作为实时系统中唯一的场景表示从头开始训练，从而使 RGB-D 相机能够构建和跟踪完整且准确的体积模型 房间规模的场景。 我们方法的实时但长期 SLAM 性能的关键是：并行跟踪和映射、用于快速优化的损失引导像素采样以及智能关键帧选择作为重放以避免网络遗忘。  iMAP 的未来方向包括如何制作更结构化和组合性的表示，以明确地推理场景中的自相似性。</p>
+<p>d2t用于tracking（RO和GO），tr、fs、rgb用于mapping和GO-based pose optimization</p>
+<blockquote>
+<p><strong>疑问：RO和GO是什么，暂时没看到论文提及</strong></p>
+<p>RO指的是随即优化，randomized optimization</p>
+<p>GO指的是gradient-based optimization</p>
+<p>后面三种loss近期的工作经常使用，而d2t本文声称是highly effective and efficient for tracking optimization</p>
+<p>另外，本文没有使用常见的depth rendering loss，因为tr和fs已经覆盖depth rendering loss了</p>
+</blockquote>
+<p><strong>Depth-to-TSDF loss</strong>    we define a frame-to-model error metric to measure <strong>the fitness of how well 𝐷𝑡 “fits into” the TSDF under pose</strong></p>
+<p>大概意思就是，在这个pose下，对于某个像素p，根据观测的深度值计算出它世界坐标系下的坐标，再拿到在当前子图的坐标，去查询子图下定义的TSDF，如果pose正确的话，这个点到曲面的距离应该为0，即TSDF应该为0</p>
+<img src="/images/paper-reading-MIPS-Fusion/image-20240411102301885.png" style="zoom:67%;">
+
+<p><strong>TSDF truncation-region loss</strong>    The truncation-region loss is devised to <strong>supervise the MLP to output correct SDF values for points within the truncation region</strong></p>
+<p>大概意思就是，根据传感器观测深度和采样深度计算一个SDF值，然后和网络预测的值做差，看看对不对。</p>
+<img src="/images/paper-reading-MIPS-Fusion/image-20240411104211489.png" style="zoom:67%;">
+
+<p><strong>TSDF free-space loss</strong>    The free-space loss directs the neural map to output a value equal to the truncation value 𝜏 for the empty region in the visible side of the viewing frustum</p>
+<p>这里应该是希望TSDF MLP能够准确表示free space，即相机到物体表面的视锥内，TSDF值应该为1，对应的，网络的输出也应该尽可能地接近截断距离。这样设计有助于提高三维重建的质量和精度。</p>
+<img src="/images/paper-reading-MIPS-Fusion/image-20240411111210362.png" style="zoom:67%;">
+
+<p><strong>RGB rendering loss</strong>    非常常规的损失函数了</p>
+<img src="/images/paper-reading-MIPS-Fusion/image-20240411112422189.png" style="zoom:67%;">
+
+<h3 id="Tracking-with-Hybrid-Optimization"><a href="#Tracking-with-Hybrid-Optimization" class="headerlink" title="Tracking with Hybrid Optimization"></a>Tracking with Hybrid Optimization</h3><p>这里的Hybrid Optimization指的是结合了随即优化（RO）和基于梯度的优化（GO）。在固定次数的 RO 迭代之后，针对另外固定次数的迭代的两个损失调用 GO。</p>
+<p><strong>关于RO：</strong>Randomized pose optimization</p>
+<p>是比较新鲜的东西，很遗憾我不会，需要再好好了解一下！</p>
+<p>看起来是只围绕d2t这个loss的优化。</p>
+<p><strong>疑问：</strong>这里提到的particle filter optimization（PFO）、Particle Swarm Template（PST）等优化方法不是很了解。</p>
+<p><strong>关于GO：</strong>Gradient-based pose optimization</p>
+<p>和NICE-SLAM、Co-SLAM等方法一样，很传统的优化方法</p>
+<p>根据公式17，是围绕d2t+rgb的loss优化，而且有权重</p>
+<h3 id="Mapping-of-the-Active-Submap"><a href="#Mapping-of-the-Active-Submap" class="headerlink" title="Mapping of the Active Submap"></a>Mapping of the Active Submap</h3><p>Submap allocation这里提到“the far clipping plane is set to 5m”，这样的话，我觉得可能比较适合室内场景，而且后面也说subvolume的任意一边达到7m的时候，就会停止扩展，那应该就会开始准备开启新的submap了。</p>
+<p>Submap initialization这里提到创建新的submap的话，会使用共享的那个关键帧迭代500轮。</p>
+<blockquote>
+<p>由于这里毕竟是TSDF MLP+NeRF MLP的形式，所以必须迭代了</p>
+<p>如果是point slam或者3dgs based的方法，我认为完全可以用这个关键帧对应的点云</p>
+</blockquote>
+<p>Keyframe selection的选择标准是information gain of a frame。在论文所使用的方法下，基于depth-to-TSDF loss就可以进行过滤了。直接看像素的比例，如果误差小的比例低于某个阈值，就认为可以作为新的关键帧了。论文这里还规定了两个关键帧的最小间距为30帧。</p>
+<blockquote>
+<p>放到3dgs里面的话，我可以做不透明度mask，看看mask掉了多少区域，然后选择一下；</p>
+<p>另外，也可以看视角变换的幅度，比如即使没有mask的区域，视角变化大，也可以作为关键帧。</p>
+</blockquote>
+<p>Active submap optimization这里提到每个帧的优化包括5个不同的帧，包括：当前帧、submap第一个关键帧、随机选择的另外三个关键帧。</p>
+<p>根据下面的损失函数，看起来pose和d2t、rgb关联比较大，而mapping更关心tr与fs。</p>
+<img src="/images/paper-reading-MIPS-Fusion/image-20240411195438087.png" style="zoom:67%;">
+
+<h3 id="Back-end-Optimization-and-Loop-Closure"><a href="#Back-end-Optimization-and-Loop-Closure" class="headerlink" title="Back-end Optimization and Loop Closure"></a>Back-end Optimization and Loop Closure</h3><p>开头提到这个工作分成两个线程，一个是tracking and mapping activate submap的，一个是refinement inactive submap的。</p>
+<p>Optimization of inactive submaps这里说，按顺序重复优化每一个inactive submap，对于每一个正在优化的submap，从中随机选择四个关键帧+第一帧进行优化，迭代10次。</p>
+<blockquote>
+<p>这个是因为之前追求效率优化的比较少，所以回头再继续优化优化吗？</p>
+</blockquote>
+<p>Handling pose jump at submap revisiting这里说，当相机移动到inactive submap的subvolume中时，这个inactive submap会被激活。为了避免位姿漂移和错位，先用这个重叠关键帧和其他关键帧对新激活的submap进行local BA，然后再开始新的tracking。</p>
+<blockquote>
+<p>这不就，阻塞住了？不会影响后续帧的tracking嘛？？？</p>
+<p>不过现在的nerf based or 3dgs based slam都是读数据集，不太在乎实时性，这里阻塞了肯定也不会说。。。说到底还是看个平均fps，中间阻塞几下不在乎。</p>
+</blockquote>
+<p>Loop detection and closure这里说论文更关心submap级别的回环检测，并且目前实现的是涉及至少四个submap的loop。论文认为两个连续子地图之间的漂移通常非常小。</p>
+<blockquote>
+<p>论文的方法肯定只能做submap级别的loop closure</p>
+<p><strong>疑问：这个涉及至少四个submap的loop，或许指的是四个以上submap的subvolume重合的时候才回环一次？？？也可能是说相机轨迹跨越了至少四个不同子地图之后，才开始检测闭环？？？</strong></p>
+</blockquote>
+<h3 id="实验部分"><a href="#实验部分" class="headerlink" title="实验部分"></a>实验部分</h3><p>看论文的消融实验，看起来RO、SR、LC对结果的影响很大。其中如果没有SI、SR、LC，甚至可能会跑不完一个数据集。</p>
+<img src="/images/paper-reading-MIPS-Fusion/image-20240411205041142.png" style="zoom:80%;">
+
+<p>另外实验也证明了RO、GO、RO+GO的方法中，RO+GO是最好的。</p>
+<p><strong>看了TUM RGBD数据集的结果，还是有一个问题：</strong>在常见的三个数据集上，MIPS-Fusion没有表现出非常亮眼的效果，可以理解。<strong>但是，为什么不放一些大场景、带回环的数据集的结果呢？？？</strong></p>
+<img src="/images/paper-reading-MIPS-Fusion/image-20240411205441212.png" style="zoom:80%;">
+
+<p>不过这里倒是展示了FastCaMo-Large datasets的一些结果，可以看到论文方法的优越性</p>
+<img src="/images/paper-reading-MIPS-Fusion/image-20240411210338298.png" style="zoom:80%;">
+
 
                 
             </div>
@@ -502,7 +532,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://Immortalqx.github.io/2022/08/31/paper-reading-imap/">http://Immortalqx.github.io/2022/08/31/paper-reading-imap/</a>
+                    <a href="http://Immortalqx.github.io/2024/04/10/paper-reading-mips-fusion/">http://Immortalqx.github.io/2024/04/10/paper-reading-mips-fusion/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -891,17 +921,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2022/10/12/cs231a-lecture2/">
+                <a href="/2024/04/10/paper-reading-mips-fusion/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/58.jpg" class="responsive-img" alt="CS231A Lecture 2：Camera Models">
+                        <img src="/medias/featureimages/48.jpg" class="responsive-img" alt="论文阅读《MIPS-Fusion Multi-Implicit-Submaps for Scalable and Robust Online Neural RGB-D 》">
                         
-                        <span class="card-title">CS231A Lecture 2：Camera Models</span>
+                        <span class="card-title">论文阅读《MIPS-Fusion Multi-Implicit-Submaps for Scalable and Robust Online Neural RGB-D 》</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -911,26 +942,31 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-10-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-04-10
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E4%B8%89%E7%BB%B4%E8%A7%86%E8%A7%89/" class="post-category">
-                                    三维视觉
+                            <a href="/categories/slam/" class="post-category">
+                                    slam
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/CS231A/">
-                        <span class="chip bg-color">CS231A</span>
+                    <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                        <span class="chip bg-color">隐式表示</span>
+                    </a>
+                    
+                    <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                        <span class="chip bg-color">视觉SLAM</span>
                     </a>
                     
                 </div>
@@ -944,13 +980,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/08/30/paper-reading-nice-slam/">
+                <a href="/2024/04/02/nerf-slam-6/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/38.jpg" class="responsive-img" alt="论文阅读《NICE-SLAM：Neural Implicit Scalable Encoding for SLAM》">
+                        <img src="/medias/featureimages/66.jpg" class="responsive-img" alt="NeRF based SLAM学习笔记（7）：从Point NeRF到Loopy SLAM">
                         
-                        <span class="card-title">论文阅读《NICE-SLAM：Neural Implicit Scalable Encoding for SLAM》</span>
+                        <span class="card-title">NeRF based SLAM学习笔记（7）：从Point NeRF到Loopy SLAM</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -961,7 +997,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-30
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-04-02
                             </span>
                         <span class="publish-author">
                             
@@ -978,8 +1014,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
-                        <span class="chip bg-color">隐式表示</span>
+                    <a href="/tags/NeRF/">
+                        <span class="chip bg-color">NeRF</span>
                     </a>
                     
                     <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
@@ -1107,13 +1143,6 @@
 
 </main>
 
-
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
-    });
-</script>
 
 
 

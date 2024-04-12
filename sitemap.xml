@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://immortalqx.github.io/2024/03/15/paper-reading-eslam/</loc>
+    
+    <lastmod>2024-04-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/2024/04/10/paper-reading-mips-fusion/</loc>
+    
+    <lastmod>2024-04-12</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://immortalqx.github.io/2024/04/02/nerf-slam-6/</loc>
     
     <lastmod>2024-04-12</lastmod>
@@ -10,13 +24,6 @@
   
   <url>
     <loc>http://immortalqx.github.io/2024/03/01/nerf-slam-5/</loc>
-    
-    <lastmod>2024-04-12</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/2024/03/15/paper-reading-eslam/</loc>
     
     <lastmod>2024-04-12</lastmod>
     
@@ -37,14 +44,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2022/08/22/nerf-notes-3/</loc>
+    <loc>http://immortalqx.github.io/2022/08/21/nerf-notes-2/</loc>
     
     <lastmod>2024-04-12</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2022/08/21/nerf-notes-2/</loc>
+    <loc>http://immortalqx.github.io/2022/08/22/nerf-notes-3/</loc>
     
     <lastmod>2024-04-12</lastmod>
     
@@ -65,14 +72,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2023/07/26/nerf-slam-0/</loc>
+    <loc>http://immortalqx.github.io/2023/07/30/nerf-slam-1/</loc>
     
     <lastmod>2024-04-12</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2023/07/30/nerf-slam-1/</loc>
+    <loc>http://immortalqx.github.io/2023/07/26/nerf-slam-0/</loc>
     
     <lastmod>2024-04-12</lastmod>
     
@@ -107,6 +114,13 @@
   </url>
   
   <url>
+    <loc>http://immortalqx.github.io/2021/02/23/opencv-notes-4/</loc>
+    
+    <lastmod>2024-04-12</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://immortalqx.github.io/2020/08/17/opencv-notes-2/</loc>
     
     <lastmod>2024-04-12</lastmod>
@@ -115,13 +129,6 @@
   
   <url>
     <loc>http://immortalqx.github.io/2020/12/19/opencv-notes-3/</loc>
-    
-    <lastmod>2024-04-12</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://immortalqx.github.io/2021/02/23/opencv-notes-4/</loc>
     
     <lastmod>2024-04-12</lastmod>
     
@@ -254,13 +261,6 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/about/index.html</loc>
-    
-    <lastmod>2024-04-12</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://immortalqx.github.io/google561fc42db74e2484.html</loc>
     
     <lastmod>2024-04-12</lastmod>
@@ -269,6 +269,13 @@
   
   <url>
     <loc>http://immortalqx.github.io/categories/index.html</loc>
+    
+    <lastmod>2024-04-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/about/index.html</loc>
     
     <lastmod>2024-04-12</lastmod>
     
@@ -303,13 +310,6 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2022/11/01/cs231a-lecture5/</loc>
-    
-    <lastmod>2024-04-12</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://immortalqx.github.io/2022/11/05/cs231a-lecture6/</loc>
     
     <lastmod>2024-04-12</lastmod>
@@ -332,6 +332,13 @@
   
   <url>
     <loc>http://immortalqx.github.io/2022/11/23/cs231a-lecture9/</loc>
+    
+    <lastmod>2024-04-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/2022/11/01/cs231a-lecture5/</loc>
     
     <lastmod>2024-04-12</lastmod>
     
@@ -373,14 +380,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/03/28/learning-cartographer/</loc>
+    <loc>http://immortalqx.github.io/2021/04/06/introduce-qt/</loc>
     
     <lastmod>2024-04-12</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/04/06/introduce-qt/</loc>
+    <loc>http://immortalqx.github.io/2021/03/28/learning-cartographer/</loc>
     
     <lastmod>2024-04-12</lastmod>
     
@@ -478,14 +485,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2022/01/25/machine-learning-8/</loc>
+    <loc>http://immortalqx.github.io/2022/08/19/nerf-notes-1/</loc>
     
     <lastmod>2024-04-12</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2022/08/19/nerf-notes-1/</loc>
+    <loc>http://immortalqx.github.io/2022/01/25/machine-learning-8/</loc>
     
     <lastmod>2024-04-12</lastmod>
     
@@ -513,13 +520,6 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2020/09/05/ros-notes-1/</loc>
-    
-    <lastmod>2024-04-12</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://immortalqx.github.io/2020/09/04/ros-notes-2/</loc>
     
     <lastmod>2024-04-12</lastmod>
@@ -528,6 +528,13 @@
   
   <url>
     <loc>http://immortalqx.github.io/2021/07/17/ros-notes-3/</loc>
+    
+    <lastmod>2024-04-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://immortalqx.github.io/2020/09/05/ros-notes-1/</loc>
     
     <lastmod>2024-04-12</lastmod>
     
@@ -555,14 +562,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2022/08/29/richard-hamming-you-and-your-research/</loc>
+    <loc>http://immortalqx.github.io/2021/07/27/uav-notes-1/</loc>
     
     <lastmod>2024-04-12</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2021/07/27/uav-notes-1/</loc>
+    <loc>http://immortalqx.github.io/2022/08/29/richard-hamming-you-and-your-research/</loc>
     
     <lastmod>2024-04-12</lastmod>
     
@@ -597,14 +604,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2022/02/08/cpp-notes-6/</loc>
+    <loc>http://immortalqx.github.io/2022/02/04/cpp-notes-5/</loc>
     
     <lastmod>2024-04-12</lastmod>
     
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/2022/02/04/cpp-notes-5/</loc>
+    <loc>http://immortalqx.github.io/2022/02/08/cpp-notes-6/</loc>
     
     <lastmod>2024-04-12</lastmod>
     
@@ -760,14 +767,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/tags/%E6%BF%80%E5%85%89SLAM/</loc>
+    <loc>http://immortalqx.github.io/tags/Qt/</loc>
     <lastmod>2024-04-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/tags/Qt/</loc>
+    <loc>http://immortalqx.github.io/tags/%E6%BF%80%E5%85%89SLAM/</loc>
     <lastmod>2024-04-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -837,14 +844,14 @@
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/tags/ROS%E5%9F%BA%E7%A1%80/</loc>
+    <loc>http://immortalqx.github.io/tags/SVM/</loc>
     <lastmod>2024-04-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://immortalqx.github.io/tags/SVM/</loc>
+    <loc>http://immortalqx.github.io/tags/ROS%E5%9F%BA%E7%A1%80/</loc>
     <lastmod>2024-04-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

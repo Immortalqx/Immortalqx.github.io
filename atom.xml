@@ -6,7 +6,7 @@
   <link href="http://immortalqx.github.io/atom.xml" rel="self"/>
   
   <link href="http://immortalqx.github.io/"/>
-  <updated>2024-04-12T08:49:39.852Z</updated>
+  <updated>2024-04-12T08:51:32.436Z</updated>
   <id>http://immortalqx.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>论文阅读《MIPS-Fusion Multi-Implicit-Submaps for Scalable and Robust Online Neural RGB-D 》</title>
+    <link href="http://immortalqx.github.io/2024/04/10/paper-reading-mips-fusion/"/>
+    <id>http://immortalqx.github.io/2024/04/10/paper-reading-mips-fusion/</id>
+    <published>2024-04-10T03:10:20.000Z</published>
+    <updated>2024-04-12T08:51:32.436Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;论文阅读《MIPS-Fusion-Multi-Implicit-Submaps-for-Scalable-and-Robust-Online-Neural-RGB-D-》Reconstruction&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
+    
+  </entry>
   
   <entry>
     <title>NeRF based SLAM学习笔记（7）：从Point NeRF到Loopy SLAM</title>
@@ -48,7 +75,7 @@
     <link href="http://immortalqx.github.io/2024/03/15/paper-reading-eslam/"/>
     <id>http://immortalqx.github.io/2024/03/15/paper-reading-eslam/</id>
     <published>2024-03-15T06:31:00.000Z</published>
-    <updated>2024-04-12T08:36:05.577Z</updated>
+    <updated>2024-04-12T08:51:41.716Z</updated>
     
     
       
@@ -520,31 +547,6 @@
     
     
     <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
-    
-    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>论文阅读《ORB-SLAM2：an Open-Source SLAM System for Monocular, Stereo and RGB-D Cameras》</title>
-    <link href="http://immortalqx.github.io/2023/03/07/paper-reading-orb-slam2/"/>
-    <id>http://immortalqx.github.io/2023/03/07/paper-reading-orb-slam2/</id>
-    <published>2023-03-07T08:47:39.000Z</published>
-    <updated>2024-04-12T03:35:53.588Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;论文阅读《ORB-SLAM2-an-Open-Source-SLAM-System-for-Monocular-Stereo-and-RGB-D-Cameras》&quot;&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
-    
     
     <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
     
