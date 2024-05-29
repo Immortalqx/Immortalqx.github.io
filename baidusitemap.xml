@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://Immortalqx.github.io/2024/05/25/code-reading-compact-3dgs/</loc>
+    <lastmod>2024-05-29</lastmod>
+  </url>
+  <url>
+    <loc>http://Immortalqx.github.io/2024/05/21/paper-reading-compact-3dgs/</loc>
+    <lastmod>2024-05-29</lastmod>
+  </url>
+  <url>
+    <loc>http://Immortalqx.github.io/2024/05/19/paper-reading-cg-slam/</loc>
+    <lastmod>2024-05-29</lastmod>
+  </url>
+  <url>
+    <loc>http://Immortalqx.github.io/2024/05/14/paper-reading-compact-gsslam/</loc>
+    <lastmod>2024-05-29</lastmod>
+  </url>
+  <url>
+    <loc>http://Immortalqx.github.io/2024/05/02/paper-reading-rgbd-gs-icp-slam/</loc>
+    <lastmod>2024-05-29</lastmod>
+  </url>
+  <url>
     <loc>http://Immortalqx.github.io/2023/07/26/nerf-slam-0/</loc>
     <lastmod>2024-04-12</lastmod>
   </url>
@@ -65,11 +85,11 @@
     <lastmod>2024-04-12</lastmod>
   </url>
   <url>
-    <loc>http://Immortalqx.github.io/2021/02/23/opencv-notes-4/</loc>
+    <loc>http://Immortalqx.github.io/2020/12/19/opencv-notes-3/</loc>
     <lastmod>2024-04-12</lastmod>
   </url>
   <url>
-    <loc>http://Immortalqx.github.io/2020/12/19/opencv-notes-3/</loc>
+    <loc>http://Immortalqx.github.io/2021/02/23/opencv-notes-4/</loc>
     <lastmod>2024-04-12</lastmod>
   </url>
   <url>
@@ -97,11 +117,11 @@
     <lastmod>2024-04-12</lastmod>
   </url>
   <url>
-    <loc>http://Immortalqx.github.io/2021/07/08/slam-learning-2/</loc>
+    <loc>http://Immortalqx.github.io/2021/02/05/slam-learning-1/</loc>
     <lastmod>2024-04-12</lastmod>
   </url>
   <url>
-    <loc>http://Immortalqx.github.io/2021/02/05/slam-learning-1/</loc>
+    <loc>http://Immortalqx.github.io/2021/07/08/slam-learning-2/</loc>
     <lastmod>2024-04-12</lastmod>
   </url>
   <url>
@@ -177,11 +197,11 @@
     <lastmod>2024-04-12</lastmod>
   </url>
   <url>
-    <loc>http://Immortalqx.github.io/2022/08/17/geometry-notes-1/</loc>
+    <loc>http://Immortalqx.github.io/2022/04/17/hexo-multi-theme/</loc>
     <lastmod>2024-04-12</lastmod>
   </url>
   <url>
-    <loc>http://Immortalqx.github.io/2022/04/17/hexo-multi-theme/</loc>
+    <loc>http://Immortalqx.github.io/2022/08/17/geometry-notes-1/</loc>
     <lastmod>2024-04-12</lastmod>
   </url>
   <url>
@@ -289,19 +309,19 @@
     <lastmod>2024-04-12</lastmod>
   </url>
   <url>
-    <loc>http://Immortalqx.github.io/2021/07/18/ros-notes-5/</loc>
-    <lastmod>2024-04-12</lastmod>
-  </url>
-  <url>
-    <loc>http://Immortalqx.github.io/2022/08/29/richard-hamming-you-and-your-research/</loc>
-    <lastmod>2024-04-12</lastmod>
-  </url>
-  <url>
     <loc>http://Immortalqx.github.io/2021/07/18/ros-notes-4/</loc>
     <lastmod>2024-04-12</lastmod>
   </url>
   <url>
     <loc>http://Immortalqx.github.io/2021/07/23/ros-notes-6/</loc>
+    <lastmod>2024-04-12</lastmod>
+  </url>
+  <url>
+    <loc>http://Immortalqx.github.io/2021/07/18/ros-notes-5/</loc>
+    <lastmod>2024-04-12</lastmod>
+  </url>
+  <url>
+    <loc>http://Immortalqx.github.io/2022/08/29/richard-hamming-you-and-your-research/</loc>
     <lastmod>2024-04-12</lastmod>
   </url>
   <url>
@@ -313,11 +333,11 @@
     <lastmod>2024-04-12</lastmod>
   </url>
   <url>
-    <loc>http://Immortalqx.github.io/2020/08/21/cpp-notes-2/</loc>
+    <loc>http://Immortalqx.github.io/2020/08/22/cpp-notes-1/</loc>
     <lastmod>2024-04-12</lastmod>
   </url>
   <url>
-    <loc>http://Immortalqx.github.io/2020/08/22/cpp-notes-1/</loc>
+    <loc>http://Immortalqx.github.io/2020/08/21/cpp-notes-2/</loc>
     <lastmod>2024-04-12</lastmod>
   </url>
   <url>

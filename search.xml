@@ -402,219 +402,6 @@ rosrun nodelet nodelet load try_nodelet/try_use nodelet_manager __name:<span cla
       </tags>
   </entry>
   <entry>
-    <title>ROS中的URDF</title>
-    <url>/2021/07/18/ros-notes-5/</url>
-    <content><![CDATA[<h1 id="ROS中的URDF"><a href="#ROS中的URDF" class="headerlink" title="ROS中的URDF"></a>ROS中的URDF</h1><h2 id="什么是URDF"><a href="#什么是URDF" class="headerlink" title="什么是URDF"></a>什么是URDF</h2><ul>
-<li><p>Unified Robot Description Format，统一机器人描述格式，简称为URDF；</p>
-</li>
-<li><p>ROS中一个非常重要的机器人模型描述格式；</p>
-</li>
-<li><p>URDF文件使用XML格式描述机器人模型；</p>
-</li>
-<li><p>ROS中的urdf功能包包含一个URDF的C++解析器。</p>
-</li>
-</ul>
-<h2 id="URDF标签说明"><a href="#URDF标签说明" class="headerlink" title="URDF标签说明"></a>URDF标签说明</h2><h3 id="lt-link-gt"><a href="#lt-link-gt" class="headerlink" title="<link>"></a>&lt;link&gt;</h3><p><strong>作用：</strong></p>
-<ul>
-<li>描述机器人某个刚体部分的外观和物理属性；</li>
-<li>尺寸（size）、颜色（color）、形状（shape）、惯性矩阵（inertial matrix）、碰撞参数（collision properties）等。</li>
-</ul>
-<img src="/images/ros-notes/5-1.png" style="zoom:33%;">
-
-<p><strong>子标签：</strong></p>
-<ul>
-<li>&lt;visual&gt;：描述机器人link部分的外观参数；</li>
-<li>&lt;inertial&gt;：描述link的惯性参数；</li>
-<li>&lt;collision&gt;：描述link的碰撞属性。</li>
-</ul>
-<img src="/images/ros-notes/5-2.png" style="zoom: 67%;">
-
-<h3 id="lt-joint-gt"><a href="#lt-joint-gt" class="headerlink" title="<joint>"></a>&lt;joint&gt;</h3><p><strong>作用：</strong></p>
-<ul>
-<li>描述机器人关节的运动学和动力学属性；</li>
-<li>包括关节运动的位置和速度限制；</li>
-<li>根据关节运动的形式，可以将其分为六种类型。</li>
-</ul>
-<img src="/images/ros-notes/5-3.png" style="zoom:33%;">
-
-<table>
-<thead>
-<tr>
-<th>关节类型</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>continuous</td>
-<td>旋转关节，可以围绕单轴无限旋转</td>
-</tr>
-<tr>
-<td>revolute</td>
-<td>旋转关节，类似于continuous，但有旋转的角度限制</td>
-</tr>
-<tr>
-<td>prismatic</td>
-<td>滑动关节，沿某一轴线移动的关节，带有位置极限</td>
-</tr>
-<tr>
-<td>planar</td>
-<td>平面关节，允许在平面正交方向上平移或者旋转</td>
-</tr>
-<tr>
-<td>floating</td>
-<td>浮动关节，允许进行平移、旋转运动</td>
-</tr>
-<tr>
-<td>fixed</td>
-<td>固定关节，不允许运动的特殊关节</td>
-</tr>
-</tbody></table>
-<p><strong>子标签：</strong></p>
-<ul>
-<li>&lt;calibration&gt;：关节的参考位置，用来校准关节的绝对位置；</li>
-<li>&lt;dynamics&gt;：描述关节的物理属性，例如阻尼值、物理静摩擦力等，经常在动力学仿真中用到；</li>
-<li>&lt;limit&gt;：描述运动的一些极限值，包括关节运动的上下限位置、速度限制、力矩限制等；</li>
-<li>&lt;mimic&gt;：描述该关节与已有关节的关系；</li>
-<li>&lt;safety＿controller&gt;：描述安全控制器参数。 </li>
-</ul>
-<img src="/images/ros-notes/5-4.png" style="zoom:67%;">
-
-<h3 id="lt-robot-gt"><a href="#lt-robot-gt" class="headerlink" title="<robot>"></a>&lt;robot&gt;</h3><ul>
-<li>完整机器人模型的最顶层标签；</li>
-<li>&lt;link&gt;和&lt;joint&gt;标签都必须包含在&lt;robot&gt;标签内。</li>
-</ul>
-<img src="/images/ros-notes/5-5.png" style="zoom:33%;">
-
-<p>一个完整的机器人模型，由一系列&lt;link&gt;和&lt;joint&gt;组成。</p>
-<img src="/images/ros-notes/5-6.png" style="zoom:67%;">
-
-<h2 id="URDF建模优化"><a href="#URDF建模优化" class="headerlink" title="URDF建模优化"></a>URDF建模优化</h2><h3 id="URDF建模存在的问题："><a href="#URDF建模存在的问题：" class="headerlink" title="URDF建模存在的问题："></a>URDF建模存在的问题：</h3><ol>
-<li>模型冗长，重复内容过多；</li>
-<li>参数修改麻烦，不便于二次开发；</li>
-<li>没有参数计算的功能。</li>
-</ol>
-<h3 id="URDF模型的进化版本——xacro模型文件"><a href="#URDF模型的进化版本——xacro模型文件" class="headerlink" title="URDF模型的进化版本——xacro模型文件"></a>URDF模型的进化版本——xacro模型文件</h3><ul>
-<li>精简模型代码<ul>
-<li>创建宏定义</li>
-<li>文件包含</li>
-</ul>
-</li>
-<li>提供可编程接口<ul>
-<li>常量</li>
-<li>变量</li>
-<li>数学计算</li>
-<li>条件语句</li>
-</ul>
-</li>
-</ul>
-<h3 id="常量的定义和使用"><a href="#常量的定义和使用" class="headerlink" title="常量的定义和使用"></a>常量的定义和使用</h3><p>常量定义：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>M_PI<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>3.14159<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>常量使用：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpy</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>${M_PI/2} 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<img src="/images/ros-notes/5-7.png" style="zoom:67%;">
-
-<h3 id="数学计算"><a href="#数学计算" class="headerlink" title="数学计算"></a>数学计算</h3><p>数学计算：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 ${(motor_length+wheel_length)/2} 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpx</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<img src="/images/ros-notes/5-8.png" style="zoom:67%;">
-
-<p>注意：所有的数学运算都会转换成浮点数进行，以保证运算精度。</p>
-<h3 id="宏定义"><a href="#宏定义" class="headerlink" title="宏定义"></a>宏定义</h3><p>宏定义：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>macro</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">params</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A B C<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
-    ......
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">sacro:</span>macros</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>宏调用：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span> <span class="token attr-name">A</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A_value<span class="token punctuation">"</span></span> <span class="token attr-name">B</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>B_value<span class="token punctuation">"</span></span> <span class="token attr-name">C</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>C_value<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<img src="/images/ros-notes/5-9.png" style="zoom:67%;">
-
-<h3 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h3><p>文件包含：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">xacro:</span>include</span> <span class="token attr-name">filename</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find mbot_description)/urdf/xacro/mbot_base.xacro<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<img src="/images/ros-notes/5-10.png" style="zoom:67%;">
-
-<h3 id="模型显示"><a href="#模型显示" class="headerlink" title="模型显示"></a>模型显示</h3><p>方法一：将xacro文件转换成URDF文件后显示</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun xacro xacro.py mbot.xacro<span class="token operator">&gt;</span>mbot.urdf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>方法二：直接调用xacro文件解析器</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>arg</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>model<span class="token punctuation">"</span></span> <span class="token attr-name">default</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find xacro)/xacro --inorder <span class="token punctuation">'</span>$(find mbot_description)/urdf/xacro/mbot.xacro<span class="token punctuation">'</span><span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>robot_description<span class="token punctuation">"</span></span> <span class="token attr-name">command</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(arg model)<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">roslaunch mbot_description display_mbot_base_xacro.launch<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>相关学习资料：<a href="http://wiki.ros.org/urdf/Tutorials">http://wiki.ros.org/urdf/Tutorials</a></p>
-]]></content>
-      <categories>
-        <category>编程基础</category>
-      </categories>
-      <tags>
-        <tag>ROS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Richard Hamming &quot;You and Your Research&quot;</title>
-    <url>/2022/08/29/richard-hamming-you-and-your-research/</url>
-    <content><![CDATA[<h1 id="Richard-Hamming-“You-and-Your-Research”"><a href="#Richard-Hamming-“You-and-Your-Research”" class="headerlink" title="Richard Hamming “You and Your Research”"></a>Richard Hamming “You and Your Research”</h1><blockquote>
-<p>原文链接：<a href="https://www.cs.virginia.edu/~robins/YouAndYourResearch.html">https://www.cs.virginia.edu/~robins/YouAndYourResearch.html</a></p>
-<p>中文链接：<a href="https://tieba.baidu.com/p/248718051?red_tag=0886115742">https://tieba.baidu.com/p/248718051?red_tag=0886115742</a></p>
-</blockquote>
-<p>1986年3月7日，Richard Hamming在贝尔通信研究中心给200多名科学家们，做了一次演讲，题目叫做”You and Your Research”。他试图回答下面这样一个问题。</p>
-<blockquote>
-<p><strong>“为什么有的科学家做出了影响深远的重大成果，而大多数其他人的成果都被历史遗忘了？”</strong></p>
-</blockquote>
-<p>这篇演讲非常有名，属于经典文献。不仅对科学工作者有启发意义，每一个从事创造性工作的人，都应该读一下。</p>
-<p>下面是<a href="https://www.ruanyifeng.com/blog/2016/04/you-and-your-research.html">阮一峰</a>的摘录，删除了一些涉及具体的人和事的段落，内容更集中易读，并且为每个部分加上了小标题。</p>
-<h2 id="You-and-Your-Research"><a href="#You-and-Your-Research" class="headerlink" title="You and Your Research"></a>You and Your Research</h2><p>我演讲的题目是”你和你的研究”。我要谈的不是普通的研究，而是重大的研究，就是相当诺贝尔奖那一级别的研究。比如，相对论，香农的信息论，以及其他杰出的理论—-这就是我要讲的。</p>
-<p>1945年，我进入洛斯阿拉莫斯国家实验室，负责计算机方面的事，因此见过费曼、费米、奥本海默等大科学家。我一直问自己这样的问题： “为什么他们做出了这样的成果？”和”我和他们的差别是什么” 。我读了传记、自传，去问他们本人：”你是怎么干起来这样的事的？” 我试着搞清原因，这就是今天要谈的内容。</p>
-<p>为什么这个话题重要？因为你只有一次生命。即使你相信来世，那也没关系，为什么不在今生就做一些重大的事呢。</p>
-<h3 id="一、要有做大事的想法"><a href="#一、要有做大事的想法" class="headerlink" title="一、要有做大事的想法"></a>一、要有做大事的想法</h3><p>首先，你要有干大事的想法。很多人毕生只是例行公事般地从事安全的工作，所以产出有限。就这么简单：如果你要干大事，你必须毫不迟疑地去解决重大难题。</p>
-<p>我遇到费曼时，就知道他肯定能得诺贝尔奖。因为他会从事伟大的工作。不论未来走哪个方向，这个人都会干大事。</p>
-<p>你要跟自己说，往前走，去做大事！</p>
-<h3 id="二、年轻的时候就要有勇气追求答案"><a href="#二、年轻的时候就要有勇气追求答案" class="headerlink" title="二、年轻的时候就要有勇气追求答案"></a>二、年轻的时候就要有勇气追求答案</h3><p>成功科学家的重要品质之一就是勇气。</p>
-<p>一旦你鼓起了勇气，相信自己能解决重要的问题，那么你就行。如果你觉得你不行，几乎肯定你不会去做。伟大的科学家都充满勇气，他们不管周围境况，勇往直前；他们思考、思考、再思考。</p>
-<p>年龄是另一个因素。你要做就得趁年轻。爱因斯坦做事就早，所有的量子理论的大科学家开始做他们的”事”的时候，都早得吓人。大多数数学家、理论物理学家，以及天体物理学家都在他们的早年，作出了我们公认的他们最好的成就。这并不是说他们岁数大了以后，就不能做有益的工作。是我们认为他们最有价值的事是他们年轻的时候所为。另一方面，在音乐、政治和文学方面，通常的情况是，那些我们仰慕的大作品往往出炉较晚。</p>
-<h3 id="三、忍受不确定的状态"><a href="#三、忍受不确定的状态" class="headerlink" title="三、忍受不确定的状态"></a>三、忍受不确定的状态</h3><p>伟大科学家还有另一个性格方面的特点，那就是”似是而非”。大多数人愿意相信世上万物非此即彼，是非分明。大科学家们却能很大程度地容忍”似是而非”。他们对自己的想法非常自信，但是又保持足够的警觉，随时挑出其中的错误和瑕疵。</p>
-<p>如果你过于自信，你将忽视其中的破绽；如果你过分怀疑，你甚至将无从起步。这需要一个良好的平衡。多数大科学家非常清楚为什么他们的理论是真知灼见，同时也知道哪里还有些小毛病。</p>
-<h3 id="四、比别人多努力10"><a href="#四、比别人多努力10" class="headerlink" title="四、比别人多努力10%"></a>四、比别人多努力10%</h3><p>大多数伟大的科学家都有惊人的动力。他们总是比别人投入更多。假设两个人拥有几乎一样的能力，其中一个人比另一个人多干10%，几年后他将多产一倍。</p>
-<p>你知道得越多，就学得越多；你学得越多，就做得越多；你做得越多，机会就越多。</p>
-<h3 id="五、全力投入重要的问题"><a href="#五、全力投入重要的问题" class="headerlink" title="五、全力投入重要的问题"></a>五、全力投入重要的问题</h3><p>如果你找到一件真正重要的事情，就不要让任何别的事情分散你的注意力。</p>
-<p>多数大科学家口袋里约有一二十个大问题，想方设法去攻克。每当他们发现一个新想法出现的时候，你就会听到他们说：”唔，这个与该问题有关。” 他们于是抛开其他一切，全力投入此问题。</p>
-<p>他们的思想是时刻准备着的，看见机会就紧跟其后。当然，很多时候也不能奏效，一个主要的诀窍就是活得长一点。</p>
-<h3 id="六、敞开办公室大门"><a href="#六、敞开办公室大门" class="headerlink" title="六、敞开办公室大门"></a>六、敞开办公室大门</h3><p>另一个性格特点，我一开始没注意到：有人的办公室大门是关着的，另一些人是开着的。</p>
-<p>我观察到，如果关上办公室的门，你今天或明天确实会比别人多干不少的活。但是，十年后就未必了。因为你可能干了不少不值得干的事。那些把门敞开的人，的确受了很多的打扰，但他也不时地获得线索，了解这世界什么更重要。</p>
-<p>我可以说，那些敞开了门干活的人和最终成就了大事的人之间，存在千丝万缕的联系。</p>
-<h3 id="七、做可以成为他人基石的工作"><a href="#七、做可以成为他人基石的工作" class="headerlink" title="七、做可以成为他人基石的工作"></a>七、做可以成为他人基石的工作</h3><p>早年，我在攻克一个又一个难题，成功的多，失败的少。可是，周五解决了一个问题回到家里后，我却并不快活，反而很沮丧。我看到生活就是一个问题接着一个问题又接着另一个问题。</p>
-<p>想了相当长一阵子后，我决定以另一种方式干活：你的工作要成为别人工作的基石！于是别人就会说： “看哪，我站在他的肩膀之上，我看得更远了。”</p>
-<p>科学的本质是积累！我再也不去做相互孤立的问题，除非它能代表某一类问题的共性。我决不再去解决单一的问题。</p>
-<p>你要么让人们在你的成果上有所建树，要么别人不得不把你干的活从头再来复制一遍。</p>
-<h3 id="八、重视推销和表达自己"><a href="#八、重视推销和表达自己" class="headerlink" title="八、重视推销和表达自己"></a>八、重视推销和表达自己</h3><p>做完一件事情还不够，你还得把它”贩卖”出去。</p>
-<p>对于一个科学家而言，推销是一件棘手的事。这很讨厌，你本不该做这事，这世界就该等着，当你做成某件大事时，他们就该赶快出来主动迎接。但是，事与愿违，每个人都忙着他们自己的活。你必须很好地主动介绍，使得他们能把手头的活放在一边，过来瞧瞧你的东西，理解它，然后回过头来说：”是，那玩意不错。” 现实是即使你发表了研究成果，如果读者们把你的文章翻过去，不停下来读它，你就会竹篮打水一场空。</p>
-<p>你得学会写好、写清楚以便人们愿意看；你必须学会发表相当正式的发言；你还必须学会作出非正式的谈话。我们有不少所谓的”后排科学家”。在一个会议上，他们更愿意闭口不谈。他们不愿站在一个炙手可热的会议的中央，在大庭广众之下说：”我们应该做这件事，为了这些原因……” 你必须掌握这种形式的交流，准备发表演说。</p>
-<p>我刚开始做演讲的时候，非常非常紧张，几乎表现出生理上的病态。我意识到，我得学习作演讲，否则整个职业生涯就不会有很好的发展。我决定一定要做一个非常好的演讲，一个真正符合听众需要的演讲，不只针对专业人士，而是针对更广泛的听众。</p>
-<p>现在，我认为，研究要只花50%的时间，另外50%的时间用来表达，这是一个非常大的数字。</p>
-<h3 id="九、阅读方法比数量更重要"><a href="#九、阅读方法比数量更重要" class="headerlink" title="九、阅读方法比数量更重要"></a>九、阅读方法比数量更重要</h3><p>你也不要在图书馆花太多时间，一味追随别人的研究成果。</p>
-<p>贝尔实验室有个同事，一个非常非常聪明的家伙。他老在图书馆里呆着，读所有的东西。如果你想要参考资料，你到他那里去，他就会告诉你所有的参考资料。但我觉得，长此以往，他不会有任何以他命名的成果。他现在已退休，成为了一个副教授。他是很有价值，我对此没有疑问。他写了一些不错的文章登在《物理评论》上，但他没有以他命名的成果，因为他读得太多。如果你成天研究别人怎么做，你就会按别人的老路子思考。</p>
-<p>如果你想要有不同的新思维，你需要去搞清问题，而不是成天靠读书去找答案。这不是可取的方法。</p>
-<p>我的建议是：阅读，但不是靠量，而是靠正确的阅读方法起作用。</p>
-<h3 id="十、重视写书"><a href="#十、重视写书" class="headerlink" title="十、重视写书"></a>十、重视写书</h3><p>短期来看，论文非常重要。但如果你想要一个长期的认可，写书的作用更大，因为我们大多数人需要方向。现今的知识几乎是无穷的，我们需要寻找自己的方向。那些帮助我们融会贯通的、代表重要思想的书，会被后代珍视。</p>
-<p>写论文也是必要的，但我倾向于认为，长期看，那些只写至关重要内容的书更重要。</p>
-<h3 id="十一、远见超出你的能力时，才去做管理"><a href="#十一、远见超出你的能力时，才去做管理" class="headerlink" title="十一、远见超出你的能力时，才去做管理"></a>十一、远见超出你的能力时，才去做管理</h3><p>如果你想成为一名伟大的研究者，就不要成为一个公司的总裁。你得清楚你要什么。</p>
-<p>一天，我到我的老板Bode那里，对他说：”为什么你要当这个部门的头呢？为什么你不去当一名大科学家呢？” 他说：”Hamming， 我有远见，知道贝尔实验室的数学部分要怎样，如果要让这个”远见”得到共识，我就得当上部门的头。”</p>
-<p>当你觉得你想干什么的远见，正好在你的能力范围内，你就应努力获取它。如果有一天你的远见大大超过了你的能力时，你就应该去做管理工作。而且，远见越大，你就应做越大的管理。如果你拥有一个关于整个实验室应该向何处去，或者有关整个贝尔系统，你就得到该去的位子让它实现。你从底层是无法轻易让它实现的。</p>
-<p>这取决于你的目标和对目标的渴望。我选择回避管理工作因为我更希望做我容易应付的事。但这是我的选择，只对我起作用。每个人有权做出自己的选择，保持一个开放的心态。但别试着两样都占。</p>
-<p>（完）</p>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>经验分享</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ROS中的TF</title>
     <url>/2021/07/18/ros-notes-4/</url>
     <content><![CDATA[<h1 id="ROS中的TF"><a href="#ROS中的TF" class="headerlink" title="ROS中的TF"></a>ROS中的TF</h1><h2 id="TF介绍"><a href="#TF介绍" class="headerlink" title="TF介绍"></a>TF介绍</h2><p>TF(TransForm)，就是坐标转换，包括了位置和姿态两个方面的变换。这里需要注意<strong>区分坐标转换和坐标系转换</strong>，坐标转换是一个坐标在不同坐标系下的表示，而坐标系转换不同坐标系的相对位姿关系。</p>
@@ -982,6 +769,219 @@ mavros_msgs<span class="token double-colon punctuation">::</span>State current_s
       </tags>
   </entry>
   <entry>
+    <title>ROS中的URDF</title>
+    <url>/2021/07/18/ros-notes-5/</url>
+    <content><![CDATA[<h1 id="ROS中的URDF"><a href="#ROS中的URDF" class="headerlink" title="ROS中的URDF"></a>ROS中的URDF</h1><h2 id="什么是URDF"><a href="#什么是URDF" class="headerlink" title="什么是URDF"></a>什么是URDF</h2><ul>
+<li><p>Unified Robot Description Format，统一机器人描述格式，简称为URDF；</p>
+</li>
+<li><p>ROS中一个非常重要的机器人模型描述格式；</p>
+</li>
+<li><p>URDF文件使用XML格式描述机器人模型；</p>
+</li>
+<li><p>ROS中的urdf功能包包含一个URDF的C++解析器。</p>
+</li>
+</ul>
+<h2 id="URDF标签说明"><a href="#URDF标签说明" class="headerlink" title="URDF标签说明"></a>URDF标签说明</h2><h3 id="lt-link-gt"><a href="#lt-link-gt" class="headerlink" title="<link>"></a>&lt;link&gt;</h3><p><strong>作用：</strong></p>
+<ul>
+<li>描述机器人某个刚体部分的外观和物理属性；</li>
+<li>尺寸（size）、颜色（color）、形状（shape）、惯性矩阵（inertial matrix）、碰撞参数（collision properties）等。</li>
+</ul>
+<img src="/images/ros-notes/5-1.png" style="zoom:33%;">
+
+<p><strong>子标签：</strong></p>
+<ul>
+<li>&lt;visual&gt;：描述机器人link部分的外观参数；</li>
+<li>&lt;inertial&gt;：描述link的惯性参数；</li>
+<li>&lt;collision&gt;：描述link的碰撞属性。</li>
+</ul>
+<img src="/images/ros-notes/5-2.png" style="zoom: 67%;">
+
+<h3 id="lt-joint-gt"><a href="#lt-joint-gt" class="headerlink" title="<joint>"></a>&lt;joint&gt;</h3><p><strong>作用：</strong></p>
+<ul>
+<li>描述机器人关节的运动学和动力学属性；</li>
+<li>包括关节运动的位置和速度限制；</li>
+<li>根据关节运动的形式，可以将其分为六种类型。</li>
+</ul>
+<img src="/images/ros-notes/5-3.png" style="zoom:33%;">
+
+<table>
+<thead>
+<tr>
+<th>关节类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>continuous</td>
+<td>旋转关节，可以围绕单轴无限旋转</td>
+</tr>
+<tr>
+<td>revolute</td>
+<td>旋转关节，类似于continuous，但有旋转的角度限制</td>
+</tr>
+<tr>
+<td>prismatic</td>
+<td>滑动关节，沿某一轴线移动的关节，带有位置极限</td>
+</tr>
+<tr>
+<td>planar</td>
+<td>平面关节，允许在平面正交方向上平移或者旋转</td>
+</tr>
+<tr>
+<td>floating</td>
+<td>浮动关节，允许进行平移、旋转运动</td>
+</tr>
+<tr>
+<td>fixed</td>
+<td>固定关节，不允许运动的特殊关节</td>
+</tr>
+</tbody></table>
+<p><strong>子标签：</strong></p>
+<ul>
+<li>&lt;calibration&gt;：关节的参考位置，用来校准关节的绝对位置；</li>
+<li>&lt;dynamics&gt;：描述关节的物理属性，例如阻尼值、物理静摩擦力等，经常在动力学仿真中用到；</li>
+<li>&lt;limit&gt;：描述运动的一些极限值，包括关节运动的上下限位置、速度限制、力矩限制等；</li>
+<li>&lt;mimic&gt;：描述该关节与已有关节的关系；</li>
+<li>&lt;safety＿controller&gt;：描述安全控制器参数。 </li>
+</ul>
+<img src="/images/ros-notes/5-4.png" style="zoom:67%;">
+
+<h3 id="lt-robot-gt"><a href="#lt-robot-gt" class="headerlink" title="<robot>"></a>&lt;robot&gt;</h3><ul>
+<li>完整机器人模型的最顶层标签；</li>
+<li>&lt;link&gt;和&lt;joint&gt;标签都必须包含在&lt;robot&gt;标签内。</li>
+</ul>
+<img src="/images/ros-notes/5-5.png" style="zoom:33%;">
+
+<p>一个完整的机器人模型，由一系列&lt;link&gt;和&lt;joint&gt;组成。</p>
+<img src="/images/ros-notes/5-6.png" style="zoom:67%;">
+
+<h2 id="URDF建模优化"><a href="#URDF建模优化" class="headerlink" title="URDF建模优化"></a>URDF建模优化</h2><h3 id="URDF建模存在的问题："><a href="#URDF建模存在的问题：" class="headerlink" title="URDF建模存在的问题："></a>URDF建模存在的问题：</h3><ol>
+<li>模型冗长，重复内容过多；</li>
+<li>参数修改麻烦，不便于二次开发；</li>
+<li>没有参数计算的功能。</li>
+</ol>
+<h3 id="URDF模型的进化版本——xacro模型文件"><a href="#URDF模型的进化版本——xacro模型文件" class="headerlink" title="URDF模型的进化版本——xacro模型文件"></a>URDF模型的进化版本——xacro模型文件</h3><ul>
+<li>精简模型代码<ul>
+<li>创建宏定义</li>
+<li>文件包含</li>
+</ul>
+</li>
+<li>提供可编程接口<ul>
+<li>常量</li>
+<li>变量</li>
+<li>数学计算</li>
+<li>条件语句</li>
+</ul>
+</li>
+</ul>
+<h3 id="常量的定义和使用"><a href="#常量的定义和使用" class="headerlink" title="常量的定义和使用"></a>常量的定义和使用</h3><p>常量定义：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>M_PI<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>3.14159<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>常量使用：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpy</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>${M_PI/2} 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<img src="/images/ros-notes/5-7.png" style="zoom:67%;">
+
+<h3 id="数学计算"><a href="#数学计算" class="headerlink" title="数学计算"></a>数学计算</h3><p>数学计算：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 ${(motor_length+wheel_length)/2} 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpx</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<img src="/images/ros-notes/5-8.png" style="zoom:67%;">
+
+<p>注意：所有的数学运算都会转换成浮点数进行，以保证运算精度。</p>
+<h3 id="宏定义"><a href="#宏定义" class="headerlink" title="宏定义"></a>宏定义</h3><p>宏定义：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>macro</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">params</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A B C<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    ......
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">sacro:</span>macros</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>宏调用：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span> <span class="token attr-name">A</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A_value<span class="token punctuation">"</span></span> <span class="token attr-name">B</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>B_value<span class="token punctuation">"</span></span> <span class="token attr-name">C</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>C_value<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<img src="/images/ros-notes/5-9.png" style="zoom:67%;">
+
+<h3 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h3><p>文件包含：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">xacro:</span>include</span> <span class="token attr-name">filename</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find mbot_description)/urdf/xacro/mbot_base.xacro<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<img src="/images/ros-notes/5-10.png" style="zoom:67%;">
+
+<h3 id="模型显示"><a href="#模型显示" class="headerlink" title="模型显示"></a>模型显示</h3><p>方法一：将xacro文件转换成URDF文件后显示</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun xacro xacro.py mbot.xacro<span class="token operator">&gt;</span>mbot.urdf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>方法二：直接调用xacro文件解析器</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>arg</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>model<span class="token punctuation">"</span></span> <span class="token attr-name">default</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find xacro)/xacro --inorder <span class="token punctuation">'</span>$(find mbot_description)/urdf/xacro/mbot.xacro<span class="token punctuation">'</span><span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>robot_description<span class="token punctuation">"</span></span> <span class="token attr-name">command</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(arg model)<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">roslaunch mbot_description display_mbot_base_xacro.launch<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>相关学习资料：<a href="http://wiki.ros.org/urdf/Tutorials">http://wiki.ros.org/urdf/Tutorials</a></p>
+]]></content>
+      <categories>
+        <category>编程基础</category>
+      </categories>
+      <tags>
+        <tag>ROS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Richard Hamming &quot;You and Your Research&quot;</title>
+    <url>/2022/08/29/richard-hamming-you-and-your-research/</url>
+    <content><![CDATA[<h1 id="Richard-Hamming-“You-and-Your-Research”"><a href="#Richard-Hamming-“You-and-Your-Research”" class="headerlink" title="Richard Hamming “You and Your Research”"></a>Richard Hamming “You and Your Research”</h1><blockquote>
+<p>原文链接：<a href="https://www.cs.virginia.edu/~robins/YouAndYourResearch.html">https://www.cs.virginia.edu/~robins/YouAndYourResearch.html</a></p>
+<p>中文链接：<a href="https://tieba.baidu.com/p/248718051?red_tag=0886115742">https://tieba.baidu.com/p/248718051?red_tag=0886115742</a></p>
+</blockquote>
+<p>1986年3月7日，Richard Hamming在贝尔通信研究中心给200多名科学家们，做了一次演讲，题目叫做”You and Your Research”。他试图回答下面这样一个问题。</p>
+<blockquote>
+<p><strong>“为什么有的科学家做出了影响深远的重大成果，而大多数其他人的成果都被历史遗忘了？”</strong></p>
+</blockquote>
+<p>这篇演讲非常有名，属于经典文献。不仅对科学工作者有启发意义，每一个从事创造性工作的人，都应该读一下。</p>
+<p>下面是<a href="https://www.ruanyifeng.com/blog/2016/04/you-and-your-research.html">阮一峰</a>的摘录，删除了一些涉及具体的人和事的段落，内容更集中易读，并且为每个部分加上了小标题。</p>
+<h2 id="You-and-Your-Research"><a href="#You-and-Your-Research" class="headerlink" title="You and Your Research"></a>You and Your Research</h2><p>我演讲的题目是”你和你的研究”。我要谈的不是普通的研究，而是重大的研究，就是相当诺贝尔奖那一级别的研究。比如，相对论，香农的信息论，以及其他杰出的理论—-这就是我要讲的。</p>
+<p>1945年，我进入洛斯阿拉莫斯国家实验室，负责计算机方面的事，因此见过费曼、费米、奥本海默等大科学家。我一直问自己这样的问题： “为什么他们做出了这样的成果？”和”我和他们的差别是什么” 。我读了传记、自传，去问他们本人：”你是怎么干起来这样的事的？” 我试着搞清原因，这就是今天要谈的内容。</p>
+<p>为什么这个话题重要？因为你只有一次生命。即使你相信来世，那也没关系，为什么不在今生就做一些重大的事呢。</p>
+<h3 id="一、要有做大事的想法"><a href="#一、要有做大事的想法" class="headerlink" title="一、要有做大事的想法"></a>一、要有做大事的想法</h3><p>首先，你要有干大事的想法。很多人毕生只是例行公事般地从事安全的工作，所以产出有限。就这么简单：如果你要干大事，你必须毫不迟疑地去解决重大难题。</p>
+<p>我遇到费曼时，就知道他肯定能得诺贝尔奖。因为他会从事伟大的工作。不论未来走哪个方向，这个人都会干大事。</p>
+<p>你要跟自己说，往前走，去做大事！</p>
+<h3 id="二、年轻的时候就要有勇气追求答案"><a href="#二、年轻的时候就要有勇气追求答案" class="headerlink" title="二、年轻的时候就要有勇气追求答案"></a>二、年轻的时候就要有勇气追求答案</h3><p>成功科学家的重要品质之一就是勇气。</p>
+<p>一旦你鼓起了勇气，相信自己能解决重要的问题，那么你就行。如果你觉得你不行，几乎肯定你不会去做。伟大的科学家都充满勇气，他们不管周围境况，勇往直前；他们思考、思考、再思考。</p>
+<p>年龄是另一个因素。你要做就得趁年轻。爱因斯坦做事就早，所有的量子理论的大科学家开始做他们的”事”的时候，都早得吓人。大多数数学家、理论物理学家，以及天体物理学家都在他们的早年，作出了我们公认的他们最好的成就。这并不是说他们岁数大了以后，就不能做有益的工作。是我们认为他们最有价值的事是他们年轻的时候所为。另一方面，在音乐、政治和文学方面，通常的情况是，那些我们仰慕的大作品往往出炉较晚。</p>
+<h3 id="三、忍受不确定的状态"><a href="#三、忍受不确定的状态" class="headerlink" title="三、忍受不确定的状态"></a>三、忍受不确定的状态</h3><p>伟大科学家还有另一个性格方面的特点，那就是”似是而非”。大多数人愿意相信世上万物非此即彼，是非分明。大科学家们却能很大程度地容忍”似是而非”。他们对自己的想法非常自信，但是又保持足够的警觉，随时挑出其中的错误和瑕疵。</p>
+<p>如果你过于自信，你将忽视其中的破绽；如果你过分怀疑，你甚至将无从起步。这需要一个良好的平衡。多数大科学家非常清楚为什么他们的理论是真知灼见，同时也知道哪里还有些小毛病。</p>
+<h3 id="四、比别人多努力10"><a href="#四、比别人多努力10" class="headerlink" title="四、比别人多努力10%"></a>四、比别人多努力10%</h3><p>大多数伟大的科学家都有惊人的动力。他们总是比别人投入更多。假设两个人拥有几乎一样的能力，其中一个人比另一个人多干10%，几年后他将多产一倍。</p>
+<p>你知道得越多，就学得越多；你学得越多，就做得越多；你做得越多，机会就越多。</p>
+<h3 id="五、全力投入重要的问题"><a href="#五、全力投入重要的问题" class="headerlink" title="五、全力投入重要的问题"></a>五、全力投入重要的问题</h3><p>如果你找到一件真正重要的事情，就不要让任何别的事情分散你的注意力。</p>
+<p>多数大科学家口袋里约有一二十个大问题，想方设法去攻克。每当他们发现一个新想法出现的时候，你就会听到他们说：”唔，这个与该问题有关。” 他们于是抛开其他一切，全力投入此问题。</p>
+<p>他们的思想是时刻准备着的，看见机会就紧跟其后。当然，很多时候也不能奏效，一个主要的诀窍就是活得长一点。</p>
+<h3 id="六、敞开办公室大门"><a href="#六、敞开办公室大门" class="headerlink" title="六、敞开办公室大门"></a>六、敞开办公室大门</h3><p>另一个性格特点，我一开始没注意到：有人的办公室大门是关着的，另一些人是开着的。</p>
+<p>我观察到，如果关上办公室的门，你今天或明天确实会比别人多干不少的活。但是，十年后就未必了。因为你可能干了不少不值得干的事。那些把门敞开的人，的确受了很多的打扰，但他也不时地获得线索，了解这世界什么更重要。</p>
+<p>我可以说，那些敞开了门干活的人和最终成就了大事的人之间，存在千丝万缕的联系。</p>
+<h3 id="七、做可以成为他人基石的工作"><a href="#七、做可以成为他人基石的工作" class="headerlink" title="七、做可以成为他人基石的工作"></a>七、做可以成为他人基石的工作</h3><p>早年，我在攻克一个又一个难题，成功的多，失败的少。可是，周五解决了一个问题回到家里后，我却并不快活，反而很沮丧。我看到生活就是一个问题接着一个问题又接着另一个问题。</p>
+<p>想了相当长一阵子后，我决定以另一种方式干活：你的工作要成为别人工作的基石！于是别人就会说： “看哪，我站在他的肩膀之上，我看得更远了。”</p>
+<p>科学的本质是积累！我再也不去做相互孤立的问题，除非它能代表某一类问题的共性。我决不再去解决单一的问题。</p>
+<p>你要么让人们在你的成果上有所建树，要么别人不得不把你干的活从头再来复制一遍。</p>
+<h3 id="八、重视推销和表达自己"><a href="#八、重视推销和表达自己" class="headerlink" title="八、重视推销和表达自己"></a>八、重视推销和表达自己</h3><p>做完一件事情还不够，你还得把它”贩卖”出去。</p>
+<p>对于一个科学家而言，推销是一件棘手的事。这很讨厌，你本不该做这事，这世界就该等着，当你做成某件大事时，他们就该赶快出来主动迎接。但是，事与愿违，每个人都忙着他们自己的活。你必须很好地主动介绍，使得他们能把手头的活放在一边，过来瞧瞧你的东西，理解它，然后回过头来说：”是，那玩意不错。” 现实是即使你发表了研究成果，如果读者们把你的文章翻过去，不停下来读它，你就会竹篮打水一场空。</p>
+<p>你得学会写好、写清楚以便人们愿意看；你必须学会发表相当正式的发言；你还必须学会作出非正式的谈话。我们有不少所谓的”后排科学家”。在一个会议上，他们更愿意闭口不谈。他们不愿站在一个炙手可热的会议的中央，在大庭广众之下说：”我们应该做这件事，为了这些原因……” 你必须掌握这种形式的交流，准备发表演说。</p>
+<p>我刚开始做演讲的时候，非常非常紧张，几乎表现出生理上的病态。我意识到，我得学习作演讲，否则整个职业生涯就不会有很好的发展。我决定一定要做一个非常好的演讲，一个真正符合听众需要的演讲，不只针对专业人士，而是针对更广泛的听众。</p>
+<p>现在，我认为，研究要只花50%的时间，另外50%的时间用来表达，这是一个非常大的数字。</p>
+<h3 id="九、阅读方法比数量更重要"><a href="#九、阅读方法比数量更重要" class="headerlink" title="九、阅读方法比数量更重要"></a>九、阅读方法比数量更重要</h3><p>你也不要在图书馆花太多时间，一味追随别人的研究成果。</p>
+<p>贝尔实验室有个同事，一个非常非常聪明的家伙。他老在图书馆里呆着，读所有的东西。如果你想要参考资料，你到他那里去，他就会告诉你所有的参考资料。但我觉得，长此以往，他不会有任何以他命名的成果。他现在已退休，成为了一个副教授。他是很有价值，我对此没有疑问。他写了一些不错的文章登在《物理评论》上，但他没有以他命名的成果，因为他读得太多。如果你成天研究别人怎么做，你就会按别人的老路子思考。</p>
+<p>如果你想要有不同的新思维，你需要去搞清问题，而不是成天靠读书去找答案。这不是可取的方法。</p>
+<p>我的建议是：阅读，但不是靠量，而是靠正确的阅读方法起作用。</p>
+<h3 id="十、重视写书"><a href="#十、重视写书" class="headerlink" title="十、重视写书"></a>十、重视写书</h3><p>短期来看，论文非常重要。但如果你想要一个长期的认可，写书的作用更大，因为我们大多数人需要方向。现今的知识几乎是无穷的，我们需要寻找自己的方向。那些帮助我们融会贯通的、代表重要思想的书，会被后代珍视。</p>
+<p>写论文也是必要的，但我倾向于认为，长期看，那些只写至关重要内容的书更重要。</p>
+<h3 id="十一、远见超出你的能力时，才去做管理"><a href="#十一、远见超出你的能力时，才去做管理" class="headerlink" title="十一、远见超出你的能力时，才去做管理"></a>十一、远见超出你的能力时，才去做管理</h3><p>如果你想成为一名伟大的研究者，就不要成为一个公司的总裁。你得清楚你要什么。</p>
+<p>一天，我到我的老板Bode那里，对他说：”为什么你要当这个部门的头呢？为什么你不去当一名大科学家呢？” 他说：”Hamming， 我有远见，知道贝尔实验室的数学部分要怎样，如果要让这个”远见”得到共识，我就得当上部门的头。”</p>
+<p>当你觉得你想干什么的远见，正好在你的能力范围内，你就应努力获取它。如果有一天你的远见大大超过了你的能力时，你就应该去做管理工作。而且，远见越大，你就应做越大的管理。如果你拥有一个关于整个实验室应该向何处去，或者有关整个贝尔系统，你就得到该去的位子让它实现。你从底层是无法轻易让它实现的。</p>
+<p>这取决于你的目标和对目标的渴望。我选择回避管理工作因为我更希望做我容易应付的事。但这是我的选择，只对我起作用。每个人有权做出自己的选择，保持一个开放的心态。但别试着两样都占。</p>
+<p>（完）</p>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>经验分享</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>区分PIXHAWK、PX4与APM(ardupilot)</title>
     <url>/2021/07/27/uav-notes-1/</url>
     <content><![CDATA[<h1 id="区分PIXHAWK、PX4与APM-ardupilot"><a href="#区分PIXHAWK、PX4与APM-ardupilot" class="headerlink" title="区分PIXHAWK、PX4与APM(ardupilot)"></a>区分PIXHAWK、PX4与APM(ardupilot)</h1><h3 id="一、PIXHAWK介绍"><a href="#一、PIXHAWK介绍" class="headerlink" title="一、PIXHAWK介绍"></a>一、PIXHAWK介绍</h3><p><strong>pixhawk是硬件平台</strong>，PX4是pixhawk的原生固件，专门为pixhawk开发。</p>
@@ -1006,6 +1006,200 @@ mavros_msgs<span class="token double-colon punctuation">::</span>State current_s
         <tag>PX4</tag>
         <tag>PIXHAWK</tag>
         <tag>APM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>code-reading-Compact-3DGS</title>
+    <url>/2024/05/25/code-reading-compact-3dgs/</url>
+    <content><![CDATA[<h1 id="Compact-3DGS代码阅读"><a href="#Compact-3DGS代码阅读" class="headerlink" title="Compact 3DGS代码阅读"></a>Compact 3DGS代码阅读</h1><h2 id="Gaussian-Volume-Mask"><a href="#Gaussian-Volume-Mask" class="headerlink" title="Gaussian Volume Mask"></a>Gaussian Volume Mask</h2><blockquote>
+<p>learn-able mask，用可以学习的掩膜去mask掉冗余的部分高斯函数</p>
+</blockquote>
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p><code>gaussian_model.py</code>中<code>def __init__()</code>定义了learn-able mask</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> model<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 与原始3dgs相比，下面两个参数不见了</span>
+    <span class="token comment"># self._features_dc</span>
+    <span class="token comment"># self._features_rest</span>
+    <span class="token comment"># 省略......</span>
+    self<span class="token punctuation">.</span>_mask <span class="token operator">=</span> torch<span class="token punctuation">.</span>empty<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token comment"># learn-able mask</span>
+    <span class="token comment"># 省略......</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>``gaussian_model.py<code>中</code>def create_from_pcd()`初始化了learn-able mask</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">create_from_pcd</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> pcd<span class="token punctuation">:</span> BasicPointCloud<span class="token punctuation">,</span> spatial_lr_scale<span class="token punctuation">:</span> <span class="token builtin">float</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 省略......</span>
+    <span class="token comment"># 这里的mask对应了论文中的Gaussian Volume Mask，即learn-able mask，用可以学习的掩膜去mask掉冗余的部分高斯函数</span>
+    self<span class="token punctuation">.</span>_mask <span class="token operator">=</span> nn<span class="token punctuation">.</span>Parameter<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>ones<span class="token punctuation">(</span><span class="token punctuation">(</span>fused_point_cloud<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> device<span class="token operator">=</span><span class="token string">"cuda"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>requires_grad_<span class="token punctuation">(</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token comment"># 省略......</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如论文3.1节最后讲的一样“Once training is completed, the mask parameter m does not need to be stored since we re moved the masked Gaussians.”``gaussian_model.py<code>中并没有保存这个mask，因此在</code>def load_model()`函数中也没有加载mask的过程。</p>
+<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><p>``gaussian_model.py`中通过Adam优化器优化learn-able mask</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">l <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span><span class="token string">'params'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>self<span class="token punctuation">.</span>_xyz<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'lr'</span><span class="token punctuation">:</span> training_args<span class="token punctuation">.</span>position_lr_init <span class="token operator">*</span> self<span class="token punctuation">.</span>spatial_lr_scale<span class="token punctuation">,</span> <span class="token string">"name"</span><span class="token punctuation">:</span> <span class="token string">"xyz"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token string">'params'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>self<span class="token punctuation">.</span>_opacity<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'lr'</span><span class="token punctuation">:</span> training_args<span class="token punctuation">.</span>opacity_lr<span class="token punctuation">,</span> <span class="token string">"name"</span><span class="token punctuation">:</span> <span class="token string">"opacity"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token string">'params'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>self<span class="token punctuation">.</span>_scaling<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'lr'</span><span class="token punctuation">:</span> training_args<span class="token punctuation">.</span>scaling_lr<span class="token punctuation">,</span> <span class="token string">"name"</span><span class="token punctuation">:</span> <span class="token string">"scaling"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token string">'params'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>self<span class="token punctuation">.</span>_rotation<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'lr'</span><span class="token punctuation">:</span> training_args<span class="token punctuation">.</span>rotation_lr<span class="token punctuation">,</span> <span class="token string">"name"</span><span class="token punctuation">:</span> <span class="token string">"rotation"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token string">'params'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>self<span class="token punctuation">.</span>_mask<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'lr'</span><span class="token punctuation">:</span> training_args<span class="token punctuation">.</span>mask_lr<span class="token punctuation">,</span> <span class="token string">"name"</span><span class="token punctuation">:</span> <span class="token string">"mask"</span><span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+
+self<span class="token punctuation">.</span>optimizer <span class="token operator">=</span> torch<span class="token punctuation">.</span>optim<span class="token punctuation">.</span>Adam<span class="token punctuation">(</span>l<span class="token punctuation">,</span> lr<span class="token operator">=</span><span class="token number">0.0</span><span class="token punctuation">,</span> eps<span class="token operator">=</span><span class="token number">1e-15</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>论文中的损失函数如下，最小化这个损失函数，会尽可能多的mask掉场景中的高斯。</p>
+<p><img src="/images/code-reading-Compact-3DGS/image-20240524204127934.png"></p>
+<p>但是这个损失函数不是单独使用的，上面定义优化器的时候，就把mask和其它参数放到一起了，说明它会作为一个总的loss的一部分使用。这样，在给定的权重，和其他loss的共同作用下，它会像论文提的那样“We balance the accurate rendering and the number of Gaussians eliminated during training by adding masking loss”。</p>
+<p>在论文的公式中，也体现了这一点，如下所示。</p>
+<p><img src="/images/code-reading-Compact-3DGS/image-20240524204355835.png"></p>
+<p>对应到代码中，是<code>train.py</code>中<code>def training()</code>函数如下的部分：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># Loss</span>
+gt_image <span class="token operator">=</span> viewpoint_cam<span class="token punctuation">.</span>original_image<span class="token punctuation">.</span>cuda<span class="token punctuation">(</span><span class="token punctuation">)</span>
+Ll1 <span class="token operator">=</span> l1_loss<span class="token punctuation">(</span>image<span class="token punctuation">,</span> gt_image<span class="token punctuation">)</span>
+<span class="token comment"># 与3dgs相比，其实只多了一个mask相关的损失</span>
+loss <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">1.0</span> <span class="token operator">-</span> opt<span class="token punctuation">.</span>lambda_dssim<span class="token punctuation">)</span> <span class="token operator">*</span> Ll1 <span class="token operator">+</span> opt<span class="token punctuation">.</span>lambda_dssim <span class="token operator">*</span> <span class="token punctuation">(</span>
+        <span class="token number">1.0</span> <span class="token operator">-</span> ssim<span class="token punctuation">(</span>image<span class="token punctuation">,</span> gt_image<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> opt<span class="token punctuation">.</span>lambda_mask <span class="token operator">*</span> torch<span class="token punctuation">.</span>mean<span class="token punctuation">(</span><span class="token punctuation">(</span>torch<span class="token punctuation">.</span>sigmoid<span class="token punctuation">(</span>gaussians<span class="token punctuation">.</span>_mask<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+loss<span class="token punctuation">.</span>backward<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="过滤冗余高斯"><a href="#过滤冗余高斯" class="headerlink" title="过滤冗余高斯"></a>过滤冗余高斯</h3><p>在论文中，learn-able mask的公式如下所示。论文写的比较严谨，把stop grad的操作也放到公式里了，看着似乎很复杂。</p>
+<p>实际上，公式（1）的意思就是如果$\sigma(m_n)&gt;\epsilon$，对应的$M_n=1$，否则对应的$M_n=0$。</p>
+<p><img src="/images/code-reading-Compact-3DGS/image-20240524205034954.png"></p>
+<p>实际实现中有多处用到了learn-able mask，这些用法都包含在<code>gaussian_model.py</code>中。核心其实就是一行代码：<code>torch.sigmoid(self._mask) &lt;= 0.01</code>。</p>
+<p><strong>第一处：</strong>对3D高斯模型进行致密化或者剪枝操作时使用。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># 对3D高斯分布进行密集化和修剪的操作</span>
+<span class="token keyword">def</span> <span class="token function">densify_and_prune</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> max_grad<span class="token punctuation">,</span> min_opacity<span class="token punctuation">,</span> extent<span class="token punctuation">,</span> max_screen_size<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    grads <span class="token operator">=</span> self<span class="token punctuation">.</span>xyz_gradient_accum <span class="token operator">/</span> self<span class="token punctuation">.</span>denom
+    grads<span class="token punctuation">[</span>grads<span class="token punctuation">.</span>isnan<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0.0</span>
+
+    self<span class="token punctuation">.</span>densify_and_clone<span class="token punctuation">(</span>grads<span class="token punctuation">,</span> max_grad<span class="token punctuation">,</span> extent<span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>densify_and_split<span class="token punctuation">(</span>grads<span class="token punctuation">,</span> max_grad<span class="token punctuation">,</span> extent<span class="token punctuation">)</span>
+
+    <span class="token comment"># 与3dgs相比，这里考虑了self._mask</span>
+    <span class="token comment"># 对于每个3dgs，如果对应的sigmoid(mask)&lt;=0.01 或 opacity&lt;min_opacity就会被剪枝</span>
+    <span class="token comment"># 这部分是在no_grad下进行的，对应了论文中的公式1</span>
+    prune_mask <span class="token operator">=</span> torch<span class="token punctuation">.</span>logical_or<span class="token punctuation">(</span><span class="token punctuation">(</span>torch<span class="token punctuation">.</span>sigmoid<span class="token punctuation">(</span>self<span class="token punctuation">.</span>_mask<span class="token punctuation">)</span> <span class="token operator">&lt;=</span> <span class="token number">0.01</span><span class="token punctuation">)</span><span class="token punctuation">.</span>squeeze<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                                  <span class="token punctuation">(</span>self<span class="token punctuation">.</span>get_opacity <span class="token operator">&lt;</span> min_opacity<span class="token punctuation">)</span><span class="token punctuation">.</span>squeeze<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> max_screen_size<span class="token punctuation">:</span>
+        big_points_vs <span class="token operator">=</span> self<span class="token punctuation">.</span>max_radii2D <span class="token operator">&gt;</span> max_screen_size
+        big_points_ws <span class="token operator">=</span> self<span class="token punctuation">.</span>get_scaling<span class="token punctuation">.</span><span class="token builtin">max</span><span class="token punctuation">(</span>dim<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span>values <span class="token operator">&gt;</span> <span class="token number">0.1</span> <span class="token operator">*</span> extent
+        prune_mask <span class="token operator">=</span> torch<span class="token punctuation">.</span>logical_or<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>logical_or<span class="token punctuation">(</span>prune_mask<span class="token punctuation">,</span> big_points_vs<span class="token punctuation">)</span><span class="token punctuation">,</span> big_points_ws<span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>prune_points<span class="token punctuation">(</span>prune_mask<span class="token punctuation">)</span>
+    torch<span class="token punctuation">.</span>cuda<span class="token punctuation">.</span>empty_cache<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>对应<code>train.py</code>下面的内容。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># Densification</span>
+<span class="token keyword">if</span> iteration <span class="token operator">&lt;</span> opt<span class="token punctuation">.</span>densify_until_iter<span class="token punctuation">:</span>
+    <span class="token comment"># Keep track of max radii in image-space for pruning</span>
+    gaussians<span class="token punctuation">.</span>max_radii2D<span class="token punctuation">[</span>visibility_filter<span class="token punctuation">]</span> <span class="token operator">=</span> torch<span class="token punctuation">.</span><span class="token builtin">max</span><span class="token punctuation">(</span>gaussians<span class="token punctuation">.</span>max_radii2D<span class="token punctuation">[</span>visibility_filter<span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                                         radii<span class="token punctuation">[</span>visibility_filter<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    gaussians<span class="token punctuation">.</span>add_densification_stats<span class="token punctuation">(</span>viewspace_point_tensor<span class="token punctuation">,</span> visibility_filter<span class="token punctuation">)</span>
+
+    <span class="token keyword">if</span> iteration <span class="token operator">&gt;</span> opt<span class="token punctuation">.</span>densify_from_iter <span class="token keyword">and</span> iteration <span class="token operator">%</span> opt<span class="token punctuation">.</span>densification_interval <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+        size_threshold <span class="token operator">=</span> <span class="token number">20</span> <span class="token keyword">if</span> iteration <span class="token operator">&gt;</span> opt<span class="token punctuation">.</span>opacity_reset_interval <span class="token keyword">else</span> <span class="token boolean">None</span>
+        <span class="token comment"># ============= 在这里调用 =============</span>
+        gaussians<span class="token punctuation">.</span>densify_and_prune<span class="token punctuation">(</span>opt<span class="token punctuation">.</span>densify_grad_threshold<span class="token punctuation">,</span> <span class="token number">0.005</span><span class="token punctuation">,</span> scene<span class="token punctuation">.</span>cameras_extent<span class="token punctuation">,</span> size_threshold<span class="token punctuation">)</span>
+
+    <span class="token keyword">if</span> iteration <span class="token operator">%</span> opt<span class="token punctuation">.</span>opacity_reset_interval <span class="token operator">==</span> <span class="token number">0</span> <span class="token keyword">or</span> <span class="token punctuation">(</span>
+            dataset<span class="token punctuation">.</span>white_background <span class="token keyword">and</span> iteration <span class="token operator">==</span> opt<span class="token punctuation">.</span>densify_from_iter<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        gaussians<span class="token punctuation">.</span>reset_opacity<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">else</span><span class="token punctuation">:</span>  <span class="token comment"># 新增内容，间隔一定次数通过可学习的mask筛选一遍高斯</span>
+    <span class="token keyword">if</span> iteration <span class="token operator">%</span> opt<span class="token punctuation">.</span>mask_prune_iter <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+        gaussians<span class="token punctuation">.</span>mask_prune<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>第二处：</strong>如果不进行致密化或剪枝，但迭代了一定次数之后，会执行<code>def mask_prune()</code>过滤掉冗余高斯。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">mask_prune</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 这部分是在no_grad下进行的，对应了论文中的公式1</span>
+    prune_mask <span class="token operator">=</span> <span class="token punctuation">(</span>torch<span class="token punctuation">.</span>sigmoid<span class="token punctuation">(</span>self<span class="token punctuation">.</span>_mask<span class="token punctuation">)</span> <span class="token operator">&lt;=</span> <span class="token number">0.01</span><span class="token punctuation">)</span><span class="token punctuation">.</span>squeeze<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>prune_points<span class="token punctuation">(</span>prune_mask<span class="token punctuation">)</span>
+    torch<span class="token punctuation">.</span>cuda<span class="token punctuation">.</span>empty_cache<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>对应<code>train.py</code>下面的内容。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># Densification</span>
+<span class="token keyword">if</span> iteration <span class="token operator">&lt;</span> opt<span class="token punctuation">.</span>densify_until_iter<span class="token punctuation">:</span>
+    <span class="token comment"># Keep track of max radii in image-space for pruning</span>
+    gaussians<span class="token punctuation">.</span>max_radii2D<span class="token punctuation">[</span>visibility_filter<span class="token punctuation">]</span> <span class="token operator">=</span> torch<span class="token punctuation">.</span><span class="token builtin">max</span><span class="token punctuation">(</span>gaussians<span class="token punctuation">.</span>max_radii2D<span class="token punctuation">[</span>visibility_filter<span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                                         radii<span class="token punctuation">[</span>visibility_filter<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    gaussians<span class="token punctuation">.</span>add_densification_stats<span class="token punctuation">(</span>viewspace_point_tensor<span class="token punctuation">,</span> visibility_filter<span class="token punctuation">)</span>
+
+    <span class="token keyword">if</span> iteration <span class="token operator">&gt;</span> opt<span class="token punctuation">.</span>densify_from_iter <span class="token keyword">and</span> iteration <span class="token operator">%</span> opt<span class="token punctuation">.</span>densification_interval <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+        size_threshold <span class="token operator">=</span> <span class="token number">20</span> <span class="token keyword">if</span> iteration <span class="token operator">&gt;</span> opt<span class="token punctuation">.</span>opacity_reset_interval <span class="token keyword">else</span> <span class="token boolean">None</span>
+        gaussians<span class="token punctuation">.</span>densify_and_prune<span class="token punctuation">(</span>opt<span class="token punctuation">.</span>densify_grad_threshold<span class="token punctuation">,</span> <span class="token number">0.005</span><span class="token punctuation">,</span> scene<span class="token punctuation">.</span>cameras_extent<span class="token punctuation">,</span> size_threshold<span class="token punctuation">)</span>
+
+    <span class="token keyword">if</span> iteration <span class="token operator">%</span> opt<span class="token punctuation">.</span>opacity_reset_interval <span class="token operator">==</span> <span class="token number">0</span> <span class="token keyword">or</span> <span class="token punctuation">(</span>
+            dataset<span class="token punctuation">.</span>white_background <span class="token keyword">and</span> iteration <span class="token operator">==</span> opt<span class="token punctuation">.</span>densify_from_iter<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        gaussians<span class="token punctuation">.</span>reset_opacity<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">else</span><span class="token punctuation">:</span>  <span class="token comment"># 新增内容，间隔一定次数通过可学习的mask筛选一遍高斯</span>
+    <span class="token keyword">if</span> iteration <span class="token operator">%</span> opt<span class="token punctuation">.</span>mask_prune_iter <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+        <span class="token comment"># ============= 在这里调用 =============</span>
+        gaussians<span class="token punctuation">.</span>mask_prune<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>第三处：</strong>最终训练结束，准备导出3D高斯模型的时候使用。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">final_prune</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> compress<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 这部分是在no_grad下进行的，对应了论文中的公式1</span>
+    prune_mask <span class="token operator">=</span> <span class="token punctuation">(</span>torch<span class="token punctuation">.</span>sigmoid<span class="token punctuation">(</span>self<span class="token punctuation">.</span>_mask<span class="token punctuation">)</span> <span class="token operator">&lt;=</span> <span class="token number">0.01</span><span class="token punctuation">)</span><span class="token punctuation">.</span>squeeze<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>prune_points<span class="token punctuation">(</span>prune_mask<span class="token punctuation">)</span>
+    <span class="token comment"># 省略。。。。。。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>对应<code>train.py</code>下面的内容。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">if</span> iteration <span class="token operator">==</span> opt<span class="token punctuation">.</span>iterations<span class="token punctuation">:</span>
+    <span class="token comment"># 完成迭代之后保存结果，保存的结果要进行一次最终的剪枝</span>
+    storage <span class="token operator">=</span> gaussians<span class="token punctuation">.</span>final_prune<span class="token punctuation">(</span>compress<span class="token operator">=</span>comp<span class="token punctuation">)</span>
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>args<span class="token punctuation">.</span>model_path<span class="token punctuation">,</span> <span class="token string">"storage"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'w'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> c<span class="token punctuation">:</span>
+        c<span class="token punctuation">.</span>write<span class="token punctuation">(</span>storage<span class="token punctuation">)</span>
+    <span class="token comment"># TODO 这里在做什么？</span>
+    gaussians<span class="token punctuation">.</span>precompute<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="Geometry-Codebook"><a href="#Geometry-Codebook" class="headerlink" title="Geometry Codebook"></a>Geometry Codebook</h2><blockquote>
+<p>应用了R-VQ来归并那些形状、旋转很相似的高斯</p>
+</blockquote>
+<h3 id="定义-amp-初始化"><a href="#定义-amp-初始化" class="headerlink" title="定义&amp;初始化"></a>定义&amp;初始化</h3><p><code>gaussian_model.py</code>中<code>def __init__()</code>定义了R-VQ</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># ====================== 新增内容 ======================</span>
+<span class="token comment"># 对应论文中的Geometry Codebook</span>
+<span class="token comment"># 应用R-VQ来归并那些尺度scale、旋转rot很相似的高斯，下面这个RVQ甚至还是现成的</span>
+<span class="token comment"># 只看这个文件，RVQ似乎只对最后导出npz或ply的时候有用，过程中似乎没有办法降低高斯的内存占用？？？毕竟尺度和旋转这两个向量还在这里放着？？？</span>
+<span class="token comment"># TODO：可以用相同的数据集，对比一下3dgs和compact 3dgs内存的占用情况！</span>
+
+<span class="token comment"># 初始化一个用于ResidualVQ（矢量量化）对象，并设置特定的超参数。</span>
+self<span class="token punctuation">.</span>vq_scale <span class="token operator">=</span> ResidualVQ<span class="token punctuation">(</span>dim<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span>  <span class="token comment"># 量化器输入的维度</span>
+                           codebook_size<span class="token operator">=</span>model<span class="token punctuation">.</span>rvq_size<span class="token punctuation">,</span>  <span class="token comment"># codebook的大小，从模型的 rvq_size 中获取</span>
+                           num_quantizers<span class="token operator">=</span>model<span class="token punctuation">.</span>rvq_num<span class="token punctuation">,</span>  <span class="token comment"># 量化器的数量，从模型的 rvq_num 中获取</span>
+                           commitment_weight<span class="token operator">=</span><span class="token number">0.</span><span class="token punctuation">,</span>  <span class="token comment"># 承诺损失的权重</span>
+                           kmeans_init<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span>  <span class="token comment"># 布尔值，指示是否使用 k-means 初始化</span>
+                           kmeans_iters<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span>  <span class="token comment"># 初始化的迭代次数</span>
+                           ema_update<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span>  <span class="token comment"># 是否使用指数移动平均更新</span>
+                           learnable_codebook<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span>  <span class="token comment"># 布尔值，指示coodbook是否可学习</span>
+                           in_place_codebook_optimizer<span class="token operator">=</span><span class="token keyword">lambda</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">:</span>  <span class="token comment"># 创建学习率为 0.0001 的 Adam 优化器</span>
+                           torch<span class="token punctuation">.</span>optim<span class="token punctuation">.</span>Adam<span class="token punctuation">(</span><span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">,</span> lr<span class="token operator">=</span><span class="token number">0.0001</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>cuda<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 移动到 GPU 上</span>
+self<span class="token punctuation">.</span>vq_rot <span class="token operator">=</span> ResidualVQ<span class="token punctuation">(</span>dim<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">,</span>
+                         codebook_size<span class="token operator">=</span>model<span class="token punctuation">.</span>rvq_size<span class="token punctuation">,</span>
+                         num_quantizers<span class="token operator">=</span>model<span class="token punctuation">.</span>rvq_num<span class="token punctuation">,</span>
+                         commitment_weight<span class="token operator">=</span><span class="token number">0.</span><span class="token punctuation">,</span>
+                         kmeans_init<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span>
+                         kmeans_iters<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span>
+                         ema_update<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span>
+                         learnable_codebook<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span>
+                         in_place_codebook_optimizer<span class="token operator">=</span><span class="token keyword">lambda</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">:</span>
+                         torch<span class="token punctuation">.</span>optim<span class="token punctuation">.</span>Adam<span class="token punctuation">(</span><span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">,</span> lr<span class="token operator">=</span><span class="token number">0.0001</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>cuda<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment"># 通过取codebook大小的以2为底的对数，计算表示码书索引所需的比特数。这个参数只用在计算内存大小上了。</span>
+self<span class="token punctuation">.</span>rvq_bit <span class="token operator">=</span> math<span class="token punctuation">.</span>log2<span class="token punctuation">(</span>model<span class="token punctuation">.</span>rvq_size<span class="token punctuation">)</span>
+<span class="token comment"># 存储模型中的量化器数量，以备后用。这个参数也是只用在计算内存大小上了。</span>
+self<span class="token punctuation">.</span>rvq_num <span class="token operator">=</span> model<span class="token punctuation">.</span>rvq_num<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="关于ResidualVQ"><a href="#关于ResidualVQ" class="headerlink" title="关于ResidualVQ"></a>关于ResidualVQ</h3><p>这部分实现对应的仓库为：<a href="https://github.com/lucidrains/vector-quantize-pytorch">https://github.com/lucidrains/vector-quantize-pytorch</a></p>
+<p>更详细的用法也可以参考这个仓库。</p>
+<p><img src="/images/code-reading-Compact-3DGS/vq.png"></p>
+<h3 id="优化更新？"><a href="#优化更新？" class="headerlink" title="优化更新？"></a>优化更新？</h3><p>很奇怪，我查找了文件，但是没有找到更新的地方。可能还得去上面的仓库里面学习一下。。。</p>
+<p><img src="/images/code-reading-Compact-3DGS/image-20240524215047795.png"></p>
+<p>我猜测，每次使用RVQ，它就会迭代更新一次，毕竟初始化的时候就给定了优化器。而且看起来，每次渲染的时候才有可能会进行一次更新。</p>
+<p>这样的话，我还是感觉RVQ的作用只是保存结果的时候，让存储空间的占用更小，训练过程中没办法让显存占用变小？？？</p>
+<h3 id="归并形状、旋转相似的高斯？"><a href="#归并形状、旋转相似的高斯？" class="headerlink" title="归并形状、旋转相似的高斯？"></a>归并形状、旋转相似的高斯？</h3><p>似乎只有渲染、最终保存的时候，会进行。</p>
+<h2 id="Compact-View-dependent-Color"><a href="#Compact-View-dependent-Color" class="headerlink" title="Compact View-dependent Color"></a>Compact View-dependent Color</h2><blockquote>
+<p>不使用3DGS的球谐去表示视图相关的颜色了，而是用了类似instant-ngp的方法去表示视图相关的颜色</p>
+</blockquote>
+<p>略，暂时没去看~</p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>隐式表示</tag>
+        <tag>3D Gaussian Splatting</tag>
+        <tag>视觉SLAM</tag>
       </tags>
   </entry>
   <entry>
@@ -1072,6 +1266,97 @@ mavros_msgs<span class="token double-colon punctuation">::</span>State current_s
 <li>所有非静态变量（不是类的数据成员）的声明</li>
 <li>默认命名空间声明不要放在头文件，using namespace std;等应放在.cpp中，在 .h 文件中使用 std::string</li>
 </ul>
+]]></content>
+      <categories>
+        <category>编程基础</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>类的六个默认的成员函数</title>
+    <url>/2020/08/22/cpp-notes-1/</url>
+    <content><![CDATA[<h1 id="类的六个默认的成员函数"><a href="#类的六个默认的成员函数" class="headerlink" title="类的六个默认的成员函数"></a>类的六个默认的成员函数</h1><h2 id="类的6个默认的成员函数包括："><a href="#类的6个默认的成员函数包括：" class="headerlink" title="类的6个默认的成员函数包括："></a>类的6个默认的成员函数包括：</h2><p>构造函数、析构函数、拷贝构造函数、赋值运算符重载函数、取地址操作符重载、const修饰的取地址操作符重载。</p>
+<h3 id="（一）构造函数"><a href="#（一）构造函数" class="headerlink" title="（一）构造函数"></a>（一）构造函数</h3><p>构造函数，顾名思义，为对象分配空间，进行初始化。它是一种特殊的成员函数，具有以下特点:</p>
+<ol>
+<li><p>函数名与类名相同。</p>
+</li>
+<li><p>无返回值。</p>
+</li>
+<li><p>构造对象的时候系统会自动调用构造函数。</p>
+</li>
+<li><p>可以重载。</p>
+</li>
+<li><p>可以在类中定义，也可以在类外定义。</p>
+</li>
+<li><p>如果类中没有给出构造函数，编译器会自动产生一个缺省的构造函数，如果类中有构造函数，编译器就不会产生缺省构造函数。</p>
+</li>
+<li><p>全缺省的构造函数和无参的构造函数只能有一个，否则调用的时候就会产生冲突。</p>
+</li>
+<li><p>没有this指针。因为构造函数才是创建对象的，没有创建对象就不会有对象的首地址。</p>
+</li>
+</ol>
+<p>构造函数，说来就是给成员变量进行初始化。而初始化却有两种方法：初始化列表、构造函数函数体内赋值。尽量使用初始化列表，因为它更高效。</p>
+<h4 id="有些成员变量必须再初始化列表中初始化，比如："><a href="#有些成员变量必须再初始化列表中初始化，比如：" class="headerlink" title="有些成员变量必须再初始化列表中初始化，比如："></a>有些成员变量必须再初始化列表中初始化，比如：</h4><ol>
+<li><p>常量成员变量。（常量创建时必须初始化，因为对于一个常量，我们给它赋值，是不对的）</p>
+</li>
+<li><p>引用类型成员变量。（引用创建时必须初始化）</p>
+</li>
+<li><p>没有缺省构造函数的类成员变量。（如果构造函数的参数列表中有一个类的对象，并且该对象的类里没有缺省参数的构造函数时，要是不使用初始化列表，参数中会调用无参或者全缺省的构造函数，而那个类中又没有。）</p>
+</li>
+</ol>
+<h3 id="（二）析构函数"><a href="#（二）析构函数" class="headerlink" title="（二）析构函数"></a>（二）析构函数</h3><h4 id="析构函数是一种特殊的成员函数，具有以下特点："><a href="#析构函数是一种特殊的成员函数，具有以下特点：" class="headerlink" title="析构函数是一种特殊的成员函数，具有以下特点："></a>析构函数是一种特殊的成员函数，具有以下特点：</h4><ol>
+<li><p>析构函数函数名是在类名加上字符 ~ 。</p>
+</li>
+<li><p>无参数无返回值（但有this指针）。</p>
+</li>
+<li><p>一个类有且只有一个析构函数，所以肯定不能重载。若未显示定义，系统会自动生成缺省的析构函数。</p>
+</li>
+<li><p>对象生命周期结束时，C++编译系统系统自动调用析构函数。</p>
+</li>
+<li><p>注意析构函数体内并不是删除对象，而是做一些清理工作。（比如我们在构造函数中动态开辟过一段空间，函数结束后需要释放，而系统自动生成的析构函数才不管内存释放呢，所以需要人为地写出析构函数）</p>
+</li>
+</ol>
+<p>注意：对象生命周期结束后，后构造的对象先释放。</p>
+<h3 id="（三）拷贝构造函数"><a href="#（三）拷贝构造函数" class="headerlink" title="（三）拷贝构造函数"></a>（三）拷贝构造函数</h3><p>用已有的对象创建一个新的对象。</p>
+<p>创建对象时使用同类对象来进行初始化，这时所用的构造函数就是拷贝构造函数（Copy  Constructor）。拷贝构造函数也是构造函数，但它只有一个参数，这个参数只能是本类的一个对象，而且采用对象的常引用形式。拷贝构造函数的作用就是将实参对象的各成员值一一赋给新的对象中对应的成员。</p>
+<p>该函数的参数是一个常引用，如果不是引用，形参是实参的一份临时拷贝，由于两者都是对象，此时就会调用自己的拷贝构造函数，陷入无限递归中…….</p>
+<h4 id="拷贝构造函数的特征"><a href="#拷贝构造函数的特征" class="headerlink" title="拷贝构造函数的特征"></a>拷贝构造函数的特征</h4><p> （1）拷贝构造函数其实是一个构造函数的重载。<br> （2）拷贝构造函数的参数必须使用引用传参，使用传参方式会引发无穷递归调用。<br> （3）若为显示定义，系统默认生成缺省的拷贝构造函数，缺省的拷贝构造函数会按照成员的声明顺序依次拷贝类成员进行初始化</p>
+<h4 id="调用拷贝构造函数的两种方法："><a href="#调用拷贝构造函数的两种方法：" class="headerlink" title="调用拷贝构造函数的两种方法："></a>调用拷贝构造函数的两种方法：</h4><ol>
+<li><p>代入法：</p>
+<p>Person p2(p1);</p>
+</li>
+<li><p>赋值法：</p>
+<p>Person p2 = p1;</p>
+</li>
+</ol>
+<h4 id="为什么这里的对象可以直接访问私有成员变量？"><a href="#为什么这里的对象可以直接访问私有成员变量？" class="headerlink" title="为什么这里的对象可以直接访问私有成员变量？"></a>为什么这里的对象可以直接访问私有成员变量？</h4><p> 1）在类的成员函数里可以直接访问同类对象的私有或保护的成员。<br> 2）C++的访问限定符是以类为单位的，即：在这个单位内的成员可以互相访问。</p>
+<h3 id="（四）赋值运算符重载函数"><a href="#（四）赋值运算符重载函数" class="headerlink" title="（四）赋值运算符重载函数"></a>（四）赋值运算符重载函数</h3><p>用一个对象修改已经存在对象的内容，不是去创建新的对象，修改之后，两个对象的内容一致</p>
+<blockquote>
+<ol>
+<li>可以通过检查是否给自己赋值，进行优化</li>
+<li><strong>如果需要连续赋值，返回值不能是void，一般为引用类型</strong></li>
+<li>*<em>返回值一般是 <em>this</em></em></li>
+<li>编译器默认生成的赋值运算符为字节拷贝，即浅拷贝，如果资源需要拷贝，需要显示定义，完成深拷贝</li>
+</ol>
+<p>=调用：如果对象都存在，调用赋值运算符重载函数</p>
+<p>​              如果左边对象不存在，调用拷贝构造创建左边对象</p>
+</blockquote>
+<p><em>赋值是从右向左进行的</em></p>
+<p>如果不写，编译器会自动生成，默认生成的也是字节拷贝，浅拷贝</p>
+<p>如果当前类中有资源，则必须显示定义运算符重载函数，完成深拷贝</p>
+<h4 id="普通运算符重载函数"><a href="#普通运算符重载函数" class="headerlink" title="普通运算符重载函数"></a>普通运算符重载函数</h4><blockquote>
+<ol>
+<li>不能创建新的操作符，如operator@</li>
+<li>重载操作符必须有一个类类型或者枚举类型的操作符</li>
+<li>用于内置类型的操作符，其含义不能改变</li>
+<li>运算符重载函数如果是成员函数，则参数的个数比运算符需要的个数少一个，这里编译器会传入this指针作为第一个参数</li>
+<li>普通的运算符重载函数，参数的个数和运算符需要的个数一致</li>
+</ol>
+</blockquote>
+<p><strong>.*（成员指针访问运算符） ,  ::  ,  sizeof  ,  ? :  ,  .   五个运算符不能被重载</strong></p>
+<h3 id="（五）取地址运算符重载函数-const取地址运算符重载函数：获取对象的地址"><a href="#（五）取地址运算符重载函数-const取地址运算符重载函数：获取对象的地址" class="headerlink" title="（五）取地址运算符重载函数 / const取地址运算符重载函数：获取对象的地址**"></a>（五）取地址运算符重载函数 / const取地址运算符重载函数：获取对象的地址**</h3><p>一般不需要显示定义，直接使用编译器自动生成的即可</p>
 ]]></content>
       <categories>
         <category>编程基础</category>
@@ -1241,97 +1526,6 @@ w<span class="token punctuation">.</span><span class="token function">doWork</sp
 <p>定义一个函数为纯虚函数，才代表函数没有被实现。（这里好像有问题。。。）</p>
 <p>定义纯虚函数是为了实现一个接口，起到一个规范的作用，规范继承这个类的程序员必须实现这个函数。</p>
 <p>虚函数只能借助于指针或者引用来达到多态的效果</p>
-]]></content>
-      <categories>
-        <category>编程基础</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>类的六个默认的成员函数</title>
-    <url>/2020/08/22/cpp-notes-1/</url>
-    <content><![CDATA[<h1 id="类的六个默认的成员函数"><a href="#类的六个默认的成员函数" class="headerlink" title="类的六个默认的成员函数"></a>类的六个默认的成员函数</h1><h2 id="类的6个默认的成员函数包括："><a href="#类的6个默认的成员函数包括：" class="headerlink" title="类的6个默认的成员函数包括："></a>类的6个默认的成员函数包括：</h2><p>构造函数、析构函数、拷贝构造函数、赋值运算符重载函数、取地址操作符重载、const修饰的取地址操作符重载。</p>
-<h3 id="（一）构造函数"><a href="#（一）构造函数" class="headerlink" title="（一）构造函数"></a>（一）构造函数</h3><p>构造函数，顾名思义，为对象分配空间，进行初始化。它是一种特殊的成员函数，具有以下特点:</p>
-<ol>
-<li><p>函数名与类名相同。</p>
-</li>
-<li><p>无返回值。</p>
-</li>
-<li><p>构造对象的时候系统会自动调用构造函数。</p>
-</li>
-<li><p>可以重载。</p>
-</li>
-<li><p>可以在类中定义，也可以在类外定义。</p>
-</li>
-<li><p>如果类中没有给出构造函数，编译器会自动产生一个缺省的构造函数，如果类中有构造函数，编译器就不会产生缺省构造函数。</p>
-</li>
-<li><p>全缺省的构造函数和无参的构造函数只能有一个，否则调用的时候就会产生冲突。</p>
-</li>
-<li><p>没有this指针。因为构造函数才是创建对象的，没有创建对象就不会有对象的首地址。</p>
-</li>
-</ol>
-<p>构造函数，说来就是给成员变量进行初始化。而初始化却有两种方法：初始化列表、构造函数函数体内赋值。尽量使用初始化列表，因为它更高效。</p>
-<h4 id="有些成员变量必须再初始化列表中初始化，比如："><a href="#有些成员变量必须再初始化列表中初始化，比如：" class="headerlink" title="有些成员变量必须再初始化列表中初始化，比如："></a>有些成员变量必须再初始化列表中初始化，比如：</h4><ol>
-<li><p>常量成员变量。（常量创建时必须初始化，因为对于一个常量，我们给它赋值，是不对的）</p>
-</li>
-<li><p>引用类型成员变量。（引用创建时必须初始化）</p>
-</li>
-<li><p>没有缺省构造函数的类成员变量。（如果构造函数的参数列表中有一个类的对象，并且该对象的类里没有缺省参数的构造函数时，要是不使用初始化列表，参数中会调用无参或者全缺省的构造函数，而那个类中又没有。）</p>
-</li>
-</ol>
-<h3 id="（二）析构函数"><a href="#（二）析构函数" class="headerlink" title="（二）析构函数"></a>（二）析构函数</h3><h4 id="析构函数是一种特殊的成员函数，具有以下特点："><a href="#析构函数是一种特殊的成员函数，具有以下特点：" class="headerlink" title="析构函数是一种特殊的成员函数，具有以下特点："></a>析构函数是一种特殊的成员函数，具有以下特点：</h4><ol>
-<li><p>析构函数函数名是在类名加上字符 ~ 。</p>
-</li>
-<li><p>无参数无返回值（但有this指针）。</p>
-</li>
-<li><p>一个类有且只有一个析构函数，所以肯定不能重载。若未显示定义，系统会自动生成缺省的析构函数。</p>
-</li>
-<li><p>对象生命周期结束时，C++编译系统系统自动调用析构函数。</p>
-</li>
-<li><p>注意析构函数体内并不是删除对象，而是做一些清理工作。（比如我们在构造函数中动态开辟过一段空间，函数结束后需要释放，而系统自动生成的析构函数才不管内存释放呢，所以需要人为地写出析构函数）</p>
-</li>
-</ol>
-<p>注意：对象生命周期结束后，后构造的对象先释放。</p>
-<h3 id="（三）拷贝构造函数"><a href="#（三）拷贝构造函数" class="headerlink" title="（三）拷贝构造函数"></a>（三）拷贝构造函数</h3><p>用已有的对象创建一个新的对象。</p>
-<p>创建对象时使用同类对象来进行初始化，这时所用的构造函数就是拷贝构造函数（Copy  Constructor）。拷贝构造函数也是构造函数，但它只有一个参数，这个参数只能是本类的一个对象，而且采用对象的常引用形式。拷贝构造函数的作用就是将实参对象的各成员值一一赋给新的对象中对应的成员。</p>
-<p>该函数的参数是一个常引用，如果不是引用，形参是实参的一份临时拷贝，由于两者都是对象，此时就会调用自己的拷贝构造函数，陷入无限递归中…….</p>
-<h4 id="拷贝构造函数的特征"><a href="#拷贝构造函数的特征" class="headerlink" title="拷贝构造函数的特征"></a>拷贝构造函数的特征</h4><p> （1）拷贝构造函数其实是一个构造函数的重载。<br> （2）拷贝构造函数的参数必须使用引用传参，使用传参方式会引发无穷递归调用。<br> （3）若为显示定义，系统默认生成缺省的拷贝构造函数，缺省的拷贝构造函数会按照成员的声明顺序依次拷贝类成员进行初始化</p>
-<h4 id="调用拷贝构造函数的两种方法："><a href="#调用拷贝构造函数的两种方法：" class="headerlink" title="调用拷贝构造函数的两种方法："></a>调用拷贝构造函数的两种方法：</h4><ol>
-<li><p>代入法：</p>
-<p>Person p2(p1);</p>
-</li>
-<li><p>赋值法：</p>
-<p>Person p2 = p1;</p>
-</li>
-</ol>
-<h4 id="为什么这里的对象可以直接访问私有成员变量？"><a href="#为什么这里的对象可以直接访问私有成员变量？" class="headerlink" title="为什么这里的对象可以直接访问私有成员变量？"></a>为什么这里的对象可以直接访问私有成员变量？</h4><p> 1）在类的成员函数里可以直接访问同类对象的私有或保护的成员。<br> 2）C++的访问限定符是以类为单位的，即：在这个单位内的成员可以互相访问。</p>
-<h3 id="（四）赋值运算符重载函数"><a href="#（四）赋值运算符重载函数" class="headerlink" title="（四）赋值运算符重载函数"></a>（四）赋值运算符重载函数</h3><p>用一个对象修改已经存在对象的内容，不是去创建新的对象，修改之后，两个对象的内容一致</p>
-<blockquote>
-<ol>
-<li>可以通过检查是否给自己赋值，进行优化</li>
-<li><strong>如果需要连续赋值，返回值不能是void，一般为引用类型</strong></li>
-<li>*<em>返回值一般是 <em>this</em></em></li>
-<li>编译器默认生成的赋值运算符为字节拷贝，即浅拷贝，如果资源需要拷贝，需要显示定义，完成深拷贝</li>
-</ol>
-<p>=调用：如果对象都存在，调用赋值运算符重载函数</p>
-<p>​              如果左边对象不存在，调用拷贝构造创建左边对象</p>
-</blockquote>
-<p><em>赋值是从右向左进行的</em></p>
-<p>如果不写，编译器会自动生成，默认生成的也是字节拷贝，浅拷贝</p>
-<p>如果当前类中有资源，则必须显示定义运算符重载函数，完成深拷贝</p>
-<h4 id="普通运算符重载函数"><a href="#普通运算符重载函数" class="headerlink" title="普通运算符重载函数"></a>普通运算符重载函数</h4><blockquote>
-<ol>
-<li>不能创建新的操作符，如operator@</li>
-<li>重载操作符必须有一个类类型或者枚举类型的操作符</li>
-<li>用于内置类型的操作符，其含义不能改变</li>
-<li>运算符重载函数如果是成员函数，则参数的个数比运算符需要的个数少一个，这里编译器会传入this指针作为第一个参数</li>
-<li>普通的运算符重载函数，参数的个数和运算符需要的个数一致</li>
-</ol>
-</blockquote>
-<p><strong>.*（成员指针访问运算符） ,  ::  ,  sizeof  ,  ? :  ,  .   五个运算符不能被重载</strong></p>
-<h3 id="（五）取地址运算符重载函数-const取地址运算符重载函数：获取对象的地址"><a href="#（五）取地址运算符重载函数-const取地址运算符重载函数：获取对象的地址" class="headerlink" title="（五）取地址运算符重载函数 / const取地址运算符重载函数：获取对象的地址**"></a>（五）取地址运算符重载函数 / const取地址运算符重载函数：获取对象的地址**</h3><p>一般不需要显示定义，直接使用编译器自动生成的即可</p>
 ]]></content>
       <categories>
         <category>编程基础</category>
@@ -3331,6 +3525,91 @@ A<span class="token double-colon punctuation">::</span>size_type num<span class=
       </tags>
   </entry>
   <entry>
+    <title>Hexo中同时使用多个主题</title>
+    <url>/2022/04/17/hexo-multi-theme/</url>
+    <content><![CDATA[<h1 id="Hexo中同时使用多个主题"><a href="#Hexo中同时使用多个主题" class="headerlink" title="Hexo中同时使用多个主题"></a>Hexo中同时使用多个主题</h1><p>最近想在github上搭建一个Homepage，但是我的博客已经把immortalqx.github.io这个坑给占着了。</p>
+<p>一个很自然的想法就是让Hexo同时使用多个主题，一个主题给我的博客，一个主题给我的Homepage，这样就可以在保持博客现状的情况下搭建一个风格严谨的Homepage。</p>
+<h3 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h3><p>类似于<code>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</code>这样的命令，对hexo来说是默认按照<code>_config.yml</code>设定的参数来执行渲染的。而<code>_config.yml</code>文件中指定了网站的url、root、source_dir和public_dir等非常关键的数据。</p>
+<p>所以我们可以写两个config文件，比如<code>_config.yml</code>继续用于博客，然后新建一个<code>_config_homepage.yml</code>用于搭建Homepage。之后，我们可以通过<code>hexo g</code>可以默认使用<code>_config.yml</code>来搭建博客，再通过<code>hexo --config _config_homepage.yml g</code>来指定Homepage的config文件来搭建Homepage。</p>
+<p>在使用<code>hexo --config _config_homepage.yml</code>之前，我们还需要修改<code>_config_homepage.yml</code>文件中的参数，让Homepage依附于博客，即把Homepage的public_dir放到博客的public_dir下，这样就可以通过类似于immortalqx.github.io/homepage的形式来访问Homepage。</p>
+<h3 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h3><h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><ol>
+<li><p>更改博客采用的主题的config文件，将新增Homepage的标签（不同主题设置有区别，这里以<a href="https://github.com/blinkfox/hexo-theme-matery">matery</a>为例）。</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">menu</span><span class="token punctuation">:</span>
+  <span class="token key atrule">Index</span><span class="token punctuation">:</span>
+    <span class="token key atrule">url</span><span class="token punctuation">:</span> /
+    <span class="token key atrule">icon</span><span class="token punctuation">:</span> fas fa<span class="token punctuation">-</span>home
+<span class="token punctuation">...</span><span class="token punctuation">...</span>
+  <span class="token key atrule">Homepage</span><span class="token punctuation">:</span>
+    <span class="token key atrule">url</span><span class="token punctuation">:</span> /homepage
+    <span class="token key atrule">icon</span><span class="token punctuation">:</span> fas fa<span class="token punctuation">-</span>award<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>复制root目录下的<code>_config.yml</code>文件，重命名为<code>_config_homepage.yml</code>。</p>
+</li>
+<li><p>安装需要使用的新主题（以<a href="https://github.com/PhosphorW/hexo-theme-academia">academia</a>为例）。注意要记得安装新主题需要的一些依赖，防止无法进行渲染。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token builtin class-name">cd</span> your-hexo-directory
+<span class="token function">git</span> clone https://github.com/PhosphorW/hexo-theme-academia.git themes/academia<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
+<li><p>修改<code>_config_homepage.yml</code>文件，（下面仅列出需要修改的数据，根据使用的主题要修改的数据可能不一样）。</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment"># Site</span>
+<span class="token comment"># 部分选项置空，防止和采用的theme冲突</span>
+<span class="token key atrule">title</span><span class="token punctuation">:</span> Homepage
+<span class="token key atrule">subtitle</span><span class="token punctuation">:</span> <span class="token string">'Homepage'</span>
+<span class="token key atrule">description</span><span class="token punctuation">:</span>
+<span class="token key atrule">keywords</span><span class="token punctuation">:</span>
+<span class="token key atrule">author</span><span class="token punctuation">:</span>
+<span class="token key atrule">language</span><span class="token punctuation">:</span> EN
+<span class="token key atrule">timezone</span><span class="token punctuation">:</span> <span class="token string">''</span>
+
+<span class="token punctuation">...</span><span class="token punctuation">...</span>
+
+<span class="token comment"># URL</span>
+<span class="token comment"># 在原来的基础上增加一个“/homepage”</span>
+<span class="token key atrule">url</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//Immortalqx.github.io/homepage
+<span class="token key atrule">root</span><span class="token punctuation">:</span> /homepage
+
+<span class="token punctuation">...</span><span class="token punctuation">...</span>
+
+<span class="token comment"># Directory</span>
+<span class="token comment"># 新设置一个source文件夹，但是public文件夹要放到博客的public文件夹下(这样才能够在博客中打开Homepage)</span>
+<span class="token key atrule">source_dir</span><span class="token punctuation">:</span> source_homepage
+<span class="token key atrule">public_dir</span><span class="token punctuation">:</span> public/homepage
+
+<span class="token punctuation">...</span><span class="token punctuation">...</span>
+
+<span class="token comment"># Extensions</span>
+<span class="token comment">## Plugins: https://hexo.io/plugins/</span>
+<span class="token comment">## Themes: https://hexo.io/themes/</span>
+<span class="token comment"># 设置成需要使用的新主题</span>
+<span class="token key atrule">theme</span><span class="token punctuation">:</span> academia<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>修改academia主题的config，更改资源文件目录，icon、favicon等。这里就看个人喜好了，可以在这里新增一个跳转到博客的链接，也可以不写。</p>
+</li>
+<li><p>创建采用新主题的页面：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">hexo --config _config_homepage.yml new <span class="token string">"xxxxx"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>在新页面中增加内容。</p>
+</li>
+</ol>
+<h4 id="开始部署"><a href="#开始部署" class="headerlink" title="开始部署"></a>开始部署</h4><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">hexo cl
+hexo --config _config.yml g
+hexo --config _config_homepage.yml g
+hexo d<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>注意事项：</p>
+<ul>
+<li>由于本博客介绍的方法中，新主题渲染的页面在博客的public文件夹下，所以可以通过<code>hexo cl</code>来清除原来渲染的页面。</li>
+<li>通过<code>hexo --config</code>来指定config文件渲染博客和Homepage。</li>
+<li>由于所有渲染内容都在原博客的public文件夹下，所以这里对应的是同一个github仓库，只需要<code>hexo d</code>就能同时把两个主题渲染的页面推送过去。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>几何的隐式表示与显示表示</title>
     <url>/2022/08/17/geometry-notes-1/</url>
     <content><![CDATA[<h1 id="几何的隐式表示与显示表示"><a href="#几何的隐式表示与显示表示" class="headerlink" title="几何的隐式表示与显示表示"></a>几何的隐式表示与显示表示</h1><h2 id="Many-Ways-to-Represent-Geometry"><a href="#Many-Ways-to-Represent-Geometry" class="headerlink" title="Many Ways to Represent Geometry"></a>Many Ways to Represent Geometry</h2><p><strong>Implicit</strong> 隐式表示</p>
@@ -3435,91 +3714,6 @@ A<span class="token double-colon punctuation">::</span>size_type num<span class=
       <tags>
         <tag>隐式表示</tag>
         <tag>显示表示</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo中同时使用多个主题</title>
-    <url>/2022/04/17/hexo-multi-theme/</url>
-    <content><![CDATA[<h1 id="Hexo中同时使用多个主题"><a href="#Hexo中同时使用多个主题" class="headerlink" title="Hexo中同时使用多个主题"></a>Hexo中同时使用多个主题</h1><p>最近想在github上搭建一个Homepage，但是我的博客已经把immortalqx.github.io这个坑给占着了。</p>
-<p>一个很自然的想法就是让Hexo同时使用多个主题，一个主题给我的博客，一个主题给我的Homepage，这样就可以在保持博客现状的情况下搭建一个风格严谨的Homepage。</p>
-<h3 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h3><p>类似于<code>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</code>这样的命令，对hexo来说是默认按照<code>_config.yml</code>设定的参数来执行渲染的。而<code>_config.yml</code>文件中指定了网站的url、root、source_dir和public_dir等非常关键的数据。</p>
-<p>所以我们可以写两个config文件，比如<code>_config.yml</code>继续用于博客，然后新建一个<code>_config_homepage.yml</code>用于搭建Homepage。之后，我们可以通过<code>hexo g</code>可以默认使用<code>_config.yml</code>来搭建博客，再通过<code>hexo --config _config_homepage.yml g</code>来指定Homepage的config文件来搭建Homepage。</p>
-<p>在使用<code>hexo --config _config_homepage.yml</code>之前，我们还需要修改<code>_config_homepage.yml</code>文件中的参数，让Homepage依附于博客，即把Homepage的public_dir放到博客的public_dir下，这样就可以通过类似于immortalqx.github.io/homepage的形式来访问Homepage。</p>
-<h3 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h3><h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><ol>
-<li><p>更改博客采用的主题的config文件，将新增Homepage的标签（不同主题设置有区别，这里以<a href="https://github.com/blinkfox/hexo-theme-matery">matery</a>为例）。</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">menu</span><span class="token punctuation">:</span>
-  <span class="token key atrule">Index</span><span class="token punctuation">:</span>
-    <span class="token key atrule">url</span><span class="token punctuation">:</span> /
-    <span class="token key atrule">icon</span><span class="token punctuation">:</span> fas fa<span class="token punctuation">-</span>home
-<span class="token punctuation">...</span><span class="token punctuation">...</span>
-  <span class="token key atrule">Homepage</span><span class="token punctuation">:</span>
-    <span class="token key atrule">url</span><span class="token punctuation">:</span> /homepage
-    <span class="token key atrule">icon</span><span class="token punctuation">:</span> fas fa<span class="token punctuation">-</span>award<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>复制root目录下的<code>_config.yml</code>文件，重命名为<code>_config_homepage.yml</code>。</p>
-</li>
-<li><p>安装需要使用的新主题（以<a href="https://github.com/PhosphorW/hexo-theme-academia">academia</a>为例）。注意要记得安装新主题需要的一些依赖，防止无法进行渲染。</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token builtin class-name">cd</span> your-hexo-directory
-<span class="token function">git</span> clone https://github.com/PhosphorW/hexo-theme-academia.git themes/academia<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-</li>
-<li><p>修改<code>_config_homepage.yml</code>文件，（下面仅列出需要修改的数据，根据使用的主题要修改的数据可能不一样）。</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment"># Site</span>
-<span class="token comment"># 部分选项置空，防止和采用的theme冲突</span>
-<span class="token key atrule">title</span><span class="token punctuation">:</span> Homepage
-<span class="token key atrule">subtitle</span><span class="token punctuation">:</span> <span class="token string">'Homepage'</span>
-<span class="token key atrule">description</span><span class="token punctuation">:</span>
-<span class="token key atrule">keywords</span><span class="token punctuation">:</span>
-<span class="token key atrule">author</span><span class="token punctuation">:</span>
-<span class="token key atrule">language</span><span class="token punctuation">:</span> EN
-<span class="token key atrule">timezone</span><span class="token punctuation">:</span> <span class="token string">''</span>
-
-<span class="token punctuation">...</span><span class="token punctuation">...</span>
-
-<span class="token comment"># URL</span>
-<span class="token comment"># 在原来的基础上增加一个“/homepage”</span>
-<span class="token key atrule">url</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//Immortalqx.github.io/homepage
-<span class="token key atrule">root</span><span class="token punctuation">:</span> /homepage
-
-<span class="token punctuation">...</span><span class="token punctuation">...</span>
-
-<span class="token comment"># Directory</span>
-<span class="token comment"># 新设置一个source文件夹，但是public文件夹要放到博客的public文件夹下(这样才能够在博客中打开Homepage)</span>
-<span class="token key atrule">source_dir</span><span class="token punctuation">:</span> source_homepage
-<span class="token key atrule">public_dir</span><span class="token punctuation">:</span> public/homepage
-
-<span class="token punctuation">...</span><span class="token punctuation">...</span>
-
-<span class="token comment"># Extensions</span>
-<span class="token comment">## Plugins: https://hexo.io/plugins/</span>
-<span class="token comment">## Themes: https://hexo.io/themes/</span>
-<span class="token comment"># 设置成需要使用的新主题</span>
-<span class="token key atrule">theme</span><span class="token punctuation">:</span> academia<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>修改academia主题的config，更改资源文件目录，icon、favicon等。这里就看个人喜好了，可以在这里新增一个跳转到博客的链接，也可以不写。</p>
-</li>
-<li><p>创建采用新主题的页面：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">hexo --config _config_homepage.yml new <span class="token string">"xxxxx"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>在新页面中增加内容。</p>
-</li>
-</ol>
-<h4 id="开始部署"><a href="#开始部署" class="headerlink" title="开始部署"></a>开始部署</h4><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">hexo cl
-hexo --config _config.yml g
-hexo --config _config_homepage.yml g
-hexo d<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>注意事项：</p>
-<ul>
-<li>由于本博客介绍的方法中，新主题渲染的页面在博客的public文件夹下，所以可以通过<code>hexo cl</code>来清除原来渲染的页面。</li>
-<li>通过<code>hexo --config</code>来指定config文件渲染博客和Homepage。</li>
-<li>由于所有渲染内容都在原博客的public文件夹下，所以这里对应的是同一个github仓库，只需要<code>hexo d</code>就能同时把两个主题渲染的页面推送过去。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -5099,8 +5293,8 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
         <category>NeRF</category>
       </categories>
       <tags>
-        <tag>NeRF</tag>
         <tag>视觉SLAM</tag>
+        <tag>NeRF</tag>
       </tags>
   </entry>
   <entry>
@@ -5498,8 +5692,8 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
         <category>slam</category>
       </categories>
       <tags>
-        <tag>NeRF</tag>
         <tag>视觉SLAM</tag>
+        <tag>NeRF</tag>
       </tags>
   </entry>
   <entry>
@@ -5681,8 +5875,8 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
         <category>slam</category>
       </categories>
       <tags>
-        <tag>NeRF</tag>
         <tag>视觉SLAM</tag>
+        <tag>NeRF</tag>
       </tags>
   </entry>
   <entry>
@@ -5702,8 +5896,8 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
         <category>slam</category>
       </categories>
       <tags>
-        <tag>NeRF</tag>
         <tag>视觉SLAM</tag>
+        <tag>NeRF</tag>
       </tags>
   </entry>
   <entry>
@@ -5924,8 +6118,8 @@ pointsf <span class="token operator">=</span> pts<span class="token punctuation"
         <category>slam</category>
       </categories>
       <tags>
-        <tag>NeRF</tag>
         <tag>视觉SLAM</tag>
+        <tag>NeRF</tag>
       </tags>
   </entry>
   <entry>
@@ -5964,8 +6158,8 @@ pointsf <span class="token operator">=</span> pts<span class="token punctuation"
         <category>slam</category>
       </categories>
       <tags>
-        <tag>NeRF</tag>
         <tag>视觉SLAM</tag>
+        <tag>NeRF</tag>
       </tags>
   </entry>
   <entry>
@@ -6115,8 +6309,8 @@ pointsf <span class="token operator">=</span> pts<span class="token punctuation"
         <category>slam</category>
       </categories>
       <tags>
-        <tag>NeRF</tag>
         <tag>视觉SLAM</tag>
+        <tag>NeRF</tag>
       </tags>
   </entry>
   <entry>
@@ -6393,25 +6587,6 @@ Subminor version <span class="token builtin class-name">:</span> <span class="to
       </tags>
   </entry>
   <entry>
-    <title>理解SVM的三层境界</title>
-    <url>/2021/02/23/opencv-notes-4/</url>
-    <content><![CDATA[<h1 id="理解SVM的三层境界"><a href="#理解SVM的三层境界" class="headerlink" title="理解SVM的三层境界"></a>理解SVM的三层境界</h1><p>SVM是什么? 先来看看维基百科上对<a href="https://link.zhihu.com/?target=https://zh.wikipedia.org/wiki/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA">SVM的定义</a>:</p>
-<blockquote>
-<p>支持向量机（英语：support vector machine，常简称为SVM，又名支持向量网络）是在分类与回归分析中分析数据的监督式学习模型与相关的学习算法。给定一组训练实例，每个训练实例被标记为属于两个类别中的一个或另一个，SVM训练算法创建一个将新的实例分配给两个类别之一的模型，使其成为非概率二元线性分类器。SVM模型是将实例表示为空间中的点，这样映射就使得单独类别的实例被尽可能宽的明显的间隔分开。然后，将新的实例映射到同一空间，并基于它们落在间隔的哪一侧来预测所属类别。</p>
-</blockquote>
-<p>如果从未接触SVM的话，维基的这一大段解释肯定会让你一头雾水。简单点讲，SVM就是一种二类分类模型，他的基本模型是的定义在特征空间上的<strong>间隔最大</strong>的线性分类器，SVM的学习策略就是间隔最大化。</p>
-<p>下面是我从网上找到的一篇讲解SVM比较好的文章：</p>
-<object data="/pdf/理解SVM的三层境界.pdf" type="application/pdf" width="100%" height="1000">
-
-</object>]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>SVM</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>创建指定OpenCV版本的ROS工程</title>
     <url>/2020/12/19/opencv-notes-3/</url>
     <content><![CDATA[<h1 id="创建指定OpenCV版本的ROS工程"><a href="#创建指定OpenCV版本的ROS工程" class="headerlink" title="创建指定OpenCV版本的ROS工程"></a>创建指定OpenCV版本的ROS工程</h1><h3 id="一、创建工作空间和程序包"><a href="#一、创建工作空间和程序包" class="headerlink" title="一、创建工作空间和程序包"></a>一、创建工作空间和程序包</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> -p ~/catkin_cv/src
@@ -6669,6 +6844,25 @@ seek<span class="token double-colon punctuation">::</span><span class="token fun
       <tags>
         <tag>OpenCV</tag>
         <tag>ROS基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>理解SVM的三层境界</title>
+    <url>/2021/02/23/opencv-notes-4/</url>
+    <content><![CDATA[<h1 id="理解SVM的三层境界"><a href="#理解SVM的三层境界" class="headerlink" title="理解SVM的三层境界"></a>理解SVM的三层境界</h1><p>SVM是什么? 先来看看维基百科上对<a href="https://link.zhihu.com/?target=https://zh.wikipedia.org/wiki/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA">SVM的定义</a>:</p>
+<blockquote>
+<p>支持向量机（英语：support vector machine，常简称为SVM，又名支持向量网络）是在分类与回归分析中分析数据的监督式学习模型与相关的学习算法。给定一组训练实例，每个训练实例被标记为属于两个类别中的一个或另一个，SVM训练算法创建一个将新的实例分配给两个类别之一的模型，使其成为非概率二元线性分类器。SVM模型是将实例表示为空间中的点，这样映射就使得单独类别的实例被尽可能宽的明显的间隔分开。然后，将新的实例映射到同一空间，并基于它们落在间隔的哪一侧来预测所属类别。</p>
+</blockquote>
+<p>如果从未接触SVM的话，维基的这一大段解释肯定会让你一头雾水。简单点讲，SVM就是一种二类分类模型，他的基本模型是的定义在特征空间上的<strong>间隔最大</strong>的线性分类器，SVM的学习策略就是间隔最大化。</p>
+<p>下面是我从网上找到的一篇讲解SVM比较好的文章：</p>
+<object data="/pdf/理解SVM的三层境界.pdf" type="application/pdf" width="100%" height="1000">
+
+</object>]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>SVM</tag>
       </tags>
   </entry>
   <entry>
@@ -6995,8 +7189,168 @@ seek<span class="token double-colon punctuation">::</span><span class="token fun
       </categories>
       <tags>
         <tag>隐式表示</tag>
-        <tag>视觉SLAM</tag>
         <tag>3D Gaussian Splatting</tag>
+        <tag>视觉SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文阅读《Efficient Dense RGB-D SLAM in a Consistent Uncertainty-aware 3D Gaussian Field》</title>
+    <url>/2024/05/19/paper-reading-cg-slam/</url>
+    <content><![CDATA[<p><strong>项目主页：</strong><a href="https://zju3dv.github.io/cg-slam/">https://zju3dv.github.io/cg-slam/</a></p>
+<h1 id="论文阅读《Efficient-Dense-RGB-D-SLAM-in-a-Consistent-Uncertainty-aware-3D-Gaussian-Field》"><a href="#论文阅读《Efficient-Dense-RGB-D-SLAM-in-a-Consistent-Uncertainty-aware-3D-Gaussian-Field》" class="headerlink" title="论文阅读《Efficient Dense RGB-D SLAM in a Consistent Uncertainty-aware 3D Gaussian Field》"></a>论文阅读《Efficient Dense RGB-D SLAM in a Consistent Uncertainty-aware 3D Gaussian Field》</h1><p>本文介绍了一种基于高一致性和几何稳定性的新型三维高斯场的实时高斯溅射SLAM系统，即CG-SLAM。为此，我们首先对EWA(椭圆加权平均)溅射过程中相机姿态的导数进行了全面的数学分析[60]，并为SLAM任务开发了一个专门的CUDA框架，有效地解耦了跟踪和映射组件。其次，为了减少固有的过拟合问题，我们提出了一个尺度正则化项，适当地鼓励高斯椭球近似高斯球体，以减少各向异性，并在跟踪精度和渲染真实感之间实现良好的权衡。同时，我们观察到单独使用alpha混合深度不能对高斯基元的位置施加有效的约束。因此，为了实现高质量的映射，我们进一步对齐中值深度和alpha混合深度，以鼓励高斯原语在场景表面上很好地分布，从而促进具有更集中几何密度的一致高斯场。此外，为了进一步提高系统的精度和效率，我们设计了一种新的深度不确定性模型，以指导我们基于高斯的SLAM关注那些稳定且信息丰富的深度不确定性。我们在各种RGB-D数据集上对我们的系统进行了评估，实验结果表明我们的CG-SLAM在跟踪精度、重建质量和运行效率方面具有优越的性能。</p>
+<h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><p><img src="/images/paper-reading-CG-SLAM/image-20240513111128366.png"></p>
+<h3 id="Preliminary"><a href="#Preliminary" class="headerlink" title="Preliminary"></a>Preliminary</h3><p>基本都是3DGS的内容</p>
+<p>3DGS中3D投影到2D用的是02年的一篇文章，EWA splatting，本文分析了这个EWA splatting，推导了位姿的导数。</p>
+<h3 id="Uncertainty-Modeling"><a href="#Uncertainty-Modeling" class="headerlink" title="Uncertainty Modeling"></a>Uncertainty Modeling</h3><p>参考UncLe-SLAM实现了Uncertainty Modeling</p>
+<blockquote>
+<p>Sandström, E., Ta, K., Van Gool, L., Oswald, M.R.: Uncle-slam: Uncertainty learning for dense neural slam. arXiv preprint arXiv:2306.11048 (2023)</p>
+</blockquote>
+<p>这部分看起来就是希望不确定性尽量小，然后对深度影响最大的高斯尽可能的居中。</p>
+<h3 id="Mapping"><a href="#Mapping" class="headerlink" title="Mapping"></a>Mapping</h3><p>稀松平常的内容</p>
+<h3 id="Tracking"><a href="#Tracking" class="headerlink" title="Tracking"></a>Tracking</h3><p>稀松平常的内容</p>
+<p>提到了一个Sliding Bundle Adjustment，希望通过这个减小累积误差。</p>
+<p>这里的sliding window没有用基于视锥的方法，而是用NetVLAD预训练模型去处理。</p>
+<p><strong>疑惑：</strong></p>
+<p>这里tracking的内容写的好少，不知道这个导数什么的是怎么弄的啊。。。补充材料没有找到居然。。。</p>
+<p>又去找了一下，没找到，那只能等了。。。这篇文章虽然是章国峰组的，但是其实也没看到很突出的地方。。。</p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>隐式表示</tag>
+        <tag>3D Gaussian Splatting</tag>
+        <tag>视觉SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文阅读《Compact 3D Gaussian Representation for Radiance Field》</title>
+    <url>/2024/05/21/paper-reading-compact-3dgs/</url>
+    <content><![CDATA[<h1 id="论文阅读《Compact-3D-Gaussian-Representation-for-Radiance-Field》"><a href="#论文阅读《Compact-3D-Gaussian-Representation-for-Radiance-Field》" class="headerlink" title="论文阅读《Compact 3D Gaussian Representation for Radiance Field》"></a>论文阅读《Compact 3D Gaussian Representation for Radiance Field》</h1><p>问题：3DGS需要大量的3D高斯来保持渲染图像的高保真度，这需要大量的内存和存储空间。</p>
+<p>解决方案：</p>
+<ul>
+<li>为了解决3DGS中关键的大内存和存储问题，我们提出了一个紧凑的3D高斯表示框架。该方法显著提高了内存和存储效率，同时具有高质量的重构、快速的训练速度和实时的渲染效果，如图1所示。我们特别强调两个关键目标。首先，我们的目标是在不牺牲性能的情况下减少场景表示所需的高斯点数量。高斯函数的数量随着由克隆和分裂高斯函数组成的规则致密化过程的增加而增加，它是表示场景精细细节的关键组成部分。然而，我们观察到，目前的致密化算法产生了许多冗余和不必要的高斯分布，导致内存和存储需求高。<strong>我们引入了一种新的基于体积的掩蔽策略，该策略可以识别和去除对整体性能影响最小的非必要高斯值。</strong>利用所提出的掩蔽方法，我们学会了在训练过程中减少高斯数的同时获得高性能。除了有效的内存和存储使用，我们可以实现更快的渲染速度，因为计算复杂度与高斯数成线性比例。</li>
+<li>其次，<strong>我们提出压缩高斯属性，如视图相关的颜色和协方差。</strong>在原始的3DGS中，每个高斯函数都有自己的属性，并且没有利用空间冗余，这在各种类型的信号压缩中得到了广泛的应用。例如，相邻的高斯函数可能具有相似的颜色属性，我们可以重用相邻高斯函数的相似颜色。考虑到这个动机，我们结合了一个基于网格的神经场来有效地表示与视图相关的颜色，而不是使用每个高斯颜色属性。当提供查询高斯点时，我们从紧凑的网格表示中提取颜色属性，避免了为每个高斯单独存储颜色属性的需要。对于我们最初的方法，由于其紧凑性和快速的处理速度，我们从几个候选中选择了基于哈希的网格表示(Instant NGP[30])。这种选择大大降低了3DGS的空间复杂性。</li>
+<li>与颜色属性相反，大多数高斯函数具有相似的几何形状，在尺度和旋转属性上具有有限的变化。3DGS代表了一个由无数小高斯元集合而成的场景，每个高斯原语都不期望表现出很高的多样性。<strong>因此，我们引入了一种基于码本的方法来建模高斯函数的几何形状。</strong>它学习寻找在每个场景中共享的相似模式或几何形状，并且只存储每个高斯的码本索引，从而产生非常紧凑的表示。此外，由于码本的大小可能非常小，因此训练期间的空间和计算开销并不显著。</li>
+</ul>
+<h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><h3 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h3><p>建立在3DGS的基础上，Each Gaussian represents 3D position, opacity, geometry (3D scale and 3D rotation represented as a quaternion), and spherical harmonics (SH) for view-dependent color.</p>
+<blockquote>
+<p>看起来就是经典的3DGS</p>
+</blockquote>
+<h3 id="Overall-architecture"><a href="#Overall-architecture" class="headerlink" title="Overall architecture"></a>Overall architecture</h3><p>我们的主要目标是1)减少高斯函数的数量，2)在保持原始性能的同时紧凑地表示属性。为此，在优化过程中，我们屏蔽掉对性能影响最小的高斯函数，并通过码本表示几何属性，如图2所示。我们使用基于网格的神经场来表示颜色属性，而不是在每个高斯分布中直接存储它们。对于几何属性，如尺度和旋转，我们建议使用基于码本的方法，可以充分利用这些属性的有限变化。最后，在随后的渲染步骤中使用少量具有紧凑属性的高斯函数，包括投影和栅格化来渲染图像。</p>
+<p><img src="/images/paper-reading-Compact-3DGS/image-20240514154353045.png"></p>
+<h3 id="Gaussian-Volume-Mask"><a href="#Gaussian-Volume-Mask" class="headerlink" title="Gaussian Volume Mask"></a>Gaussian Volume Mask</h3><p>The scale attribute of each Gaussian determines its 3D volume, which is then reflected in the rendering process. <strong>Small-sized Gaussians, due to their minimal volume, have a negligible contribution to the overall rendering quality, often to the point where their effect is essentially imperceptible.</strong> In such cases, it becomes highly beneficial to identify and remove such unessential Gaussians.</p>
+<blockquote>
+<p>这里认为小尺寸的高斯，因为体积很小，对渲染的贡献可以忽略不计，可以识别和去除他们。</p>
+</blockquote>
+<p>这里就提出了一个用来处理尺度、透明度的learn-able mask，学习的向量是$m_n$，最终的mask是$M_n$，如下公式所示：</p>
+<p><img src="/images/paper-reading-Compact-3DGS/image-20240514160440341.png"></p>
+<p>通过添加掩蔽损失Lm来平衡准确渲染和训练过程中消除的高斯数：</p>
+<p><img src="/images/paper-reading-Compact-3DGS/image-20240514160648730.png"></p>
+<blockquote>
+<p>与Compact GSSLAM相同的疑问：为什么要使用这个损失函数？</p>
+<p>看这个损失函数的意思，它想要mask掉所有东西啊，这样肯定有问题吧？？？</p>
+<p>感觉，这个L_m不是单独使用的，给个权重，放到一个大的loss function里。</p>
+</blockquote>
+<p>在每一次致密化中，我们根据二值掩模消除高斯分布。此外，与原始3DGS在训练中间停止致密化并保留高斯数直至结束不同，我们在整个训练过程中始终保持掩码，有效地减少了不必要的高斯数，并确保在整个训练阶段使用低GPU内存进行高效计算(图3)。一旦训练完成，由于我们删除了掩码高斯数，因此不需要存储掩码参数m。</p>
+<h3 id="Geometry-Codebook"><a href="#Geometry-Codebook" class="headerlink" title="Geometry Codebook"></a>Geometry Codebook</h3><blockquote>
+<p><strong>参考资料：</strong></p>
+<p>关于VQ</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/603387650">https://zhuanlan.zhihu.com/p/603387650</a></li>
+</ul>
+<p>关于VAE</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/34998569">https://zhuanlan.zhihu.com/p/34998569</a></li>
+</ul>
+<p>关于VQ-VAE</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/388299884">https://zhuanlan.zhihu.com/p/388299884</a></li>
+</ul>
+<p>R-VQ</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/688229464">https://zhuanlan.zhihu.com/p/688229464</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/676754766">https://zhuanlan.zhihu.com/p/676754766</a></li>
+<li><a href="https://www.assemblyai.com/blog/what-is-residual-vector-quantization/">https://www.assemblyai.com/blog/what-is-residual-vector-quantization/</a></li>
+<li><a href="https://drscotthawley.github.io/blog/posts/2023-06-12-RVQ.html">https://drscotthawley.github.io/blog/posts/2023-06-12-RVQ.html</a></li>
+</ul>
+</blockquote>
+<p>论文说他们观察到，大多数高斯的几何形状是非常相似的，显示只有微小的差异在规模和旋转特性。此外，一个场景是由许多小高斯组成的，并且每个高斯原语都不期望表现出广泛的多样性。因此他们想到了使用R-VQ：</p>
+<p><img src="/images/paper-reading-Compact-3DGS/image-20240514213043223.png"></p>
+<p><img src="/images/paper-reading-Compact-3DGS/image-20240514202806984.png"></p>
+<blockquote>
+<p>我找到一个算法框图，写的很简单很清楚：</p>
+<p><img src="/images/paper-reading-Compact-3DGS/soundstream_alg1.png"></p>
+</blockquote>
+<p>这个codebook也是需要训练的，对应的损失函数如下：</p>
+<p><img src="/images/paper-reading-Compact-3DGS/image-20240514210618885.png"></p>
+<blockquote>
+<p>如果考虑论文里面提到的公式4、5，主要是公式5，这个损失函数还挺好理解的，就是希望每一个阶段的残差和对应的codebook的欧氏距离最小。</p>
+</blockquote>
+<h3 id="Compact-View-dependent-Color"><a href="#Compact-View-dependent-Color" class="headerlink" title="Compact View-dependent Color"></a>Compact View-dependent Color</h3><p>这里说3DGS的每个高斯总共有59个参数，其中48个用来表示SH（max 3 degrees）。论文认为用基于网格的神经辐射场方法表示每个高斯视图相关的颜色会比较好：</p>
+<p><img src="/images/paper-reading-Compact-3DGS/image-20240514213832546.png"></p>
+<h3 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h3><p><img src="/images/paper-reading-Compact-3DGS/image-20240514215106098.png"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这篇文章应该算看懂了。他就做了三个东西：<br>1、【Gaussian Volume Mask】，就是learn-able mask，用可以学习的掩膜去mask掉冗余的部分高斯函数<br>2、【Geometry Codebook】，就是应用了R-VQ来归并那些形状、旋转很相似的高斯<br>3、【Compact View-dependent Color】，就是不使用3DGS的球谐去表示视图相关的颜色了，而是用了类似instant-ngp的方法去表示视图相关的颜色</p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>隐式表示</tag>
+        <tag>3D Gaussian Splatting</tag>
+        <tag>视觉SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文阅读《Compact 3D Gaussian Splatting For Dense Visual SLAM》</title>
+    <url>/2024/05/14/paper-reading-compact-gsslam/</url>
+    <content><![CDATA[<h1 id="论文阅读《Compact-3D-Gaussian-Splatting-For-Dense-Visual-SLAM》"><a href="#论文阅读《Compact-3D-Gaussian-Splatting-For-Dense-Visual-SLAM》" class="headerlink" title="论文阅读《Compact 3D Gaussian Splatting For Dense Visual SLAM》"></a>论文阅读《Compact 3D Gaussian Splatting For Dense Visual SLAM》</h1><h2 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h2><p>论文提到最近的3DGS SLAM都是建立在大量冗余3D高斯椭球上的，导致了高内存占用和存储成本，以及很慢的训练速度。</p>
+<p>为了解决这个问题，他们提出了一种紧凑的3D高斯飞溅SLAM系统，该系统减少了高斯椭球的数量和参数大小。</p>
+<h2 id="Contributions"><a href="#Contributions" class="headerlink" title="Contributions"></a>Contributions</h2><ul>
+<li>我们提出了一种新的基于GS的SLAM系统，该系统具有<strong>紧凑的高斯场景表示</strong>，实现了快速的训练和渲染速度、准确的姿态估计，并显著提高了存储效率。</li>
+<li>提出了一种新的<strong>基于滑动窗口的在线掩蔽方法</strong>，以消除冗余高斯椭球的数量，同时在训练过程中实现高保真度。</li>
+<li>我们<strong>观察并分析了三维高斯椭球的几何相似性</strong>，并提出了一种基于码本的方法来有效地恢复SLAM系统运行过程中每个高斯点的几何。针对摄像机跟踪性能相对较低的问题，提出了一种基于关键帧的全局BA方法，该方法具有重投影损失。</li>
+<li>我们在不同的数据集上进行了全面的实验，渲染速度提高了近176%，内存使用压缩率超过1.97倍。</li>
+</ul>
+<h2 id="System-Pipeline"><a href="#System-Pipeline" class="headerlink" title="System Pipeline"></a>System Pipeline</h2><p><img src="/images/paper-reading-Compact-GSSLAM/image-20240506113119541.png"></p>
+<blockquote>
+<p>乍一看，有点像是SplaTAM的图呢，会不会是在SplaTAM的基础上改进来的？</p>
+</blockquote>
+<h2 id="讨论分析"><a href="#讨论分析" class="headerlink" title="讨论分析"></a>讨论分析</h2><p>看了一下论文写的一些内容，我都不是很理解：</p>
+<p><strong>3.2 Sliding Window-based Mask部分</strong></p>
+<ul>
+<li><p>3.2 Sliding Window-based Mask部分stop gradient operator sg(·)输出的结果是什么？</p>
+<p>根据下面的信息解释这个公式：<br>We introduce a learnable mask parameter $m \in R^N$ and a corresponding binary mask $M \in {0, 1}^N$​, N is the number of Gaussian ellipsoids.<br>$$<br>M_n = sg (\mathbb{I}[Sig(m_n) &gt; \epsilon] - Sig(m_n)) + Sig(m_n)<br>$$<br>where $n$ is the index of the Gaussian ellipsoids, $\epsilon$ denotes the mask threshold. Inspired by [1], we employ the stop gradient operator $sg(·) $to calculate gradients from binary masks. $\mathbb{I}$ and $Sig(·)$ denote the indicator and sigmoid function. This formulation of mask strategy allows us to effectively combine the influence of volume and opacity of Gaussian ellipsoids.</p>
+<p>根据GPT的解释，结论：</p>
+<p>sg()就是停止梯度计算，相当于with_no_grad()。</p>
+<p>这里就是计算一个1-sig+sig=1，或者计算一个0-sig+sig=0</p>
+<p>因为这里不连续所以不计算梯度。</p>
+</li>
+<li><p>3.2 Sliding Window-based Mask部分为什么使用这样的损失函数？</p>
+<p>追问：为什么使用如下的损失函数</p>
+<p>We formulate the loss function $L_m$ of our mask:<br>$$<br>L_m = \frac{1}{N} \sum_{n=1}^{N}Sig(m_n)<br>$$<br>这个损失函数真的非常奇怪，确定不是1-Sig吗？</p>
+<p>这个目的是让所有的mask都变成0啊？？？</p>
+</li>
+</ul>
+<p><strong>3.3 Geometry Codebook</strong></p>
+<ul>
+<li><p>3.3 Geometry Codebook这部分的公式也不是太看得懂，没理解codebook的作用，这里也没有详细介绍。</p>
+<blockquote>
+<p>后续看《Compact 3D Gaussian Representation for Radiance Field》，看明白了。。。</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>评价：</strong></p>
+<p>这篇论文主要是压缩3DGS的大小，<strong>做了两方面的工作，一个是基于可学习的mask和视锥体来过滤高斯，一个是通过codebook压缩相似的高斯。</strong></p>
+<p>其他方面倒是没感觉特别突出，对于Global BA部分，它说维护的关键帧数量比其他GS SLAM大得多，个人觉得这不是优点。比如RGBD GS-ICP SLAM就提到了，关键帧数量越多越容易导致误差累积的问题。</p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>隐式表示</tag>
+        <tag>3D Gaussian Splatting</tag>
+        <tag>视觉SLAM</tag>
       </tags>
   </entry>
   <entry>
@@ -7122,6 +7476,78 @@ seek<span class="token double-colon punctuation">::</span><span class="token fun
       </categories>
       <tags>
         <tag>隐式表示</tag>
+        <tag>视觉SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文阅读《RGBD GS-ICP SLAM》</title>
+    <url>/2024/05/02/paper-reading-rgbd-gs-icp-slam/</url>
+    <content><![CDATA[<h1 id="论文阅读《RGBD-GS-ICP-SLAM》"><a href="#论文阅读《RGBD-GS-ICP-SLAM》" class="headerlink" title="论文阅读《RGBD GS-ICP SLAM》"></a>论文阅读《RGBD GS-ICP SLAM》</h1><blockquote>
+<p>从这篇论文的Fig. 1其实可以看出来，Gaussian Splatting SLAM虽然FPS较低，但是PSNR还是很高的。</p>
+</blockquote>
+<h2 id="关键问题"><a href="#关键问题" class="headerlink" title="关键问题"></a>关键问题</h2><ul>
+<li><p>尽管基于3dgs的SLAM方法利用了高速渲染的优势，但它们未能解决根本问题:<strong>无法直接利用3D显式表示和通过2D图像渲染间接跟踪3D空间。</strong></p>
+<blockquote>
+<p>Although 3DGS-based SLAM methods take advantages of the high-speed rendering, they fail to address the fundamental issue: the inability to directly utilize 3D explicit representations and the indirect tracking of 3D space through 2D image rendering.</p>
+</blockquote>
+</li>
+<li><p>尽管解耦方法通过分离映射和跟踪过程在跟踪方面表现出更好的性能，但它们<strong>需要额外的计算资源用于独立阶段。此外，这些方法需要在三维空间中存储特征，与三维GS地图无关。</strong></p>
+<blockquote>
+<p>Although decoupled methods exhibit better performances in tracking by separating mapping and tracking processes, they require additional computational resources for the independent stages. Moreover, these methods need to store features in 3D space, unrelated to the 3D GS map.</p>
+</blockquote>
+</li>
+<li><p>==<strong>G-ICP的方法允许Gaussian这样的表示方法直接用于跟踪。</strong>==</p>
+<blockquote>
+<p>There exists a method that allows Gaussian, an explicit representation, to be directly used for tracking. The well-known Generalized Iterative Closest Point (G-ICP) [17,33] from the 3D scan matching family is simple yet efficient for fast tracking of 3D point clouds. During preprocessing, it only requires computing Gaussians for the current frame and the map. Given that the map in 3DGS utilizes Gaussians as an explicit representation in 3D space, using G-ICP for tracking allows for the direct utilization of the 3DGS map without the need for post-processing. Furthermore, the Gaussians of the current frame computed during tracking with G-ICP can also be directly utilized as an explicit representation in the 3DGS map, without additional computations.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Contributions"><a href="#Contributions" class="headerlink" title="Contributions"></a>Contributions</h2><ul>
+<li>结合G-ICP和3DGS的SLAM系统</li>
+<li>通过使用G-ICP进行跟踪，积极利用3D信息，减少了跟踪需要的时间</li>
+<li>通过尺度对齐技术共享了G-ICP和3DGS的协方差，降低了计算成本，并且促进了3DGS的快速收敛。</li>
+</ul>
+<h2 id="System-Overview"><a href="#System-Overview" class="headerlink" title="System Overview"></a>System Overview</h2><p><img src="/images/paper-reading-RGBD-GS-ICP-SLAM/image-20240504162019382.png"></p>
+<blockquote>
+<p>不是很理解下面这段话，我觉得GS中3D点的数量应该是有必要调整的，我在运行这篇工作源码的时候，其实能发现点的分布不是很均匀，帧多的地方点也多。。。</p>
+<p><img src="/images/paper-reading-RGBD-GS-ICP-SLAM/image-20240505112159783.png"></p>
+<p>不过论文后面又说，只有和现在地图不重叠的高斯函数才能被认定是目标高斯函数，从这里看就很合理。但是代码跑的结果确实存在不均匀的地方，还是再好好看看吧。</p>
+</blockquote>
+<h3 id="G-ICP-Tracking"><a href="#G-ICP-Tracking" class="headerlink" title="G-ICP Tracking"></a>G-ICP Tracking</h3><h4 id="Scale-Regularization"><a href="#Scale-Regularization" class="headerlink" title="Scale Regularization"></a>Scale Regularization</h4><blockquote>
+<p>为什么有这个步骤？RGB-D输入的尺度不应该就是固定的吗？</p>
+<p>这里说的尺度应该指的是高斯的大小。</p>
+</blockquote>
+<p>这里貌似是说原始的G-ICP算法是把高斯平面化了的，把每个高斯分布视为类平面的分布。</p>
+<p>然后本文在正则化的同时保留目标高斯函数的原始特征，做了一个椭圆正则化。</p>
+<h4 id="Keyframe-Selection"><a href="#Keyframe-Selection" class="headerlink" title="Keyframe Selection"></a>Keyframe Selection</h4><p>参考了ORB-SLAM和Vins-Mono实现了动态的关键帧选择方法。</p>
+<p>不过这里说分成了tracking keyframe和mapping keyframe。</p>
+<h3 id="GS-Mapping"><a href="#GS-Mapping" class="headerlink" title="GS Mapping"></a>GS Mapping</h3><h4 id="Scale-Aligning"><a href="#Scale-Aligning" class="headerlink" title="Scale Aligning"></a>Scale Aligning</h4><p>这里提到了传感器和场景的距离不同，就算是拿到了深度图，点云的间距也是不一样的，稀疏程度不同。这种情况会导致K近邻计算的协方差尺度也变大。因此论文做了一个尺度归一化的处理。</p>
+<h4 id="Additional-Keyframe-Selection-for-Mapping"><a href="#Additional-Keyframe-Selection-for-Mapping" class="headerlink" title="Additional Keyframe Selection for Mapping"></a>Additional Keyframe Selection for Mapping</h4><p>提到了跟踪期间增加关键帧数量容易导致累积误差。为了缓解这个问题，就实现了这个方法，添加mapping only keyframe。tracking继续从现有跟踪过程中的选定关键帧进行，而mapping利用原始关键帧和附加的仅映射关键帧。</p>
+<blockquote>
+<p>新的问题，tracking keyframe的作用是什么？？？或者说以往SLAM的关键帧的作用是什么？？？</p>
+<p>忘了。。。</p>
+</blockquote>
+<p><img src="/images/paper-reading-RGBD-GS-ICP-SLAM/image-20240505122210749.png"></p>
+<h4 id="Avoiding-Local-Minima-while-Mapping"><a href="#Avoiding-Local-Minima-while-Mapping" class="headerlink" title="Avoiding Local Minima while Mapping"></a>Avoiding Local Minima while Mapping</h4><p>这里提到了我也很认同的一个点，GS SLAM是实时运行的，通常是缺乏对场景的充分观察的。这种情况容易导致局部最优。</p>
+<p>不过本文的解决方案比较简单，就是每次迭代训练从关键帧中随机选一个进行学习。。。</p>
+<blockquote>
+<p>我觉得GS SLAM也存在稀疏视角重建的问题，这里可以好好探究一下怎么解决。</p>
+</blockquote>
+<h2 id="实验部分"><a href="#实验部分" class="headerlink" title="实验部分"></a>实验部分</h2><p><img src="/images/paper-reading-RGBD-GS-ICP-SLAM/image-20240505122956821.png"></p>
+<p>从这里倒是可以看出，本文的方法在SSIM上不是很好，Point-SLAM和GS-SLAM在这部分表现是非常好的。</p>
+<p><img src="/images/paper-reading-RGBD-GS-ICP-SLAM/image-20240505123102119.png"></p>
+<p>从这里，我有一个推测，因为TUM-RGBD的数据是存在噪声和运动模糊的，所以<strong>本文的方法在存在噪声和运动模糊的情况下，表现不好！！！</strong></p>
+<blockquote>
+<p>这里论文作者狡辩了一下，说“TUM数据集是用老式传感器捕获的，这会导致深度图像中的噪声和大量信息丢失。SplaTAM仅在深度损失明显的区域添加新的高斯函数来处理这些因素，而我们的方法利用了深度图像中的所有结构信息，专注于准确跟踪和快速系统，而不是处理这些因素。”</p>
+</blockquote>
+<p>最后论文总结了一下自己的局限性：该方法仅依赖于三维结构的深度，实现了快速的系统速度。然而，在现实环境中，由于RGB-D传感器固有的深度噪声，重建地图的质量受到限制。由于系统速度已经非常快，因此可以预期，在嘈杂的现实环境中，通过牺牲一点速度来补偿具有相对鲁棒RGB信息的嘈杂深度图像，可以实现稳健的性能。</p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>隐式表示</tag>
+        <tag>3D Gaussian Splatting</tag>
         <tag>视觉SLAM</tag>
       </tags>
   </entry>
@@ -7637,24 +8063,6 @@ python3 RANSAC_3D.py<span aria-hidden="true" class="line-numbers-rows"><span></s
       </tags>
   </entry>
   <entry>
-    <title>罗德里格斯公式推导</title>
-    <url>/2021/07/08/slam-learning-2/</url>
-    <content><![CDATA[<h1 id="罗德里格斯公式推导"><a href="#罗德里格斯公式推导" class="headerlink" title="罗德里格斯公式推导"></a>罗德里格斯公式推导</h1><blockquote>
-<p>最近博主在重学《视觉SLAM十四讲》，之后可能会陆陆续续的发一些学习笔记或者公式的推导。</p>
-</blockquote>
-<p>书中第53页给出了罗德里格斯公式，这个公式描述了<strong>从旋转向量到旋转矩阵的转换过程。</strong></p>
-<p>虽然作者后面会从李代数层面给出一个证明，但直接从线性代数的层面进行推导也并不麻烦，具体的推导过程如下所示：</p>
-<p><img src="/images/slam-learning/2-1.jpg"></p>
-<p><img src="/images/slam-learning/2-2.jpg"></p>
-]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>视觉SLAM</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SLAM问题的数学表述</title>
     <url>/2021/02/05/slam-learning-1/</url>
     <content><![CDATA[<h1 id="SLAM问题的数学表述"><a href="#SLAM问题的数学表述" class="headerlink" title="SLAM问题的数学表述"></a>SLAM问题的数学表述</h1><blockquote>
@@ -7677,6 +8085,24 @@ python3 RANSAC_3D.py<span aria-hidden="true" class="line-numbers-rows"><span></s
 <h2 id="对SLAM问题的总结"><a href="#对SLAM问题的总结" class="headerlink" title="对SLAM问题的总结"></a>对SLAM问题的总结</h2><p>通常，由于各种复杂因素的影响，我们无法直接求解机器人实际的运动方程，也无法通过理论上的运动方程精确计算出机器人的位姿，因此我们通过求解观测方程来相对精确地计算机器人的位置信息。</p>
 <p>在视觉SLAM中，这个过程可以表述为：已知相机内参$ K $，相机观测到的目标物坐标$ P_w $，目标物距离相机的距离$ s $以及它在图像上的像素坐标$ P_{uv} $，求解机器人的位姿$ T $。</p>
 <p>当然，由于观测数据同样受噪声影响，最终得到的位姿也不是准确的，还需要通过一些处理来减小误差。</p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>视觉SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>罗德里格斯公式推导</title>
+    <url>/2021/07/08/slam-learning-2/</url>
+    <content><![CDATA[<h1 id="罗德里格斯公式推导"><a href="#罗德里格斯公式推导" class="headerlink" title="罗德里格斯公式推导"></a>罗德里格斯公式推导</h1><blockquote>
+<p>最近博主在重学《视觉SLAM十四讲》，之后可能会陆陆续续的发一些学习笔记或者公式的推导。</p>
+</blockquote>
+<p>书中第53页给出了罗德里格斯公式，这个公式描述了<strong>从旋转向量到旋转矩阵的转换过程。</strong></p>
+<p>虽然作者后面会从李代数层面给出一个证明，但直接从线性代数的层面进行推导也并不麻烦，具体的推导过程如下所示：</p>
+<p><img src="/images/slam-learning/2-1.jpg"></p>
+<p><img src="/images/slam-learning/2-2.jpg"></p>
 ]]></content>
       <categories>
         <category>slam</category>
@@ -11889,8 +12315,8 @@ SudokuRNN time = 337.7354459999997
         <category>slam</category>
       </categories>
       <tags>
-        <tag>NeRF</tag>
         <tag>视觉SLAM</tag>
+        <tag>NeRF</tag>
       </tags>
   </entry>
   <entry>
