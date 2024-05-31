@@ -6,7 +6,7 @@
   <link href="http://immortalqx.github.io/atom.xml" rel="self"/>
   
   <link href="http://immortalqx.github.io/"/>
-  <updated>2024-05-29T08:46:52.637Z</updated>
+  <updated>2024-05-31T09:15:55.851Z</updated>
   <id>http://immortalqx.github.io/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>code-reading-Compact-3DGS</title>
+    <title>Compact 3DGS代码阅读</title>
     <link href="http://immortalqx.github.io/2024/05/25/code-reading-compact-3dgs/"/>
     <id>http://immortalqx.github.io/2024/05/25/code-reading-compact-3dgs/</id>
     <published>2024-05-25T14:55:23.000Z</published>
-    <updated>2024-05-29T08:46:52.637Z</updated>
+    <updated>2024-05-31T09:15:55.851Z</updated>
     
     
       
@@ -34,14 +34,12 @@
     
     
     
-    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    <category term="NeRF&amp;3DGS" scheme="http://immortalqx.github.io/categories/NeRF-3DGS/"/>
     
     
     <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
     
     <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
-    
-    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
     
   </entry>
   
@@ -50,7 +48,7 @@
     <link href="http://immortalqx.github.io/2024/05/21/paper-reading-compact-3dgs/"/>
     <id>http://immortalqx.github.io/2024/05/21/paper-reading-compact-3dgs/</id>
     <published>2024-05-21T08:30:22.000Z</published>
-    <updated>2024-05-29T08:46:21.549Z</updated>
+    <updated>2024-05-31T09:16:17.828Z</updated>
     
     
       
@@ -63,14 +61,12 @@
     
     
     
-    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    <category term="NeRF&amp;3DGS" scheme="http://immortalqx.github.io/categories/NeRF-3DGS/"/>
     
     
     <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
     
     <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
-    
-    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
     
   </entry>
   
@@ -210,9 +206,9 @@
     <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
     
     
-    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
-    
     <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
     
   </entry>
   
@@ -293,9 +289,9 @@
     <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
     
     
-    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
-    
     <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
     
   </entry>
   
@@ -353,9 +349,9 @@
     <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
     
     
-    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
-    
     <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
     
   </entry>
   
@@ -380,9 +376,9 @@
     <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
     
     
-    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
-    
     <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
     
   </entry>
   
@@ -407,9 +403,9 @@
     <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
     
     
-    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
-    
     <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
     
   </entry>
   
@@ -434,9 +430,9 @@
     <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
     
     
-    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
-    
     <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
     
   </entry>
   
@@ -461,9 +457,9 @@
     <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
     
     
-    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
-    
     <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
     
   </entry>
   
@@ -488,9 +484,9 @@
     <category term="NeRF" scheme="http://immortalqx.github.io/categories/NeRF/"/>
     
     
-    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
-    
     <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
     
   </entry>
   

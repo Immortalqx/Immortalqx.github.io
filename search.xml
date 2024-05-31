@@ -556,6 +556,159 @@ geometry_msgs/Transform transform
       </tags>
   </entry>
   <entry>
+    <title>ROS中的URDF</title>
+    <url>/2021/07/18/ros-notes-5/</url>
+    <content><![CDATA[<h1 id="ROS中的URDF"><a href="#ROS中的URDF" class="headerlink" title="ROS中的URDF"></a>ROS中的URDF</h1><h2 id="什么是URDF"><a href="#什么是URDF" class="headerlink" title="什么是URDF"></a>什么是URDF</h2><ul>
+<li><p>Unified Robot Description Format，统一机器人描述格式，简称为URDF；</p>
+</li>
+<li><p>ROS中一个非常重要的机器人模型描述格式；</p>
+</li>
+<li><p>URDF文件使用XML格式描述机器人模型；</p>
+</li>
+<li><p>ROS中的urdf功能包包含一个URDF的C++解析器。</p>
+</li>
+</ul>
+<h2 id="URDF标签说明"><a href="#URDF标签说明" class="headerlink" title="URDF标签说明"></a>URDF标签说明</h2><h3 id="lt-link-gt"><a href="#lt-link-gt" class="headerlink" title="<link>"></a>&lt;link&gt;</h3><p><strong>作用：</strong></p>
+<ul>
+<li>描述机器人某个刚体部分的外观和物理属性；</li>
+<li>尺寸（size）、颜色（color）、形状（shape）、惯性矩阵（inertial matrix）、碰撞参数（collision properties）等。</li>
+</ul>
+<img src="/images/ros-notes/5-1.png" style="zoom:33%;">
+
+<p><strong>子标签：</strong></p>
+<ul>
+<li>&lt;visual&gt;：描述机器人link部分的外观参数；</li>
+<li>&lt;inertial&gt;：描述link的惯性参数；</li>
+<li>&lt;collision&gt;：描述link的碰撞属性。</li>
+</ul>
+<img src="/images/ros-notes/5-2.png" style="zoom: 67%;">
+
+<h3 id="lt-joint-gt"><a href="#lt-joint-gt" class="headerlink" title="<joint>"></a>&lt;joint&gt;</h3><p><strong>作用：</strong></p>
+<ul>
+<li>描述机器人关节的运动学和动力学属性；</li>
+<li>包括关节运动的位置和速度限制；</li>
+<li>根据关节运动的形式，可以将其分为六种类型。</li>
+</ul>
+<img src="/images/ros-notes/5-3.png" style="zoom:33%;">
+
+<table>
+<thead>
+<tr>
+<th>关节类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>continuous</td>
+<td>旋转关节，可以围绕单轴无限旋转</td>
+</tr>
+<tr>
+<td>revolute</td>
+<td>旋转关节，类似于continuous，但有旋转的角度限制</td>
+</tr>
+<tr>
+<td>prismatic</td>
+<td>滑动关节，沿某一轴线移动的关节，带有位置极限</td>
+</tr>
+<tr>
+<td>planar</td>
+<td>平面关节，允许在平面正交方向上平移或者旋转</td>
+</tr>
+<tr>
+<td>floating</td>
+<td>浮动关节，允许进行平移、旋转运动</td>
+</tr>
+<tr>
+<td>fixed</td>
+<td>固定关节，不允许运动的特殊关节</td>
+</tr>
+</tbody></table>
+<p><strong>子标签：</strong></p>
+<ul>
+<li>&lt;calibration&gt;：关节的参考位置，用来校准关节的绝对位置；</li>
+<li>&lt;dynamics&gt;：描述关节的物理属性，例如阻尼值、物理静摩擦力等，经常在动力学仿真中用到；</li>
+<li>&lt;limit&gt;：描述运动的一些极限值，包括关节运动的上下限位置、速度限制、力矩限制等；</li>
+<li>&lt;mimic&gt;：描述该关节与已有关节的关系；</li>
+<li>&lt;safety＿controller&gt;：描述安全控制器参数。 </li>
+</ul>
+<img src="/images/ros-notes/5-4.png" style="zoom:67%;">
+
+<h3 id="lt-robot-gt"><a href="#lt-robot-gt" class="headerlink" title="<robot>"></a>&lt;robot&gt;</h3><ul>
+<li>完整机器人模型的最顶层标签；</li>
+<li>&lt;link&gt;和&lt;joint&gt;标签都必须包含在&lt;robot&gt;标签内。</li>
+</ul>
+<img src="/images/ros-notes/5-5.png" style="zoom:33%;">
+
+<p>一个完整的机器人模型，由一系列&lt;link&gt;和&lt;joint&gt;组成。</p>
+<img src="/images/ros-notes/5-6.png" style="zoom:67%;">
+
+<h2 id="URDF建模优化"><a href="#URDF建模优化" class="headerlink" title="URDF建模优化"></a>URDF建模优化</h2><h3 id="URDF建模存在的问题："><a href="#URDF建模存在的问题：" class="headerlink" title="URDF建模存在的问题："></a>URDF建模存在的问题：</h3><ol>
+<li>模型冗长，重复内容过多；</li>
+<li>参数修改麻烦，不便于二次开发；</li>
+<li>没有参数计算的功能。</li>
+</ol>
+<h3 id="URDF模型的进化版本——xacro模型文件"><a href="#URDF模型的进化版本——xacro模型文件" class="headerlink" title="URDF模型的进化版本——xacro模型文件"></a>URDF模型的进化版本——xacro模型文件</h3><ul>
+<li>精简模型代码<ul>
+<li>创建宏定义</li>
+<li>文件包含</li>
+</ul>
+</li>
+<li>提供可编程接口<ul>
+<li>常量</li>
+<li>变量</li>
+<li>数学计算</li>
+<li>条件语句</li>
+</ul>
+</li>
+</ul>
+<h3 id="常量的定义和使用"><a href="#常量的定义和使用" class="headerlink" title="常量的定义和使用"></a>常量的定义和使用</h3><p>常量定义：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>M_PI<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>3.14159<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>常量使用：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpy</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>${M_PI/2} 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<img src="/images/ros-notes/5-7.png" style="zoom:67%;">
+
+<h3 id="数学计算"><a href="#数学计算" class="headerlink" title="数学计算"></a>数学计算</h3><p>数学计算：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 ${(motor_length+wheel_length)/2} 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpx</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<img src="/images/ros-notes/5-8.png" style="zoom:67%;">
+
+<p>注意：所有的数学运算都会转换成浮点数进行，以保证运算精度。</p>
+<h3 id="宏定义"><a href="#宏定义" class="headerlink" title="宏定义"></a>宏定义</h3><p>宏定义：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>macro</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">params</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A B C<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    ......
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">sacro:</span>macros</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>宏调用：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span> <span class="token attr-name">A</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A_value<span class="token punctuation">"</span></span> <span class="token attr-name">B</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>B_value<span class="token punctuation">"</span></span> <span class="token attr-name">C</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>C_value<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<img src="/images/ros-notes/5-9.png" style="zoom:67%;">
+
+<h3 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h3><p>文件包含：</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">xacro:</span>include</span> <span class="token attr-name">filename</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find mbot_description)/urdf/xacro/mbot_base.xacro<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<img src="/images/ros-notes/5-10.png" style="zoom:67%;">
+
+<h3 id="模型显示"><a href="#模型显示" class="headerlink" title="模型显示"></a>模型显示</h3><p>方法一：将xacro文件转换成URDF文件后显示</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun xacro xacro.py mbot.xacro<span class="token operator">&gt;</span>mbot.urdf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>方法二：直接调用xacro文件解析器</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>arg</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>model<span class="token punctuation">"</span></span> <span class="token attr-name">default</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find xacro)/xacro --inorder <span class="token punctuation">'</span>$(find mbot_description)/urdf/xacro/mbot.xacro<span class="token punctuation">'</span><span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>robot_description<span class="token punctuation">"</span></span> <span class="token attr-name">command</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(arg model)<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">roslaunch mbot_description display_mbot_base_xacro.launch<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>相关学习资料：<a href="http://wiki.ros.org/urdf/Tutorials">http://wiki.ros.org/urdf/Tutorials</a></p>
+]]></content>
+      <categories>
+        <category>编程基础</category>
+      </categories>
+      <tags>
+        <tag>ROS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>PX4 Offboard Control Using MAVROS on Gazebo</title>
     <url>/2021/07/23/ros-notes-6/</url>
     <content><![CDATA[<h1 id="PX4-Offboard-Control-Using-MAVROS-on-Gazebo"><a href="#PX4-Offboard-Control-Using-MAVROS-on-Gazebo" class="headerlink" title="PX4 Offboard Control Using MAVROS on Gazebo"></a>PX4 Offboard Control Using MAVROS on Gazebo</h1><p>最近在学习PX4和mavros，感觉px4官网的教程总体上讲得不错，但有一些地方不是很友好，比如offboard control这一块儿，讲的比较简单，省略了gazebo的使用，我上网查了一大堆资料才勉强把这个示例代码在gazebo中跑出来。所以这里做一个记录，希望对看到的人有点帮助。</p>
@@ -769,159 +922,6 @@ mavros_msgs<span class="token double-colon punctuation">::</span>State current_s
       </tags>
   </entry>
   <entry>
-    <title>ROS中的URDF</title>
-    <url>/2021/07/18/ros-notes-5/</url>
-    <content><![CDATA[<h1 id="ROS中的URDF"><a href="#ROS中的URDF" class="headerlink" title="ROS中的URDF"></a>ROS中的URDF</h1><h2 id="什么是URDF"><a href="#什么是URDF" class="headerlink" title="什么是URDF"></a>什么是URDF</h2><ul>
-<li><p>Unified Robot Description Format，统一机器人描述格式，简称为URDF；</p>
-</li>
-<li><p>ROS中一个非常重要的机器人模型描述格式；</p>
-</li>
-<li><p>URDF文件使用XML格式描述机器人模型；</p>
-</li>
-<li><p>ROS中的urdf功能包包含一个URDF的C++解析器。</p>
-</li>
-</ul>
-<h2 id="URDF标签说明"><a href="#URDF标签说明" class="headerlink" title="URDF标签说明"></a>URDF标签说明</h2><h3 id="lt-link-gt"><a href="#lt-link-gt" class="headerlink" title="<link>"></a>&lt;link&gt;</h3><p><strong>作用：</strong></p>
-<ul>
-<li>描述机器人某个刚体部分的外观和物理属性；</li>
-<li>尺寸（size）、颜色（color）、形状（shape）、惯性矩阵（inertial matrix）、碰撞参数（collision properties）等。</li>
-</ul>
-<img src="/images/ros-notes/5-1.png" style="zoom:33%;">
-
-<p><strong>子标签：</strong></p>
-<ul>
-<li>&lt;visual&gt;：描述机器人link部分的外观参数；</li>
-<li>&lt;inertial&gt;：描述link的惯性参数；</li>
-<li>&lt;collision&gt;：描述link的碰撞属性。</li>
-</ul>
-<img src="/images/ros-notes/5-2.png" style="zoom: 67%;">
-
-<h3 id="lt-joint-gt"><a href="#lt-joint-gt" class="headerlink" title="<joint>"></a>&lt;joint&gt;</h3><p><strong>作用：</strong></p>
-<ul>
-<li>描述机器人关节的运动学和动力学属性；</li>
-<li>包括关节运动的位置和速度限制；</li>
-<li>根据关节运动的形式，可以将其分为六种类型。</li>
-</ul>
-<img src="/images/ros-notes/5-3.png" style="zoom:33%;">
-
-<table>
-<thead>
-<tr>
-<th>关节类型</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>continuous</td>
-<td>旋转关节，可以围绕单轴无限旋转</td>
-</tr>
-<tr>
-<td>revolute</td>
-<td>旋转关节，类似于continuous，但有旋转的角度限制</td>
-</tr>
-<tr>
-<td>prismatic</td>
-<td>滑动关节，沿某一轴线移动的关节，带有位置极限</td>
-</tr>
-<tr>
-<td>planar</td>
-<td>平面关节，允许在平面正交方向上平移或者旋转</td>
-</tr>
-<tr>
-<td>floating</td>
-<td>浮动关节，允许进行平移、旋转运动</td>
-</tr>
-<tr>
-<td>fixed</td>
-<td>固定关节，不允许运动的特殊关节</td>
-</tr>
-</tbody></table>
-<p><strong>子标签：</strong></p>
-<ul>
-<li>&lt;calibration&gt;：关节的参考位置，用来校准关节的绝对位置；</li>
-<li>&lt;dynamics&gt;：描述关节的物理属性，例如阻尼值、物理静摩擦力等，经常在动力学仿真中用到；</li>
-<li>&lt;limit&gt;：描述运动的一些极限值，包括关节运动的上下限位置、速度限制、力矩限制等；</li>
-<li>&lt;mimic&gt;：描述该关节与已有关节的关系；</li>
-<li>&lt;safety＿controller&gt;：描述安全控制器参数。 </li>
-</ul>
-<img src="/images/ros-notes/5-4.png" style="zoom:67%;">
-
-<h3 id="lt-robot-gt"><a href="#lt-robot-gt" class="headerlink" title="<robot>"></a>&lt;robot&gt;</h3><ul>
-<li>完整机器人模型的最顶层标签；</li>
-<li>&lt;link&gt;和&lt;joint&gt;标签都必须包含在&lt;robot&gt;标签内。</li>
-</ul>
-<img src="/images/ros-notes/5-5.png" style="zoom:33%;">
-
-<p>一个完整的机器人模型，由一系列&lt;link&gt;和&lt;joint&gt;组成。</p>
-<img src="/images/ros-notes/5-6.png" style="zoom:67%;">
-
-<h2 id="URDF建模优化"><a href="#URDF建模优化" class="headerlink" title="URDF建模优化"></a>URDF建模优化</h2><h3 id="URDF建模存在的问题："><a href="#URDF建模存在的问题：" class="headerlink" title="URDF建模存在的问题："></a>URDF建模存在的问题：</h3><ol>
-<li>模型冗长，重复内容过多；</li>
-<li>参数修改麻烦，不便于二次开发；</li>
-<li>没有参数计算的功能。</li>
-</ol>
-<h3 id="URDF模型的进化版本——xacro模型文件"><a href="#URDF模型的进化版本——xacro模型文件" class="headerlink" title="URDF模型的进化版本——xacro模型文件"></a>URDF模型的进化版本——xacro模型文件</h3><ul>
-<li>精简模型代码<ul>
-<li>创建宏定义</li>
-<li>文件包含</li>
-</ul>
-</li>
-<li>提供可编程接口<ul>
-<li>常量</li>
-<li>变量</li>
-<li>数学计算</li>
-<li>条件语句</li>
-</ul>
-</li>
-</ul>
-<h3 id="常量的定义和使用"><a href="#常量的定义和使用" class="headerlink" title="常量的定义和使用"></a>常量的定义和使用</h3><p>常量定义：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>M_PI<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>3.14159<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>常量使用：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpy</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>${M_PI/2} 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<img src="/images/ros-notes/5-7.png" style="zoom:67%;">
-
-<h3 id="数学计算"><a href="#数学计算" class="headerlink" title="数学计算"></a>数学计算</h3><p>数学计算：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>origin</span> <span class="token attr-name">xyz</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 ${(motor_length+wheel_length)/2} 0<span class="token punctuation">"</span></span> <span class="token attr-name">rpx</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0 0<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<img src="/images/ros-notes/5-8.png" style="zoom:67%;">
-
-<p>注意：所有的数学运算都会转换成浮点数进行，以保证运算精度。</p>
-<h3 id="宏定义"><a href="#宏定义" class="headerlink" title="宏定义"></a>宏定义</h3><p>宏定义：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">sacro:</span>macro</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">params</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A B C<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
-    ......
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">sacro:</span>macros</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>宏调用：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span> <span class="token attr-name">A</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>A_value<span class="token punctuation">"</span></span> <span class="token attr-name">B</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>B_value<span class="token punctuation">"</span></span> <span class="token attr-name">C</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>C_value<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<img src="/images/ros-notes/5-9.png" style="zoom:67%;">
-
-<h3 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h3><p>文件包含：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">xacro:</span>include</span> <span class="token attr-name">filename</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find mbot_description)/urdf/xacro/mbot_base.xacro<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<img src="/images/ros-notes/5-10.png" style="zoom:67%;">
-
-<h3 id="模型显示"><a href="#模型显示" class="headerlink" title="模型显示"></a>模型显示</h3><p>方法一：将xacro文件转换成URDF文件后显示</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rosrun xacro xacro.py mbot.xacro<span class="token operator">&gt;</span>mbot.urdf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>方法二：直接调用xacro文件解析器</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>arg</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>model<span class="token punctuation">"</span></span> <span class="token attr-name">default</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(find xacro)/xacro --inorder <span class="token punctuation">'</span>$(find mbot_description)/urdf/xacro/mbot.xacro<span class="token punctuation">'</span><span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>robot_description<span class="token punctuation">"</span></span> <span class="token attr-name">command</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>$(arg model)<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">roslaunch mbot_description display_mbot_base_xacro.launch<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>相关学习资料：<a href="http://wiki.ros.org/urdf/Tutorials">http://wiki.ros.org/urdf/Tutorials</a></p>
-]]></content>
-      <categories>
-        <category>编程基础</category>
-      </categories>
-      <tags>
-        <tag>ROS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Richard Hamming &quot;You and Your Research&quot;</title>
     <url>/2022/08/29/richard-hamming-you-and-your-research/</url>
     <content><![CDATA[<h1 id="Richard-Hamming-“You-and-Your-Research”"><a href="#Richard-Hamming-“You-and-Your-Research”" class="headerlink" title="Richard Hamming “You and Your Research”"></a>Richard Hamming “You and Your Research”</h1><blockquote>
@@ -1009,7 +1009,7 @@ mavros_msgs<span class="token double-colon punctuation">::</span>State current_s
       </tags>
   </entry>
   <entry>
-    <title>code-reading-Compact-3DGS</title>
+    <title>Compact 3DGS代码阅读</title>
     <url>/2024/05/25/code-reading-compact-3dgs/</url>
     <content><![CDATA[<h1 id="Compact-3DGS代码阅读"><a href="#Compact-3DGS代码阅读" class="headerlink" title="Compact 3DGS代码阅读"></a>Compact 3DGS代码阅读</h1><h2 id="Gaussian-Volume-Mask"><a href="#Gaussian-Volume-Mask" class="headerlink" title="Gaussian Volume Mask"></a>Gaussian Volume Mask</h2><blockquote>
 <p>learn-able mask，用可以学习的掩膜去mask掉冗余的部分高斯函数</p>
@@ -1194,12 +1194,11 @@ self<span class="token punctuation">.</span>rvq_num <span class="token operator"
 <p>略，暂时没去看~</p>
 ]]></content>
       <categories>
-        <category>slam</category>
+        <category>NeRF&amp;3DGS</category>
       </categories>
       <tags>
         <tag>隐式表示</tag>
         <tag>3D Gaussian Splatting</tag>
-        <tag>视觉SLAM</tag>
       </tags>
   </entry>
   <entry>
@@ -3525,91 +3524,6 @@ A<span class="token double-colon punctuation">::</span>size_type num<span class=
       </tags>
   </entry>
   <entry>
-    <title>Hexo中同时使用多个主题</title>
-    <url>/2022/04/17/hexo-multi-theme/</url>
-    <content><![CDATA[<h1 id="Hexo中同时使用多个主题"><a href="#Hexo中同时使用多个主题" class="headerlink" title="Hexo中同时使用多个主题"></a>Hexo中同时使用多个主题</h1><p>最近想在github上搭建一个Homepage，但是我的博客已经把immortalqx.github.io这个坑给占着了。</p>
-<p>一个很自然的想法就是让Hexo同时使用多个主题，一个主题给我的博客，一个主题给我的Homepage，这样就可以在保持博客现状的情况下搭建一个风格严谨的Homepage。</p>
-<h3 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h3><p>类似于<code>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</code>这样的命令，对hexo来说是默认按照<code>_config.yml</code>设定的参数来执行渲染的。而<code>_config.yml</code>文件中指定了网站的url、root、source_dir和public_dir等非常关键的数据。</p>
-<p>所以我们可以写两个config文件，比如<code>_config.yml</code>继续用于博客，然后新建一个<code>_config_homepage.yml</code>用于搭建Homepage。之后，我们可以通过<code>hexo g</code>可以默认使用<code>_config.yml</code>来搭建博客，再通过<code>hexo --config _config_homepage.yml g</code>来指定Homepage的config文件来搭建Homepage。</p>
-<p>在使用<code>hexo --config _config_homepage.yml</code>之前，我们还需要修改<code>_config_homepage.yml</code>文件中的参数，让Homepage依附于博客，即把Homepage的public_dir放到博客的public_dir下，这样就可以通过类似于immortalqx.github.io/homepage的形式来访问Homepage。</p>
-<h3 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h3><h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><ol>
-<li><p>更改博客采用的主题的config文件，将新增Homepage的标签（不同主题设置有区别，这里以<a href="https://github.com/blinkfox/hexo-theme-matery">matery</a>为例）。</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">menu</span><span class="token punctuation">:</span>
-  <span class="token key atrule">Index</span><span class="token punctuation">:</span>
-    <span class="token key atrule">url</span><span class="token punctuation">:</span> /
-    <span class="token key atrule">icon</span><span class="token punctuation">:</span> fas fa<span class="token punctuation">-</span>home
-<span class="token punctuation">...</span><span class="token punctuation">...</span>
-  <span class="token key atrule">Homepage</span><span class="token punctuation">:</span>
-    <span class="token key atrule">url</span><span class="token punctuation">:</span> /homepage
-    <span class="token key atrule">icon</span><span class="token punctuation">:</span> fas fa<span class="token punctuation">-</span>award<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>复制root目录下的<code>_config.yml</code>文件，重命名为<code>_config_homepage.yml</code>。</p>
-</li>
-<li><p>安装需要使用的新主题（以<a href="https://github.com/PhosphorW/hexo-theme-academia">academia</a>为例）。注意要记得安装新主题需要的一些依赖，防止无法进行渲染。</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token builtin class-name">cd</span> your-hexo-directory
-<span class="token function">git</span> clone https://github.com/PhosphorW/hexo-theme-academia.git themes/academia<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-</li>
-<li><p>修改<code>_config_homepage.yml</code>文件，（下面仅列出需要修改的数据，根据使用的主题要修改的数据可能不一样）。</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment"># Site</span>
-<span class="token comment"># 部分选项置空，防止和采用的theme冲突</span>
-<span class="token key atrule">title</span><span class="token punctuation">:</span> Homepage
-<span class="token key atrule">subtitle</span><span class="token punctuation">:</span> <span class="token string">'Homepage'</span>
-<span class="token key atrule">description</span><span class="token punctuation">:</span>
-<span class="token key atrule">keywords</span><span class="token punctuation">:</span>
-<span class="token key atrule">author</span><span class="token punctuation">:</span>
-<span class="token key atrule">language</span><span class="token punctuation">:</span> EN
-<span class="token key atrule">timezone</span><span class="token punctuation">:</span> <span class="token string">''</span>
-
-<span class="token punctuation">...</span><span class="token punctuation">...</span>
-
-<span class="token comment"># URL</span>
-<span class="token comment"># 在原来的基础上增加一个“/homepage”</span>
-<span class="token key atrule">url</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//Immortalqx.github.io/homepage
-<span class="token key atrule">root</span><span class="token punctuation">:</span> /homepage
-
-<span class="token punctuation">...</span><span class="token punctuation">...</span>
-
-<span class="token comment"># Directory</span>
-<span class="token comment"># 新设置一个source文件夹，但是public文件夹要放到博客的public文件夹下(这样才能够在博客中打开Homepage)</span>
-<span class="token key atrule">source_dir</span><span class="token punctuation">:</span> source_homepage
-<span class="token key atrule">public_dir</span><span class="token punctuation">:</span> public/homepage
-
-<span class="token punctuation">...</span><span class="token punctuation">...</span>
-
-<span class="token comment"># Extensions</span>
-<span class="token comment">## Plugins: https://hexo.io/plugins/</span>
-<span class="token comment">## Themes: https://hexo.io/themes/</span>
-<span class="token comment"># 设置成需要使用的新主题</span>
-<span class="token key atrule">theme</span><span class="token punctuation">:</span> academia<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>修改academia主题的config，更改资源文件目录，icon、favicon等。这里就看个人喜好了，可以在这里新增一个跳转到博客的链接，也可以不写。</p>
-</li>
-<li><p>创建采用新主题的页面：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">hexo --config _config_homepage.yml new <span class="token string">"xxxxx"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>在新页面中增加内容。</p>
-</li>
-</ol>
-<h4 id="开始部署"><a href="#开始部署" class="headerlink" title="开始部署"></a>开始部署</h4><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">hexo cl
-hexo --config _config.yml g
-hexo --config _config_homepage.yml g
-hexo d<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>注意事项：</p>
-<ul>
-<li>由于本博客介绍的方法中，新主题渲染的页面在博客的public文件夹下，所以可以通过<code>hexo cl</code>来清除原来渲染的页面。</li>
-<li>通过<code>hexo --config</code>来指定config文件渲染博客和Homepage。</li>
-<li>由于所有渲染内容都在原博客的public文件夹下，所以这里对应的是同一个github仓库，只需要<code>hexo d</code>就能同时把两个主题渲染的页面推送过去。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>几何的隐式表示与显示表示</title>
     <url>/2022/08/17/geometry-notes-1/</url>
     <content><![CDATA[<h1 id="几何的隐式表示与显示表示"><a href="#几何的隐式表示与显示表示" class="headerlink" title="几何的隐式表示与显示表示"></a>几何的隐式表示与显示表示</h1><h2 id="Many-Ways-to-Represent-Geometry"><a href="#Many-Ways-to-Represent-Geometry" class="headerlink" title="Many Ways to Represent Geometry"></a>Many Ways to Represent Geometry</h2><p><strong>Implicit</strong> 隐式表示</p>
@@ -3714,6 +3628,91 @@ hexo d<span aria-hidden="true" class="line-numbers-rows"><span></span><span></sp
       <tags>
         <tag>隐式表示</tag>
         <tag>显示表示</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo中同时使用多个主题</title>
+    <url>/2022/04/17/hexo-multi-theme/</url>
+    <content><![CDATA[<h1 id="Hexo中同时使用多个主题"><a href="#Hexo中同时使用多个主题" class="headerlink" title="Hexo中同时使用多个主题"></a>Hexo中同时使用多个主题</h1><p>最近想在github上搭建一个Homepage，但是我的博客已经把immortalqx.github.io这个坑给占着了。</p>
+<p>一个很自然的想法就是让Hexo同时使用多个主题，一个主题给我的博客，一个主题给我的Homepage，这样就可以在保持博客现状的情况下搭建一个风格严谨的Homepage。</p>
+<h3 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h3><p>类似于<code>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</code>这样的命令，对hexo来说是默认按照<code>_config.yml</code>设定的参数来执行渲染的。而<code>_config.yml</code>文件中指定了网站的url、root、source_dir和public_dir等非常关键的数据。</p>
+<p>所以我们可以写两个config文件，比如<code>_config.yml</code>继续用于博客，然后新建一个<code>_config_homepage.yml</code>用于搭建Homepage。之后，我们可以通过<code>hexo g</code>可以默认使用<code>_config.yml</code>来搭建博客，再通过<code>hexo --config _config_homepage.yml g</code>来指定Homepage的config文件来搭建Homepage。</p>
+<p>在使用<code>hexo --config _config_homepage.yml</code>之前，我们还需要修改<code>_config_homepage.yml</code>文件中的参数，让Homepage依附于博客，即把Homepage的public_dir放到博客的public_dir下，这样就可以通过类似于immortalqx.github.io/homepage的形式来访问Homepage。</p>
+<h3 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h3><h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><ol>
+<li><p>更改博客采用的主题的config文件，将新增Homepage的标签（不同主题设置有区别，这里以<a href="https://github.com/blinkfox/hexo-theme-matery">matery</a>为例）。</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">menu</span><span class="token punctuation">:</span>
+  <span class="token key atrule">Index</span><span class="token punctuation">:</span>
+    <span class="token key atrule">url</span><span class="token punctuation">:</span> /
+    <span class="token key atrule">icon</span><span class="token punctuation">:</span> fas fa<span class="token punctuation">-</span>home
+<span class="token punctuation">...</span><span class="token punctuation">...</span>
+  <span class="token key atrule">Homepage</span><span class="token punctuation">:</span>
+    <span class="token key atrule">url</span><span class="token punctuation">:</span> /homepage
+    <span class="token key atrule">icon</span><span class="token punctuation">:</span> fas fa<span class="token punctuation">-</span>award<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>复制root目录下的<code>_config.yml</code>文件，重命名为<code>_config_homepage.yml</code>。</p>
+</li>
+<li><p>安装需要使用的新主题（以<a href="https://github.com/PhosphorW/hexo-theme-academia">academia</a>为例）。注意要记得安装新主题需要的一些依赖，防止无法进行渲染。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token builtin class-name">cd</span> your-hexo-directory
+<span class="token function">git</span> clone https://github.com/PhosphorW/hexo-theme-academia.git themes/academia<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
+<li><p>修改<code>_config_homepage.yml</code>文件，（下面仅列出需要修改的数据，根据使用的主题要修改的数据可能不一样）。</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment"># Site</span>
+<span class="token comment"># 部分选项置空，防止和采用的theme冲突</span>
+<span class="token key atrule">title</span><span class="token punctuation">:</span> Homepage
+<span class="token key atrule">subtitle</span><span class="token punctuation">:</span> <span class="token string">'Homepage'</span>
+<span class="token key atrule">description</span><span class="token punctuation">:</span>
+<span class="token key atrule">keywords</span><span class="token punctuation">:</span>
+<span class="token key atrule">author</span><span class="token punctuation">:</span>
+<span class="token key atrule">language</span><span class="token punctuation">:</span> EN
+<span class="token key atrule">timezone</span><span class="token punctuation">:</span> <span class="token string">''</span>
+
+<span class="token punctuation">...</span><span class="token punctuation">...</span>
+
+<span class="token comment"># URL</span>
+<span class="token comment"># 在原来的基础上增加一个“/homepage”</span>
+<span class="token key atrule">url</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//Immortalqx.github.io/homepage
+<span class="token key atrule">root</span><span class="token punctuation">:</span> /homepage
+
+<span class="token punctuation">...</span><span class="token punctuation">...</span>
+
+<span class="token comment"># Directory</span>
+<span class="token comment"># 新设置一个source文件夹，但是public文件夹要放到博客的public文件夹下(这样才能够在博客中打开Homepage)</span>
+<span class="token key atrule">source_dir</span><span class="token punctuation">:</span> source_homepage
+<span class="token key atrule">public_dir</span><span class="token punctuation">:</span> public/homepage
+
+<span class="token punctuation">...</span><span class="token punctuation">...</span>
+
+<span class="token comment"># Extensions</span>
+<span class="token comment">## Plugins: https://hexo.io/plugins/</span>
+<span class="token comment">## Themes: https://hexo.io/themes/</span>
+<span class="token comment"># 设置成需要使用的新主题</span>
+<span class="token key atrule">theme</span><span class="token punctuation">:</span> academia<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>修改academia主题的config，更改资源文件目录，icon、favicon等。这里就看个人喜好了，可以在这里新增一个跳转到博客的链接，也可以不写。</p>
+</li>
+<li><p>创建采用新主题的页面：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">hexo --config _config_homepage.yml new <span class="token string">"xxxxx"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>在新页面中增加内容。</p>
+</li>
+</ol>
+<h4 id="开始部署"><a href="#开始部署" class="headerlink" title="开始部署"></a>开始部署</h4><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">hexo cl
+hexo --config _config.yml g
+hexo --config _config_homepage.yml g
+hexo d<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>注意事项：</p>
+<ul>
+<li>由于本博客介绍的方法中，新主题渲染的页面在博客的public文件夹下，所以可以通过<code>hexo cl</code>来清除原来渲染的页面。</li>
+<li>通过<code>hexo --config</code>来指定config文件渲染博客和Homepage。</li>
+<li>由于所有渲染内容都在原博客的public文件夹下，所以这里对应的是同一个github仓库，只需要<code>hexo d</code>就能同时把两个主题渲染的页面推送过去。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -5293,8 +5292,8 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
         <category>NeRF</category>
       </categories>
       <tags>
-        <tag>视觉SLAM</tag>
         <tag>NeRF</tag>
+        <tag>视觉SLAM</tag>
       </tags>
   </entry>
   <entry>
@@ -5692,8 +5691,8 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
         <category>slam</category>
       </categories>
       <tags>
-        <tag>视觉SLAM</tag>
         <tag>NeRF</tag>
+        <tag>视觉SLAM</tag>
       </tags>
   </entry>
   <entry>
@@ -5875,8 +5874,8 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
         <category>slam</category>
       </categories>
       <tags>
-        <tag>视觉SLAM</tag>
         <tag>NeRF</tag>
+        <tag>视觉SLAM</tag>
       </tags>
   </entry>
   <entry>
@@ -5896,8 +5895,8 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
         <category>slam</category>
       </categories>
       <tags>
-        <tag>视觉SLAM</tag>
         <tag>NeRF</tag>
+        <tag>视觉SLAM</tag>
       </tags>
   </entry>
   <entry>
@@ -6118,8 +6117,8 @@ pointsf <span class="token operator">=</span> pts<span class="token punctuation"
         <category>slam</category>
       </categories>
       <tags>
-        <tag>视觉SLAM</tag>
         <tag>NeRF</tag>
+        <tag>视觉SLAM</tag>
       </tags>
   </entry>
   <entry>
@@ -6158,8 +6157,8 @@ pointsf <span class="token operator">=</span> pts<span class="token punctuation"
         <category>slam</category>
       </categories>
       <tags>
-        <tag>视觉SLAM</tag>
         <tag>NeRF</tag>
+        <tag>视觉SLAM</tag>
       </tags>
   </entry>
   <entry>
@@ -6309,8 +6308,8 @@ pointsf <span class="token operator">=</span> pts<span class="token punctuation"
         <category>slam</category>
       </categories>
       <tags>
-        <tag>视觉SLAM</tag>
         <tag>NeRF</tag>
+        <tag>视觉SLAM</tag>
       </tags>
   </entry>
   <entry>
@@ -7293,12 +7292,11 @@ seek<span class="token double-colon punctuation">::</span><span class="token fun
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这篇文章应该算看懂了。他就做了三个东西：<br>1、【Gaussian Volume Mask】，就是learn-able mask，用可以学习的掩膜去mask掉冗余的部分高斯函数<br>2、【Geometry Codebook】，就是应用了R-VQ来归并那些形状、旋转很相似的高斯<br>3、【Compact View-dependent Color】，就是不使用3DGS的球谐去表示视图相关的颜色了，而是用了类似instant-ngp的方法去表示视图相关的颜色</p>
 ]]></content>
       <categories>
-        <category>slam</category>
+        <category>NeRF&amp;3DGS</category>
       </categories>
       <tags>
         <tag>隐式表示</tag>
         <tag>3D Gaussian Splatting</tag>
-        <tag>视觉SLAM</tag>
       </tags>
   </entry>
   <entry>
@@ -12315,8 +12313,8 @@ SudokuRNN time = 337.7354459999997
         <category>slam</category>
       </categories>
       <tags>
-        <tag>视觉SLAM</tag>
         <tag>NeRF</tag>
+        <tag>视觉SLAM</tag>
       </tags>
   </entry>
   <entry>
