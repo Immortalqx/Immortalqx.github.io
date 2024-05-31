@@ -370,20 +370,20 @@
                 </a>
                 
                 
-                <a href="/categories/%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" title="编程基础: 16">
+                <a href="/categories/NeRF-3DGS/" title="NeRF&3DGS: 12">
                     <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F5EEF8;">编程基础
-                        <span class="tag-length">16</span>
+                             chip-active "
+                            style="background-color: #F5EEF8;">NeRF&3DGS
+                        <span class="tag-length">12</span>
                     </span>
                 </a>
                 
                 
-                <a href="/categories/NeRF-3DGS/" title="NeRF&3DGS: 2">
+                <a href="/categories/%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" title="编程基础: 16">
                     <span class="chip center-align waves-effect waves-light
-                             chip-active "
-                            style="background-color: #D5F5E3;">NeRF&3DGS
-                        <span class="tag-length">2</span>
+                             chip-default "
+                            style="background-color: #D5F5E3;">编程基础
+                        <span class="tag-length">16</span>
                     </span>
                 </a>
                 
@@ -415,15 +415,6 @@
                 </a>
                 
                 
-                <a href="/categories/NeRF/" title="NeRF: 8">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #82E0AA;">NeRF
-                        <span class="tag-length">8</span>
-                    </span>
-                </a>
-                
-                
             </div>
         </div>
     </div>
@@ -434,6 +425,111 @@
 
     <article id="articles" class="container articles">
         <div class="row tags-posts">
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2024/05/31/3dgs-notes-1/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Gaussian Splatting中球谐的使用">
+                            
+                            <span class="card-title">Gaussian Splatting中球谐的使用</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                Gaussian Splatting中球谐的使用定义在class GaussianModel中，球谐是通过下面的方式定义的：
+self._features_dc = torch.empty(0)  # 第一个球谐系数，用于表示基础颜色
+se
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-05-31
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/NeRF-3DGS/" class="post-category">
+                                    NeRF&3DGS
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                            <span class="chip bg-color">隐式表示</span>
+                        </a>
+                        
+                        <a href="/tags/3D-Gaussian-Splatting/">
+                            <span class="chip bg-color">3D Gaussian Splatting</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2024/05/30/3dgs-notes-0/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/70.jpg" class="responsive-img" alt="Colmap和Gaussian Splatting保存出来的ply文件格式解析">
+                            
+                            <span class="card-title">Colmap和Gaussian Splatting保存出来的ply文件格式解析</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                Colmap和Gaussian Splatting保存出来的ply文件格式解析Colmap打印Colmap稀疏重建的点云，前13行是这样的：
+ply
+format binary_little_endian 1.0
+element verte
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-05-30
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/NeRF-3DGS/" class="post-category">
+                                    NeRF&3DGS
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                            <span class="chip bg-color">隐式表示</span>
+                        </a>
+                        
+                        <a href="/tags/3D-Gaussian-Splatting/">
+                            <span class="chip bg-color">3D Gaussian Splatting</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
@@ -541,6 +637,417 @@ learn-able mask，用可以学习的掩膜去mask掉冗余的部分高斯函数
                 </div>
             </div>
             
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2023/12/21/paper-reading-3d-gaussian-splatting/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/25.jpg" class="responsive-img" alt="3D Gaussian Splatting学习笔记">
+                            
+                            <span class="card-title">3D Gaussian Splatting学习笔记</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                3D Gaussian Splatting学习笔记视频笔记：Point-based NeRF
+【【综述】基于点的神经辐射场，用点云实现真实的新视角渲染】 https://www.bilibili.com/video/BV1LX4y1H7a1
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-12-21
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/NeRF-3DGS/" class="post-category">
+                                    NeRF&3DGS
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                            <span class="chip bg-color">隐式表示</span>
+                        </a>
+                        
+                        <a href="/tags/3D-Gaussian-Splatting/">
+                            <span class="chip bg-color">3D Gaussian Splatting</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2023/07/15/meeting-5/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/38.jpg" class="responsive-img" alt="Neural Implicit Representations in SLAM">
+                            
+                            <span class="card-title">Neural Implicit Representations in SLAM</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                Neural Implicit Representations in SLAM
+神经隐式表征在SLAM中的应用探索
+讲座链接：https://www.shenlanxueyuan.com/open/course/194
+
+背景和基础知识介绍
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-07-15
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/NeRF-3DGS/" class="post-category">
+                                    NeRF&3DGS
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/NeRF/">
+                            <span class="chip bg-color">NeRF</span>
+                        </a>
+                        
+                        <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                            <span class="chip bg-color">视觉SLAM</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2023/04/25/3d-reconstruction-1/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="基于神经网络的三维重建">
+                            
+                            <span class="card-title">基于神经网络的三维重建</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                基于神经网络的三维重建1 对NeRF的思考NeRF的核心是场景的隐式表示，给定一组影像，网络去学习这个三维场景，然后当指定任意一个位姿的时候，就输出它对应的图片。这其实和传统的SfM的流程是一样的，没什么新鲜的。唯一不同的是SfM构建的是场
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-04-25
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/NeRF-3DGS/" class="post-category">
+                                    NeRF&3DGS
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/NeRF/">
+                            <span class="chip bg-color">NeRF</span>
+                        </a>
+                        
+                        <a href="/tags/%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA/">
+                            <span class="chip bg-color">三维重建</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2022/08/28/nerf-notes-5/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/44.jpg" class="responsive-img" alt="NeRF学习笔记（五）：神经隐式SLAM方法">
+                            
+                            <span class="card-title">NeRF学习笔记（五）：神经隐式SLAM方法</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                NeRF学习笔记（五）：神经隐式SLAM方法iMAP: Implicit Mapping and Positioning in Real-TimeMotivationA multilayer perceptron (MLP) can ser
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-28
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/NeRF-3DGS/" class="post-category">
+                                    NeRF&3DGS
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                            <span class="chip bg-color">隐式表示</span>
+                        </a>
+                        
+                        <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                            <span class="chip bg-color">视觉SLAM</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2022/08/24/nerf-notes-4/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="NeRF学习笔记（四）：基于NeRF的三维场景重建和理解">
+                            
+                            <span class="card-title">NeRF学习笔记（四）：基于NeRF的三维场景重建和理解</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                NeRF学习笔记（四）：基于NeRF的三维场景重建和理解NeRF的背景和基础原理场景表征 Scene Representations
+Classical Geometric Scene Representation
+Neural Scene
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-24
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/NeRF-3DGS/" class="post-category">
+                                    NeRF&3DGS
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/NeRF/">
+                            <span class="chip bg-color">NeRF</span>
+                        </a>
+                        
+                        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+                            <span class="chip bg-color">深度学习</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2022/08/22/nerf-notes-3/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="NeRF学习笔记（三）：基于NeRF的三维内容生成">
+                            
+                            <span class="card-title">NeRF学习笔记（三）：基于NeRF的三维内容生成</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                NeRF学习笔记（三）：基于NeRF的三维内容生成Why NeRF SucceededWhy 3D content creation from imagesWhat are 3D contents3D内容是形状和外观模型的组合，可以从不同的
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-22
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/NeRF-3DGS/" class="post-category">
+                                    NeRF&3DGS
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/NeRF/">
+                            <span class="chip bg-color">NeRF</span>
+                        </a>
+                        
+                        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+                            <span class="chip bg-color">深度学习</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2022/08/21/nerf-notes-2/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/62.jpg" class="responsive-img" alt="NeRF学习笔记（二）：论文阅读与思考">
+                            
+                            <span class="card-title">NeRF学习笔记（二）：论文阅读与思考</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                NeRF学习笔记（二）：论文阅读与思考AbstractQ：如何理解稀疏的输入视图集
+A： a sparse set of input views 稀疏的输入视图集。也就是输入视图并不是连续的，可能就是在若干个方向或者角度拍几张照片，就能合成
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-21
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/NeRF-3DGS/" class="post-category">
+                                    NeRF&3DGS
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/NeRF/">
+                            <span class="chip bg-color">NeRF</span>
+                        </a>
+                        
+                        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+                            <span class="chip bg-color">深度学习</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2022/08/19/nerf-notes-1/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="NeRF学习笔记（一）：论文翻译">
+                            
+                            <span class="card-title">NeRF学习笔记（一）：论文翻译</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                NeRF学习笔记（一）：论文翻译
+NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis
+
+Abstract我们提出了一种方法，通过使用稀疏的输入视图集来
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-19
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/NeRF-3DGS/" class="post-category">
+                                    NeRF&3DGS
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/NeRF/">
+                            <span class="chip bg-color">NeRF</span>
+                        </a>
+                        
+                        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+                            <span class="chip bg-color">深度学习</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
         </div>
     </article>
 </main>
@@ -563,7 +1070,7 @@ learn-able mask，用可以学习的掩膜去mask掉冗余的部分高斯函数
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">198.1k</span>&nbsp;字
+                class="white-color">200.2k</span>&nbsp;字
             
             
             
