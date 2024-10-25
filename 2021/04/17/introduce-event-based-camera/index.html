@@ -1,0 +1,1415 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="事件相机介绍, 所念皆星河">
+    <meta name="description" content="Event-based Camera
+本文将网上的相关资料整理到了一起，方便阅读
+
+前言
+事件相机英文名为：Event-based Camera，或简称为Event Camera，缩写为EB。有时也称作DVS（Dynamic Vision ">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>事件相机介绍 | 所念皆星河</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">所念皆星河</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/homepage" class="waves-effect waves-light">
+      
+      <i class="fas fa-award" style="zoom: 0.6;"></i>
+      
+      <span>Homepage</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">所念皆星河</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/homepage" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-award"></i>
+			
+			Homepage
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/Immortalqx" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Follow me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/Immortalqx" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Follow me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">事件相机介绍</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA/">
+                                <span class="chip bg-color">事件相机</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%85%B6%E4%BB%96/" class="post-category">
+                                其他
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-04-17
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.7k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    9 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="Event-based-Camera"><a href="#Event-based-Camera" class="headerlink" title="Event-based Camera"></a>Event-based Camera</h1><blockquote>
+<p>本文将网上的相关资料整理到了一起，方便阅读</p>
+</blockquote>
+<p><strong>前言</strong></p>
+<p>事件相机英文名为：Event-based Camera，或简称为Event Camera，缩写为EB。有时也称作DVS（Dynamic Vision Sensor “动态视觉传感器”）、DAVIS（Dynamic and Active-Pixel Vision Sensor）等。 </p>
+<p>不同于传统相机拍摄一幅完整的图像，事件相机拍摄的是“事件”，可以简单理解为“像素亮度的变化”，即事件相机输出的是像素亮度的变化情况。相比于以固定的帧率采集图像，这种相机通多测量每个像素的亮度变化来输出异步信号（包括事件，位置和亮度变化的符号）。</p>
+<p>事件相机与传统相机相比具有很多的优点: 高的动态测量范围（140dB vs. 60dB）， 高时间分辨率， 低功耗，不受运动模糊的影响。在高速、高动态范围的场景下有着广阔的应用空间。</p>
+<h2 id="零、传统相机的缺点"><a href="#零、传统相机的缺点" class="headerlink" title="零、传统相机的缺点"></a>零、传统相机的缺点</h2><p>传统相机，无论是CMOS传感器，还是CCD传感器，亦或是RGBD相机，都有一个参数：帧率。它们是以恒定的频率拍摄获取图像。这样，即使帧率能够达到1KHz，那也具有1ms的延时。所以传统相机存在一定的延迟问题。</p>
+<p>除此之外，传统相机需要通过一定时间的曝光，使感光器件积累一定的光子，那么在曝光时间之内如果物体在高速运动，则会产生模糊，这也是传统相机的一个问题。</p>
+<p>另外，传统相机的动态范围较低，具体表现为在光线极差或者亮度极高时，相机获取的信息有限。</p>
+<p>以上三点，是由于相机自身硬件的限制，即使高性能相机能够一定程度减小这些问题，但由于相机原理，这些问题无法避免。这些问题极大地限制了一些应用场景。而事件相机完全不存在这些问题。 </p>
+<h2 id="一、事件相机的介绍"><a href="#一、事件相机的介绍" class="headerlink" title="一、事件相机的介绍"></a>一、事件相机的介绍</h2><p>事件相机具有优势的典型场景包括实时交互系统，比如机器人与可穿戴设备，因为这些场景下的光照条件不可控，并且对于延时以及功率敏感。事件相机可以用于物体跟踪、识别以及手势控制，也可以应用在三维重建、光流估计、图像HDR和SLAM中，随着事件相机的发展，图像去模糊以及恒星跟踪也成为新的应用范围。</p>
+<h2 id="二、事件相机的原理"><a href="#二、事件相机的原理" class="headerlink" title="二、事件相机的原理"></a>二、事件相机的原理</h2><p><strong>基本原理</strong></p>
+<p>事件相机的最基本的原理，即：当某个像素的亮度变化累计达到一定阈值后，输出一个事件。这里强调几个概念：</p>
+<p>a） 亮度变化：说明事件相机的输出和变化有关，而与亮度的绝对值没有关系；</p>
+<p>b） 阈值：当亮度变化达到一定程度时，将输出数据，这个阈值是相机的固有参数。</p>
+<p>下面重点解释什么是一个“事件”。事件具有三要素：时间戳、像素坐标与极性。一个事件表达的是“在什么时间，哪个像素点，发生了亮度的增加或减小”。</p>
+<p>当场景中由物体运动或光照改变造成大量像素变化时，会产生一系列的事件，这些事件以事件流（Events stream）方式输出。事件流的数据量远小于传统相机传输的数据，且事件流没有最小时间单位，所以不像传统相机定时输出数据，具有低延迟特性。下面的动图揭示了事件相机与传统相机的成像的不同。</p>
+<p><img src="/images/Event-Camera/001.gif"></p>
+<p><em>（动图：左侧为有一个黑色斑块的圆盘，匀速旋转时，右上方的传统相机会定时拍摄完整的图像，下方事件相机的输出会仅输出变化，即黑斑的运动。当圆盘不转时，传统相机依旧傻傻的拍摄图像，而事件相机不会产生任何输出）</em></p>
+<p>由于事件相机的成像原理，我们可以发现只要亮度一有变化就会输出，且仅输出变化的数据占用了很小的带宽，同时由于事件相机更擅长捕捉亮度变化，所以在较暗和强光场景下也能输出有效数据。事件相机具有低延迟（&lt;𝟏𝝁𝒔）、高动态范围（𝟏𝟒𝟎𝒅𝑩）、极低功耗（𝟏𝒎𝑾）等特性。</p>
+<p><strong>深入了解</strong></p>
+<p>事件相机是对每一个像素下面有一个计算电路，左边的光电转换电路将光强转换为电压值，中间是一个差分电路，结果达到触发阈值之后会触发信号。信号从片上到USB是采用一种AER（Address Event Representation）编码的方式，国内有人将这种编码用于二值图像的压缩，具体的结果就是USB传输过来的数据不是前文所说的$(x, y, polarity, timestamp)$的形式，而是需要解码之后才能得到，常见的解码程序有:</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/inivation/libcaer">https://github.com/inivation/libcaer</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/SensorsINI/jaer">https://github.com/SensorsINI/jaer</a></p>
+</blockquote>
+<p>这些开源代码往往已经包含在了事件相机厂商提供的SDK中了。</p>
+<p><img src="/images/Event-Camera/002.jpg" alt="简化事件相机的硬件电路"></p>
+<p>虽然事件相机很好用，但有的时候还是有人想要使用绝对的灰度值。ATIS就实现了这样的一种相机，它通过触发事件后将电容器设置为高电压，然后在用另一个二极管从电容器中放电，光强越大放电越快，ATIS对放电事件进行编码得到强度值。但这样就导致在较暗的环境下放电速度不够快会导致新的事件打断放电过程（算法见<a target="_blank" rel="noopener" href="https://github.com/SensorsINI/jaer/blob/master/src/eu/seebetter/ini/chips/davis/DavisAutoShooter.java">jaer</a>）。DAVIS是另一种使用广泛的将DVS（Dynamic Vision Sensor）和APS（Active Pixel Sensor）结合在一起的传感器，它将二者的光电二极管进行共享，不同在加装了一个读出电路，因此可以在输出事件的同时输出强度帧（来自APS）。</p>
+<p>事件相机的理想模型很简单：<br>$$<br>\Delta L(x_k,t_k)=p_kC<br>$$<br>等式左边是对数灰度的变化，右边是输出的极性以及阈值，一般而言$C$会设置在 $15%-50%$。但是实际中事件相机会受到噪声以及像素错配的影响，所以一般会在该模型加上高斯随机噪声，这一点在事件相机的仿真器中有体现：</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://rpg.ifi.uzh.ch/esim.html">http://rpg.ifi.uzh.ch/esim.html</a></p>
+</blockquote>
+<p>跟普通相机一样，事件相机也有需要一个<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Fixed-pattern_noise">FPN</a>（Fixed Pixel Noise），即相机灰度的初始bias，对于事件相机而言，bias的定义就是指阈值 $C$ ，一般而言不同像素之间的 $C$ 可能相差 $2.5%-4%$，现在不存在事件相机的FPN标定计算方案，这是一个能做的研究方向。</p>
+<p>BSI（back-side illumination）技术是广泛应用于智能手机相机上的增大填充系数的技术，目前事件相机上的光电芯片的FSI方法会阻碍光线到达像素，意味着必须增大像素面积才能获取足够的光强，使用BSI技术可以使得相机模块更薄、更小，但由于这项技术的难度与花费，现在只有少数的验证用的事件相机。</p>
+<p>下面是一些现有的商业化的事件相机比较，最后一列是来自中国上海的芯仑科技的事件相机，最新的Celex-V相机是世界上第一台百万级像素的事件相机。（但是CeleX-IV的填充系数只有9per…）</p>
+<p><img src="/images/Event-Camera/003.jpg" alt="现有的商业化的事件相机比较"></p>
+<h2 id="三、事件相机的处理范式"><a href="#三、事件相机的处理范式" class="headerlink" title="三、事件相机的处理范式"></a>三、事件相机的处理范式</h2><p>事件相机的输出是事件流，主要有三种常见的处理范式，分别是：</p>
+<h3 id="A-Event-by-Event"><a href="#A-Event-by-Event" class="headerlink" title="A. Event-by-Event"></a>A. Event-by-Event</h3><p>Event-by-Event的方法常常用于许多任务中，如SLAM里面的特征追踪、位姿追踪和图像重建。一类的方法是依赖于模型的（模型可以从其它类型的传感器数据中获得，如获得一个半稠密的深度图），然后再通过处理一个一个的事件来更新系统的状态。另一类方法是不依赖于模型的（数据驱动即机器学习）。</p>
+<h3 id="B-Groups-of-Events"><a href="#B-Groups-of-Events" class="headerlink" title="B. Groups of Events"></a>B. Groups of Events</h3><p>由于每个事件的携带的信息很少，并且容易受到噪声的影响，因此将几个事件一起处理，能够为需要解决的问题产生足够的信噪比。基于模型的方法往往是将事件转化为frame，然后运用传统的视觉方法来解决问题。而另外一种就是基于数据驱动的事件组方法，其已经用在了分类、光流估计、深度估计等任务中。经典的CNN网络使用张量作为输入，因此事件组必须转为类似的形式。现有的一些转换方法有：事件的像素直方图、最近时间戳表面（SAE）、插值体素网格。在网络架构方面，这些任务往往都会使用流形的Encoder-Decoder架构，具体网络中的其它细节可以在引文中查找对应的引用。</p>
+<p><img src="/images/Event-Camera/004.jpg" alt="流形的Encoder-Decoder架构"></p>
+<h3 id="C-SNN"><a href="#C-SNN" class="headerlink" title="C. SNN"></a>C. SNN</h3><p>事件相机是受到生物学启发的传感器，SNN也是一种受到生物学启发的网络。SNN 使用脉冲（发生在时间点上的离散事件）进行连接。一个神经元从视觉空间的一个小区域（一个感受野）接受输入事件，在状态超过阈值时产生输出事件。神经元以分层的方式连接，形成一个网络，事件从输入到SNN的第一层一直往后传播。所以SNN跟事件相机搭配在一起就跟珍珠配奶茶一样自然。</p>
+<h2 id="四、事件相机的发展与研究现状"><a href="#四、事件相机的发展与研究现状" class="headerlink" title="四、事件相机的发展与研究现状"></a>四、事件相机的发展与研究现状</h2><p>事件相机诞生于1990年，那个时间许多研究人员探讨动物感知环境的方式，发现对变化更为敏感，所以设计出了实验室用的事件相机。</p>
+<p>2008年，诞生了第一款商用的事件相机。这么看来，事件相机从商用到现在也刚刚过了十来年。目前，许多商业公司致力于事件相机的发展，有韩国Samsung、法国prophesee、瑞士iniVation、中国CelePixel（芯仑科技）等。</p>
+<p>在学术上，苏黎世联邦理工学院（ETH）的机器人与感知团队对事件相机有着系统深入的研究，其他高校例如帝国理工、慕尼黑大学等也开始相关研究。</p>
+<p>事件相机，目前在在特征提取与跟踪、光流、三维重建、SLAM、模式识别、控制等方向正在不断进行着研究，具有广泛的应用前景。</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Immortalqx</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://Immortalqx.github.io/2021/04/17/introduce-event-based-camera/">http://Immortalqx.github.io/2021/04/17/introduce-event-based-camera/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Immortalqx</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA/">
+                                    <span class="chip bg-color">事件相机</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban,google,linkedin,twitter,facebook" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'bMq5alM79AoOmPl5Q65aeVqI-gzGzoHsz',
+        appKey: 'O0Q21Re9hVoBb41y6euVKCQq',
+        serverURLs: '',
+        notify: '' === 'true',
+        verify: '' === 'true',
+        visitor: '' === 'true',
+        avatar: 'retro',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '填上邮箱可以收到我的回复呦ฅ^ω^ฅ'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2021/05/16/2d-collision-detection/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="2D碰撞检测">
+                        
+                        <span class="card-title">2D碰撞检测</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-05-16
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%85%B6%E4%BB%96/" class="post-category">
+                                    其他
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B/">
+                        <span class="chip bg-color">碰撞检测</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/04/06/introduce-qt/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Qt速成指南">
+                        
+                        <span class="card-title">Qt速成指南</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-06
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%85%B6%E4%BB%96/" class="post-category">
+                                    其他
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Qt/">
+                        <span class="chip bg-color">Qt</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2024</span>
+            
+            <a href="/about" target="_blank">Immortalqx</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">215.7k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2021";
+                    var startMonth = "2";
+                    var startDate = "1";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Immortalqx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:immortalqx@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1727854434" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1727854434" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+    
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <script src="/js/FunnyTitle.js"></script>
+    <!--script src="/live2d/autoload.js"></script-->
+</body>
+
+</html>
