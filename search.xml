@@ -7355,6 +7355,291 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
       </tags>
   </entry>
   <entry>
+    <title>机器学习笔记（三）：多层神经网络</title>
+    <url>/2022/01/09/machine-learning-3/</url>
+    <content><![CDATA[<h1 id="机器学习笔记（三）：多层神经网络"><a href="#机器学习笔记（三）：多层神经网络" class="headerlink" title="机器学习笔记（三）：多层神经网络"></a>机器学习笔记（三）：多层神经网络</h1><p>基于生物神经元模型可得到多层感知器（Multi-layer Perceptron, MLP)的基本结构，最典型的MLP包括包括三层：输入层(Input Layer)、隐层(Hidden Layer)和输出层(Output Layer)，MLP神经网络不同层之间是全连接的（全连接的意思就是：上一层的任何一个神经元与下一层的所有神经元都有连接）。</p>
+<p><img src="/images/neural-network/mlp_theory.gif"></p>
+<h2 id="1-神经元"><a href="#1-神经元" class="headerlink" title="1. 神经元"></a>1. 神经元</h2><p>神经元和感知器本质上是一样的，感知器的激活函数是阶跃函数；而神经元的激活函数往往选择为sigmoid函数或tanh函数。如下图所示：</p>
+<p><img src="/images/neural-network/neuron.gif"></p>
+<p>计算一个神经元的输出的方法和计算一个感知器的输出是一样的。假设神经元的输入是向量$\vec{x}$，权重向量是$\vec{w}$(偏置项是$w_0$)，激活函数是sigmoid函数，则其输出$y$：<br>$$<br>y = sigmoid(\vec{w}^T \cdot \vec{x})<br>$$</p>
+<p>sigmoid函数的定义如下：<br>$$<br>sigmoid(x) = \frac{1}{1+e^{-x}}<br>$$<br>将其带入前面的式子，得到<br>$$<br>y = \frac{1}{1+e^{-\vec{w}^T \cdot \vec{x}}}<br>$$</p>
+<p>sigmoid函数是一个非线性函数，值域是(0,1)。函数图像如下图所示</p>
+<p><img src="/images/neural-network/sigmod.jpg"></p>
+<p>sigmoid函数的导数是：<br>$$<br>\begin{eqnarray}<br>y &amp; = &amp; sigmod(x) \tag{1} \<br>y’ &amp; = &amp; y(1-y)<br>\end{eqnarray}<br>$$<br>可以看到，sigmoid函数的导数可以用sigmoid函数自身来表示。这样，一旦计算出sigmoid函数的值，计算它的导数的值就非常方便。</p>
+<h2 id="2-神经网络的结构"><a href="#2-神经网络的结构" class="headerlink" title="2. 神经网络的结构"></a>2. 神经网络的结构</h2><p><img src="/images/neural-network/nn1.jpeg"></p>
+<p>神经网络就是按照一定规则连接起来的多个神经元。上图展示了一个全连接(Full Connected, FC)神经网络，通过观察上面的图，可以发现它的规则包括：</p>
+<ul>
+<li>神经元按照层来布局<ul>
+<li>最左边的层叫做输入层，负责接收输入数据；</li>
+<li>最右边的层叫输出层，可以从这层获取神经网络输出数据;</li>
+<li>输入层和输出层之间的层叫做隐藏层，因为它们对于外部来说是不可见的。</li>
+</ul>
+</li>
+<li>同一层的神经元之间没有连接</li>
+<li>第N层的每个神经元和第N-1层的所有神经元相连(这就是full connected的含义)，第N-1层神经元的输出就是第N层神经元的输入</li>
+<li>每个连接都有一个权值</li>
+</ul>
+<p>由此可知，神经网络主要有三个基本要素：权重、偏置和激活函数</p>
+<ul>
+<li>权重：神经元之间的连接强度由权重控制，权重的大小表示可能性的大小</li>
+<li>偏置：偏置的设置是为了正确分类样本，是模型中一个重要的参数，即保证通过输入算出的输出值不能随便激活。</li>
+<li>激活函数：起非线性映射的作用，其可将神经元的输出幅度限制在一定范围内，一般限制在（-1~1）或（0~1）之间。最常用的激活函数是Sigmoid函数，可将（-∞，+∞）的数映射到（0~1）的范围内。</li>
+</ul>
+<p>上面这些规则定义了全连接神经网络的结构。事实上还存在很多其它结构的神经网络，比如卷积神经网络(CNN)、循环神经网络(RNN)，他们都具有不同的连接规则。</p>
+<h2 id="3-计算神经网络的输出"><a href="#3-计算神经网络的输出" class="headerlink" title="3. 计算神经网络的输出"></a>3. 计算神经网络的输出</h2><p>神经网络实际上就是一个输入向量$\vec{x}$到输出向量$\vec{y}$的函数，即：</p>
+<p>$$<br>\vec{y} = f_{network}(\vec{x})<br>$$<br>根据输入计算神经网络的输出</p>
+<ul>
+<li>首先将输入向量$\vec{x}$的每个元素的值$x_i$赋给神经网络的输入层的对应神经元</li>
+<li>然后根据式（1）依次向前计算每一层的每个神经元的值，直到最后一层输出层的所有神经元的值计算完毕</li>
+<li>最后，将输出层每个神经元的值串在一起就得到了输出向量$\vec{y}$。</li>
+</ul>
+<p>接下来举一个例子来说明这个过程，我们先给神经网络的每个单元写上编号。</p>
+<p><img src="/images/neural-network/nn2.png"></p>
+<ul>
+<li>输入层有三个节点，我们将其依次编号为1、2、3；</li>
+<li>隐藏层的4个节点，编号依次为4、5、6、7；</li>
+<li>最后输出层的两个节点编号为8、9。</li>
+</ul>
+<p>因为这个神经网络是全连接网络，所以可以看到每个节点都和上一层的所有节点有连接。比如，隐藏层的节点4，它和输入层的三个节点1、2、3之间都有连接，其连接上的权重分别为$w_{41}$,$w_{42}$,$w_{43}$。那么，怎样计算节点4的输出值$a_4$呢？</p>
+<p>为了计算节点4的输出值，必须先得到其所有上游节点（也就是节点1、2、3）的输出值。节点1、2、3是输入层的节点，所以，他们的输出值就是输入向量$\vec{x}$本身。按照上图画出的对应关系，可以看到节点1、2、3的输出值分别是$x_1$,$x_2$,$x_3$。要求输入向量的维度和输入层神经元个数相同，而输入向量的某个元素对应到哪个输入节点是可以自由决定的。</p>
+<p>一旦有了节点1、2、3的输出值，就可以根据式1计算节点4的输出值$a_4$：</p>
+<p><img src="/images/neural-network/eqn_3_4.png"></p>
+<p>上式的$w_{4b}$是节点4的偏置项，图中没有画出来。而$w_{41}$,$w_{42}$,$w_{43}$分别为节点1、2、3到节点4连接的权重，在给权重$w_{ji}$编号时，目标节点的编号$j$放在前面，把源节点的编号$i$放在后面。</p>
+<p>同样，可以继续计算出节点5、6、7的输出值$a_5$,$a_6$,$a_7$。这样，隐藏层的4个节点的输出值就计算完成了，就可以接着计算输出层的节点8的输出值$y_1$：</p>
+<p><img src="/images/neural-network/eqn_5_6.png"></p>
+<p>同理，我们还可以计算出$y_2$的值。这样输出层所有节点的输出值计算完毕，就得到了在输入向量$\vec{x} = (x_1, x_2, x_3)^T$时，神经网络的输出向量$\vec{y} = (y_1, y_2)^T$。可以看出：输出向量的维度和输出层神经元个数相同。</p>
+<h2 id="4-神经网络的矩阵表示"><a href="#4-神经网络的矩阵表示" class="headerlink" title="4. 神经网络的矩阵表示"></a>4. 神经网络的矩阵表示</h2><p>神经网络的计算如果用矩阵来表示会很方便，此外可以用优化加速算法提高计算速度。</p>
+<p>隐藏层4个节点的计算依次排列出来：</p>
+<p><img src="/images/neural-network/eqn_hidden_units.png"></p>
+<p>接着，定义网络的输入向量$\vec{x}$和隐藏层每个节点的权重向量$\vec{w}$。令</p>
+<p><img src="/images/neural-network/eqn_7_12.png"></p>
+<p>代入到前面的一组式子，得到：</p>
+<p><img src="/images/neural-network/eqn_13_16.png"></p>
+<p>现在，把上述计算$a_4$, $a_5$,$a_6$,$a_7$的四个式子写到一个矩阵里面，每个式子作为矩阵的一行，就可以利用矩阵来表示它们的计算了。令</p>
+<p><img src="/images/neural-network/eqn_matrix1.png"></p>
+<p>带入前面的一组式子，得到</p>
+<p><img src="/images/neural-network/formular_2.png"></p>
+<p>在（式2）中，</p>
+<ul>
+<li>$f$是激活函数，在本例中是$sigmod$函数；</li>
+<li>$W$是某一层的权重矩阵；</li>
+<li>$\vec{x}$是某层的输入向量；</li>
+<li>$\vec{a}$是某层的输出向量。</li>
+</ul>
+<p>（式2）说明神经网络的每一层的作用实际上就是先将输入向量左乘一个数组进行线性变换，得到一个新的向量，然后再对这个向量逐元素应用一个激活函数。</p>
+<p>每一层的算法都是一样的。比如，对于包含一个输入层，一个输出层和三个隐藏层的神经网络，我们假设其权重矩阵分别为$W_1$,$W_2$,$W_3$,$W_4$，每个隐藏层的输出分别是$\vec{a}_1$,$\vec{a}_2$,$\vec{a}_3$，神经网络的输入为$\vec{x}$，神经网络的输出为$\vec{y}$，如下图所示：</p>
+<p><img src="/images/neural-network/nn_parameters_demo.png"></p>
+<p>则每一层的输出向量的计算可以表示为：</p>
+<p><img src="/images/neural-network/eqn_17_20.png"></p>
+<p>这就是神经网络输出值的矩阵计算方法。</p>
+<p>如果写成一个公式：<br>$$<br>\vec{y} = f(W4 \cdot f(W3 \cdot f(W2 \cdot f(W1 \cdot \vec{x}))))<br>$$<br>神经网络正向计算的过程比较简单，就是一层一层不断做运算，动态的演示如下图所示：<br><img src="/images/neural-network/neural_network_demo.gif"></p>
+<h2 id="5-神经网络的训练-反向传播算法"><a href="#5-神经网络的训练-反向传播算法" class="headerlink" title="5. 神经网络的训练 - 反向传播算法"></a>5. 神经网络的训练 - 反向传播算法</h2><p>神经网络的每个连接上的权值如果知道，那么就可以将输入数据代入得到希望的结果。神经网络是一个模型，那么这些权值就是<strong>模型的参数</strong>，也就是模型要学习的东西。然而，一个神经网络的连接方式、网络的层数、每层的节点数这些参数，则不是学习出来的，而是人为事先设置的。对于这些人为设置的参数，我们称之为**超参数(Hyper-Parameters)**。</p>
+<p>前面课程中所学的最小二乘、逻辑回归等可以直接优化损失函数来求解模型参数的更新值。在多层神经网络中：</p>
+<ul>
+<li>最后一层的参数可以用这样的方式求解得到；</li>
+<li>隐层节点没有输出的真值，因此无法直接构建损失函数来求解</li>
+</ul>
+<p>如何化解这个难题？</p>
+<p>反向传播算法其实就是链式求导法则的应用。然而，这个如此简单且显而易见的方法，却是在Roseblatt提出感知器算法将近30年之后才被发明和普及的。对此，Bengio这样回应道：</p>
+<blockquote>
+<p>很多看似显而易见的想法只有在事后才变得显而易见。</p>
+</blockquote>
+<p>按照机器学习的通用套路，我们先确定神经网络的目标函数，然后用随机梯度下降优化算法去求目标函数最小值时的参数值。</p>
+<p>我们取网络所有输出层节点的误差平方和作为目标函数：</p>
+<p><img src="/images/neural-network/bp_loss.png"></p>
+<p>其中，$E_d$表示是样本$d$的误差, <strong>t是样本的标签值</strong>，<strong>y是神经网络的输出值</strong>。</p>
+<p>然后，使用随机梯度下降算法对目标函数进行优化：</p>
+<p><img src="/images/neural-network/bp_weight_update.png"></p>
+<p>随机梯度下降算法也就是需要求出误差$E_d$对于每个权重$w_{ji}$的偏导数（也就是梯度），如何求解？</p>
+<p><img src="/images/neural-network/nn3.png"></p>
+<p>观察上图，我们发现权重$w_{ji}$仅能通过影响节点$j$的输入值影响网络的其它部分，设$net_j$是节点$j$的加权输入，即</p>
+<p><img src="/images/neural-network/eqn_21_22.png"></p>
+<p>$E_d$是$net_j$的函数，而$net_j$是$w_{ji}$的函数。根据链式求导法则，可以得到：</p>
+<p><img src="/images/neural-network/eqn_23_25.png"></p>
+<p>上式中，$x_{ji}$是节点传递给节点$j$的输入值，也就是节点$i$的输出值。</p>
+<p>对于的$\frac{\partial E_d}{\partial net_j}$推导，需要区分输出层和隐藏层两种情况。</p>
+<h3 id="5-1-输出层权值训练"><a href="#5-1-输出层权值训练" class="headerlink" title="5.1 输出层权值训练"></a>5.1 输出层权值训练</h3><p><img src="/images/neural-network/nn3.png"></p>
+<p>对于输出层来说，$net_j$仅能通过节点$j$的输出值$y_j$来影响网络其它部分，也就是说$E_d$是$y_j$的函数，而$y_j$是$net_j$的函数，其中$y_j = sigmod(net_j)$。所以我们可以再次使用链式求导法则：</p>
+<p><img src="/images/neural-network/eqn_26.png"></p>
+<p>考虑上式第一项:</p>
+<p><img src="/images/neural-network/eqn_27_29.png"></p>
+<p>考虑上式第二项：</p>
+<p><img src="/images/neural-network/eqn_30_31.png"></p>
+<p>将第一项和第二项带入，得到：</p>
+<p><img src="/images/neural-network/eqn_ed_net_j.png"></p>
+<p>如果令$\delta_j = - \frac{\partial E_d}{\partial net_j}$，也就是一个节点的误差项$\delta$是网络误差对这个节点输入的偏导数的相反数。带入上式，得到：</p>
+<p><img src="/images/neural-network/eqn_delta_j.png"></p>
+<p>将上述推导带入随机梯度下降公式，得到：</p>
+<p><img src="/images/neural-network/eqn_32_34.png"></p>
+<h3 id="5-2-隐藏层权值训练"><a href="#5-2-隐藏层权值训练" class="headerlink" title="5.2 隐藏层权值训练"></a>5.2 隐藏层权值训练</h3><p>现在我们要推导出隐藏层的$\frac{\partial E_d}{\partial net_j}$。</p>
+<p><img src="/images/neural-network/nn3.png"></p>
+<p>首先，我们需要定义节点$j$的所有直接下游节点的集合$Downstream(j)$。例如，对于节点4来说，它的直接下游节点是节点8、节点9。可以看到$net_j$只能通过影响$Downstream(j)$再影响$E_d$。设$net_k$是节点$j$的下游节点的输入，则$E_d$是$net_k$的函数，而$net_k$是$net_j$的函数。因为$net_k$有多个，我们应用全导数公式，可以做出如下推导：</p>
+<p><img src="/images/neural-network/eqn_35_40.png"></p>
+<p>因为$\delta_j = - \frac{\partial E_d}{\partial net_j}$，带入上式得到：</p>
+<p><img src="/images/neural-network/eqn_delta_hidden.png"></p>
+<p>至此，我们已经推导出了反向传播算法。需要注意的是，我们刚刚推导出的训练规则是根据激活函数是sigmoid函数、平方和误差、全连接网络、随机梯度下降优化算法。如果激活函数不同、误差计算方式不同、网络连接结构不同、优化算法不同，则具体的训练规则也会不一样。但是无论怎样，训练规则的推导方式都是一样的，应用链式求导法则进行推导即可。</p>
+<h3 id="5-3-具体解释"><a href="#5-3-具体解释" class="headerlink" title="5.3 具体解释"></a>5.3 具体解释</h3><p>假设每个训练样本为$(\vec{x}, \vec{t})$，其中向量$\vec{x}$是训练样本的特征，而$\vec{t}$是样本的目标值。</p>
+<p><img src="/images/neural-network/nn3.png"></p>
+<p>首先，根据上一节介绍的算法，用样本的特征$\vec{x}$，计算出神经网络中每个隐藏层节点的输出$a_i$，以及输出层每个节点的输出$y_i$。</p>
+<p>然后，按照下面的方法计算出每个节点的误差项$\delta_i$：</p>
+<ul>
+<li><strong>对于输出层节点$i$</strong></li>
+</ul>
+<p><img src="/images/neural-network/formular_3.png"></p>
+<p>其中，$\delta_i$是节点$i$的误差项，$y_i$是节点$i$的输出值，$t_i$是样本对应于节点$i$的目标值。举个例子，根据上图，对于输出层节点8来说，它的输出值是$y_1$，而样本的目标值是$t_1$，带入上面的公式得到节点8的误差项应该是：</p>
+<p><img src="/images/neural-network/forumlar_delta8.png"></p>
+<ul>
+<li><strong>对于隐藏层节点</strong></li>
+</ul>
+<p><img src="/images/neural-network/formular_4.png"></p>
+<p>其中，$a_i$是节点$i$的输出值，$w_{ki}$是节点$i$到它的下一层节点$k$的连接的权重，$\delta_k$是节点$i$的下一层节点$k$的误差项。例如，对于隐藏层节点4来说，计算方法如下：</p>
+<p><img src="/images/neural-network/forumlar_delta4.png"></p>
+<p>最后，更新每个连接上的权值：</p>
+<p><img src="/images/neural-network/formular_5.png"></p>
+<p>其中，$w_{ji}$是节点$i$到节点$j$的权重，$\eta$是一个成为学习速率的常数，$\delta_j$是节点$j$的误差项，$x_{ji}$是节点$i$传递给节点$j$的输入。例如，权重$w_{84}$的更新方法如下：</p>
+<p><img src="/images/neural-network/eqn_w84_update.png"></p>
+<p>类似的，权重$w_{41}$的更新方法如下：</p>
+<p><img src="/images/neural-network/eqn_w41_update.png"></p>
+<p>偏置项的输入值永远为1。例如，节点4的偏置项$w_{4b}$应该按照下面的方法计算：</p>
+<p><img src="/images/neural-network/eqn_w4b_update.png"></p>
+<p>计算一个节点的误差项，需要先计算每个与其相连的下一层节点的误差项，这就要求误差项的计算顺序必须是从输出层开始，然后反向依次计算每个隐藏层的误差项，直到与输入层相连的那个隐藏层，这就是反向传播算法的名字的含义。当所有节点的误差项计算完毕后，就可以根据式5来更新所有的权重。</p>
+<h2 id="6-为什么要使用激活函数"><a href="#6-为什么要使用激活函数" class="headerlink" title="6. 为什么要使用激活函数"></a>6. 为什么要使用激活函数</h2><p>激活函数在神经网络中非常重要，使用激活函数也是非常必要的，前面我们从人脑神经元的角度理解了激活函数，因为神经元需要通过激活才能往后传播，所以神经网络中需要激活函数，下面我们从数学的角度理解一下激活函数的必要性。</p>
+<p>比如一个两层的神经网络，使用 f 表示激活函数，那么</p>
+<p>$$<br>y = f( w_2  f(w_1 x) )<br>$$</p>
+<p>如果不使用激活函数，那么神经网络的结果就是</p>
+<p>$$<br>y = w_2 (w_1 x) = (w_2 w_1) x = \bar{w} x<br>$$</p>
+<p>可以看到，将两层神经网络的参数合在一起，用 $\bar{w}$ 来表示，两层的神经网络其实就变成了一层神经网络，只不过参数变成了新的 $\bar{w}$，所以如果不使用激活函数，那么不管多少层的神经网络，$y = w_n \cdots w_2 w_1 x = \bar{w} x$，就都变成了单层神经网络，所以在每一层都必须使用激活函数。</p>
+<p>最后看看激活函数对神经网络的影响</p>
+<p><img src="/images/neural-network/nn-activation-function.gif"></p>
+<p>可以看到使用了激活函数之后，神经网络可以通过改变权重实现任意形状，越是复杂的神经网络能拟合的形状越复杂，这就是著名的神经网络万有逼近定理。神经网络使用的激活函数都是非线性的，每个激活函数都输入一个值，然后做一种特定的数学运算得到一个结果。</p>
+<h3 id="6-1-sigmoid-激活函数"><a href="#6-1-sigmoid-激活函数" class="headerlink" title="6.1 sigmoid 激活函数"></a>6.1 sigmoid 激活函数</h3><p>$$\sigma(x) = \frac{1}{1 + e^{-x}}$$</p>
+<p><img src="/images/neural-network/act-sigmoid.jpg"></p>
+<h3 id="6-2-tanh-激活函数"><a href="#6-2-tanh-激活函数" class="headerlink" title="6.2 tanh 激活函数"></a>6.2 tanh 激活函数</h3><p>$$tanh(x) = 2 \sigma(2x) - 1$$</p>
+<p><img src="/images/neural-network/act-tanh.jpg"></p>
+<h3 id="6-3-ReLU-激活函数"><a href="#6-3-ReLU-激活函数" class="headerlink" title="6.3 ReLU 激活函数"></a>6.3 ReLU 激活函数</h3><p>$$ReLU(x) = max(0, x)$$</p>
+<p><img src="/images/neural-network/act-relu.jpg"></p>
+<p>当输入 $x&lt;0$ 时，输出为 $0$，当 $x&gt; 0$ 时，输出为 $x$。该激活函数使网络更快速地收敛。它不会饱和，即它可以对抗梯度消失问题，至少在正区域（$x&gt; 0$ 时）可以这样，因此神经元至少在一半区域中不会把所有零进行反向传播。由于使用了简单的阈值化（thresholding），ReLU 计算效率很高。</p>
+<p>在网络中，不同的输入可能包含着大小不同关键特征，使用大小可变的数据结构去做容器，则更加灵活。假如神经元激活具有稀疏性，那么不同激活路径上：不同数量（选择性不激活）、不同功能（分布式激活）。两种可优化的结构生成的激活路径，可以更好地从有效的数据的维度上，学习到相对稀疏的特征，起到自动化解离效果。</p>
+<p><img src="/images/neural-network/nn-sparse.png"></p>
+<p>稀疏特征并不需要网络具有很强的处理线性不可分机制，因此在深度学习模型中，使用简单、速度快的线性激活函数可能更为合适。如图，一旦神经元与神经元之间改为线性激活，网络的非线性部分仅仅来自于神经元部分选择性激活。</p>
+<p>更倾向于使用线性神经激活函数的另外一个原因是，减轻梯度法训练深度网络时的Vanishing Gradient Problem。</p>
+<p>看过BP推导的人都知道，误差从输出层反向传播算梯度时，在各层都要乘当前层的输入神经元值，激活函数的一阶导数。<br>$$<br>grad = error ⋅ sigmoid’(x) ⋅ x<br>$$</p>
+<p>使用双端饱和(即值域被限制)Sigmoid系函数会有两个问题：</p>
+<ol>
+<li>sigmoid’(x) ∈ (0,1)  导数缩放</li>
+<li>x∈(0,1)或x∈(-1,1)  饱和值缩放</li>
+</ol>
+<p>这样，经过每一层时，误差都是成倍的衰减，一旦进行递推式的多层的反向传播，梯度就会不停的衰减，消失，使得网络学习变慢。而校正激活函数的梯度是1，且只有一端饱和，梯度很好的在反向传播中流动，训练速度得到了很大的提高。</p>
+<h2 id="7-算法与处理步骤"><a href="#7-算法与处理步骤" class="headerlink" title="7. 算法与处理步骤"></a>7. 算法与处理步骤</h2><pre class="line-numbers language-none"><code class="language-none">W = random
+
+# 每次训练
+for k in range(epoch)
+    # 正向计算
+    for j in range(NN_depth):
+        # 式2 ( a = xxx)
+        X_j = f( W_{j, j-1} X_{j-1})
+
+    ＃ 反向误差计算
+    for j in range(NN_depth, 0, -1):
+        # 式3， 式4
+        delta = y_i(1-y_i)(t_i-y_i)
+        or 
+        delta = a_i(1-a_i) \sum w_ki delta_k
+
+        # 式5
+        w_ji = w_j + epsilon delta_j x_ji<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="7-1-正向计算："><a href="#7-1-正向计算：" class="headerlink" title="7.1 正向计算："></a>7.1 正向计算：</h3><p><img src="/images/neural-network/formular_2.png"></p>
+<h3 id="7-2-反向传播："><a href="#7-2-反向传播：" class="headerlink" title="7.2 反向传播："></a>7.2 反向传播：</h3><p>输出层的误差计算：</p>
+<p><img src="/images/neural-network/formular_3.png"></p>
+<p>隐层的误差计算：</p>
+<p><img src="/images/neural-network/formular_4.png"></p>
+<p>权值更新：</p>
+<p><img src="/images/neural-network/formular_5.png"></p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>多层神经网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>机器学习笔记（五）：初探卷积神经网络</title>
+    <url>/2022/01/12/machine-learning-5/</url>
+    <content><![CDATA[<h1 id="机器学习笔记（五）：初探卷积神经网络"><a href="#机器学习笔记（五）：初探卷积神经网络" class="headerlink" title="机器学习笔记（五）：初探卷积神经网络"></a>机器学习笔记（五）：初探卷积神经网络</h1><h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>卷积神经网络主要由两部分组成：</p>
+<ul>
+<li>一部分是<strong>特征提取</strong>（卷积、激活函数、池化）</li>
+<li>另一部分是<strong>分类识别</strong>（全连接）</li>
+</ul>
+<p>卷积神经网络应用非常广泛：</p>
+<ul>
+<li><p>图像分类：场景分类，目标分类</p>
+</li>
+<li><p>图像检测：显著性检测，物体检测，语义检测等等</p>
+</li>
+<li><p>图像识别：人脸识别，字符识别，车牌识别，行为识别，步态识别等等</p>
+</li>
+<li><p>图像分割：前景分割，语义分割</p>
+</li>
+</ul>
+<p>但是，CNN真正能做的，只是起到一个<strong>图像特征提取器</strong>的作用！</p>
+<h2 id="二、CNN是什么"><a href="#二、CNN是什么" class="headerlink" title="二、CNN是什么"></a>二、CNN是什么</h2><h3 id="2-1-卷积神经网络（CNN）是一种带有卷积结构的深度神经网络"><a href="#2-1-卷积神经网络（CNN）是一种带有卷积结构的深度神经网络" class="headerlink" title="2.1 卷积神经网络（CNN）是一种带有卷积结构的深度神经网络"></a>2.1 卷积神经网络（CNN）是一种带有卷积结构的深度神经网络</h3><p><strong>卷积结构</strong>可以减少深层网络占用的内存量。</p>
+<p><strong>卷积结构有三个关键的操作</strong></p>
+<ul>
+<li>其一是局部感受野，</li>
+<li>其二是权值共享，</li>
+<li>其三是池化层pooling。</li>
+</ul>
+<p><strong>作用：</strong>可以有效的减少网络的参数个数，缓解模型的过拟合问题。</p>
+<h3 id="2-2-卷积神经网络（CNN）与普通神经网络非常相似"><a href="#2-2-卷积神经网络（CNN）与普通神经网络非常相似" class="headerlink" title="2.2 卷积神经网络（CNN）与普通神经网络非常相似"></a>2.2 卷积神经网络（CNN）与普通神经网络非常相似</h3><p><strong>相同点</strong>：</p>
+<p>它们都由具有“可学习的权重W”和“偏置常量b”的神经元组成。<br>每个神经元都接收一些输入，并做一些点积计算，输出是每个分类的分数，普通神经网络里的一些计算技巧到这里依旧适用。</p>
+<p><strong>不同之处在哪？</strong></p>
+<p><strong>CNN具有三维体积的神经元(3D volumes of neurons)</strong></p>
+<p>卷积神经网络，利用输入是图片的特点，把神经元设计成三个维度：<strong>depth、height、width</strong></p>
+<p>(注意这个depth不是神经网络的深度，而是用来描述神经元的) 。</p>
+<p>比如，输入的图片大小是 3× 32 × 32 (rgb)，那么输入神经元就也具有 3× 32 × 32 的维度。</p>
+<p>传统神经网络：</p>
+<p><img src="/images/machine-learning/5-1.jpg"></p>
+<p>卷积神经网络：一个CNN由很多层组成，它们的输入是三维的，输出也是三维的</p>
+<p><img src="/images/machine-learning/5-2.jpg"></p>
+<h3 id="2-3-卷积神经网络（CNN）的结构"><a href="#2-3-卷积神经网络（CNN）的结构" class="headerlink" title="2.3 卷积神经网络（CNN）的结构"></a>2.3 卷积神经网络（CNN）的结构</h3><h5 id="1）卷积层（Convolutional-layer）"><a href="#1）卷积层（Convolutional-layer）" class="headerlink" title="1）卷积层（Convolutional layer）"></a>1）卷积层（Convolutional layer）</h5><p>卷积神经网路中，每层卷积层由若干卷积核组成，每个卷积核的参数都是通过反向传播算法优化得到的。</p>
+<p>卷积运算的目的是提取输入的不同特征，第一层卷积层可能只能提取一些低级的特征如边缘、线条和角等层级，更多层的网络能从低级特征中迭代提取更复杂的特征。</p>
+<h5 id="2）线性整流层（Rectified-Linear-Units-layer-ReLU-layer）"><a href="#2）线性整流层（Rectified-Linear-Units-layer-ReLU-layer）" class="headerlink" title="2）线性整流层（Rectified Linear Units layer, ReLU layer）"></a>2）线性整流层（Rectified Linear Units layer, ReLU layer）</h5><p>这一层神经的激活函数（Activation function）使用线性整流（Rectified Linear Units, ReLU）。</p>
+<h5 id="3）池化层（Pooling-layer）"><a href="#3）池化层（Pooling-layer）" class="headerlink" title="3）池化层（Pooling layer）"></a>3）池化层（Pooling layer）</h5><p>通常在卷积层之后，会得到维度很大的特征，将特征切成几个区域，取其最大值或平均值，得到新的、维度较小的特征。</p>
+<h5 id="4）全连接层（-Fully-Connected-layer）"><a href="#4）全连接层（-Fully-Connected-layer）" class="headerlink" title="4）全连接层（ Fully-Connected layer）"></a>4）全连接层（ Fully-Connected layer）</h5><p>把所有局部特征，结合变成全局特征，用来计算最后每一类的得分。</p>
+<h3 id="2-4-一个卷积神经网络各层应用实例"><a href="#2-4-一个卷积神经网络各层应用实例" class="headerlink" title="2.4 一个卷积神经网络各层应用实例"></a>2.4 一个卷积神经网络各层应用实例</h3><p><img src="/images/machine-learning/5-3.jpg"></p>
+<p>上图中，CNN要做的事情是：给定一张图片，现在需要模型判断这张图片里具体是一个什么东西，总之输出一个结果：这是什么？</p>
+<p>左边是：</p>
+<ul>
+<li><strong>数据输入层</strong>，对数据做一些处理。</li>
+</ul>
+<p>中间是：</p>
+<ul>
+<li>CONV：<strong>卷积计算层，</strong>线性乘积、求和。</li>
+<li>RELU：<strong>激励层</strong>，ReLU是激活函数的一种。</li>
+<li>POOL：<strong>池化层</strong>，简言之，即取区域平均或最大。</li>
+</ul>
+<p>右边是：</p>
+<ul>
+<li>FC：<strong>全连接层，</strong>所有局部特征，结合变成全局特征，分类评分</li>
+</ul>
+<p>其中，卷积计算层是CNN的核心！</p>
+<h2 id="三、为什么使用CNN"><a href="#三、为什么使用CNN" class="headerlink" title="三、为什么使用CNN"></a>三、为什么使用CNN</h2><p>在图像领域，用传统的神经网络并不合适。</p>
+<p>我们知道，图像是由一个个像素点构成，每个像素点有三个通道，分别代表RGB颜色。如果一个图像的尺寸是（28，28，1），即代表这个图像的是一个长宽均为28，channel为1的图像（channel也叫depth,此处1代表灰色图像）。</p>
+<p>使用全连接的网络结构，即，网络中的神经与与相邻层上的每个神经元均连接，那就意味着我们的网络输入层有28 * 28 =784个神经元，再假设隐藏层采用了15个神经元，输出层采用了10个神经元。那么简单计算一下，我们需要的参数个数(w和b)就有：784*15*10+15+10=117625个。这个参数太多了，随便进行一次反向传播计算量都是巨大的，从计算资源和调参的角度都不建议用传统的神经网络。</p>
+<p>使用卷积神经网络，就可以比较好的解决这个问题。卷积层可以很好的利用图像本身具有的二维空间特征，比全连接网络仅仅考虑单个像素点的效果会更好，同时使用卷积核后图片的尺寸变小，方便后续计算；而池化层通过降采样的方式，在不影响图像质量的情况下，压缩图片，减少参数，这样计算量也会比全连接网络小很多。</p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>CNN</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>机器学习笔记（四）：手写多层神经网络并应用</title>
     <url>/2022/01/10/machine-learning-4/</url>
     <content><![CDATA[<h1 id="机器学习笔记（四）：手写多层神经网络并应用"><a href="#机器学习笔记（四）：手写多层神经网络并应用" class="headerlink" title="机器学习笔记（四）：手写多层神经网络并应用"></a>机器学习笔记（四）：手写多层神经网络并应用</h1><p>在上一篇文章中，我们已经学习了多层神经网络的基本原理，并且对正向传播、反向传播和激活函数都有了一定的了解。</p>
@@ -7897,291 +8182,6 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
     plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
-        <tag>多层神经网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>机器学习笔记（五）：初探卷积神经网络</title>
-    <url>/2022/01/12/machine-learning-5/</url>
-    <content><![CDATA[<h1 id="机器学习笔记（五）：初探卷积神经网络"><a href="#机器学习笔记（五）：初探卷积神经网络" class="headerlink" title="机器学习笔记（五）：初探卷积神经网络"></a>机器学习笔记（五）：初探卷积神经网络</h1><h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>卷积神经网络主要由两部分组成：</p>
-<ul>
-<li>一部分是<strong>特征提取</strong>（卷积、激活函数、池化）</li>
-<li>另一部分是<strong>分类识别</strong>（全连接）</li>
-</ul>
-<p>卷积神经网络应用非常广泛：</p>
-<ul>
-<li><p>图像分类：场景分类，目标分类</p>
-</li>
-<li><p>图像检测：显著性检测，物体检测，语义检测等等</p>
-</li>
-<li><p>图像识别：人脸识别，字符识别，车牌识别，行为识别，步态识别等等</p>
-</li>
-<li><p>图像分割：前景分割，语义分割</p>
-</li>
-</ul>
-<p>但是，CNN真正能做的，只是起到一个<strong>图像特征提取器</strong>的作用！</p>
-<h2 id="二、CNN是什么"><a href="#二、CNN是什么" class="headerlink" title="二、CNN是什么"></a>二、CNN是什么</h2><h3 id="2-1-卷积神经网络（CNN）是一种带有卷积结构的深度神经网络"><a href="#2-1-卷积神经网络（CNN）是一种带有卷积结构的深度神经网络" class="headerlink" title="2.1 卷积神经网络（CNN）是一种带有卷积结构的深度神经网络"></a>2.1 卷积神经网络（CNN）是一种带有卷积结构的深度神经网络</h3><p><strong>卷积结构</strong>可以减少深层网络占用的内存量。</p>
-<p><strong>卷积结构有三个关键的操作</strong></p>
-<ul>
-<li>其一是局部感受野，</li>
-<li>其二是权值共享，</li>
-<li>其三是池化层pooling。</li>
-</ul>
-<p><strong>作用：</strong>可以有效的减少网络的参数个数，缓解模型的过拟合问题。</p>
-<h3 id="2-2-卷积神经网络（CNN）与普通神经网络非常相似"><a href="#2-2-卷积神经网络（CNN）与普通神经网络非常相似" class="headerlink" title="2.2 卷积神经网络（CNN）与普通神经网络非常相似"></a>2.2 卷积神经网络（CNN）与普通神经网络非常相似</h3><p><strong>相同点</strong>：</p>
-<p>它们都由具有“可学习的权重W”和“偏置常量b”的神经元组成。<br>每个神经元都接收一些输入，并做一些点积计算，输出是每个分类的分数，普通神经网络里的一些计算技巧到这里依旧适用。</p>
-<p><strong>不同之处在哪？</strong></p>
-<p><strong>CNN具有三维体积的神经元(3D volumes of neurons)</strong></p>
-<p>卷积神经网络，利用输入是图片的特点，把神经元设计成三个维度：<strong>depth、height、width</strong></p>
-<p>(注意这个depth不是神经网络的深度，而是用来描述神经元的) 。</p>
-<p>比如，输入的图片大小是 3× 32 × 32 (rgb)，那么输入神经元就也具有 3× 32 × 32 的维度。</p>
-<p>传统神经网络：</p>
-<p><img src="/images/machine-learning/5-1.jpg"></p>
-<p>卷积神经网络：一个CNN由很多层组成，它们的输入是三维的，输出也是三维的</p>
-<p><img src="/images/machine-learning/5-2.jpg"></p>
-<h3 id="2-3-卷积神经网络（CNN）的结构"><a href="#2-3-卷积神经网络（CNN）的结构" class="headerlink" title="2.3 卷积神经网络（CNN）的结构"></a>2.3 卷积神经网络（CNN）的结构</h3><h5 id="1）卷积层（Convolutional-layer）"><a href="#1）卷积层（Convolutional-layer）" class="headerlink" title="1）卷积层（Convolutional layer）"></a>1）卷积层（Convolutional layer）</h5><p>卷积神经网路中，每层卷积层由若干卷积核组成，每个卷积核的参数都是通过反向传播算法优化得到的。</p>
-<p>卷积运算的目的是提取输入的不同特征，第一层卷积层可能只能提取一些低级的特征如边缘、线条和角等层级，更多层的网络能从低级特征中迭代提取更复杂的特征。</p>
-<h5 id="2）线性整流层（Rectified-Linear-Units-layer-ReLU-layer）"><a href="#2）线性整流层（Rectified-Linear-Units-layer-ReLU-layer）" class="headerlink" title="2）线性整流层（Rectified Linear Units layer, ReLU layer）"></a>2）线性整流层（Rectified Linear Units layer, ReLU layer）</h5><p>这一层神经的激活函数（Activation function）使用线性整流（Rectified Linear Units, ReLU）。</p>
-<h5 id="3）池化层（Pooling-layer）"><a href="#3）池化层（Pooling-layer）" class="headerlink" title="3）池化层（Pooling layer）"></a>3）池化层（Pooling layer）</h5><p>通常在卷积层之后，会得到维度很大的特征，将特征切成几个区域，取其最大值或平均值，得到新的、维度较小的特征。</p>
-<h5 id="4）全连接层（-Fully-Connected-layer）"><a href="#4）全连接层（-Fully-Connected-layer）" class="headerlink" title="4）全连接层（ Fully-Connected layer）"></a>4）全连接层（ Fully-Connected layer）</h5><p>把所有局部特征，结合变成全局特征，用来计算最后每一类的得分。</p>
-<h3 id="2-4-一个卷积神经网络各层应用实例"><a href="#2-4-一个卷积神经网络各层应用实例" class="headerlink" title="2.4 一个卷积神经网络各层应用实例"></a>2.4 一个卷积神经网络各层应用实例</h3><p><img src="/images/machine-learning/5-3.jpg"></p>
-<p>上图中，CNN要做的事情是：给定一张图片，现在需要模型判断这张图片里具体是一个什么东西，总之输出一个结果：这是什么？</p>
-<p>左边是：</p>
-<ul>
-<li><strong>数据输入层</strong>，对数据做一些处理。</li>
-</ul>
-<p>中间是：</p>
-<ul>
-<li>CONV：<strong>卷积计算层，</strong>线性乘积、求和。</li>
-<li>RELU：<strong>激励层</strong>，ReLU是激活函数的一种。</li>
-<li>POOL：<strong>池化层</strong>，简言之，即取区域平均或最大。</li>
-</ul>
-<p>右边是：</p>
-<ul>
-<li>FC：<strong>全连接层，</strong>所有局部特征，结合变成全局特征，分类评分</li>
-</ul>
-<p>其中，卷积计算层是CNN的核心！</p>
-<h2 id="三、为什么使用CNN"><a href="#三、为什么使用CNN" class="headerlink" title="三、为什么使用CNN"></a>三、为什么使用CNN</h2><p>在图像领域，用传统的神经网络并不合适。</p>
-<p>我们知道，图像是由一个个像素点构成，每个像素点有三个通道，分别代表RGB颜色。如果一个图像的尺寸是（28，28，1），即代表这个图像的是一个长宽均为28，channel为1的图像（channel也叫depth,此处1代表灰色图像）。</p>
-<p>使用全连接的网络结构，即，网络中的神经与与相邻层上的每个神经元均连接，那就意味着我们的网络输入层有28 * 28 =784个神经元，再假设隐藏层采用了15个神经元，输出层采用了10个神经元。那么简单计算一下，我们需要的参数个数(w和b)就有：784*15*10+15+10=117625个。这个参数太多了，随便进行一次反向传播计算量都是巨大的，从计算资源和调参的角度都不建议用传统的神经网络。</p>
-<p>使用卷积神经网络，就可以比较好的解决这个问题。卷积层可以很好的利用图像本身具有的二维空间特征，比全连接网络仅仅考虑单个像素点的效果会更好，同时使用卷积核后图片的尺寸变小，方便后续计算；而池化层通过降采样的方式，在不影响图像质量的情况下，压缩图片，减少参数，这样计算量也会比全连接网络小很多。</p>
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
-        <tag>CNN</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>机器学习笔记（三）：多层神经网络</title>
-    <url>/2022/01/09/machine-learning-3/</url>
-    <content><![CDATA[<h1 id="机器学习笔记（三）：多层神经网络"><a href="#机器学习笔记（三）：多层神经网络" class="headerlink" title="机器学习笔记（三）：多层神经网络"></a>机器学习笔记（三）：多层神经网络</h1><p>基于生物神经元模型可得到多层感知器（Multi-layer Perceptron, MLP)的基本结构，最典型的MLP包括包括三层：输入层(Input Layer)、隐层(Hidden Layer)和输出层(Output Layer)，MLP神经网络不同层之间是全连接的（全连接的意思就是：上一层的任何一个神经元与下一层的所有神经元都有连接）。</p>
-<p><img src="/images/neural-network/mlp_theory.gif"></p>
-<h2 id="1-神经元"><a href="#1-神经元" class="headerlink" title="1. 神经元"></a>1. 神经元</h2><p>神经元和感知器本质上是一样的，感知器的激活函数是阶跃函数；而神经元的激活函数往往选择为sigmoid函数或tanh函数。如下图所示：</p>
-<p><img src="/images/neural-network/neuron.gif"></p>
-<p>计算一个神经元的输出的方法和计算一个感知器的输出是一样的。假设神经元的输入是向量$\vec{x}$，权重向量是$\vec{w}$(偏置项是$w_0$)，激活函数是sigmoid函数，则其输出$y$：<br>$$<br>y = sigmoid(\vec{w}^T \cdot \vec{x})<br>$$</p>
-<p>sigmoid函数的定义如下：<br>$$<br>sigmoid(x) = \frac{1}{1+e^{-x}}<br>$$<br>将其带入前面的式子，得到<br>$$<br>y = \frac{1}{1+e^{-\vec{w}^T \cdot \vec{x}}}<br>$$</p>
-<p>sigmoid函数是一个非线性函数，值域是(0,1)。函数图像如下图所示</p>
-<p><img src="/images/neural-network/sigmod.jpg"></p>
-<p>sigmoid函数的导数是：<br>$$<br>\begin{eqnarray}<br>y &amp; = &amp; sigmod(x) \tag{1} \<br>y’ &amp; = &amp; y(1-y)<br>\end{eqnarray}<br>$$<br>可以看到，sigmoid函数的导数可以用sigmoid函数自身来表示。这样，一旦计算出sigmoid函数的值，计算它的导数的值就非常方便。</p>
-<h2 id="2-神经网络的结构"><a href="#2-神经网络的结构" class="headerlink" title="2. 神经网络的结构"></a>2. 神经网络的结构</h2><p><img src="/images/neural-network/nn1.jpeg"></p>
-<p>神经网络就是按照一定规则连接起来的多个神经元。上图展示了一个全连接(Full Connected, FC)神经网络，通过观察上面的图，可以发现它的规则包括：</p>
-<ul>
-<li>神经元按照层来布局<ul>
-<li>最左边的层叫做输入层，负责接收输入数据；</li>
-<li>最右边的层叫输出层，可以从这层获取神经网络输出数据;</li>
-<li>输入层和输出层之间的层叫做隐藏层，因为它们对于外部来说是不可见的。</li>
-</ul>
-</li>
-<li>同一层的神经元之间没有连接</li>
-<li>第N层的每个神经元和第N-1层的所有神经元相连(这就是full connected的含义)，第N-1层神经元的输出就是第N层神经元的输入</li>
-<li>每个连接都有一个权值</li>
-</ul>
-<p>由此可知，神经网络主要有三个基本要素：权重、偏置和激活函数</p>
-<ul>
-<li>权重：神经元之间的连接强度由权重控制，权重的大小表示可能性的大小</li>
-<li>偏置：偏置的设置是为了正确分类样本，是模型中一个重要的参数，即保证通过输入算出的输出值不能随便激活。</li>
-<li>激活函数：起非线性映射的作用，其可将神经元的输出幅度限制在一定范围内，一般限制在（-1~1）或（0~1）之间。最常用的激活函数是Sigmoid函数，可将（-∞，+∞）的数映射到（0~1）的范围内。</li>
-</ul>
-<p>上面这些规则定义了全连接神经网络的结构。事实上还存在很多其它结构的神经网络，比如卷积神经网络(CNN)、循环神经网络(RNN)，他们都具有不同的连接规则。</p>
-<h2 id="3-计算神经网络的输出"><a href="#3-计算神经网络的输出" class="headerlink" title="3. 计算神经网络的输出"></a>3. 计算神经网络的输出</h2><p>神经网络实际上就是一个输入向量$\vec{x}$到输出向量$\vec{y}$的函数，即：</p>
-<p>$$<br>\vec{y} = f_{network}(\vec{x})<br>$$<br>根据输入计算神经网络的输出</p>
-<ul>
-<li>首先将输入向量$\vec{x}$的每个元素的值$x_i$赋给神经网络的输入层的对应神经元</li>
-<li>然后根据式（1）依次向前计算每一层的每个神经元的值，直到最后一层输出层的所有神经元的值计算完毕</li>
-<li>最后，将输出层每个神经元的值串在一起就得到了输出向量$\vec{y}$。</li>
-</ul>
-<p>接下来举一个例子来说明这个过程，我们先给神经网络的每个单元写上编号。</p>
-<p><img src="/images/neural-network/nn2.png"></p>
-<ul>
-<li>输入层有三个节点，我们将其依次编号为1、2、3；</li>
-<li>隐藏层的4个节点，编号依次为4、5、6、7；</li>
-<li>最后输出层的两个节点编号为8、9。</li>
-</ul>
-<p>因为这个神经网络是全连接网络，所以可以看到每个节点都和上一层的所有节点有连接。比如，隐藏层的节点4，它和输入层的三个节点1、2、3之间都有连接，其连接上的权重分别为$w_{41}$,$w_{42}$,$w_{43}$。那么，怎样计算节点4的输出值$a_4$呢？</p>
-<p>为了计算节点4的输出值，必须先得到其所有上游节点（也就是节点1、2、3）的输出值。节点1、2、3是输入层的节点，所以，他们的输出值就是输入向量$\vec{x}$本身。按照上图画出的对应关系，可以看到节点1、2、3的输出值分别是$x_1$,$x_2$,$x_3$。要求输入向量的维度和输入层神经元个数相同，而输入向量的某个元素对应到哪个输入节点是可以自由决定的。</p>
-<p>一旦有了节点1、2、3的输出值，就可以根据式1计算节点4的输出值$a_4$：</p>
-<p><img src="/images/neural-network/eqn_3_4.png"></p>
-<p>上式的$w_{4b}$是节点4的偏置项，图中没有画出来。而$w_{41}$,$w_{42}$,$w_{43}$分别为节点1、2、3到节点4连接的权重，在给权重$w_{ji}$编号时，目标节点的编号$j$放在前面，把源节点的编号$i$放在后面。</p>
-<p>同样，可以继续计算出节点5、6、7的输出值$a_5$,$a_6$,$a_7$。这样，隐藏层的4个节点的输出值就计算完成了，就可以接着计算输出层的节点8的输出值$y_1$：</p>
-<p><img src="/images/neural-network/eqn_5_6.png"></p>
-<p>同理，我们还可以计算出$y_2$的值。这样输出层所有节点的输出值计算完毕，就得到了在输入向量$\vec{x} = (x_1, x_2, x_3)^T$时，神经网络的输出向量$\vec{y} = (y_1, y_2)^T$。可以看出：输出向量的维度和输出层神经元个数相同。</p>
-<h2 id="4-神经网络的矩阵表示"><a href="#4-神经网络的矩阵表示" class="headerlink" title="4. 神经网络的矩阵表示"></a>4. 神经网络的矩阵表示</h2><p>神经网络的计算如果用矩阵来表示会很方便，此外可以用优化加速算法提高计算速度。</p>
-<p>隐藏层4个节点的计算依次排列出来：</p>
-<p><img src="/images/neural-network/eqn_hidden_units.png"></p>
-<p>接着，定义网络的输入向量$\vec{x}$和隐藏层每个节点的权重向量$\vec{w}$。令</p>
-<p><img src="/images/neural-network/eqn_7_12.png"></p>
-<p>代入到前面的一组式子，得到：</p>
-<p><img src="/images/neural-network/eqn_13_16.png"></p>
-<p>现在，把上述计算$a_4$, $a_5$,$a_6$,$a_7$的四个式子写到一个矩阵里面，每个式子作为矩阵的一行，就可以利用矩阵来表示它们的计算了。令</p>
-<p><img src="/images/neural-network/eqn_matrix1.png"></p>
-<p>带入前面的一组式子，得到</p>
-<p><img src="/images/neural-network/formular_2.png"></p>
-<p>在（式2）中，</p>
-<ul>
-<li>$f$是激活函数，在本例中是$sigmod$函数；</li>
-<li>$W$是某一层的权重矩阵；</li>
-<li>$\vec{x}$是某层的输入向量；</li>
-<li>$\vec{a}$是某层的输出向量。</li>
-</ul>
-<p>（式2）说明神经网络的每一层的作用实际上就是先将输入向量左乘一个数组进行线性变换，得到一个新的向量，然后再对这个向量逐元素应用一个激活函数。</p>
-<p>每一层的算法都是一样的。比如，对于包含一个输入层，一个输出层和三个隐藏层的神经网络，我们假设其权重矩阵分别为$W_1$,$W_2$,$W_3$,$W_4$，每个隐藏层的输出分别是$\vec{a}_1$,$\vec{a}_2$,$\vec{a}_3$，神经网络的输入为$\vec{x}$，神经网络的输出为$\vec{y}$，如下图所示：</p>
-<p><img src="/images/neural-network/nn_parameters_demo.png"></p>
-<p>则每一层的输出向量的计算可以表示为：</p>
-<p><img src="/images/neural-network/eqn_17_20.png"></p>
-<p>这就是神经网络输出值的矩阵计算方法。</p>
-<p>如果写成一个公式：<br>$$<br>\vec{y} = f(W4 \cdot f(W3 \cdot f(W2 \cdot f(W1 \cdot \vec{x}))))<br>$$<br>神经网络正向计算的过程比较简单，就是一层一层不断做运算，动态的演示如下图所示：<br><img src="/images/neural-network/neural_network_demo.gif"></p>
-<h2 id="5-神经网络的训练-反向传播算法"><a href="#5-神经网络的训练-反向传播算法" class="headerlink" title="5. 神经网络的训练 - 反向传播算法"></a>5. 神经网络的训练 - 反向传播算法</h2><p>神经网络的每个连接上的权值如果知道，那么就可以将输入数据代入得到希望的结果。神经网络是一个模型，那么这些权值就是<strong>模型的参数</strong>，也就是模型要学习的东西。然而，一个神经网络的连接方式、网络的层数、每层的节点数这些参数，则不是学习出来的，而是人为事先设置的。对于这些人为设置的参数，我们称之为**超参数(Hyper-Parameters)**。</p>
-<p>前面课程中所学的最小二乘、逻辑回归等可以直接优化损失函数来求解模型参数的更新值。在多层神经网络中：</p>
-<ul>
-<li>最后一层的参数可以用这样的方式求解得到；</li>
-<li>隐层节点没有输出的真值，因此无法直接构建损失函数来求解</li>
-</ul>
-<p>如何化解这个难题？</p>
-<p>反向传播算法其实就是链式求导法则的应用。然而，这个如此简单且显而易见的方法，却是在Roseblatt提出感知器算法将近30年之后才被发明和普及的。对此，Bengio这样回应道：</p>
-<blockquote>
-<p>很多看似显而易见的想法只有在事后才变得显而易见。</p>
-</blockquote>
-<p>按照机器学习的通用套路，我们先确定神经网络的目标函数，然后用随机梯度下降优化算法去求目标函数最小值时的参数值。</p>
-<p>我们取网络所有输出层节点的误差平方和作为目标函数：</p>
-<p><img src="/images/neural-network/bp_loss.png"></p>
-<p>其中，$E_d$表示是样本$d$的误差, <strong>t是样本的标签值</strong>，<strong>y是神经网络的输出值</strong>。</p>
-<p>然后，使用随机梯度下降算法对目标函数进行优化：</p>
-<p><img src="/images/neural-network/bp_weight_update.png"></p>
-<p>随机梯度下降算法也就是需要求出误差$E_d$对于每个权重$w_{ji}$的偏导数（也就是梯度），如何求解？</p>
-<p><img src="/images/neural-network/nn3.png"></p>
-<p>观察上图，我们发现权重$w_{ji}$仅能通过影响节点$j$的输入值影响网络的其它部分，设$net_j$是节点$j$的加权输入，即</p>
-<p><img src="/images/neural-network/eqn_21_22.png"></p>
-<p>$E_d$是$net_j$的函数，而$net_j$是$w_{ji}$的函数。根据链式求导法则，可以得到：</p>
-<p><img src="/images/neural-network/eqn_23_25.png"></p>
-<p>上式中，$x_{ji}$是节点传递给节点$j$的输入值，也就是节点$i$的输出值。</p>
-<p>对于的$\frac{\partial E_d}{\partial net_j}$推导，需要区分输出层和隐藏层两种情况。</p>
-<h3 id="5-1-输出层权值训练"><a href="#5-1-输出层权值训练" class="headerlink" title="5.1 输出层权值训练"></a>5.1 输出层权值训练</h3><p><img src="/images/neural-network/nn3.png"></p>
-<p>对于输出层来说，$net_j$仅能通过节点$j$的输出值$y_j$来影响网络其它部分，也就是说$E_d$是$y_j$的函数，而$y_j$是$net_j$的函数，其中$y_j = sigmod(net_j)$。所以我们可以再次使用链式求导法则：</p>
-<p><img src="/images/neural-network/eqn_26.png"></p>
-<p>考虑上式第一项:</p>
-<p><img src="/images/neural-network/eqn_27_29.png"></p>
-<p>考虑上式第二项：</p>
-<p><img src="/images/neural-network/eqn_30_31.png"></p>
-<p>将第一项和第二项带入，得到：</p>
-<p><img src="/images/neural-network/eqn_ed_net_j.png"></p>
-<p>如果令$\delta_j = - \frac{\partial E_d}{\partial net_j}$，也就是一个节点的误差项$\delta$是网络误差对这个节点输入的偏导数的相反数。带入上式，得到：</p>
-<p><img src="/images/neural-network/eqn_delta_j.png"></p>
-<p>将上述推导带入随机梯度下降公式，得到：</p>
-<p><img src="/images/neural-network/eqn_32_34.png"></p>
-<h3 id="5-2-隐藏层权值训练"><a href="#5-2-隐藏层权值训练" class="headerlink" title="5.2 隐藏层权值训练"></a>5.2 隐藏层权值训练</h3><p>现在我们要推导出隐藏层的$\frac{\partial E_d}{\partial net_j}$。</p>
-<p><img src="/images/neural-network/nn3.png"></p>
-<p>首先，我们需要定义节点$j$的所有直接下游节点的集合$Downstream(j)$。例如，对于节点4来说，它的直接下游节点是节点8、节点9。可以看到$net_j$只能通过影响$Downstream(j)$再影响$E_d$。设$net_k$是节点$j$的下游节点的输入，则$E_d$是$net_k$的函数，而$net_k$是$net_j$的函数。因为$net_k$有多个，我们应用全导数公式，可以做出如下推导：</p>
-<p><img src="/images/neural-network/eqn_35_40.png"></p>
-<p>因为$\delta_j = - \frac{\partial E_d}{\partial net_j}$，带入上式得到：</p>
-<p><img src="/images/neural-network/eqn_delta_hidden.png"></p>
-<p>至此，我们已经推导出了反向传播算法。需要注意的是，我们刚刚推导出的训练规则是根据激活函数是sigmoid函数、平方和误差、全连接网络、随机梯度下降优化算法。如果激活函数不同、误差计算方式不同、网络连接结构不同、优化算法不同，则具体的训练规则也会不一样。但是无论怎样，训练规则的推导方式都是一样的，应用链式求导法则进行推导即可。</p>
-<h3 id="5-3-具体解释"><a href="#5-3-具体解释" class="headerlink" title="5.3 具体解释"></a>5.3 具体解释</h3><p>假设每个训练样本为$(\vec{x}, \vec{t})$，其中向量$\vec{x}$是训练样本的特征，而$\vec{t}$是样本的目标值。</p>
-<p><img src="/images/neural-network/nn3.png"></p>
-<p>首先，根据上一节介绍的算法，用样本的特征$\vec{x}$，计算出神经网络中每个隐藏层节点的输出$a_i$，以及输出层每个节点的输出$y_i$。</p>
-<p>然后，按照下面的方法计算出每个节点的误差项$\delta_i$：</p>
-<ul>
-<li><strong>对于输出层节点$i$</strong></li>
-</ul>
-<p><img src="/images/neural-network/formular_3.png"></p>
-<p>其中，$\delta_i$是节点$i$的误差项，$y_i$是节点$i$的输出值，$t_i$是样本对应于节点$i$的目标值。举个例子，根据上图，对于输出层节点8来说，它的输出值是$y_1$，而样本的目标值是$t_1$，带入上面的公式得到节点8的误差项应该是：</p>
-<p><img src="/images/neural-network/forumlar_delta8.png"></p>
-<ul>
-<li><strong>对于隐藏层节点</strong></li>
-</ul>
-<p><img src="/images/neural-network/formular_4.png"></p>
-<p>其中，$a_i$是节点$i$的输出值，$w_{ki}$是节点$i$到它的下一层节点$k$的连接的权重，$\delta_k$是节点$i$的下一层节点$k$的误差项。例如，对于隐藏层节点4来说，计算方法如下：</p>
-<p><img src="/images/neural-network/forumlar_delta4.png"></p>
-<p>最后，更新每个连接上的权值：</p>
-<p><img src="/images/neural-network/formular_5.png"></p>
-<p>其中，$w_{ji}$是节点$i$到节点$j$的权重，$\eta$是一个成为学习速率的常数，$\delta_j$是节点$j$的误差项，$x_{ji}$是节点$i$传递给节点$j$的输入。例如，权重$w_{84}$的更新方法如下：</p>
-<p><img src="/images/neural-network/eqn_w84_update.png"></p>
-<p>类似的，权重$w_{41}$的更新方法如下：</p>
-<p><img src="/images/neural-network/eqn_w41_update.png"></p>
-<p>偏置项的输入值永远为1。例如，节点4的偏置项$w_{4b}$应该按照下面的方法计算：</p>
-<p><img src="/images/neural-network/eqn_w4b_update.png"></p>
-<p>计算一个节点的误差项，需要先计算每个与其相连的下一层节点的误差项，这就要求误差项的计算顺序必须是从输出层开始，然后反向依次计算每个隐藏层的误差项，直到与输入层相连的那个隐藏层，这就是反向传播算法的名字的含义。当所有节点的误差项计算完毕后，就可以根据式5来更新所有的权重。</p>
-<h2 id="6-为什么要使用激活函数"><a href="#6-为什么要使用激活函数" class="headerlink" title="6. 为什么要使用激活函数"></a>6. 为什么要使用激活函数</h2><p>激活函数在神经网络中非常重要，使用激活函数也是非常必要的，前面我们从人脑神经元的角度理解了激活函数，因为神经元需要通过激活才能往后传播，所以神经网络中需要激活函数，下面我们从数学的角度理解一下激活函数的必要性。</p>
-<p>比如一个两层的神经网络，使用 f 表示激活函数，那么</p>
-<p>$$<br>y = f( w_2  f(w_1 x) )<br>$$</p>
-<p>如果不使用激活函数，那么神经网络的结果就是</p>
-<p>$$<br>y = w_2 (w_1 x) = (w_2 w_1) x = \bar{w} x<br>$$</p>
-<p>可以看到，将两层神经网络的参数合在一起，用 $\bar{w}$ 来表示，两层的神经网络其实就变成了一层神经网络，只不过参数变成了新的 $\bar{w}$，所以如果不使用激活函数，那么不管多少层的神经网络，$y = w_n \cdots w_2 w_1 x = \bar{w} x$，就都变成了单层神经网络，所以在每一层都必须使用激活函数。</p>
-<p>最后看看激活函数对神经网络的影响</p>
-<p><img src="/images/neural-network/nn-activation-function.gif"></p>
-<p>可以看到使用了激活函数之后，神经网络可以通过改变权重实现任意形状，越是复杂的神经网络能拟合的形状越复杂，这就是著名的神经网络万有逼近定理。神经网络使用的激活函数都是非线性的，每个激活函数都输入一个值，然后做一种特定的数学运算得到一个结果。</p>
-<h3 id="6-1-sigmoid-激活函数"><a href="#6-1-sigmoid-激活函数" class="headerlink" title="6.1 sigmoid 激活函数"></a>6.1 sigmoid 激活函数</h3><p>$$\sigma(x) = \frac{1}{1 + e^{-x}}$$</p>
-<p><img src="/images/neural-network/act-sigmoid.jpg"></p>
-<h3 id="6-2-tanh-激活函数"><a href="#6-2-tanh-激活函数" class="headerlink" title="6.2 tanh 激活函数"></a>6.2 tanh 激活函数</h3><p>$$tanh(x) = 2 \sigma(2x) - 1$$</p>
-<p><img src="/images/neural-network/act-tanh.jpg"></p>
-<h3 id="6-3-ReLU-激活函数"><a href="#6-3-ReLU-激活函数" class="headerlink" title="6.3 ReLU 激活函数"></a>6.3 ReLU 激活函数</h3><p>$$ReLU(x) = max(0, x)$$</p>
-<p><img src="/images/neural-network/act-relu.jpg"></p>
-<p>当输入 $x&lt;0$ 时，输出为 $0$，当 $x&gt; 0$ 时，输出为 $x$。该激活函数使网络更快速地收敛。它不会饱和，即它可以对抗梯度消失问题，至少在正区域（$x&gt; 0$ 时）可以这样，因此神经元至少在一半区域中不会把所有零进行反向传播。由于使用了简单的阈值化（thresholding），ReLU 计算效率很高。</p>
-<p>在网络中，不同的输入可能包含着大小不同关键特征，使用大小可变的数据结构去做容器，则更加灵活。假如神经元激活具有稀疏性，那么不同激活路径上：不同数量（选择性不激活）、不同功能（分布式激活）。两种可优化的结构生成的激活路径，可以更好地从有效的数据的维度上，学习到相对稀疏的特征，起到自动化解离效果。</p>
-<p><img src="/images/neural-network/nn-sparse.png"></p>
-<p>稀疏特征并不需要网络具有很强的处理线性不可分机制，因此在深度学习模型中，使用简单、速度快的线性激活函数可能更为合适。如图，一旦神经元与神经元之间改为线性激活，网络的非线性部分仅仅来自于神经元部分选择性激活。</p>
-<p>更倾向于使用线性神经激活函数的另外一个原因是，减轻梯度法训练深度网络时的Vanishing Gradient Problem。</p>
-<p>看过BP推导的人都知道，误差从输出层反向传播算梯度时，在各层都要乘当前层的输入神经元值，激活函数的一阶导数。<br>$$<br>grad = error ⋅ sigmoid’(x) ⋅ x<br>$$</p>
-<p>使用双端饱和(即值域被限制)Sigmoid系函数会有两个问题：</p>
-<ol>
-<li>sigmoid’(x) ∈ (0,1)  导数缩放</li>
-<li>x∈(0,1)或x∈(-1,1)  饱和值缩放</li>
-</ol>
-<p>这样，经过每一层时，误差都是成倍的衰减，一旦进行递推式的多层的反向传播，梯度就会不停的衰减，消失，使得网络学习变慢。而校正激活函数的梯度是1，且只有一端饱和，梯度很好的在反向传播中流动，训练速度得到了很大的提高。</p>
-<h2 id="7-算法与处理步骤"><a href="#7-算法与处理步骤" class="headerlink" title="7. 算法与处理步骤"></a>7. 算法与处理步骤</h2><pre class="line-numbers language-none"><code class="language-none">W = random
-
-# 每次训练
-for k in range(epoch)
-    # 正向计算
-    for j in range(NN_depth):
-        # 式2 ( a = xxx)
-        X_j = f( W_{j, j-1} X_{j-1})
-
-    ＃ 反向误差计算
-    for j in range(NN_depth, 0, -1):
-        # 式3， 式4
-        delta = y_i(1-y_i)(t_i-y_i)
-        or 
-        delta = a_i(1-a_i) \sum w_ki delta_k
-
-        # 式5
-        w_ji = w_j + epsilon delta_j x_ji<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="7-1-正向计算："><a href="#7-1-正向计算：" class="headerlink" title="7.1 正向计算："></a>7.1 正向计算：</h3><p><img src="/images/neural-network/formular_2.png"></p>
-<h3 id="7-2-反向传播："><a href="#7-2-反向传播：" class="headerlink" title="7.2 反向传播："></a>7.2 反向传播：</h3><p>输出层的误差计算：</p>
-<p><img src="/images/neural-network/formular_3.png"></p>
-<p>隐层的误差计算：</p>
-<p><img src="/images/neural-network/formular_4.png"></p>
-<p>权值更新：</p>
-<p><img src="/images/neural-network/formular_5.png"></p>
 ]]></content>
       <categories>
         <category>机器学习</category>
@@ -10285,6 +10285,63 @@ SudokuRNN time = 337.7354459999997
       </tags>
   </entry>
   <entry>
+    <title>NeRF学习笔记（二）：论文阅读与思考</title>
+    <url>/2022/08/21/nerf-notes-2/</url>
+    <content><![CDATA[<h1 id="NeRF学习笔记（二）：论文阅读与思考"><a href="#NeRF学习笔记（二）：论文阅读与思考" class="headerlink" title="NeRF学习笔记（二）：论文阅读与思考"></a>NeRF学习笔记（二）：论文阅读与思考</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p><strong>Q：如何理解稀疏的输入视图集</strong></p>
+<p><strong>A：</strong> a sparse set of input views 稀疏的输入视图集。也就是输入视图并不是连续的，可能就是在若干个方向或者角度拍几张照片，就能合成一个连续的360度环绕的场景</p>
+<p><strong>Q：如何理解volume density</strong></p>
+<p>volume density字面意思是体积密度，实际上理解为<strong>不透明度</strong>会更好，不透明度对应对光的吸收能力，volume density越大，不透明度越高，对光的吸收能力越强。</p>
+<p>这个在后面的公式有所涉及。</p>
+<p><strong>Q：为什么要输入这么五个坐标？</strong></p>
+<p><strong>A：</strong>因为考虑到不同视角上某一点的颜色是不一样的。正因如此，原文用了view-dependent，即某点的颜色是跟视角相关的</p>
+<p><strong>Q：如何理解5D坐标（空间位置$(x，y，z)$和观察方向$(θ，φ)$)？</strong></p>
+<p><strong>A：</strong>作者应该是确定了某个坐标系，空间位置$(x,y,z)$就是被观察物体某个点在这个坐标系中的坐标，而观察方向$(θ，φ)$就是相机指向被观察物体这个点的射线，通过两个角度可以表示三维下的一条射线。</p>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1 Introduction"></a>1 Introduction</h2><p><strong>Q：什么是MLP网络？</strong></p>
+<p><strong>A：</strong>多层感知器（Multilayer Perceptron，缩写MLP）是一种前向结构的人工神经网络，映射一组输入向量到一组输出向量。MLP可以被看作是一个有向图，由多个的节点层所组成，每一层都全连接到下一层。除了输入节点，每个节点都是一个带有非线性激活函数的神经元（或称处理单元）。一种被称为反向传播算法的监督学习方法常被用来训练MLP。</p>
+<p><strong>Q：还有什么想说的？</strong></p>
+<blockquote>
+<p>这里是搬运的，目前并不了解PINN</p>
+</blockquote>
+<p><strong>A：</strong>这篇论文的思想非常像流体力学的PINN，也是使用一个神经网络拟合某一个对象。PINN是用网络输出尽可能拟合离散点的函数值，而NERF就是用神经网络的输出拟合稀疏的相机拍摄图像。而且，与一般的问题不同，PINN和NERF都是尽可能过拟合标签值，因为它们都是应用于某一个特定的对象，如前者应用于某一个偏微分方程（组），后者应用于某一个场景。但是这引出了另一个问题：网络的泛化性很差，即不能通过微调将网络迁移适应于另一个不同的场景。</p>
+<p>另外有很多优点也是PINN和NERF所共通的。比如，流体力学求解方程的数值方法，需要采样大量的点才能逼近真实解，而且天然的时序特征导致了求解效率的低下；NERF以前的存储离散化体网络也需要耗费大量存储成本。</p>
+<p>更一般地说，PINN全称是physical-informed neural network，NERF本质上也是一种物理理论与神经网络的融合。流体力学的PINN和NERF有天然的近似性自然也就不奇怪了。</p>
+<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2 Related Work"></a>2 Related Work</h2><p>暂时没有问题</p>
+<h2 id="3-Neural-Radiance-Field-Scene-Representation"><a href="#3-Neural-Radiance-Field-Scene-Representation" class="headerlink" title="3 Neural Radiance Field Scene Representation"></a>3 Neural Radiance Field Scene Representation</h2><p><strong>Q：如何理解”We encourage the representation to be multiview consistent by restricting the network to predict the volume density σ as a function of only the location x, while allowing the RGB color c to be predicted as a function of both location and viewing direction. “即，这里为什么要限制体积密度σ作为位置x的函数，而让颜色c作为位置x和观看方向(θ，φ)的函数？观看方向(θ，φ)为什么会影响多视图的一致性？</strong></p>
+<p><strong>思考：</strong>从论文里面看，它这里的操作是先用8个完全连接层处理输入的3D坐标$(x，y，z)$，得到一个体积密度$σ$和256维的特征向量。然后特征向量和观看方向$(θ，φ)$连接起来，得到一个256+2维的向量，再给到最后的全连接层里面，从而输出与试图相关的颜色$c$。</p>
+<p>这样处理虽然是为了限制体积密度σ作为位置x的函数，但会不会也导致颜色$c$和观察方向$(θ，φ)$的关系不是很大了（毕竟只占了两个维度）？这样的话，如何设计并优化针对特定物理问题的网络？</p>
+<p>在知乎上看到一个很有趣的探讨：我们直觉理解空间点和颜色是没有任何关系的，在一个空间点放什么东西完全是人为确定。但是这篇文章可以通过MLP硬拟合这种关系，其中一个前提是MLP只用于某一特定场景的渲染，只是学习这种拟合关系而不是学会推理。所以，如果要使得网络具备迁移泛化能力，必须解除坐标与RGB这种不合逻辑的映射关系。</p>
+<p><strong>A：</strong>TODO</p>
+<h2 id="4-Volume-Rendering-with-Radiance-Fields"><a href="#4-Volume-Rendering-with-Radiance-Fields" class="headerlink" title="4 Volume Rendering with Radiance Fields"></a>4 Volume Rendering with Radiance Fields</h2><p><strong>Q：如何理解“The volume density σ(x) can be interpreted as the diﬀerential probability of a ray terminating at an inﬁnitesimal particle at location x. ”</strong></p>
+<p><strong>A：</strong>我认为这里应该和<strong>Abstract</strong>部分的问题<strong>“如何理解volume density”</strong>是一样的。这句话翻译过来就是“体积密度$σ(x)$可以解释为一条射线在$x$位置的无穷小粒子处终止的微分概率”，比较拗口，不过很明显关键部分是“射线在某个位置终止的微分概率”。这看起来应该和之前解释的不透明度差不多，光在这里终止（被吸收）的概率越大就说明这里越不透明。而之所以是微分概率，应该是体积密度$σ(x)$表示的只是某个点的不透明率。</p>
+<p><strong>Q：前面定义的网络已经计算出了从某个视角看到的某点颜色$c=(r，g，b)$和体积密度$σ$，为什么这里仍然需要通过公式1把预期颜色$C$计算出来？它们有什么区别？为什么不直接拟合？</strong></p>
+<p><strong>A：</strong>$C$是最终渲染时需要计算的值，$c$是RGB颜色值。拟合的只是空间单点的颜色$c$，只有通过离散积分一条光线上所有采样单点的颜色$c$，才能得到从某个视角看过去的2D图像上某个点的最终渲染颜色。如果硬要拟合整条光线所有点的$C$且使它们一样，那就只是angle-dependent而非view-dependent了，RGB和xyz坐标参数还是有关系的。</p>
+<p><strong>PS：这部分公式1到公式3是连续积分离散化的推导，这是最基本的数值方法，需要好好回顾一下！！！另外一个就是，目前没有学习图形学相关的一些知识，这方面知识欠缺比较多。</strong></p>
+<h2 id="5-Optimizing-a-Neural-Radiance-Field"><a href="#5-Optimizing-a-Neural-Radiance-Field" class="headerlink" title="5 Optimizing a Neural Radiance Field"></a>5 Optimizing a Neural Radiance Field</h2><h3 id="5-1-Positional-encoding"><a href="#5-1-Positional-encoding" class="headerlink" title="5.1 Positional encoding"></a>5.1 Positional encoding</h3><p><strong>Q：为什么第一段说使用高频函数将输入映射到更高维空间，能够更好地拟合包含高频变化的数据？</strong></p>
+<p><strong>思考：</strong>这种数据高频变化的思想不仅仅局限在三维重建中。我觉得可以泛化到具有剧烈域变化的数据集，此时可以对输入数据进行高维映射，以获得对数据更好的表征，更好地实现数据域适应。</p>
+<p><strong>A：</strong>TODO</p>
+<p><strong>Q：如何理解此处的编码函数？</strong></p>
+<p><strong>A：</strong>TODO</p>
+<h3 id="5-2-Hierarchical-volume-sampling"><a href="#5-2-Hierarchical-volume-sampling" class="headerlink" title="5.2 Hierarchical volume sampling"></a>5.2 Hierarchical volume sampling</h3><p><strong>Q：为什么通过同时优化两个网络（粗网络和细网络）可以解决自由空间和遮挡区域被重复采样的问题？</strong></p>
+<p><strong>A：</strong>TODO</p>
+<h3 id="5-3-Implementation-details"><a href="#5-3-Implementation-details" class="headerlink" title="5.3 Implementation details"></a>5.3 Implementation details</h3><p>暂时没有问题</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
+<li><a href="https://zhuanlan.zhihu.com/p/542200751">NeRF论文阅读</a></li>
+<li><a href="http://www.liuxiao.org/2021/11/%e8%ae%ba%e6%96%87%e7%ac%94%e8%ae%b0%ef%bc%9anerf-representing-scenes-as-neural-radiance-fields-for-view-synthesis/">论文笔记：NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/360365941">【NeRF论文笔记】用于视图合成的神经辐射场技术</a></li>
+<li><a href="https://blog.csdn.net/YuhsiHu/article/details/124318473">【论文精读】NeRF中的数学公式推导</a></li>
+<li><a href="https://raymondkevin.top/2021/07/22/neural-radiance-fields-volume-rendering-%E5%85%AC%E5%BC%8F%E5%88%86%E6%9E%90/">Neural Radiance Field’s Volume Rendering 公式分析</a></li>
+<li><a href="https://zh.m.wikipedia.org/zh-hans/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8">多层感知器</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>NeRF&amp;3DGS</category>
+      </categories>
+      <tags>
+        <tag>NeRF</tag>
+        <tag>深度学习</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>NeRF学习笔记（三）：基于NeRF的三维内容生成</title>
     <url>/2022/08/22/nerf-notes-3/</url>
     <content><![CDATA[<h1 id="NeRF学习笔记（三）：基于NeRF的三维内容生成"><a href="#NeRF学习笔记（三）：基于NeRF的三维内容生成" class="headerlink" title="NeRF学习笔记（三）：基于NeRF的三维内容生成"></a>NeRF学习笔记（三）：基于NeRF的三维内容生成</h1><h2 id="Why-NeRF-Succeeded"><a href="#Why-NeRF-Succeeded" class="headerlink" title="Why NeRF Succeeded"></a>Why NeRF Succeeded</h2><h3 id="Why-3D-content-creation-from-images"><a href="#Why-3D-content-creation-from-images" class="headerlink" title="Why 3D content creation from images"></a>Why 3D content creation from images</h3><h4 id="What-are-3D-contents"><a href="#What-are-3D-contents" class="headerlink" title="What are 3D contents"></a>What are 3D contents</h4><p>3D内容是形状和外观模型的组合，可以从不同的视点渲染为2D图像。</p>
@@ -10371,63 +10428,6 @@ SudokuRNN time = 337.7354459999997
 <p><strong>A：</strong>TODO</p>
 <p><strong>Q：为什么NeRF只用没有空间信息的MLP？</strong></p>
 <p><strong>A：</strong>TODO</p>
-]]></content>
-      <categories>
-        <category>NeRF&amp;3DGS</category>
-      </categories>
-      <tags>
-        <tag>NeRF</tag>
-        <tag>深度学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>NeRF学习笔记（二）：论文阅读与思考</title>
-    <url>/2022/08/21/nerf-notes-2/</url>
-    <content><![CDATA[<h1 id="NeRF学习笔记（二）：论文阅读与思考"><a href="#NeRF学习笔记（二）：论文阅读与思考" class="headerlink" title="NeRF学习笔记（二）：论文阅读与思考"></a>NeRF学习笔记（二）：论文阅读与思考</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p><strong>Q：如何理解稀疏的输入视图集</strong></p>
-<p><strong>A：</strong> a sparse set of input views 稀疏的输入视图集。也就是输入视图并不是连续的，可能就是在若干个方向或者角度拍几张照片，就能合成一个连续的360度环绕的场景</p>
-<p><strong>Q：如何理解volume density</strong></p>
-<p>volume density字面意思是体积密度，实际上理解为<strong>不透明度</strong>会更好，不透明度对应对光的吸收能力，volume density越大，不透明度越高，对光的吸收能力越强。</p>
-<p>这个在后面的公式有所涉及。</p>
-<p><strong>Q：为什么要输入这么五个坐标？</strong></p>
-<p><strong>A：</strong>因为考虑到不同视角上某一点的颜色是不一样的。正因如此，原文用了view-dependent，即某点的颜色是跟视角相关的</p>
-<p><strong>Q：如何理解5D坐标（空间位置$(x，y，z)$和观察方向$(θ，φ)$)？</strong></p>
-<p><strong>A：</strong>作者应该是确定了某个坐标系，空间位置$(x,y,z)$就是被观察物体某个点在这个坐标系中的坐标，而观察方向$(θ，φ)$就是相机指向被观察物体这个点的射线，通过两个角度可以表示三维下的一条射线。</p>
-<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1 Introduction"></a>1 Introduction</h2><p><strong>Q：什么是MLP网络？</strong></p>
-<p><strong>A：</strong>多层感知器（Multilayer Perceptron，缩写MLP）是一种前向结构的人工神经网络，映射一组输入向量到一组输出向量。MLP可以被看作是一个有向图，由多个的节点层所组成，每一层都全连接到下一层。除了输入节点，每个节点都是一个带有非线性激活函数的神经元（或称处理单元）。一种被称为反向传播算法的监督学习方法常被用来训练MLP。</p>
-<p><strong>Q：还有什么想说的？</strong></p>
-<blockquote>
-<p>这里是搬运的，目前并不了解PINN</p>
-</blockquote>
-<p><strong>A：</strong>这篇论文的思想非常像流体力学的PINN，也是使用一个神经网络拟合某一个对象。PINN是用网络输出尽可能拟合离散点的函数值，而NERF就是用神经网络的输出拟合稀疏的相机拍摄图像。而且，与一般的问题不同，PINN和NERF都是尽可能过拟合标签值，因为它们都是应用于某一个特定的对象，如前者应用于某一个偏微分方程（组），后者应用于某一个场景。但是这引出了另一个问题：网络的泛化性很差，即不能通过微调将网络迁移适应于另一个不同的场景。</p>
-<p>另外有很多优点也是PINN和NERF所共通的。比如，流体力学求解方程的数值方法，需要采样大量的点才能逼近真实解，而且天然的时序特征导致了求解效率的低下；NERF以前的存储离散化体网络也需要耗费大量存储成本。</p>
-<p>更一般地说，PINN全称是physical-informed neural network，NERF本质上也是一种物理理论与神经网络的融合。流体力学的PINN和NERF有天然的近似性自然也就不奇怪了。</p>
-<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2 Related Work"></a>2 Related Work</h2><p>暂时没有问题</p>
-<h2 id="3-Neural-Radiance-Field-Scene-Representation"><a href="#3-Neural-Radiance-Field-Scene-Representation" class="headerlink" title="3 Neural Radiance Field Scene Representation"></a>3 Neural Radiance Field Scene Representation</h2><p><strong>Q：如何理解”We encourage the representation to be multiview consistent by restricting the network to predict the volume density σ as a function of only the location x, while allowing the RGB color c to be predicted as a function of both location and viewing direction. “即，这里为什么要限制体积密度σ作为位置x的函数，而让颜色c作为位置x和观看方向(θ，φ)的函数？观看方向(θ，φ)为什么会影响多视图的一致性？</strong></p>
-<p><strong>思考：</strong>从论文里面看，它这里的操作是先用8个完全连接层处理输入的3D坐标$(x，y，z)$，得到一个体积密度$σ$和256维的特征向量。然后特征向量和观看方向$(θ，φ)$连接起来，得到一个256+2维的向量，再给到最后的全连接层里面，从而输出与试图相关的颜色$c$。</p>
-<p>这样处理虽然是为了限制体积密度σ作为位置x的函数，但会不会也导致颜色$c$和观察方向$(θ，φ)$的关系不是很大了（毕竟只占了两个维度）？这样的话，如何设计并优化针对特定物理问题的网络？</p>
-<p>在知乎上看到一个很有趣的探讨：我们直觉理解空间点和颜色是没有任何关系的，在一个空间点放什么东西完全是人为确定。但是这篇文章可以通过MLP硬拟合这种关系，其中一个前提是MLP只用于某一特定场景的渲染，只是学习这种拟合关系而不是学会推理。所以，如果要使得网络具备迁移泛化能力，必须解除坐标与RGB这种不合逻辑的映射关系。</p>
-<p><strong>A：</strong>TODO</p>
-<h2 id="4-Volume-Rendering-with-Radiance-Fields"><a href="#4-Volume-Rendering-with-Radiance-Fields" class="headerlink" title="4 Volume Rendering with Radiance Fields"></a>4 Volume Rendering with Radiance Fields</h2><p><strong>Q：如何理解“The volume density σ(x) can be interpreted as the diﬀerential probability of a ray terminating at an inﬁnitesimal particle at location x. ”</strong></p>
-<p><strong>A：</strong>我认为这里应该和<strong>Abstract</strong>部分的问题<strong>“如何理解volume density”</strong>是一样的。这句话翻译过来就是“体积密度$σ(x)$可以解释为一条射线在$x$位置的无穷小粒子处终止的微分概率”，比较拗口，不过很明显关键部分是“射线在某个位置终止的微分概率”。这看起来应该和之前解释的不透明度差不多，光在这里终止（被吸收）的概率越大就说明这里越不透明。而之所以是微分概率，应该是体积密度$σ(x)$表示的只是某个点的不透明率。</p>
-<p><strong>Q：前面定义的网络已经计算出了从某个视角看到的某点颜色$c=(r，g，b)$和体积密度$σ$，为什么这里仍然需要通过公式1把预期颜色$C$计算出来？它们有什么区别？为什么不直接拟合？</strong></p>
-<p><strong>A：</strong>$C$是最终渲染时需要计算的值，$c$是RGB颜色值。拟合的只是空间单点的颜色$c$，只有通过离散积分一条光线上所有采样单点的颜色$c$，才能得到从某个视角看过去的2D图像上某个点的最终渲染颜色。如果硬要拟合整条光线所有点的$C$且使它们一样，那就只是angle-dependent而非view-dependent了，RGB和xyz坐标参数还是有关系的。</p>
-<p><strong>PS：这部分公式1到公式3是连续积分离散化的推导，这是最基本的数值方法，需要好好回顾一下！！！另外一个就是，目前没有学习图形学相关的一些知识，这方面知识欠缺比较多。</strong></p>
-<h2 id="5-Optimizing-a-Neural-Radiance-Field"><a href="#5-Optimizing-a-Neural-Radiance-Field" class="headerlink" title="5 Optimizing a Neural Radiance Field"></a>5 Optimizing a Neural Radiance Field</h2><h3 id="5-1-Positional-encoding"><a href="#5-1-Positional-encoding" class="headerlink" title="5.1 Positional encoding"></a>5.1 Positional encoding</h3><p><strong>Q：为什么第一段说使用高频函数将输入映射到更高维空间，能够更好地拟合包含高频变化的数据？</strong></p>
-<p><strong>思考：</strong>这种数据高频变化的思想不仅仅局限在三维重建中。我觉得可以泛化到具有剧烈域变化的数据集，此时可以对输入数据进行高维映射，以获得对数据更好的表征，更好地实现数据域适应。</p>
-<p><strong>A：</strong>TODO</p>
-<p><strong>Q：如何理解此处的编码函数？</strong></p>
-<p><strong>A：</strong>TODO</p>
-<h3 id="5-2-Hierarchical-volume-sampling"><a href="#5-2-Hierarchical-volume-sampling" class="headerlink" title="5.2 Hierarchical volume sampling"></a>5.2 Hierarchical volume sampling</h3><p><strong>Q：为什么通过同时优化两个网络（粗网络和细网络）可以解决自由空间和遮挡区域被重复采样的问题？</strong></p>
-<p><strong>A：</strong>TODO</p>
-<h3 id="5-3-Implementation-details"><a href="#5-3-Implementation-details" class="headerlink" title="5.3 Implementation details"></a>5.3 Implementation details</h3><p>暂时没有问题</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
-<li><a href="https://zhuanlan.zhihu.com/p/542200751">NeRF论文阅读</a></li>
-<li><a href="http://www.liuxiao.org/2021/11/%e8%ae%ba%e6%96%87%e7%ac%94%e8%ae%b0%ef%bc%9anerf-representing-scenes-as-neural-radiance-fields-for-view-synthesis/">论文笔记：NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/360365941">【NeRF论文笔记】用于视图合成的神经辐射场技术</a></li>
-<li><a href="https://blog.csdn.net/YuhsiHu/article/details/124318473">【论文精读】NeRF中的数学公式推导</a></li>
-<li><a href="https://raymondkevin.top/2021/07/22/neural-radiance-fields-volume-rendering-%E5%85%AC%E5%BC%8F%E5%88%86%E6%9E%90/">Neural Radiance Field’s Volume Rendering 公式分析</a></li>
-<li><a href="https://zh.m.wikipedia.org/zh-hans/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8">多层感知器</a></li>
-</ol>
 ]]></content>
       <categories>
         <category>NeRF&amp;3DGS</category>
@@ -11386,6 +11386,157 @@ pointsf <span class="token operator">=</span> pts<span class="token punctuation"
       </tags>
   </entry>
   <entry>
+    <title>NeRF based SLAM学习笔记（7）：从Point NeRF到Loopy SLAM</title>
+    <url>/2024/04/02/nerf-slam-6/</url>
+    <content><![CDATA[<h1 id="NeRF-based-SLAM学习笔记（7）：从Point-NeRF到Loopy-SLAM"><a href="#NeRF-based-SLAM学习笔记（7）：从Point-NeRF到Loopy-SLAM" class="headerlink" title="NeRF based SLAM学习笔记（7）：从Point NeRF到Loopy SLAM"></a>NeRF based SLAM学习笔记（7）：从Point NeRF到Loopy SLAM</h1><h2 id="Point-NeRF"><a href="#Point-NeRF" class="headerlink" title="Point NeRF"></a>Point NeRF</h2><h3 id="System-Overview"><a href="#System-Overview" class="headerlink" title="System Overview"></a>System Overview</h3><img src="/images/nerf-slam-6/image-20240402145508974.png" style="zoom:67%;">
+
+<h3 id="场景表征"><a href="#场景表征" class="headerlink" title="场景表征"></a>场景表征</h3><p>使用neural point cloud表示场景<br>$$<br>P = {(p_i, f_i, r_i)|i = 1,…,N}<br>$$<br>p表示坐标，f是feature vector，r是scale confidence value，表示位于实际场景表面附近的可能性。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><img src="/images/nerf-slam-6/image-20231220204200344.png" style="zoom:67%;">
+
+<img src="/images/nerf-slam-6/image-20231220164344891.png" style="zoom:67%;">
+
+<img src="/images/nerf-slam-6/image-20231220164600991.png" style="zoom:67%;">
+
+<p><strong>问题：</strong></p>
+<ul>
+<li><p>查询MLP的次数和原版NeRF差不多，拖慢了渲染速度；</p>
+<p>比如，这里可以用上SNeRG[20] Baking Neural Radiance Fields for Real-Time View Synthesis. ICCV 2021. 这样的延迟渲染模型来加速，把一条射线上的采样点的特征融合之后再拿去解码，从而减少MLP查询次数；</p>
+</li>
+<li><p>点云密度和渲染质量之间需要平衡；</p>
+<ul>
+<li>点云密度高，显存占用增加</li>
+<li>降低点云密度，会降低渲染质量</li>
+</ul>
+<p>小模型这样的问题不明显，但是场景扩大就有问题了；</p>
+</li>
+</ul>
+<h2 id="Point-SLAM"><a href="#Point-SLAM" class="headerlink" title="Point SLAM"></a>Point SLAM</h2><h3 id="System-Overview-1"><a href="#System-Overview-1" class="headerlink" title="System Overview"></a>System Overview</h3><img src="/images/nerf-slam-6/image-20240409142122665.png" style="zoom: 67%;">
+
+<h3 id="场景表示"><a href="#场景表示" class="headerlink" title="场景表示"></a>场景表示</h3><img src="/images/nerf-slam-6/image-20240409143848241.png" style="zoom:67%;">
+
+<p>一系列的点云，每个点包括：位置、geometric特征向量、color特征向量</p>
+<h3 id="Point-Adding-Strategy"><a href="#Point-Adding-Strategy" class="headerlink" title="Point Adding Strategy"></a>Point Adding Strategy</h3><ol>
+<li><strong>采样阶段</strong>：<ul>
+<li>对于每个映射阶段和给定的估计相机姿态，从图像平面均匀采样X个像素和在具有最高颜色梯度幅度的前10Y个像素中采样Y个像素。</li>
+</ul>
+</li>
+<li><strong>像素转换到3D空间</strong>：<ul>
+<li>利用可用的深度信息，将这些像素转换到三维空间。在三维空间中搜索半径为r内的邻居点。</li>
+</ul>
+</li>
+<li><strong>点的添加</strong>：<ul>
+<li>如果在搜索半径r内没有找到邻居点，则沿着光线添加三个神经点。这些点以深度读数D为中心，并且偏移量分别为(1 − ρ)D和(1 + ρ)D，其中ρ ∈ (0, 1)是一个超参数，用于考虑期望深度噪声。</li>
+</ul>
+</li>
+<li><strong>初始化</strong>：<ul>
+<li>使用特征向量的正态分布初始化这些点。这三个点作为有限的更新带，其深度依赖性可用于建模深度相机的常见噪声特性。</li>
+</ul>
+</li>
+<li><strong>点云的增长和收敛</strong>：<ul>
+<li>随着处理更多帧，神经点云逐渐增长以表示场景的探索，但当不再访问新的场景部分时，它会收敛到有限的点集。与许多基于体素的表示不同，不需要在重建之前指定任何场景边界。</li>
+</ul>
+</li>
+</ol>
+<p>该策略的关键思想是在SLAM过程中根据当前相机姿态和深度信息动态地添加特征点，以捕获场景中的重要结构并适应深度相机的噪声。这种方法允许在不提前知道场景边界的情况下进行建图，并且可以在场景探索过程中动态地调整特征点的分布。</p>
+<h3 id="Dynamic-Resolution"><a href="#Dynamic-Resolution" class="headerlink" title="Dynamic Resolution"></a>Dynamic Resolution</h3><p>简单说就是每个区域点的数量、密度都是动态调整的。这样可以在保持建图精度的同时，节省计算和内存资源。</p>
+<p>颜色梯度比较大的地方，可能信息比较丰富，就需要更大的点密度，Point Adding Strategy添加点的半径就可以设置的小一些；</p>
+<p>反过来，颜色梯度非常小的地方，那说明信息很少，可以更低的点密度，Point Adding Strategy添加点的半径可以更大一些。</p>
+<img src="/images/nerf-slam-6/image-20240409150606209.png" style="zoom:67%;">
+
+<h3 id="Rendering"><a href="#Rendering" class="headerlink" title="Rendering"></a>Rendering</h3><p>如果像素点有观测深度，就在深度前后采样5个点，按照距离计算权重；如果没有观测深度，就采样25个点，按照占用率计算权重。</p>
+<p>其他的部分比较常见，这里不记录。</p>
+<h3 id="Mapping"><a href="#Mapping" class="headerlink" title="Mapping"></a>Mapping</h3><p>损失函数很简单，这里有一个细节，对于每个mapping phase，首先只使用深度进行优化，论文认为这样可以更好的初始化颜色的优化过程。</p>
+<blockquote>
+<p>但是最近也有研究深度噪声对重建影响的工作，这里就完全依赖深度了。</p>
+<p>如果给的深度误差比较大，可能对重建的结果有不小的影响。</p>
+</blockquote>
+<h3 id="Tracking"><a href="#Tracking" class="headerlink" title="Tracking"></a>Tracking</h3><p>和NICE-SLAM的Tracking非常相似。</p>
+<h3 id="Exposure-Compensation"><a href="#Exposure-Compensation" class="headerlink" title="Exposure Compensation"></a>Exposure Compensation</h3><p>居然还有exposure MLP来处理不同帧之间曝光变化的问题。</p>
+<h3 id="实验部分"><a href="#实验部分" class="headerlink" title="实验部分"></a>实验部分</h3><p>主要在Replica、TUM-RGBD和ScanNet上面测试。mesh是通过marching cubes算法获取的。</p>
+<p>提到了对于motion blur和specularities（镜面反射）非常敏感。</p>
+<h2 id="Loopy-SLAM"><a href="#Loopy-SLAM" class="headerlink" title="Loopy SLAM"></a>Loopy SLAM</h2><blockquote>
+<p>还是Point SLAM那个组做的工作</p>
+</blockquote>
+<h3 id="论文的贡献"><a href="#论文的贡献" class="headerlink" title="论文的贡献"></a>论文的贡献</h3><ul>
+<li>我们提出了 Loopy-SLAM，这是一种密集的 RGBD SLAM 方法，它将神经特征锚定在点云子图中，这些子图在场景探索过程中以数据驱动的方式迭代增长。 我们根据相机运动动态创建子图，并逐步在子图关键帧之间构建姿势图。 全局位置识别用于在线检测循环闭合，并直接在场景表示上通过简单有效的刚性校正来全局对齐轨迹和子图。</li>
+<li>我们提出了一种直接实现密集神经 SLAM 闭环的方法，与之前的工作相反，不需要场景表示的任何梯度更新或重新集成策略</li>
+<li><strong>传统上，严格的子图配准可能会在重叠区域中产生可见的接缝。</strong> 我们基于神经点云的方法避免了这种情况，并且我们在轨迹捕获结束时应用颜色和几何的特征细化。 我们进一步引入了重叠区域中子图的特征融合策略，以避免过多的内存使用并提高渲染性能。</li>
+</ul>
+<h3 id="论文提到的观点"><a href="#论文提到的观点" class="headerlink" title="论文提到的观点"></a>论文提到的观点</h3><ul>
+<li><p>作者认为SLAM可以分为耦合的方法和解耦合的方法，其中<strong>耦合的方法指的是使用相同的场景表示来进行tracking和mapping，解耦的方法对每个任务都使用独立的框架</strong>。</p>
+<ul>
+<li><p>目前解耦的方法能够实现更好的跟踪精度，但是会产生不期望的数据冗余和独立性；</p>
+</li>
+<li><p>作者认为tracking和mapping是耦合的任务，可以用相同的场景表示；</p>
+</li>
+</ul>
+<blockquote>
+<p>这里不是很懂，作者提到的解耦的方法我刚好都没有好好的去看过，不过Orbeez-slam是使用传统方法tracking，再用instant-ngp做mapping的。</p>
+<p>作者引用的解耦的方法：</p>
+<ul>
+<li>Orbeez-slam</li>
+<li>Newton: Neural view-centric mapping for on-the-fly large-scale slam.</li>
+<li>NeRF-SLAM: Real-Time Dense Monocular SLAM with Neural Radiance Fields</li>
+<li>Go-slam: Global optimization for consistent 3d instant reconstruction.</li>
+</ul>
+<p>作者引用的耦合的方法：</p>
+<ul>
+<li>Eslam: Efficient dense slam system based on hybrid representation of signed distance fields</li>
+<li>Point-slam: Dense neural point cloud-based slam.</li>
+<li>iMAP: Implicit Mapping and Positioning in Real-Time.</li>
+<li>Co-slam: Joint coordinate and sparse parametric encodings for neural real-time slam</li>
+<li>Vox-fusion: Dense tracking and mapping with voxel-based neural implicit representation.</li>
+<li>Nice-slam: Neural implicit scalable encoding for slam.</li>
+</ul>
+</blockquote>
+</li>
+<li><p><strong>耦合方法中，除了MIPS_Fusion之外，其他所有方法都是实现的frame-to-model tracking，这会导致位姿出现显著的漂移。</strong></p>
+</li>
+<li><p><strong>解耦方法都使用多分辨率哈希网格，这样不容易进行地图校正。而基于点的表示方法特别适合进行地图校正。</strong></p>
+</li>
+</ul>
+<h3 id="对其他回环检测方法的评价"><a href="#对其他回环检测方法的评价" class="headerlink" title="对其他回环检测方法的评价"></a>对其他回环检测方法的评价</h3><p>略，直接看论文的Loop Closure on Dense Maps.部分</p>
+<h3 id="System-Overview-2"><a href="#System-Overview-2" class="headerlink" title="System Overview"></a>System Overview</h3><img src="/images/nerf-slam-6/image-20240409193805630.png" style="zoom:67%;">
+
+<p>大部分流程都和Point SLAM一样，需要注意的是<strong>Keyframe Selection and Submap Initialization</strong>部分：论文认为过于频繁的创建子图也会增加姿态漂移，因此他们没有使用固定间隔等方法，而是根据相机运动去动态的创建全局关键帧。然后，在子图构建完成的时候进行闭环检测。</p>
+<p>对于<strong>Building Submaps Progressively</strong>部分，提到了子图的第一帧作为全局关键帧，但是没有具体说明如何创建一个新的子图。。。不过Figure 2下面的描述倒是说创建新的全局关键帧的时候，会开始初始化一个新子图。</p>
+<blockquote>
+<p>那估计这个系统的全局关键帧会挺少的，不然子图会比较多。。。</p>
+</blockquote>
+<h3 id="Loop-Closure-and-Refinement"><a href="#Loop-Closure-and-Refinement" class="headerlink" title="Loop Closure and Refinement"></a>Loop Closure and Refinement</h3><p>与MIPS-Fusion相比的话，这里的loop closure比较功利，每次开始新的submap就检测一次回环，MIPS-Fusion是开启新的submap之后，如果再回到之前submap的subvolume中才会检测，而且还有额外的条件。</p>
+<p><strong>Global Place Recognition</strong>    每个全局关键帧都被添加到Bow数据库中用于位置识别。这里论文cue了一下MIPS-Fusion，认为MIPS-Fusion这种通过重叠的submap去检测回环，只适合较小漂移的校正。</p>
+<blockquote>
+<p>有点像ORB-SLAM的做法，这里我需要再好好了解一下</p>
+<p>但是这里即使全局位置识别做得很好，自己用的还是子地图，而且还是每次开始新的子地图就检测一次回环，真不一定能比过MIPS-Fusion吧。。。</p>
+<p>而且后面的实验也没有和人家MIPS-Fusion用过的数据集比较。。。</p>
+</blockquote>
+<p><strong>Pose Graph Optimization</strong>    下面是GPT的一个总结</p>
+<img src="/images/nerf-slam-6/image-20240412103921609.png" style="zoom: 80%;">
+
+<blockquote>
+<p>这部分看不太懂，以后再好好研究一下吧。。。</p>
+</blockquote>
+<p><strong>Loop Edge Constraints</strong>    下面也是GPT的一个介绍</p>
+<img src="/images/nerf-slam-6/image-20240412104304511.png">
+
+<p><strong>Feature Fusion and Refinement</strong>    在tracking结束之后才会开始连接所有子图来构成一个全局的神经点云，首先是进行特征融合来压缩模型，由于Loopy SLAM是基于Point SLAM的工作，本质上还是feature point+decoder的结构，这里论文选择的是特征融合之后固定decoder，然后把color 和 geometry feature再进行一个优化。</p>
+<h3 id="实验部分-1"><a href="#实验部分-1" class="headerlink" title="实验部分"></a>实验部分</h3><p>Replica、TUM-RGBD数据集都用了，但是没有专门去找那种大场景、回环的。</p>
+<p>不过论文在ScanNet上做了一些实验，倒是也有说服力的证明了自己的回环是有效果的。</p>
+<blockquote>
+<p>但是我最近看的这些做回环检测的论文，实验都做的不太够。。</p>
+<p>一方面，在经典的几个数据集上比较自己的性能；</p>
+<p>另外一方面，只在某个能体现回环的数据集上证明自己回环有效果。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>NeRF</tag>
+        <tag>视觉SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Ubuntu配置OpenCV及多版本OpenCV共存</title>
     <url>/2021/07/06/opencv-notes-0/</url>
     <content><![CDATA[<h1 id="Ubuntu配置OpenCV及多版本OpenCV共存"><a href="#Ubuntu配置OpenCV及多版本OpenCV共存" class="headerlink" title="Ubuntu配置OpenCV及多版本OpenCV共存"></a>Ubuntu配置OpenCV及多版本OpenCV共存</h1><p>本文主要介绍ubuntu下OpenCV的安装，以及如何实现多个OpenCV版本共存。</p>
@@ -11561,157 +11712,6 @@ Subminor version <span class="token builtin class-name">:</span> <span class="to
       </categories>
       <tags>
         <tag>OpenCV</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>NeRF based SLAM学习笔记（7）：从Point NeRF到Loopy SLAM</title>
-    <url>/2024/04/02/nerf-slam-6/</url>
-    <content><![CDATA[<h1 id="NeRF-based-SLAM学习笔记（7）：从Point-NeRF到Loopy-SLAM"><a href="#NeRF-based-SLAM学习笔记（7）：从Point-NeRF到Loopy-SLAM" class="headerlink" title="NeRF based SLAM学习笔记（7）：从Point NeRF到Loopy SLAM"></a>NeRF based SLAM学习笔记（7）：从Point NeRF到Loopy SLAM</h1><h2 id="Point-NeRF"><a href="#Point-NeRF" class="headerlink" title="Point NeRF"></a>Point NeRF</h2><h3 id="System-Overview"><a href="#System-Overview" class="headerlink" title="System Overview"></a>System Overview</h3><img src="/images/nerf-slam-6/image-20240402145508974.png" style="zoom:67%;">
-
-<h3 id="场景表征"><a href="#场景表征" class="headerlink" title="场景表征"></a>场景表征</h3><p>使用neural point cloud表示场景<br>$$<br>P = {(p_i, f_i, r_i)|i = 1,…,N}<br>$$<br>p表示坐标，f是feature vector，r是scale confidence value，表示位于实际场景表面附近的可能性。</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><img src="/images/nerf-slam-6/image-20231220204200344.png" style="zoom:67%;">
-
-<img src="/images/nerf-slam-6/image-20231220164344891.png" style="zoom:67%;">
-
-<img src="/images/nerf-slam-6/image-20231220164600991.png" style="zoom:67%;">
-
-<p><strong>问题：</strong></p>
-<ul>
-<li><p>查询MLP的次数和原版NeRF差不多，拖慢了渲染速度；</p>
-<p>比如，这里可以用上SNeRG[20] Baking Neural Radiance Fields for Real-Time View Synthesis. ICCV 2021. 这样的延迟渲染模型来加速，把一条射线上的采样点的特征融合之后再拿去解码，从而减少MLP查询次数；</p>
-</li>
-<li><p>点云密度和渲染质量之间需要平衡；</p>
-<ul>
-<li>点云密度高，显存占用增加</li>
-<li>降低点云密度，会降低渲染质量</li>
-</ul>
-<p>小模型这样的问题不明显，但是场景扩大就有问题了；</p>
-</li>
-</ul>
-<h2 id="Point-SLAM"><a href="#Point-SLAM" class="headerlink" title="Point SLAM"></a>Point SLAM</h2><h3 id="System-Overview-1"><a href="#System-Overview-1" class="headerlink" title="System Overview"></a>System Overview</h3><img src="/images/nerf-slam-6/image-20240409142122665.png" style="zoom: 67%;">
-
-<h3 id="场景表示"><a href="#场景表示" class="headerlink" title="场景表示"></a>场景表示</h3><img src="/images/nerf-slam-6/image-20240409143848241.png" style="zoom:67%;">
-
-<p>一系列的点云，每个点包括：位置、geometric特征向量、color特征向量</p>
-<h3 id="Point-Adding-Strategy"><a href="#Point-Adding-Strategy" class="headerlink" title="Point Adding Strategy"></a>Point Adding Strategy</h3><ol>
-<li><strong>采样阶段</strong>：<ul>
-<li>对于每个映射阶段和给定的估计相机姿态，从图像平面均匀采样X个像素和在具有最高颜色梯度幅度的前10Y个像素中采样Y个像素。</li>
-</ul>
-</li>
-<li><strong>像素转换到3D空间</strong>：<ul>
-<li>利用可用的深度信息，将这些像素转换到三维空间。在三维空间中搜索半径为r内的邻居点。</li>
-</ul>
-</li>
-<li><strong>点的添加</strong>：<ul>
-<li>如果在搜索半径r内没有找到邻居点，则沿着光线添加三个神经点。这些点以深度读数D为中心，并且偏移量分别为(1 − ρ)D和(1 + ρ)D，其中ρ ∈ (0, 1)是一个超参数，用于考虑期望深度噪声。</li>
-</ul>
-</li>
-<li><strong>初始化</strong>：<ul>
-<li>使用特征向量的正态分布初始化这些点。这三个点作为有限的更新带，其深度依赖性可用于建模深度相机的常见噪声特性。</li>
-</ul>
-</li>
-<li><strong>点云的增长和收敛</strong>：<ul>
-<li>随着处理更多帧，神经点云逐渐增长以表示场景的探索，但当不再访问新的场景部分时，它会收敛到有限的点集。与许多基于体素的表示不同，不需要在重建之前指定任何场景边界。</li>
-</ul>
-</li>
-</ol>
-<p>该策略的关键思想是在SLAM过程中根据当前相机姿态和深度信息动态地添加特征点，以捕获场景中的重要结构并适应深度相机的噪声。这种方法允许在不提前知道场景边界的情况下进行建图，并且可以在场景探索过程中动态地调整特征点的分布。</p>
-<h3 id="Dynamic-Resolution"><a href="#Dynamic-Resolution" class="headerlink" title="Dynamic Resolution"></a>Dynamic Resolution</h3><p>简单说就是每个区域点的数量、密度都是动态调整的。这样可以在保持建图精度的同时，节省计算和内存资源。</p>
-<p>颜色梯度比较大的地方，可能信息比较丰富，就需要更大的点密度，Point Adding Strategy添加点的半径就可以设置的小一些；</p>
-<p>反过来，颜色梯度非常小的地方，那说明信息很少，可以更低的点密度，Point Adding Strategy添加点的半径可以更大一些。</p>
-<img src="/images/nerf-slam-6/image-20240409150606209.png" style="zoom:67%;">
-
-<h3 id="Rendering"><a href="#Rendering" class="headerlink" title="Rendering"></a>Rendering</h3><p>如果像素点有观测深度，就在深度前后采样5个点，按照距离计算权重；如果没有观测深度，就采样25个点，按照占用率计算权重。</p>
-<p>其他的部分比较常见，这里不记录。</p>
-<h3 id="Mapping"><a href="#Mapping" class="headerlink" title="Mapping"></a>Mapping</h3><p>损失函数很简单，这里有一个细节，对于每个mapping phase，首先只使用深度进行优化，论文认为这样可以更好的初始化颜色的优化过程。</p>
-<blockquote>
-<p>但是最近也有研究深度噪声对重建影响的工作，这里就完全依赖深度了。</p>
-<p>如果给的深度误差比较大，可能对重建的结果有不小的影响。</p>
-</blockquote>
-<h3 id="Tracking"><a href="#Tracking" class="headerlink" title="Tracking"></a>Tracking</h3><p>和NICE-SLAM的Tracking非常相似。</p>
-<h3 id="Exposure-Compensation"><a href="#Exposure-Compensation" class="headerlink" title="Exposure Compensation"></a>Exposure Compensation</h3><p>居然还有exposure MLP来处理不同帧之间曝光变化的问题。</p>
-<h3 id="实验部分"><a href="#实验部分" class="headerlink" title="实验部分"></a>实验部分</h3><p>主要在Replica、TUM-RGBD和ScanNet上面测试。mesh是通过marching cubes算法获取的。</p>
-<p>提到了对于motion blur和specularities（镜面反射）非常敏感。</p>
-<h2 id="Loopy-SLAM"><a href="#Loopy-SLAM" class="headerlink" title="Loopy SLAM"></a>Loopy SLAM</h2><blockquote>
-<p>还是Point SLAM那个组做的工作</p>
-</blockquote>
-<h3 id="论文的贡献"><a href="#论文的贡献" class="headerlink" title="论文的贡献"></a>论文的贡献</h3><ul>
-<li>我们提出了 Loopy-SLAM，这是一种密集的 RGBD SLAM 方法，它将神经特征锚定在点云子图中，这些子图在场景探索过程中以数据驱动的方式迭代增长。 我们根据相机运动动态创建子图，并逐步在子图关键帧之间构建姿势图。 全局位置识别用于在线检测循环闭合，并直接在场景表示上通过简单有效的刚性校正来全局对齐轨迹和子图。</li>
-<li>我们提出了一种直接实现密集神经 SLAM 闭环的方法，与之前的工作相反，不需要场景表示的任何梯度更新或重新集成策略</li>
-<li><strong>传统上，严格的子图配准可能会在重叠区域中产生可见的接缝。</strong> 我们基于神经点云的方法避免了这种情况，并且我们在轨迹捕获结束时应用颜色和几何的特征细化。 我们进一步引入了重叠区域中子图的特征融合策略，以避免过多的内存使用并提高渲染性能。</li>
-</ul>
-<h3 id="论文提到的观点"><a href="#论文提到的观点" class="headerlink" title="论文提到的观点"></a>论文提到的观点</h3><ul>
-<li><p>作者认为SLAM可以分为耦合的方法和解耦合的方法，其中<strong>耦合的方法指的是使用相同的场景表示来进行tracking和mapping，解耦的方法对每个任务都使用独立的框架</strong>。</p>
-<ul>
-<li><p>目前解耦的方法能够实现更好的跟踪精度，但是会产生不期望的数据冗余和独立性；</p>
-</li>
-<li><p>作者认为tracking和mapping是耦合的任务，可以用相同的场景表示；</p>
-</li>
-</ul>
-<blockquote>
-<p>这里不是很懂，作者提到的解耦的方法我刚好都没有好好的去看过，不过Orbeez-slam是使用传统方法tracking，再用instant-ngp做mapping的。</p>
-<p>作者引用的解耦的方法：</p>
-<ul>
-<li>Orbeez-slam</li>
-<li>Newton: Neural view-centric mapping for on-the-fly large-scale slam.</li>
-<li>NeRF-SLAM: Real-Time Dense Monocular SLAM with Neural Radiance Fields</li>
-<li>Go-slam: Global optimization for consistent 3d instant reconstruction.</li>
-</ul>
-<p>作者引用的耦合的方法：</p>
-<ul>
-<li>Eslam: Efficient dense slam system based on hybrid representation of signed distance fields</li>
-<li>Point-slam: Dense neural point cloud-based slam.</li>
-<li>iMAP: Implicit Mapping and Positioning in Real-Time.</li>
-<li>Co-slam: Joint coordinate and sparse parametric encodings for neural real-time slam</li>
-<li>Vox-fusion: Dense tracking and mapping with voxel-based neural implicit representation.</li>
-<li>Nice-slam: Neural implicit scalable encoding for slam.</li>
-</ul>
-</blockquote>
-</li>
-<li><p><strong>耦合方法中，除了MIPS_Fusion之外，其他所有方法都是实现的frame-to-model tracking，这会导致位姿出现显著的漂移。</strong></p>
-</li>
-<li><p><strong>解耦方法都使用多分辨率哈希网格，这样不容易进行地图校正。而基于点的表示方法特别适合进行地图校正。</strong></p>
-</li>
-</ul>
-<h3 id="对其他回环检测方法的评价"><a href="#对其他回环检测方法的评价" class="headerlink" title="对其他回环检测方法的评价"></a>对其他回环检测方法的评价</h3><p>略，直接看论文的Loop Closure on Dense Maps.部分</p>
-<h3 id="System-Overview-2"><a href="#System-Overview-2" class="headerlink" title="System Overview"></a>System Overview</h3><img src="/images/nerf-slam-6/image-20240409193805630.png" style="zoom:67%;">
-
-<p>大部分流程都和Point SLAM一样，需要注意的是<strong>Keyframe Selection and Submap Initialization</strong>部分：论文认为过于频繁的创建子图也会增加姿态漂移，因此他们没有使用固定间隔等方法，而是根据相机运动去动态的创建全局关键帧。然后，在子图构建完成的时候进行闭环检测。</p>
-<p>对于<strong>Building Submaps Progressively</strong>部分，提到了子图的第一帧作为全局关键帧，但是没有具体说明如何创建一个新的子图。。。不过Figure 2下面的描述倒是说创建新的全局关键帧的时候，会开始初始化一个新子图。</p>
-<blockquote>
-<p>那估计这个系统的全局关键帧会挺少的，不然子图会比较多。。。</p>
-</blockquote>
-<h3 id="Loop-Closure-and-Refinement"><a href="#Loop-Closure-and-Refinement" class="headerlink" title="Loop Closure and Refinement"></a>Loop Closure and Refinement</h3><p>与MIPS-Fusion相比的话，这里的loop closure比较功利，每次开始新的submap就检测一次回环，MIPS-Fusion是开启新的submap之后，如果再回到之前submap的subvolume中才会检测，而且还有额外的条件。</p>
-<p><strong>Global Place Recognition</strong>    每个全局关键帧都被添加到Bow数据库中用于位置识别。这里论文cue了一下MIPS-Fusion，认为MIPS-Fusion这种通过重叠的submap去检测回环，只适合较小漂移的校正。</p>
-<blockquote>
-<p>有点像ORB-SLAM的做法，这里我需要再好好了解一下</p>
-<p>但是这里即使全局位置识别做得很好，自己用的还是子地图，而且还是每次开始新的子地图就检测一次回环，真不一定能比过MIPS-Fusion吧。。。</p>
-<p>而且后面的实验也没有和人家MIPS-Fusion用过的数据集比较。。。</p>
-</blockquote>
-<p><strong>Pose Graph Optimization</strong>    下面是GPT的一个总结</p>
-<img src="/images/nerf-slam-6/image-20240412103921609.png" style="zoom: 80%;">
-
-<blockquote>
-<p>这部分看不太懂，以后再好好研究一下吧。。。</p>
-</blockquote>
-<p><strong>Loop Edge Constraints</strong>    下面也是GPT的一个介绍</p>
-<img src="/images/nerf-slam-6/image-20240412104304511.png">
-
-<p><strong>Feature Fusion and Refinement</strong>    在tracking结束之后才会开始连接所有子图来构成一个全局的神经点云，首先是进行特征融合来压缩模型，由于Loopy SLAM是基于Point SLAM的工作，本质上还是feature point+decoder的结构，这里论文选择的是特征融合之后固定decoder，然后把color 和 geometry feature再进行一个优化。</p>
-<h3 id="实验部分-1"><a href="#实验部分-1" class="headerlink" title="实验部分"></a>实验部分</h3><p>Replica、TUM-RGBD数据集都用了，但是没有专门去找那种大场景、回环的。</p>
-<p>不过论文在ScanNet上做了一些实验，倒是也有说服力的证明了自己的回环是有效果的。</p>
-<blockquote>
-<p>但是我最近看的这些做回环检测的论文，实验都做的不太够。。</p>
-<p>一方面，在经典的几个数据集上比较自己的性能；</p>
-<p>另外一方面，只在某个能体现回环的数据集上证明自己回环有效果。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>NeRF</tag>
-        <tag>视觉SLAM</tag>
       </tags>
   </entry>
   <entry>
@@ -12586,277 +12586,6 @@ TODO
       </tags>
   </entry>
   <entry>
-    <title>3DGS SLAM泛读（一）</title>
-    <url>/2024/03/06/paper-reading-3dgs-slam-1/</url>
-    <content><![CDATA[<h1 id="3DGS-SLAM泛读（一）"><a href="#3DGS-SLAM泛读（一）" class="headerlink" title="3DGS SLAM泛读（一）"></a>3DGS SLAM泛读（一）</h1><h2 id="GS-SLAM"><a href="#GS-SLAM" class="headerlink" title="GS-SLAM"></a>GS-SLAM</h2><p><strong>贡献：</strong></p>
-<ul>
-<li>第一个3D高斯的稠密RGB-D SLAM方法</li>
-<li>自适应3D高斯扩展策略，coarse to fine的选择可靠的3D高斯</li>
-<li>8FPS的速度，平衡效率与精度</li>
-</ul>
-<p><strong>Overview：</strong></p>
-<img src="/images/3dgs-slam-1/image-20240306193920492.png" style="zoom:67%;">
-
-<p><strong>场景表示：</strong></p>
-<p>与3dgs一模一样的表示方法</p>
-<img src="/images/3dgs-slam-1/image-20240315150752115.png" style="zoom:67%;">
-
-<p><strong>个人观点：</strong></p>
-<p>做的比较粗糙，没有特别亮眼的地方，感觉就是按照之前NeRF SLAM的思路，简单的用3DGS又做了一遍。不过可以基于这篇论文，了解一下3DGS SLAM应该是怎么样去做的，这篇论文比较好理解。</p>
-<p>实验部分能看到受益于3DGS，渲染做得很好、速度也很快，但是跟踪和建图的精度以及速度却和之前NeRF SLAM的方法却差距不大（甚至不如ESLAM和COSLAM），这里个人感觉是有问题的。</p>
-<h2 id="Gaussian-SLAM"><a href="#Gaussian-SLAM" class="headerlink" title="Gaussian-SLAM"></a>Gaussian-SLAM</h2><p><strong>贡献：</strong></p>
-<ul>
-<li>3D高斯表示场景的RGB-D SLAM方法</li>
-<li>扩展了Gaussian splatting，更好的编码几何形状</li>
-<li>高斯分布的在线学习策略，将场景分成很多子场景，并且引入了seeding和优化的策略</li>
-<li>通过最小化光度误差，实现了frame-to-model的tracking，并且和现有的frame-to-frame的方法作了比较</li>
-</ul>
-<p><strong>Limitations of Gaussian Splatting for SLAM：</strong></p>
-<p>这篇论文讲了Gaussian Splatting运用到SLAM算法中的局限性，个人认为是比较值得参考的。这里讲了几点问题：</p>
-<ul>
-<li><p><strong>Seeding strategy for online SLAM</strong></p>
-<p>原始3DGS的自适应密度控制策略是iterative dynamic behavior的，可能会导致mapping的迭代和计算时间发生剧烈的变化，这种方式不适合SLAM。</p>
-<blockquote>
-<p>因为SLAM既要建图又要跟踪吧，如果建图时间过长，或者地图更新太大，会对跟踪造成很不好的影响</p>
-</blockquote>
-</li>
-<li><p><strong>Online optimization</strong></p>
-<p>对于较长的序列来说，在线优化所有帧太慢了</p>
-<blockquote>
-<p>这个，就好像sfm和slam</p>
-</blockquote>
-</li>
-<li><p><strong>Catastrophic forgetting in online optimization</strong></p>
-<p>为了避免每个新帧带来地图的线性增长，一种候选的方案是使用当前帧去优化高斯场景表示。但是这种方法会导致之前mapped views严重退化。</p>
-<blockquote>
-<p>这里我不理解，为什么会导致之前优化的结果严重退化？</p>
-<p>是因为当前帧和前面的帧有重复的内容，而这个候选的方案只考虑当前帧，优化之后的3D高斯只能和当前帧“合得来”，而和之前的帧就“合不来”了？</p>
-</blockquote>
-</li>
-<li><p><strong>Highly randomized solutions</strong></p>
-<p>提到了splatting优化的结果高度依赖于高斯的初始化。并且优化过程中，会受到相邻高斯的影响，高斯可能会向不同的方向增长。</p>
-<p>3D高斯固有的对称性导致了不影响损失函数（损失不变）的情况下，3D高斯的参数可以被改动，就是说存在不唯一的解，而这种情况是优化过程不希望出现的。</p>
-<blockquote>
-<p>这可能会导致有时候优化了，损失函数没有被改变？</p>
-</blockquote>
-</li>
-<li><p><strong>Poor extrapolation capabilities</strong></p>
-<p>高斯函数经常不受控制的生长到未观察到的区域。原始3DGS的方法因为良好的视图覆盖，可以约束大多数高斯模型；但是稀疏视图的SLAM中，新视图往往包含由于先前约束不足的高斯模型产生的伪影，这对于model-based tracking影响很致命。</p>
-<blockquote>
-<p>因为存在伪影，使用color或者depth计算的损失都会有一些影响？</p>
-</blockquote>
-</li>
-<li><p><strong>Limited geometric accuracy</strong></p>
-<p>单目的情况下，3DGS不擅长编码精确的几何形状。</p>
-</li>
-</ul>
-<blockquote>
-<p>其实根据这里所讲的几个问题，我认为对于3D高斯来说，SLAM似乎是这样的一个问题：稀疏视角（我们可能不会mapping每一帧，每次对于新的观测区域也都可以算是稀疏视角的）、位姿未知（需要tracking每一帧）、在线（数据是一帧一帧来的，不是一次性给到位的）的重建问题</p>
-<p>另外，这篇论文是我见过，提出问题最多的论文。</p>
-</blockquote>
-<p><strong>Overview：</strong></p>
-<img src="/images/3dgs-slam-1/image-20240306205206830.png" style="zoom:67%;">
-
-<blockquote>
-<p>看起来是借鉴了ORB-SLAM3的思路，用sub-map的方式去尝试解决3DGS在SLAM中的一些问题。</p>
-</blockquote>
-<p><strong>场景表示：</strong></p>
-<p>看起来也是用的原版的3dgs，没有做什么改动？？？</p>
-<p><strong>实验部分：</strong></p>
-<img src="/images/3dgs-slam-1/image-20240306215736766.png" style="zoom:67%;">
-
-<blockquote>
-<p>实验部分很有意思，展示了一个比较关键的问题：<strong>纯3DGS的tracking性能不好，加入pre-mapped效果会好很多</strong></p>
-<p>但是也反映了一个和GS-SLAM一样存在的问题：<strong>Rendering的速度很快，但Mapping的速度并不快</strong></p>
-</blockquote>
-<p><strong>个人观点：</strong></p>
-<p>对于3DGS应用到SLAM中可能存在的问题，做了一个很好的介绍，很有参考价值。</p>
-<p>实验中体现了两个值得关注的问题：</p>
-<ul>
-<li>纯粹的依靠3DGS的tracking，性能不好，但是加入pre-mapped之后效果会好很多；</li>
-<li>目前的3DGS SLAM，Rendering速度都很快，但是Mapping和Tracking的速度普遍与之前NeRF-SLAM的方法差距不大。</li>
-</ul>
-<h2 id="SplaTAM"><a href="#SplaTAM" class="headerlink" title="SplaTAM"></a>SplaTAM</h2><p><strong>贡献：</strong></p>
-<p>SplaTAM解决了之前基于辐射场表示的局限性，包括：快速渲染和优化、<strong>确定区域先前是否已建图的能力、通过添加更多高斯函数进行结构化地图扩展</strong>。</p>
-<p><strong>对显示3D Gaussian用于SLAM的优点做了分析：</strong></p>
-<ul>
-<li><p>Fast rendering and rich optimization</p>
-<blockquote>
-<p>能够实时使用dense photometric loss进行SLAM</p>
-</blockquote>
-</li>
-<li><p>具有明确空间范围的地图，可以轻松控制现有地图的边界</p>
-<blockquote>
-<p>但是我认为它主要是和用MLP表示场景的方法相比，而feature grid+mlp的方法其实已经可以控制地图的边界了，不过也没有3dgs这么灵活。</p>
-</blockquote>
-</li>
-<li><p>显示的地图</p>
-<blockquote>
-<p>目前来看，显示的地图更好编辑和增加容量</p>
-</blockquote>
-</li>
-<li><p>到参数的直接梯度流</p>
-<blockquote>
-<p>不太懂这个。。。</p>
-</blockquote>
-</li>
-</ul>
-<p><strong>SLAM System</strong></p>
-<img src="/images/3dgs-slam-1/image-20240315152612755.png" style="zoom:67%;">
-
-<img src="/images/3dgs-slam-1/image-20240315151501208.png" style="zoom:67%;">
-
-<ul>
-<li><p><strong>Initialization</strong></p>
-<img src="/images/3dgs-slam-1/image-20240315160040041.png" style="zoom:67%;">
-</li>
-<li><p><strong>Tracking</strong></p>
-<img src="/images/3dgs-slam-1/image-20240315160108994.png" style="zoom:67%;">
-
-<img src="/images/3dgs-slam-1/image-20240315160120508.png" style="zoom:67%;">
-</li>
-<li><p><strong>Gaussian Densification</strong></p>
-<img src="/images/3dgs-slam-1/image-20240315160207865.png" style="zoom:67%;">
-</li>
-<li><p><strong>Gaussian Map Updating</strong></p>
-<img src="/images/3dgs-slam-1/image-20240315160237644.png" style="zoom:67%;">
-
-</li>
-</ul>
-<p><strong>场景表示：</strong></p>
-<p>与原始的3dgs相比，使用了与视图无关的颜色，强制高斯分布为各向同性。</p>
-<blockquote>
-<p>与视图无关的颜色指的是没有用球谐函数了？？？从论文的说法看确实是这样的</p>
-</blockquote>
-<p>每个高斯对应了8个值：颜色R、G、B，中心位置x、y、z，半径r，不透明度o</p>
-<p><strong>实验部分：</strong></p>
-<p>这里我主要关注耗时，SplaTAM其实并没有在Tracking和Mapping的耗时上彻底优于之前基于NeRF的SLAM方法，只能说在渲染的速率上快了很多。</p>
-<img src="/images/3dgs-slam-1/image-20240315160602090.png" style="zoom: 67%;">
-
-<p><strong>Limitations and Future Work</strong></p>
-<img src="/images/3dgs-slam-1/image-20240315160722944.png" style="zoom:67%;">
-
-<p><strong>个人观点：</strong></p>
-<p>感觉不是非常有特色，和其他3dgs slam相比，最大的不同可能只是场景的表示不一样了，放弃了球谐函数，每个3dgs都只有8个参数。有一个博士评价这个工作拼凑感太强。</p>
-<p>不过这篇论文是第一个开源的，而且也把工作的流程讲的很清楚，可以拿来好好学习。</p>
-<h2 id="Gaussian-Splatting-SLAM"><a href="#Gaussian-Splatting-SLAM" class="headerlink" title="Gaussian Splatting SLAM"></a>Gaussian Splatting SLAM</h2><p><strong>贡献：</strong></p>
-<img src="/images/3dgs-slam-1/image-20240310145931259.png" style="zoom:67%;">
-
-
-
-<p><strong>论文提及的一些观点：</strong></p>
-<ul>
-<li>NeRF近期的发展都引入了显示的体积结构，从这些工作中可以推断出：<strong>高质量新视图合成的关键不是神经网络，而是可微分体积渲染</strong>。以Plenoxels为例，可以避免使用MLP就实现与NeRF相当的渲染质量。</li>
-</ul>
-<p><strong>场景表示：</strong></p>
-<p>anisotropic（各向异性）的3DGS，但是省略了球谐函数相关的部分</p>
-<img src="/images/3dgs-slam-1/image-20240319153804529.png" style="zoom: 67%;">
-
-
-
-<p><strong>部分公式推导、理解</strong></p>
-<img src="/images/3dgs-slam-1/image-20240320171441720.png" style="zoom: 67%;">
-
-<p>公式3：回顾《视觉SLAM十四讲》，可以比较简单的推导出来。但是对于这里面表示反对称的符号为什么有两种，个人不太理解。</p>
-<p>公式4：我好像对雅可比矩阵等内容非常不熟悉，还需要好好了解一下才能继续写这部分！！！</p>
-<p><strong>System Overview</strong></p>
-<img src="/images/3dgs-slam-1/image-20240320180342588.png" style="zoom:67%;">
-
-<p>Tracking部分还是老样子的感觉，毕竟无论NeRF SLAM还是3DGS SLAM基本都是用frame-to-model优化位姿，玩不出新花样来。</p>
-<p>Keyframing有点传统slam的意思了，通过共视关系选择关键帧，并且使用DSO的方式管理关键帧。同时3DGS也遵循可见性排序，考虑Gaussian Covisibility又进一步简化了关键帧的选择与管理。另外，看起来3DGS场景也只能由keyframe去加入点，同时也会看这些高斯函数是否被其他关键帧看到，没看到就会被修剪掉。</p>
-<blockquote>
-<p>关键帧选择对mono slam来说应该是很重要的，因为只有只有multiple-view observations才能够决定场景的几何结构！</p>
-</blockquote>
-<p>Mapping部分之前的工作我也没好好了解，但是这部分其实才是3dgs slam中最重要的部分。这里详细记录一下：</p>
-<ul>
-<li><p>基于共视关系选择一系列的关键帧，用于优化当前的可见区域；</p>
-<p>另外每次迭代优化都随机选择两个过往关键帧，防止遗忘全局地图。</p>
-<blockquote>
-<p>3dgs这种表示为什么会担心遗忘全局地图呢？</p>
-<p>最近刚好自己写了一个简单的3dgs slam，一帧进来优化位姿、优化场景，这种的最后也就学出来了一个几何结构，但是颜色、视图很差，我这里用的RGB各16维的球谐系数，不过场景是各向同性的3dgs，我认为是球谐函数被影响的问题。</p>
-<p>但是放到这里，mono GS放弃了球谐函数，但是选择了各向异性的3dgs，会不会是各向异性的问题？</p>
-</blockquote>
-</li>
-<li><p>引入了一个各向同性正则化，减少伪影，方便SLAM的tracking</p>
-<blockquote>
-<p>为什么不干脆用各向同性的3dgs呢？？？</p>
-</blockquote>
-</li>
-</ul>
-<p><strong>实验部分</strong></p>
-<p>略，懒得记了，到时候直接看论文！</p>
-<h2 id="Photo-SLAM"><a href="#Photo-SLAM" class="headerlink" title="Photo-SLAM"></a>Photo-SLAM</h2><p><strong>Motivation：</strong>Our proposed Photo-SLAM seeks to recover a concise representation of the observed environment <strong>for immersive exploration rather than reconstructing a dense mesh</strong>.</p>
-<p><strong>贡献：</strong></p>
-<img src="/images/3dgs-slam-1/image-20240326153452403.png" style="zoom:67%;">
-
-<p><strong>Overview：</strong></p>
-<img src="/images/3dgs-slam-1/image-20240326154856204.png" style="zoom: 80%;">
-
-<p>根据论文的描述，photo-SLAM包括：localization、geometry mapping、photorealistic mapping、loop closure，并且每一个组件都有一个单独的线程，而且他们共同维护了一个hyper primitives map。</p>
-<blockquote>
-<p>ORB-SLAM3分为tracking、local mapping、loop and map merging这三个线程</p>
-<p>ORB-SLAM2分为tracking、local mapping、loop closing这三个线程</p>
-<p>个人感觉photo slam是基于orb slam2或3的工作，在上面加了一个3DGS的photorealistic mapping线程。</p>
-</blockquote>
-<p><strong>Hyper Primitives Map</strong>【场景表征】</p>
-<p>Hyper Primitives由一系列的点云组成，而这些点云包括了：ORB特征、旋转、缩放、密度、球谐系数</p>
-<blockquote>
-<p>point cloud: 3维</p>
-<p>ORB features: 256维</p>
-<p>rotation: 3维, SO(3)</p>
-<p>scaling: 3维</p>
-<p>density: 1维</p>
-<p>SH: 16维</p>
-<p>个人观点：在原始的3DGS上加入了ORB特征，而3DGS点云的添加来自于ORB-SLAM产生的地图点（ORB特征点），<strong>ORB特征用传统方法得到，而其他的都是原汁原味的3DGS</strong></p>
-<p>这样做对于传统SLAM方法而言，还是非常自然的，但是photorealistic mapping真的能够实时运行吗？</p>
-</blockquote>
-<p><strong>Localization and Geometry Mapping</strong></p>
-<p>作用：实时的位姿估计、稀疏的3D点云，创建所谓的Hyper Primitives</p>
-<blockquote>
-<p>感觉很经典，，，先不仔细看，后面和ORB-SLAM比较一下</p>
-</blockquote>
-<p><strong>Photorealisitc Mapping</strong></p>
-<p>作用：负责优化geometry mapping thread线程创建的Hyper Primitives</p>
-<blockquote>
-<p> 这部分就放了个损失函数欸</p>
-</blockquote>
-<p><strong>Geometry-based Densification</strong></p>
-<p>这部分说为了保证实时性，只生成了稀疏的Hyper Primitives，后面还需要致密化。他们额外设计了一个基于几何结构的致密化方法。</p>
-<p>他们做的实验表明：只有不到30%的特征点是active的并且有对应的3D点。而他们认为2D几何特征点的分布表示这些区域有更复杂的纹理，因此需要更多的Hyper Primitives，他们会把inactive的特征点主动创建成额外的临时Hyper Primitives。</p>
-<img src="/images/3dgs-slam-1/image-20240329154831969.png" style="zoom:80%;">
-
-<blockquote>
-<p>这个也不太像是基于几何结构的致密化方法，感觉做的很简单。</p>
-<p>不过思路很不错，特征点多的区域确实是纹理复杂的区域，但是如果我想重建场景的话，特征点少的区域、纹理弱的区域也是很重要的，这部分应该怎么去处理呢？</p>
-<p>是不是可以特征点多、纹理丰富的区域做一种处理方法，多放小的3DGS点；</p>
-<p>在特征点少、纹理弱的区域另外处理，比如放一些大的3DGS点</p>
-</blockquote>
-<p><strong>Gaussian-Pyramid-Based Learning</strong></p>
-<p><img src="/images/3dgs-slam-1/image-20240329154856803.png"></p>
-<p>论文在这里介绍了一些Progressive training的方法，比如NSVF、NVGO是训练中逐步增加特征网格的分辨率，较低分辨率的decoder用来初始化较高分辨率的decoder；NGLoD是逐步训练多个MLP做编码器解码器，最后只保留最终的那个解码器；Neuralangelo是在训练过程中只保持一个MLP；BungeeNeRF是用不同模型处理不同分辨率的图像，算是一种显示的方法。</p>
-<p>论文提出的方法是基于高斯金字塔的学习方法，分辨率逐渐增加。</p>
-<img src="/images/3dgs-slam-1/image-20240329154905950.png" style="zoom:67%;">
-
-<blockquote>
-<p>看起来其实也是很好地利用了ORB-SLAM提供的一些东西</p>
-</blockquote>
-<p><strong>Loop Closure</strong></p>
-<p>论文这里写的很简洁，个人认为就是套用ORB-SLAM的回环检测。</p>
-<p>这里只是提到了检测到闭环之后，通过相似变换矫正关键帧和Hyper Primitives，然后还需要优化来消除一些重影。</p>
-<p><strong>实验部分</strong></p>
-<p>论文提到Photo-SLAM是用C++和CUDA写的，使用了ORB-SLAM3、3D Gaussian Splatting和LibTorch的框架。</p>
-<p>实验部分略过，但是有一个很大的疑惑：既然说了用了英伟达的Jetson平台，为什么没有指明到底用的什么平台？而且看Table 1，这种方法即使在Jetson上也需要4GB的显存，Laptop也是4GB，然后桌面端显存需要6GB。这个Jetson跑的效果也还行，渲染速率也是100fps左右。</p>
-]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>隐式表示</tag>
-        <tag>3D Gaussian Splatting</tag>
-        <tag>视觉SLAM</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>3D Gaussian Splatting学习笔记</title>
     <url>/2023/12/21/paper-reading-3d-gaussian-splatting/</url>
     <content><![CDATA[<h1 id="3D-Gaussian-Splatting学习笔记"><a href="#3D-Gaussian-Splatting学习笔记" class="headerlink" title="3D Gaussian Splatting学习笔记"></a>3D Gaussian Splatting学习笔记</h1><h2 id="视频笔记：Point-based-NeRF"><a href="#视频笔记：Point-based-NeRF" class="headerlink" title="视频笔记：Point-based NeRF"></a>视频笔记：Point-based NeRF</h2><blockquote>
@@ -13357,6 +13086,277 @@ TODO
       </tags>
   </entry>
   <entry>
+    <title>3DGS SLAM泛读（一）</title>
+    <url>/2024/03/06/paper-reading-3dgs-slam-1/</url>
+    <content><![CDATA[<h1 id="3DGS-SLAM泛读（一）"><a href="#3DGS-SLAM泛读（一）" class="headerlink" title="3DGS SLAM泛读（一）"></a>3DGS SLAM泛读（一）</h1><h2 id="GS-SLAM"><a href="#GS-SLAM" class="headerlink" title="GS-SLAM"></a>GS-SLAM</h2><p><strong>贡献：</strong></p>
+<ul>
+<li>第一个3D高斯的稠密RGB-D SLAM方法</li>
+<li>自适应3D高斯扩展策略，coarse to fine的选择可靠的3D高斯</li>
+<li>8FPS的速度，平衡效率与精度</li>
+</ul>
+<p><strong>Overview：</strong></p>
+<img src="/images/3dgs-slam-1/image-20240306193920492.png" style="zoom:67%;">
+
+<p><strong>场景表示：</strong></p>
+<p>与3dgs一模一样的表示方法</p>
+<img src="/images/3dgs-slam-1/image-20240315150752115.png" style="zoom:67%;">
+
+<p><strong>个人观点：</strong></p>
+<p>做的比较粗糙，没有特别亮眼的地方，感觉就是按照之前NeRF SLAM的思路，简单的用3DGS又做了一遍。不过可以基于这篇论文，了解一下3DGS SLAM应该是怎么样去做的，这篇论文比较好理解。</p>
+<p>实验部分能看到受益于3DGS，渲染做得很好、速度也很快，但是跟踪和建图的精度以及速度却和之前NeRF SLAM的方法却差距不大（甚至不如ESLAM和COSLAM），这里个人感觉是有问题的。</p>
+<h2 id="Gaussian-SLAM"><a href="#Gaussian-SLAM" class="headerlink" title="Gaussian-SLAM"></a>Gaussian-SLAM</h2><p><strong>贡献：</strong></p>
+<ul>
+<li>3D高斯表示场景的RGB-D SLAM方法</li>
+<li>扩展了Gaussian splatting，更好的编码几何形状</li>
+<li>高斯分布的在线学习策略，将场景分成很多子场景，并且引入了seeding和优化的策略</li>
+<li>通过最小化光度误差，实现了frame-to-model的tracking，并且和现有的frame-to-frame的方法作了比较</li>
+</ul>
+<p><strong>Limitations of Gaussian Splatting for SLAM：</strong></p>
+<p>这篇论文讲了Gaussian Splatting运用到SLAM算法中的局限性，个人认为是比较值得参考的。这里讲了几点问题：</p>
+<ul>
+<li><p><strong>Seeding strategy for online SLAM</strong></p>
+<p>原始3DGS的自适应密度控制策略是iterative dynamic behavior的，可能会导致mapping的迭代和计算时间发生剧烈的变化，这种方式不适合SLAM。</p>
+<blockquote>
+<p>因为SLAM既要建图又要跟踪吧，如果建图时间过长，或者地图更新太大，会对跟踪造成很不好的影响</p>
+</blockquote>
+</li>
+<li><p><strong>Online optimization</strong></p>
+<p>对于较长的序列来说，在线优化所有帧太慢了</p>
+<blockquote>
+<p>这个，就好像sfm和slam</p>
+</blockquote>
+</li>
+<li><p><strong>Catastrophic forgetting in online optimization</strong></p>
+<p>为了避免每个新帧带来地图的线性增长，一种候选的方案是使用当前帧去优化高斯场景表示。但是这种方法会导致之前mapped views严重退化。</p>
+<blockquote>
+<p>这里我不理解，为什么会导致之前优化的结果严重退化？</p>
+<p>是因为当前帧和前面的帧有重复的内容，而这个候选的方案只考虑当前帧，优化之后的3D高斯只能和当前帧“合得来”，而和之前的帧就“合不来”了？</p>
+</blockquote>
+</li>
+<li><p><strong>Highly randomized solutions</strong></p>
+<p>提到了splatting优化的结果高度依赖于高斯的初始化。并且优化过程中，会受到相邻高斯的影响，高斯可能会向不同的方向增长。</p>
+<p>3D高斯固有的对称性导致了不影响损失函数（损失不变）的情况下，3D高斯的参数可以被改动，就是说存在不唯一的解，而这种情况是优化过程不希望出现的。</p>
+<blockquote>
+<p>这可能会导致有时候优化了，损失函数没有被改变？</p>
+</blockquote>
+</li>
+<li><p><strong>Poor extrapolation capabilities</strong></p>
+<p>高斯函数经常不受控制的生长到未观察到的区域。原始3DGS的方法因为良好的视图覆盖，可以约束大多数高斯模型；但是稀疏视图的SLAM中，新视图往往包含由于先前约束不足的高斯模型产生的伪影，这对于model-based tracking影响很致命。</p>
+<blockquote>
+<p>因为存在伪影，使用color或者depth计算的损失都会有一些影响？</p>
+</blockquote>
+</li>
+<li><p><strong>Limited geometric accuracy</strong></p>
+<p>单目的情况下，3DGS不擅长编码精确的几何形状。</p>
+</li>
+</ul>
+<blockquote>
+<p>其实根据这里所讲的几个问题，我认为对于3D高斯来说，SLAM似乎是这样的一个问题：稀疏视角（我们可能不会mapping每一帧，每次对于新的观测区域也都可以算是稀疏视角的）、位姿未知（需要tracking每一帧）、在线（数据是一帧一帧来的，不是一次性给到位的）的重建问题</p>
+<p>另外，这篇论文是我见过，提出问题最多的论文。</p>
+</blockquote>
+<p><strong>Overview：</strong></p>
+<img src="/images/3dgs-slam-1/image-20240306205206830.png" style="zoom:67%;">
+
+<blockquote>
+<p>看起来是借鉴了ORB-SLAM3的思路，用sub-map的方式去尝试解决3DGS在SLAM中的一些问题。</p>
+</blockquote>
+<p><strong>场景表示：</strong></p>
+<p>看起来也是用的原版的3dgs，没有做什么改动？？？</p>
+<p><strong>实验部分：</strong></p>
+<img src="/images/3dgs-slam-1/image-20240306215736766.png" style="zoom:67%;">
+
+<blockquote>
+<p>实验部分很有意思，展示了一个比较关键的问题：<strong>纯3DGS的tracking性能不好，加入pre-mapped效果会好很多</strong></p>
+<p>但是也反映了一个和GS-SLAM一样存在的问题：<strong>Rendering的速度很快，但Mapping的速度并不快</strong></p>
+</blockquote>
+<p><strong>个人观点：</strong></p>
+<p>对于3DGS应用到SLAM中可能存在的问题，做了一个很好的介绍，很有参考价值。</p>
+<p>实验中体现了两个值得关注的问题：</p>
+<ul>
+<li>纯粹的依靠3DGS的tracking，性能不好，但是加入pre-mapped之后效果会好很多；</li>
+<li>目前的3DGS SLAM，Rendering速度都很快，但是Mapping和Tracking的速度普遍与之前NeRF-SLAM的方法差距不大。</li>
+</ul>
+<h2 id="SplaTAM"><a href="#SplaTAM" class="headerlink" title="SplaTAM"></a>SplaTAM</h2><p><strong>贡献：</strong></p>
+<p>SplaTAM解决了之前基于辐射场表示的局限性，包括：快速渲染和优化、<strong>确定区域先前是否已建图的能力、通过添加更多高斯函数进行结构化地图扩展</strong>。</p>
+<p><strong>对显示3D Gaussian用于SLAM的优点做了分析：</strong></p>
+<ul>
+<li><p>Fast rendering and rich optimization</p>
+<blockquote>
+<p>能够实时使用dense photometric loss进行SLAM</p>
+</blockquote>
+</li>
+<li><p>具有明确空间范围的地图，可以轻松控制现有地图的边界</p>
+<blockquote>
+<p>但是我认为它主要是和用MLP表示场景的方法相比，而feature grid+mlp的方法其实已经可以控制地图的边界了，不过也没有3dgs这么灵活。</p>
+</blockquote>
+</li>
+<li><p>显示的地图</p>
+<blockquote>
+<p>目前来看，显示的地图更好编辑和增加容量</p>
+</blockquote>
+</li>
+<li><p>到参数的直接梯度流</p>
+<blockquote>
+<p>不太懂这个。。。</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>SLAM System</strong></p>
+<img src="/images/3dgs-slam-1/image-20240315152612755.png" style="zoom:67%;">
+
+<img src="/images/3dgs-slam-1/image-20240315151501208.png" style="zoom:67%;">
+
+<ul>
+<li><p><strong>Initialization</strong></p>
+<img src="/images/3dgs-slam-1/image-20240315160040041.png" style="zoom:67%;">
+</li>
+<li><p><strong>Tracking</strong></p>
+<img src="/images/3dgs-slam-1/image-20240315160108994.png" style="zoom:67%;">
+
+<img src="/images/3dgs-slam-1/image-20240315160120508.png" style="zoom:67%;">
+</li>
+<li><p><strong>Gaussian Densification</strong></p>
+<img src="/images/3dgs-slam-1/image-20240315160207865.png" style="zoom:67%;">
+</li>
+<li><p><strong>Gaussian Map Updating</strong></p>
+<img src="/images/3dgs-slam-1/image-20240315160237644.png" style="zoom:67%;">
+
+</li>
+</ul>
+<p><strong>场景表示：</strong></p>
+<p>与原始的3dgs相比，使用了与视图无关的颜色，强制高斯分布为各向同性。</p>
+<blockquote>
+<p>与视图无关的颜色指的是没有用球谐函数了？？？从论文的说法看确实是这样的</p>
+</blockquote>
+<p>每个高斯对应了8个值：颜色R、G、B，中心位置x、y、z，半径r，不透明度o</p>
+<p><strong>实验部分：</strong></p>
+<p>这里我主要关注耗时，SplaTAM其实并没有在Tracking和Mapping的耗时上彻底优于之前基于NeRF的SLAM方法，只能说在渲染的速率上快了很多。</p>
+<img src="/images/3dgs-slam-1/image-20240315160602090.png" style="zoom: 67%;">
+
+<p><strong>Limitations and Future Work</strong></p>
+<img src="/images/3dgs-slam-1/image-20240315160722944.png" style="zoom:67%;">
+
+<p><strong>个人观点：</strong></p>
+<p>感觉不是非常有特色，和其他3dgs slam相比，最大的不同可能只是场景的表示不一样了，放弃了球谐函数，每个3dgs都只有8个参数。有一个博士评价这个工作拼凑感太强。</p>
+<p>不过这篇论文是第一个开源的，而且也把工作的流程讲的很清楚，可以拿来好好学习。</p>
+<h2 id="Gaussian-Splatting-SLAM"><a href="#Gaussian-Splatting-SLAM" class="headerlink" title="Gaussian Splatting SLAM"></a>Gaussian Splatting SLAM</h2><p><strong>贡献：</strong></p>
+<img src="/images/3dgs-slam-1/image-20240310145931259.png" style="zoom:67%;">
+
+
+
+<p><strong>论文提及的一些观点：</strong></p>
+<ul>
+<li>NeRF近期的发展都引入了显示的体积结构，从这些工作中可以推断出：<strong>高质量新视图合成的关键不是神经网络，而是可微分体积渲染</strong>。以Plenoxels为例，可以避免使用MLP就实现与NeRF相当的渲染质量。</li>
+</ul>
+<p><strong>场景表示：</strong></p>
+<p>anisotropic（各向异性）的3DGS，但是省略了球谐函数相关的部分</p>
+<img src="/images/3dgs-slam-1/image-20240319153804529.png" style="zoom: 67%;">
+
+
+
+<p><strong>部分公式推导、理解</strong></p>
+<img src="/images/3dgs-slam-1/image-20240320171441720.png" style="zoom: 67%;">
+
+<p>公式3：回顾《视觉SLAM十四讲》，可以比较简单的推导出来。但是对于这里面表示反对称的符号为什么有两种，个人不太理解。</p>
+<p>公式4：我好像对雅可比矩阵等内容非常不熟悉，还需要好好了解一下才能继续写这部分！！！</p>
+<p><strong>System Overview</strong></p>
+<img src="/images/3dgs-slam-1/image-20240320180342588.png" style="zoom:67%;">
+
+<p>Tracking部分还是老样子的感觉，毕竟无论NeRF SLAM还是3DGS SLAM基本都是用frame-to-model优化位姿，玩不出新花样来。</p>
+<p>Keyframing有点传统slam的意思了，通过共视关系选择关键帧，并且使用DSO的方式管理关键帧。同时3DGS也遵循可见性排序，考虑Gaussian Covisibility又进一步简化了关键帧的选择与管理。另外，看起来3DGS场景也只能由keyframe去加入点，同时也会看这些高斯函数是否被其他关键帧看到，没看到就会被修剪掉。</p>
+<blockquote>
+<p>关键帧选择对mono slam来说应该是很重要的，因为只有只有multiple-view observations才能够决定场景的几何结构！</p>
+</blockquote>
+<p>Mapping部分之前的工作我也没好好了解，但是这部分其实才是3dgs slam中最重要的部分。这里详细记录一下：</p>
+<ul>
+<li><p>基于共视关系选择一系列的关键帧，用于优化当前的可见区域；</p>
+<p>另外每次迭代优化都随机选择两个过往关键帧，防止遗忘全局地图。</p>
+<blockquote>
+<p>3dgs这种表示为什么会担心遗忘全局地图呢？</p>
+<p>最近刚好自己写了一个简单的3dgs slam，一帧进来优化位姿、优化场景，这种的最后也就学出来了一个几何结构，但是颜色、视图很差，我这里用的RGB各16维的球谐系数，不过场景是各向同性的3dgs，我认为是球谐函数被影响的问题。</p>
+<p>但是放到这里，mono GS放弃了球谐函数，但是选择了各向异性的3dgs，会不会是各向异性的问题？</p>
+</blockquote>
+</li>
+<li><p>引入了一个各向同性正则化，减少伪影，方便SLAM的tracking</p>
+<blockquote>
+<p>为什么不干脆用各向同性的3dgs呢？？？</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>实验部分</strong></p>
+<p>略，懒得记了，到时候直接看论文！</p>
+<h2 id="Photo-SLAM"><a href="#Photo-SLAM" class="headerlink" title="Photo-SLAM"></a>Photo-SLAM</h2><p><strong>Motivation：</strong>Our proposed Photo-SLAM seeks to recover a concise representation of the observed environment <strong>for immersive exploration rather than reconstructing a dense mesh</strong>.</p>
+<p><strong>贡献：</strong></p>
+<img src="/images/3dgs-slam-1/image-20240326153452403.png" style="zoom:67%;">
+
+<p><strong>Overview：</strong></p>
+<img src="/images/3dgs-slam-1/image-20240326154856204.png" style="zoom: 80%;">
+
+<p>根据论文的描述，photo-SLAM包括：localization、geometry mapping、photorealistic mapping、loop closure，并且每一个组件都有一个单独的线程，而且他们共同维护了一个hyper primitives map。</p>
+<blockquote>
+<p>ORB-SLAM3分为tracking、local mapping、loop and map merging这三个线程</p>
+<p>ORB-SLAM2分为tracking、local mapping、loop closing这三个线程</p>
+<p>个人感觉photo slam是基于orb slam2或3的工作，在上面加了一个3DGS的photorealistic mapping线程。</p>
+</blockquote>
+<p><strong>Hyper Primitives Map</strong>【场景表征】</p>
+<p>Hyper Primitives由一系列的点云组成，而这些点云包括了：ORB特征、旋转、缩放、密度、球谐系数</p>
+<blockquote>
+<p>point cloud: 3维</p>
+<p>ORB features: 256维</p>
+<p>rotation: 3维, SO(3)</p>
+<p>scaling: 3维</p>
+<p>density: 1维</p>
+<p>SH: 16维</p>
+<p>个人观点：在原始的3DGS上加入了ORB特征，而3DGS点云的添加来自于ORB-SLAM产生的地图点（ORB特征点），<strong>ORB特征用传统方法得到，而其他的都是原汁原味的3DGS</strong></p>
+<p>这样做对于传统SLAM方法而言，还是非常自然的，但是photorealistic mapping真的能够实时运行吗？</p>
+</blockquote>
+<p><strong>Localization and Geometry Mapping</strong></p>
+<p>作用：实时的位姿估计、稀疏的3D点云，创建所谓的Hyper Primitives</p>
+<blockquote>
+<p>感觉很经典，，，先不仔细看，后面和ORB-SLAM比较一下</p>
+</blockquote>
+<p><strong>Photorealisitc Mapping</strong></p>
+<p>作用：负责优化geometry mapping thread线程创建的Hyper Primitives</p>
+<blockquote>
+<p> 这部分就放了个损失函数欸</p>
+</blockquote>
+<p><strong>Geometry-based Densification</strong></p>
+<p>这部分说为了保证实时性，只生成了稀疏的Hyper Primitives，后面还需要致密化。他们额外设计了一个基于几何结构的致密化方法。</p>
+<p>他们做的实验表明：只有不到30%的特征点是active的并且有对应的3D点。而他们认为2D几何特征点的分布表示这些区域有更复杂的纹理，因此需要更多的Hyper Primitives，他们会把inactive的特征点主动创建成额外的临时Hyper Primitives。</p>
+<img src="/images/3dgs-slam-1/image-20240329154831969.png" style="zoom:80%;">
+
+<blockquote>
+<p>这个也不太像是基于几何结构的致密化方法，感觉做的很简单。</p>
+<p>不过思路很不错，特征点多的区域确实是纹理复杂的区域，但是如果我想重建场景的话，特征点少的区域、纹理弱的区域也是很重要的，这部分应该怎么去处理呢？</p>
+<p>是不是可以特征点多、纹理丰富的区域做一种处理方法，多放小的3DGS点；</p>
+<p>在特征点少、纹理弱的区域另外处理，比如放一些大的3DGS点</p>
+</blockquote>
+<p><strong>Gaussian-Pyramid-Based Learning</strong></p>
+<p><img src="/images/3dgs-slam-1/image-20240329154856803.png"></p>
+<p>论文在这里介绍了一些Progressive training的方法，比如NSVF、NVGO是训练中逐步增加特征网格的分辨率，较低分辨率的decoder用来初始化较高分辨率的decoder；NGLoD是逐步训练多个MLP做编码器解码器，最后只保留最终的那个解码器；Neuralangelo是在训练过程中只保持一个MLP；BungeeNeRF是用不同模型处理不同分辨率的图像，算是一种显示的方法。</p>
+<p>论文提出的方法是基于高斯金字塔的学习方法，分辨率逐渐增加。</p>
+<img src="/images/3dgs-slam-1/image-20240329154905950.png" style="zoom:67%;">
+
+<blockquote>
+<p>看起来其实也是很好地利用了ORB-SLAM提供的一些东西</p>
+</blockquote>
+<p><strong>Loop Closure</strong></p>
+<p>论文这里写的很简洁，个人认为就是套用ORB-SLAM的回环检测。</p>
+<p>这里只是提到了检测到闭环之后，通过相似变换矫正关键帧和Hyper Primitives，然后还需要优化来消除一些重影。</p>
+<p><strong>实验部分</strong></p>
+<p>论文提到Photo-SLAM是用C++和CUDA写的，使用了ORB-SLAM3、3D Gaussian Splatting和LibTorch的框架。</p>
+<p>实验部分略过，但是有一个很大的疑惑：既然说了用了英伟达的Jetson平台，为什么没有指明到底用的什么平台？而且看Table 1，这种方法即使在Jetson上也需要4GB的显存，Laptop也是4GB，然后桌面端显存需要6GB。这个Jetson跑的效果也还行，渲染速率也是100fps左右。</p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>隐式表示</tag>
+        <tag>3D Gaussian Splatting</tag>
+        <tag>视觉SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>论文阅读《Efficient Dense RGB-D SLAM in a Consistent Uncertainty-aware 3D Gaussian Field》</title>
     <url>/2024/05/19/paper-reading-cg-slam/</url>
     <content><![CDATA[<p><strong>项目主页：</strong><a href="https://zju3dv.github.io/cg-slam/">https://zju3dv.github.io/cg-slam/</a></p>
@@ -13376,58 +13376,6 @@ TODO
 <p><strong>疑惑：</strong></p>
 <p>这里tracking的内容写的好少，不知道这个导数什么的是怎么弄的啊。。。补充材料没有找到居然。。。</p>
 <p>又去找了一下，没找到，那只能等了。。。这篇文章虽然是章国峰组的，但是其实也没看到很突出的地方。。。</p>
-]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>隐式表示</tag>
-        <tag>3D Gaussian Splatting</tag>
-        <tag>视觉SLAM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>论文阅读《Compact 3D Gaussian Splatting For Dense Visual SLAM》</title>
-    <url>/2024/05/14/paper-reading-compact-gsslam/</url>
-    <content><![CDATA[<h1 id="论文阅读《Compact-3D-Gaussian-Splatting-For-Dense-Visual-SLAM》"><a href="#论文阅读《Compact-3D-Gaussian-Splatting-For-Dense-Visual-SLAM》" class="headerlink" title="论文阅读《Compact 3D Gaussian Splatting For Dense Visual SLAM》"></a>论文阅读《Compact 3D Gaussian Splatting For Dense Visual SLAM》</h1><h2 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h2><p>论文提到最近的3DGS SLAM都是建立在大量冗余3D高斯椭球上的，导致了高内存占用和存储成本，以及很慢的训练速度。</p>
-<p>为了解决这个问题，他们提出了一种紧凑的3D高斯飞溅SLAM系统，该系统减少了高斯椭球的数量和参数大小。</p>
-<h2 id="Contributions"><a href="#Contributions" class="headerlink" title="Contributions"></a>Contributions</h2><ul>
-<li>我们提出了一种新的基于GS的SLAM系统，该系统具有<strong>紧凑的高斯场景表示</strong>，实现了快速的训练和渲染速度、准确的姿态估计，并显著提高了存储效率。</li>
-<li>提出了一种新的<strong>基于滑动窗口的在线掩蔽方法</strong>，以消除冗余高斯椭球的数量，同时在训练过程中实现高保真度。</li>
-<li>我们<strong>观察并分析了三维高斯椭球的几何相似性</strong>，并提出了一种基于码本的方法来有效地恢复SLAM系统运行过程中每个高斯点的几何。针对摄像机跟踪性能相对较低的问题，提出了一种基于关键帧的全局BA方法，该方法具有重投影损失。</li>
-<li>我们在不同的数据集上进行了全面的实验，渲染速度提高了近176%，内存使用压缩率超过1.97倍。</li>
-</ul>
-<h2 id="System-Pipeline"><a href="#System-Pipeline" class="headerlink" title="System Pipeline"></a>System Pipeline</h2><p><img src="/images/paper-reading-Compact-GSSLAM/image-20240506113119541.png"></p>
-<blockquote>
-<p>乍一看，有点像是SplaTAM的图呢，会不会是在SplaTAM的基础上改进来的？</p>
-</blockquote>
-<h2 id="讨论分析"><a href="#讨论分析" class="headerlink" title="讨论分析"></a>讨论分析</h2><p>看了一下论文写的一些内容，我都不是很理解：</p>
-<p><strong>3.2 Sliding Window-based Mask部分</strong></p>
-<ul>
-<li><p>3.2 Sliding Window-based Mask部分stop gradient operator sg(·)输出的结果是什么？</p>
-<p>根据下面的信息解释这个公式：<br>We introduce a learnable mask parameter $m \in R^N$ and a corresponding binary mask $M \in {0, 1}^N$​, N is the number of Gaussian ellipsoids.<br>$$<br>M_n = sg (\mathbb{I}[Sig(m_n) &gt; \epsilon] - Sig(m_n)) + Sig(m_n)<br>$$<br>where $n$ is the index of the Gaussian ellipsoids, $\epsilon$ denotes the mask threshold. Inspired by [1], we employ the stop gradient operator $sg(·) $to calculate gradients from binary masks. $\mathbb{I}$ and $Sig(·)$ denote the indicator and sigmoid function. This formulation of mask strategy allows us to effectively combine the influence of volume and opacity of Gaussian ellipsoids.</p>
-<p>根据GPT的解释，结论：</p>
-<p>sg()就是停止梯度计算，相当于with_no_grad()。</p>
-<p>这里就是计算一个1-sig+sig=1，或者计算一个0-sig+sig=0</p>
-<p>因为这里不连续所以不计算梯度。</p>
-</li>
-<li><p>3.2 Sliding Window-based Mask部分为什么使用这样的损失函数？</p>
-<p>追问：为什么使用如下的损失函数</p>
-<p>We formulate the loss function $L_m$ of our mask:<br>$$<br>L_m = \frac{1}{N} \sum_{n=1}^{N}Sig(m_n)<br>$$<br>这个损失函数真的非常奇怪，确定不是1-Sig吗？</p>
-<p>这个目的是让所有的mask都变成0啊？？？</p>
-</li>
-</ul>
-<p><strong>3.3 Geometry Codebook</strong></p>
-<ul>
-<li><p>3.3 Geometry Codebook这部分的公式也不是太看得懂，没理解codebook的作用，这里也没有详细介绍。</p>
-<blockquote>
-<p>后续看《Compact 3D Gaussian Representation for Radiance Field》，看明白了。。。</p>
-</blockquote>
-</li>
-</ul>
-<p><strong>评价：</strong></p>
-<p>这篇论文主要是压缩3DGS的大小，<strong>做了两方面的工作，一个是基于可学习的mask和视锥体来过滤高斯，一个是通过codebook压缩相似的高斯。</strong></p>
-<p>其他方面倒是没感觉特别突出，对于Global BA部分，它说维护的关键帧数量比其他GS SLAM大得多，个人觉得这不是优点。比如RGBD GS-ICP SLAM就提到了，关键帧数量越多越容易导致误差累积的问题。</p>
 ]]></content>
       <categories>
         <category>slam</category>
@@ -13513,6 +13461,58 @@ TODO
       <tags>
         <tag>隐式表示</tag>
         <tag>3D Gaussian Splatting</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文阅读《Compact 3D Gaussian Splatting For Dense Visual SLAM》</title>
+    <url>/2024/05/14/paper-reading-compact-gsslam/</url>
+    <content><![CDATA[<h1 id="论文阅读《Compact-3D-Gaussian-Splatting-For-Dense-Visual-SLAM》"><a href="#论文阅读《Compact-3D-Gaussian-Splatting-For-Dense-Visual-SLAM》" class="headerlink" title="论文阅读《Compact 3D Gaussian Splatting For Dense Visual SLAM》"></a>论文阅读《Compact 3D Gaussian Splatting For Dense Visual SLAM》</h1><h2 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h2><p>论文提到最近的3DGS SLAM都是建立在大量冗余3D高斯椭球上的，导致了高内存占用和存储成本，以及很慢的训练速度。</p>
+<p>为了解决这个问题，他们提出了一种紧凑的3D高斯飞溅SLAM系统，该系统减少了高斯椭球的数量和参数大小。</p>
+<h2 id="Contributions"><a href="#Contributions" class="headerlink" title="Contributions"></a>Contributions</h2><ul>
+<li>我们提出了一种新的基于GS的SLAM系统，该系统具有<strong>紧凑的高斯场景表示</strong>，实现了快速的训练和渲染速度、准确的姿态估计，并显著提高了存储效率。</li>
+<li>提出了一种新的<strong>基于滑动窗口的在线掩蔽方法</strong>，以消除冗余高斯椭球的数量，同时在训练过程中实现高保真度。</li>
+<li>我们<strong>观察并分析了三维高斯椭球的几何相似性</strong>，并提出了一种基于码本的方法来有效地恢复SLAM系统运行过程中每个高斯点的几何。针对摄像机跟踪性能相对较低的问题，提出了一种基于关键帧的全局BA方法，该方法具有重投影损失。</li>
+<li>我们在不同的数据集上进行了全面的实验，渲染速度提高了近176%，内存使用压缩率超过1.97倍。</li>
+</ul>
+<h2 id="System-Pipeline"><a href="#System-Pipeline" class="headerlink" title="System Pipeline"></a>System Pipeline</h2><p><img src="/images/paper-reading-Compact-GSSLAM/image-20240506113119541.png"></p>
+<blockquote>
+<p>乍一看，有点像是SplaTAM的图呢，会不会是在SplaTAM的基础上改进来的？</p>
+</blockquote>
+<h2 id="讨论分析"><a href="#讨论分析" class="headerlink" title="讨论分析"></a>讨论分析</h2><p>看了一下论文写的一些内容，我都不是很理解：</p>
+<p><strong>3.2 Sliding Window-based Mask部分</strong></p>
+<ul>
+<li><p>3.2 Sliding Window-based Mask部分stop gradient operator sg(·)输出的结果是什么？</p>
+<p>根据下面的信息解释这个公式：<br>We introduce a learnable mask parameter $m \in R^N$ and a corresponding binary mask $M \in {0, 1}^N$​, N is the number of Gaussian ellipsoids.<br>$$<br>M_n = sg (\mathbb{I}[Sig(m_n) &gt; \epsilon] - Sig(m_n)) + Sig(m_n)<br>$$<br>where $n$ is the index of the Gaussian ellipsoids, $\epsilon$ denotes the mask threshold. Inspired by [1], we employ the stop gradient operator $sg(·) $to calculate gradients from binary masks. $\mathbb{I}$ and $Sig(·)$ denote the indicator and sigmoid function. This formulation of mask strategy allows us to effectively combine the influence of volume and opacity of Gaussian ellipsoids.</p>
+<p>根据GPT的解释，结论：</p>
+<p>sg()就是停止梯度计算，相当于with_no_grad()。</p>
+<p>这里就是计算一个1-sig+sig=1，或者计算一个0-sig+sig=0</p>
+<p>因为这里不连续所以不计算梯度。</p>
+</li>
+<li><p>3.2 Sliding Window-based Mask部分为什么使用这样的损失函数？</p>
+<p>追问：为什么使用如下的损失函数</p>
+<p>We formulate the loss function $L_m$ of our mask:<br>$$<br>L_m = \frac{1}{N} \sum_{n=1}^{N}Sig(m_n)<br>$$<br>这个损失函数真的非常奇怪，确定不是1-Sig吗？</p>
+<p>这个目的是让所有的mask都变成0啊？？？</p>
+</li>
+</ul>
+<p><strong>3.3 Geometry Codebook</strong></p>
+<ul>
+<li><p>3.3 Geometry Codebook这部分的公式也不是太看得懂，没理解codebook的作用，这里也没有详细介绍。</p>
+<blockquote>
+<p>后续看《Compact 3D Gaussian Representation for Radiance Field》，看明白了。。。</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>评价：</strong></p>
+<p>这篇论文主要是压缩3DGS的大小，<strong>做了两方面的工作，一个是基于可学习的mask和视锥体来过滤高斯，一个是通过codebook压缩相似的高斯。</strong></p>
+<p>其他方面倒是没感觉特别突出，对于Global BA部分，它说维护的关键帧数量比其他GS SLAM大得多，个人觉得这不是优点。比如RGBD GS-ICP SLAM就提到了，关键帧数量越多越容易导致误差累积的问题。</p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>隐式表示</tag>
+        <tag>3D Gaussian Splatting</tag>
+        <tag>视觉SLAM</tag>
       </tags>
   </entry>
   <entry>
@@ -14412,6 +14412,104 @@ TODO
       </tags>
   </entry>
   <entry>
+    <title>论文阅读《iMAP：Implicit Mapping and Positioning in Real-Time 》</title>
+    <url>/2022/08/31/paper-reading-imap/</url>
+    <content><![CDATA[<h1 id="论文阅读《iMAP-Implicit-Mapping-and-Positioning-in-Real-Time-》"><a href="#论文阅读《iMAP-Implicit-Mapping-and-Positioning-in-Real-Time-》" class="headerlink" title="论文阅读《iMAP: Implicit Mapping and Positioning in Real-Time 》"></a>论文阅读《iMAP: Implicit Mapping and Positioning in Real-Time 》</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>我们首次展示了多层感知器 (MLP) 可以作为手持 RGB-D 相机的实时 SLAM 系统中唯一的场景表示。 我们的网络在没有先验数据的情况下进行实时操作训练，构建了一个稠密的、特定场景的隐式 3D 占用和颜色模型，该模型也可立即用于跟踪。</p>
+<p>通过针对实时图像流持续训练神经网络来实现实时 SLAM 需要重大创新。 我们的 iMAP 算法使用关键帧结构和多处理计算流程，采用动态信息引导像素采样提高速度，跟踪频率为 10 Hz，全局地图更新频率为 2 Hz。 与标准稠密 SLAM 技术相比，隐式 MLP 的优势包括具有自动细节控制的高效几何表示以及对未观察区域（例如对象的后表面）的平滑、合理填充。</p>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>用于智能体现设备的实时同步定位和映射 (SLAM) 系统必须逐步构建 3D 世界的表示，以实现定位和场景理解。理想的表示应该精确地编码几何图形，但也应该是高效的，可用的内存容量可以根据场景大小和复杂性自适应地使用； 预测性的，能够合理地估计未直接观察到的区域的形状； 灵活，无需大量训练数据或手动调整即可在新场景下运行。</p>
+<p>隐式神经表示是离线重建的一个有前途的最新进展，它使用多层感知器 (MLP) 将 3D 点映射到占用或颜色，并从头开始对其进行优化以适应特定场景。  MLP 是一种通用的隐式函数逼近器，能够用很少的参数表示可变细节并且没有量化伪影。即使没有事先的训练，网络结构中存在的固有先验也允许它从部分数据中做出稠密的几何估计，并合理地完成未观察到的区域。</p>
+<p>在本文中，我们首次展示了 MLP 可以用作使用手持 RGB-D 相机的实时 SLAM 系统中的唯一场景表示。 我们随机初始化的网络是在实时操作中训练的，我们不需要任何先前的训练数据。 我们的 iMAP 系统设计有关键帧结构和多处理计算流程，让人想起 PTAM 。 在以超过 10 Hz 运行的跟踪过程中，我们将实时 RGB-D 观察与来自 MLP 场景地图的渲染深度和颜色预测对齐。 同时，映射过程选择并维护一组视点跨越场景的历史关键帧，并使用这些关键帧不断训练和改进 MLP，同时联合优化关键帧姿势。</p>
+<p>在跟踪和映射中，我们动态地对信息量最大的 RGB-D 像素进行采样，以减少几何不确定性，实现实时速度。 我们的系统在 Python 中运行，所有优化都是通过单个桌面 CPU/GPU 系统上的标准 PyTorch 框架。</p>
+<p>通过将 SLAM 视为一个持续学习问题，我们实现了一种表示，该表示可以有效地表示具有连续和自适应分辨率的场景，并且具有出色的平滑插值能力以实现完整的、无懈可击的重建（图 1）。 使用大约 10~20 个关键帧和一个只有 1 MB 参数的 MLP，我们可以准确地映射整个房间。 我们的场景表示没有固定的分辨率； 关键帧的分布自动实现高效的多尺度映射。</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830223022639.png" alt="图 1：使用 Azure Kinect RGB-D 摄像头从实时 iMAP 重建房间，显示稠密场景模型、摄像头跟踪和自动关键帧集。"></p>
+<p>我们在各种真实世界序列上展示了我们的系统，并对来自房间规模的副本数据集的 8 个场景进行了详尽的评估和烧蚀分析。 我们表明，与标准稠密 SLAM 系统相比，iMAP 可以进行更完整的场景重建，并且内存占用明显更小。 我们在 TUM RGB-D 数据集上展示了与最先进的 SLAM 系统相比具有竞争力的跟踪性能。</p>
+<p>总而言之，这篇论文的主要贡献是：</p>
+<ul>
+<li>第一个使用隐式神经场景表示并能够联合优化完整 3D 地图和相机姿势的稠密实时 SLAM 系统。</li>
+<li>通过自动关键帧选择和损失引导稀疏主动采样实现实时增量训练隐式场景网络的能力。</li>
+<li>我们提出的SLAM公式的并行实现（完全在PyTorch中多处理），它与手持RGB-D相机联机工作。</li>
+</ul>
+<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2. Related Work"></a>2. Related Work</h2><p><strong>视觉 SLAM 系统 Visual SLAM Systems</strong>    用于建模环境的实时视觉 SLAM 系统通常以分层方式构建，其中稀疏表示用于定位，更详细的几何或语义分层。 然而，在这里，我们在“稠密 SLAM”范式中工作，其中统一的稠密场景表示也是相机跟踪的基础。 稠密表示避免了任意抽象，例如关键点，能够以稳健的不变方式进行跟踪和重新定位，并且作为与传感器无关的、统一的、完整的空间表示具有长期吸引力。</p>
+<p>稠密 SLAM 中的一些方法明确表示表面，但需要直接表示体积以实现全面的应用，例如规划。 如果使用固定分辨率，则使用占用或有符号距离函数的体积标准表示在内存方面代价很大。 分层方法更有效，但实现起来很复杂，并且通常只提供小范围的详细信息。 在任何一种情况下，表示都是相当严格的，并且由于它们使用了大量的参数，因此不适合与相机姿势进行联合优化。</p>
+<p>机器学习可以发现密集结构的低维嵌入，从而实现高效、联合优化的表示。  CodeSLAM就是一个例子，但使用深度图视图表示而不是完整的体积 3D。 学习技术也被用于改进密集重建，但需要现有的扫描或先验的训练数据。</p>
+<p><strong>使用 MLP 进行隐式场景表示 Implicit Scene Representation with MLPs</strong>    在利用隐式MLP神经模型进行目标重建、目标压缩、新的视图合成和场景完成方面，场景表示和图形显示取得了很大进展。最近的两篇论文 [35,39] 也探讨了相机姿态优化。但是到目前为止，这些方法被认为是一个离线工具，计算要求是几小时、几天或几周。结果表明，当深度图像可用时，利用引导稀疏采样进行渲染和训练时，这些方法适用于实时SLAM。</p>
+<p><strong>持续学习 Continual Learning</strong>    通过使用单个 MLP 作为主场景模型，我们将实时 SLAM 视为在线持续学习。 一个有效的持续学习系统应该展示可塑性（获取新知识的能力）和稳定性（保留旧知识）。 灾难性遗忘是神经网络的一个众所周知的特性，并且是稳定性的失败，新的经历会覆盖记忆。</p>
+<p>减轻灾难性遗忘的一项工作重点是使用相对权重来保护表示免受新数据的影响。 这让人想起 SLAM 中的经典过滤方法，例如 EKF，值得未来研究。 在对每个单独的任务进行训练后冻结或合并子网络的方法对于 SLAM 来说可能过于简单和离散。</p>
+<p>相反，我们将注意力转向基于重放的持续学习方法，其中先前的知识要么直接存储在缓冲区中，要么压缩在生成模型中。 我们使用一种简单的方法，自动选择关键帧来存储和压缩过去的记忆。 我们在持续运行的地图更新过程中使用这些关键帧的损失引导随机抽样来定期重播和加强先前观察到的场景区域，同时继续通过新的关键帧添加信息。 在 SLAM 术语中，这种方法类似于 PTAM 开创的方法，其中历史关键帧集和重复的全局束调整作为长期场景表示。</p>
+<h2 id="3-iMAP-A-Real-Time-Implicit-SLAM-System"><a href="#3-iMAP-A-Real-Time-Implicit-SLAM-System" class="headerlink" title="3. iMAP: A Real-Time Implicit SLAM System"></a>3. iMAP: A Real-Time Implicit SLAM System</h2><h3 id="3-1-System-Overview"><a href="#3-1-System-Overview" class="headerlink" title="3.1. System Overview"></a>3.1. System Overview</h3><p>图2概述了iMAP的工作原理。使用将3D坐标映射到颜色和体积密度的全连接神经网络$ F_\theta $来表示3D体积图 (第3.2节)。给定相机的姿态，我们可以通过累积来自反向投影射线中的样本的网络查询来渲染像素的颜色和深度 (第3.3节)。</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830225347891.png" alt="图2：iMAP system pipeline."></p>
+<p>我们通过相对于一组稀疏的主动采样测量值（第 3.6 节）逐步优化网络权重和相机位姿，从深度和彩色视频中映射场景。 两个进程同时运行：跟踪（第 3.4 节），它优化当前帧相对于锁定网络的位姿； 和映射（第 3.4 节），它联合优化所选关键帧的网络和相机位姿，根据信息增益增量选择（第 3.5 节）。</p>
+<h3 id="3-2-Implicit-Scene-Neural-Network"><a href="#3-2-Implicit-Scene-Neural-Network" class="headerlink" title="3.2. Implicit Scene Neural Network"></a>3.2. Implicit Scene Neural Network</h3><p>遵循 NeRF 中的网络架构，我们使用具有 4 个特征大小为 256 的隐藏层的 MLP，以及将 3D 坐标$ \mathrm p = (x, y, z) $映射到颜色和体积密度值的两个输出头：$ F_\theta{\mathrm p} = (\mathrm c , \rho)$。 与 NeRF 不同，我们不考虑观察方向，因为我们对镜面反射建模不感兴趣。</p>
+<p>我们应用傅里叶特征网络中提出的高斯位置嵌入将输入 3D 坐标提升到 n 维空间：sin(<strong>Bp</strong>)，其中 <strong>B</strong> 是从具有标准偏差$ \sigma $的正态分布采样的 [n×3] 矩阵。 该嵌入用作 MLP 的输入，也连接到网络的第二个激活层。 从 SIREN [27] 中汲取灵感，我们允许优化嵌入矩阵 <strong>B</strong>，实现为具有正弦激活的单个全连接层。</p>
+<h3 id="3-3-Depth-and-Colour-Rendering"><a href="#3-3-Depth-and-Colour-Rendering" class="headerlink" title="3.3. Depth and Colour Rendering"></a>3.3. Depth and Colour Rendering</h3><p>我们的新可微渲染引擎受 NeRF 和 NodeSLAM 的启发，查询场景网络以从给定视图获取深度和彩色图像。</p>
+<p>给定一个相机位姿$ T_{WC} $和一个像素坐标$ [u, v] $，我们首先反向投影一个归一化的观察方向并将其转换为世界坐标：$ r = T_{WC}K^{−1}[u, v]$，相机内在矩阵$ K $。 我们沿着射线$ \mathrm p_i = d_i\mathrm r $取一组$ N $个样本，具有相应的深度值$ {d_1,····, d_N}$，并在网络中查询颜色和体积密度$ (\mathrm c_i, \rho_i) = F_\theta(\mathrm p_i)$。我们遵循 NeRF 的分层和分层体积采样策略。</p>
+<p>体积密度通过乘以样本间距离$ \delta_i = d_{i+1} - d_i $并通过激活函数$ o_i = 1 - exp(-\rho_i \delta_i) $转换为占用概率。然后每个样本的射线终止概率可以 计算为$\omega_i = o_i \prod_{j = 1}^{i - 1}(1 - o_j)$。 最后，深度和颜色被渲染为期望值：</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830225234185.png"></p>
+<p>我们可以将沿射线的深度方差计算为：</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830225300639.png"></p>
+<h3 id="3-4-Joint-optimisation"><a href="#3-4-Joint-optimisation" class="headerlink" title="3.4. Joint optimisation"></a>3.4. Joint optimisation</h3><p>我们联合优化了隐式场景网络参数$ \theta $和不断增长的$ W $关键帧集的相机姿态，每个关键帧都有相关的颜色和深度测量以及初始姿态估计：${I_i,D_i,T_i}$。</p>
+<p>我们的渲染函数对于这些变量是可微的，因此我们执行迭代优化以最小化每个关键帧中选定数量的渲染像素$ s_i $的几何和光度误差。</p>
+<p>光度损失是渲染和测量颜色值$ e_i^p[u,v] = \left| I_i[u,v] - \hat I_i[u,v] \right| $之间的 L1 范数，用于$ M $个像素样本：</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830225657705.png"></p>
+<p>几何损失测量深度差异$ e_i^g[u,v] = \left| D_i[u,v] - \hat D_i[u,v] \right| $并使用深度方差作为归一化因子，在对象边界等不确定区域降低损失：</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830225809862.png"></p>
+<p>我们将 Adam优化器应用于两个损失的加权和，因子$ \lambda_p $调整赋予光度误差的权重：</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830225854970.png"></p>
+<p><strong>相机追踪 Camera Tracking</strong>    在在线 SLAM 中，接近帧率的摄像机跟踪很重要，因为对较小位移的优化更加稳健。 我们运行一个并行跟踪过程，在使用相同的损失和优化器的同时，以比联合优化高得多的帧速率连续优化最新帧相对于固定场景网络的位姿。 跟踪的姿势初始化在选定关键帧的映射过程中被细化。</p>
+<h3 id="3-5-Keyframe-Selection"><a href="#3-5-Keyframe-Selection" class="headerlink" title="3.5. Keyframe Selection"></a>3.5. Keyframe Selection</h3><p>使用来自视频流的所有图像联合优化网络参数和相机位姿在计算上是不可行的。 然而，由于视频图像中存在巨大的冗余，我们可以用一组稀疏的代表性关键帧来表示一个场景，这些关键帧是根据信息增益增量选择的。 始终选择第一帧来初始化网络并固定世界坐标系。 每次添加新的关键帧时，我们都会锁定我们网络的副本以表示我们在那个时间点的 3D 地图的快照。 随后的帧将根据该副本进行检查，如果它们看到一个显着的新区域，则选择它们。</p>
+<p>为此，我们渲染一组统一的像素样本$ s $并计算归一化深度误差小于阈值$ t_D = 0.1 $的比例$ P $，以测量我们的地图快照已经解释的帧的比例：</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830230036340.png"></p>
+<p>当该比例低于阈值$ P &lt; t_P $（我们将$ t_P $设置为0.65）时，该帧将添加到关键帧集。归一化深度误差会产生自适应关键帧选择，当相机更靠近物体时，需要更高的精度，因此需要更紧密的关键帧。</p>
+<p>在映射过程中接收到的每一帧都用于联合优化几次迭代（10 到 20 次之间），因此我们的关键帧集总是由所选集以及不断变化的最新帧组成。</p>
+<h3 id="3-6-Active-Sampling"><a href="#3-6-Active-Sampling" class="headerlink" title="3.6. Active Sampling"></a>3.6. Active Sampling</h3><p><strong>图像主动采样 Image Active Sampling</strong>    渲染和优化所有图像像素在计算和内存方面代价很大。 我们利用图像规律性在每次迭代中仅渲染和优化一组非常稀疏的随机像素（每张图像 200 个）。 此外，我们使用渲染损失来指导在具有更高细节的信息区域或重建尚不精确的信息区域中的主动采样。</p>
+<p>每次联合优化迭代分为两个阶段。首先，我们采样一组$ s_i $像素，均匀分布在每个关键帧的深度和颜色图像上。这些像素用于更新网络和相机位姿，并计算损失统计。 为此，我们将每张图像划分为 [8×8] 网格，并计算每个正方形区域$ R_j $内的平均损失，其中$ j = {1, 2, · · · , 64} $：</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830230713156.png"></p>
+<p>其中$ r_j = s_i \cap R_j $是从$ R_j $均匀采样的像素。 我们将这些统计数据归一化为概率分布：</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830230837596.png"></p>
+<p>我们使用这个分布对每个区域重新采样一组新的$ n_i \cdot f_i[j] $个均匀样本（$ n_i $是每个关键帧中的总样本），将更多样本分配到具有高损失的区域。 场景网络使用来自活动样本的损失进行更新（在相机跟踪中仅使用统一采样）。 图像主动采样如图 3 所示。</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830230953670.png" alt="图 3：图像主动采样。 左：使用一组均匀样本的几何损失计算整个图像网格的损失分布。 右图：根据损失分布进一步分配活动样本。"></p>
+<p><strong>关键帧主动采样 Keyframe Active Sampling</strong>    在 iMAP 中，我们使用一组选定的关键帧不断优化我们的场景地图，作为记忆库来避免网络遗忘。 我们希望将更多样本分配给具有更高损失的关键帧，因为它们与新探索的、高度详细的或网络开始忘记的区域相关。 我们遵循类似于图像主动采样的过程，并将 ni 个样本分配给每个关键帧，与关键帧之间的损失分布成比例，见图 4。</p>
+<p><strong>有界关键帧选择 Bounded Keyframe Selection</strong>    随着相机移动到新的和未探索的区域，我们的关键帧集不断增长。 为了绑定联合优化计算，我们在每次迭代中选择一个固定数量的关键帧（实时系统中为 3 个），根据损失分布随机采样。 我们总是在联合优化中包含最后一个关键帧和当前实时帧，以组成一个$ W = 5 $不断变化的帧的有界窗口。 参见图 4。</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830231107081-16618741509601.png" alt="图4: 关键帧主动采样。我们在注册的关键帧上保持损耗分布。该分布用于对关键帧 (红色框) 的有界窗口进行采样，并用于在每个关键帧中分配像素样本。"></p>
+<h2 id="4-Experimental-Results"><a href="#4-Experimental-Results" class="headerlink" title="4. Experimental Results"></a>4. Experimental Results</h2><p>通过综合实验，我们评估了 iMAP 的 3D 重建和跟踪，并对设计选择的准确性和速度进行了详细的烧蚀分析。</p>
+<h3 id="4-1-Experimental-Setup"><a href="#4-1-Experimental-Setup" class="headerlink" title="4.1. Experimental Setup"></a>4.1. Experimental Setup</h3><p><strong>数据集</strong>    我们在模拟和真实序列上进行实验。 对于重建评估，我们使用 Replica 数据集，这是对真实房间规模环境的高质量 3D 重建，有 5 个办公室和 3 个公寓。 对于每个 Replica 场景，我们渲染 2000 个 RGB-D 帧的随机轨迹。 对于原始摄像机记录，我们使用手持式 Microsoft Azure Kinect 在各种环境中捕获 RGB-D 视频，并在 TUM RGB-D 数据集上进行测试以评估摄像机跟踪。</p>
+<p><strong>实施细节</strong>    对于所有实验，我们设置以下默认参数：关键帧配准阈值$ t_P = 0.65 $，光度损失加权$ \lambda_p = 5 $，关键帧窗口大小$ W = 5 $，像素样本$ |s_i|  = 200 $，位置嵌入大小$ m = 93 $和$ \sigma = 25$，以及 32 个粗分类和 12 个细分类用于渲染。  3D 点坐标通过$\frac {1}{10}$归一化以接近 [0, 1] 范围。</p>
+<p>在手持相机的在线操作中，到达处理帧之间的流式图像被丢弃。 对于此处介绍的实验，每个捕获的帧都被处理，以 10 Hz 运行。 如果需要，我们通过在统一体素网格中从网络查询占用值，然后运行行进立方体来恢复网格重建。 网格化用于可视化和评估目的，不构成我们的 SLAM 系统的一部分。</p>
+<h3 id="4-2-Scene-Reconstruction-Evaluation"><a href="#4-2-Scene-Reconstruction-Evaluation" class="headerlink" title="4.2. Scene Reconstruction Evaluation"></a>4.2. Scene Reconstruction Evaluation</h3><p><strong>尺度</strong>    我们从地面实况和重建网格中采样了200000个点，并计算了三个定量指标：精度（cm）：重建网格中的采样点与最近地面实况点之间的平均距离；完成度（cm）：采样点与地面真实网格和最近重建点之间的平均距离；和完成率（&lt;5cm%）：重建网格中完成小于5cm的点的百分比。</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830233300102.png" alt="图 5：Replica room-0 的重建和跟踪结果以及注册的关键帧。"></p>
+<p><img src="/images/paper-reading-iMAP/image-20220830233317768.png" alt="图 6：iMAP（左）设法填充未观察到的区域，这些区域可被视为 TSDF 融合中的漏洞（右）。"></p>
+<p>联合优化 3D 地图和相机位姿的能力使我们的系统能够构建完整的全局连贯场景重建，如图 1 和 7 所示，以及准确的相机跟踪，如图 5 所示。iMAP 的鲁棒性和多功能性 通过图 9 和 8 中的重建，在各种真实世界的录音中得到了证明，这些重建显示了它在从整个房间到小物体和薄结构的规模上工作的能力。</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830233059436.png" alt="图 7：副本重建，突出显示 iMAP 如何填充未观察到的区域，这些区域是 TSDF 融合中的白洞。"></p>
+<p><img src="/images/paper-reading-iMAP/image-20220830233041963.png" alt="图 8：使用 Azure Kinect 映射的各种真实场景的对比重建结果。  TDSF 融合结果中的白洞似乎由 iMAP 填充。"></p>
+<p><img src="/images/paper-reading-iMAP/image-20220830233021258.png" alt="图 9：iMAP 在各种现实世界设置中的实时重建结果。"></p>
+<p>我们将iMAP中的场景重建与TSDF fusion进行了比较，后者是基于融合的密集SLAM方法的代表。为了隔离重建，我们使用iMAP生成的摄像机跟踪进行TSDF fusion。我们的隐式表示最显著的优势是能够在未观察到的区域填充，如图7和图8所示。iMAP在所有8个复制场景中平均实现了4%的高完成率，如表1所示，office-3的完成率提高了11%。</p>
+<p>具有不同配置设置的 iMAP 和 TSDF 融合的内存消耗如表 2 所示。在 TSDF 融合中默认值为 2563 体素分辨率和 iMAP 中的网络宽度为 256 时，我们的系统可以表示内存使用量减少 60 倍的场景，同时获得相似的 重建精度如表 1 所示。</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830233129794.png" alt="表1：8个室内复制场景的重建结果。我们报告了每个场景中最高的完成率，以及相应的准确性和完成率值。"></p>
+<p><img src="/images/paper-reading-iMAP/image-20220830232944402.png" alt="表 2：内存消耗：对于 iMAP 作为网络大小的函数，对于体素分辨率的 TSDF 融合。"></p>
+<p>当使用真实相机时，除了更好地完成外，我们的方法在深度相机无法提供准确读数的地方（如黑色物体（图8d）和反射或透明表面（图6））优于TSDF融合。这种性能可归因于重建的光度损失以及地图网络的插值能力。</p>
+<h3 id="4-3-TUM-Evaluation"><a href="#4-3-TUM-Evaluation" class="headerlink" title="4.3. TUM Evaluation"></a>4.3. TUM Evaluation</h3><p>我们在来自 TUM RGB-D 的三个序列上运行 iMAP。 跟踪 ATE RMSE 如表 3 所示。我们与基于面元的 BAD-SLAM、TSDF 融合 Kintinuous和稀疏 ORB-SLAM2 等最先进的 SLAM 系统进行了比较。 在姿势准确性方面，iMAP 的表现并不优于它们，但在 2 到 6 厘米的误差方面具有竞争力。 网格重建如图 10 所示。在图 11 中，我们强调了 iMAP 如何填充未观察区域中的孔，这与 BAD-SLAM 不同。</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830232831812.png" alt="表 3：在 TUM RGB-D 数据集上以厘米为单位的 ATE RMSE。"></p>
+<p><img src="/images/paper-reading-iMAP/image-20220830232809469.png" alt="图 10：TUM 数据集的 iMAP 重建结果。"></p>
+<p><img src="/images/paper-reading-iMAP/image-20220830232904051.png" alt="图 11：iMAP（顶部）对 BAD-SLAM（底部）的孔填充能力。"></p>
+<h3 id="4-4-Ablative-Analysis"><a href="#4-4-Ablative-Analysis" class="headerlink" title="4.4. Ablative Analysis"></a>4.4. Ablative Analysis</h3><p>我们使用最大的 Replica 场景分析影响我们系统的设计选择：office-2 和三个不同的随机种子。 完成率结果和时序如表 4 所示。我们发现网络$ width = 256 $，关键帧窗口大小限制为$ W = 5 $，每帧 200 像素样本提供了收敛速度和准确性的最佳折衷。我们在图 12 中进一步表明，主动采样比随机采样能够实现更快的精度收敛和更高的场景完成度。</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830232727343.png" alt="表 4：跟踪（6 次迭代）和映射（10 次迭代）的时序结果，在同一 GPU 上同时运行。 默认配置：网络宽度 256，窗口大小 5，每个关键帧 200 个样本。 最后一行：副本 office-2 的完成率。"></p>
+<p>这些设计选择使我们的在线隐式SLAM系统能够以10Hz的频率运行以进行跟踪，以2Hz的频率进行映射。我们的实验证明了随机抽样在优化中的作用，并强调了关键发现，即使用随机变化的信息进行快速迭代比使用密集和缓慢迭代更好。</p>
+<p>将几何和光度损失结合起来，使我们的系统能够从几个关键帧获得全房间尺度的重建；对于表1中的8个复制场景，平均为13。如表5所示，使用更多关键帧对进一步提高场景完成率几乎没有作用。</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830232657552.png" alt="表 5：Replica office-2 中不同选择阈值的关键帧数和完成率结果。"></p>
+<p>隐式场景网络具有在添加高频场景细节之前快速收敛到低频形状的特性。 图 13 显示了来自静态摄像机的网络训练，平均超过 5 个不同的真实场景。 深度损失在一秒钟内降至 5 厘米以下； 在 4 秒内低于 2 厘米； 然后继续缓慢下降。当映射一个新场景时，我们的系统需要几秒钟来进行粗略的重建，并需要几分钟来添加精细的细节。 在图 14 中，我们展示了系统如何从粗略重建开始，并随着网络训练和相机靠近物体而添加细节。 这是 SLAM 中的一个有用属性，因为它使实时跟踪即使在移动到未探索区域时也能正常工作。</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830232622823.png" alt="图 13：达到 5cm、2cm、1cm 和 0.75cm 深度误差分别需要大约 1、4、20、43 秒。"></p>
+<p><img src="/images/paper-reading-iMAP/image-20220830232552221.png" alt="图 14：重建细节的演变。"></p>
+<h2 id="5-Conclusions"><a href="#5-Conclusions" class="headerlink" title="5. Conclusions"></a>5. Conclusions</h2><p>我们将密集 SLAM 视为实时持续学习，并表明 MLP 可以作为实时系统中唯一的场景表示从头开始训练，从而使 RGB-D 相机能够构建和跟踪完整且准确的体积模型 房间规模的场景。 我们方法的实时但长期 SLAM 性能的关键是：并行跟踪和映射、用于快速优化的损失引导像素采样以及智能关键帧选择作为重放以避免网络遗忘。  iMAP 的未来方向包括如何制作更结构化和组合性的表示，以明确地推理场景中的自相似性。</p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>隐式表示</tag>
+        <tag>视觉SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>论文阅读《Gaussian Splatting with Localized Points Management》</title>
     <url>/2024/07/20/paper-reading-lpm/</url>
     <content><![CDATA[<h1 id="论文阅读《Gaussian-Splatting-with-Localized-Points-Management》"><a href="#论文阅读《Gaussian-Splatting-with-Localized-Points-Management》" class="headerlink" title="论文阅读《Gaussian Splatting with Localized Points Management》"></a>论文阅读《Gaussian Splatting with Localized Points Management》</h1><h2 id="Motivation-Adaptive-Density-Control的局限性"><a href="#Motivation-Adaptive-Density-Control的局限性" class="headerlink" title="Motivation: Adaptive Density Control的局限性"></a>Motivation: Adaptive Density Control的局限性</h2><p>论文在Introduction部分提到了Adaptive Density Control存在几个问题：</p>
@@ -14588,178 +14686,6 @@ TODO
       </tags>
   </entry>
   <entry>
-    <title>论文阅读《iMAP：Implicit Mapping and Positioning in Real-Time 》</title>
-    <url>/2022/08/31/paper-reading-imap/</url>
-    <content><![CDATA[<h1 id="论文阅读《iMAP-Implicit-Mapping-and-Positioning-in-Real-Time-》"><a href="#论文阅读《iMAP-Implicit-Mapping-and-Positioning-in-Real-Time-》" class="headerlink" title="论文阅读《iMAP: Implicit Mapping and Positioning in Real-Time 》"></a>论文阅读《iMAP: Implicit Mapping and Positioning in Real-Time 》</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>我们首次展示了多层感知器 (MLP) 可以作为手持 RGB-D 相机的实时 SLAM 系统中唯一的场景表示。 我们的网络在没有先验数据的情况下进行实时操作训练，构建了一个稠密的、特定场景的隐式 3D 占用和颜色模型，该模型也可立即用于跟踪。</p>
-<p>通过针对实时图像流持续训练神经网络来实现实时 SLAM 需要重大创新。 我们的 iMAP 算法使用关键帧结构和多处理计算流程，采用动态信息引导像素采样提高速度，跟踪频率为 10 Hz，全局地图更新频率为 2 Hz。 与标准稠密 SLAM 技术相比，隐式 MLP 的优势包括具有自动细节控制的高效几何表示以及对未观察区域（例如对象的后表面）的平滑、合理填充。</p>
-<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>用于智能体现设备的实时同步定位和映射 (SLAM) 系统必须逐步构建 3D 世界的表示，以实现定位和场景理解。理想的表示应该精确地编码几何图形，但也应该是高效的，可用的内存容量可以根据场景大小和复杂性自适应地使用； 预测性的，能够合理地估计未直接观察到的区域的形状； 灵活，无需大量训练数据或手动调整即可在新场景下运行。</p>
-<p>隐式神经表示是离线重建的一个有前途的最新进展，它使用多层感知器 (MLP) 将 3D 点映射到占用或颜色，并从头开始对其进行优化以适应特定场景。  MLP 是一种通用的隐式函数逼近器，能够用很少的参数表示可变细节并且没有量化伪影。即使没有事先的训练，网络结构中存在的固有先验也允许它从部分数据中做出稠密的几何估计，并合理地完成未观察到的区域。</p>
-<p>在本文中，我们首次展示了 MLP 可以用作使用手持 RGB-D 相机的实时 SLAM 系统中的唯一场景表示。 我们随机初始化的网络是在实时操作中训练的，我们不需要任何先前的训练数据。 我们的 iMAP 系统设计有关键帧结构和多处理计算流程，让人想起 PTAM 。 在以超过 10 Hz 运行的跟踪过程中，我们将实时 RGB-D 观察与来自 MLP 场景地图的渲染深度和颜色预测对齐。 同时，映射过程选择并维护一组视点跨越场景的历史关键帧，并使用这些关键帧不断训练和改进 MLP，同时联合优化关键帧姿势。</p>
-<p>在跟踪和映射中，我们动态地对信息量最大的 RGB-D 像素进行采样，以减少几何不确定性，实现实时速度。 我们的系统在 Python 中运行，所有优化都是通过单个桌面 CPU/GPU 系统上的标准 PyTorch 框架。</p>
-<p>通过将 SLAM 视为一个持续学习问题，我们实现了一种表示，该表示可以有效地表示具有连续和自适应分辨率的场景，并且具有出色的平滑插值能力以实现完整的、无懈可击的重建（图 1）。 使用大约 10~20 个关键帧和一个只有 1 MB 参数的 MLP，我们可以准确地映射整个房间。 我们的场景表示没有固定的分辨率； 关键帧的分布自动实现高效的多尺度映射。</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830223022639.png" alt="图 1：使用 Azure Kinect RGB-D 摄像头从实时 iMAP 重建房间，显示稠密场景模型、摄像头跟踪和自动关键帧集。"></p>
-<p>我们在各种真实世界序列上展示了我们的系统，并对来自房间规模的副本数据集的 8 个场景进行了详尽的评估和烧蚀分析。 我们表明，与标准稠密 SLAM 系统相比，iMAP 可以进行更完整的场景重建，并且内存占用明显更小。 我们在 TUM RGB-D 数据集上展示了与最先进的 SLAM 系统相比具有竞争力的跟踪性能。</p>
-<p>总而言之，这篇论文的主要贡献是：</p>
-<ul>
-<li>第一个使用隐式神经场景表示并能够联合优化完整 3D 地图和相机姿势的稠密实时 SLAM 系统。</li>
-<li>通过自动关键帧选择和损失引导稀疏主动采样实现实时增量训练隐式场景网络的能力。</li>
-<li>我们提出的SLAM公式的并行实现（完全在PyTorch中多处理），它与手持RGB-D相机联机工作。</li>
-</ul>
-<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2. Related Work"></a>2. Related Work</h2><p><strong>视觉 SLAM 系统 Visual SLAM Systems</strong>    用于建模环境的实时视觉 SLAM 系统通常以分层方式构建，其中稀疏表示用于定位，更详细的几何或语义分层。 然而，在这里，我们在“稠密 SLAM”范式中工作，其中统一的稠密场景表示也是相机跟踪的基础。 稠密表示避免了任意抽象，例如关键点，能够以稳健的不变方式进行跟踪和重新定位，并且作为与传感器无关的、统一的、完整的空间表示具有长期吸引力。</p>
-<p>稠密 SLAM 中的一些方法明确表示表面，但需要直接表示体积以实现全面的应用，例如规划。 如果使用固定分辨率，则使用占用或有符号距离函数的体积标准表示在内存方面代价很大。 分层方法更有效，但实现起来很复杂，并且通常只提供小范围的详细信息。 在任何一种情况下，表示都是相当严格的，并且由于它们使用了大量的参数，因此不适合与相机姿势进行联合优化。</p>
-<p>机器学习可以发现密集结构的低维嵌入，从而实现高效、联合优化的表示。  CodeSLAM就是一个例子，但使用深度图视图表示而不是完整的体积 3D。 学习技术也被用于改进密集重建，但需要现有的扫描或先验的训练数据。</p>
-<p><strong>使用 MLP 进行隐式场景表示 Implicit Scene Representation with MLPs</strong>    在利用隐式MLP神经模型进行目标重建、目标压缩、新的视图合成和场景完成方面，场景表示和图形显示取得了很大进展。最近的两篇论文 [35,39] 也探讨了相机姿态优化。但是到目前为止，这些方法被认为是一个离线工具，计算要求是几小时、几天或几周。结果表明，当深度图像可用时，利用引导稀疏采样进行渲染和训练时，这些方法适用于实时SLAM。</p>
-<p><strong>持续学习 Continual Learning</strong>    通过使用单个 MLP 作为主场景模型，我们将实时 SLAM 视为在线持续学习。 一个有效的持续学习系统应该展示可塑性（获取新知识的能力）和稳定性（保留旧知识）。 灾难性遗忘是神经网络的一个众所周知的特性，并且是稳定性的失败，新的经历会覆盖记忆。</p>
-<p>减轻灾难性遗忘的一项工作重点是使用相对权重来保护表示免受新数据的影响。 这让人想起 SLAM 中的经典过滤方法，例如 EKF，值得未来研究。 在对每个单独的任务进行训练后冻结或合并子网络的方法对于 SLAM 来说可能过于简单和离散。</p>
-<p>相反，我们将注意力转向基于重放的持续学习方法，其中先前的知识要么直接存储在缓冲区中，要么压缩在生成模型中。 我们使用一种简单的方法，自动选择关键帧来存储和压缩过去的记忆。 我们在持续运行的地图更新过程中使用这些关键帧的损失引导随机抽样来定期重播和加强先前观察到的场景区域，同时继续通过新的关键帧添加信息。 在 SLAM 术语中，这种方法类似于 PTAM 开创的方法，其中历史关键帧集和重复的全局束调整作为长期场景表示。</p>
-<h2 id="3-iMAP-A-Real-Time-Implicit-SLAM-System"><a href="#3-iMAP-A-Real-Time-Implicit-SLAM-System" class="headerlink" title="3. iMAP: A Real-Time Implicit SLAM System"></a>3. iMAP: A Real-Time Implicit SLAM System</h2><h3 id="3-1-System-Overview"><a href="#3-1-System-Overview" class="headerlink" title="3.1. System Overview"></a>3.1. System Overview</h3><p>图2概述了iMAP的工作原理。使用将3D坐标映射到颜色和体积密度的全连接神经网络$ F_\theta $来表示3D体积图 (第3.2节)。给定相机的姿态，我们可以通过累积来自反向投影射线中的样本的网络查询来渲染像素的颜色和深度 (第3.3节)。</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830225347891.png" alt="图2：iMAP system pipeline."></p>
-<p>我们通过相对于一组稀疏的主动采样测量值（第 3.6 节）逐步优化网络权重和相机位姿，从深度和彩色视频中映射场景。 两个进程同时运行：跟踪（第 3.4 节），它优化当前帧相对于锁定网络的位姿； 和映射（第 3.4 节），它联合优化所选关键帧的网络和相机位姿，根据信息增益增量选择（第 3.5 节）。</p>
-<h3 id="3-2-Implicit-Scene-Neural-Network"><a href="#3-2-Implicit-Scene-Neural-Network" class="headerlink" title="3.2. Implicit Scene Neural Network"></a>3.2. Implicit Scene Neural Network</h3><p>遵循 NeRF 中的网络架构，我们使用具有 4 个特征大小为 256 的隐藏层的 MLP，以及将 3D 坐标$ \mathrm p = (x, y, z) $映射到颜色和体积密度值的两个输出头：$ F_\theta{\mathrm p} = (\mathrm c , \rho)$。 与 NeRF 不同，我们不考虑观察方向，因为我们对镜面反射建模不感兴趣。</p>
-<p>我们应用傅里叶特征网络中提出的高斯位置嵌入将输入 3D 坐标提升到 n 维空间：sin(<strong>Bp</strong>)，其中 <strong>B</strong> 是从具有标准偏差$ \sigma $的正态分布采样的 [n×3] 矩阵。 该嵌入用作 MLP 的输入，也连接到网络的第二个激活层。 从 SIREN [27] 中汲取灵感，我们允许优化嵌入矩阵 <strong>B</strong>，实现为具有正弦激活的单个全连接层。</p>
-<h3 id="3-3-Depth-and-Colour-Rendering"><a href="#3-3-Depth-and-Colour-Rendering" class="headerlink" title="3.3. Depth and Colour Rendering"></a>3.3. Depth and Colour Rendering</h3><p>我们的新可微渲染引擎受 NeRF 和 NodeSLAM 的启发，查询场景网络以从给定视图获取深度和彩色图像。</p>
-<p>给定一个相机位姿$ T_{WC} $和一个像素坐标$ [u, v] $，我们首先反向投影一个归一化的观察方向并将其转换为世界坐标：$ r = T_{WC}K^{−1}[u, v]$，相机内在矩阵$ K $。 我们沿着射线$ \mathrm p_i = d_i\mathrm r $取一组$ N $个样本，具有相应的深度值$ {d_1,····, d_N}$，并在网络中查询颜色和体积密度$ (\mathrm c_i, \rho_i) = F_\theta(\mathrm p_i)$。我们遵循 NeRF 的分层和分层体积采样策略。</p>
-<p>体积密度通过乘以样本间距离$ \delta_i = d_{i+1} - d_i $并通过激活函数$ o_i = 1 - exp(-\rho_i \delta_i) $转换为占用概率。然后每个样本的射线终止概率可以 计算为$\omega_i = o_i \prod_{j = 1}^{i - 1}(1 - o_j)$。 最后，深度和颜色被渲染为期望值：</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830225234185.png"></p>
-<p>我们可以将沿射线的深度方差计算为：</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830225300639.png"></p>
-<h3 id="3-4-Joint-optimisation"><a href="#3-4-Joint-optimisation" class="headerlink" title="3.4. Joint optimisation"></a>3.4. Joint optimisation</h3><p>我们联合优化了隐式场景网络参数$ \theta $和不断增长的$ W $关键帧集的相机姿态，每个关键帧都有相关的颜色和深度测量以及初始姿态估计：${I_i,D_i,T_i}$。</p>
-<p>我们的渲染函数对于这些变量是可微的，因此我们执行迭代优化以最小化每个关键帧中选定数量的渲染像素$ s_i $的几何和光度误差。</p>
-<p>光度损失是渲染和测量颜色值$ e_i^p[u,v] = \left| I_i[u,v] - \hat I_i[u,v] \right| $之间的 L1 范数，用于$ M $个像素样本：</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830225657705.png"></p>
-<p>几何损失测量深度差异$ e_i^g[u,v] = \left| D_i[u,v] - \hat D_i[u,v] \right| $并使用深度方差作为归一化因子，在对象边界等不确定区域降低损失：</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830225809862.png"></p>
-<p>我们将 Adam优化器应用于两个损失的加权和，因子$ \lambda_p $调整赋予光度误差的权重：</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830225854970.png"></p>
-<p><strong>相机追踪 Camera Tracking</strong>    在在线 SLAM 中，接近帧率的摄像机跟踪很重要，因为对较小位移的优化更加稳健。 我们运行一个并行跟踪过程，在使用相同的损失和优化器的同时，以比联合优化高得多的帧速率连续优化最新帧相对于固定场景网络的位姿。 跟踪的姿势初始化在选定关键帧的映射过程中被细化。</p>
-<h3 id="3-5-Keyframe-Selection"><a href="#3-5-Keyframe-Selection" class="headerlink" title="3.5. Keyframe Selection"></a>3.5. Keyframe Selection</h3><p>使用来自视频流的所有图像联合优化网络参数和相机位姿在计算上是不可行的。 然而，由于视频图像中存在巨大的冗余，我们可以用一组稀疏的代表性关键帧来表示一个场景，这些关键帧是根据信息增益增量选择的。 始终选择第一帧来初始化网络并固定世界坐标系。 每次添加新的关键帧时，我们都会锁定我们网络的副本以表示我们在那个时间点的 3D 地图的快照。 随后的帧将根据该副本进行检查，如果它们看到一个显着的新区域，则选择它们。</p>
-<p>为此，我们渲染一组统一的像素样本$ s $并计算归一化深度误差小于阈值$ t_D = 0.1 $的比例$ P $，以测量我们的地图快照已经解释的帧的比例：</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830230036340.png"></p>
-<p>当该比例低于阈值$ P &lt; t_P $（我们将$ t_P $设置为0.65）时，该帧将添加到关键帧集。归一化深度误差会产生自适应关键帧选择，当相机更靠近物体时，需要更高的精度，因此需要更紧密的关键帧。</p>
-<p>在映射过程中接收到的每一帧都用于联合优化几次迭代（10 到 20 次之间），因此我们的关键帧集总是由所选集以及不断变化的最新帧组成。</p>
-<h3 id="3-6-Active-Sampling"><a href="#3-6-Active-Sampling" class="headerlink" title="3.6. Active Sampling"></a>3.6. Active Sampling</h3><p><strong>图像主动采样 Image Active Sampling</strong>    渲染和优化所有图像像素在计算和内存方面代价很大。 我们利用图像规律性在每次迭代中仅渲染和优化一组非常稀疏的随机像素（每张图像 200 个）。 此外，我们使用渲染损失来指导在具有更高细节的信息区域或重建尚不精确的信息区域中的主动采样。</p>
-<p>每次联合优化迭代分为两个阶段。首先，我们采样一组$ s_i $像素，均匀分布在每个关键帧的深度和颜色图像上。这些像素用于更新网络和相机位姿，并计算损失统计。 为此，我们将每张图像划分为 [8×8] 网格，并计算每个正方形区域$ R_j $内的平均损失，其中$ j = {1, 2, · · · , 64} $：</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830230713156.png"></p>
-<p>其中$ r_j = s_i \cap R_j $是从$ R_j $均匀采样的像素。 我们将这些统计数据归一化为概率分布：</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830230837596.png"></p>
-<p>我们使用这个分布对每个区域重新采样一组新的$ n_i \cdot f_i[j] $个均匀样本（$ n_i $是每个关键帧中的总样本），将更多样本分配到具有高损失的区域。 场景网络使用来自活动样本的损失进行更新（在相机跟踪中仅使用统一采样）。 图像主动采样如图 3 所示。</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830230953670.png" alt="图 3：图像主动采样。 左：使用一组均匀样本的几何损失计算整个图像网格的损失分布。 右图：根据损失分布进一步分配活动样本。"></p>
-<p><strong>关键帧主动采样 Keyframe Active Sampling</strong>    在 iMAP 中，我们使用一组选定的关键帧不断优化我们的场景地图，作为记忆库来避免网络遗忘。 我们希望将更多样本分配给具有更高损失的关键帧，因为它们与新探索的、高度详细的或网络开始忘记的区域相关。 我们遵循类似于图像主动采样的过程，并将 ni 个样本分配给每个关键帧，与关键帧之间的损失分布成比例，见图 4。</p>
-<p><strong>有界关键帧选择 Bounded Keyframe Selection</strong>    随着相机移动到新的和未探索的区域，我们的关键帧集不断增长。 为了绑定联合优化计算，我们在每次迭代中选择一个固定数量的关键帧（实时系统中为 3 个），根据损失分布随机采样。 我们总是在联合优化中包含最后一个关键帧和当前实时帧，以组成一个$ W = 5 $不断变化的帧的有界窗口。 参见图 4。</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830231107081-16618741509601.png" alt="图4: 关键帧主动采样。我们在注册的关键帧上保持损耗分布。该分布用于对关键帧 (红色框) 的有界窗口进行采样，并用于在每个关键帧中分配像素样本。"></p>
-<h2 id="4-Experimental-Results"><a href="#4-Experimental-Results" class="headerlink" title="4. Experimental Results"></a>4. Experimental Results</h2><p>通过综合实验，我们评估了 iMAP 的 3D 重建和跟踪，并对设计选择的准确性和速度进行了详细的烧蚀分析。</p>
-<h3 id="4-1-Experimental-Setup"><a href="#4-1-Experimental-Setup" class="headerlink" title="4.1. Experimental Setup"></a>4.1. Experimental Setup</h3><p><strong>数据集</strong>    我们在模拟和真实序列上进行实验。 对于重建评估，我们使用 Replica 数据集，这是对真实房间规模环境的高质量 3D 重建，有 5 个办公室和 3 个公寓。 对于每个 Replica 场景，我们渲染 2000 个 RGB-D 帧的随机轨迹。 对于原始摄像机记录，我们使用手持式 Microsoft Azure Kinect 在各种环境中捕获 RGB-D 视频，并在 TUM RGB-D 数据集上进行测试以评估摄像机跟踪。</p>
-<p><strong>实施细节</strong>    对于所有实验，我们设置以下默认参数：关键帧配准阈值$ t_P = 0.65 $，光度损失加权$ \lambda_p = 5 $，关键帧窗口大小$ W = 5 $，像素样本$ |s_i|  = 200 $，位置嵌入大小$ m = 93 $和$ \sigma = 25$，以及 32 个粗分类和 12 个细分类用于渲染。  3D 点坐标通过$\frac {1}{10}$归一化以接近 [0, 1] 范围。</p>
-<p>在手持相机的在线操作中，到达处理帧之间的流式图像被丢弃。 对于此处介绍的实验，每个捕获的帧都被处理，以 10 Hz 运行。 如果需要，我们通过在统一体素网格中从网络查询占用值，然后运行行进立方体来恢复网格重建。 网格化用于可视化和评估目的，不构成我们的 SLAM 系统的一部分。</p>
-<h3 id="4-2-Scene-Reconstruction-Evaluation"><a href="#4-2-Scene-Reconstruction-Evaluation" class="headerlink" title="4.2. Scene Reconstruction Evaluation"></a>4.2. Scene Reconstruction Evaluation</h3><p><strong>尺度</strong>    我们从地面实况和重建网格中采样了200000个点，并计算了三个定量指标：精度（cm）：重建网格中的采样点与最近地面实况点之间的平均距离；完成度（cm）：采样点与地面真实网格和最近重建点之间的平均距离；和完成率（&lt;5cm%）：重建网格中完成小于5cm的点的百分比。</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830233300102.png" alt="图 5：Replica room-0 的重建和跟踪结果以及注册的关键帧。"></p>
-<p><img src="/images/paper-reading-iMAP/image-20220830233317768.png" alt="图 6：iMAP（左）设法填充未观察到的区域，这些区域可被视为 TSDF 融合中的漏洞（右）。"></p>
-<p>联合优化 3D 地图和相机位姿的能力使我们的系统能够构建完整的全局连贯场景重建，如图 1 和 7 所示，以及准确的相机跟踪，如图 5 所示。iMAP 的鲁棒性和多功能性 通过图 9 和 8 中的重建，在各种真实世界的录音中得到了证明，这些重建显示了它在从整个房间到小物体和薄结构的规模上工作的能力。</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830233059436.png" alt="图 7：副本重建，突出显示 iMAP 如何填充未观察到的区域，这些区域是 TSDF 融合中的白洞。"></p>
-<p><img src="/images/paper-reading-iMAP/image-20220830233041963.png" alt="图 8：使用 Azure Kinect 映射的各种真实场景的对比重建结果。  TDSF 融合结果中的白洞似乎由 iMAP 填充。"></p>
-<p><img src="/images/paper-reading-iMAP/image-20220830233021258.png" alt="图 9：iMAP 在各种现实世界设置中的实时重建结果。"></p>
-<p>我们将iMAP中的场景重建与TSDF fusion进行了比较，后者是基于融合的密集SLAM方法的代表。为了隔离重建，我们使用iMAP生成的摄像机跟踪进行TSDF fusion。我们的隐式表示最显著的优势是能够在未观察到的区域填充，如图7和图8所示。iMAP在所有8个复制场景中平均实现了4%的高完成率，如表1所示，office-3的完成率提高了11%。</p>
-<p>具有不同配置设置的 iMAP 和 TSDF 融合的内存消耗如表 2 所示。在 TSDF 融合中默认值为 2563 体素分辨率和 iMAP 中的网络宽度为 256 时，我们的系统可以表示内存使用量减少 60 倍的场景，同时获得相似的 重建精度如表 1 所示。</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830233129794.png" alt="表1：8个室内复制场景的重建结果。我们报告了每个场景中最高的完成率，以及相应的准确性和完成率值。"></p>
-<p><img src="/images/paper-reading-iMAP/image-20220830232944402.png" alt="表 2：内存消耗：对于 iMAP 作为网络大小的函数，对于体素分辨率的 TSDF 融合。"></p>
-<p>当使用真实相机时，除了更好地完成外，我们的方法在深度相机无法提供准确读数的地方（如黑色物体（图8d）和反射或透明表面（图6））优于TSDF融合。这种性能可归因于重建的光度损失以及地图网络的插值能力。</p>
-<h3 id="4-3-TUM-Evaluation"><a href="#4-3-TUM-Evaluation" class="headerlink" title="4.3. TUM Evaluation"></a>4.3. TUM Evaluation</h3><p>我们在来自 TUM RGB-D 的三个序列上运行 iMAP。 跟踪 ATE RMSE 如表 3 所示。我们与基于面元的 BAD-SLAM、TSDF 融合 Kintinuous和稀疏 ORB-SLAM2 等最先进的 SLAM 系统进行了比较。 在姿势准确性方面，iMAP 的表现并不优于它们，但在 2 到 6 厘米的误差方面具有竞争力。 网格重建如图 10 所示。在图 11 中，我们强调了 iMAP 如何填充未观察区域中的孔，这与 BAD-SLAM 不同。</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830232831812.png" alt="表 3：在 TUM RGB-D 数据集上以厘米为单位的 ATE RMSE。"></p>
-<p><img src="/images/paper-reading-iMAP/image-20220830232809469.png" alt="图 10：TUM 数据集的 iMAP 重建结果。"></p>
-<p><img src="/images/paper-reading-iMAP/image-20220830232904051.png" alt="图 11：iMAP（顶部）对 BAD-SLAM（底部）的孔填充能力。"></p>
-<h3 id="4-4-Ablative-Analysis"><a href="#4-4-Ablative-Analysis" class="headerlink" title="4.4. Ablative Analysis"></a>4.4. Ablative Analysis</h3><p>我们使用最大的 Replica 场景分析影响我们系统的设计选择：office-2 和三个不同的随机种子。 完成率结果和时序如表 4 所示。我们发现网络$ width = 256 $，关键帧窗口大小限制为$ W = 5 $，每帧 200 像素样本提供了收敛速度和准确性的最佳折衷。我们在图 12 中进一步表明，主动采样比随机采样能够实现更快的精度收敛和更高的场景完成度。</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830232727343.png" alt="表 4：跟踪（6 次迭代）和映射（10 次迭代）的时序结果，在同一 GPU 上同时运行。 默认配置：网络宽度 256，窗口大小 5，每个关键帧 200 个样本。 最后一行：副本 office-2 的完成率。"></p>
-<p>这些设计选择使我们的在线隐式SLAM系统能够以10Hz的频率运行以进行跟踪，以2Hz的频率进行映射。我们的实验证明了随机抽样在优化中的作用，并强调了关键发现，即使用随机变化的信息进行快速迭代比使用密集和缓慢迭代更好。</p>
-<p>将几何和光度损失结合起来，使我们的系统能够从几个关键帧获得全房间尺度的重建；对于表1中的8个复制场景，平均为13。如表5所示，使用更多关键帧对进一步提高场景完成率几乎没有作用。</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830232657552.png" alt="表 5：Replica office-2 中不同选择阈值的关键帧数和完成率结果。"></p>
-<p>隐式场景网络具有在添加高频场景细节之前快速收敛到低频形状的特性。 图 13 显示了来自静态摄像机的网络训练，平均超过 5 个不同的真实场景。 深度损失在一秒钟内降至 5 厘米以下； 在 4 秒内低于 2 厘米； 然后继续缓慢下降。当映射一个新场景时，我们的系统需要几秒钟来进行粗略的重建，并需要几分钟来添加精细的细节。 在图 14 中，我们展示了系统如何从粗略重建开始，并随着网络训练和相机靠近物体而添加细节。 这是 SLAM 中的一个有用属性，因为它使实时跟踪即使在移动到未探索区域时也能正常工作。</p>
-<p><img src="/images/paper-reading-iMAP/image-20220830232622823.png" alt="图 13：达到 5cm、2cm、1cm 和 0.75cm 深度误差分别需要大约 1、4、20、43 秒。"></p>
-<p><img src="/images/paper-reading-iMAP/image-20220830232552221.png" alt="图 14：重建细节的演变。"></p>
-<h2 id="5-Conclusions"><a href="#5-Conclusions" class="headerlink" title="5. Conclusions"></a>5. Conclusions</h2><p>我们将密集 SLAM 视为实时持续学习，并表明 MLP 可以作为实时系统中唯一的场景表示从头开始训练，从而使 RGB-D 相机能够构建和跟踪完整且准确的体积模型 房间规模的场景。 我们方法的实时但长期 SLAM 性能的关键是：并行跟踪和映射、用于快速优化的损失引导像素采样以及智能关键帧选择作为重放以避免网络遗忘。  iMAP 的未来方向包括如何制作更结构化和组合性的表示，以明确地推理场景中的自相似性。</p>
-]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>隐式表示</tag>
-        <tag>视觉SLAM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>论文阅读《ORB-SLAM2：an Open-Source SLAM System for Monocular, Stereo and RGB-D Cameras》</title>
-    <url>/2023/03/07/paper-reading-orb-slam2/</url>
-    <content><![CDATA[<h1 id="论文阅读《ORB-SLAM2-an-Open-Source-SLAM-System-for-Monocular-Stereo-and-RGB-D-Cameras》"><a href="#论文阅读《ORB-SLAM2-an-Open-Source-SLAM-System-for-Monocular-Stereo-and-RGB-D-Cameras》" class="headerlink" title="论文阅读《ORB-SLAM2: an Open-Source SLAM System for Monocular, Stereo and RGB-D Cameras》"></a>论文阅读《ORB-SLAM2: an Open-Source SLAM System for Monocular, Stereo and RGB-D Cameras》</h1><p>本文提出了ORB-SLAM2，它是基于单目、双目或RGB-D相机的一个完整的SLAM系统，其中包括地图重用、回环检测和重定位功能。</p>
-<h2 id="前置工作ORB-SLAM"><a href="#前置工作ORB-SLAM" class="headerlink" title="前置工作ORB-SLAM"></a>前置工作ORB-SLAM</h2><p>基于双目和RGB-D相机的ORB-SLAM2是建立在基于特征的单目ORB-SLAM的基础上的。所以，这里首先回顾一下前置工作 ORB-SLAM。</p>
-<img src="/images/paper-reading-orb-slam2/orb-slam.png" style="zoom: 50%;">
-
-<p>ORB-SLAM系统概述，显示了跟踪，局部建图和回环检测这三个线程执行的所有步骤。还显示了地点识别模块和地图的主要组件。</p>
-<ul>
-<li><p>跟踪</p>
-<p>负责对每一帧摄像机进行定位，并决定何时插入一个新的关键帧。首先与前一帧进行初始特征匹配，并使用纯运动的BA优化姿势。如果跟踪丢失（例如由于遮挡或突然的移动），则使用地点识别模块来进行全局重新定位。一旦有了对摄像机姿势和特征匹配的初步估计，就会使用系统维护的关键帧的共存图来检索局部可见图。然后，通过重新投影寻找与本地地图点的匹配，并通过所有的匹配再次优化摄像机的姿势。最后，跟踪线程决定是否插入一个新的关键帧。</p>
-</li>
-<li><p>局部建图</p>
-<p>处理新的关键帧并执行局部BA，以在相机姿态的周围环境中实现最佳重建。新关键帧中未匹配ORB的新对应关系在共视性图中的连接关键帧中搜索，以三角化新点。创建后一段时间，基于跟踪期间收集的信息，应用紧急点剔除策略，以便仅保留高质量点。局部映射还负责剔除冗余关键帧。</p>
-</li>
-<li><p>回环检测</p>
-<p>在每个新的关键帧中搜索回环。如果检测到一个回环，就计算一个相似性变换，得到回环中积累的漂移。然后，回环的两边被对齐，重复的点被融合。最后，对相似性约束进行姿势图优化，以实现全局一致性。主要的创新之处在于，我们在基本图上进行优化，这是一个更稀疏的共存图子图。</p>
-</li>
-</ul>
-<blockquote>
-<p>orb-slam更具体的细节还是看论文和代码，论文把这个工作讲得特别详细！！！</p>
-<p>阅读orb-slam2的代码有问题时，也可以再回来看这两篇论文，帮助挺大的。</p>
-</blockquote>
-<h2 id="ORB-SLAM2的系统架构"><a href="#ORB-SLAM2的系统架构" class="headerlink" title="ORB-SLAM2的系统架构"></a>ORB-SLAM2的系统架构</h2><p><img src="/images/paper-reading-orb-slam2/orb-slam2.png"></p>
-<p>ORB-SLAM2由三个主要的并行线程组成：跟踪、局部建图和回环检测。在回环检测后会执行第四个线程，进行全局BA。跟踪线程会对双目和RGB-D输入进行预处理，从而使得系统其它部分可以独立于输入传感器运行。虽然这张图没有展示，但ORB-SLAM2也可以基于单目输入运行。</p>
-<p>该系统具有三个主要的并行线程：</p>
-<p>1）跟踪线程是用来在每一帧中定位相机的位置，通过匹配特征和局部地图并且进行运动BA（motion-only BA）最小化重投影误差；</p>
-<p>2）局部建图线程是用来管理和优化局部地图；</p>
-<p>3）回环检测线程是用来检测大回环，并通过执行位姿图优化来修正累积误差。该线程在位姿图优化后会启动第四个线程来执行全局BA，计算最优的结构和运动结果。</p>
-<p>该系统嵌入了一个基于DBoW2 的位置识别模块，在发生跟踪失败（例如：碰撞）或者在建好图的场景中重新初始化时用来进行重定位，以及用来进行回环检测。该系统维护了一个关联可见地图（convisible map），此地图将每两个观察到相同地图点的关键帧连接到一起；同时该系统也维护了一个最小生成树，它连接了所有的关键帧。这种地图结构实现了对于关键帧局部窗的检索，因此跟踪线程和局部建图线程可以局部地运行，使其可以在大场景中工作；同时该结构在回环闭合进行位姿图优化时，也可作为优化的图结构。</p>
-<h2 id="基于ORB-SLAM进行的工作"><a href="#基于ORB-SLAM进行的工作" class="headerlink" title="基于ORB-SLAM进行的工作"></a>基于ORB-SLAM进行的工作</h2><p>这篇论文后面主要介绍在ORB-SLAM基础上进行的工作，即如何使用双目/深度信息，以及系统的哪些部分将会被影响。</p>
-<p><strong>TRACKING部分</strong></p>
-<p>ORB-SLAM在初始化的时候是计算两帧之间的相对pose，然后用三角测量的方式初始化地图点集，它同时计算了两个模型（一个基础矩阵F，一个单应矩阵H），最后选择一个更好的模型来求解SFM问题。</p>
-<p>ORB-SLAM2多了一个预处理的部分，把RGB-D输入或者双目的输入处理成为单目特征点和这些特征点对应的深度，之后系统的全部运算就基于这些特征，而输入的图像就被丢弃了。</p>
-<blockquote>
-<p>ORB-SLAM应该也是基于这些特征做运算？</p>
-</blockquote>
-<p>其中，RGB-D输入也被他们处理成类似双目的输入了，他们为RGB-D图像中提取的特征点计算了一个虚拟的右图坐标，这样就可以统一的进行处理。这里他们是把特征点划分为近处点和远处点，近处特征点可以被安全地三角化，深度能被精确估计，而远处特征点提供了精确地旋转信息，不过无法提供精确的尺度和平移信息，只有远处特征点在多个视图中存在的时候才会被三角化。</p>
-<p>因为双目或者RGB-D能够直接从单帧图像获取深度信息，所以第一帧设置为关键帧，其位姿设置为初始姿态，并且根据所有的立体关键点来建立一个初始地图。</p>
-<p><strong>FULL BA部分</strong></p>
-<p>ORB-SLAM的论文里在讲初始化（IV. AUTOMATIC MAP INITIALIZATION ）的时候提到初始化过程的最后会执行一个全局的BA来完善初始化的重建。</p>
-<p>而ORB-SLAM2这里是在位姿图优化后，再采用全局BA优化来得到最优解。这个优化过程可能开销会很大，所以被放在一个独立的线程中，从而使得系统可以持续建立地图、检测回环。</p>
-<p>但这样会导致BA输出与当前地图状态之间进行融合产生困难。如果在优化运行的同时发现了新的回环，ORB-SLAM2就停止优化，转而去闭合回环，这将再次启动全局BA优化。当全局BA完成时，就需要将全局BA优化更新后的关键帧和点的集合，与在优化过程中插入的未更新的关键帧和点，进行融合。这通过将更新的关键帧的修正（未优化位姿至优化位姿的变换）沿生成树传递至未更新的关键帧来完成。未更新的点依据它们的参考帧的修正来进行变换。</p>
-]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>视觉SLAM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SEAMLESS MAP MERGING in ORBSLAM-Atlas</title>
-    <url>/2023/05/27/paper-reading-orbslam-atlas/</url>
-    <content><![CDATA[<h1 id="SEAMLESS-MAP-MERGING-in-ORBSLAM-Atlas"><a href="#SEAMLESS-MAP-MERGING-in-ORBSLAM-Atlas" class="headerlink" title="SEAMLESS MAP MERGING in ORBSLAM-Atlas"></a>SEAMLESS MAP MERGING in ORBSLAM-Atlas</h1><p>为了检测地图的合并，我们使用ORBSLAM的place recognition阶段。它对由共视图连接的三个关键帧进行重复的位置识别，以减少错误检测的风险。</p>
-<p>下面介绍SEAMLESS MAP MERGING的流程，我们使用a、s、m三个子索引分别指代活动的（active）、被吞噬的（swallowed ）和合并的（merged ）地图。</p>
-<ol>
-<li><strong>检测两张地图之间的共同区域</strong>。place recognition提供了两个匹配的关键帧$K_a$和$K_s$，以及两个地图$M_a$和$M_s$中地图点之间的假定匹配。</li>
-<li><strong>估计两张地图之间的变换矩阵</strong>。在双目模式下需要估计欧式变换矩阵$SE(3)$，而在单目模式需要估计相似变换矩阵$Sim(3)$。我们结合了Horn的方法[1]和RANSAC算法，从地图$M_a$和$M_s$中地图点之间的假定匹配中计算出一个初始估计，我们将估计的变换矩阵应用于关键帧$K_s$的引导性匹配阶段，我们在关键帧$K_s$中匹配地图$M_a$中的点，通过对重投影误差进行非线性优化，最终估计出$T_{W_a,W_s}$。</li>
-<li><strong>融合两张地图</strong>。我们将$T_{W_a,W_s}$应用于所有关键帧和地图$M_S$中的点，然后，我们检测重复的地图点并将其融合，从而得到从地图$M_s$和$M_a$的关键帧观察到的地图点。 之后，我们将地图$M_s$和$M_a$的所有关键帧和地图点合并到地图$M_m$中。此外，我们将地图$M_s$和$M_a$的生成树和共视图合并为地图$M_m$的生成树和共视图。</li>
-<li><strong>在连接区域进行局部BA</strong>。连接区域包括地图$M_m$的共视图中与关键帧$K_a$共视的所有关键帧。为了固定测量的自由度，地图$M_a$中固定的关键帧在局部BA时保持固定，而其余的关键帧在非线性优化过程中被设置为可优化的变量。我们应用第二个重复点检测和融合阶段来更新地图$M_m$的共视图。</li>
-<li><strong>位姿图优化</strong>。最后，我们对地图$M_m$进行了位姿图优化。</li>
-</ol>
-<p>地图合并的线程与跟踪线程、局部建图线程以及全局BA线程并行。在开始合并之前，局部建图线程被停止，以避免在atlas中增加新的关键帧；如果全局BA线程正在运行，它也会被停止，因为生成树在全局BA之后会被改变。跟踪线程在旧的活动地图上保持运行，以保持实时计算位姿。一旦地图合并完成，我们就恢复局部建图线程。全局BA如果已经停止，也将重新启动以处理新数据。</p>
-<p><strong>REFERENCES</strong></p>
-<p>[1] B. K. Horn, “Closed-form solution of absolute orientation using unit quaternions,” JOSA A, vol. 4, no. 4, pp. 629–642, 1987.</p>
-]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>视觉SLAM</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>论文阅读《NICE-SLAM：Neural Implicit Scalable Encoding for SLAM》</title>
     <url>/2022/08/30/paper-reading-nice-slam/</url>
     <content><![CDATA[<h1 id="论文阅读《NICE-SLAM-Neural-Implicit-Scalable-Encoding-for-SLAM》"><a href="#论文阅读《NICE-SLAM-Neural-Implicit-Scalable-Encoding-for-SLAM》" class="headerlink" title="论文阅读《NICE-SLAM: Neural Implicit Scalable Encoding for SLAM》"></a>论文阅读《NICE-SLAM: Neural Implicit Scalable Encoding for SLAM》</h1><p><img src="/images/paper-reading-nice-slam/poster_nice-slam_00.png"></p>
@@ -14859,6 +14785,80 @@ TODO
       </categories>
       <tags>
         <tag>隐式表示</tag>
+        <tag>视觉SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文阅读《ORB-SLAM2：an Open-Source SLAM System for Monocular, Stereo and RGB-D Cameras》</title>
+    <url>/2023/03/07/paper-reading-orb-slam2/</url>
+    <content><![CDATA[<h1 id="论文阅读《ORB-SLAM2-an-Open-Source-SLAM-System-for-Monocular-Stereo-and-RGB-D-Cameras》"><a href="#论文阅读《ORB-SLAM2-an-Open-Source-SLAM-System-for-Monocular-Stereo-and-RGB-D-Cameras》" class="headerlink" title="论文阅读《ORB-SLAM2: an Open-Source SLAM System for Monocular, Stereo and RGB-D Cameras》"></a>论文阅读《ORB-SLAM2: an Open-Source SLAM System for Monocular, Stereo and RGB-D Cameras》</h1><p>本文提出了ORB-SLAM2，它是基于单目、双目或RGB-D相机的一个完整的SLAM系统，其中包括地图重用、回环检测和重定位功能。</p>
+<h2 id="前置工作ORB-SLAM"><a href="#前置工作ORB-SLAM" class="headerlink" title="前置工作ORB-SLAM"></a>前置工作ORB-SLAM</h2><p>基于双目和RGB-D相机的ORB-SLAM2是建立在基于特征的单目ORB-SLAM的基础上的。所以，这里首先回顾一下前置工作 ORB-SLAM。</p>
+<img src="/images/paper-reading-orb-slam2/orb-slam.png" style="zoom: 50%;">
+
+<p>ORB-SLAM系统概述，显示了跟踪，局部建图和回环检测这三个线程执行的所有步骤。还显示了地点识别模块和地图的主要组件。</p>
+<ul>
+<li><p>跟踪</p>
+<p>负责对每一帧摄像机进行定位，并决定何时插入一个新的关键帧。首先与前一帧进行初始特征匹配，并使用纯运动的BA优化姿势。如果跟踪丢失（例如由于遮挡或突然的移动），则使用地点识别模块来进行全局重新定位。一旦有了对摄像机姿势和特征匹配的初步估计，就会使用系统维护的关键帧的共存图来检索局部可见图。然后，通过重新投影寻找与本地地图点的匹配，并通过所有的匹配再次优化摄像机的姿势。最后，跟踪线程决定是否插入一个新的关键帧。</p>
+</li>
+<li><p>局部建图</p>
+<p>处理新的关键帧并执行局部BA，以在相机姿态的周围环境中实现最佳重建。新关键帧中未匹配ORB的新对应关系在共视性图中的连接关键帧中搜索，以三角化新点。创建后一段时间，基于跟踪期间收集的信息，应用紧急点剔除策略，以便仅保留高质量点。局部映射还负责剔除冗余关键帧。</p>
+</li>
+<li><p>回环检测</p>
+<p>在每个新的关键帧中搜索回环。如果检测到一个回环，就计算一个相似性变换，得到回环中积累的漂移。然后，回环的两边被对齐，重复的点被融合。最后，对相似性约束进行姿势图优化，以实现全局一致性。主要的创新之处在于，我们在基本图上进行优化，这是一个更稀疏的共存图子图。</p>
+</li>
+</ul>
+<blockquote>
+<p>orb-slam更具体的细节还是看论文和代码，论文把这个工作讲得特别详细！！！</p>
+<p>阅读orb-slam2的代码有问题时，也可以再回来看这两篇论文，帮助挺大的。</p>
+</blockquote>
+<h2 id="ORB-SLAM2的系统架构"><a href="#ORB-SLAM2的系统架构" class="headerlink" title="ORB-SLAM2的系统架构"></a>ORB-SLAM2的系统架构</h2><p><img src="/images/paper-reading-orb-slam2/orb-slam2.png"></p>
+<p>ORB-SLAM2由三个主要的并行线程组成：跟踪、局部建图和回环检测。在回环检测后会执行第四个线程，进行全局BA。跟踪线程会对双目和RGB-D输入进行预处理，从而使得系统其它部分可以独立于输入传感器运行。虽然这张图没有展示，但ORB-SLAM2也可以基于单目输入运行。</p>
+<p>该系统具有三个主要的并行线程：</p>
+<p>1）跟踪线程是用来在每一帧中定位相机的位置，通过匹配特征和局部地图并且进行运动BA（motion-only BA）最小化重投影误差；</p>
+<p>2）局部建图线程是用来管理和优化局部地图；</p>
+<p>3）回环检测线程是用来检测大回环，并通过执行位姿图优化来修正累积误差。该线程在位姿图优化后会启动第四个线程来执行全局BA，计算最优的结构和运动结果。</p>
+<p>该系统嵌入了一个基于DBoW2 的位置识别模块，在发生跟踪失败（例如：碰撞）或者在建好图的场景中重新初始化时用来进行重定位，以及用来进行回环检测。该系统维护了一个关联可见地图（convisible map），此地图将每两个观察到相同地图点的关键帧连接到一起；同时该系统也维护了一个最小生成树，它连接了所有的关键帧。这种地图结构实现了对于关键帧局部窗的检索，因此跟踪线程和局部建图线程可以局部地运行，使其可以在大场景中工作；同时该结构在回环闭合进行位姿图优化时，也可作为优化的图结构。</p>
+<h2 id="基于ORB-SLAM进行的工作"><a href="#基于ORB-SLAM进行的工作" class="headerlink" title="基于ORB-SLAM进行的工作"></a>基于ORB-SLAM进行的工作</h2><p>这篇论文后面主要介绍在ORB-SLAM基础上进行的工作，即如何使用双目/深度信息，以及系统的哪些部分将会被影响。</p>
+<p><strong>TRACKING部分</strong></p>
+<p>ORB-SLAM在初始化的时候是计算两帧之间的相对pose，然后用三角测量的方式初始化地图点集，它同时计算了两个模型（一个基础矩阵F，一个单应矩阵H），最后选择一个更好的模型来求解SFM问题。</p>
+<p>ORB-SLAM2多了一个预处理的部分，把RGB-D输入或者双目的输入处理成为单目特征点和这些特征点对应的深度，之后系统的全部运算就基于这些特征，而输入的图像就被丢弃了。</p>
+<blockquote>
+<p>ORB-SLAM应该也是基于这些特征做运算？</p>
+</blockquote>
+<p>其中，RGB-D输入也被他们处理成类似双目的输入了，他们为RGB-D图像中提取的特征点计算了一个虚拟的右图坐标，这样就可以统一的进行处理。这里他们是把特征点划分为近处点和远处点，近处特征点可以被安全地三角化，深度能被精确估计，而远处特征点提供了精确地旋转信息，不过无法提供精确的尺度和平移信息，只有远处特征点在多个视图中存在的时候才会被三角化。</p>
+<p>因为双目或者RGB-D能够直接从单帧图像获取深度信息，所以第一帧设置为关键帧，其位姿设置为初始姿态，并且根据所有的立体关键点来建立一个初始地图。</p>
+<p><strong>FULL BA部分</strong></p>
+<p>ORB-SLAM的论文里在讲初始化（IV. AUTOMATIC MAP INITIALIZATION ）的时候提到初始化过程的最后会执行一个全局的BA来完善初始化的重建。</p>
+<p>而ORB-SLAM2这里是在位姿图优化后，再采用全局BA优化来得到最优解。这个优化过程可能开销会很大，所以被放在一个独立的线程中，从而使得系统可以持续建立地图、检测回环。</p>
+<p>但这样会导致BA输出与当前地图状态之间进行融合产生困难。如果在优化运行的同时发现了新的回环，ORB-SLAM2就停止优化，转而去闭合回环，这将再次启动全局BA优化。当全局BA完成时，就需要将全局BA优化更新后的关键帧和点的集合，与在优化过程中插入的未更新的关键帧和点，进行融合。这通过将更新的关键帧的修正（未优化位姿至优化位姿的变换）沿生成树传递至未更新的关键帧来完成。未更新的点依据它们的参考帧的修正来进行变换。</p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>视觉SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SEAMLESS MAP MERGING in ORBSLAM-Atlas</title>
+    <url>/2023/05/27/paper-reading-orbslam-atlas/</url>
+    <content><![CDATA[<h1 id="SEAMLESS-MAP-MERGING-in-ORBSLAM-Atlas"><a href="#SEAMLESS-MAP-MERGING-in-ORBSLAM-Atlas" class="headerlink" title="SEAMLESS MAP MERGING in ORBSLAM-Atlas"></a>SEAMLESS MAP MERGING in ORBSLAM-Atlas</h1><p>为了检测地图的合并，我们使用ORBSLAM的place recognition阶段。它对由共视图连接的三个关键帧进行重复的位置识别，以减少错误检测的风险。</p>
+<p>下面介绍SEAMLESS MAP MERGING的流程，我们使用a、s、m三个子索引分别指代活动的（active）、被吞噬的（swallowed ）和合并的（merged ）地图。</p>
+<ol>
+<li><strong>检测两张地图之间的共同区域</strong>。place recognition提供了两个匹配的关键帧$K_a$和$K_s$，以及两个地图$M_a$和$M_s$中地图点之间的假定匹配。</li>
+<li><strong>估计两张地图之间的变换矩阵</strong>。在双目模式下需要估计欧式变换矩阵$SE(3)$，而在单目模式需要估计相似变换矩阵$Sim(3)$。我们结合了Horn的方法[1]和RANSAC算法，从地图$M_a$和$M_s$中地图点之间的假定匹配中计算出一个初始估计，我们将估计的变换矩阵应用于关键帧$K_s$的引导性匹配阶段，我们在关键帧$K_s$中匹配地图$M_a$中的点，通过对重投影误差进行非线性优化，最终估计出$T_{W_a,W_s}$。</li>
+<li><strong>融合两张地图</strong>。我们将$T_{W_a,W_s}$应用于所有关键帧和地图$M_S$中的点，然后，我们检测重复的地图点并将其融合，从而得到从地图$M_s$和$M_a$的关键帧观察到的地图点。 之后，我们将地图$M_s$和$M_a$的所有关键帧和地图点合并到地图$M_m$中。此外，我们将地图$M_s$和$M_a$的生成树和共视图合并为地图$M_m$的生成树和共视图。</li>
+<li><strong>在连接区域进行局部BA</strong>。连接区域包括地图$M_m$的共视图中与关键帧$K_a$共视的所有关键帧。为了固定测量的自由度，地图$M_a$中固定的关键帧在局部BA时保持固定，而其余的关键帧在非线性优化过程中被设置为可优化的变量。我们应用第二个重复点检测和融合阶段来更新地图$M_m$的共视图。</li>
+<li><strong>位姿图优化</strong>。最后，我们对地图$M_m$进行了位姿图优化。</li>
+</ol>
+<p>地图合并的线程与跟踪线程、局部建图线程以及全局BA线程并行。在开始合并之前，局部建图线程被停止，以避免在atlas中增加新的关键帧；如果全局BA线程正在运行，它也会被停止，因为生成树在全局BA之后会被改变。跟踪线程在旧的活动地图上保持运行，以保持实时计算位姿。一旦地图合并完成，我们就恢复局部建图线程。全局BA如果已经停止，也将重新启动以处理新数据。</p>
+<p><strong>REFERENCES</strong></p>
+<p>[1] B. K. Horn, “Closed-form solution of absolute orientation using unit quaternions,” JOSA A, vol. 4, no. 4, pp. 629–642, 1987.</p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
         <tag>视觉SLAM</tag>
       </tags>
   </entry>
