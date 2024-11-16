@@ -7566,80 +7566,6 @@ for k in range(epoch)
       </tags>
   </entry>
   <entry>
-    <title>机器学习笔记（五）：初探卷积神经网络</title>
-    <url>/2022/01/12/machine-learning-5/</url>
-    <content><![CDATA[<h1 id="机器学习笔记（五）：初探卷积神经网络"><a href="#机器学习笔记（五）：初探卷积神经网络" class="headerlink" title="机器学习笔记（五）：初探卷积神经网络"></a>机器学习笔记（五）：初探卷积神经网络</h1><h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>卷积神经网络主要由两部分组成：</p>
-<ul>
-<li>一部分是<strong>特征提取</strong>（卷积、激活函数、池化）</li>
-<li>另一部分是<strong>分类识别</strong>（全连接）</li>
-</ul>
-<p>卷积神经网络应用非常广泛：</p>
-<ul>
-<li><p>图像分类：场景分类，目标分类</p>
-</li>
-<li><p>图像检测：显著性检测，物体检测，语义检测等等</p>
-</li>
-<li><p>图像识别：人脸识别，字符识别，车牌识别，行为识别，步态识别等等</p>
-</li>
-<li><p>图像分割：前景分割，语义分割</p>
-</li>
-</ul>
-<p>但是，CNN真正能做的，只是起到一个<strong>图像特征提取器</strong>的作用！</p>
-<h2 id="二、CNN是什么"><a href="#二、CNN是什么" class="headerlink" title="二、CNN是什么"></a>二、CNN是什么</h2><h3 id="2-1-卷积神经网络（CNN）是一种带有卷积结构的深度神经网络"><a href="#2-1-卷积神经网络（CNN）是一种带有卷积结构的深度神经网络" class="headerlink" title="2.1 卷积神经网络（CNN）是一种带有卷积结构的深度神经网络"></a>2.1 卷积神经网络（CNN）是一种带有卷积结构的深度神经网络</h3><p><strong>卷积结构</strong>可以减少深层网络占用的内存量。</p>
-<p><strong>卷积结构有三个关键的操作</strong></p>
-<ul>
-<li>其一是局部感受野，</li>
-<li>其二是权值共享，</li>
-<li>其三是池化层pooling。</li>
-</ul>
-<p><strong>作用：</strong>可以有效的减少网络的参数个数，缓解模型的过拟合问题。</p>
-<h3 id="2-2-卷积神经网络（CNN）与普通神经网络非常相似"><a href="#2-2-卷积神经网络（CNN）与普通神经网络非常相似" class="headerlink" title="2.2 卷积神经网络（CNN）与普通神经网络非常相似"></a>2.2 卷积神经网络（CNN）与普通神经网络非常相似</h3><p><strong>相同点</strong>：</p>
-<p>它们都由具有“可学习的权重W”和“偏置常量b”的神经元组成。<br>每个神经元都接收一些输入，并做一些点积计算，输出是每个分类的分数，普通神经网络里的一些计算技巧到这里依旧适用。</p>
-<p><strong>不同之处在哪？</strong></p>
-<p><strong>CNN具有三维体积的神经元(3D volumes of neurons)</strong></p>
-<p>卷积神经网络，利用输入是图片的特点，把神经元设计成三个维度：<strong>depth、height、width</strong></p>
-<p>(注意这个depth不是神经网络的深度，而是用来描述神经元的) 。</p>
-<p>比如，输入的图片大小是 3× 32 × 32 (rgb)，那么输入神经元就也具有 3× 32 × 32 的维度。</p>
-<p>传统神经网络：</p>
-<p><img src="/images/machine-learning/5-1.jpg"></p>
-<p>卷积神经网络：一个CNN由很多层组成，它们的输入是三维的，输出也是三维的</p>
-<p><img src="/images/machine-learning/5-2.jpg"></p>
-<h3 id="2-3-卷积神经网络（CNN）的结构"><a href="#2-3-卷积神经网络（CNN）的结构" class="headerlink" title="2.3 卷积神经网络（CNN）的结构"></a>2.3 卷积神经网络（CNN）的结构</h3><h5 id="1）卷积层（Convolutional-layer）"><a href="#1）卷积层（Convolutional-layer）" class="headerlink" title="1）卷积层（Convolutional layer）"></a>1）卷积层（Convolutional layer）</h5><p>卷积神经网路中，每层卷积层由若干卷积核组成，每个卷积核的参数都是通过反向传播算法优化得到的。</p>
-<p>卷积运算的目的是提取输入的不同特征，第一层卷积层可能只能提取一些低级的特征如边缘、线条和角等层级，更多层的网络能从低级特征中迭代提取更复杂的特征。</p>
-<h5 id="2）线性整流层（Rectified-Linear-Units-layer-ReLU-layer）"><a href="#2）线性整流层（Rectified-Linear-Units-layer-ReLU-layer）" class="headerlink" title="2）线性整流层（Rectified Linear Units layer, ReLU layer）"></a>2）线性整流层（Rectified Linear Units layer, ReLU layer）</h5><p>这一层神经的激活函数（Activation function）使用线性整流（Rectified Linear Units, ReLU）。</p>
-<h5 id="3）池化层（Pooling-layer）"><a href="#3）池化层（Pooling-layer）" class="headerlink" title="3）池化层（Pooling layer）"></a>3）池化层（Pooling layer）</h5><p>通常在卷积层之后，会得到维度很大的特征，将特征切成几个区域，取其最大值或平均值，得到新的、维度较小的特征。</p>
-<h5 id="4）全连接层（-Fully-Connected-layer）"><a href="#4）全连接层（-Fully-Connected-layer）" class="headerlink" title="4）全连接层（ Fully-Connected layer）"></a>4）全连接层（ Fully-Connected layer）</h5><p>把所有局部特征，结合变成全局特征，用来计算最后每一类的得分。</p>
-<h3 id="2-4-一个卷积神经网络各层应用实例"><a href="#2-4-一个卷积神经网络各层应用实例" class="headerlink" title="2.4 一个卷积神经网络各层应用实例"></a>2.4 一个卷积神经网络各层应用实例</h3><p><img src="/images/machine-learning/5-3.jpg"></p>
-<p>上图中，CNN要做的事情是：给定一张图片，现在需要模型判断这张图片里具体是一个什么东西，总之输出一个结果：这是什么？</p>
-<p>左边是：</p>
-<ul>
-<li><strong>数据输入层</strong>，对数据做一些处理。</li>
-</ul>
-<p>中间是：</p>
-<ul>
-<li>CONV：<strong>卷积计算层，</strong>线性乘积、求和。</li>
-<li>RELU：<strong>激励层</strong>，ReLU是激活函数的一种。</li>
-<li>POOL：<strong>池化层</strong>，简言之，即取区域平均或最大。</li>
-</ul>
-<p>右边是：</p>
-<ul>
-<li>FC：<strong>全连接层，</strong>所有局部特征，结合变成全局特征，分类评分</li>
-</ul>
-<p>其中，卷积计算层是CNN的核心！</p>
-<h2 id="三、为什么使用CNN"><a href="#三、为什么使用CNN" class="headerlink" title="三、为什么使用CNN"></a>三、为什么使用CNN</h2><p>在图像领域，用传统的神经网络并不合适。</p>
-<p>我们知道，图像是由一个个像素点构成，每个像素点有三个通道，分别代表RGB颜色。如果一个图像的尺寸是（28，28，1），即代表这个图像的是一个长宽均为28，channel为1的图像（channel也叫depth,此处1代表灰色图像）。</p>
-<p>使用全连接的网络结构，即，网络中的神经与与相邻层上的每个神经元均连接，那就意味着我们的网络输入层有28 * 28 =784个神经元，再假设隐藏层采用了15个神经元，输出层采用了10个神经元。那么简单计算一下，我们需要的参数个数(w和b)就有：784*15*10+15+10=117625个。这个参数太多了，随便进行一次反向传播计算量都是巨大的，从计算资源和调参的角度都不建议用传统的神经网络。</p>
-<p>使用卷积神经网络，就可以比较好的解决这个问题。卷积层可以很好的利用图像本身具有的二维空间特征，比全连接网络仅仅考虑单个像素点的效果会更好，同时使用卷积核后图片的尺寸变小，方便后续计算；而池化层通过降采样的方式，在不影响图像质量的情况下，压缩图片，减少参数，这样计算量也会比全连接网络小很多。</p>
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
-        <tag>CNN</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>机器学习笔记（四）：手写多层神经网络并应用</title>
     <url>/2022/01/10/machine-learning-4/</url>
     <content><![CDATA[<h1 id="机器学习笔记（四）：手写多层神经网络并应用"><a href="#机器学习笔记（四）：手写多层神经网络并应用" class="headerlink" title="机器学习笔记（四）：手写多层神经网络并应用"></a>机器学习笔记（四）：手写多层神经网络并应用</h1><p>在上一篇文章中，我们已经学习了多层神经网络的基本原理，并且对正向传播、反向传播和激活函数都有了一定的了解。</p>
@@ -8189,6 +8115,80 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
       <tags>
         <tag>机器学习</tag>
         <tag>多层神经网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>机器学习笔记（五）：初探卷积神经网络</title>
+    <url>/2022/01/12/machine-learning-5/</url>
+    <content><![CDATA[<h1 id="机器学习笔记（五）：初探卷积神经网络"><a href="#机器学习笔记（五）：初探卷积神经网络" class="headerlink" title="机器学习笔记（五）：初探卷积神经网络"></a>机器学习笔记（五）：初探卷积神经网络</h1><h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>卷积神经网络主要由两部分组成：</p>
+<ul>
+<li>一部分是<strong>特征提取</strong>（卷积、激活函数、池化）</li>
+<li>另一部分是<strong>分类识别</strong>（全连接）</li>
+</ul>
+<p>卷积神经网络应用非常广泛：</p>
+<ul>
+<li><p>图像分类：场景分类，目标分类</p>
+</li>
+<li><p>图像检测：显著性检测，物体检测，语义检测等等</p>
+</li>
+<li><p>图像识别：人脸识别，字符识别，车牌识别，行为识别，步态识别等等</p>
+</li>
+<li><p>图像分割：前景分割，语义分割</p>
+</li>
+</ul>
+<p>但是，CNN真正能做的，只是起到一个<strong>图像特征提取器</strong>的作用！</p>
+<h2 id="二、CNN是什么"><a href="#二、CNN是什么" class="headerlink" title="二、CNN是什么"></a>二、CNN是什么</h2><h3 id="2-1-卷积神经网络（CNN）是一种带有卷积结构的深度神经网络"><a href="#2-1-卷积神经网络（CNN）是一种带有卷积结构的深度神经网络" class="headerlink" title="2.1 卷积神经网络（CNN）是一种带有卷积结构的深度神经网络"></a>2.1 卷积神经网络（CNN）是一种带有卷积结构的深度神经网络</h3><p><strong>卷积结构</strong>可以减少深层网络占用的内存量。</p>
+<p><strong>卷积结构有三个关键的操作</strong></p>
+<ul>
+<li>其一是局部感受野，</li>
+<li>其二是权值共享，</li>
+<li>其三是池化层pooling。</li>
+</ul>
+<p><strong>作用：</strong>可以有效的减少网络的参数个数，缓解模型的过拟合问题。</p>
+<h3 id="2-2-卷积神经网络（CNN）与普通神经网络非常相似"><a href="#2-2-卷积神经网络（CNN）与普通神经网络非常相似" class="headerlink" title="2.2 卷积神经网络（CNN）与普通神经网络非常相似"></a>2.2 卷积神经网络（CNN）与普通神经网络非常相似</h3><p><strong>相同点</strong>：</p>
+<p>它们都由具有“可学习的权重W”和“偏置常量b”的神经元组成。<br>每个神经元都接收一些输入，并做一些点积计算，输出是每个分类的分数，普通神经网络里的一些计算技巧到这里依旧适用。</p>
+<p><strong>不同之处在哪？</strong></p>
+<p><strong>CNN具有三维体积的神经元(3D volumes of neurons)</strong></p>
+<p>卷积神经网络，利用输入是图片的特点，把神经元设计成三个维度：<strong>depth、height、width</strong></p>
+<p>(注意这个depth不是神经网络的深度，而是用来描述神经元的) 。</p>
+<p>比如，输入的图片大小是 3× 32 × 32 (rgb)，那么输入神经元就也具有 3× 32 × 32 的维度。</p>
+<p>传统神经网络：</p>
+<p><img src="/images/machine-learning/5-1.jpg"></p>
+<p>卷积神经网络：一个CNN由很多层组成，它们的输入是三维的，输出也是三维的</p>
+<p><img src="/images/machine-learning/5-2.jpg"></p>
+<h3 id="2-3-卷积神经网络（CNN）的结构"><a href="#2-3-卷积神经网络（CNN）的结构" class="headerlink" title="2.3 卷积神经网络（CNN）的结构"></a>2.3 卷积神经网络（CNN）的结构</h3><h5 id="1）卷积层（Convolutional-layer）"><a href="#1）卷积层（Convolutional-layer）" class="headerlink" title="1）卷积层（Convolutional layer）"></a>1）卷积层（Convolutional layer）</h5><p>卷积神经网路中，每层卷积层由若干卷积核组成，每个卷积核的参数都是通过反向传播算法优化得到的。</p>
+<p>卷积运算的目的是提取输入的不同特征，第一层卷积层可能只能提取一些低级的特征如边缘、线条和角等层级，更多层的网络能从低级特征中迭代提取更复杂的特征。</p>
+<h5 id="2）线性整流层（Rectified-Linear-Units-layer-ReLU-layer）"><a href="#2）线性整流层（Rectified-Linear-Units-layer-ReLU-layer）" class="headerlink" title="2）线性整流层（Rectified Linear Units layer, ReLU layer）"></a>2）线性整流层（Rectified Linear Units layer, ReLU layer）</h5><p>这一层神经的激活函数（Activation function）使用线性整流（Rectified Linear Units, ReLU）。</p>
+<h5 id="3）池化层（Pooling-layer）"><a href="#3）池化层（Pooling-layer）" class="headerlink" title="3）池化层（Pooling layer）"></a>3）池化层（Pooling layer）</h5><p>通常在卷积层之后，会得到维度很大的特征，将特征切成几个区域，取其最大值或平均值，得到新的、维度较小的特征。</p>
+<h5 id="4）全连接层（-Fully-Connected-layer）"><a href="#4）全连接层（-Fully-Connected-layer）" class="headerlink" title="4）全连接层（ Fully-Connected layer）"></a>4）全连接层（ Fully-Connected layer）</h5><p>把所有局部特征，结合变成全局特征，用来计算最后每一类的得分。</p>
+<h3 id="2-4-一个卷积神经网络各层应用实例"><a href="#2-4-一个卷积神经网络各层应用实例" class="headerlink" title="2.4 一个卷积神经网络各层应用实例"></a>2.4 一个卷积神经网络各层应用实例</h3><p><img src="/images/machine-learning/5-3.jpg"></p>
+<p>上图中，CNN要做的事情是：给定一张图片，现在需要模型判断这张图片里具体是一个什么东西，总之输出一个结果：这是什么？</p>
+<p>左边是：</p>
+<ul>
+<li><strong>数据输入层</strong>，对数据做一些处理。</li>
+</ul>
+<p>中间是：</p>
+<ul>
+<li>CONV：<strong>卷积计算层，</strong>线性乘积、求和。</li>
+<li>RELU：<strong>激励层</strong>，ReLU是激活函数的一种。</li>
+<li>POOL：<strong>池化层</strong>，简言之，即取区域平均或最大。</li>
+</ul>
+<p>右边是：</p>
+<ul>
+<li>FC：<strong>全连接层，</strong>所有局部特征，结合变成全局特征，分类评分</li>
+</ul>
+<p>其中，卷积计算层是CNN的核心！</p>
+<h2 id="三、为什么使用CNN"><a href="#三、为什么使用CNN" class="headerlink" title="三、为什么使用CNN"></a>三、为什么使用CNN</h2><p>在图像领域，用传统的神经网络并不合适。</p>
+<p>我们知道，图像是由一个个像素点构成，每个像素点有三个通道，分别代表RGB颜色。如果一个图像的尺寸是（28，28，1），即代表这个图像的是一个长宽均为28，channel为1的图像（channel也叫depth,此处1代表灰色图像）。</p>
+<p>使用全连接的网络结构，即，网络中的神经与与相邻层上的每个神经元均连接，那就意味着我们的网络输入层有28 * 28 =784个神经元，再假设隐藏层采用了15个神经元，输出层采用了10个神经元。那么简单计算一下，我们需要的参数个数(w和b)就有：784*15*10+15+10=117625个。这个参数太多了，随便进行一次反向传播计算量都是巨大的，从计算资源和调参的角度都不建议用传统的神经网络。</p>
+<p>使用卷积神经网络，就可以比较好的解决这个问题。卷积层可以很好的利用图像本身具有的二维空间特征，比全连接网络仅仅考虑单个像素点的效果会更好，同时使用卷积核后图片的尺寸变小，方便后续计算；而池化层通过降采样的方式，在不影响图像质量的情况下，压缩图片，减少参数，这样计算量也会比全连接网络小很多。</p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>CNN</tag>
       </tags>
   </entry>
   <entry>
@@ -11537,6 +11537,401 @@ pointsf <span class="token operator">=</span> pts<span class="token punctuation"
       </tags>
   </entry>
   <entry>
+    <title>Neural Point Rendering回顾</title>
+    <url>/2024/11/11/neural-point-rendering/</url>
+    <content><![CDATA[<h1 id="Neural-Point-Rendering回顾"><a href="#Neural-Point-Rendering回顾" class="headerlink" title="Neural Point Rendering回顾"></a>Neural Point Rendering回顾</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>3D Gaussian Splatting这两年非常火，已经取代NeRF成为了计算机视觉、SLAM等领域的新热点，每周都能看到很多3DGS的工作出现。</p>
+<p>笔者自己是研究3DGS SLAM的，在学习和做实验的过程中发现，3DGS作为一种显示的表示方法，其几何性质却没有那么好，与传统的点云数据相比，3DGS的点云只捕获了粗糙的几何结构，而且通常存在噪声，这导致3DGS虽然提供了显示的点云，但是在上面做配准很困难。目前笔者了解到在3DGS上做配准的工作只有《GaussReg: Fast 3D Registration with Gaussian Splatting》这一篇，具体可以看笔者的<a href="https://immortalqx.github.io/2024/08/16/paper-reading-gaussianreg">博客文章</a>。</p>
+<p>与3DGS相比，笔者认为Neural Point的表示方法在几何上更有优势，因此笔者选择了neural point相关的几篇工作，做一个回顾整理。</p>
+<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><h3 id="Neural-Point-Based-Graphics-ECCV-2020"><a href="#Neural-Point-Based-Graphics-ECCV-2020" class="headerlink" title="Neural Point-Based Graphics (ECCV 2020)"></a>Neural Point-Based Graphics (ECCV 2020)</h3><p><img src="/images/neural-point-rendering/image-20241107193256641.png"></p>
+<p>如下图所示，该方法使用raw point cloud作为场景几何表示，每个点都带有一个learnable neural descriptor，这个descriptor编码了局部的几何形状和外观；之后根据相机位姿，在不同的分辨率下通过z-buffer对点云进行栅格化，得到不同分辨率下的raw images，这些raw images的像素就是对应点云的descriptor；之后把这一组不同分辨率下的raw images通过类似U-net的Rendering network，可以得到最终渲染的图像。</p>
+<p><img src="/images/neural-point-rendering/image-20241105204710606.png"></p>
+<p>根据论文Method部分的描述，上面的具体流程为：</p>
+<h4 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h4><p>场景被表示为带有$M$维神经描述符$D = {d_1,d_2,…,d_N}$的点云$P={p_1,p_2,…,p_N}$。需要渲染在相机$C$（提供了相机位姿和内参）下的新视图，新视图具有$W \times H$的像素网格，并且viewpoint为$p_0$。</p>
+<h4 id="渲染过程（forward）"><a href="#渲染过程（forward）" class="headerlink" title="渲染过程（forward）"></a>渲染过程（forward）</h4><p>创建一个$M$通道、分辨率为$W \times H$的raw image，记为$S(\mathrm {P},\mathrm {D},C)$；</p>
+<p>将场景中的点投影到目标视图上，比如对于某个点$p_i$，投影到raw image中的$(x,y)$处：<br>$$<br>S(\mathrm {P},\mathrm {D},C)[[x],[y]] = d_i<br>$$<br>由于可能存在很多点投影到相同的像素上，因此论文使用z-buffer算法来过滤被遮挡的点，只保留距离像素平面最近的那个点。但是点云缺乏拓扑信息，很容易出现孔洞，这会导致被遮挡表面的点或来自背景的点被投影到了图像上，即bleeding problem。</p>
+<blockquote>
+<p>可以看这个<a href="https://gamedev.stackexchange.com/questions/46963/how-to-avoid-texture-bleeding-in-a-texture-atlas">链接</a>，简单了解一下texture bleeding的现象</p>
+</blockquote>
+<p>论文提到，传统的解决思路是通过splatting，而他们选择创建很多不同分辨率的raw image，$S[1],S[2],…S[T]$，其中对于第i张raw image，分辨率为$\frac{W}{2^t} \times \frac{H}{2^t}$。这样的话，分辨率越高的raw image，包含的细节最多，但是bleeding的问题越严重，而分辨率越低的图像，包含了粗糙的几何细节，同时bleeding的问题越轻微。</p>
+<blockquote>
+<p>splatting？3D Gaussian Splatting启动！</p>
+<p>话说这里的splatting是什么？也没有见它引用文献。。。</p>
+<blockquote>
+<p>可以看看这篇文章：</p>
+<p>Splatting 抛雪球法简介 - bo233的文章 - 知乎<br><a href="https://zhuanlan.zhihu.com/p/660512916">https://zhuanlan.zhihu.com/p/660512916</a></p>
+</blockquote>
+</blockquote>
+<p>得到不同分辨率的raw images之后，就可以通过论文的rendering network，得到最终的RGB图像了。</p>
+<p><img src="/images/neural-point-rendering/image-20241105222855468.png"></p>
+<h4 id="训练过程（backward）"><a href="#训练过程（backward）" class="headerlink" title="训练过程（backward）"></a>训练过程（backward）</h4><p><img src="/images/neural-point-rendering/image-20241105223310293.png"></p>
+<p>论文是通过优化rendering network的参数$\theta$和神经描述符$D = {d_1,d_2,…,d_N}$来拟合场景的。</p>
+<p>值得注意的是，论文提到rendering network的训练被分为两个阶段：第一阶段是在一组特定类型的场景上进行预训练，第二个阶段是在新场景上进行fine-tune。因此对于新场景的拟合，是fine-tune预训练好的rendering network和从头开始训练每一个点的descriptor。</p>
+<h4 id="实验部分"><a href="#实验部分" class="headerlink" title="实验部分"></a>实验部分</h4><p>略，看原论文吧~</p>
+<h4 id="局限性"><a href="#局限性" class="headerlink" title="局限性"></a>局限性</h4><ul>
+<li><p>论文提到他们的模型不能填补较大的空洞，另外也没有研究在动态场景中的性能。</p>
+</li>
+<li><p>看论文中的TABLE2，每一个点的descriptor也不大，descriptor的长度和点的数量对场景的影响似乎较小。从这里看的话，这个工作渲染质量的瓶颈应该是Pipeline中的Rendering network。</p>
+<p><img src="/images/neural-point-rendering/image-20241107191530848.png"></p>
+</li>
+</ul>
+<h3 id="Point-NeRF-Point-based-Neural-Radiance-Fields-CVPR-2022"><a href="#Point-NeRF-Point-based-Neural-Radiance-Fields-CVPR-2022" class="headerlink" title="Point-NeRF: Point-based Neural Radiance Fields (CVPR 2022)"></a>Point-NeRF: Point-based Neural Radiance Fields (CVPR 2022)</h3><p><img src="/images/neural-point-rendering/image-20241107193322757.png"></p>
+<p><strong>论文的Motivation：</strong>long reconstruction times due to the slow per-scene network fitting and the unnecessary sampling of vast empty space.</p>
+<p><strong>论文的Pipeline：</strong></p>
+<p><img src="/images/neural-point-rendering/image-20241107193636916.png"></p>
+<p>论文在这张图里把自己的工作分成了两个部分，(a) Neural Point Generation和(b) Point-NeRF Representation with Volume Rendering。不过论文是按照Point-NeRF Representation和Point-NeRF Reconstruction来讲的，下面笔者也按照论文的思路来介绍。</p>
+<h4 id="Point-NeRF-Representation"><a href="#Point-NeRF-Representation" class="headerlink" title="Point-NeRF Representation"></a>Point-NeRF Representation</h4><p><strong>场景表征</strong>：使用neural point cloud表示场景<br>$$<br>P = {(p_i, f_i, \gamma_i)|i = 1,…,N}<br>$$<br>对于第$i$个neural point，$p_i$表示该点的坐标，$f_i$是对应的neural feature vector，编码了局部场景的信息，$\gamma_i$是scale confidence value，表示该点位于实际场景表面附近的可能性。</p>
+<p>对于三维空间中任意的一个点$x$，Point-NeRF会在半径$R$内查询周围$K$个相邻neural point，之后通过该点的坐标$x$、观察方向$d$和$K$个相邻的neural point，得到$x$处的volume density $\sigma$和view-dependent radiance $r$。这个过程对应的公式为：<br>$$<br>(\sigma,r) = \text{Point-NeRF}(x,d,p_1,f_1,\gamma_1,…,p_K,f_K,\gamma_K)<br>$$<br><strong>Per-point processing</strong>：对于相邻点的neural feature vector，Point-NeRF不是直接拿过来就给位置$x$处用的，而是过了一个MLP网络$F$，相当于是根据距离加权，做一个插值，拿到插值之后的neural feature vector。</p>
+<blockquote>
+<p>个人感觉这一步没必要，下面还有一个类似的处理。</p>
+</blockquote>
+<p>$$<br>f_{i,x} = F(f_i,x-p_i)<br>$$</p>
+<p><strong>View-dependent radiance regression</strong>：Point-NeRF使用逆距离加权来得到位置$x$处的neural feature vector。</p>
+<img src="/images/neural-point-rendering/image-20241107210554355.png" style="zoom: 50%;">
+
+<p>之后通过一个MLP网络$R$根据特征$f_x$和观察方向$d$回归得到位置$x$的radiance $r$。<br>$$<br>r = R(f_x,d)<br>$$<br><strong>Density regression</strong>：和上面的过程类似，不过是先计算每个相邻点的体密度，再通过逆距离加权来得到最终的体密度。</p>
+<img src="/images/neural-point-rendering/image-20241107211223065.png" style="zoom:67%;">
+
+<h4 id="Point-NeRF-Reconstruction"><a href="#Point-NeRF-Reconstruction" class="headerlink" title="Point-NeRF Reconstruction"></a>Point-NeRF Reconstruction</h4><p><img src="/images/neural-point-rendering/image-20241107211447810.png"></p>
+<h5 id="初始化：Generating-initial-point-based-radiance-fields"><a href="#初始化：Generating-initial-point-based-radiance-fields" class="headerlink" title="初始化：Generating initial point-based radiance fields"></a>初始化：Generating initial point-based radiance fields</h5><p>论文提到完全从头开始训练随机初始化的neural feature和MLP可能会非常慢，因此他们设计了这个初始化的模块。这里放一个哔哩哔哩UP主<a href="https://space.bilibili.com/355024665">意の茗</a>的总结：</p>
+<p><img src="/images/neural-point-rendering/image-20241107215153253.png"></p>
+<h5 id="优化：Optimizing-point-based-radiance-fields"><a href="#优化：Optimizing-point-based-radiance-fields" class="headerlink" title="优化：Optimizing point-based radiance fields"></a>优化：Optimizing point-based radiance fields</h5><p>论文在这里提到初始的点云，特别是其他重建方法的点云（比如Metashape或者COLMAP等方法），通常会包含孔洞和异常值，为了解决这个问题，Point-NeRF尝试过直接优化现有点的位置，但是发现这样会导致训练不稳定。因此最终的解决思路是：设计新颖的point pruning和point growing策略。</p>
+<blockquote>
+<p>3DGS优化了点的位置欸</p>
+</blockquote>
+<p><strong>Point pruning</strong></p>
+<p>每个neural point都保存了自己的置信度$\gamma$，这个置信度表示该点是否靠近场景的表面。Point-NeRF利用这些置信度来修剪异常点，置信度低说明该点附近的区域可能是空的。因此Point-NeRF每10k次迭代就修剪掉那些$\gamma &lt; 0.1$的点。</p>
+<p>针对每个点的置信度，论文设计了一个sparsity loss，这个损失函数会强迫每个点的置信度接近0或1。</p>
+<img src="/images/neural-point-rendering/image-20241107221339051.png" style="zoom: 33%;">
+
+<p>论文作者认为这种剪枝技术可以去除异常点，减少相应的伪影。</p>
+<p><strong>Point growing</strong></p>
+<p>Point growing的目的是在不存在点的空白区域恢复信息，核心思路是逐步增长在点云边界附近的点。</p>
+<p>具体的思路是，把每次沿着射线采样的点作为新的候选点，计算这条射线不透明度最高的位置$x_{jg}$，以及该位置到最近neural point的距离。</p>
+<img src="/images/neural-point-rendering/image-20241107222828251.png" style="zoom:50%;">
+
+<p>如果不透明度$\alpha_j$和最近neural point的距离都大于设定的阈值，就说明位置$x_{jg}$位于场景的表面附近，但是这个位置附近又缺少neural point，Point-NeRF就会在位置$x_{jg}$新增一个neural point。</p>
+<p>通过重复这种生长策略，Point-NeRF可以逐渐扩展并覆盖初始点云中缺失的区域，比如下图这种比较极端的情况，也可以通过该策略逐步增长新的neural point，从而覆盖整个物体表面。</p>
+<p><img src="/images/neural-point-rendering/image-20241107223232630.png"></p>
+<h4 id="实验部分-1"><a href="#实验部分-1" class="headerlink" title="实验部分"></a>实验部分</h4><blockquote>
+<p>只写几个个人感兴趣的实验，其他部分看原论文吧~</p>
+</blockquote>
+<p>Table 1这里可以发现，Point-NeRF初始化之后就有了一个不错的结果，而经过一段时间的优化之后，各项指标都很突出。</p>
+<p><img src="/images/neural-point-rendering/image-20241107223505876.png"></p>
+<p>论文的Table 4还对比了点云点修剪和生长的效果，并且展示了在Point-NeRF初始化的点和COLMAP提供的点上的效果。可以看到点云修建和生长策略可以给各项指标带来很大的提升，而且使用Point-NeRF初始化的上限比COLMAP要更高</p>
+<blockquote>
+<p>也许因为本质上还是走的体渲染流程，初始化的点全部在表面上，采样不了几个点，所以论文P&amp;G其实主要是在物体内部疯狂生成新的点？或者在表面附近生成很多个点？</p>
+</blockquote>
+<img src="/images/neural-point-rendering/image-20241107224306676.png" style="zoom: 67%;">
+
+<h4 id="局限性-1"><a href="#局限性-1" class="headerlink" title="局限性"></a>局限性</h4><ul>
+<li><p>查询MLP的次数和原版NeRF差不多，渲染速度上没有提升</p>
+</li>
+<li><p>点云密度和渲染质量之间需要平衡，大场景重建可能会比较吃力</p>
+<ul>
+<li>点云密度高，显存占用增加</li>
+<li>降低点云密度，会降低渲染质量</li>
+</ul>
+</li>
+</ul>
+<h3 id="INPC-Implicit-Neural-Point-Clouds-for-Radiance-Field-Rendering"><a href="#INPC-Implicit-Neural-Point-Clouds-for-Radiance-Field-Rendering" class="headerlink" title="INPC: Implicit Neural Point Clouds for Radiance Field Rendering"></a>INPC: Implicit Neural Point Clouds for Radiance Field Rendering</h3><blockquote>
+<p>2024年3月25日，在3D Gaussian Splatting浪潮席卷下，一篇Neural Point相关的工作被挂在了arxiv上~</p>
+<blockquote>
+<p>都年底了，这篇文章怎么还没中稿？</p>
+</blockquote>
+</blockquote>
+<p><img src="/images/neural-point-rendering/image-20241108154550207.png"></p>
+<p><strong>论文的Motivation</strong>：当前新视角生成的研究主要分为了两个方向，一个是implicit radiance fields的方法，一个是explicit point-based的方法。然而前者依赖intensive ray-marching，后者则需要a-priori point proxies。对此论文希望创建一种新的场景表示方法，结合这两种方法的优点，同时绕过ray-marching和explicit priors。</p>
+<blockquote>
+<p>看起来是在尝试结合3DGS和Zip-NeRF，原论文是这么说的：</p>
+<p>More specifically, we take inspiration from current state-of-the-art approaches 3D Gaussian Splatting and Zip-NeRF: We decompose and optimize a scene into two parts, which constitutes a concept that we dub implicit point cloud.</p>
+</blockquote>
+<p><strong>论文对Zip-NeRF的评价</strong>：The current state-of-the-art in this field, Zip-NeRF, combines ideas from both quality and efficiency directions: It augments the underlying gridbased data structure with anti-aliasing through conical sampling, the addition of scaling information, and refined empty space skipping. While Zip-NeRF is comparably fast in training (taking about 5 hours), the rendering speed for novel views is limited to ∼ 0.2 fps on consumer-grade hardware. This approach is closest in mind to our method, as we also recombine grid-based appearance information with implicit density formulation for scene reconstruction. In contrast to Zip-NeRF, however, our method enables rasterization-based rendering, making it faster in inference.</p>
+<p><strong>论文对3DGS的评价</strong>：Especially important here is 3D Gaussian Splatting (3DGS) which extends point rendering with anisotropic 3D Gaussians as a radiance field rendering paradigm. Apart from removing the need for a CNN to fill holes, this formulation allows them to start with a sparser point cloud that is densified by repeatedly splitting large Gaussians during the optimization.</p>
+<p><strong>论文的Pipeline</strong>：</p>
+<p><img src="/images/neural-point-rendering/image-20241108213938413.png"></p>
+<p>与上面的两个工作不同，INPC的neural point是隐式的，点的位置被保存在基于八叉树的概率场中，点的外观（颜色、特征、不透明度）被保存在类似于instant-ngp的neural field中。</p>
+<p>对于某个给定的视角，INPC会对Implicit Point Cloud进行采样，得到显示的点云（位置和特征向量），之后通过Bilinear Point Splatting得到多分辨率的2D feature map，再和Background Model的输出进行$\alpha$-blending，最后通过U-Net结构的渲染网络渲染得到该视角下的图像。</p>
+<blockquote>
+<p>Neural Point-Based Graphics是创建很多不同分辨率的raw image，不使用splatting。</p>
+<p>这个工作怎么又splatting，又多分辨率？</p>
+</blockquote>
+<h4 id="Sparse-Point-Probability-Octree"><a href="#Sparse-Point-Probability-Octree" class="headerlink" title="Sparse Point Probability Octree"></a>Sparse Point Probability Octree</h4><p>作者在这部分开头又提到，现有的NeRF方法不需要明确的几何形状，相比之下基于点的方法在优化过程中需要长期保存显示的点云。之后又重申了本工作的一个目标是，在point-based neural rendering pipeline中消除对长期保存显示点云的需求。</p>
+<blockquote>
+<p><strong>质疑：</strong>看到这里仍然不理解为什么作者的目标是”One goal of this work is removing the need for a persistent set of point positions within a typical point-based neural rendering pipeline.“</p>
+<p>这个工作似乎在追求完全隐式的场景表示方法，感觉有点极端了。这样有什么优势呢？这篇论文并没有多少篇幅进行介绍，而且也没有说清楚explicit point-based的方法需要a-priori point proxies为什么是不好的。</p>
+<blockquote>
+<p>也许这样可以避免point-nerf、3DGS需要的致密化？这是笔者唯一能想到的一个点了，显示的方法需要明确某个地方有多少个点，点的数量或者密度会影响最后渲染的结果，点的数量过多会导致显存占用上升。</p>
+</blockquote>
+</blockquote>
+<p><strong>初始化</strong>：使用3D体素网格初始化概率场，稀疏八叉树的初始叶节点概率设置为1。也可以将点云作为先验来计算初始叶节点的概率。</p>
+<p><strong>概率更新</strong>：叶节点的概率表示相对于其他的叶节点，场景几何占据它体积的多少。论文对此设计了一种更新策略，通过如下的公式更新所有叶节点的概率。</p>
+<img src="/images/neural-point-rendering/image-20241111150018808.png" style="zoom: 50%;">
+
+<p>其中${b_0,…,b_n}$是使用第$i$个叶节点生成的所有点的$\alpha \text{-blending}$权重的集合，而$\lambda_u$是超参数，论文设置为0.9968。</p>
+<p><strong>叶节点细分</strong>：上面的概率更新公式，会使得只有一部分被场景占据的叶子节点获得比较高的概率。论文的策略是对概率大于设定阈值的所有叶节点进行细分，并且叶子节点总数不能超过$256^3$。</p>
+<p><strong>剪枝</strong>：通过上面的概率更新公式，没有覆盖到场景的叶子节点概率会指数衰减到0，删除小于指定阈值的叶子节点即可实现剪枝。</p>
+<h4 id="Point-Sampling-Strategies"><a href="#Point-Sampling-Strategies" class="headerlink" title="Point Sampling Strategies"></a>Point Sampling Strategies</h4><p>该部分的核心思路是对Sparse Point Probability Octree进行采样，论文设计了两种采样策略：基于特定视角的采样方案（Viewpoint-Specific Sampling）和独立于视角的采样方案（Viewpoint-Independent Sampling）。对于训练，可以生成特定视角下的点云；而全局的、独立于视角的点云可以增加时间稳定性和渲染的性能，不需要对隐式的点云进行逐帧采样。</p>
+<p><strong>Viewpoint-Specific Sampling</strong>：针对特定视角的加权方案主要考虑以下三点：1）不能在相机视锥体外采样；2）远离相机的区域少采样；3）具有较高细分级别的叶子，即代表较小体积的叶子，需要少采样。对应的公式如下：</p>
+<img src="/images/neural-point-rendering/image-20241111152706562.png" style="zoom: 50%;">
+
+<p>其中$\mathbb{1}_{visible}$是一个指示函数，可见叶子节点返回1，不可见叶子节点返回0。$\lambda_l$表示应该采样多少较小的体素，论文设置为0.5，$d_i$表示叶子中心到图像平面之间的距离。</p>
+<p><strong>Viewpoint-Independent Sampling</strong>：作者观察到在推理的过程中，点云采样占用了一半以上的时间，因此作者希望为所有的视角预先提取一个全局点云。这里仍然是使用上面Viewpoint-Specific Sampling的公式，不过忽略了$\mathbb{1}_{visible}$和$d_i$。</p>
+<h4 id="Appearance-Representation"><a href="#Appearance-Representation" class="headerlink" title="Appearance Representation"></a>Appearance Representation</h4><p>采样之后，对于每个点，从多分辨率哈希网格中检索$M+1$个appearance feature，第一个feature会被转换为不透明度：<br>$$<br>\alpha_h = 1 - e^{-e^x}<br>$$<br>剩下的M个feature会用来计算球谐系数。</p>
+<p>对于background model，论文使用了一个小型MLP，使用相应的sh编码的观看方向作为输入，计算每个像素的4D特征。</p>
+<h4 id="Differentiable-Bilinear-Point-Splatting"><a href="#Differentiable-Bilinear-Point-Splatting" class="headerlink" title="Differentiable Bilinear Point Splatting"></a>Differentiable Bilinear Point Splatting</h4><p>论文提到之前关于point rasterization的工作（包括3DGS）可以证明，对辐射场的点渲染可以非常迅速，但是单像素点渲染（将多个点投影并离散到一个像素）会导致混叠，并且需要近似梯度。</p>
+<p>为了避免这个情况，论文使用双线性公式，在投影之后将每个点与其最近的$2\times2$个相邻点相接。对于采样点$p_w = (x,y,z)^T$，将其投影到图像坐标$p=(u,v,d)^T$中：<br>$$<br>p = P \cdot V \cdot p_w<br>$$<br>其中$P$是相机内参，$V$是相机外参。对于最接近的$2 \times 2$像素点$p_{i \in {0…3}} = (u_i,v_i)^T$，通过如下公式计算不透明度：<br>$$<br>\alpha = \alpha_h \cdot (1 - |u-u_i|) \cdot (1 - |v - v_i|)<br>$$<br>这种方法可以让每个点能根据它们投影的位置被正确加权。</p>
+<p>这种双线性喷溅方法有三个优点：(1)可以获得更鲁棒的梯度，(2)提高渲染的时间稳定性，(3)栅格化后的图像包含的孔洞更少，这使得填充孔洞的CNN工作更容易。</p>
+<h4 id="Post-Processing-amp-Optimization-Loss"><a href="#Post-Processing-amp-Optimization-Loss" class="headerlink" title="Post-Processing &amp; Optimization Loss"></a>Post-Processing &amp; Optimization Loss</h4><p>这篇工作使用U-Net架构的网络进行解码，得到最终渲染的图像。</p>
+<p>受到Plenoptic-points和3DGS的启发，这篇工作结合了逐像素损失和两个图像控件的损失函数：</p>
+<img src="/images/neural-point-rendering/image-20241111165553227.png" style="zoom:50%;">
+
+<h4 id="实验部分-2"><a href="#实验部分-2" class="headerlink" title="实验部分"></a>实验部分</h4><blockquote>
+<p>只写几个个人感兴趣的实验，其他部分看原论文吧~</p>
+</blockquote>
+<p>论文在Mip-NeRF360和Tanks&amp;Temples数据集上与多种方法进行了定量对比，在渲染质量上，这篇工作是比较有竞争力的。这里也放出了训练时间、渲染速度和存储占用的情况，在这三个点上，这篇工作表现得不太好。</p>
+<p><img src="/images/neural-point-rendering/image-20241111170002310.png"></p>
+<p>论文消融实验的结果如下所示。对于”G) No SfM Prior”，对LPIPS、SSIM、PSNR这三项指标的影响不是很大，说明这篇工作不需要初始点云也可以work，这里还是挺不错的。</p>
+<p><img src="/images/neural-point-rendering/image-20241111170607252.png"></p>
+<h4 id="局限性-2"><a href="#局限性-2" class="headerlink" title="局限性"></a>局限性</h4><p>如论文Fig5所示，这篇工作在相机附近缺乏更精细的几何细节，并且在高光度变化的数据集上表现较差。</p>
+<p><img src="/images/neural-point-rendering/image-20241111170943800.png"></p>
+<h2 id="总结-amp-讨论"><a href="#总结-amp-讨论" class="headerlink" title="总结&amp;讨论"></a>总结&amp;讨论</h2><p>本文回顾了Neural Point Rendering相关的几篇工作。</p>
+<p>其中Neural Point-Based Graphics和INPC都是将场景中的neural point投影到新视角的图像平面上，得到多分辨率的feature map，之后通过U-Net解码得到最终渲染的图像。投影的过程和3DGS很类似，渲染质量的瓶颈主要在于U-Net网络，neural point特征向量的维度对渲染质量的影响较小。</p>
+<p>而Point-NeRF结合了传统点云和NeRF的优点，通过neural point表示场景，避免对空白区域的采样。渲染质量主要取决于点云密度。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><p>【论文讲解】Point-NeRF：用点云做NeRF重建，既抽象又具体，既新奇又传统（2022 CVPR Oral）</p>
+<p><a href="https://www.bilibili.com/video/BV1X24y187RG">https://www.bilibili.com/video/BV1X24y187RG</a></p>
+</li>
+<li><p>【论文讲解】用点云结合3D高斯构建辐射场，成为快速训练、实时渲染的新SOTA！</p>
+<p><a href="https://www.bilibili.com/video/BV1uV4y1Y7cA">https://www.bilibili.com/video/BV1uV4y1Y7cA</a></p>
+</li>
+<li><p>day4：Z-buffering（深度缓冲）</p>
+<p><a href="https://supercodepower.com/docs/toy-renderer/day4-Z-buffering">https://supercodepower.com/docs/toy-renderer/day4-Z-buffering</a></p>
+</li>
+<li><p>How to avoid texture bleeding in a texture atlas?</p>
+<p><a href="https://gamedev.stackexchange.com/questions/46963/how-to-avoid-texture-bleeding-in-a-texture-atlas">https://gamedev.stackexchange.com/questions/46963/how-to-avoid-texture-bleeding-in-a-texture-atlas</a></p>
+</li>
+<li><p>Splatting 抛雪球法简介 - bo233的文章 - 知乎<br><a href="https://zhuanlan.zhihu.com/p/660512916">https://zhuanlan.zhihu.com/p/660512916</a></p>
+</li>
+</ul>
+<p><strong>注：本文是笔者学习研究过程中的思考整理，如有错误疏漏，请各路大佬批评斧正！</strong></p>
+]]></content>
+      <categories>
+        <category>NeRF&amp;3DGS</category>
+      </categories>
+      <tags>
+        <tag>隐式表示</tag>
+        <tag>3D Gaussian Splatting</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Neural Point SLAM回顾</title>
+    <url>/2024/11/16/neural-point-slam/</url>
+    <content><![CDATA[<h1 id="Neural-Point-SLAM回顾"><a href="#Neural-Point-SLAM回顾" class="headerlink" title="Neural Point SLAM回顾"></a>Neural Point SLAM回顾</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p><a href="https://zhuanlan.zhihu.com/p/6289222117">上一篇文章</a>笔者回顾了Neural Point Rendering相关的工作，这篇文章笔者将聚焦于Neural Point在SLAM上的一些应用。</p>
+<p>在NeRF时代出现的iMAP、NICE-SLAM、Co-SLAM等工作，他们的tracking基本都是渲染图像-计算损失-反向优化位姿；尽管也有Orbeez-SLAM、GO-SLAM等工作，但他们都借助了ORB-SLAM、Droid-SLAM等External Tracker，并不是在NeRF表示的场景之上直接做tracking的。</p>
+<p>而到了3DGS时代，或许是因为研究惯性，早期的3DGS SLAM工作还是沿用了老一套的tracking方法：渲染图像-计算损失-反向优化位姿。</p>
+<blockquote>
+<p>是不是NeRF SLAM做一半转3DGS了，偷看(/ω＼*)……… (/ω•＼*)</p>
+</blockquote>
+<p>而到现在笔者写这篇文章，也没有了解到多少直接在3DGS上进行tracking的SLAM工作。另外，无论是NeRF SLAM还是3DGS SLAM，绝大部分工作都是通过子地图拼接来实现loop closure，或者只是通过位姿图优化(PGO)等方法在回环时调整了每一帧的位姿，并且需要进行额外的迭代优化来矫正地图。</p>
+<blockquote>
+<p>如果有笔者没有注意到的工作，欢迎在评论区讨论分享！！！</p>
+<p>RGBD GS-ICP SLAM可以算一篇在3DGS上进行tracking的工作，但代码实现上看着很奇怪。。。</p>
+</blockquote>
+<p><img src="/images/neural-point-slam/image-20241111205712720-1731733908093-1.png" alt="《How NeRFs and 3D Gaussian Splatting are Reshaping SLAM: a Survey》中的表格"></p>
+<p>不过，自从Point-NeRF等工作出现后，基于Neural Point的SLAM逐渐涌现。Point-SLAM将Neural Point的思路引入SLAM领域，而Point-SLAM的作者进一步提出了后续工作——Loopy-SLAM，在Point-SLAM的基础上实现了基于子地图拼接的Loop Closure。之后PIN-SLAM在Neural Point表示场景的框架下，实现了无需子地图的Loop Closure。</p>
+<p>接下来笔者将着重介绍这三篇工作。</p>
+<h2 id="Point-SLAM-Dense-Neural-Point-Cloud-based-SLAM-ICCV-2023"><a href="#Point-SLAM-Dense-Neural-Point-Cloud-based-SLAM-ICCV-2023" class="headerlink" title="Point-SLAM: Dense Neural Point Cloud-based SLAM (ICCV 2023)"></a>Point-SLAM: Dense Neural Point Cloud-based SLAM (ICCV 2023)</h2><p><img src="/images/neural-point-slam/image-20241113160839894-1731733908093-2.png"></p>
+<p><strong>论文想要解决的问题</strong>：Can point-based neural scene representations be used for tracking and mapping for real-time capable SLAM?</p>
+<p><strong>论文的贡献</strong>：</p>
+<ul>
+<li>We present Point-SLAM, a real-time capable dense RGBD SLAM approach which anchors neural features in a point cloud that grows iteratively in a data-driven manner during scene exploration. We demonstrate that the proposed neural point-based scene representation can be effectively used for both mapping and tracking.</li>
+<li>We propose a dynamic point density strategy which allows for computational and memory efficiency gains and trade reconstruction accuracy against speed and memory.</li>
+<li>Our approach shows clear benefits on a variety of datasets in terms of tracking, rendering and mapping accuracy.</li>
+</ul>
+<p><strong>论文的Pipeline</strong>：</p>
+<p><img src="/images/neural-point-slam/image-20241112210239564-1731733908093-3.png"></p>
+<h3 id="Neural-Point-Cloud-Representation"><a href="#Neural-Point-Cloud-Representation" class="headerlink" title="Neural Point Cloud Representation"></a>Neural Point Cloud Representation</h3><p><strong>场景表示</strong>：场景被表示为neural point cloud，每一个neural point包括位置、几何特征、颜色特征。</p>
+<p><img src="/images/neural-point-slam/image-20241112210614858-1731733908093-4.png"></p>
+<p><strong>Point Adding Strategy</strong>：</p>
+<ul>
+<li>采样阶段：在图像平面上均匀采样$X$个像素，并且在具有最高颜色梯度幅度的前$10Y$个像素中采样$Y$个像素。</li>
+<li>判断是否需要添加点：利用深度图的信息，将像素点转换到三维空间，并且在每个点的半径$r$内查找是否有neural point。如果没有neural point，则需要添加neural point。</li>
+<li>添加新的neural point：对于半径$r$内没有查找到neural point的那些像素点，需要沿着该像素的射线添加3个neural point，这三个点以该像素点的深度$D$为中心，偏移量为$(1-\rho)D$和$(1+\rho)D$，其中$\rho \in (0,1)$，是一个超参数，表示期望深度噪声。</li>
+<li>初始化新的neural point：使用正态分布初始化每一个neural point的特征向量。</li>
+</ul>
+<p>这个添加点的策略允许在不提前知道场景边界的情况下进行建图，并且可以在场景探索过程中动态地调整特征点的分布，即使是不再访问新的场景部分，它也会收敛到有限的点集。</p>
+<p><strong>Dynamic Resolution</strong>：</p>
+<p>为了节省计算和内存资源，每个区域点的数量、密度都是动态调整的。</p>
+<p>颜色梯度比较大的地方，可能信息比较丰富，就需要更大的点密度，Point Adding Strategy的搜索半径就可以设置的小一些。反过来，颜色梯度非常小的地方，那说明信息很少，可以更低的点密度，Point Adding Strategy的搜索半径可以更大一些。</p>
+<p><img src="/images/neural-point-slam/image-20241112225654506-1731733908093-5.png"></p>
+<h3 id="Rendering"><a href="#Rendering" class="headerlink" title="Rendering"></a>Rendering</h3><p><strong>解码器设计</strong>：Point-SLAM吸收了NICE-SLAM中decoder的设计思路，使用与NICE-SLAM相同结构的解码器。其中geometry decoder表示为$h$，和NICE-SLAM一样都是预训练好的网络，网络参数被固定住不再优化；而color decoder表示为$g_\xi$，和NICE-SLAM一样，网络的参数$\xi$是需要训练的。</p>
+<p><strong>采样策略</strong>：与NICE-SLAM采样策略不同的是，Point-NeRF对于有深度的像素，在$(1-\rho)D$和$(1+\rho)D$之间均匀采样5个点，而对于没有深度的像素，在5cm和$1.2D_{max}$之间采样25个点。</p>
+<p><strong>Neural Point查找</strong>：对于每一个采样点，在半径$2r$内查找neural point，至少需要查找到两个点，否则该点的占用率为0。如果存在多个点，就只取最近的8个点来计算。</p>
+<p><strong>渲染过程</strong>：与NICE-SLAM、Point-NeRF等工作一样，都是采用体渲染得到深度和颜色。</p>
+<p><strong>与Point-NeRF在渲染上的区别</strong>：Point-SLAM像NICE-SLAM一样，设计了geometry feature和color feature，而Point-NeRF只有color feature。另外，Point-SLAM对color feature采用了“Per-point processing”的处理，而geometry feature没有经过这个处理。</p>
+<h3 id="Mapping-and-Tracking"><a href="#Mapping-and-Tracking" class="headerlink" title="Mapping and Tracking"></a>Mapping and Tracking</h3><p><strong>Mapping阶段</strong>：在Mapping阶段，Point-SLAM在RGBD帧上均匀渲染$M$个像素，并且使用如下所示的损失函数。在最开始的迭代中，Point-SLAM只使用深度项进行优化，之后剩下的60%次迭代中才会引入颜色项。</p>
+<p><img src="/images/neural-point-slam/image-20241113151534897-1731733908093-6.png"></p>
+<p><strong>Tracking阶段</strong>：Point-SLAM在每一帧中采样$M_t$个像素，并且使用恒速运动模型来初始化位姿。tracking使用的损失函数为：</p>
+<p><img src="/images/neural-point-slam/image-20241113151854777-1731733908093-7.png"></p>
+<h3 id="Exposure-Compensation"><a href="#Exposure-Compensation" class="headerlink" title="Exposure Compensation"></a>Exposure Compensation</h3><p>对于帧间曝光变化较大的场景，论文使用额外的模块来减少相应像素之间的色差。</p>
+<h3 id="实验部分"><a href="#实验部分" class="headerlink" title="实验部分"></a>实验部分</h3><blockquote>
+<p>论文展示了非常多的实验结果，下面只截取一部分。</p>
+</blockquote>
+<p><img src="/images/neural-point-slam/image-20241113160505424-1731733908093-8.png"></p>
+<p><img src="/images/neural-point-slam/image-20241113160526160-1731733908093-9.png"></p>
+<p><img src="/images/neural-point-slam/image-20241113160601067-1731733908093-10.png"></p>
+<p><img src="/images/neural-point-slam/image-20241113160540402-1731733908093-11.png"></p>
+<p><img src="/images/neural-point-slam/image-20241113160627377-1731733908093-12.png"></p>
+<blockquote>
+<p>为什么fr1/desk2和fr1/room，传统的几个SLAM方法都跑失败了？？？</p>
+</blockquote>
+<h3 id="局限性"><a href="#局限性" class="headerlink" title="局限性"></a>局限性</h3><ul>
+<li><p>如果允许对neural point的位置进行动态优化，可以更好的处理深度噪声。</p>
+<blockquote>
+<p>不过3DGS优化了每一个高斯的位置，也还是有比较严重的噪声。</p>
+</blockquote>
+</li>
+<li><p>点密度的局部自适应基于简单的启发式方法，理想情况下，这一过程可以通过学习的方法来实现。</p>
+</li>
+<li><p>对运动模糊和高光反射比较敏感。</p>
+</li>
+</ul>
+<h2 id="Loopy-SLAM-Dense-Neural-SLAM-with-Loop-Closures-CVPR-2024"><a href="#Loopy-SLAM-Dense-Neural-SLAM-with-Loop-Closures-CVPR-2024" class="headerlink" title="Loopy-SLAM: Dense Neural SLAM with Loop Closures (CVPR 2024)"></a>Loopy-SLAM: Dense Neural SLAM with Loop Closures (CVPR 2024)</h2><p><img src="/images/neural-point-slam/image-20241113161118522-1731733908093-13.png"></p>
+<p><strong>论文提到的观点</strong>：</p>
+<p>作者认为SLAM可以分为耦合和解耦合的方法，其中<strong>耦合的方法指的是使用相同的场景表示来进行tracking和mapping，解耦的方法对每个任务都使用独立的框架</strong>。</p>
+<ul>
+<li><p>目前解耦的方法能够实现更好的跟踪精度，但是会产生不期望的数据冗余和独立性。耦合方法中，除了MIPS_Fusion之外，其他所有方法都是实现的frame-to-model tracking，这会导致面对现实场景中带有噪声的数据，估计的位姿会产生显著的漂移。</p>
+<blockquote>
+<p>但是frame-to-frame不应该更容易漂移？只不过frame-to-model太容易受到噪声影响了，毕竟model构建的不好，新来的frame估计的位姿也不好，又导致更新之后的model更差了，开始滚雪球了。</p>
+</blockquote>
+<p>作者提到的解耦的方法：</p>
+<ul>
+<li>Orbeez-slam</li>
+<li>Newton: Neural view-centric mapping for on-the-fly large-scale slam.</li>
+<li>NeRF-SLAM: Real-Time Dense Monocular SLAM with Neural Radiance Fields</li>
+<li>Go-slam: Global optimization for consistent 3d instant reconstruction.</li>
+</ul>
+</li>
+<li><p>作者认为tracking和mapping是耦合的任务，可以用相同的场景表示。但是解耦方法基本都使用多分辨率哈希网格，这样不容易进行地图校正，而<strong>基于点的表示方法特别适合进行地图校正</strong>。（论文的motivation）</p>
+<p>作者提到的耦合的方法：</p>
+<ul>
+<li>Eslam: Efficient dense slam system based on hybrid representation of signed distance fields</li>
+<li>Point-slam: Dense neural point cloud-based slam.</li>
+<li>iMAP: Implicit Mapping and Positioning in Real-Time.</li>
+<li>Co-slam: Joint coordinate and sparse parametric encodings for neural real-time slam</li>
+<li>Vox-fusion: Dense tracking and mapping with voxel-based neural implicit representation.</li>
+<li>Nice-slam: Neural implicit scalable encoding for slam.</li>
+</ul>
+</li>
+</ul>
+<p><strong>论文的贡献</strong>：</p>
+<ul>
+<li>We propose Loopy-SLAM, a dense RGBD SLAM approach which anchors neural features in point cloud submaps that grow iteratively in a data-driven manner during scene exploration. We dynamically create submaps depending on the camera motion and progressively build a pose graph between the submap keyframes. Global place recognition is used to detect loop closures online and to globally align the trajectory and the submaps with simple and efficient rigid corrections directly on the scene representation.</li>
+<li>We propose a direct way of implementing loop closure for dense neural SLAM that does not require any gradient updates of the scene representation or reintegration strategies, contrary to previous works.</li>
+<li>Traditionally, rigid submap registration may create visible seams in the overlapping regions. Our approach based on neural point clouds avoids this and we apply feature refinement of color and geometry at the end of the trajectory capture. We further introduce a feature fusion strategy of the submaps in the overlapping regions to avoid excessive memory usage and to improve the rendering performance.</li>
+</ul>
+<p><strong>论文的Pipeline</strong>：</p>
+<p><img src="/images/neural-point-slam/image-20241114154645443-1731733908093-14.png"></p>
+<h3 id="Neural-Point-Cloud-based-SLAM"><a href="#Neural-Point-Cloud-based-SLAM" class="headerlink" title="Neural Point Cloud-based SLAM"></a>Neural Point Cloud-based SLAM</h3><p>这部分基本与Point-SLAM是一样的，多了子地图构建的内容。</p>
+<p>子地图的第一帧作为global keyframe，在当前子地图中，当前帧与对应的global keyframe的旋转角度或者相对平移超过设定的阈值，就会创建新的子地图。</p>
+<p>在每个子地图中还会间隔一定帧选择一次local keyframe，用于优化子地图。但是当新的子地图被初始化时，这些local keyframe会被删除。</p>
+<h3 id="Loop-Closure-and-Refinement"><a href="#Loop-Closure-and-Refinement" class="headerlink" title="Loop Closure and Refinement"></a>Loop Closure and Refinement</h3><p>与MIPS-Fusion相比的话，Loopy-SLAM的loop closure比较功利，每次开始新的submap就检测一次回环。MIPS-Fusion是开启新的submap之后，如果再回到之前submap的subvolume中才会检测，而且还有额外的条件。</p>
+<p><strong>Global Place Recognition</strong>：每个全局关键帧都被添加到视觉词袋Bow数据库中用于全局位置识别。这里论文cue了一下MIPS-Fusion，作者认为MIPS-Fusion这种通过重叠的submap去检测回环，只适合较小漂移的校正。</p>
+<p><strong>Pose Graph Optimization</strong>：每个节点$T_s \in SE(3)$表示global keyframe在世界坐标系下的位姿的correction。姿态图中包括了两种边，其中odometry edge连接了相邻子地图的global keyframe，并且使用单位矩阵作为约束；loop edge连接不相邻的子地图的global keyframe，每次完成一个子地图就查询词袋（Bow）数据库，根据查询结果添加loop edge。PGO最终的输出是对global keyframe姿态的一组刚性校正变换$T$。</p>
+<p><strong>Loop Edge Constraints</strong>：对于子地图$P^s$和$P^t$之间的loop edge，需要计算约束条件$T_{st}$。论文提到，直接使用子地图中的neural point cloud是不稳定的，有两个原因：</p>
+<ol>
+<li>密集表面配准方法需要在表面均匀采样，但是子地图的分辨率是动态的；</li>
+<li>子地图中的锚定点（应该就是地图中的neural point）来自单个深度观测，可能会存在噪声，从而影响配准的结果。</li>
+</ol>
+<p>因此，论文使用由粗到精的方法来对齐两个子地图，为了减轻上面提到的问题，论文通过volumetric TSDF Fusion来整合与子地图相关联的所有深度帧，并通过marching cubes提取表面，在表面上均匀采样得到新的点云$S^s$和$S^t$。</p>
+<p>粗对齐阶段，论文使用Rusu等人（Fast point feature histograms (fpfh) for 3d registration）的全局配准方法。</p>
+<p>精配准阶段，论文使用ICP在完整分辨率的点云上进行配准。</p>
+<p><strong>Feature Fusion and Refinement</strong>：在Tracking结束之后，Loopy SLAM会将所有子地图连接到一起组成一个global neural point cloud。这个过程首先在重叠的子地图区域进行特征融合来压缩模型，由于Loopy SLAM是基于Point SLAM的工作，本质上还是feature+decoder的结构，这里论文选择的是特征融合之后固定decoder，然后把color和geometry feature再进行优化。</p>
+<h3 id="实验部分-1"><a href="#实验部分-1" class="headerlink" title="实验部分"></a>实验部分</h3><p>论文主要在Replica、TUM-RGBD、ScanNet上做了实验。</p>
+<p>Tracking的结果：</p>
+<p><img src="/images/neural-point-slam/image-20241115160846971-1731733908093-15.png"></p>
+<p><img src="/images/neural-point-slam/image-20241115160900284-1731733908093-16.png"></p>
+<p><img src="/images/neural-point-slam/image-20241115160948491-1731733908093-17.png"></p>
+<p>Rendering和Reconstruction的结果：</p>
+<p><img src="/images/neural-point-slam/image-20241115161116456-1731733908093-18.png"></p>
+<p><img src="/images/neural-point-slam/image-20241115161139043-1731733908093-19.png"></p>
+<p><img src="/images/neural-point-slam/image-20241115161202262-1731733908093-20.png"></p>
+<p>运行时间、内存占用的结果：</p>
+<p><img src="/images/neural-point-slam/image-20241115161255244-1731733908093-21.png"></p>
+<p>场景中点的数量：</p>
+<p><img src="/images/neural-point-slam/image-20241115161410425-1731733908093-22.png"></p>
+<h3 id="局限性-1"><a href="#局限性-1" class="headerlink" title="局限性"></a>局限性</h3><p>下面是论文提到的局限性：</p>
+<ul>
+<li><p>可以结合使用frame-to-model和frame-to-frame queues的组合来构建更健壮的tracker；</p>
+<blockquote>
+<p>类似于构建local map，实现frame-to-local model？</p>
+</blockquote>
+</li>
+<li><p>loopy-slam只利用了3D点特征，其实还可以利用关联关键帧的图像特征，从而实现更鲁棒更快速的配准；</p>
+</li>
+<li><p>位置识别可以通过学习的方法来提升；</p>
+</li>
+<li><p>loopy-slam没有实现relocalization。</p>
+<blockquote>
+<p>relocalization指的是tracking失败的时候，重新定位相机所在的位置，恢复tracking。</p>
+</blockquote>
+</li>
+</ul>
+<p>下面是笔者认为的局限性：</p>
+<ul>
+<li>没有在更大的场景中验证loop closure的有效性，比如TUM-RGBD fr3有两个专门用于回环检测的场景；</li>
+<li>还是基于子地图拼接的思路实现的loop closure，不能够调整子地图中neural point之间的结构。</li>
+</ul>
+<h2 id="PIN-SLAM-LiDAR-SLAM-Using-a-Point-Based-Implicit-Neural-Representation-for-Achieving-Global-Map-Consistency-TRO-2024"><a href="#PIN-SLAM-LiDAR-SLAM-Using-a-Point-Based-Implicit-Neural-Representation-for-Achieving-Global-Map-Consistency-TRO-2024" class="headerlink" title="PIN-SLAM: LiDAR SLAM Using a Point-Based Implicit Neural Representation for Achieving Global Map Consistency (TRO 2024)"></a>PIN-SLAM: LiDAR SLAM Using a Point-Based Implicit Neural Representation for Achieving Global Map Consistency (TRO 2024)</h2><p><img src="/images/neural-point-slam/image-20241115195333282-1731733908093-23.png"></p>
+<p><strong>论文想要解决的问题</strong>：These SLAM approaches <strong>lack support for direct loop closure corrections</strong> and are <strong>not able to build globally consistent maps of larger scenes</strong>. This is mainly due to the usage of regular grid-based local feature embeddings, which are not elastic and resilient to loop corrections.</p>
+<p><strong>论文为什么选择neural point表示场景</strong>：We opt to use a neural point-based implicit representation, which has two main advantages over grid-based representations: <strong>the flexibility of spatial distribution and the elasticity for transformations</strong>. Recent work (Point-SLAM) only makes use of the first advantage for neural RGB-D SLAM at the cost of scalability and inefficient neighborhood querying. Instead, we exploit the second and more important advantage to build a globally consistentmap that can be corrected while online mapping after closing a loop, which is essential for large-scale LiDAR-based SLAM.</p>
+<p>论文在Introduction提到，Mapping部分主要是基于之前的工作SHINE-Mapping，而Odometry部分是扩展了之前的工作LocNDF。</p>
+<blockquote>
+<p>工作是延续的，非常扎实，令人羡慕。</p>
+</blockquote>
+<p><strong>论文提出了四个key claims</strong>：</p>
+<ol>
+<li>Our SLAM system achieves <strong>localization accuracy better or on par with state-of-the-art</strong> LiDAR odometry/SLAM approaches and is more accurate than recent implicit neural SLAM methods on various datasets using different range sensors.</li>
+<li>Our method can conduct <strong>large-scale globally consistent mapping with loop closure</strong> thanks to the elastic neural point representation.</li>
+<li>Our map representation is <strong>more compact than the previous counterparts</strong> and <strong>can be used to reconstruct accurate and complete meshes at an arbitrary resolution</strong>.</li>
+<li>Our correspondence-free scan-to-implicit map registration and the efficient neural point indexing by voxel hashing enable our algorithm to <strong>run at the sensor frame rate on a single NVIDIA A4000</strong> graphics processing unit (GPU).</li>
+</ol>
+<p><strong>论文对基于Submap的方法的评价</strong>：The submap-based methods accumulate the observations as a submap and assume the submap is a locally defined rigid body. The pseudoglobal consistency is maintained by optimizing a graph linking submaps and their associated poses through submap-to-submap registrations. The usage of submaps decreases the number of nodes and edges in PGO, thus saving computational effort. However, these methods have issues of ambiguity in the overlapping region of the adjacent submaps and determining appropriate criteria for submap division to balance the rigidity and efficiency.</p>
+<p><strong>论文的Pipeline</strong>：</p>
+<p><img src="/images/neural-point-slam/image-20241115205159958-1731733908093-24.png"></p>
+<p>论文将他们的方法分成5个部分：</p>
+<ol>
+<li><strong>Preprocessing</strong>：对于输入点云$P$，通过体素下采样到用于registration的点云$P_r$和用于mapping的点云$P_m$；</li>
+<li><strong>Odometry</strong>：通过将点云$P_r$与local map $M_l$的implicit SDF进行配准来估计全局的位姿$T_{WC_t}$，并将前后两帧的变换$T_{C_{t-1}C_t}$作为一条边添加到Pose Graph $G$中。</li>
+<li><strong>Mapping</strong>：根据地图$M$过滤掉用于mapping的点云$P_m$中的动态点，并沿着从传感器到$P_m$中每个点的射线进行采样，得到训练样本$D$，并使用在Odometry中计算的位姿$T_{WC_t}$将其转换到世界坐标系中。使用靠近场景表面的样本$D_s \subset D$来初始化新的neural point，并且将他们附加到地图$M$上，并且重置local map $M_l$，让其以当前位置$T_{WC_t}$为中心。使用采样的点$D_s$来更新训练样本池$D_p$，并且使用$D_p$和SDF监督来优化local map $M_l$中的neural point feature。最后将更新之后的local map $M_l$分配回global map $M$中。</li>
+<li><strong>Loop closure detection</strong>：通过local map $M_l$生成一个本地极坐标上下文描述符$U_t$。之后通过比较当前帧和候选帧描述符之间的特征距离来搜索潜在的loop closure。一旦检测到当前帧$C_t$和候选帧$C_k$之间的存在闭环，就通过将当前帧点云$P_r$和以候选帧位置$t_{WC_k}$为中心的local map $M_l$进行配准，来验证是否真的存在闭环。如果配准成功，就将配准产生的变换$T_{C_kC_t}$作为新的边添加到Pose Graph $G$中。</li>
+<li><strong>Pose graph optimization</strong>：加入loop closure edge之后，对pose graph $G$进行优化。优化之后对global map $M$中每个neural point的位置和方向及其关联帧进行变换，以保证全局一致性。在完成loop correction之后，对训练样本池$D_p$进行变换，并且重置local map $M_l$。</li>
+</ol>
+<blockquote>
+<p>PIN-SLAM的内容非常多，准备另起一篇文章进行介绍了。新文章完成之后链接会同步更新到这里。</p>
+</blockquote>
+<h2 id="总结-amp-讨论"><a href="#总结-amp-讨论" class="headerlink" title="总结&amp;讨论"></a>总结&amp;讨论</h2><p>在PIN-SLAM出来之前，笔者一直认为与NeRF、Neural Point相比，3DGS才是最“几何”的表示方法，毕竟3DGS显示的给出了点云，尽管这个点云有很多的噪声。</p>
+<p>而当时一些neural point的工作，比如Point-NeRF论文中说“we find that directly optimizing the location of the existing points makes the training unstable and cannot fill the large holes”，笔者便认为neural point效果好主要是因为feature + decoder这一套流程的差值能力好，以及neural point也避免了在空白区域采样。而neural point的位置几乎无法优化，直接使用输入的点云，并且通过一些简单的加剪枝策略添加和删除点，那“几何”肯定是很好的，不过怎么利用这一点是个难解决的问题。</p>
+<p>在Point-SLAM和Loopy-SLAM中，neural point是从RGB-D输入得到的，但是它们没有用传统的点云配准方法实现tracking，而是渲染图像-计算损失-反向优化位姿，其中Loopy-SLAM的loop closure也还是通过子地图的方式实现的，与之前一些基于feature grid的nerf slam没有太大的区别，并没有利用到neural point在几何上的优点。</p>
+<p>而PIN-SLAM对neural point的开发很深入，不但实现了在neural point上进行tracking，也实现了不使用子地图的loop closure，工作做得非常完整。PIN-SLAM主要是面向lidar的，不过也扩展到了RGB-D的输入上，论文的实验部分展示了在Replica数据集上与一众RGB-D NeRF SLAM方法的对比，位姿精度遥遥领先。</p>
+<p>笔者认为科研创新不是一蹴而就的，解决问题应该建立在完全认知问题的基础上。笔者目前在3DGS SLAM的研究上遇到一些困难，因此回顾了与3DGS很相似的Neural Point系列的方法，写了这两篇文章，希望能从中得到一些灵感，更全面的认识问题，也期待能和大家交流讨论。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li>How NeRFs and 3D Gaussian Splatting are Reshaping SLAM: a Survey</li>
+<li>Point-SLAM: Dense Neural Point Cloud-based SLAM</li>
+<li>Loopy-SLAM: Dense Neural SLAM with Loop Closures</li>
+<li>PIN-SLAM: LiDAR SLAM Using a Point-Based Implicit Neural Representation for Achieving Global Map Consistency</li>
+</ol>
+<p><strong>注：本文是笔者学习研究过程中的思考整理，如有错误疏漏，请各路大佬批评斧正！</strong></p>
+]]></content>
+      <categories>
+        <category>NeRF&amp;3DGS</category>
+      </categories>
+      <tags>
+        <tag>隐式表示</tag>
+        <tag>3D Gaussian Splatting</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Ubuntu配置OpenCV及多版本OpenCV共存</title>
     <url>/2021/07/06/opencv-notes-0/</url>
     <content><![CDATA[<h1 id="Ubuntu配置OpenCV及多版本OpenCV共存"><a href="#Ubuntu配置OpenCV及多版本OpenCV共存" class="headerlink" title="Ubuntu配置OpenCV及多版本OpenCV共存"></a>Ubuntu配置OpenCV及多版本OpenCV共存</h1><p>本文主要介绍ubuntu下OpenCV的安装，以及如何实现多个OpenCV版本共存。</p>
@@ -11749,58 +12144,6 @@ Subminor version <span class="token builtin class-name">:</span> <span class="to
 <p>下面是效果图：</p>
 <p><img src="/images/OpenCV-Notes/1-1.png"></p>
 <p><img src="/images/OpenCV-Notes/1-2.png"></p>
-]]></content>
-      <categories>
-        <category>三维视觉</category>
-      </categories>
-      <tags>
-        <tag>OpenCV</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>几种常见的颜色空间</title>
-    <url>/2020/08/17/opencv-notes-2/</url>
-    <content><![CDATA[<h1 id="颜色空间"><a href="#颜色空间" class="headerlink" title="颜色空间"></a>颜色空间</h1><p><strong>颜色空间</strong>（英语：Color space）是对<a href="https://zh.wikipedia.org/wiki/%E8%89%B2%E5%BD%A9">色彩</a>的组织方式。借助色彩空间和针对物理设备的测试，可以得到色彩的固定<a href="https://zh.wikipedia.org/wiki/%E6%A8%A1%E6%93%AC%E4%BF%A1%E8%99%9F">模拟</a>和<a href="https://zh.wikipedia.org/wiki/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7">数字</a>表示。色彩空间可以只通过任意挑选一些颜色来定义，比如像<a href="https://zh.wikipedia.org/wiki/%E5%BD%A9%E9%80%9A">彩通</a>系统就只是把一组特定的颜色作为<a href="https://zh.wikipedia.org/wiki/%E8%AA%BF%E8%89%B2%E7%9B%A4_(%E9%9B%BB%E8%85%A6%E5%9C%96%E5%BD%A2%E5%AD%B8)">样本</a>，然后给每个颜色定义名字和代码；也可以是基于严谨的数学定义，比如 <a href="https://zh.wikipedia.org/wiki/Adobe_RGB%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4">Adobe RGB</a>、<a href="https://zh.wikipedia.org/wiki/SRGB%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4">sRGB</a>。</p>
-<p>在计算机视觉，尤其颜色识别相关的算法中，rgb,hsv,lab颜色空间混用是常用的方法。</p>
-<h2 id="RGB"><a href="#RGB" class="headerlink" title="RGB"></a>RGB</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>RGB颜色空间以R(Red:红)、G(Green:绿)、B(Blue:蓝)三种基本色为基础，进行不同程度的叠加，产生丰富而广泛的颜色，所以俗称三基色模式。在大自然中有无穷多种不同的颜色，而人眼只能分辨有限种不同的颜色，RGB模式可表示一千六百多万种不同的颜色，在人眼看来它非常接近大自然的颜色，故又称为自然色彩模式。红绿蓝代表可见光谱中的三种基本颜色或称为三原色，每一种颜色按其亮度的不同分为256个等级。当色光三原色重叠时，由于不同的混色比例能产生各种中间色，例如，三原色相加可产生白色。所以RGB模式是加色过程。屏幕显示的基础是RGB模式，彩色印刷品却无法用RGB模式来产生各种彩色，所以，<strong>RGB模式常用于视频、多媒体与网页设计</strong>。</p>
-<h3 id="空间模型"><a href="#空间模型" class="headerlink" title="空间模型"></a>空间模型</h3><p>对图像处理而言，RGB是最为重要和常见的颜色模型，它建立在笛卡尔坐标系中，以红、绿、蓝三种基本色为基础，<strong>进行不同程度的叠加</strong>，产生丰富而广泛的颜色，俗称三基色模式。如下图所示：</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9nc3MwLmJkc3RhdGljLmNvbS85NG8zZFNhZ194STRraEdrcG9XSzFIRjZoaHkvYmFpa2UvYzAlM0RiYWlrZTgwJTJDNSUyQzUlMkM4MCUyQzI2L3NpZ249MjdmYjUwZjlhYWVjMDhmYTMyMGQxYmY1Mzg4NzU2MDgvZTFmZTk5MjViYzMxNWM2MGU0NTA5ZmE5ODdiMWNiMTM0ODU0NzdhYi5qcGc?x-oss-process=image/format,png"></p>
-<h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><p>RGB模型的原理来自于颜色的三刺激理论，它基于以下假设:在眼睛的中央部位有3种类型的对色彩敏感的锥状细胞。其中一类对位于可见光谱中间位置的光波敏感，这种光波经人的视觉系统转换产生绿色感。而其他两种锥状细胞对位于可见光波的上、下端即较长和较短的波长的光波敏感，它们分别被识别为红色和蓝色。从生理学的角度来看，由于眼睛仅包含3种不同类型的锥状细胞，因而对任意3种颜色适当混合均可产生白光视觉，条件是这3中颜色中任意两种的组合都并不能产生第3种颜色，则这三种颜色就被称为三原色。</p>
-<h3 id="表达方式"><a href="#表达方式" class="headerlink" title="表达方式"></a>表达方式</h3><p> RGB空间是目前最常用的彩色信息表达方式，使用红、绿、蓝三原色的亮度来定量表示颜色，<strong>是以RGB三色光互相叠加来实现混色的方式</strong>。三种颜色所占比例不同，得到的颜色就不同。变换混合的比例，就会得到各种各样的混合效果。RGB颜色空间可以看作是三维直角坐标系中的一个单位正方体。任何一种颜色在RGB颜色空间中都可以用三维空间中的一个点来表示。在RGB颜色空间，任意色光F都可以用RGB三种颜色不同分量的相加混合而成：F=r[R]+g[G]+b[B]</p>
-<h4 id="色度学规则："><a href="#色度学规则：" class="headerlink" title="色度学规则："></a>色度学规则：</h4><p> 　(1)通过R,G,B这三种颜色能产生任何颜色，并且这三种颜色混合后产生的颜色是唯一的。<br> 　(2)如果两个颜色相等，这三个颜色分量再乘以或者除以相同的数，得到的颜色仍然相等。<br> 　(3)混合色的亮度等于每种颜色亮度的和。</p>
-<h3 id="优点与缺点"><a href="#优点与缺点" class="headerlink" title="优点与缺点"></a>优点与缺点</h3><p>优点： RGB颜色空间最大的优点就是直观，容易理解。</p>
-<p>缺点：<strong>R,G,B这3个分量是高度相关的</strong>，即如果一个颜色的某一个分量发生了一定程度的改变，那么这个颜色很可能要发生改变；人眼对于常见的红绿蓝三色的敏感程度是不一样的，因此RGB颜色空间的均匀性非常差，且两种颜色之间的知觉差异色差不能表示为该颜色空间中两点间的距离，但是利用线性或非线性变换，则可以从RGB颜色空间推导出其他的颜色特征空间。</p>
-<h2 id="HSV"><a href="#HSV" class="headerlink" title="HSV"></a>HSV</h2><h3 id="基本概念-1"><a href="#基本概念-1" class="headerlink" title="基本概念"></a>基本概念</h3><p>HSV(Hue, Saturation, Value)是根据颜色的直观特性由A. R.  Smith在1978年创建的一种颜色空间, 也称六角锥体模型(Hexcone  Model)。这个模型中颜色的参数分别是：<strong>色调（H），饱和度（S），明度（V）</strong>。</p>
-<h3 id="空间模型-1"><a href="#空间模型-1" class="headerlink" title="空间模型"></a>空间模型</h3><h4 id="色调H："><a href="#色调H：" class="headerlink" title="色调H："></a>色调H：</h4><p>用角度度量，取值范围为0°～360°，从红色开始按逆时针方向计算，红色为0°，绿色为120°,蓝色为240°。它们的补色是：黄色为60°，青色为180°,品红为300°；</p>
-<h4 id="饱和度S："><a href="#饱和度S：" class="headerlink" title="饱和度S："></a>饱和度S：</h4><p>饱和度S表示颜色接近光谱色的程度。一种颜色，可以看成是某种光谱色与白色混合的结果。其中光谱色所占的比例愈大，颜色接近光谱色的程度就愈高，颜色的饱和度也就愈高。饱和度高，颜色则深而艳。光谱色的白光成分为0，饱和度达到最高。通常取值范围为0%～100%，值越大，颜色越饱和。</p>
-<h4 id="明度V："><a href="#明度V：" class="headerlink" title="明度V："></a>明度V：</h4><p>明度表示颜色明亮的程度，对于光源色，明度值与发光体的光亮度有关；对于物体色，此值和物体的透射比或反射比有关。通常取值范围为0%（黑）到100%（白）。</p>
-<p><strong>RGB和CMY颜色模型都是面向硬件的，而HSV（Hue Saturation  Value）颜色模型是面向用户的。</strong>HSV模型的三维表示从RGB立方体演化而来。设想从RGB沿立方体对角线的白色顶点向黑色顶点观察，就可以看到立方体的六边形外形。六边形边界表示色彩，水平轴表示纯度，明度沿垂直轴测量。</p>
-<p> <img src="https://img-blog.csdnimg.cn/20181128220932509.png"> </p>
-<p> <img src="https://img-blog.csdnimg.cn/20181128220957174.png"></p>
-<h3 id="从RGB到HSV的转换"><a href="#从RGB到HSV的转换" class="headerlink" title="从RGB到HSV的转换"></a>从RGB到HSV的转换</h3><p>HSV 在数学上定义为在 RGB 空间中的颜色的 R, G 和 B 的坐标的变换。设 (r, g, b) 分别是一个颜色的红、绿和蓝坐标，它们的值是在 0 到 1 之间的实数。设 max 等价于 r, g 和 b 中的最大者，设 min 等于这些值中的最小者。要找到在 HSV 空间中的 (h, s, v) 值，这里的 h ∈ [0,  360）是角度的色相角，而 s, v ∈ [0,1] 是饱和度和亮度，计算公式为：</p>
-<p><img src="https://img-blog.csdnimg.cn/20181128221242343.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppYW5nSHVpMTIxMQ==,size_16,color_FFFFFF,t_70"></p>
-<p><img src="https://img-blog.csdnimg.cn/20181128221304329.png"></p>
-<p><img src="https://img-blog.csdnimg.cn/2018112822132243.png"></p>
-<p>HSV对用户来说是一种直观的颜色模型。我们可以从一种纯色彩开始，即指定色彩角H，并让V=S=1，然后我们可以通过向其中加入黑色和白色来得到我们需要的颜色。<strong>增加黑色可以减小V而S不变，同样增加白色可以减小S而V不变。</strong>例如，要得到深蓝色，V=0.4 S=1 H=240度。要得到淡蓝色，V=1 S=0.4 H=240度。</p>
-<p>一般说来，人眼最大能区分128种不同的色彩，130种色饱和度，23种明暗度。如果我们用16Bit表示HSV的话，可以用7位存放H，4位存放S，5位存放V，即745或者655就可以满足我们的需要了。</p>
-<p>由于HSV是一种比较直观的颜色模型，所以在许多图像编辑工具中应用比较广泛，如Photoshop（在Photoshop中叫HSB）等等，但这也决定了<strong>它不适合使用在光照模型中，许多光线混合运算、光强运算等都无法直接使用HSV来实现。</strong></p>
-<h2 id="LAB"><a href="#LAB" class="headerlink" title="LAB"></a>LAB</h2><h3 id="基本概念-2"><a href="#基本概念-2" class="headerlink" title="基本概念"></a>基本概念</h3><p><a href="https://baike.baidu.com/item/Lab%E6%A8%A1%E5%BC%8F/7362402">Lab模式</a>是根据Commission International Eclairage（CIE）在1931年所制定的一种测定颜色的国际标准建立的。于1976年被改进，并且命名的一种色彩模式。Lab颜色模型弥补了<a href="https://baike.baidu.com/item/RGB/342517">RGB</a>和CMYK两种色彩模式的不足。它是一种<strong>设备无关的颜色模型</strong>，也是一种<strong>基于生理特征的颜色模型</strong>。 Lab颜色模型由三个要素组成，一个要素是亮度（L），a 和b是两个<a href="https://baike.baidu.com/item/%E9%A2%9C%E8%89%B2%E9%80%9A%E9%81%93/5706858">颜色通道</a>。a包括的颜色是从<a href="https://baike.baidu.com/item/%E6%B7%B1%E7%BB%BF%E8%89%B2/2192808">深绿色</a>（低亮度值）到灰色（中亮度值）再到亮粉红色（高亮度值）；b是从亮蓝色（低亮度值）到灰色（中亮度值）再到黄色（高亮度值）。因此，这种颜色混合后将产生具有明亮效果的色彩。</p>
-<h3 id="空间模型-2"><a href="#空间模型-2" class="headerlink" title="空间模型"></a>空间模型</h3><p><a href="https://baike.baidu.com/item/Lab%E6%A8%A1%E5%BC%8F/7362402">Lab模式</a>既不依赖光线，也不依赖于颜料，它是CIE组织确定的一个理论上包括了人眼可以看见的所有色彩的色彩模式。Lab模式弥补了<a href="https://baike.baidu.com/item/RGB/342517">RGB</a>和CMYK两种色彩模式的不足。同RGB颜色空间相比，Lab是一种不常用的色彩空间。它是一种设备无关的颜色系统，也是一种基于生理特征的颜色系统。这也就意味着，<strong>它是用数字化的方法来描述人的视觉感应</strong>。Lab颜色空间中的L分量用于表示像素的亮度，取值范围是[0,100],表示从纯黑到纯白；a表示从红色到绿色的范围，取值范围是[127,-128]；b表示从黄色到蓝色的范围，取值范围是[127,-128]。下图所示为Lab颜色空间的图示：</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9nc3MzLmJkc3RhdGljLmNvbS8tUG8zZFNhZ194STRraEdrcG9XSzFIRjZoaHkvYmFpa2UvYzAlM0RiYWlrZTgwJTJDNSUyQzUlMkM4MCUyQzI2L3NpZ249ZTM1OWY1YTZhNDRiZDExMzEwYzBiZjYwM2JjNmNmNmEvMDIzYjViYjVjOWVhMTVjZTFkMWZmMWRjYmYwMDNhZjMzYjg3YjI3NS5qcGc?x-oss-process=image/format,png"></p>
-<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><p><strong>Lab颜色空间比计算机显示器甚至比人类视觉的色域都要大 **，表示为Lab的位图比RGB或CMYK位图获得同样的精度需要要求更多的像素数据。<a href="https://baike.baidu.com/item/Lab%E6%A8%A1%E5%BC%8F/7362402">Lab模式</a>所定义的色彩最多，且与光线及设备无关并且</strong>处理速度与<a href="https://baike.baidu.com/item/RGB%E6%A8%A1%E5%BC%8F/7362104">RGB模式</a>同样快**，比<a href="https://baike.baidu.com/item/CMYK%E6%A8%A1%E5%BC%8F/305545">CMYK模式</a>快很多。因此，可以放心大胆的在图象编辑中使用Lab模 式。而且，Lab模式在转换成CMYK模式时色彩没有丢失或被替换。因此，最佳避免色彩损失的方法是：应用Lab模式编辑图象，再转换为CMYK模式打印输出。</p>
-<h2 id="CMYK"><a href="#CMYK" class="headerlink" title="CMYK"></a>CMYK</h2><h3 id="基本概念-3"><a href="#基本概念-3" class="headerlink" title="基本概念"></a>基本概念</h3><p>当阳光照射到一个物体上时，这个物体将吸收一部分光线，并将剩下的光线进行反射，反射的光线就是我们所看见的物体颜色。这是一种**减色<a href="https://baike.baidu.com/item/%E8%89%B2%E5%BD%A9%E6%A8%A1%E5%BC%8F/10209468">色彩模式</a>**，同时也是与<a href="https://baike.baidu.com/item/RGB%E6%A8%A1%E5%BC%8F">RGB模式</a>的根本不同之处。不但我们看物体的颜色时用到了这种减色模式，而且在纸上印刷时应用的也是这种减色模式。CMYK代表印刷上用的四种颜色，C代表青色（Cyan），M代表<a href="https://baike.baidu.com/item/%E6%B4%8B%E7%BA%A2%E8%89%B2/6833575">洋红色</a>（Magenta），Y代表黄色（Yellow），K代表黑色（Black）。因为在实际应用中，青色、洋红色和黄色很难叠加形成真正的黑色，最多不过是褐色而已。因此才引入了K——黑色。黑色的作用是强化暗调，加深暗部色彩。</p>
-<h3 id="打印模式"><a href="#打印模式" class="headerlink" title="打印模式"></a>打印模式</h3><p><strong>CMYK模式俗称四色打印模式，是最佳的打印模式</strong>。但是在进行实际打印时，两种模式存在转换问题，具体原因如下：</p>
-<ol>
-<li><p>CMYK模式编辑虽然能够避免色彩的损失，但运算速度很慢。主要原因如下：</p>
-<p>1）、即使在CMYK模式下工作，<a href="https://baike.baidu.com/item/Photoshop/133866">Photoshop</a>也必须将CMYK模式转变为显示器所使用的RGB模式。</p>
-<p>2）、对于同样的图像，RGB模式只需要处理三个<a href="https://baike.baidu.com/item/%E9%80%9A%E9%81%93">通道</a>即可，而CMYK模式则需要处理四个。</p>
-</li>
-<li><p> 用户所使用的扫描仪和显示器都是<a href="https://baike.baidu.com/item/RGB/342517">RGB</a>设备，所以无论什么时候使用CMYK模式工作都有把RGB模式转换为CMYK模式这样一个过程。因此，是否应用CMYK模式进行编辑都存在<a href="https://baike.baidu.com/item/RGB%E6%A8%A1%E5%BC%8F/7362104">RGB模式</a>和CMYK模式转换的问题。</p>
-</li>
-</ol>
-<p>对于<a href="https://baike.baidu.com/item/RGB%E6%A8%A1%E5%BC%8F/7362104">RGB模式</a>和CMYK模式转换的问题，可以先用RGB模式进行编辑工作，再用CMYK模式进行打印工作，在打印前才进行转换，然后加入必要的<a href="https://baike.baidu.com/item/%E8%89%B2%E5%BD%A9%E6%A0%A1%E6%AD%A3/10786529">色彩校正</a>，<a href="https://baike.baidu.com/item/%E9%94%90%E5%8C%96/2189784">锐化</a>和修整。这样虽然使<a href="https://baike.baidu.com/item/Photoshop/133866">Photoshop</a>在CMYK模式下速度慢一些，但可节省大部分编辑时间。这种打印前的模式转换，并不是避免图像损失最佳的途径，最佳方法是将<a href="https://baike.baidu.com/item/Lab%E6%A8%A1%E5%BC%8F">Lab模式</a>和CMYK模式相结合使用，这样可以最大程度的减少图像失真。</p>
-<h3 id="优缺点-1"><a href="#优缺点-1" class="headerlink" title="优缺点"></a>优缺点</h3><p>优点：可以满足打印的需求，解决RGB不能打印的问题</p>
-<p>缺点：一定程度上存在色彩的缺失，运行速度慢</p>
 ]]></content>
       <categories>
         <category>三维视觉</category>
@@ -12067,6 +12410,58 @@ seek<span class="token double-colon punctuation">::</span><span class="token fun
       <tags>
         <tag>OpenCV</tag>
         <tag>ROS基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>几种常见的颜色空间</title>
+    <url>/2020/08/17/opencv-notes-2/</url>
+    <content><![CDATA[<h1 id="颜色空间"><a href="#颜色空间" class="headerlink" title="颜色空间"></a>颜色空间</h1><p><strong>颜色空间</strong>（英语：Color space）是对<a href="https://zh.wikipedia.org/wiki/%E8%89%B2%E5%BD%A9">色彩</a>的组织方式。借助色彩空间和针对物理设备的测试，可以得到色彩的固定<a href="https://zh.wikipedia.org/wiki/%E6%A8%A1%E6%93%AC%E4%BF%A1%E8%99%9F">模拟</a>和<a href="https://zh.wikipedia.org/wiki/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7">数字</a>表示。色彩空间可以只通过任意挑选一些颜色来定义，比如像<a href="https://zh.wikipedia.org/wiki/%E5%BD%A9%E9%80%9A">彩通</a>系统就只是把一组特定的颜色作为<a href="https://zh.wikipedia.org/wiki/%E8%AA%BF%E8%89%B2%E7%9B%A4_(%E9%9B%BB%E8%85%A6%E5%9C%96%E5%BD%A2%E5%AD%B8)">样本</a>，然后给每个颜色定义名字和代码；也可以是基于严谨的数学定义，比如 <a href="https://zh.wikipedia.org/wiki/Adobe_RGB%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4">Adobe RGB</a>、<a href="https://zh.wikipedia.org/wiki/SRGB%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4">sRGB</a>。</p>
+<p>在计算机视觉，尤其颜色识别相关的算法中，rgb,hsv,lab颜色空间混用是常用的方法。</p>
+<h2 id="RGB"><a href="#RGB" class="headerlink" title="RGB"></a>RGB</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>RGB颜色空间以R(Red:红)、G(Green:绿)、B(Blue:蓝)三种基本色为基础，进行不同程度的叠加，产生丰富而广泛的颜色，所以俗称三基色模式。在大自然中有无穷多种不同的颜色，而人眼只能分辨有限种不同的颜色，RGB模式可表示一千六百多万种不同的颜色，在人眼看来它非常接近大自然的颜色，故又称为自然色彩模式。红绿蓝代表可见光谱中的三种基本颜色或称为三原色，每一种颜色按其亮度的不同分为256个等级。当色光三原色重叠时，由于不同的混色比例能产生各种中间色，例如，三原色相加可产生白色。所以RGB模式是加色过程。屏幕显示的基础是RGB模式，彩色印刷品却无法用RGB模式来产生各种彩色，所以，<strong>RGB模式常用于视频、多媒体与网页设计</strong>。</p>
+<h3 id="空间模型"><a href="#空间模型" class="headerlink" title="空间模型"></a>空间模型</h3><p>对图像处理而言，RGB是最为重要和常见的颜色模型，它建立在笛卡尔坐标系中，以红、绿、蓝三种基本色为基础，<strong>进行不同程度的叠加</strong>，产生丰富而广泛的颜色，俗称三基色模式。如下图所示：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9nc3MwLmJkc3RhdGljLmNvbS85NG8zZFNhZ194STRraEdrcG9XSzFIRjZoaHkvYmFpa2UvYzAlM0RiYWlrZTgwJTJDNSUyQzUlMkM4MCUyQzI2L3NpZ249MjdmYjUwZjlhYWVjMDhmYTMyMGQxYmY1Mzg4NzU2MDgvZTFmZTk5MjViYzMxNWM2MGU0NTA5ZmE5ODdiMWNiMTM0ODU0NzdhYi5qcGc?x-oss-process=image/format,png"></p>
+<h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><p>RGB模型的原理来自于颜色的三刺激理论，它基于以下假设:在眼睛的中央部位有3种类型的对色彩敏感的锥状细胞。其中一类对位于可见光谱中间位置的光波敏感，这种光波经人的视觉系统转换产生绿色感。而其他两种锥状细胞对位于可见光波的上、下端即较长和较短的波长的光波敏感，它们分别被识别为红色和蓝色。从生理学的角度来看，由于眼睛仅包含3种不同类型的锥状细胞，因而对任意3种颜色适当混合均可产生白光视觉，条件是这3中颜色中任意两种的组合都并不能产生第3种颜色，则这三种颜色就被称为三原色。</p>
+<h3 id="表达方式"><a href="#表达方式" class="headerlink" title="表达方式"></a>表达方式</h3><p> RGB空间是目前最常用的彩色信息表达方式，使用红、绿、蓝三原色的亮度来定量表示颜色，<strong>是以RGB三色光互相叠加来实现混色的方式</strong>。三种颜色所占比例不同，得到的颜色就不同。变换混合的比例，就会得到各种各样的混合效果。RGB颜色空间可以看作是三维直角坐标系中的一个单位正方体。任何一种颜色在RGB颜色空间中都可以用三维空间中的一个点来表示。在RGB颜色空间，任意色光F都可以用RGB三种颜色不同分量的相加混合而成：F=r[R]+g[G]+b[B]</p>
+<h4 id="色度学规则："><a href="#色度学规则：" class="headerlink" title="色度学规则："></a>色度学规则：</h4><p> 　(1)通过R,G,B这三种颜色能产生任何颜色，并且这三种颜色混合后产生的颜色是唯一的。<br> 　(2)如果两个颜色相等，这三个颜色分量再乘以或者除以相同的数，得到的颜色仍然相等。<br> 　(3)混合色的亮度等于每种颜色亮度的和。</p>
+<h3 id="优点与缺点"><a href="#优点与缺点" class="headerlink" title="优点与缺点"></a>优点与缺点</h3><p>优点： RGB颜色空间最大的优点就是直观，容易理解。</p>
+<p>缺点：<strong>R,G,B这3个分量是高度相关的</strong>，即如果一个颜色的某一个分量发生了一定程度的改变，那么这个颜色很可能要发生改变；人眼对于常见的红绿蓝三色的敏感程度是不一样的，因此RGB颜色空间的均匀性非常差，且两种颜色之间的知觉差异色差不能表示为该颜色空间中两点间的距离，但是利用线性或非线性变换，则可以从RGB颜色空间推导出其他的颜色特征空间。</p>
+<h2 id="HSV"><a href="#HSV" class="headerlink" title="HSV"></a>HSV</h2><h3 id="基本概念-1"><a href="#基本概念-1" class="headerlink" title="基本概念"></a>基本概念</h3><p>HSV(Hue, Saturation, Value)是根据颜色的直观特性由A. R.  Smith在1978年创建的一种颜色空间, 也称六角锥体模型(Hexcone  Model)。这个模型中颜色的参数分别是：<strong>色调（H），饱和度（S），明度（V）</strong>。</p>
+<h3 id="空间模型-1"><a href="#空间模型-1" class="headerlink" title="空间模型"></a>空间模型</h3><h4 id="色调H："><a href="#色调H：" class="headerlink" title="色调H："></a>色调H：</h4><p>用角度度量，取值范围为0°～360°，从红色开始按逆时针方向计算，红色为0°，绿色为120°,蓝色为240°。它们的补色是：黄色为60°，青色为180°,品红为300°；</p>
+<h4 id="饱和度S："><a href="#饱和度S：" class="headerlink" title="饱和度S："></a>饱和度S：</h4><p>饱和度S表示颜色接近光谱色的程度。一种颜色，可以看成是某种光谱色与白色混合的结果。其中光谱色所占的比例愈大，颜色接近光谱色的程度就愈高，颜色的饱和度也就愈高。饱和度高，颜色则深而艳。光谱色的白光成分为0，饱和度达到最高。通常取值范围为0%～100%，值越大，颜色越饱和。</p>
+<h4 id="明度V："><a href="#明度V：" class="headerlink" title="明度V："></a>明度V：</h4><p>明度表示颜色明亮的程度，对于光源色，明度值与发光体的光亮度有关；对于物体色，此值和物体的透射比或反射比有关。通常取值范围为0%（黑）到100%（白）。</p>
+<p><strong>RGB和CMY颜色模型都是面向硬件的，而HSV（Hue Saturation  Value）颜色模型是面向用户的。</strong>HSV模型的三维表示从RGB立方体演化而来。设想从RGB沿立方体对角线的白色顶点向黑色顶点观察，就可以看到立方体的六边形外形。六边形边界表示色彩，水平轴表示纯度，明度沿垂直轴测量。</p>
+<p> <img src="https://img-blog.csdnimg.cn/20181128220932509.png"> </p>
+<p> <img src="https://img-blog.csdnimg.cn/20181128220957174.png"></p>
+<h3 id="从RGB到HSV的转换"><a href="#从RGB到HSV的转换" class="headerlink" title="从RGB到HSV的转换"></a>从RGB到HSV的转换</h3><p>HSV 在数学上定义为在 RGB 空间中的颜色的 R, G 和 B 的坐标的变换。设 (r, g, b) 分别是一个颜色的红、绿和蓝坐标，它们的值是在 0 到 1 之间的实数。设 max 等价于 r, g 和 b 中的最大者，设 min 等于这些值中的最小者。要找到在 HSV 空间中的 (h, s, v) 值，这里的 h ∈ [0,  360）是角度的色相角，而 s, v ∈ [0,1] 是饱和度和亮度，计算公式为：</p>
+<p><img src="https://img-blog.csdnimg.cn/20181128221242343.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppYW5nSHVpMTIxMQ==,size_16,color_FFFFFF,t_70"></p>
+<p><img src="https://img-blog.csdnimg.cn/20181128221304329.png"></p>
+<p><img src="https://img-blog.csdnimg.cn/2018112822132243.png"></p>
+<p>HSV对用户来说是一种直观的颜色模型。我们可以从一种纯色彩开始，即指定色彩角H，并让V=S=1，然后我们可以通过向其中加入黑色和白色来得到我们需要的颜色。<strong>增加黑色可以减小V而S不变，同样增加白色可以减小S而V不变。</strong>例如，要得到深蓝色，V=0.4 S=1 H=240度。要得到淡蓝色，V=1 S=0.4 H=240度。</p>
+<p>一般说来，人眼最大能区分128种不同的色彩，130种色饱和度，23种明暗度。如果我们用16Bit表示HSV的话，可以用7位存放H，4位存放S，5位存放V，即745或者655就可以满足我们的需要了。</p>
+<p>由于HSV是一种比较直观的颜色模型，所以在许多图像编辑工具中应用比较广泛，如Photoshop（在Photoshop中叫HSB）等等，但这也决定了<strong>它不适合使用在光照模型中，许多光线混合运算、光强运算等都无法直接使用HSV来实现。</strong></p>
+<h2 id="LAB"><a href="#LAB" class="headerlink" title="LAB"></a>LAB</h2><h3 id="基本概念-2"><a href="#基本概念-2" class="headerlink" title="基本概念"></a>基本概念</h3><p><a href="https://baike.baidu.com/item/Lab%E6%A8%A1%E5%BC%8F/7362402">Lab模式</a>是根据Commission International Eclairage（CIE）在1931年所制定的一种测定颜色的国际标准建立的。于1976年被改进，并且命名的一种色彩模式。Lab颜色模型弥补了<a href="https://baike.baidu.com/item/RGB/342517">RGB</a>和CMYK两种色彩模式的不足。它是一种<strong>设备无关的颜色模型</strong>，也是一种<strong>基于生理特征的颜色模型</strong>。 Lab颜色模型由三个要素组成，一个要素是亮度（L），a 和b是两个<a href="https://baike.baidu.com/item/%E9%A2%9C%E8%89%B2%E9%80%9A%E9%81%93/5706858">颜色通道</a>。a包括的颜色是从<a href="https://baike.baidu.com/item/%E6%B7%B1%E7%BB%BF%E8%89%B2/2192808">深绿色</a>（低亮度值）到灰色（中亮度值）再到亮粉红色（高亮度值）；b是从亮蓝色（低亮度值）到灰色（中亮度值）再到黄色（高亮度值）。因此，这种颜色混合后将产生具有明亮效果的色彩。</p>
+<h3 id="空间模型-2"><a href="#空间模型-2" class="headerlink" title="空间模型"></a>空间模型</h3><p><a href="https://baike.baidu.com/item/Lab%E6%A8%A1%E5%BC%8F/7362402">Lab模式</a>既不依赖光线，也不依赖于颜料，它是CIE组织确定的一个理论上包括了人眼可以看见的所有色彩的色彩模式。Lab模式弥补了<a href="https://baike.baidu.com/item/RGB/342517">RGB</a>和CMYK两种色彩模式的不足。同RGB颜色空间相比，Lab是一种不常用的色彩空间。它是一种设备无关的颜色系统，也是一种基于生理特征的颜色系统。这也就意味着，<strong>它是用数字化的方法来描述人的视觉感应</strong>。Lab颜色空间中的L分量用于表示像素的亮度，取值范围是[0,100],表示从纯黑到纯白；a表示从红色到绿色的范围，取值范围是[127,-128]；b表示从黄色到蓝色的范围，取值范围是[127,-128]。下图所示为Lab颜色空间的图示：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9nc3MzLmJkc3RhdGljLmNvbS8tUG8zZFNhZ194STRraEdrcG9XSzFIRjZoaHkvYmFpa2UvYzAlM0RiYWlrZTgwJTJDNSUyQzUlMkM4MCUyQzI2L3NpZ249ZTM1OWY1YTZhNDRiZDExMzEwYzBiZjYwM2JjNmNmNmEvMDIzYjViYjVjOWVhMTVjZTFkMWZmMWRjYmYwMDNhZjMzYjg3YjI3NS5qcGc?x-oss-process=image/format,png"></p>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><p><strong>Lab颜色空间比计算机显示器甚至比人类视觉的色域都要大 **，表示为Lab的位图比RGB或CMYK位图获得同样的精度需要要求更多的像素数据。<a href="https://baike.baidu.com/item/Lab%E6%A8%A1%E5%BC%8F/7362402">Lab模式</a>所定义的色彩最多，且与光线及设备无关并且</strong>处理速度与<a href="https://baike.baidu.com/item/RGB%E6%A8%A1%E5%BC%8F/7362104">RGB模式</a>同样快**，比<a href="https://baike.baidu.com/item/CMYK%E6%A8%A1%E5%BC%8F/305545">CMYK模式</a>快很多。因此，可以放心大胆的在图象编辑中使用Lab模 式。而且，Lab模式在转换成CMYK模式时色彩没有丢失或被替换。因此，最佳避免色彩损失的方法是：应用Lab模式编辑图象，再转换为CMYK模式打印输出。</p>
+<h2 id="CMYK"><a href="#CMYK" class="headerlink" title="CMYK"></a>CMYK</h2><h3 id="基本概念-3"><a href="#基本概念-3" class="headerlink" title="基本概念"></a>基本概念</h3><p>当阳光照射到一个物体上时，这个物体将吸收一部分光线，并将剩下的光线进行反射，反射的光线就是我们所看见的物体颜色。这是一种**减色<a href="https://baike.baidu.com/item/%E8%89%B2%E5%BD%A9%E6%A8%A1%E5%BC%8F/10209468">色彩模式</a>**，同时也是与<a href="https://baike.baidu.com/item/RGB%E6%A8%A1%E5%BC%8F">RGB模式</a>的根本不同之处。不但我们看物体的颜色时用到了这种减色模式，而且在纸上印刷时应用的也是这种减色模式。CMYK代表印刷上用的四种颜色，C代表青色（Cyan），M代表<a href="https://baike.baidu.com/item/%E6%B4%8B%E7%BA%A2%E8%89%B2/6833575">洋红色</a>（Magenta），Y代表黄色（Yellow），K代表黑色（Black）。因为在实际应用中，青色、洋红色和黄色很难叠加形成真正的黑色，最多不过是褐色而已。因此才引入了K——黑色。黑色的作用是强化暗调，加深暗部色彩。</p>
+<h3 id="打印模式"><a href="#打印模式" class="headerlink" title="打印模式"></a>打印模式</h3><p><strong>CMYK模式俗称四色打印模式，是最佳的打印模式</strong>。但是在进行实际打印时，两种模式存在转换问题，具体原因如下：</p>
+<ol>
+<li><p>CMYK模式编辑虽然能够避免色彩的损失，但运算速度很慢。主要原因如下：</p>
+<p>1）、即使在CMYK模式下工作，<a href="https://baike.baidu.com/item/Photoshop/133866">Photoshop</a>也必须将CMYK模式转变为显示器所使用的RGB模式。</p>
+<p>2）、对于同样的图像，RGB模式只需要处理三个<a href="https://baike.baidu.com/item/%E9%80%9A%E9%81%93">通道</a>即可，而CMYK模式则需要处理四个。</p>
+</li>
+<li><p> 用户所使用的扫描仪和显示器都是<a href="https://baike.baidu.com/item/RGB/342517">RGB</a>设备，所以无论什么时候使用CMYK模式工作都有把RGB模式转换为CMYK模式这样一个过程。因此，是否应用CMYK模式进行编辑都存在<a href="https://baike.baidu.com/item/RGB%E6%A8%A1%E5%BC%8F/7362104">RGB模式</a>和CMYK模式转换的问题。</p>
+</li>
+</ol>
+<p>对于<a href="https://baike.baidu.com/item/RGB%E6%A8%A1%E5%BC%8F/7362104">RGB模式</a>和CMYK模式转换的问题，可以先用RGB模式进行编辑工作，再用CMYK模式进行打印工作，在打印前才进行转换，然后加入必要的<a href="https://baike.baidu.com/item/%E8%89%B2%E5%BD%A9%E6%A0%A1%E6%AD%A3/10786529">色彩校正</a>，<a href="https://baike.baidu.com/item/%E9%94%90%E5%8C%96/2189784">锐化</a>和修整。这样虽然使<a href="https://baike.baidu.com/item/Photoshop/133866">Photoshop</a>在CMYK模式下速度慢一些，但可节省大部分编辑时间。这种打印前的模式转换，并不是避免图像损失最佳的途径，最佳方法是将<a href="https://baike.baidu.com/item/Lab%E6%A8%A1%E5%BC%8F">Lab模式</a>和CMYK模式相结合使用，这样可以最大程度的减少图像失真。</p>
+<h3 id="优缺点-1"><a href="#优缺点-1" class="headerlink" title="优缺点"></a>优缺点</h3><p>优点：可以满足打印的需求，解决RGB不能打印的问题</p>
+<p>缺点：一定程度上存在色彩的缺失，运行速度慢</p>
+]]></content>
+      <categories>
+        <category>三维视觉</category>
+      </categories>
+      <tags>
+        <tag>OpenCV</tag>
       </tags>
   </entry>
   <entry>
@@ -13086,6 +13481,36 @@ TODO
       </tags>
   </entry>
   <entry>
+    <title>论文阅读《Efficient Dense RGB-D SLAM in a Consistent Uncertainty-aware 3D Gaussian Field》</title>
+    <url>/2024/05/19/paper-reading-cg-slam/</url>
+    <content><![CDATA[<p><strong>项目主页：</strong><a href="https://zju3dv.github.io/cg-slam/">https://zju3dv.github.io/cg-slam/</a></p>
+<h1 id="论文阅读《Efficient-Dense-RGB-D-SLAM-in-a-Consistent-Uncertainty-aware-3D-Gaussian-Field》"><a href="#论文阅读《Efficient-Dense-RGB-D-SLAM-in-a-Consistent-Uncertainty-aware-3D-Gaussian-Field》" class="headerlink" title="论文阅读《Efficient Dense RGB-D SLAM in a Consistent Uncertainty-aware 3D Gaussian Field》"></a>论文阅读《Efficient Dense RGB-D SLAM in a Consistent Uncertainty-aware 3D Gaussian Field》</h1><p>本文介绍了一种基于高一致性和几何稳定性的新型三维高斯场的实时高斯溅射SLAM系统，即CG-SLAM。为此，我们首先对EWA(椭圆加权平均)溅射过程中相机姿态的导数进行了全面的数学分析[60]，并为SLAM任务开发了一个专门的CUDA框架，有效地解耦了跟踪和映射组件。其次，为了减少固有的过拟合问题，我们提出了一个尺度正则化项，适当地鼓励高斯椭球近似高斯球体，以减少各向异性，并在跟踪精度和渲染真实感之间实现良好的权衡。同时，我们观察到单独使用alpha混合深度不能对高斯基元的位置施加有效的约束。因此，为了实现高质量的映射，我们进一步对齐中值深度和alpha混合深度，以鼓励高斯原语在场景表面上很好地分布，从而促进具有更集中几何密度的一致高斯场。此外，为了进一步提高系统的精度和效率，我们设计了一种新的深度不确定性模型，以指导我们基于高斯的SLAM关注那些稳定且信息丰富的深度不确定性。我们在各种RGB-D数据集上对我们的系统进行了评估，实验结果表明我们的CG-SLAM在跟踪精度、重建质量和运行效率方面具有优越的性能。</p>
+<h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><p><img src="/images/paper-reading-CG-SLAM/image-20240513111128366.png"></p>
+<h3 id="Preliminary"><a href="#Preliminary" class="headerlink" title="Preliminary"></a>Preliminary</h3><p>基本都是3DGS的内容</p>
+<p>3DGS中3D投影到2D用的是02年的一篇文章，EWA splatting，本文分析了这个EWA splatting，推导了位姿的导数。</p>
+<h3 id="Uncertainty-Modeling"><a href="#Uncertainty-Modeling" class="headerlink" title="Uncertainty Modeling"></a>Uncertainty Modeling</h3><p>参考UncLe-SLAM实现了Uncertainty Modeling</p>
+<blockquote>
+<p>Sandström, E., Ta, K., Van Gool, L., Oswald, M.R.: Uncle-slam: Uncertainty learning for dense neural slam. arXiv preprint arXiv:2306.11048 (2023)</p>
+</blockquote>
+<p>这部分看起来就是希望不确定性尽量小，然后对深度影响最大的高斯尽可能的居中。</p>
+<h3 id="Mapping"><a href="#Mapping" class="headerlink" title="Mapping"></a>Mapping</h3><p>稀松平常的内容</p>
+<h3 id="Tracking"><a href="#Tracking" class="headerlink" title="Tracking"></a>Tracking</h3><p>稀松平常的内容</p>
+<p>提到了一个Sliding Bundle Adjustment，希望通过这个减小累积误差。</p>
+<p>这里的sliding window没有用基于视锥的方法，而是用NetVLAD预训练模型去处理。</p>
+<p><strong>疑惑：</strong></p>
+<p>这里tracking的内容写的好少，不知道这个导数什么的是怎么弄的啊。。。补充材料没有找到居然。。。</p>
+<p>又去找了一下，没找到，那只能等了。。。这篇文章虽然是章国峰组的，但是其实也没看到很突出的地方。。。</p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>隐式表示</tag>
+        <tag>3D Gaussian Splatting</tag>
+        <tag>视觉SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>3DGS SLAM泛读（一）</title>
     <url>/2024/03/06/paper-reading-3dgs-slam-1/</url>
     <content><![CDATA[<h1 id="3DGS-SLAM泛读（一）"><a href="#3DGS-SLAM泛读（一）" class="headerlink" title="3DGS SLAM泛读（一）"></a>3DGS SLAM泛读（一）</h1><h2 id="GS-SLAM"><a href="#GS-SLAM" class="headerlink" title="GS-SLAM"></a>GS-SLAM</h2><p><strong>贡献：</strong></p>
@@ -13346,36 +13771,6 @@ TODO
 <p><strong>实验部分</strong></p>
 <p>论文提到Photo-SLAM是用C++和CUDA写的，使用了ORB-SLAM3、3D Gaussian Splatting和LibTorch的框架。</p>
 <p>实验部分略过，但是有一个很大的疑惑：既然说了用了英伟达的Jetson平台，为什么没有指明到底用的什么平台？而且看Table 1，这种方法即使在Jetson上也需要4GB的显存，Laptop也是4GB，然后桌面端显存需要6GB。这个Jetson跑的效果也还行，渲染速率也是100fps左右。</p>
-]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>隐式表示</tag>
-        <tag>3D Gaussian Splatting</tag>
-        <tag>视觉SLAM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>论文阅读《Efficient Dense RGB-D SLAM in a Consistent Uncertainty-aware 3D Gaussian Field》</title>
-    <url>/2024/05/19/paper-reading-cg-slam/</url>
-    <content><![CDATA[<p><strong>项目主页：</strong><a href="https://zju3dv.github.io/cg-slam/">https://zju3dv.github.io/cg-slam/</a></p>
-<h1 id="论文阅读《Efficient-Dense-RGB-D-SLAM-in-a-Consistent-Uncertainty-aware-3D-Gaussian-Field》"><a href="#论文阅读《Efficient-Dense-RGB-D-SLAM-in-a-Consistent-Uncertainty-aware-3D-Gaussian-Field》" class="headerlink" title="论文阅读《Efficient Dense RGB-D SLAM in a Consistent Uncertainty-aware 3D Gaussian Field》"></a>论文阅读《Efficient Dense RGB-D SLAM in a Consistent Uncertainty-aware 3D Gaussian Field》</h1><p>本文介绍了一种基于高一致性和几何稳定性的新型三维高斯场的实时高斯溅射SLAM系统，即CG-SLAM。为此，我们首先对EWA(椭圆加权平均)溅射过程中相机姿态的导数进行了全面的数学分析[60]，并为SLAM任务开发了一个专门的CUDA框架，有效地解耦了跟踪和映射组件。其次，为了减少固有的过拟合问题，我们提出了一个尺度正则化项，适当地鼓励高斯椭球近似高斯球体，以减少各向异性，并在跟踪精度和渲染真实感之间实现良好的权衡。同时，我们观察到单独使用alpha混合深度不能对高斯基元的位置施加有效的约束。因此，为了实现高质量的映射，我们进一步对齐中值深度和alpha混合深度，以鼓励高斯原语在场景表面上很好地分布，从而促进具有更集中几何密度的一致高斯场。此外，为了进一步提高系统的精度和效率，我们设计了一种新的深度不确定性模型，以指导我们基于高斯的SLAM关注那些稳定且信息丰富的深度不确定性。我们在各种RGB-D数据集上对我们的系统进行了评估，实验结果表明我们的CG-SLAM在跟踪精度、重建质量和运行效率方面具有优越的性能。</p>
-<h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><p><img src="/images/paper-reading-CG-SLAM/image-20240513111128366.png"></p>
-<h3 id="Preliminary"><a href="#Preliminary" class="headerlink" title="Preliminary"></a>Preliminary</h3><p>基本都是3DGS的内容</p>
-<p>3DGS中3D投影到2D用的是02年的一篇文章，EWA splatting，本文分析了这个EWA splatting，推导了位姿的导数。</p>
-<h3 id="Uncertainty-Modeling"><a href="#Uncertainty-Modeling" class="headerlink" title="Uncertainty Modeling"></a>Uncertainty Modeling</h3><p>参考UncLe-SLAM实现了Uncertainty Modeling</p>
-<blockquote>
-<p>Sandström, E., Ta, K., Van Gool, L., Oswald, M.R.: Uncle-slam: Uncertainty learning for dense neural slam. arXiv preprint arXiv:2306.11048 (2023)</p>
-</blockquote>
-<p>这部分看起来就是希望不确定性尽量小，然后对深度影响最大的高斯尽可能的居中。</p>
-<h3 id="Mapping"><a href="#Mapping" class="headerlink" title="Mapping"></a>Mapping</h3><p>稀松平常的内容</p>
-<h3 id="Tracking"><a href="#Tracking" class="headerlink" title="Tracking"></a>Tracking</h3><p>稀松平常的内容</p>
-<p>提到了一个Sliding Bundle Adjustment，希望通过这个减小累积误差。</p>
-<p>这里的sliding window没有用基于视锥的方法，而是用NetVLAD预训练模型去处理。</p>
-<p><strong>疑惑：</strong></p>
-<p>这里tracking的内容写的好少，不知道这个导数什么的是怎么弄的啊。。。补充材料没有找到居然。。。</p>
-<p>又去找了一下，没找到，那只能等了。。。这篇文章虽然是章国峰组的，但是其实也没看到很突出的地方。。。</p>
 ]]></content>
       <categories>
         <category>slam</category>
@@ -14510,6 +14905,90 @@ TODO
       </tags>
   </entry>
   <entry>
+    <title>论文阅读《Mini-Splatting：Representing Scenes with a Constrained Number of Gaussians》</title>
+    <url>/2024/07/21/paper-reading-mini-splatting/</url>
+    <content><![CDATA[<h1 id="论文阅读《Mini-Splatting-Representing-Scenes-with-a-Constrained-Number-of-Gaussians》"><a href="#论文阅读《Mini-Splatting-Representing-Scenes-with-a-Constrained-Number-of-Gaussians》" class="headerlink" title="论文阅读《Mini-Splatting: Representing Scenes with a Constrained Number of Gaussians》"></a>论文阅读《Mini-Splatting: Representing Scenes with a Constrained Number of Gaussians》</h1><h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><h3 id="Densification"><a href="#Densification" class="headerlink" title="Densification"></a>Densification</h3><h4 id="Blur-Split"><a href="#Blur-Split" class="headerlink" title="Blur Split"></a>Blur Split</h4><p>这个策略的目的是：解决高斯伪影。</p>
+<p>论文提到了，基于梯度的分割和克隆策略可能会在颜色过渡平滑的区域中失败，这会导致相应的过大尺寸的高斯会在优化过程中保留。不过3DGS也会根据投影的2D高斯分布，对屏幕空间中尺寸过大的高斯进行剪枝，但是这种方法也解决不了重建不足的问题。</p>
+<blockquote>
+<p>论文在这里说废话，这不是解决overlapping的问题才这么做的？</p>
+<p>3DGS看起来只是没有着重去解决under-reconstruction的问题，就像论文分析的，基于梯度的分割和克隆策略在弱纹理的区域效果不好，没有分裂或克隆足够的高斯点，就导致了under-reconstruction的问题。</p>
+</blockquote>
+<p>论文说他们记录了每个像素权重最大的高斯函数的索引$i_{max}(x)$，以及对这个像素实际影响最大的高斯函数的索引$i(x)$，并且观察到高斯伪影与$i_{max}(x)$更相关，这说明具有较大的”最大贡献面积“的高斯函数会导致under-reconstruction。</p>
+<blockquote>
+<p>我也觉得，因为既然已经造成了影响，说明这个高斯的权重会比较大。</p>
+<p>而伪影通常看起来不透明度都不是那么高（因为看着很模糊），有可能他们的不透明度很低，只是在深度排序里面比较靠前，导致alpha-blending中的权重就比较大了。</p>
+</blockquote>
+<p>因此，基于这个观察，论文根据公式（2）识别导致模糊的高斯函数，并且在优化过程中对其进行分割，这样可以增强图像清晰度。</p>
+<p><img src="/images/paper-reading-mini-splatting/image-20240721171315625.png"></p>
+<p>这部分的实验如下所示：</p>
+<p><img src="/images/paper-reading-mini-splatting/image-20240721163151587.png" alt="image-20240721163151587"></p>
+<h4 id="Depth-Reinitialization"><a href="#Depth-Reinitialization" class="headerlink" title="Depth Reinitialization"></a>Depth Reinitialization</h4><blockquote>
+<p>这部分做的没有意思，个人感觉比较牵强了。</p>
+<p>大家渲染深度基本都是用高斯中心的深度来进行渲染的，但是论文作者认为这个会产生误导，导致深度点云存在伪影。因此他们计算了相机射线与头球的交点，以交点的中点作为高斯的深度。</p>
+<blockquote>
+<p>好好看看3D高斯往2D高斯的投影，就会感觉，大家用的方法也没有问题。。。</p>
+<p>不过只是感觉。</p>
+</blockquote>
+<p>这里论文提到其实用高斯中心的深度页有相似的渲染质量。</p>
+<blockquote>
+<p>所以其实论文效果好只是单纯的只用权重最大的高斯深度作为相似的深度了，他这个计算交点中点的方法，个人感觉没必要。。。</p>
+</blockquote>
+</blockquote>
+<h3 id="Simplification"><a href="#Simplification" class="headerlink" title="Simplification"></a>Simplification</h3><p>这里没感觉到论文做了什么很突出的贡献，记录几个论文提到的观点：</p>
+<ul>
+<li>通过给每个高斯分布分配一个预定义的重要性值，我们可以简单地修剪低重要性的高斯分布。虽然这种策略对于去除有限数量的高斯函数是有效的，但当剪枝比相对较大时，它可能导致渲染质量的崩溃。主要问题在于<strong>高斯重要性只反映了简化前的重要性。直接剪枝很容易破坏局部几何</strong>，这反过来又降低了进一步优化后的最终渲染质量。</li>
+<li><strong>与确定性剪枝相比，随机采样策略可以更好地保持整体几何形状</strong>。我们将高斯重要性纳入每个高斯的抽样概率，这种重要性加权采样策略具有更强的保持几何质量的能力，从而增强了最终的渲染结果</li>
+</ul>
+<p>总结就是：根据重要性来剪枝不好，容易破坏局部的几何结构。最好的办法是结合高斯的权重进行随机采样剪枝。</p>
+<blockquote>
+<p>放到SLAM里面那就是learnable-mask * weight</p>
+<p>又是一个很方便实现而且比较有效的小技巧</p>
+<p>learnable-mask太棒了！</p>
+</blockquote>
+<h2 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h2><p>这篇论文做了很多有意思的实验，这里记录一下</p>
+<h3 id="剪枝和采样策略"><a href="#剪枝和采样策略" class="headerlink" title="剪枝和采样策略"></a>剪枝和采样策略</h3><p>论文提到减少高斯数最直接的方法是进行剪枝和采样，这里他们尝试了四种方法：(b) 计算每个高斯的重要性，重要性低的剪枝；(c) 随机采样；(d) 网格采样；(e) 密度保持采样。这些结果表明，在保持渲染质量的同时，解决高斯分布的低效和实现最小高斯表示需要进一步的努力。</p>
+<p><img src="/images/paper-reading-mini-splatting/image-20240721154422922.png"></p>
+<p>论文也提到了，修剪策略可以将高斯数量大幅减少，比如(b)方法可以从610w降低到60w，但是PSNR会降低，而且仍然会存在overlapping和under-reconstruction的问题。</p>
+<blockquote>
+<p>很显然啊，因为只是进行了修剪，而不是进行了更合理的density control。不管数量多寡，只要density是不合理的，就一定会存在overlapping和under-reconstruction。</p>
+<p>从这个实验和作者的分析可以进一步的出一个结论：</p>
+<ul>
+<li><p>首先，高斯的数量是可以通过简单的修剪或采样数量显著减少的，对PSNR等指标影响不大；</p>
+</li>
+<li><p>另外，重建的结果好坏，受高斯数量多寡的影响小，受density是否合理的影响大；</p>
+</li>
+<li><p>不影响其他指标的同时减少高斯的数量值得研究，而在这个基础上实现更合理的density分布更值得研究，减少高斯点数和更合理的density control是相辅相成的。</p>
+<blockquote>
+<p>论文也是同时研究了Densification和Simplification</p>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+<h2 id="个人评价"><a href="#个人评价" class="headerlink" title="个人评价"></a>个人评价</h2><p>论文做了很多实验，讲了自己观察到的很多问题，并且针对性的研究了Densification和Simplification策略。</p>
+<p>不过其中个人觉得最创新的还是Densification中的Blur Split，而Depth Reinitialization就有点牵强了。另外，Simplification这里也提到了观察到的一个重要现象，即<strong>随机采样策略可以更好地保持整体几何形状</strong>，这个在Compact 3DGS一系列的工作中得到了验证。</p>
+<p>后续的话可以借鉴这篇论文的思路，围绕：</p>
+<ul>
+<li><p>更全面的Densification，而不是仅仅关注产生伪影的部分高斯；</p>
+<blockquote>
+<p>这个目前还是没有看到做的比较好的工作出现。</p>
+</blockquote>
+</li>
+<li><p>结合高斯权重和learnable-mask的Simplification策略。</p>
+<blockquote>
+<p>这个应该已经不创新了，但是效果很好。</p>
+</blockquote>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>NeRF&amp;3DGS</category>
+      </categories>
+      <tags>
+        <tag>隐式表示</tag>
+        <tag>3D Gaussian Splatting</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>论文阅读《Gaussian Splatting with Localized Points Management》</title>
     <url>/2024/07/20/paper-reading-lpm/</url>
     <content><![CDATA[<h1 id="论文阅读《Gaussian-Splatting-with-Localized-Points-Management》"><a href="#论文阅读《Gaussian-Splatting-with-Localized-Points-Management》" class="headerlink" title="论文阅读《Gaussian Splatting with Localized Points Management》"></a>论文阅读《Gaussian Splatting with Localized Points Management》</h1><h2 id="Motivation-Adaptive-Density-Control的局限性"><a href="#Motivation-Adaptive-Density-Control的局限性" class="headerlink" title="Motivation: Adaptive Density Control的局限性"></a>Motivation: Adaptive Density Control的局限性</h2><p>论文在Introduction部分提到了Adaptive Density Control存在几个问题：</p>
@@ -14592,90 +15071,6 @@ TODO
 </blockquote>
 <p>从实验结果来看：加入论文实现的LPM模块之后，PSNR、LPIPS等指标只有些微的提升，感觉可以忽略不计；不过训练时间、高斯点数等指标也没有特别大的影响。另外，论文还测试了自适应密度控制lower threshold下3DGS的结果，高斯点数、训练时间明显提升，但是效果不一定提升，这个现象我之前也发现了，所以自适应密度控制这种方法，确实不是很适合提升一些局部的细节。这样看的话，论文为3dgs局部细节的提升做了一定的贡献。</p>
 <p>此外，论文在最后的总结部分也提到了“While our method identifies the 3D Gaussian points that lead to rendering errors, it still follows the densification rules of 3DGS”，论文的方法本质上还是遵循3DGS的致密化规则，只是识别了导致渲染错误的3D高斯。所以如何寻找更好的致密化规则，还是值得研究的。</p>
-]]></content>
-      <categories>
-        <category>NeRF&amp;3DGS</category>
-      </categories>
-      <tags>
-        <tag>隐式表示</tag>
-        <tag>3D Gaussian Splatting</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>论文阅读《Mini-Splatting：Representing Scenes with a Constrained Number of Gaussians》</title>
-    <url>/2024/07/21/paper-reading-mini-splatting/</url>
-    <content><![CDATA[<h1 id="论文阅读《Mini-Splatting-Representing-Scenes-with-a-Constrained-Number-of-Gaussians》"><a href="#论文阅读《Mini-Splatting-Representing-Scenes-with-a-Constrained-Number-of-Gaussians》" class="headerlink" title="论文阅读《Mini-Splatting: Representing Scenes with a Constrained Number of Gaussians》"></a>论文阅读《Mini-Splatting: Representing Scenes with a Constrained Number of Gaussians》</h1><h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><h3 id="Densification"><a href="#Densification" class="headerlink" title="Densification"></a>Densification</h3><h4 id="Blur-Split"><a href="#Blur-Split" class="headerlink" title="Blur Split"></a>Blur Split</h4><p>这个策略的目的是：解决高斯伪影。</p>
-<p>论文提到了，基于梯度的分割和克隆策略可能会在颜色过渡平滑的区域中失败，这会导致相应的过大尺寸的高斯会在优化过程中保留。不过3DGS也会根据投影的2D高斯分布，对屏幕空间中尺寸过大的高斯进行剪枝，但是这种方法也解决不了重建不足的问题。</p>
-<blockquote>
-<p>论文在这里说废话，这不是解决overlapping的问题才这么做的？</p>
-<p>3DGS看起来只是没有着重去解决under-reconstruction的问题，就像论文分析的，基于梯度的分割和克隆策略在弱纹理的区域效果不好，没有分裂或克隆足够的高斯点，就导致了under-reconstruction的问题。</p>
-</blockquote>
-<p>论文说他们记录了每个像素权重最大的高斯函数的索引$i_{max}(x)$，以及对这个像素实际影响最大的高斯函数的索引$i(x)$，并且观察到高斯伪影与$i_{max}(x)$更相关，这说明具有较大的”最大贡献面积“的高斯函数会导致under-reconstruction。</p>
-<blockquote>
-<p>我也觉得，因为既然已经造成了影响，说明这个高斯的权重会比较大。</p>
-<p>而伪影通常看起来不透明度都不是那么高（因为看着很模糊），有可能他们的不透明度很低，只是在深度排序里面比较靠前，导致alpha-blending中的权重就比较大了。</p>
-</blockquote>
-<p>因此，基于这个观察，论文根据公式（2）识别导致模糊的高斯函数，并且在优化过程中对其进行分割，这样可以增强图像清晰度。</p>
-<p><img src="/images/paper-reading-mini-splatting/image-20240721171315625.png"></p>
-<p>这部分的实验如下所示：</p>
-<p><img src="/images/paper-reading-mini-splatting/image-20240721163151587.png" alt="image-20240721163151587"></p>
-<h4 id="Depth-Reinitialization"><a href="#Depth-Reinitialization" class="headerlink" title="Depth Reinitialization"></a>Depth Reinitialization</h4><blockquote>
-<p>这部分做的没有意思，个人感觉比较牵强了。</p>
-<p>大家渲染深度基本都是用高斯中心的深度来进行渲染的，但是论文作者认为这个会产生误导，导致深度点云存在伪影。因此他们计算了相机射线与头球的交点，以交点的中点作为高斯的深度。</p>
-<blockquote>
-<p>好好看看3D高斯往2D高斯的投影，就会感觉，大家用的方法也没有问题。。。</p>
-<p>不过只是感觉。</p>
-</blockquote>
-<p>这里论文提到其实用高斯中心的深度页有相似的渲染质量。</p>
-<blockquote>
-<p>所以其实论文效果好只是单纯的只用权重最大的高斯深度作为相似的深度了，他这个计算交点中点的方法，个人感觉没必要。。。</p>
-</blockquote>
-</blockquote>
-<h3 id="Simplification"><a href="#Simplification" class="headerlink" title="Simplification"></a>Simplification</h3><p>这里没感觉到论文做了什么很突出的贡献，记录几个论文提到的观点：</p>
-<ul>
-<li>通过给每个高斯分布分配一个预定义的重要性值，我们可以简单地修剪低重要性的高斯分布。虽然这种策略对于去除有限数量的高斯函数是有效的，但当剪枝比相对较大时，它可能导致渲染质量的崩溃。主要问题在于<strong>高斯重要性只反映了简化前的重要性。直接剪枝很容易破坏局部几何</strong>，这反过来又降低了进一步优化后的最终渲染质量。</li>
-<li><strong>与确定性剪枝相比，随机采样策略可以更好地保持整体几何形状</strong>。我们将高斯重要性纳入每个高斯的抽样概率，这种重要性加权采样策略具有更强的保持几何质量的能力，从而增强了最终的渲染结果</li>
-</ul>
-<p>总结就是：根据重要性来剪枝不好，容易破坏局部的几何结构。最好的办法是结合高斯的权重进行随机采样剪枝。</p>
-<blockquote>
-<p>放到SLAM里面那就是learnable-mask * weight</p>
-<p>又是一个很方便实现而且比较有效的小技巧</p>
-<p>learnable-mask太棒了！</p>
-</blockquote>
-<h2 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h2><p>这篇论文做了很多有意思的实验，这里记录一下</p>
-<h3 id="剪枝和采样策略"><a href="#剪枝和采样策略" class="headerlink" title="剪枝和采样策略"></a>剪枝和采样策略</h3><p>论文提到减少高斯数最直接的方法是进行剪枝和采样，这里他们尝试了四种方法：(b) 计算每个高斯的重要性，重要性低的剪枝；(c) 随机采样；(d) 网格采样；(e) 密度保持采样。这些结果表明，在保持渲染质量的同时，解决高斯分布的低效和实现最小高斯表示需要进一步的努力。</p>
-<p><img src="/images/paper-reading-mini-splatting/image-20240721154422922.png"></p>
-<p>论文也提到了，修剪策略可以将高斯数量大幅减少，比如(b)方法可以从610w降低到60w，但是PSNR会降低，而且仍然会存在overlapping和under-reconstruction的问题。</p>
-<blockquote>
-<p>很显然啊，因为只是进行了修剪，而不是进行了更合理的density control。不管数量多寡，只要density是不合理的，就一定会存在overlapping和under-reconstruction。</p>
-<p>从这个实验和作者的分析可以进一步的出一个结论：</p>
-<ul>
-<li><p>首先，高斯的数量是可以通过简单的修剪或采样数量显著减少的，对PSNR等指标影响不大；</p>
-</li>
-<li><p>另外，重建的结果好坏，受高斯数量多寡的影响小，受density是否合理的影响大；</p>
-</li>
-<li><p>不影响其他指标的同时减少高斯的数量值得研究，而在这个基础上实现更合理的density分布更值得研究，减少高斯点数和更合理的density control是相辅相成的。</p>
-<blockquote>
-<p>论文也是同时研究了Densification和Simplification</p>
-</blockquote>
-</li>
-</ul>
-</blockquote>
-<h2 id="个人评价"><a href="#个人评价" class="headerlink" title="个人评价"></a>个人评价</h2><p>论文做了很多实验，讲了自己观察到的很多问题，并且针对性的研究了Densification和Simplification策略。</p>
-<p>不过其中个人觉得最创新的还是Densification中的Blur Split，而Depth Reinitialization就有点牵强了。另外，Simplification这里也提到了观察到的一个重要现象，即<strong>随机采样策略可以更好地保持整体几何形状</strong>，这个在Compact 3DGS一系列的工作中得到了验证。</p>
-<p>后续的话可以借鉴这篇论文的思路，围绕：</p>
-<ul>
-<li><p>更全面的Densification，而不是仅仅关注产生伪影的部分高斯；</p>
-<blockquote>
-<p>这个目前还是没有看到做的比较好的工作出现。</p>
-</blockquote>
-</li>
-<li><p>结合高斯权重和learnable-mask的Simplification策略。</p>
-<blockquote>
-<p>这个应该已经不创新了，但是效果很好。</p>
-</blockquote>
-</li>
-</ul>
 ]]></content>
       <categories>
         <category>NeRF&amp;3DGS</category>
@@ -14920,129 +15315,6 @@ TODO
       </tags>
   </entry>
   <entry>
-    <title>论文阅读《RTG-SLAM：Real-time 3D Reconstruction at Scale Using Gaussian Splatting》</title>
-    <url>/2024/06/05/paper-reading-rtg-slam/</url>
-    <content><![CDATA[<h1 id="论文阅读《RTG-SLAM-Real-time-3D-Reconstruction-at-Scale-Using-Gaussian-Splatting》"><a href="#论文阅读《RTG-SLAM-Real-time-3D-Reconstruction-at-Scale-Using-Gaussian-Splatting》" class="headerlink" title="论文阅读《RTG-SLAM: Real-time 3D Reconstruction at Scale Using Gaussian Splatting》"></a>论文阅读《RTG-SLAM: Real-time 3D Reconstruction at Scale Using Gaussian Splatting》</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>我们提出了实时高斯SLAM (RTG-SLAM)，这是一个基于RGBD相机的实时三维重建系统，用于大规模环境的高斯溅射。该系统具有紧凑的高斯表示和高效的实时高斯优化方案。<strong>我们迫使每个高斯函数要么是不透明的，要么是接近透明的，不透明的高斯函数拟合表面和主色，透明的高斯函数拟合剩余色。</strong>通过以不同于颜色渲染的方式渲染深度，我们<strong>让单个不透明高斯很好地拟合局部表面区域，而不需要多个重叠的高斯</strong>，从而大大降低了内存和计算成本。对于动态高斯优化，我们<strong>显式地为每帧三种类型的像素添加高斯:新观察到的，具有大颜色误差的，和具有大深度误差的。</strong>我们还将所有高斯函数分为稳定的和不稳定的，其中<strong>稳定的高斯函数被期望很好地拟合先前观察到的RGBD图像，否则不稳定</strong>。我们<strong>只优化不稳定高斯函数，只渲染被不稳定高斯函数占用的像素。</strong>这样，无论是需要优化的高斯数还是需要渲染的像素都大大减少，并且可以实时进行优化。我们展示了各种大型场景的实时重建。与最先进的基于nerf的RGBD SLAM相比，我们的系统实现了类似的高质量重建，但速度约为两倍，内存成本为一半，并且在新视图合成的真实感和相机跟踪精度方面表现出卓越的性能。</p>
-<blockquote>
-<p>看完Abstract，感觉这篇文章主要的工作是：<strong>研究了各种让SLAM结果变好的==策略==</strong></p>
-</blockquote>
-<h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><p><img src="/images/paper-reading-rtg-slam/image-20240605200843475-1717589324365-1.png"></p>
-<h3 id="Compact-Gaussian-Representation"><a href="#Compact-Gaussian-Representation" class="headerlink" title="Compact Gaussian Representation"></a>Compact Gaussian Representation</h3><p>使用Gaussian表示场景：</p>
-<ul>
-<li>每个高斯要么不透明，要么几乎透明。Each Gaussian is determined once after being added to be opaque (𝛼 = 0.99) for fitting the 3D surface and dominant color, or to be nearly transparent (𝛼 = 0.1) for fitting the residual color.</li>
-<li>每个高斯认为是一个ellipsoid disc或者surfel。We also treat each Gaussian as an ellipsoid disc (or surfel), and record the surfel parameters including the normal n𝑖 , the confidence count 𝜂𝑖 , and the initialization timestamp 𝑡𝑖 . </li>
-</ul>
-<p>对于image rendering，这里应该是和Gaussian Splatting一样的，没有做什么特殊的处理；</p>
-<p>对于depth rendering，论文说这是他们这部分的关键：</p>
-<ul>
-<li><p>当前的所有Gaussian SLAM渲染深度的方式都和渲染颜色的方式一样，用alpha blending。但是这会导致单个高斯渲染的深度是从中间到两边下降的，不适合用来单独拟合一些近似是平面的区域。论文这里放了一张图来展示；</p>
-<img src="/images/paper-reading-rtg-slam/image-20240605210350123.png" style="zoom:50%;">
-
-<blockquote>
-<p><strong>==疑问：目前对rendering部分理解的不是很透彻，有两个疑问==</strong></p>
-<ul>
-<li><p>为什么会导致深度从中间到两边是下降的呢，是因为3D向2D投影的过程导致的吗？</p>
-</li>
-<li><p>如果这样的话，RGB的渲染会不会也是从中间到两边下降的？或者说球谐可以解决这个问题，因为每个像素都是一条单独的射线？（如果球谐可以解决这种问题，还不如让深度单独带几个球谐系数）</p>
-</li>
-</ul>
-</blockquote>
-</li>
-<li><p>每个高斯都能很好的拟合表面的局部区域，不需要多个高斯；</p>
-</li>
-<li><p><strong>depth rendering的核心思路是：</strong>对于每个像素，计算view ray与距离最近的不透明ellipsoid disc的交点来获得像素的深度。</p>
-<blockquote>
-<p>ellipsoid disc就是高斯椭球两个相对长的轴构成的椭圆面，因为论文前面提到了把短轴作为高斯的法向。</p>
-<img src="/images/paper-reading-rtg-slam/image-20240605212807029.png" style="zoom:67%;">
-
-<blockquote>
-<p>The normal vector is defined as the direction of the smallest eigenvector.</p>
-</blockquote>
-<p>看下面的公式，其实做的也挺保守：</p>
-<ul>
-<li>不相交就空着，当成-1（为什么会不相交呢）</li>
-<li>如果有个高斯和相机平面的夹角比较小，影响的像素点比较多，才会把这个高斯当成Ellipse Disc来看；</li>
-<li>而如果夹角比较大，影响的像素点少，当成Ellipse Disc处理可能误差也比较大，于是这部分的像素的深度都是根据高斯的中心点来算的。</li>
-</ul>
-</blockquote>
-<img src="/images/paper-reading-rtg-slam/image-20240605214130735.png" style="zoom:67%;">
-
-</li>
-</ul>
-<h3 id="Online-Reconstruction-Process"><a href="#Online-Reconstruction-Process" class="headerlink" title="Online Reconstruction Process"></a>Online Reconstruction Process</h3><blockquote>
-<p>这部分看来是把整个系统都讲了一遍</p>
-</blockquote>
-<h4 id="Input-pre-processing"><a href="#Input-pre-processing" class="headerlink" title="Input pre-processing"></a>Input pre-processing</h4><p>根据输入的RGB和Depth，计算local vertex map和local normal map，再利用估计的相机位姿转换成global vertex map和local normal map</p>
-<h4 id="Gaussians-adding"><a href="#Gaussians-adding" class="headerlink" title="Gaussians adding"></a>Gaussians adding</h4><p>这里评价了Gaussian Splatting的Density Control策略是低效的，然后说自己利用基于几何和外观的高斯添加策略是更有效更可靠的，具体是根据渲染的结果计算一个掩码来确定为哪些像素添加高斯：</p>
-<img src="/images/paper-reading-rtg-slam/image-20240608144803374.png" style="zoom:80%;">
-
-<p>这里$M_s$是应该添加新几何图形的区域，它的计算依据是：像素射线经过很少的高斯或者没有经过高斯，即新观测的区域；以及深度重渲染的误差过大，即新观测的表面区域与现有场景在这个视角下渲染的结果有区别。</p>
-<p>这里$M_c$表示几何上准确但颜色误差过大的区域。</p>
-<p>这里添加的策略是：</p>
-<ul>
-<li><p>对于$M_s$，添加高斯并且不透明度设置为0.99；</p>
-</li>
-<li><p>对于$M_c$​，它已经与场景中现有的不透明高斯相关联，如果是不稳定的高斯，就可以进一步优化来适应颜色，这样就不继续添加高斯；如果是稳定的高斯，那就在它的基础上加入一个不透明度为0.1的高斯来校正颜色误差。</p>
-<p>使用透明高斯光束的优点在于，这种低不透明度的高斯光束不会引起光能的明显衰减，对其他视图的颜色影响很小。另外，在深度渲染的过程中，它们会被算法自动过滤掉，因此不会影响深度渲染。对于不透明高斯点，它们的大小被初始化为尽可能多地覆盖场景，很少重叠，而透明高斯点的半径被限制在0.01m以下，以消除对其他像素渲染结果的干扰。</p>
-</li>
-</ul>
-<blockquote>
-<p>从这里看，论文更关注几何信息，而对于颜色信息则通过添加透明高斯并加以重重限制来保证不干扰深度渲染结果的同时让颜色的渲染尽可能准确。</p>
-</blockquote>
-<h4 id="Gaussian-optimization"><a href="#Gaussian-optimization" class="headerlink" title="Gaussian optimization"></a>Gaussian optimization</h4><ul>
-<li><p>根据时间顺序确定了一个窗口，每次优化都是从窗口内随机采样一帧。</p>
-</li>
-<li><p>不透明度的学习率设置为0，因此不透明度是固定的，不会被优化。</p>
-<blockquote>
-<p>直接不放到优化参数里不就好了，设置成0是因为，懒得改代码？</p>
-</blockquote>
-</li>
-<li><p>color和depth还是很经典的损失函数，这里论文希望透明高斯函数专注于在不影响其他区域的情况下精炼局部的颜色，因此设计了一个正则化项。总体的损失函数是:</p>
-<img src="/images/paper-reading-rtg-slam/image-20240608152744013.png" style="zoom:80%;">
-</li>
-<li><p>论文注意到优化后的高斯函数能很好拟合当前时间窗口，但是对于之前的视图，渲染质量会下降。这里他们提出了一种融合策略，通过加权平均的方法把当前的结果和以前的结果融合到一起，这样可以有效避免遗忘问题：</p>
-<img src="/images/paper-reading-rtg-slam/image-20240608153533128.png" style="zoom:80%;">
-</li>
-<li><p>优化所有高斯是非常耗时的，因此论文不优化稳定高斯，只关注受到不稳定高斯分布影响的像素，从而避免对所有像素的优化。</p>
-</li>
-</ul>
-<h4 id="State-management"><a href="#State-management" class="headerlink" title="State management"></a>State management</h4><p>一些稳定高斯和不稳定高斯之间的转换策略，以及错误高斯（长时间不稳定）的删除</p>
-<img src="/images/paper-reading-rtg-slam/image-20240608153855692.png" style="zoom:67%;">
-
-<h4 id="Camera-tracking"><a href="#Camera-tracking" class="headerlink" title="Camera tracking"></a>Camera tracking</h4><p><strong>使用frame-to-model的ICP算法作为front-end odometry</strong>，使用前一帧中优化的高斯函数来渲染深度图、法线图，并且转换到全局空间，然后给定当前帧，通过最小化3D反向投影误差得到位姿：</p>
-<img src="/images/paper-reading-rtg-slam/image-20240608154323318.png" style="zoom:67%;">
-
-<p>论文还提到为了减小大场景的累积漂移，用了类似ORB-SLAM2的后端优化线程，完成位姿估计的同时还会保留一组3D landmark用于后端的优化。</p>
-<blockquote>
-<p>和GS_ICP SLAM相比，这里ICP用的还是挺生硬的，需要保留一组3D landmark，存在数据冗余的情况。</p>
-<p>我怀疑这里用的就是ORB-SLAM2的RGB-D前端，因为实验部分Table 2的数据也太好看了，非常接近ORB-SLAM2的结果。</p>
-</blockquote>
-<h4 id="Keyframes-and-global-optimization"><a href="#Keyframes-and-global-optimization" class="headerlink" title="Keyframes and global optimization"></a>Keyframes and global optimization</h4><ul>
-<li>基于相机的运动构造关键帧列表，旋转角度或者相对平移超过了阈值就添加关键帧。</li>
-<li>只优化每个关键帧上误差前40%的像素，并且优化过程中不更新高斯的位置，使用0.1倍率的原始学习率来优化其他的参数。</li>
-</ul>
-<h2 id="EVALUATION"><a href="#EVALUATION" class="headerlink" title="EVALUATION"></a>EVALUATION</h2><p>见原论文</p>
-<h2 id="SUPPLEMENTARY-MATERIALS"><a href="#SUPPLEMENTARY-MATERIALS" class="headerlink" title="SUPPLEMENTARY MATERIALS"></a>SUPPLEMENTARY MATERIALS</h2><blockquote>
-<p>只记录个人认为值得注意的细节</p>
-</blockquote>
-<h3 id="GAUSSIAN-INITIALIZATION"><a href="#GAUSSIAN-INITIALIZATION" class="headerlink" title="GAUSSIAN INITIALIZATION"></a>GAUSSIAN INITIALIZATION</h3><p>每个新的高斯都会初始化为一个平面圆盘，根据最近的三个高斯来计算轴的长度，三个轴的比例为1：1：0.1</p>
-<img src="/images/paper-reading-rtg-slam/image-20240608155942944.png" style="zoom:67%;">
-
-<h3 id="IMPLEMENTATION-DETAILS"><a href="#IMPLEMENTATION-DETAILS" class="headerlink" title="IMPLEMENTATION DETAILS"></a>IMPLEMENTATION DETAILS</h3><p>系统由三个线程构成：高斯优化、前端在线跟踪、后端图优化。</p>
-<p>前端在线跟踪是用python+pytorch实现的，而后端优化部分是基于ORB-SLAM2用C语言实现的。</p>
-<h2 id="个人评价"><a href="#个人评价" class="headerlink" title="个人评价"></a>个人评价</h2><p>这篇文章主要是用了很多简单有效的改进策略，在工程上做了很多的工作。</p>
-<p>另外，这篇论文的前端里程计也是基于ICP的方法，后续可能会有越来越多的RGB-D高斯SLAM使用传统的点云配准方法来做前端的里程计。高斯毕竟还是显式地表示，和点云很相似，从基于渲染损失优化位姿到传统点云配准求解位姿的发展是必然的。</p>
-]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>隐式表示</tag>
-        <tag>3D Gaussian Splatting</tag>
-        <tag>视觉SLAM</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用RANSAC算法拟合点云中的平面</title>
     <url>/2021/11/28/ransac/</url>
     <content><![CDATA[<h1 id="使用RANSAC算法拟合点云中的平面"><a href="#使用RANSAC算法拟合点云中的平面" class="headerlink" title="使用RANSAC算法拟合点云中的平面"></a>使用RANSAC算法拟合点云中的平面</h1><p>最近在写pi-slam-fusion这个项目，需要根据pi-slam计算出来的点云拟合出大地平面的方程，从而让map2dfusion根据这个方程进行地图拼接。</p>
@@ -15201,6 +15473,129 @@ python3 RANSAC_3D.py<span aria-hidden="true" class="line-numbers-rows"><span></s
       </categories>
       <tags>
         <tag>点云</tag>
+        <tag>视觉SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文阅读《RTG-SLAM：Real-time 3D Reconstruction at Scale Using Gaussian Splatting》</title>
+    <url>/2024/06/05/paper-reading-rtg-slam/</url>
+    <content><![CDATA[<h1 id="论文阅读《RTG-SLAM-Real-time-3D-Reconstruction-at-Scale-Using-Gaussian-Splatting》"><a href="#论文阅读《RTG-SLAM-Real-time-3D-Reconstruction-at-Scale-Using-Gaussian-Splatting》" class="headerlink" title="论文阅读《RTG-SLAM: Real-time 3D Reconstruction at Scale Using Gaussian Splatting》"></a>论文阅读《RTG-SLAM: Real-time 3D Reconstruction at Scale Using Gaussian Splatting》</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>我们提出了实时高斯SLAM (RTG-SLAM)，这是一个基于RGBD相机的实时三维重建系统，用于大规模环境的高斯溅射。该系统具有紧凑的高斯表示和高效的实时高斯优化方案。<strong>我们迫使每个高斯函数要么是不透明的，要么是接近透明的，不透明的高斯函数拟合表面和主色，透明的高斯函数拟合剩余色。</strong>通过以不同于颜色渲染的方式渲染深度，我们<strong>让单个不透明高斯很好地拟合局部表面区域，而不需要多个重叠的高斯</strong>，从而大大降低了内存和计算成本。对于动态高斯优化，我们<strong>显式地为每帧三种类型的像素添加高斯:新观察到的，具有大颜色误差的，和具有大深度误差的。</strong>我们还将所有高斯函数分为稳定的和不稳定的，其中<strong>稳定的高斯函数被期望很好地拟合先前观察到的RGBD图像，否则不稳定</strong>。我们<strong>只优化不稳定高斯函数，只渲染被不稳定高斯函数占用的像素。</strong>这样，无论是需要优化的高斯数还是需要渲染的像素都大大减少，并且可以实时进行优化。我们展示了各种大型场景的实时重建。与最先进的基于nerf的RGBD SLAM相比，我们的系统实现了类似的高质量重建，但速度约为两倍，内存成本为一半，并且在新视图合成的真实感和相机跟踪精度方面表现出卓越的性能。</p>
+<blockquote>
+<p>看完Abstract，感觉这篇文章主要的工作是：<strong>研究了各种让SLAM结果变好的==策略==</strong></p>
+</blockquote>
+<h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><p><img src="/images/paper-reading-rtg-slam/image-20240605200843475-1717589324365-1.png"></p>
+<h3 id="Compact-Gaussian-Representation"><a href="#Compact-Gaussian-Representation" class="headerlink" title="Compact Gaussian Representation"></a>Compact Gaussian Representation</h3><p>使用Gaussian表示场景：</p>
+<ul>
+<li>每个高斯要么不透明，要么几乎透明。Each Gaussian is determined once after being added to be opaque (𝛼 = 0.99) for fitting the 3D surface and dominant color, or to be nearly transparent (𝛼 = 0.1) for fitting the residual color.</li>
+<li>每个高斯认为是一个ellipsoid disc或者surfel。We also treat each Gaussian as an ellipsoid disc (or surfel), and record the surfel parameters including the normal n𝑖 , the confidence count 𝜂𝑖 , and the initialization timestamp 𝑡𝑖 . </li>
+</ul>
+<p>对于image rendering，这里应该是和Gaussian Splatting一样的，没有做什么特殊的处理；</p>
+<p>对于depth rendering，论文说这是他们这部分的关键：</p>
+<ul>
+<li><p>当前的所有Gaussian SLAM渲染深度的方式都和渲染颜色的方式一样，用alpha blending。但是这会导致单个高斯渲染的深度是从中间到两边下降的，不适合用来单独拟合一些近似是平面的区域。论文这里放了一张图来展示；</p>
+<img src="/images/paper-reading-rtg-slam/image-20240605210350123.png" style="zoom:50%;">
+
+<blockquote>
+<p><strong>==疑问：目前对rendering部分理解的不是很透彻，有两个疑问==</strong></p>
+<ul>
+<li><p>为什么会导致深度从中间到两边是下降的呢，是因为3D向2D投影的过程导致的吗？</p>
+</li>
+<li><p>如果这样的话，RGB的渲染会不会也是从中间到两边下降的？或者说球谐可以解决这个问题，因为每个像素都是一条单独的射线？（如果球谐可以解决这种问题，还不如让深度单独带几个球谐系数）</p>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><p>每个高斯都能很好的拟合表面的局部区域，不需要多个高斯；</p>
+</li>
+<li><p><strong>depth rendering的核心思路是：</strong>对于每个像素，计算view ray与距离最近的不透明ellipsoid disc的交点来获得像素的深度。</p>
+<blockquote>
+<p>ellipsoid disc就是高斯椭球两个相对长的轴构成的椭圆面，因为论文前面提到了把短轴作为高斯的法向。</p>
+<img src="/images/paper-reading-rtg-slam/image-20240605212807029.png" style="zoom:67%;">
+
+<blockquote>
+<p>The normal vector is defined as the direction of the smallest eigenvector.</p>
+</blockquote>
+<p>看下面的公式，其实做的也挺保守：</p>
+<ul>
+<li>不相交就空着，当成-1（为什么会不相交呢）</li>
+<li>如果有个高斯和相机平面的夹角比较小，影响的像素点比较多，才会把这个高斯当成Ellipse Disc来看；</li>
+<li>而如果夹角比较大，影响的像素点少，当成Ellipse Disc处理可能误差也比较大，于是这部分的像素的深度都是根据高斯的中心点来算的。</li>
+</ul>
+</blockquote>
+<img src="/images/paper-reading-rtg-slam/image-20240605214130735.png" style="zoom:67%;">
+
+</li>
+</ul>
+<h3 id="Online-Reconstruction-Process"><a href="#Online-Reconstruction-Process" class="headerlink" title="Online Reconstruction Process"></a>Online Reconstruction Process</h3><blockquote>
+<p>这部分看来是把整个系统都讲了一遍</p>
+</blockquote>
+<h4 id="Input-pre-processing"><a href="#Input-pre-processing" class="headerlink" title="Input pre-processing"></a>Input pre-processing</h4><p>根据输入的RGB和Depth，计算local vertex map和local normal map，再利用估计的相机位姿转换成global vertex map和local normal map</p>
+<h4 id="Gaussians-adding"><a href="#Gaussians-adding" class="headerlink" title="Gaussians adding"></a>Gaussians adding</h4><p>这里评价了Gaussian Splatting的Density Control策略是低效的，然后说自己利用基于几何和外观的高斯添加策略是更有效更可靠的，具体是根据渲染的结果计算一个掩码来确定为哪些像素添加高斯：</p>
+<img src="/images/paper-reading-rtg-slam/image-20240608144803374.png" style="zoom:80%;">
+
+<p>这里$M_s$是应该添加新几何图形的区域，它的计算依据是：像素射线经过很少的高斯或者没有经过高斯，即新观测的区域；以及深度重渲染的误差过大，即新观测的表面区域与现有场景在这个视角下渲染的结果有区别。</p>
+<p>这里$M_c$表示几何上准确但颜色误差过大的区域。</p>
+<p>这里添加的策略是：</p>
+<ul>
+<li><p>对于$M_s$，添加高斯并且不透明度设置为0.99；</p>
+</li>
+<li><p>对于$M_c$​，它已经与场景中现有的不透明高斯相关联，如果是不稳定的高斯，就可以进一步优化来适应颜色，这样就不继续添加高斯；如果是稳定的高斯，那就在它的基础上加入一个不透明度为0.1的高斯来校正颜色误差。</p>
+<p>使用透明高斯光束的优点在于，这种低不透明度的高斯光束不会引起光能的明显衰减，对其他视图的颜色影响很小。另外，在深度渲染的过程中，它们会被算法自动过滤掉，因此不会影响深度渲染。对于不透明高斯点，它们的大小被初始化为尽可能多地覆盖场景，很少重叠，而透明高斯点的半径被限制在0.01m以下，以消除对其他像素渲染结果的干扰。</p>
+</li>
+</ul>
+<blockquote>
+<p>从这里看，论文更关注几何信息，而对于颜色信息则通过添加透明高斯并加以重重限制来保证不干扰深度渲染结果的同时让颜色的渲染尽可能准确。</p>
+</blockquote>
+<h4 id="Gaussian-optimization"><a href="#Gaussian-optimization" class="headerlink" title="Gaussian optimization"></a>Gaussian optimization</h4><ul>
+<li><p>根据时间顺序确定了一个窗口，每次优化都是从窗口内随机采样一帧。</p>
+</li>
+<li><p>不透明度的学习率设置为0，因此不透明度是固定的，不会被优化。</p>
+<blockquote>
+<p>直接不放到优化参数里不就好了，设置成0是因为，懒得改代码？</p>
+</blockquote>
+</li>
+<li><p>color和depth还是很经典的损失函数，这里论文希望透明高斯函数专注于在不影响其他区域的情况下精炼局部的颜色，因此设计了一个正则化项。总体的损失函数是:</p>
+<img src="/images/paper-reading-rtg-slam/image-20240608152744013.png" style="zoom:80%;">
+</li>
+<li><p>论文注意到优化后的高斯函数能很好拟合当前时间窗口，但是对于之前的视图，渲染质量会下降。这里他们提出了一种融合策略，通过加权平均的方法把当前的结果和以前的结果融合到一起，这样可以有效避免遗忘问题：</p>
+<img src="/images/paper-reading-rtg-slam/image-20240608153533128.png" style="zoom:80%;">
+</li>
+<li><p>优化所有高斯是非常耗时的，因此论文不优化稳定高斯，只关注受到不稳定高斯分布影响的像素，从而避免对所有像素的优化。</p>
+</li>
+</ul>
+<h4 id="State-management"><a href="#State-management" class="headerlink" title="State management"></a>State management</h4><p>一些稳定高斯和不稳定高斯之间的转换策略，以及错误高斯（长时间不稳定）的删除</p>
+<img src="/images/paper-reading-rtg-slam/image-20240608153855692.png" style="zoom:67%;">
+
+<h4 id="Camera-tracking"><a href="#Camera-tracking" class="headerlink" title="Camera tracking"></a>Camera tracking</h4><p><strong>使用frame-to-model的ICP算法作为front-end odometry</strong>，使用前一帧中优化的高斯函数来渲染深度图、法线图，并且转换到全局空间，然后给定当前帧，通过最小化3D反向投影误差得到位姿：</p>
+<img src="/images/paper-reading-rtg-slam/image-20240608154323318.png" style="zoom:67%;">
+
+<p>论文还提到为了减小大场景的累积漂移，用了类似ORB-SLAM2的后端优化线程，完成位姿估计的同时还会保留一组3D landmark用于后端的优化。</p>
+<blockquote>
+<p>和GS_ICP SLAM相比，这里ICP用的还是挺生硬的，需要保留一组3D landmark，存在数据冗余的情况。</p>
+<p>我怀疑这里用的就是ORB-SLAM2的RGB-D前端，因为实验部分Table 2的数据也太好看了，非常接近ORB-SLAM2的结果。</p>
+</blockquote>
+<h4 id="Keyframes-and-global-optimization"><a href="#Keyframes-and-global-optimization" class="headerlink" title="Keyframes and global optimization"></a>Keyframes and global optimization</h4><ul>
+<li>基于相机的运动构造关键帧列表，旋转角度或者相对平移超过了阈值就添加关键帧。</li>
+<li>只优化每个关键帧上误差前40%的像素，并且优化过程中不更新高斯的位置，使用0.1倍率的原始学习率来优化其他的参数。</li>
+</ul>
+<h2 id="EVALUATION"><a href="#EVALUATION" class="headerlink" title="EVALUATION"></a>EVALUATION</h2><p>见原论文</p>
+<h2 id="SUPPLEMENTARY-MATERIALS"><a href="#SUPPLEMENTARY-MATERIALS" class="headerlink" title="SUPPLEMENTARY MATERIALS"></a>SUPPLEMENTARY MATERIALS</h2><blockquote>
+<p>只记录个人认为值得注意的细节</p>
+</blockquote>
+<h3 id="GAUSSIAN-INITIALIZATION"><a href="#GAUSSIAN-INITIALIZATION" class="headerlink" title="GAUSSIAN INITIALIZATION"></a>GAUSSIAN INITIALIZATION</h3><p>每个新的高斯都会初始化为一个平面圆盘，根据最近的三个高斯来计算轴的长度，三个轴的比例为1：1：0.1</p>
+<img src="/images/paper-reading-rtg-slam/image-20240608155942944.png" style="zoom:67%;">
+
+<h3 id="IMPLEMENTATION-DETAILS"><a href="#IMPLEMENTATION-DETAILS" class="headerlink" title="IMPLEMENTATION DETAILS"></a>IMPLEMENTATION DETAILS</h3><p>系统由三个线程构成：高斯优化、前端在线跟踪、后端图优化。</p>
+<p>前端在线跟踪是用python+pytorch实现的，而后端优化部分是基于ORB-SLAM2用C语言实现的。</p>
+<h2 id="个人评价"><a href="#个人评价" class="headerlink" title="个人评价"></a>个人评价</h2><p>这篇文章主要是用了很多简单有效的改进策略，在工程上做了很多的工作。</p>
+<p>另外，这篇论文的前端里程计也是基于ICP的方法，后续可能会有越来越多的RGB-D高斯SLAM使用传统的点云配准方法来做前端的里程计。高斯毕竟还是显式地表示，和点云很相似，从基于渲染损失优化位姿到传统点云配准求解位姿的发展是必然的。</p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>隐式表示</tag>
+        <tag>3D Gaussian Splatting</tag>
         <tag>视觉SLAM</tag>
       </tags>
   </entry>
