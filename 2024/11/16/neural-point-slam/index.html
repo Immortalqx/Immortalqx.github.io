@@ -345,12 +345,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
-                                <span class="chip bg-color">隐式表示</span>
+                            <a href="/tags/NeRF/">
+                                <span class="chip bg-color">NeRF</span>
                             </a>
                         
-                            <a href="/tags/3D-Gaussian-Splatting/">
-                                <span class="chip bg-color">3D Gaussian Splatting</span>
+                            <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                                <span class="chip bg-color">隐式表示</span>
                             </a>
                         
                     </div>
@@ -361,8 +361,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/NeRF-3DGS/" class="post-category">
-                                NeRF&3DGS
+                            <a href="/categories/slam/" class="post-category">
+                                slam
                             </a>
                         
                     </div>
@@ -413,7 +413,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Neural-Point-SLAM回顾"><a href="#Neural-Point-SLAM回顾" class="headerlink" title="Neural Point SLAM回顾"></a>Neural Point SLAM回顾</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/6289222117">上一篇文章</a>笔者回顾了Neural Point Rendering相关的工作，这篇文章笔者将聚焦于Neural Point在SLAM上的一些应用。</p>
+                <h1 id="Neural-Point-SLAM回顾"><a href="#Neural-Point-SLAM回顾" class="headerlink" title="Neural Point SLAM回顾"></a>Neural Point SLAM回顾</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p><a href="https://immortalqx.github.io/2024/11/11/neural-point-rendering">上一篇文章</a>笔者回顾了Neural Point Rendering相关的工作，这篇文章笔者将聚焦于Neural Point在SLAM上的一些应用。</p>
 <p>在NeRF时代出现的iMAP、NICE-SLAM、Co-SLAM等工作，他们的tracking基本都是渲染图像-计算损失-反向优化位姿；尽管也有Orbeez-SLAM、GO-SLAM等工作，但他们都借助了ORB-SLAM、Droid-SLAM等External Tracker，并不是在NeRF表示的场景之上直接做tracking的。</p>
 <p>而到了3DGS时代，或许是因为研究惯性，早期的3DGS SLAM工作还是沿用了老一套的tracking方法：渲染图像-计算损失-反向优化位姿。</p>
 <blockquote>
@@ -595,7 +595,7 @@
 <li><strong>Pose graph optimization</strong>：加入loop closure edge之后，对pose graph $G$进行优化。优化之后对global map $M$中每个neural point的位置和方向及其关联帧进行变换，以保证全局一致性。在完成loop correction之后，对训练样本池$D_p$进行变换，并且重置local map $M_l$。</li>
 </ol>
 <blockquote>
-<p>PIN-SLAM的内容非常多，准备另起一篇文章进行介绍了。新文章完成之后链接会同步更新到这里。</p>
+<p>PIN-SLAM的内容非常多，可以移步：<a href="https://immortalqx.github.io/2024/11/21/paper-reading-pin-slam%E3%80%82">https://immortalqx.github.io/2024/11/21/paper-reading-pin-slam。</a></p>
 </blockquote>
 <h2 id="总结-amp-讨论"><a href="#总结-amp-讨论" class="headerlink" title="总结&amp;讨论"></a>总结&amp;讨论</h2><p>在PIN-SLAM出来之前，笔者一直认为与NeRF、Neural Point相比，3DGS才是最“几何”的表示方法，毕竟3DGS显示的给出了点云，尽管这个点云有很多的噪声。</p>
 <p>而当时一些neural point的工作，比如Point-NeRF论文中说“we find that directly optimizing the location of the existing points makes the training unstable and cannot fill the large holes”，笔者便认为neural point效果好主要是因为feature + decoder这一套流程的差值能力好，以及neural point也避免了在空白区域采样。而neural point的位置几乎无法优化，直接使用输入的点云，并且通过一些简单的加剪枝策略添加和删除点，那“几何”肯定是很好的，不过怎么利用这一点是个难解决的问题。</p>
@@ -673,12 +673,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
-                                    <span class="chip bg-color">隐式表示</span>
+                                <a href="/tags/NeRF/">
+                                    <span class="chip bg-color">NeRF</span>
                                 </a>
                             
-                                <a href="/tags/3D-Gaussian-Splatting/">
-                                    <span class="chip bg-color">3D Gaussian Splatting</span>
+                                <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                                    <span class="chip bg-color">隐式表示</span>
                                 </a>
                             
                         </div>
@@ -1024,18 +1024,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2024/11/16/neural-point-slam/">
+                <a href="/2024/11/21/paper-reading-pin-slam/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/46.jpg" class="responsive-img" alt="Neural Point SLAM回顾">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="论文阅读PIN-SLAM(TRO 2024)">
                         
-                        <span class="card-title">Neural Point SLAM回顾</span>
+                        <span class="card-title">论文阅读PIN-SLAM(TRO 2024)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1045,22 +1044,21 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-11-16
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-11-21
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/NeRF-3DGS/" class="post-category">
-                                    NeRF&3DGS
+                            <a href="/categories/slam/" class="post-category">
+                                    slam
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1068,8 +1066,8 @@
                         <span class="chip bg-color">隐式表示</span>
                     </a>
                     
-                    <a href="/tags/3D-Gaussian-Splatting/">
-                        <span class="chip bg-color">3D Gaussian Splatting</span>
+                    <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                        <span class="chip bg-color">视觉SLAM</span>
                     </a>
                     
                 </div>
@@ -1117,12 +1115,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
-                        <span class="chip bg-color">隐式表示</span>
+                    <a href="/tags/NeRF/">
+                        <span class="chip bg-color">NeRF</span>
                     </a>
                     
-                    <a href="/tags/3D-Gaussian-Splatting/">
-                        <span class="chip bg-color">3D Gaussian Splatting</span>
+                    <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                        <span class="chip bg-color">隐式表示</span>
                     </a>
                     
                 </div>
@@ -1271,7 +1269,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">225.5k</span>&nbsp;字
+                class="white-color">229.5k</span>&nbsp;字
             
             
             

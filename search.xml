@@ -4004,108 +4004,6 @@ string tableName<span class="token punctuation">;</span>  <span class="token com
       </tags>
   </entry>
   <entry>
-    <title>C++中的前置声明</title>
-    <url>/2022/04/10/cpp-notes-9/</url>
-    <content><![CDATA[<h1 id="C-中的前置声明"><a href="#C-中的前置声明" class="headerlink" title="C++中的前置声明"></a>C++中的前置声明</h1><blockquote>
-<p>最近在阅读orb-slam2的源码，一眼就看到了代码中的前置声明，这里做个笔记复习一下。</p>
-</blockquote>
-<p>最新的Google C++ Style Guide对前置声明的建议是：</p>
-<p>Avoid using forward declarations where possible. Instead, <a href="https://google.github.io/styleguide/cppguide.html#Include_What_You_Use">include the headers you need</a>.</p>
-<h2 id="Note-1"><a href="#Note-1" class="headerlink" title="Note 1"></a>Note 1</h2><blockquote>
-<p>参考：<a href="https://www.zhihu.com/question/63201378/answer/208096403">如何看待C++前置声明？ - 夏洋的回答 - 知乎</a></p>
-</blockquote>
-<p>简单来说，前置声明最大的好处就是『<strong>节省编译时间</strong>』。毕竟C++的编译时间长已经是一个臭名昭著人人喊打的问题。<strong>但对于Google来说，这方面的效率节省就不见得那么可观了</strong>——毕竟Google内部有超大规模的分布式编译集群『Forge』。哪怕是十万以上的target，全部build一遍也就是几分钟的事情。</p>
-<p>与此同时，前置声明带来的问题则显得更加关键：</p>
-<p>例如，如果一个类的实现者需要把这个类<strong>改个名字/换个命名空间</strong>，出于兼容性他原本可以在原命名空间里/用原名<strong>通过using来起一个别名指向新类</strong>。然而<strong>别名不能被前向声明</strong>。内网有一份代码改动一下子试图修改总计265个头文件，就是实现者为了要改这个类的名字而不得不去改所有的调用处。想一想，如果这265个文件分属于50个不同的团队，你得拿到50个人的同意才能提交这份改动，想不想打人？</p>
-<p>再举一个code style中提到的，更为严重的例子——它可能导致<strong>运行时出现错误的结果</strong>：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// b.h:</span>
-<span class="token keyword">struct</span> <span class="token class-name">B</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
-<span class="token keyword">struct</span> <span class="token class-name">D</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token class-name">B</span></span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-<span class="token comment">// good_user.cc:</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"b.h"</span></span>
-<span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span>B<span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span>D<span class="token operator">*</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token function">f</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>  <span class="token comment">// calls f(B*)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>若把#include换成前置声明，由于声明时不知道D是B的子类，test()中f(x)就会导致f(void*)被调用，而不是f(B*)。</p>
-<p>再比如，C++标准5.3.5/5中规定，<strong>delete一个不完整类型的指针</strong>时，如果这个类型有non-trivial的<a href="https://www.zhihu.com/search?q=%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:208096403%7D">析构函数</a>，那么这种行为是<strong>未定义</strong>的。把前置声明换成#include则能保证消除这种风险。</p>
-<p>诚然，从理论上说，一个牛逼的程序员当然是可以通过分析一个头文件的源码来决定会不会碰到以上诸多坑，并由此决定用哪个好。但一来不是所有人都是牛逼程序员，二来，把精力花费在这件事情上真的值得吗？</p>
-<h2 id="Note-2"><a href="#Note-2" class="headerlink" title="Note 2"></a>Note 2</h2><blockquote>
-<p>参考：<a href="https://www.zhihu.com/question/379789314/answer/1082007099">c++ 两个头文件互相引用，如何解决？ - 程序员柠檬的回答 - 知乎</a></p>
-</blockquote>
-<p>这里触发了C++的一个知识点，叫 <strong>C++前置声明</strong> 这是发生这种情况的根本原因，我在这里大概给你讲一下。</p>
-<p>A.h:</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">A_H</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">A_H</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"B.h"</span></span>
-<span class="token keyword">class</span> <span class="token class-name">A</span><span class="token punctuation">{</span>
-<span class="token keyword">typedef</span> vector<span class="token operator">&lt;</span>string<span class="token operator">&gt;</span><span class="token double-colon punctuation">::</span>sizetype size_type<span class="token punctuation">;</span>
-B b<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>B.h:</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">B_H</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">B_H</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"A.h"</span></span>
-<span class="token keyword">class</span> <span class="token class-name">B</span><span class="token punctuation">{</span>
-A<span class="token double-colon punctuation">::</span>size_type num<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>在这种循环依赖场景中，由于C++是按单个编译单元编译的，编译报错。</p>
-<h3 id="解决方法是-引入前置声明。"><a href="#解决方法是-引入前置声明。" class="headerlink" title="解决方法是: 引入前置声明。"></a>解决方法是: 引入前置声明。</h3><ol>
-<li>把A中的B转成<code>B*</code>；</li>
-<li>class A中先声明B，也就是前置声明；</li>
-<li>A.h 移除对类B.h文件的包含（若用了#ifdef则不必须）</li>
-</ol>
-<p>A.h:</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">A_H</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">A_H</span></span>
-<span class="token keyword">class</span> <span class="token class-name">B</span>
-<span class="token keyword">class</span> <span class="token class-name">A</span><span class="token punctuation">{</span>
-<span class="token keyword">typedef</span> vector<span class="token operator">&lt;</span>string<span class="token operator">&gt;</span><span class="token double-colon punctuation">::</span>sizetype size_type<span class="token punctuation">;</span>
-B<span class="token operator">*</span> b<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>B.h:</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">B_H</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">B_H</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"A.h"</span></span>
-<span class="token keyword">class</span> <span class="token class-name">B</span><span class="token punctuation">{</span>
-A<span class="token double-colon punctuation">::</span>size_type num<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="为什么要用指针B-呢？"><a href="#为什么要用指针B-呢？" class="headerlink" title="为什么要用指针B* 呢？"></a>为什么要用指针B* 呢？</h3><p>因为用了前置声明，编译器无法确定对象的实际大小，而指针的大小在特定机器类型上是固定的（x86机器是4byte，x64机器是8byte）</p>
-<h2 id="Note-3"><a href="#Note-3" class="headerlink" title="Note 3"></a>Note 3</h2><blockquote>
-<p>参考：<a href="https://www.zhihu.com/question/379789314/answer/1561485926">c++ 两个头文件互相引用，如何解决？ - 60荷兰盾的回答 - 知乎</a></p>
-</blockquote>
-<p>自己也碰到了这个问题，我发现前置声明可能会有隐患，而且代码结构还是不够清晰。个人感觉一旦出现相互引用，大概率是两个模块设计的不合理，应该是可以拆解的。看到其他答主有说抽出一个共有的基类，但是在某些情况下不适用。个人的解决办法是把其中一个类拆分。比如A和B相互引用，那么我把A拆成C和D两个类。那么现在有B,C,D三个类了，有可能就解决了这个问题。</p>
-<p>简而言之，要么纵向拆解，要么横向拆解。</p>
-<h2 id="Note-4"><a href="#Note-4" class="headerlink" title="Note 4"></a>Note 4</h2><blockquote>
-<p>参考：<a href="https://codeantenna.com/a/ZeGUBeamqi">C++中，两个头文件互相引用怎么办</a></p>
-</blockquote>
-<p>两个头文件相互包含会导致超前引用的问题，所谓超前引用是指一个类型在定义之前就被用来定义变量和声明函数。发生这种情况是无法编译通过的，不过可以采取一些手段解决该问题。</p>
-<p>超前引用导致的错误有以下几种处理办法：</p>
-<h3 id="1-使用类声明"><a href="#1-使用类声明" class="headerlink" title="1. 使用类声明"></a>1. 使用类声明</h3><p>在超前引用一个类之前，首先用一个特殊的语句说明该标识符是一个类名，即将被超前引用。其使用方法是：<br>  a)  用class ClassB；声明即将超前引用的类名<br>  b)  定义class ClassA<br>  c)  定义class ClassB;<br>  d)  编制两个类的实现代码。</p>
-<p>上述方法适用于所有代码在同一个文件中，一般情况下，ClassA和ClassB分别有自己的头文件和cpp文件，这种</p>
-<p>方法需要演变成：</p>
-<p>   a) 分别定义ClassA和ClassB，并在cpp文件中实现之<br>   b) 在两个头文件的开头分别用class ClassB;和class ClassA;声明对方<br>   c) 在两个cpp文件中分别包含另外一个类的头文件</p>
-<p>NOTE:这种方法切记不可使用类名来定义变量和函数的变量参数，只可用来定义引用或者指针。    </p>
-<h3 id="2-使用全局变量"><a href="#2-使用全局变量" class="headerlink" title="2. 使用全局变量"></a>2. 使用全局变量</h3><p>由于全局变量可以避免超前引用，不用赘述。我的习惯是，把类对象的extern语句加在该类头文件的最后，大家喜欢怎样写那都没有什么大问题，关键是保证不要在头文件中胡乱包含。</p>
-<h3 id="3-使用基类指针"><a href="#3-使用基类指针" class="headerlink" title="3. 使用基类指针"></a>3. 使用基类指针</h3><p>这种方法是在引用超前引用类的地方一律用基类指针。而一般情况下，两个互相引用的类并不涉及其基类，因此不会造成超前引用。</p>
-]]></content>
-      <categories>
-        <category>编程基础</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>C++ 编程规范（二）</title>
     <url>/2022/04/07/cpp-notes-8/</url>
     <content><![CDATA[<h1 id="C-编程规范（二）"><a href="#C-编程规范（二）" class="headerlink" title="C++ 编程规范（二）"></a>C++ 编程规范（二）</h1><blockquote>
@@ -4813,6 +4711,108 @@ vector<span class="token operator">&lt;</span><span class="token keyword">char</
 </ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>一图以蔽之</p>
 <p><img src="/images/cpp-notes/google-cpp-style.png" alt="google-cpp-style"></p>
+]]></content>
+      <categories>
+        <category>编程基础</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++中的前置声明</title>
+    <url>/2022/04/10/cpp-notes-9/</url>
+    <content><![CDATA[<h1 id="C-中的前置声明"><a href="#C-中的前置声明" class="headerlink" title="C++中的前置声明"></a>C++中的前置声明</h1><blockquote>
+<p>最近在阅读orb-slam2的源码，一眼就看到了代码中的前置声明，这里做个笔记复习一下。</p>
+</blockquote>
+<p>最新的Google C++ Style Guide对前置声明的建议是：</p>
+<p>Avoid using forward declarations where possible. Instead, <a href="https://google.github.io/styleguide/cppguide.html#Include_What_You_Use">include the headers you need</a>.</p>
+<h2 id="Note-1"><a href="#Note-1" class="headerlink" title="Note 1"></a>Note 1</h2><blockquote>
+<p>参考：<a href="https://www.zhihu.com/question/63201378/answer/208096403">如何看待C++前置声明？ - 夏洋的回答 - 知乎</a></p>
+</blockquote>
+<p>简单来说，前置声明最大的好处就是『<strong>节省编译时间</strong>』。毕竟C++的编译时间长已经是一个臭名昭著人人喊打的问题。<strong>但对于Google来说，这方面的效率节省就不见得那么可观了</strong>——毕竟Google内部有超大规模的分布式编译集群『Forge』。哪怕是十万以上的target，全部build一遍也就是几分钟的事情。</p>
+<p>与此同时，前置声明带来的问题则显得更加关键：</p>
+<p>例如，如果一个类的实现者需要把这个类<strong>改个名字/换个命名空间</strong>，出于兼容性他原本可以在原命名空间里/用原名<strong>通过using来起一个别名指向新类</strong>。然而<strong>别名不能被前向声明</strong>。内网有一份代码改动一下子试图修改总计265个头文件，就是实现者为了要改这个类的名字而不得不去改所有的调用处。想一想，如果这265个文件分属于50个不同的团队，你得拿到50个人的同意才能提交这份改动，想不想打人？</p>
+<p>再举一个code style中提到的，更为严重的例子——它可能导致<strong>运行时出现错误的结果</strong>：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// b.h:</span>
+<span class="token keyword">struct</span> <span class="token class-name">B</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">struct</span> <span class="token class-name">D</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token class-name">B</span></span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">// good_user.cc:</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"b.h"</span></span>
+<span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span>B<span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span>D<span class="token operator">*</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token function">f</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>  <span class="token comment">// calls f(B*)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>若把#include换成前置声明，由于声明时不知道D是B的子类，test()中f(x)就会导致f(void*)被调用，而不是f(B*)。</p>
+<p>再比如，C++标准5.3.5/5中规定，<strong>delete一个不完整类型的指针</strong>时，如果这个类型有non-trivial的<a href="https://www.zhihu.com/search?q=%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:208096403%7D">析构函数</a>，那么这种行为是<strong>未定义</strong>的。把前置声明换成#include则能保证消除这种风险。</p>
+<p>诚然，从理论上说，一个牛逼的程序员当然是可以通过分析一个头文件的源码来决定会不会碰到以上诸多坑，并由此决定用哪个好。但一来不是所有人都是牛逼程序员，二来，把精力花费在这件事情上真的值得吗？</p>
+<h2 id="Note-2"><a href="#Note-2" class="headerlink" title="Note 2"></a>Note 2</h2><blockquote>
+<p>参考：<a href="https://www.zhihu.com/question/379789314/answer/1082007099">c++ 两个头文件互相引用，如何解决？ - 程序员柠檬的回答 - 知乎</a></p>
+</blockquote>
+<p>这里触发了C++的一个知识点，叫 <strong>C++前置声明</strong> 这是发生这种情况的根本原因，我在这里大概给你讲一下。</p>
+<p>A.h:</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">A_H</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">A_H</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"B.h"</span></span>
+<span class="token keyword">class</span> <span class="token class-name">A</span><span class="token punctuation">{</span>
+<span class="token keyword">typedef</span> vector<span class="token operator">&lt;</span>string<span class="token operator">&gt;</span><span class="token double-colon punctuation">::</span>sizetype size_type<span class="token punctuation">;</span>
+B b<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>B.h:</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">B_H</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">B_H</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"A.h"</span></span>
+<span class="token keyword">class</span> <span class="token class-name">B</span><span class="token punctuation">{</span>
+A<span class="token double-colon punctuation">::</span>size_type num<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在这种循环依赖场景中，由于C++是按单个编译单元编译的，编译报错。</p>
+<h3 id="解决方法是-引入前置声明。"><a href="#解决方法是-引入前置声明。" class="headerlink" title="解决方法是: 引入前置声明。"></a>解决方法是: 引入前置声明。</h3><ol>
+<li>把A中的B转成<code>B*</code>；</li>
+<li>class A中先声明B，也就是前置声明；</li>
+<li>A.h 移除对类B.h文件的包含（若用了#ifdef则不必须）</li>
+</ol>
+<p>A.h:</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">A_H</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">A_H</span></span>
+<span class="token keyword">class</span> <span class="token class-name">B</span>
+<span class="token keyword">class</span> <span class="token class-name">A</span><span class="token punctuation">{</span>
+<span class="token keyword">typedef</span> vector<span class="token operator">&lt;</span>string<span class="token operator">&gt;</span><span class="token double-colon punctuation">::</span>sizetype size_type<span class="token punctuation">;</span>
+B<span class="token operator">*</span> b<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>B.h:</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">B_H</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">B_H</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"A.h"</span></span>
+<span class="token keyword">class</span> <span class="token class-name">B</span><span class="token punctuation">{</span>
+A<span class="token double-colon punctuation">::</span>size_type num<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="为什么要用指针B-呢？"><a href="#为什么要用指针B-呢？" class="headerlink" title="为什么要用指针B* 呢？"></a>为什么要用指针B* 呢？</h3><p>因为用了前置声明，编译器无法确定对象的实际大小，而指针的大小在特定机器类型上是固定的（x86机器是4byte，x64机器是8byte）</p>
+<h2 id="Note-3"><a href="#Note-3" class="headerlink" title="Note 3"></a>Note 3</h2><blockquote>
+<p>参考：<a href="https://www.zhihu.com/question/379789314/answer/1561485926">c++ 两个头文件互相引用，如何解决？ - 60荷兰盾的回答 - 知乎</a></p>
+</blockquote>
+<p>自己也碰到了这个问题，我发现前置声明可能会有隐患，而且代码结构还是不够清晰。个人感觉一旦出现相互引用，大概率是两个模块设计的不合理，应该是可以拆解的。看到其他答主有说抽出一个共有的基类，但是在某些情况下不适用。个人的解决办法是把其中一个类拆分。比如A和B相互引用，那么我把A拆成C和D两个类。那么现在有B,C,D三个类了，有可能就解决了这个问题。</p>
+<p>简而言之，要么纵向拆解，要么横向拆解。</p>
+<h2 id="Note-4"><a href="#Note-4" class="headerlink" title="Note 4"></a>Note 4</h2><blockquote>
+<p>参考：<a href="https://codeantenna.com/a/ZeGUBeamqi">C++中，两个头文件互相引用怎么办</a></p>
+</blockquote>
+<p>两个头文件相互包含会导致超前引用的问题，所谓超前引用是指一个类型在定义之前就被用来定义变量和声明函数。发生这种情况是无法编译通过的，不过可以采取一些手段解决该问题。</p>
+<p>超前引用导致的错误有以下几种处理办法：</p>
+<h3 id="1-使用类声明"><a href="#1-使用类声明" class="headerlink" title="1. 使用类声明"></a>1. 使用类声明</h3><p>在超前引用一个类之前，首先用一个特殊的语句说明该标识符是一个类名，即将被超前引用。其使用方法是：<br>  a)  用class ClassB；声明即将超前引用的类名<br>  b)  定义class ClassA<br>  c)  定义class ClassB;<br>  d)  编制两个类的实现代码。</p>
+<p>上述方法适用于所有代码在同一个文件中，一般情况下，ClassA和ClassB分别有自己的头文件和cpp文件，这种</p>
+<p>方法需要演变成：</p>
+<p>   a) 分别定义ClassA和ClassB，并在cpp文件中实现之<br>   b) 在两个头文件的开头分别用class ClassB;和class ClassA;声明对方<br>   c) 在两个cpp文件中分别包含另外一个类的头文件</p>
+<p>NOTE:这种方法切记不可使用类名来定义变量和函数的变量参数，只可用来定义引用或者指针。    </p>
+<h3 id="2-使用全局变量"><a href="#2-使用全局变量" class="headerlink" title="2. 使用全局变量"></a>2. 使用全局变量</h3><p>由于全局变量可以避免超前引用，不用赘述。我的习惯是，把类对象的extern语句加在该类头文件的最后，大家喜欢怎样写那都没有什么大问题，关键是保证不要在头文件中胡乱包含。</p>
+<h3 id="3-使用基类指针"><a href="#3-使用基类指针" class="headerlink" title="3. 使用基类指针"></a>3. 使用基类指针</h3><p>这种方法是在引用超前引用类的地方一律用基类指针。而一般情况下，两个互相引用的类并不涉及其基类，因此不会造成超前引用。</p>
 ]]></content>
       <categories>
         <category>编程基础</category>
@@ -8994,94 +8994,6 @@ accuracy <span class="token operator">=</span> correct <span class="token operat
       </tags>
   </entry>
   <entry>
-    <title>APSIPA ASC 2021杰出讲师报告会参会总结</title>
-    <url>/2022/01/05/meeting-1/</url>
-    <content><![CDATA[<h1 id="APSIPA-ASC-2021杰出讲师报告会参会总结"><a href="#APSIPA-ASC-2021杰出讲师报告会参会总结" class="headerlink" title="APSIPA ASC 2021杰出讲师报告会参会总结"></a>APSIPA ASC 2021杰出讲师报告会参会总结</h1><blockquote>
-<p>这是从我选修的研究生课程的课程报告整理过来的。</p>
-<blockquote>
-<p>根据“人工智能：神经网络与深度学习”课程教学要求，安排学生参加相关前沿学术报告，本学期安排参加亚太信号与信息处理协会组织的杰出讲者报告会（寒假学校）。</p>
-</blockquote>
-<p>这里我做的仅仅是记录老师们介绍的工作内容，不敢说有多深入的理解，最后做的总结也仅仅是从我目前的状况（没接触过科研，没发表过文章的菜鸡本科生）出发的。</p>
-</blockquote>
-<h3 id="Lecture-3-Exploration-of-depth-super-resolution-based-on-deep-learning"><a href="#Lecture-3-Exploration-of-depth-super-resolution-based-on-deep-learning" class="headerlink" title="Lecture 3: Exploration of depth super-resolution based on deep learning"></a>Lecture 3: Exploration of depth super-resolution based on deep learning</h3><p>白慧慧首先介绍了超分辨率技术的研究背景与研究现状，后面再介绍了她最近的三项工作以及未来的研究方向。内容要点如下所示。</p>
-<p><strong>超分辨率技术的分类：</strong></p>
-<ol>
-<li><p>Interpolated-based approach（基于插值的方法）</p>
-</li>
-<li><p>Reconstructed-based approach（基于重构的方法）</p>
-</li>
-<li><p>Learning-based approach（基于学习的方法）</p>
-<p>a)    Bicubic pre-interpolated images as input</p>
-<p>b)   LR images as input—–post-upsampling</p>
-<p>c)    GAN based image SR</p>
-</li>
-</ol>
-<h4 id="recent-work-1-Image-SR-based-on-deep-learning"><a href="#recent-work-1-Image-SR-based-on-deep-learning" class="headerlink" title="recent work 1: Image SR based on deep learning"></a>recent work 1: Image SR based on deep learning</h4><p><strong><em>The main issue of image SR</em></strong> ：有效的恢复低分辨率（LR）输入的高频细节。</p>
-<p><strong><em>现有方法的问题：</em></strong>现有CNN方法内存消耗和计算成本都很大；大多数SR网络中，LR特征的低频和高频分量在训练过程中被同等对待，忽略了局部详细信息，阻碍了网络的表示能力。</p>
-<p><strong><em>作者提出的网络结构：</em></strong></p>
-<p><img src="/images/meeting/1-1.png"></p>
-<h4 id="recent-work-2-Video-SR-based-on-deep-learning"><a href="#recent-work-2-Video-SR-based-on-deep-learning" class="headerlink" title="recent work 2: Video SR based on deep learning"></a>recent work 2: Video SR based on deep learning</h4><p><strong><em>Video super-resolution (SR) aims to</em></strong> reconstruct the corresponding high- resolution (HR) frames from consecutive lower-solution (LR) frames, which focuses on modeling the inter-frame temporal correlations and intra-frame spatial correlations among frames.</p>
-<p><strong><em>Overall Architecture:</em></strong> </p>
-<p><img src="/images/meeting/1-2.png"></p>
-<h4 id="recent-work-3-Depth-SR-based-on-deep-learning"><a href="#recent-work-3-Depth-SR-based-on-deep-learning" class="headerlink" title="recent work 3: Depth SR based on deep learning"></a>recent work 3: Depth SR based on deep learning</h4><p><strong><em>Motivation:</em></strong> 通过深度图超分辨率（Depth SR）解决深度图分辨率与RGB图像分辨率无法匹配的问题。</p>
-<p><strong><em>Limitations:</em></strong> 缺乏现实世界配对的 LR 和 HR 深度图。 大多数现有的深度图 SR 方法使用下采样来获得成对的训练样本。深度图 SR 中的锐利边界和精细细节很难恢复，尤其是当缩放因子很大时。</p>
-<p><strong><em>Proposed Method:</em></strong></p>
-<p><img src="/images/meeting/1-3.png"></p>
-<h4 id="Future-research-directions"><a href="#Future-research-directions" class="headerlink" title="Future research directions"></a>Future research directions</h4><ol>
-<li><p>Unsupervised Image/Depth SR</p>
-</li>
-<li><p>Real Degradation</p>
-</li>
-<li><p>Higher SR rates</p>
-</li>
-<li><p>Arbitrary SR rates</p>
-</li>
-</ol>
-<h3 id="Lecture-5：Glass-Reflection-Removal-for-Images-and-3D-Point-Clouds"><a href="#Lecture-5：Glass-Reflection-Removal-for-Images-and-3D-Point-Clouds" class="headerlink" title="Lecture 5：Glass Reflection Removal for Images and 3D Point Clouds"></a>Lecture 5：Glass Reflection Removal for Images and 3D Point Clouds</h3><p>Jae-Young Sim主要介绍的是去除图像和点云中玻璃反光的方法。</p>
-<h4 id="Reflection-removal-for-2D-glass-images"><a href="#Reflection-removal-for-2D-glass-images" class="headerlink" title="Reflection removal for 2D glass images"></a>Reflection removal for 2D glass images</h4><p>Jae-Young Sim去除图像玻璃反光的方法主要是Multiple Image Warping，具体的步骤如下所示：</p>
-<ol>
-<li><p>Formulated a weighted low-rank matrix completion problem in image gradient domain for the purpose of reflection removal.</p>
-</li>
-<li><p>Employ co-saliency detection for glass image alignment.</p>
-</li>
-<li><p>Iteratively obtained low-rank gradient matrix to restore the transmission gradients while suppressing the reflection gradients.</p>
-</li>
-<li><p>Reconstruction of transmission image</p>
-</li>
-</ol>
-<h4 id="Reflection-removal-for-3D-point-clouds"><a href="#Reflection-removal-for-3D-point-clouds" class="headerlink" title="Reflection removal for 3D point clouds"></a>Reflection removal for 3D point clouds</h4><p>对于只有单个玻璃平面的情况：</p>
-<ul>
-<li>First work of reflection removal</li>
-<li>Analyzing characteristic of LiDAR scanner</li>
-<li>Removing virtual points using symmetry relation</li>
-</ul>
-<p>对于有多个玻璃平面的情况：</p>
-<ul>
-<li>Detecting multiple glass planes</li>
-<li>Estimating trajectories of laser pulses·</li>
-<li>Quantitative evaluation</li>
-</ul>
-<h3 id="心得体会"><a href="#心得体会" class="headerlink" title="心得体会"></a>心得体会</h3><p>我觉得参与这样规格的会议对我的帮助还是挺大的，我目前才大三，对自己未来的研究方向还不是很明确，仅仅是对深度学习、计算机视觉方面比较感兴趣。通过这次会议，我从Wan-Chi Siu教授这里了解了深度学习的发展历程，对深度学习领域现在研究的方向有了大概的了解，同时也从白慧慧教授和Jae-Young Sim教授这里了解到计算机视觉不同分支的发展情况。</p>
-<p>具体来说，我的收获可以总结为以下几点：</p>
-<h4 id="一些技术的原理和思想并不复杂"><a href="#一些技术的原理和思想并不复杂" class="headerlink" title="一些技术的原理和思想并不复杂"></a>一些技术的原理和思想并不复杂</h4><p>我本来觉得，随着技术的进步，新的技术会变得越来越复杂。不过从Jae-Young Sim教授的报告中我发现其实有的技术的原理和思想是挺好理解的，不过具体的实现可能会复杂一些。</p>
-<p>Jae-Young Sim介绍3D点云去除反光点的时候，首先介绍了激光雷达扫描的特性，以及对于单个玻璃平面反光的情况。单个玻璃平面反光会导致激光雷达接收到两个以上的点：一个来自物体，一个来自玻璃上的反射脉冲，所以去除单个玻璃平面造成的反光点就可以通过检测这个反射脉冲来实现，而反射点到激光雷达的距离比真实点的距离大（我理解的是如果反射点距离更小就意味着有其他物体在激光雷达和真实物体之间，这样就会阻挡真实物体的光线，这样就不可能会检测到被遮挡在后面的物体），所以就可以通过距离来进行打分，判断一个点是不是反射点。</p>
-<p><img src="/images/meeting/1-4.png"></p>
-<p>而对于多个玻璃平面的情况，由于玻璃之间的互相折射，通过距离的方法不能有效检测出反射点，但是被多次折射的物理位姿往往是不正确的（如下图）。这样就可以通过检测物体位姿的合理性来判断该物体是否是反射点构成的。</p>
-<p><img src="/images/meeting/1-5.png"></p>
-<h4 id="比起新方法的实现，数据集的设计与获取也非常关键"><a href="#比起新方法的实现，数据集的设计与获取也非常关键" class="headerlink" title="比起新方法的实现，数据集的设计与获取也非常关键"></a>比起新方法的实现，数据集的设计与获取也非常关键</h4><p>我在参加这个会议的时候发现，Jae-Young Sim介绍完他们的工作后，Nakamasa Inoue就提了一个关于Ground Truth获取的问题。后面我回顾这个细节，感觉数据集或者Ground Truth的获取确实是一个很重要的问题，数据是研究的基础，任何研究都离不开数据。</p>
-<p>比如我们做一些创新性的工作时，可能现成的数据集就不是很适合，这时候就需要新的数据集来测试我们的工作，并验证我们工作的正确性，而且一个高质量的数据集往往能够提高模型训练的质量和预测的准确率。所以，这个数据集如何得到，真实值到底真不真实，都是比较重要的。</p>
-<p>这次会议中，白慧慧就介绍了他们制作的RGB-D-D数据集，用于深度图超分辨率技术。</p>
-<h4 id="需要加强对英语的学习"><a href="#需要加强对英语的学习" class="headerlink" title="需要加强对英语的学习"></a>需要加强对英语的学习</h4><p>国外的学术会议一般都是把英语作为会议的主要用语，老师们做报告的时候也是用英语来进行表达的。</p>
-<p>我英语不太行，参加会议的时候跟不上老师讲的内容,,ԾㅂԾ,,</p>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>学术会议</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>机器学习笔记（八）：应用CNN和RNN解决数独问题</title>
     <url>/2022/01/25/machine-learning-8/</url>
     <content><![CDATA[<h1 id="机器学习笔记（八）：应用CNN和RNN解决数独问题"><a href="#机器学习笔记（八）：应用CNN和RNN解决数独问题" class="headerlink" title="机器学习笔记（八）：应用CNN和RNN解决数独问题"></a>机器学习笔记（八）：应用CNN和RNN解决数独问题</h1><blockquote>
@@ -9870,6 +9782,94 @@ SudokuRNN time = 337.7354459999997
       </tags>
   </entry>
   <entry>
+    <title>APSIPA ASC 2021杰出讲师报告会参会总结</title>
+    <url>/2022/01/05/meeting-1/</url>
+    <content><![CDATA[<h1 id="APSIPA-ASC-2021杰出讲师报告会参会总结"><a href="#APSIPA-ASC-2021杰出讲师报告会参会总结" class="headerlink" title="APSIPA ASC 2021杰出讲师报告会参会总结"></a>APSIPA ASC 2021杰出讲师报告会参会总结</h1><blockquote>
+<p>这是从我选修的研究生课程的课程报告整理过来的。</p>
+<blockquote>
+<p>根据“人工智能：神经网络与深度学习”课程教学要求，安排学生参加相关前沿学术报告，本学期安排参加亚太信号与信息处理协会组织的杰出讲者报告会（寒假学校）。</p>
+</blockquote>
+<p>这里我做的仅仅是记录老师们介绍的工作内容，不敢说有多深入的理解，最后做的总结也仅仅是从我目前的状况（没接触过科研，没发表过文章的菜鸡本科生）出发的。</p>
+</blockquote>
+<h3 id="Lecture-3-Exploration-of-depth-super-resolution-based-on-deep-learning"><a href="#Lecture-3-Exploration-of-depth-super-resolution-based-on-deep-learning" class="headerlink" title="Lecture 3: Exploration of depth super-resolution based on deep learning"></a>Lecture 3: Exploration of depth super-resolution based on deep learning</h3><p>白慧慧首先介绍了超分辨率技术的研究背景与研究现状，后面再介绍了她最近的三项工作以及未来的研究方向。内容要点如下所示。</p>
+<p><strong>超分辨率技术的分类：</strong></p>
+<ol>
+<li><p>Interpolated-based approach（基于插值的方法）</p>
+</li>
+<li><p>Reconstructed-based approach（基于重构的方法）</p>
+</li>
+<li><p>Learning-based approach（基于学习的方法）</p>
+<p>a)    Bicubic pre-interpolated images as input</p>
+<p>b)   LR images as input—–post-upsampling</p>
+<p>c)    GAN based image SR</p>
+</li>
+</ol>
+<h4 id="recent-work-1-Image-SR-based-on-deep-learning"><a href="#recent-work-1-Image-SR-based-on-deep-learning" class="headerlink" title="recent work 1: Image SR based on deep learning"></a>recent work 1: Image SR based on deep learning</h4><p><strong><em>The main issue of image SR</em></strong> ：有效的恢复低分辨率（LR）输入的高频细节。</p>
+<p><strong><em>现有方法的问题：</em></strong>现有CNN方法内存消耗和计算成本都很大；大多数SR网络中，LR特征的低频和高频分量在训练过程中被同等对待，忽略了局部详细信息，阻碍了网络的表示能力。</p>
+<p><strong><em>作者提出的网络结构：</em></strong></p>
+<p><img src="/images/meeting/1-1.png"></p>
+<h4 id="recent-work-2-Video-SR-based-on-deep-learning"><a href="#recent-work-2-Video-SR-based-on-deep-learning" class="headerlink" title="recent work 2: Video SR based on deep learning"></a>recent work 2: Video SR based on deep learning</h4><p><strong><em>Video super-resolution (SR) aims to</em></strong> reconstruct the corresponding high- resolution (HR) frames from consecutive lower-solution (LR) frames, which focuses on modeling the inter-frame temporal correlations and intra-frame spatial correlations among frames.</p>
+<p><strong><em>Overall Architecture:</em></strong> </p>
+<p><img src="/images/meeting/1-2.png"></p>
+<h4 id="recent-work-3-Depth-SR-based-on-deep-learning"><a href="#recent-work-3-Depth-SR-based-on-deep-learning" class="headerlink" title="recent work 3: Depth SR based on deep learning"></a>recent work 3: Depth SR based on deep learning</h4><p><strong><em>Motivation:</em></strong> 通过深度图超分辨率（Depth SR）解决深度图分辨率与RGB图像分辨率无法匹配的问题。</p>
+<p><strong><em>Limitations:</em></strong> 缺乏现实世界配对的 LR 和 HR 深度图。 大多数现有的深度图 SR 方法使用下采样来获得成对的训练样本。深度图 SR 中的锐利边界和精细细节很难恢复，尤其是当缩放因子很大时。</p>
+<p><strong><em>Proposed Method:</em></strong></p>
+<p><img src="/images/meeting/1-3.png"></p>
+<h4 id="Future-research-directions"><a href="#Future-research-directions" class="headerlink" title="Future research directions"></a>Future research directions</h4><ol>
+<li><p>Unsupervised Image/Depth SR</p>
+</li>
+<li><p>Real Degradation</p>
+</li>
+<li><p>Higher SR rates</p>
+</li>
+<li><p>Arbitrary SR rates</p>
+</li>
+</ol>
+<h3 id="Lecture-5：Glass-Reflection-Removal-for-Images-and-3D-Point-Clouds"><a href="#Lecture-5：Glass-Reflection-Removal-for-Images-and-3D-Point-Clouds" class="headerlink" title="Lecture 5：Glass Reflection Removal for Images and 3D Point Clouds"></a>Lecture 5：Glass Reflection Removal for Images and 3D Point Clouds</h3><p>Jae-Young Sim主要介绍的是去除图像和点云中玻璃反光的方法。</p>
+<h4 id="Reflection-removal-for-2D-glass-images"><a href="#Reflection-removal-for-2D-glass-images" class="headerlink" title="Reflection removal for 2D glass images"></a>Reflection removal for 2D glass images</h4><p>Jae-Young Sim去除图像玻璃反光的方法主要是Multiple Image Warping，具体的步骤如下所示：</p>
+<ol>
+<li><p>Formulated a weighted low-rank matrix completion problem in image gradient domain for the purpose of reflection removal.</p>
+</li>
+<li><p>Employ co-saliency detection for glass image alignment.</p>
+</li>
+<li><p>Iteratively obtained low-rank gradient matrix to restore the transmission gradients while suppressing the reflection gradients.</p>
+</li>
+<li><p>Reconstruction of transmission image</p>
+</li>
+</ol>
+<h4 id="Reflection-removal-for-3D-point-clouds"><a href="#Reflection-removal-for-3D-point-clouds" class="headerlink" title="Reflection removal for 3D point clouds"></a>Reflection removal for 3D point clouds</h4><p>对于只有单个玻璃平面的情况：</p>
+<ul>
+<li>First work of reflection removal</li>
+<li>Analyzing characteristic of LiDAR scanner</li>
+<li>Removing virtual points using symmetry relation</li>
+</ul>
+<p>对于有多个玻璃平面的情况：</p>
+<ul>
+<li>Detecting multiple glass planes</li>
+<li>Estimating trajectories of laser pulses·</li>
+<li>Quantitative evaluation</li>
+</ul>
+<h3 id="心得体会"><a href="#心得体会" class="headerlink" title="心得体会"></a>心得体会</h3><p>我觉得参与这样规格的会议对我的帮助还是挺大的，我目前才大三，对自己未来的研究方向还不是很明确，仅仅是对深度学习、计算机视觉方面比较感兴趣。通过这次会议，我从Wan-Chi Siu教授这里了解了深度学习的发展历程，对深度学习领域现在研究的方向有了大概的了解，同时也从白慧慧教授和Jae-Young Sim教授这里了解到计算机视觉不同分支的发展情况。</p>
+<p>具体来说，我的收获可以总结为以下几点：</p>
+<h4 id="一些技术的原理和思想并不复杂"><a href="#一些技术的原理和思想并不复杂" class="headerlink" title="一些技术的原理和思想并不复杂"></a>一些技术的原理和思想并不复杂</h4><p>我本来觉得，随着技术的进步，新的技术会变得越来越复杂。不过从Jae-Young Sim教授的报告中我发现其实有的技术的原理和思想是挺好理解的，不过具体的实现可能会复杂一些。</p>
+<p>Jae-Young Sim介绍3D点云去除反光点的时候，首先介绍了激光雷达扫描的特性，以及对于单个玻璃平面反光的情况。单个玻璃平面反光会导致激光雷达接收到两个以上的点：一个来自物体，一个来自玻璃上的反射脉冲，所以去除单个玻璃平面造成的反光点就可以通过检测这个反射脉冲来实现，而反射点到激光雷达的距离比真实点的距离大（我理解的是如果反射点距离更小就意味着有其他物体在激光雷达和真实物体之间，这样就会阻挡真实物体的光线，这样就不可能会检测到被遮挡在后面的物体），所以就可以通过距离来进行打分，判断一个点是不是反射点。</p>
+<p><img src="/images/meeting/1-4.png"></p>
+<p>而对于多个玻璃平面的情况，由于玻璃之间的互相折射，通过距离的方法不能有效检测出反射点，但是被多次折射的物理位姿往往是不正确的（如下图）。这样就可以通过检测物体位姿的合理性来判断该物体是否是反射点构成的。</p>
+<p><img src="/images/meeting/1-5.png"></p>
+<h4 id="比起新方法的实现，数据集的设计与获取也非常关键"><a href="#比起新方法的实现，数据集的设计与获取也非常关键" class="headerlink" title="比起新方法的实现，数据集的设计与获取也非常关键"></a>比起新方法的实现，数据集的设计与获取也非常关键</h4><p>我在参加这个会议的时候发现，Jae-Young Sim介绍完他们的工作后，Nakamasa Inoue就提了一个关于Ground Truth获取的问题。后面我回顾这个细节，感觉数据集或者Ground Truth的获取确实是一个很重要的问题，数据是研究的基础，任何研究都离不开数据。</p>
+<p>比如我们做一些创新性的工作时，可能现成的数据集就不是很适合，这时候就需要新的数据集来测试我们的工作，并验证我们工作的正确性，而且一个高质量的数据集往往能够提高模型训练的质量和预测的准确率。所以，这个数据集如何得到，真实值到底真不真实，都是比较重要的。</p>
+<p>这次会议中，白慧慧就介绍了他们制作的RGB-D-D数据集，用于深度图超分辨率技术。</p>
+<h4 id="需要加强对英语的学习"><a href="#需要加强对英语的学习" class="headerlink" title="需要加强对英语的学习"></a>需要加强对英语的学习</h4><p>国外的学术会议一般都是把英语作为会议的主要用语，老师们做报告的时候也是用英语来进行表达的。</p>
+<p>我英语不太行，参加会议的时候跟不上老师讲的内容,,ԾㅂԾ,,</p>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>学术会议</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SLAM论文从零到一</title>
     <url>/2023/03/26/meeting-2/</url>
     <content><![CDATA[<h1 id="SLAM论文从零到一"><a href="#SLAM论文从零到一" class="headerlink" title="SLAM论文从零到一"></a>SLAM论文从零到一</h1><blockquote>
@@ -10204,6 +10204,63 @@ SudokuRNN time = 337.7354459999997
       </tags>
   </entry>
   <entry>
+    <title>NeRF学习笔记（二）：论文阅读与思考</title>
+    <url>/2022/08/21/nerf-notes-2/</url>
+    <content><![CDATA[<h1 id="NeRF学习笔记（二）：论文阅读与思考"><a href="#NeRF学习笔记（二）：论文阅读与思考" class="headerlink" title="NeRF学习笔记（二）：论文阅读与思考"></a>NeRF学习笔记（二）：论文阅读与思考</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p><strong>Q：如何理解稀疏的输入视图集</strong></p>
+<p><strong>A：</strong> a sparse set of input views 稀疏的输入视图集。也就是输入视图并不是连续的，可能就是在若干个方向或者角度拍几张照片，就能合成一个连续的360度环绕的场景</p>
+<p><strong>Q：如何理解volume density</strong></p>
+<p>volume density字面意思是体积密度，实际上理解为<strong>不透明度</strong>会更好，不透明度对应对光的吸收能力，volume density越大，不透明度越高，对光的吸收能力越强。</p>
+<p>这个在后面的公式有所涉及。</p>
+<p><strong>Q：为什么要输入这么五个坐标？</strong></p>
+<p><strong>A：</strong>因为考虑到不同视角上某一点的颜色是不一样的。正因如此，原文用了view-dependent，即某点的颜色是跟视角相关的</p>
+<p><strong>Q：如何理解5D坐标（空间位置$(x，y，z)$和观察方向$(θ，φ)$)？</strong></p>
+<p><strong>A：</strong>作者应该是确定了某个坐标系，空间位置$(x,y,z)$就是被观察物体某个点在这个坐标系中的坐标，而观察方向$(θ，φ)$就是相机指向被观察物体这个点的射线，通过两个角度可以表示三维下的一条射线。</p>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1 Introduction"></a>1 Introduction</h2><p><strong>Q：什么是MLP网络？</strong></p>
+<p><strong>A：</strong>多层感知器（Multilayer Perceptron，缩写MLP）是一种前向结构的人工神经网络，映射一组输入向量到一组输出向量。MLP可以被看作是一个有向图，由多个的节点层所组成，每一层都全连接到下一层。除了输入节点，每个节点都是一个带有非线性激活函数的神经元（或称处理单元）。一种被称为反向传播算法的监督学习方法常被用来训练MLP。</p>
+<p><strong>Q：还有什么想说的？</strong></p>
+<blockquote>
+<p>这里是搬运的，目前并不了解PINN</p>
+</blockquote>
+<p><strong>A：</strong>这篇论文的思想非常像流体力学的PINN，也是使用一个神经网络拟合某一个对象。PINN是用网络输出尽可能拟合离散点的函数值，而NERF就是用神经网络的输出拟合稀疏的相机拍摄图像。而且，与一般的问题不同，PINN和NERF都是尽可能过拟合标签值，因为它们都是应用于某一个特定的对象，如前者应用于某一个偏微分方程（组），后者应用于某一个场景。但是这引出了另一个问题：网络的泛化性很差，即不能通过微调将网络迁移适应于另一个不同的场景。</p>
+<p>另外有很多优点也是PINN和NERF所共通的。比如，流体力学求解方程的数值方法，需要采样大量的点才能逼近真实解，而且天然的时序特征导致了求解效率的低下；NERF以前的存储离散化体网络也需要耗费大量存储成本。</p>
+<p>更一般地说，PINN全称是physical-informed neural network，NERF本质上也是一种物理理论与神经网络的融合。流体力学的PINN和NERF有天然的近似性自然也就不奇怪了。</p>
+<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2 Related Work"></a>2 Related Work</h2><p>暂时没有问题</p>
+<h2 id="3-Neural-Radiance-Field-Scene-Representation"><a href="#3-Neural-Radiance-Field-Scene-Representation" class="headerlink" title="3 Neural Radiance Field Scene Representation"></a>3 Neural Radiance Field Scene Representation</h2><p><strong>Q：如何理解”We encourage the representation to be multiview consistent by restricting the network to predict the volume density σ as a function of only the location x, while allowing the RGB color c to be predicted as a function of both location and viewing direction. “即，这里为什么要限制体积密度σ作为位置x的函数，而让颜色c作为位置x和观看方向(θ，φ)的函数？观看方向(θ，φ)为什么会影响多视图的一致性？</strong></p>
+<p><strong>思考：</strong>从论文里面看，它这里的操作是先用8个完全连接层处理输入的3D坐标$(x，y，z)$，得到一个体积密度$σ$和256维的特征向量。然后特征向量和观看方向$(θ，φ)$连接起来，得到一个256+2维的向量，再给到最后的全连接层里面，从而输出与试图相关的颜色$c$。</p>
+<p>这样处理虽然是为了限制体积密度σ作为位置x的函数，但会不会也导致颜色$c$和观察方向$(θ，φ)$的关系不是很大了（毕竟只占了两个维度）？这样的话，如何设计并优化针对特定物理问题的网络？</p>
+<p>在知乎上看到一个很有趣的探讨：我们直觉理解空间点和颜色是没有任何关系的，在一个空间点放什么东西完全是人为确定。但是这篇文章可以通过MLP硬拟合这种关系，其中一个前提是MLP只用于某一特定场景的渲染，只是学习这种拟合关系而不是学会推理。所以，如果要使得网络具备迁移泛化能力，必须解除坐标与RGB这种不合逻辑的映射关系。</p>
+<p><strong>A：</strong>TODO</p>
+<h2 id="4-Volume-Rendering-with-Radiance-Fields"><a href="#4-Volume-Rendering-with-Radiance-Fields" class="headerlink" title="4 Volume Rendering with Radiance Fields"></a>4 Volume Rendering with Radiance Fields</h2><p><strong>Q：如何理解“The volume density σ(x) can be interpreted as the diﬀerential probability of a ray terminating at an inﬁnitesimal particle at location x. ”</strong></p>
+<p><strong>A：</strong>我认为这里应该和<strong>Abstract</strong>部分的问题<strong>“如何理解volume density”</strong>是一样的。这句话翻译过来就是“体积密度$σ(x)$可以解释为一条射线在$x$位置的无穷小粒子处终止的微分概率”，比较拗口，不过很明显关键部分是“射线在某个位置终止的微分概率”。这看起来应该和之前解释的不透明度差不多，光在这里终止（被吸收）的概率越大就说明这里越不透明。而之所以是微分概率，应该是体积密度$σ(x)$表示的只是某个点的不透明率。</p>
+<p><strong>Q：前面定义的网络已经计算出了从某个视角看到的某点颜色$c=(r，g，b)$和体积密度$σ$，为什么这里仍然需要通过公式1把预期颜色$C$计算出来？它们有什么区别？为什么不直接拟合？</strong></p>
+<p><strong>A：</strong>$C$是最终渲染时需要计算的值，$c$是RGB颜色值。拟合的只是空间单点的颜色$c$，只有通过离散积分一条光线上所有采样单点的颜色$c$，才能得到从某个视角看过去的2D图像上某个点的最终渲染颜色。如果硬要拟合整条光线所有点的$C$且使它们一样，那就只是angle-dependent而非view-dependent了，RGB和xyz坐标参数还是有关系的。</p>
+<p><strong>PS：这部分公式1到公式3是连续积分离散化的推导，这是最基本的数值方法，需要好好回顾一下！！！另外一个就是，目前没有学习图形学相关的一些知识，这方面知识欠缺比较多。</strong></p>
+<h2 id="5-Optimizing-a-Neural-Radiance-Field"><a href="#5-Optimizing-a-Neural-Radiance-Field" class="headerlink" title="5 Optimizing a Neural Radiance Field"></a>5 Optimizing a Neural Radiance Field</h2><h3 id="5-1-Positional-encoding"><a href="#5-1-Positional-encoding" class="headerlink" title="5.1 Positional encoding"></a>5.1 Positional encoding</h3><p><strong>Q：为什么第一段说使用高频函数将输入映射到更高维空间，能够更好地拟合包含高频变化的数据？</strong></p>
+<p><strong>思考：</strong>这种数据高频变化的思想不仅仅局限在三维重建中。我觉得可以泛化到具有剧烈域变化的数据集，此时可以对输入数据进行高维映射，以获得对数据更好的表征，更好地实现数据域适应。</p>
+<p><strong>A：</strong>TODO</p>
+<p><strong>Q：如何理解此处的编码函数？</strong></p>
+<p><strong>A：</strong>TODO</p>
+<h3 id="5-2-Hierarchical-volume-sampling"><a href="#5-2-Hierarchical-volume-sampling" class="headerlink" title="5.2 Hierarchical volume sampling"></a>5.2 Hierarchical volume sampling</h3><p><strong>Q：为什么通过同时优化两个网络（粗网络和细网络）可以解决自由空间和遮挡区域被重复采样的问题？</strong></p>
+<p><strong>A：</strong>TODO</p>
+<h3 id="5-3-Implementation-details"><a href="#5-3-Implementation-details" class="headerlink" title="5.3 Implementation details"></a>5.3 Implementation details</h3><p>暂时没有问题</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
+<li><a href="https://zhuanlan.zhihu.com/p/542200751">NeRF论文阅读</a></li>
+<li><a href="http://www.liuxiao.org/2021/11/%e8%ae%ba%e6%96%87%e7%ac%94%e8%ae%b0%ef%bc%9anerf-representing-scenes-as-neural-radiance-fields-for-view-synthesis/">论文笔记：NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/360365941">【NeRF论文笔记】用于视图合成的神经辐射场技术</a></li>
+<li><a href="https://blog.csdn.net/YuhsiHu/article/details/124318473">【论文精读】NeRF中的数学公式推导</a></li>
+<li><a href="https://raymondkevin.top/2021/07/22/neural-radiance-fields-volume-rendering-%E5%85%AC%E5%BC%8F%E5%88%86%E6%9E%90/">Neural Radiance Field’s Volume Rendering 公式分析</a></li>
+<li><a href="https://zh.m.wikipedia.org/zh-hans/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8">多层感知器</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>NeRF&amp;3DGS</category>
+      </categories>
+      <tags>
+        <tag>NeRF</tag>
+        <tag>深度学习</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>NeRF学习笔记（一）：论文翻译</title>
     <url>/2022/08/19/nerf-notes-1/</url>
     <content><![CDATA[<h1 id="NeRF学习笔记（一）：论文翻译"><a href="#NeRF学习笔记（一）：论文翻译" class="headerlink" title="NeRF学习笔记（一）：论文翻译"></a>NeRF学习笔记（一）：论文翻译</h1><blockquote>
@@ -10274,63 +10331,6 @@ SudokuRNN time = 337.7354459999997
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
 <li><a href="https://blog.csdn.net/qq_43620967/article/details/124467551">NeRF论文翻译笔记</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/542200751">NeRF论文阅读</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>NeRF&amp;3DGS</category>
-      </categories>
-      <tags>
-        <tag>NeRF</tag>
-        <tag>深度学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>NeRF学习笔记（二）：论文阅读与思考</title>
-    <url>/2022/08/21/nerf-notes-2/</url>
-    <content><![CDATA[<h1 id="NeRF学习笔记（二）：论文阅读与思考"><a href="#NeRF学习笔记（二）：论文阅读与思考" class="headerlink" title="NeRF学习笔记（二）：论文阅读与思考"></a>NeRF学习笔记（二）：论文阅读与思考</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p><strong>Q：如何理解稀疏的输入视图集</strong></p>
-<p><strong>A：</strong> a sparse set of input views 稀疏的输入视图集。也就是输入视图并不是连续的，可能就是在若干个方向或者角度拍几张照片，就能合成一个连续的360度环绕的场景</p>
-<p><strong>Q：如何理解volume density</strong></p>
-<p>volume density字面意思是体积密度，实际上理解为<strong>不透明度</strong>会更好，不透明度对应对光的吸收能力，volume density越大，不透明度越高，对光的吸收能力越强。</p>
-<p>这个在后面的公式有所涉及。</p>
-<p><strong>Q：为什么要输入这么五个坐标？</strong></p>
-<p><strong>A：</strong>因为考虑到不同视角上某一点的颜色是不一样的。正因如此，原文用了view-dependent，即某点的颜色是跟视角相关的</p>
-<p><strong>Q：如何理解5D坐标（空间位置$(x，y，z)$和观察方向$(θ，φ)$)？</strong></p>
-<p><strong>A：</strong>作者应该是确定了某个坐标系，空间位置$(x,y,z)$就是被观察物体某个点在这个坐标系中的坐标，而观察方向$(θ，φ)$就是相机指向被观察物体这个点的射线，通过两个角度可以表示三维下的一条射线。</p>
-<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1 Introduction"></a>1 Introduction</h2><p><strong>Q：什么是MLP网络？</strong></p>
-<p><strong>A：</strong>多层感知器（Multilayer Perceptron，缩写MLP）是一种前向结构的人工神经网络，映射一组输入向量到一组输出向量。MLP可以被看作是一个有向图，由多个的节点层所组成，每一层都全连接到下一层。除了输入节点，每个节点都是一个带有非线性激活函数的神经元（或称处理单元）。一种被称为反向传播算法的监督学习方法常被用来训练MLP。</p>
-<p><strong>Q：还有什么想说的？</strong></p>
-<blockquote>
-<p>这里是搬运的，目前并不了解PINN</p>
-</blockquote>
-<p><strong>A：</strong>这篇论文的思想非常像流体力学的PINN，也是使用一个神经网络拟合某一个对象。PINN是用网络输出尽可能拟合离散点的函数值，而NERF就是用神经网络的输出拟合稀疏的相机拍摄图像。而且，与一般的问题不同，PINN和NERF都是尽可能过拟合标签值，因为它们都是应用于某一个特定的对象，如前者应用于某一个偏微分方程（组），后者应用于某一个场景。但是这引出了另一个问题：网络的泛化性很差，即不能通过微调将网络迁移适应于另一个不同的场景。</p>
-<p>另外有很多优点也是PINN和NERF所共通的。比如，流体力学求解方程的数值方法，需要采样大量的点才能逼近真实解，而且天然的时序特征导致了求解效率的低下；NERF以前的存储离散化体网络也需要耗费大量存储成本。</p>
-<p>更一般地说，PINN全称是physical-informed neural network，NERF本质上也是一种物理理论与神经网络的融合。流体力学的PINN和NERF有天然的近似性自然也就不奇怪了。</p>
-<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2 Related Work"></a>2 Related Work</h2><p>暂时没有问题</p>
-<h2 id="3-Neural-Radiance-Field-Scene-Representation"><a href="#3-Neural-Radiance-Field-Scene-Representation" class="headerlink" title="3 Neural Radiance Field Scene Representation"></a>3 Neural Radiance Field Scene Representation</h2><p><strong>Q：如何理解”We encourage the representation to be multiview consistent by restricting the network to predict the volume density σ as a function of only the location x, while allowing the RGB color c to be predicted as a function of both location and viewing direction. “即，这里为什么要限制体积密度σ作为位置x的函数，而让颜色c作为位置x和观看方向(θ，φ)的函数？观看方向(θ，φ)为什么会影响多视图的一致性？</strong></p>
-<p><strong>思考：</strong>从论文里面看，它这里的操作是先用8个完全连接层处理输入的3D坐标$(x，y，z)$，得到一个体积密度$σ$和256维的特征向量。然后特征向量和观看方向$(θ，φ)$连接起来，得到一个256+2维的向量，再给到最后的全连接层里面，从而输出与试图相关的颜色$c$。</p>
-<p>这样处理虽然是为了限制体积密度σ作为位置x的函数，但会不会也导致颜色$c$和观察方向$(θ，φ)$的关系不是很大了（毕竟只占了两个维度）？这样的话，如何设计并优化针对特定物理问题的网络？</p>
-<p>在知乎上看到一个很有趣的探讨：我们直觉理解空间点和颜色是没有任何关系的，在一个空间点放什么东西完全是人为确定。但是这篇文章可以通过MLP硬拟合这种关系，其中一个前提是MLP只用于某一特定场景的渲染，只是学习这种拟合关系而不是学会推理。所以，如果要使得网络具备迁移泛化能力，必须解除坐标与RGB这种不合逻辑的映射关系。</p>
-<p><strong>A：</strong>TODO</p>
-<h2 id="4-Volume-Rendering-with-Radiance-Fields"><a href="#4-Volume-Rendering-with-Radiance-Fields" class="headerlink" title="4 Volume Rendering with Radiance Fields"></a>4 Volume Rendering with Radiance Fields</h2><p><strong>Q：如何理解“The volume density σ(x) can be interpreted as the diﬀerential probability of a ray terminating at an inﬁnitesimal particle at location x. ”</strong></p>
-<p><strong>A：</strong>我认为这里应该和<strong>Abstract</strong>部分的问题<strong>“如何理解volume density”</strong>是一样的。这句话翻译过来就是“体积密度$σ(x)$可以解释为一条射线在$x$位置的无穷小粒子处终止的微分概率”，比较拗口，不过很明显关键部分是“射线在某个位置终止的微分概率”。这看起来应该和之前解释的不透明度差不多，光在这里终止（被吸收）的概率越大就说明这里越不透明。而之所以是微分概率，应该是体积密度$σ(x)$表示的只是某个点的不透明率。</p>
-<p><strong>Q：前面定义的网络已经计算出了从某个视角看到的某点颜色$c=(r，g，b)$和体积密度$σ$，为什么这里仍然需要通过公式1把预期颜色$C$计算出来？它们有什么区别？为什么不直接拟合？</strong></p>
-<p><strong>A：</strong>$C$是最终渲染时需要计算的值，$c$是RGB颜色值。拟合的只是空间单点的颜色$c$，只有通过离散积分一条光线上所有采样单点的颜色$c$，才能得到从某个视角看过去的2D图像上某个点的最终渲染颜色。如果硬要拟合整条光线所有点的$C$且使它们一样，那就只是angle-dependent而非view-dependent了，RGB和xyz坐标参数还是有关系的。</p>
-<p><strong>PS：这部分公式1到公式3是连续积分离散化的推导，这是最基本的数值方法，需要好好回顾一下！！！另外一个就是，目前没有学习图形学相关的一些知识，这方面知识欠缺比较多。</strong></p>
-<h2 id="5-Optimizing-a-Neural-Radiance-Field"><a href="#5-Optimizing-a-Neural-Radiance-Field" class="headerlink" title="5 Optimizing a Neural Radiance Field"></a>5 Optimizing a Neural Radiance Field</h2><h3 id="5-1-Positional-encoding"><a href="#5-1-Positional-encoding" class="headerlink" title="5.1 Positional encoding"></a>5.1 Positional encoding</h3><p><strong>Q：为什么第一段说使用高频函数将输入映射到更高维空间，能够更好地拟合包含高频变化的数据？</strong></p>
-<p><strong>思考：</strong>这种数据高频变化的思想不仅仅局限在三维重建中。我觉得可以泛化到具有剧烈域变化的数据集，此时可以对输入数据进行高维映射，以获得对数据更好的表征，更好地实现数据域适应。</p>
-<p><strong>A：</strong>TODO</p>
-<p><strong>Q：如何理解此处的编码函数？</strong></p>
-<p><strong>A：</strong>TODO</p>
-<h3 id="5-2-Hierarchical-volume-sampling"><a href="#5-2-Hierarchical-volume-sampling" class="headerlink" title="5.2 Hierarchical volume sampling"></a>5.2 Hierarchical volume sampling</h3><p><strong>Q：为什么通过同时优化两个网络（粗网络和细网络）可以解决自由空间和遮挡区域被重复采样的问题？</strong></p>
-<p><strong>A：</strong>TODO</p>
-<h3 id="5-3-Implementation-details"><a href="#5-3-Implementation-details" class="headerlink" title="5.3 Implementation details"></a>5.3 Implementation details</h3><p>暂时没有问题</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
-<li><a href="https://zhuanlan.zhihu.com/p/542200751">NeRF论文阅读</a></li>
-<li><a href="http://www.liuxiao.org/2021/11/%e8%ae%ba%e6%96%87%e7%ac%94%e8%ae%b0%ef%bc%9anerf-representing-scenes-as-neural-radiance-fields-for-view-synthesis/">论文笔记：NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/360365941">【NeRF论文笔记】用于视图合成的神经辐射场技术</a></li>
-<li><a href="https://blog.csdn.net/YuhsiHu/article/details/124318473">【论文精读】NeRF中的数学公式推导</a></li>
-<li><a href="https://raymondkevin.top/2021/07/22/neural-radiance-fields-volume-rendering-%E5%85%AC%E5%BC%8F%E5%88%86%E6%9E%90/">Neural Radiance Field’s Volume Rendering 公式分析</a></li>
-<li><a href="https://zh.m.wikipedia.org/zh-hans/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8">多层感知器</a></li>
 </ol>
 ]]></content>
       <categories>
@@ -11719,14 +11719,14 @@ pointsf <span class="token operator">=</span> pts<span class="token punctuation"
         <category>NeRF&amp;3DGS</category>
       </categories>
       <tags>
+        <tag>NeRF</tag>
         <tag>隐式表示</tag>
-        <tag>3D Gaussian Splatting</tag>
       </tags>
   </entry>
   <entry>
     <title>Neural Point SLAM回顾</title>
     <url>/2024/11/16/neural-point-slam/</url>
-    <content><![CDATA[<h1 id="Neural-Point-SLAM回顾"><a href="#Neural-Point-SLAM回顾" class="headerlink" title="Neural Point SLAM回顾"></a>Neural Point SLAM回顾</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p><a href="https://zhuanlan.zhihu.com/p/6289222117">上一篇文章</a>笔者回顾了Neural Point Rendering相关的工作，这篇文章笔者将聚焦于Neural Point在SLAM上的一些应用。</p>
+    <content><![CDATA[<h1 id="Neural-Point-SLAM回顾"><a href="#Neural-Point-SLAM回顾" class="headerlink" title="Neural Point SLAM回顾"></a>Neural Point SLAM回顾</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p><a href="https://immortalqx.github.io/2024/11/11/neural-point-rendering">上一篇文章</a>笔者回顾了Neural Point Rendering相关的工作，这篇文章笔者将聚焦于Neural Point在SLAM上的一些应用。</p>
 <p>在NeRF时代出现的iMAP、NICE-SLAM、Co-SLAM等工作，他们的tracking基本都是渲染图像-计算损失-反向优化位姿；尽管也有Orbeez-SLAM、GO-SLAM等工作，但他们都借助了ORB-SLAM、Droid-SLAM等External Tracker，并不是在NeRF表示的场景之上直接做tracking的。</p>
 <p>而到了3DGS时代，或许是因为研究惯性，早期的3DGS SLAM工作还是沿用了老一套的tracking方法：渲染图像-计算损失-反向优化位姿。</p>
 <blockquote>
@@ -11908,7 +11908,7 @@ pointsf <span class="token operator">=</span> pts<span class="token punctuation"
 <li><strong>Pose graph optimization</strong>：加入loop closure edge之后，对pose graph $G$进行优化。优化之后对global map $M$中每个neural point的位置和方向及其关联帧进行变换，以保证全局一致性。在完成loop correction之后，对训练样本池$D_p$进行变换，并且重置local map $M_l$。</li>
 </ol>
 <blockquote>
-<p>PIN-SLAM的内容非常多，准备另起一篇文章进行介绍了。新文章完成之后链接会同步更新到这里。</p>
+<p>PIN-SLAM的内容非常多，可以移步：<a href="https://immortalqx.github.io/2024/11/21/paper-reading-pin-slam%E3%80%82">https://immortalqx.github.io/2024/11/21/paper-reading-pin-slam。</a></p>
 </blockquote>
 <h2 id="总结-amp-讨论"><a href="#总结-amp-讨论" class="headerlink" title="总结&amp;讨论"></a>总结&amp;讨论</h2><p>在PIN-SLAM出来之前，笔者一直认为与NeRF、Neural Point相比，3DGS才是最“几何”的表示方法，毕竟3DGS显示的给出了点云，尽管这个点云有很多的噪声。</p>
 <p>而当时一些neural point的工作，比如Point-NeRF论文中说“we find that directly optimizing the location of the existing points makes the training unstable and cannot fill the large holes”，笔者便认为neural point效果好主要是因为feature + decoder这一套流程的差值能力好，以及neural point也避免了在空白区域采样。而neural point的位置几乎无法优化，直接使用输入的点云，并且通过一些简单的加剪枝策略添加和删除点，那“几何”肯定是很好的，不过怎么利用这一点是个难解决的问题。</p>
@@ -11924,11 +11924,11 @@ pointsf <span class="token operator">=</span> pts<span class="token punctuation"
 <p><strong>注：本文是笔者学习研究过程中的思考整理，如有错误疏漏，请各路大佬批评斧正！</strong></p>
 ]]></content>
       <categories>
-        <category>NeRF&amp;3DGS</category>
+        <category>slam</category>
       </categories>
       <tags>
+        <tag>NeRF</tag>
         <tag>隐式表示</tag>
-        <tag>3D Gaussian Splatting</tag>
       </tags>
   </entry>
   <entry>
@@ -12144,6 +12144,58 @@ Subminor version <span class="token builtin class-name">:</span> <span class="to
 <p>下面是效果图：</p>
 <p><img src="/images/OpenCV-Notes/1-1.png"></p>
 <p><img src="/images/OpenCV-Notes/1-2.png"></p>
+]]></content>
+      <categories>
+        <category>三维视觉</category>
+      </categories>
+      <tags>
+        <tag>OpenCV</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>几种常见的颜色空间</title>
+    <url>/2020/08/17/opencv-notes-2/</url>
+    <content><![CDATA[<h1 id="颜色空间"><a href="#颜色空间" class="headerlink" title="颜色空间"></a>颜色空间</h1><p><strong>颜色空间</strong>（英语：Color space）是对<a href="https://zh.wikipedia.org/wiki/%E8%89%B2%E5%BD%A9">色彩</a>的组织方式。借助色彩空间和针对物理设备的测试，可以得到色彩的固定<a href="https://zh.wikipedia.org/wiki/%E6%A8%A1%E6%93%AC%E4%BF%A1%E8%99%9F">模拟</a>和<a href="https://zh.wikipedia.org/wiki/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7">数字</a>表示。色彩空间可以只通过任意挑选一些颜色来定义，比如像<a href="https://zh.wikipedia.org/wiki/%E5%BD%A9%E9%80%9A">彩通</a>系统就只是把一组特定的颜色作为<a href="https://zh.wikipedia.org/wiki/%E8%AA%BF%E8%89%B2%E7%9B%A4_(%E9%9B%BB%E8%85%A6%E5%9C%96%E5%BD%A2%E5%AD%B8)">样本</a>，然后给每个颜色定义名字和代码；也可以是基于严谨的数学定义，比如 <a href="https://zh.wikipedia.org/wiki/Adobe_RGB%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4">Adobe RGB</a>、<a href="https://zh.wikipedia.org/wiki/SRGB%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4">sRGB</a>。</p>
+<p>在计算机视觉，尤其颜色识别相关的算法中，rgb,hsv,lab颜色空间混用是常用的方法。</p>
+<h2 id="RGB"><a href="#RGB" class="headerlink" title="RGB"></a>RGB</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>RGB颜色空间以R(Red:红)、G(Green:绿)、B(Blue:蓝)三种基本色为基础，进行不同程度的叠加，产生丰富而广泛的颜色，所以俗称三基色模式。在大自然中有无穷多种不同的颜色，而人眼只能分辨有限种不同的颜色，RGB模式可表示一千六百多万种不同的颜色，在人眼看来它非常接近大自然的颜色，故又称为自然色彩模式。红绿蓝代表可见光谱中的三种基本颜色或称为三原色，每一种颜色按其亮度的不同分为256个等级。当色光三原色重叠时，由于不同的混色比例能产生各种中间色，例如，三原色相加可产生白色。所以RGB模式是加色过程。屏幕显示的基础是RGB模式，彩色印刷品却无法用RGB模式来产生各种彩色，所以，<strong>RGB模式常用于视频、多媒体与网页设计</strong>。</p>
+<h3 id="空间模型"><a href="#空间模型" class="headerlink" title="空间模型"></a>空间模型</h3><p>对图像处理而言，RGB是最为重要和常见的颜色模型，它建立在笛卡尔坐标系中，以红、绿、蓝三种基本色为基础，<strong>进行不同程度的叠加</strong>，产生丰富而广泛的颜色，俗称三基色模式。如下图所示：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9nc3MwLmJkc3RhdGljLmNvbS85NG8zZFNhZ194STRraEdrcG9XSzFIRjZoaHkvYmFpa2UvYzAlM0RiYWlrZTgwJTJDNSUyQzUlMkM4MCUyQzI2L3NpZ249MjdmYjUwZjlhYWVjMDhmYTMyMGQxYmY1Mzg4NzU2MDgvZTFmZTk5MjViYzMxNWM2MGU0NTA5ZmE5ODdiMWNiMTM0ODU0NzdhYi5qcGc?x-oss-process=image/format,png"></p>
+<h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><p>RGB模型的原理来自于颜色的三刺激理论，它基于以下假设:在眼睛的中央部位有3种类型的对色彩敏感的锥状细胞。其中一类对位于可见光谱中间位置的光波敏感，这种光波经人的视觉系统转换产生绿色感。而其他两种锥状细胞对位于可见光波的上、下端即较长和较短的波长的光波敏感，它们分别被识别为红色和蓝色。从生理学的角度来看，由于眼睛仅包含3种不同类型的锥状细胞，因而对任意3种颜色适当混合均可产生白光视觉，条件是这3中颜色中任意两种的组合都并不能产生第3种颜色，则这三种颜色就被称为三原色。</p>
+<h3 id="表达方式"><a href="#表达方式" class="headerlink" title="表达方式"></a>表达方式</h3><p> RGB空间是目前最常用的彩色信息表达方式，使用红、绿、蓝三原色的亮度来定量表示颜色，<strong>是以RGB三色光互相叠加来实现混色的方式</strong>。三种颜色所占比例不同，得到的颜色就不同。变换混合的比例，就会得到各种各样的混合效果。RGB颜色空间可以看作是三维直角坐标系中的一个单位正方体。任何一种颜色在RGB颜色空间中都可以用三维空间中的一个点来表示。在RGB颜色空间，任意色光F都可以用RGB三种颜色不同分量的相加混合而成：F=r[R]+g[G]+b[B]</p>
+<h4 id="色度学规则："><a href="#色度学规则：" class="headerlink" title="色度学规则："></a>色度学规则：</h4><p> 　(1)通过R,G,B这三种颜色能产生任何颜色，并且这三种颜色混合后产生的颜色是唯一的。<br> 　(2)如果两个颜色相等，这三个颜色分量再乘以或者除以相同的数，得到的颜色仍然相等。<br> 　(3)混合色的亮度等于每种颜色亮度的和。</p>
+<h3 id="优点与缺点"><a href="#优点与缺点" class="headerlink" title="优点与缺点"></a>优点与缺点</h3><p>优点： RGB颜色空间最大的优点就是直观，容易理解。</p>
+<p>缺点：<strong>R,G,B这3个分量是高度相关的</strong>，即如果一个颜色的某一个分量发生了一定程度的改变，那么这个颜色很可能要发生改变；人眼对于常见的红绿蓝三色的敏感程度是不一样的，因此RGB颜色空间的均匀性非常差，且两种颜色之间的知觉差异色差不能表示为该颜色空间中两点间的距离，但是利用线性或非线性变换，则可以从RGB颜色空间推导出其他的颜色特征空间。</p>
+<h2 id="HSV"><a href="#HSV" class="headerlink" title="HSV"></a>HSV</h2><h3 id="基本概念-1"><a href="#基本概念-1" class="headerlink" title="基本概念"></a>基本概念</h3><p>HSV(Hue, Saturation, Value)是根据颜色的直观特性由A. R.  Smith在1978年创建的一种颜色空间, 也称六角锥体模型(Hexcone  Model)。这个模型中颜色的参数分别是：<strong>色调（H），饱和度（S），明度（V）</strong>。</p>
+<h3 id="空间模型-1"><a href="#空间模型-1" class="headerlink" title="空间模型"></a>空间模型</h3><h4 id="色调H："><a href="#色调H：" class="headerlink" title="色调H："></a>色调H：</h4><p>用角度度量，取值范围为0°～360°，从红色开始按逆时针方向计算，红色为0°，绿色为120°,蓝色为240°。它们的补色是：黄色为60°，青色为180°,品红为300°；</p>
+<h4 id="饱和度S："><a href="#饱和度S：" class="headerlink" title="饱和度S："></a>饱和度S：</h4><p>饱和度S表示颜色接近光谱色的程度。一种颜色，可以看成是某种光谱色与白色混合的结果。其中光谱色所占的比例愈大，颜色接近光谱色的程度就愈高，颜色的饱和度也就愈高。饱和度高，颜色则深而艳。光谱色的白光成分为0，饱和度达到最高。通常取值范围为0%～100%，值越大，颜色越饱和。</p>
+<h4 id="明度V："><a href="#明度V：" class="headerlink" title="明度V："></a>明度V：</h4><p>明度表示颜色明亮的程度，对于光源色，明度值与发光体的光亮度有关；对于物体色，此值和物体的透射比或反射比有关。通常取值范围为0%（黑）到100%（白）。</p>
+<p><strong>RGB和CMY颜色模型都是面向硬件的，而HSV（Hue Saturation  Value）颜色模型是面向用户的。</strong>HSV模型的三维表示从RGB立方体演化而来。设想从RGB沿立方体对角线的白色顶点向黑色顶点观察，就可以看到立方体的六边形外形。六边形边界表示色彩，水平轴表示纯度，明度沿垂直轴测量。</p>
+<p> <img src="https://img-blog.csdnimg.cn/20181128220932509.png"> </p>
+<p> <img src="https://img-blog.csdnimg.cn/20181128220957174.png"></p>
+<h3 id="从RGB到HSV的转换"><a href="#从RGB到HSV的转换" class="headerlink" title="从RGB到HSV的转换"></a>从RGB到HSV的转换</h3><p>HSV 在数学上定义为在 RGB 空间中的颜色的 R, G 和 B 的坐标的变换。设 (r, g, b) 分别是一个颜色的红、绿和蓝坐标，它们的值是在 0 到 1 之间的实数。设 max 等价于 r, g 和 b 中的最大者，设 min 等于这些值中的最小者。要找到在 HSV 空间中的 (h, s, v) 值，这里的 h ∈ [0,  360）是角度的色相角，而 s, v ∈ [0,1] 是饱和度和亮度，计算公式为：</p>
+<p><img src="https://img-blog.csdnimg.cn/20181128221242343.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppYW5nSHVpMTIxMQ==,size_16,color_FFFFFF,t_70"></p>
+<p><img src="https://img-blog.csdnimg.cn/20181128221304329.png"></p>
+<p><img src="https://img-blog.csdnimg.cn/2018112822132243.png"></p>
+<p>HSV对用户来说是一种直观的颜色模型。我们可以从一种纯色彩开始，即指定色彩角H，并让V=S=1，然后我们可以通过向其中加入黑色和白色来得到我们需要的颜色。<strong>增加黑色可以减小V而S不变，同样增加白色可以减小S而V不变。</strong>例如，要得到深蓝色，V=0.4 S=1 H=240度。要得到淡蓝色，V=1 S=0.4 H=240度。</p>
+<p>一般说来，人眼最大能区分128种不同的色彩，130种色饱和度，23种明暗度。如果我们用16Bit表示HSV的话，可以用7位存放H，4位存放S，5位存放V，即745或者655就可以满足我们的需要了。</p>
+<p>由于HSV是一种比较直观的颜色模型，所以在许多图像编辑工具中应用比较广泛，如Photoshop（在Photoshop中叫HSB）等等，但这也决定了<strong>它不适合使用在光照模型中，许多光线混合运算、光强运算等都无法直接使用HSV来实现。</strong></p>
+<h2 id="LAB"><a href="#LAB" class="headerlink" title="LAB"></a>LAB</h2><h3 id="基本概念-2"><a href="#基本概念-2" class="headerlink" title="基本概念"></a>基本概念</h3><p><a href="https://baike.baidu.com/item/Lab%E6%A8%A1%E5%BC%8F/7362402">Lab模式</a>是根据Commission International Eclairage（CIE）在1931年所制定的一种测定颜色的国际标准建立的。于1976年被改进，并且命名的一种色彩模式。Lab颜色模型弥补了<a href="https://baike.baidu.com/item/RGB/342517">RGB</a>和CMYK两种色彩模式的不足。它是一种<strong>设备无关的颜色模型</strong>，也是一种<strong>基于生理特征的颜色模型</strong>。 Lab颜色模型由三个要素组成，一个要素是亮度（L），a 和b是两个<a href="https://baike.baidu.com/item/%E9%A2%9C%E8%89%B2%E9%80%9A%E9%81%93/5706858">颜色通道</a>。a包括的颜色是从<a href="https://baike.baidu.com/item/%E6%B7%B1%E7%BB%BF%E8%89%B2/2192808">深绿色</a>（低亮度值）到灰色（中亮度值）再到亮粉红色（高亮度值）；b是从亮蓝色（低亮度值）到灰色（中亮度值）再到黄色（高亮度值）。因此，这种颜色混合后将产生具有明亮效果的色彩。</p>
+<h3 id="空间模型-2"><a href="#空间模型-2" class="headerlink" title="空间模型"></a>空间模型</h3><p><a href="https://baike.baidu.com/item/Lab%E6%A8%A1%E5%BC%8F/7362402">Lab模式</a>既不依赖光线，也不依赖于颜料，它是CIE组织确定的一个理论上包括了人眼可以看见的所有色彩的色彩模式。Lab模式弥补了<a href="https://baike.baidu.com/item/RGB/342517">RGB</a>和CMYK两种色彩模式的不足。同RGB颜色空间相比，Lab是一种不常用的色彩空间。它是一种设备无关的颜色系统，也是一种基于生理特征的颜色系统。这也就意味着，<strong>它是用数字化的方法来描述人的视觉感应</strong>。Lab颜色空间中的L分量用于表示像素的亮度，取值范围是[0,100],表示从纯黑到纯白；a表示从红色到绿色的范围，取值范围是[127,-128]；b表示从黄色到蓝色的范围，取值范围是[127,-128]。下图所示为Lab颜色空间的图示：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9nc3MzLmJkc3RhdGljLmNvbS8tUG8zZFNhZ194STRraEdrcG9XSzFIRjZoaHkvYmFpa2UvYzAlM0RiYWlrZTgwJTJDNSUyQzUlMkM4MCUyQzI2L3NpZ249ZTM1OWY1YTZhNDRiZDExMzEwYzBiZjYwM2JjNmNmNmEvMDIzYjViYjVjOWVhMTVjZTFkMWZmMWRjYmYwMDNhZjMzYjg3YjI3NS5qcGc?x-oss-process=image/format,png"></p>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><p><strong>Lab颜色空间比计算机显示器甚至比人类视觉的色域都要大 **，表示为Lab的位图比RGB或CMYK位图获得同样的精度需要要求更多的像素数据。<a href="https://baike.baidu.com/item/Lab%E6%A8%A1%E5%BC%8F/7362402">Lab模式</a>所定义的色彩最多，且与光线及设备无关并且</strong>处理速度与<a href="https://baike.baidu.com/item/RGB%E6%A8%A1%E5%BC%8F/7362104">RGB模式</a>同样快**，比<a href="https://baike.baidu.com/item/CMYK%E6%A8%A1%E5%BC%8F/305545">CMYK模式</a>快很多。因此，可以放心大胆的在图象编辑中使用Lab模 式。而且，Lab模式在转换成CMYK模式时色彩没有丢失或被替换。因此，最佳避免色彩损失的方法是：应用Lab模式编辑图象，再转换为CMYK模式打印输出。</p>
+<h2 id="CMYK"><a href="#CMYK" class="headerlink" title="CMYK"></a>CMYK</h2><h3 id="基本概念-3"><a href="#基本概念-3" class="headerlink" title="基本概念"></a>基本概念</h3><p>当阳光照射到一个物体上时，这个物体将吸收一部分光线，并将剩下的光线进行反射，反射的光线就是我们所看见的物体颜色。这是一种**减色<a href="https://baike.baidu.com/item/%E8%89%B2%E5%BD%A9%E6%A8%A1%E5%BC%8F/10209468">色彩模式</a>**，同时也是与<a href="https://baike.baidu.com/item/RGB%E6%A8%A1%E5%BC%8F">RGB模式</a>的根本不同之处。不但我们看物体的颜色时用到了这种减色模式，而且在纸上印刷时应用的也是这种减色模式。CMYK代表印刷上用的四种颜色，C代表青色（Cyan），M代表<a href="https://baike.baidu.com/item/%E6%B4%8B%E7%BA%A2%E8%89%B2/6833575">洋红色</a>（Magenta），Y代表黄色（Yellow），K代表黑色（Black）。因为在实际应用中，青色、洋红色和黄色很难叠加形成真正的黑色，最多不过是褐色而已。因此才引入了K——黑色。黑色的作用是强化暗调，加深暗部色彩。</p>
+<h3 id="打印模式"><a href="#打印模式" class="headerlink" title="打印模式"></a>打印模式</h3><p><strong>CMYK模式俗称四色打印模式，是最佳的打印模式</strong>。但是在进行实际打印时，两种模式存在转换问题，具体原因如下：</p>
+<ol>
+<li><p>CMYK模式编辑虽然能够避免色彩的损失，但运算速度很慢。主要原因如下：</p>
+<p>1）、即使在CMYK模式下工作，<a href="https://baike.baidu.com/item/Photoshop/133866">Photoshop</a>也必须将CMYK模式转变为显示器所使用的RGB模式。</p>
+<p>2）、对于同样的图像，RGB模式只需要处理三个<a href="https://baike.baidu.com/item/%E9%80%9A%E9%81%93">通道</a>即可，而CMYK模式则需要处理四个。</p>
+</li>
+<li><p> 用户所使用的扫描仪和显示器都是<a href="https://baike.baidu.com/item/RGB/342517">RGB</a>设备，所以无论什么时候使用CMYK模式工作都有把RGB模式转换为CMYK模式这样一个过程。因此，是否应用CMYK模式进行编辑都存在<a href="https://baike.baidu.com/item/RGB%E6%A8%A1%E5%BC%8F/7362104">RGB模式</a>和CMYK模式转换的问题。</p>
+</li>
+</ol>
+<p>对于<a href="https://baike.baidu.com/item/RGB%E6%A8%A1%E5%BC%8F/7362104">RGB模式</a>和CMYK模式转换的问题，可以先用RGB模式进行编辑工作，再用CMYK模式进行打印工作，在打印前才进行转换，然后加入必要的<a href="https://baike.baidu.com/item/%E8%89%B2%E5%BD%A9%E6%A0%A1%E6%AD%A3/10786529">色彩校正</a>，<a href="https://baike.baidu.com/item/%E9%94%90%E5%8C%96/2189784">锐化</a>和修整。这样虽然使<a href="https://baike.baidu.com/item/Photoshop/133866">Photoshop</a>在CMYK模式下速度慢一些，但可节省大部分编辑时间。这种打印前的模式转换，并不是避免图像损失最佳的途径，最佳方法是将<a href="https://baike.baidu.com/item/Lab%E6%A8%A1%E5%BC%8F">Lab模式</a>和CMYK模式相结合使用，这样可以最大程度的减少图像失真。</p>
+<h3 id="优缺点-1"><a href="#优缺点-1" class="headerlink" title="优缺点"></a>优缺点</h3><p>优点：可以满足打印的需求，解决RGB不能打印的问题</p>
+<p>缺点：一定程度上存在色彩的缺失，运行速度慢</p>
 ]]></content>
       <categories>
         <category>三维视觉</category>
@@ -12410,58 +12462,6 @@ seek<span class="token double-colon punctuation">::</span><span class="token fun
       <tags>
         <tag>OpenCV</tag>
         <tag>ROS基础</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>几种常见的颜色空间</title>
-    <url>/2020/08/17/opencv-notes-2/</url>
-    <content><![CDATA[<h1 id="颜色空间"><a href="#颜色空间" class="headerlink" title="颜色空间"></a>颜色空间</h1><p><strong>颜色空间</strong>（英语：Color space）是对<a href="https://zh.wikipedia.org/wiki/%E8%89%B2%E5%BD%A9">色彩</a>的组织方式。借助色彩空间和针对物理设备的测试，可以得到色彩的固定<a href="https://zh.wikipedia.org/wiki/%E6%A8%A1%E6%93%AC%E4%BF%A1%E8%99%9F">模拟</a>和<a href="https://zh.wikipedia.org/wiki/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7">数字</a>表示。色彩空间可以只通过任意挑选一些颜色来定义，比如像<a href="https://zh.wikipedia.org/wiki/%E5%BD%A9%E9%80%9A">彩通</a>系统就只是把一组特定的颜色作为<a href="https://zh.wikipedia.org/wiki/%E8%AA%BF%E8%89%B2%E7%9B%A4_(%E9%9B%BB%E8%85%A6%E5%9C%96%E5%BD%A2%E5%AD%B8)">样本</a>，然后给每个颜色定义名字和代码；也可以是基于严谨的数学定义，比如 <a href="https://zh.wikipedia.org/wiki/Adobe_RGB%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4">Adobe RGB</a>、<a href="https://zh.wikipedia.org/wiki/SRGB%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4">sRGB</a>。</p>
-<p>在计算机视觉，尤其颜色识别相关的算法中，rgb,hsv,lab颜色空间混用是常用的方法。</p>
-<h2 id="RGB"><a href="#RGB" class="headerlink" title="RGB"></a>RGB</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>RGB颜色空间以R(Red:红)、G(Green:绿)、B(Blue:蓝)三种基本色为基础，进行不同程度的叠加，产生丰富而广泛的颜色，所以俗称三基色模式。在大自然中有无穷多种不同的颜色，而人眼只能分辨有限种不同的颜色，RGB模式可表示一千六百多万种不同的颜色，在人眼看来它非常接近大自然的颜色，故又称为自然色彩模式。红绿蓝代表可见光谱中的三种基本颜色或称为三原色，每一种颜色按其亮度的不同分为256个等级。当色光三原色重叠时，由于不同的混色比例能产生各种中间色，例如，三原色相加可产生白色。所以RGB模式是加色过程。屏幕显示的基础是RGB模式，彩色印刷品却无法用RGB模式来产生各种彩色，所以，<strong>RGB模式常用于视频、多媒体与网页设计</strong>。</p>
-<h3 id="空间模型"><a href="#空间模型" class="headerlink" title="空间模型"></a>空间模型</h3><p>对图像处理而言，RGB是最为重要和常见的颜色模型，它建立在笛卡尔坐标系中，以红、绿、蓝三种基本色为基础，<strong>进行不同程度的叠加</strong>，产生丰富而广泛的颜色，俗称三基色模式。如下图所示：</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9nc3MwLmJkc3RhdGljLmNvbS85NG8zZFNhZ194STRraEdrcG9XSzFIRjZoaHkvYmFpa2UvYzAlM0RiYWlrZTgwJTJDNSUyQzUlMkM4MCUyQzI2L3NpZ249MjdmYjUwZjlhYWVjMDhmYTMyMGQxYmY1Mzg4NzU2MDgvZTFmZTk5MjViYzMxNWM2MGU0NTA5ZmE5ODdiMWNiMTM0ODU0NzdhYi5qcGc?x-oss-process=image/format,png"></p>
-<h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><p>RGB模型的原理来自于颜色的三刺激理论，它基于以下假设:在眼睛的中央部位有3种类型的对色彩敏感的锥状细胞。其中一类对位于可见光谱中间位置的光波敏感，这种光波经人的视觉系统转换产生绿色感。而其他两种锥状细胞对位于可见光波的上、下端即较长和较短的波长的光波敏感，它们分别被识别为红色和蓝色。从生理学的角度来看，由于眼睛仅包含3种不同类型的锥状细胞，因而对任意3种颜色适当混合均可产生白光视觉，条件是这3中颜色中任意两种的组合都并不能产生第3种颜色，则这三种颜色就被称为三原色。</p>
-<h3 id="表达方式"><a href="#表达方式" class="headerlink" title="表达方式"></a>表达方式</h3><p> RGB空间是目前最常用的彩色信息表达方式，使用红、绿、蓝三原色的亮度来定量表示颜色，<strong>是以RGB三色光互相叠加来实现混色的方式</strong>。三种颜色所占比例不同，得到的颜色就不同。变换混合的比例，就会得到各种各样的混合效果。RGB颜色空间可以看作是三维直角坐标系中的一个单位正方体。任何一种颜色在RGB颜色空间中都可以用三维空间中的一个点来表示。在RGB颜色空间，任意色光F都可以用RGB三种颜色不同分量的相加混合而成：F=r[R]+g[G]+b[B]</p>
-<h4 id="色度学规则："><a href="#色度学规则：" class="headerlink" title="色度学规则："></a>色度学规则：</h4><p> 　(1)通过R,G,B这三种颜色能产生任何颜色，并且这三种颜色混合后产生的颜色是唯一的。<br> 　(2)如果两个颜色相等，这三个颜色分量再乘以或者除以相同的数，得到的颜色仍然相等。<br> 　(3)混合色的亮度等于每种颜色亮度的和。</p>
-<h3 id="优点与缺点"><a href="#优点与缺点" class="headerlink" title="优点与缺点"></a>优点与缺点</h3><p>优点： RGB颜色空间最大的优点就是直观，容易理解。</p>
-<p>缺点：<strong>R,G,B这3个分量是高度相关的</strong>，即如果一个颜色的某一个分量发生了一定程度的改变，那么这个颜色很可能要发生改变；人眼对于常见的红绿蓝三色的敏感程度是不一样的，因此RGB颜色空间的均匀性非常差，且两种颜色之间的知觉差异色差不能表示为该颜色空间中两点间的距离，但是利用线性或非线性变换，则可以从RGB颜色空间推导出其他的颜色特征空间。</p>
-<h2 id="HSV"><a href="#HSV" class="headerlink" title="HSV"></a>HSV</h2><h3 id="基本概念-1"><a href="#基本概念-1" class="headerlink" title="基本概念"></a>基本概念</h3><p>HSV(Hue, Saturation, Value)是根据颜色的直观特性由A. R.  Smith在1978年创建的一种颜色空间, 也称六角锥体模型(Hexcone  Model)。这个模型中颜色的参数分别是：<strong>色调（H），饱和度（S），明度（V）</strong>。</p>
-<h3 id="空间模型-1"><a href="#空间模型-1" class="headerlink" title="空间模型"></a>空间模型</h3><h4 id="色调H："><a href="#色调H：" class="headerlink" title="色调H："></a>色调H：</h4><p>用角度度量，取值范围为0°～360°，从红色开始按逆时针方向计算，红色为0°，绿色为120°,蓝色为240°。它们的补色是：黄色为60°，青色为180°,品红为300°；</p>
-<h4 id="饱和度S："><a href="#饱和度S：" class="headerlink" title="饱和度S："></a>饱和度S：</h4><p>饱和度S表示颜色接近光谱色的程度。一种颜色，可以看成是某种光谱色与白色混合的结果。其中光谱色所占的比例愈大，颜色接近光谱色的程度就愈高，颜色的饱和度也就愈高。饱和度高，颜色则深而艳。光谱色的白光成分为0，饱和度达到最高。通常取值范围为0%～100%，值越大，颜色越饱和。</p>
-<h4 id="明度V："><a href="#明度V：" class="headerlink" title="明度V："></a>明度V：</h4><p>明度表示颜色明亮的程度，对于光源色，明度值与发光体的光亮度有关；对于物体色，此值和物体的透射比或反射比有关。通常取值范围为0%（黑）到100%（白）。</p>
-<p><strong>RGB和CMY颜色模型都是面向硬件的，而HSV（Hue Saturation  Value）颜色模型是面向用户的。</strong>HSV模型的三维表示从RGB立方体演化而来。设想从RGB沿立方体对角线的白色顶点向黑色顶点观察，就可以看到立方体的六边形外形。六边形边界表示色彩，水平轴表示纯度，明度沿垂直轴测量。</p>
-<p> <img src="https://img-blog.csdnimg.cn/20181128220932509.png"> </p>
-<p> <img src="https://img-blog.csdnimg.cn/20181128220957174.png"></p>
-<h3 id="从RGB到HSV的转换"><a href="#从RGB到HSV的转换" class="headerlink" title="从RGB到HSV的转换"></a>从RGB到HSV的转换</h3><p>HSV 在数学上定义为在 RGB 空间中的颜色的 R, G 和 B 的坐标的变换。设 (r, g, b) 分别是一个颜色的红、绿和蓝坐标，它们的值是在 0 到 1 之间的实数。设 max 等价于 r, g 和 b 中的最大者，设 min 等于这些值中的最小者。要找到在 HSV 空间中的 (h, s, v) 值，这里的 h ∈ [0,  360）是角度的色相角，而 s, v ∈ [0,1] 是饱和度和亮度，计算公式为：</p>
-<p><img src="https://img-blog.csdnimg.cn/20181128221242343.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ppYW5nSHVpMTIxMQ==,size_16,color_FFFFFF,t_70"></p>
-<p><img src="https://img-blog.csdnimg.cn/20181128221304329.png"></p>
-<p><img src="https://img-blog.csdnimg.cn/2018112822132243.png"></p>
-<p>HSV对用户来说是一种直观的颜色模型。我们可以从一种纯色彩开始，即指定色彩角H，并让V=S=1，然后我们可以通过向其中加入黑色和白色来得到我们需要的颜色。<strong>增加黑色可以减小V而S不变，同样增加白色可以减小S而V不变。</strong>例如，要得到深蓝色，V=0.4 S=1 H=240度。要得到淡蓝色，V=1 S=0.4 H=240度。</p>
-<p>一般说来，人眼最大能区分128种不同的色彩，130种色饱和度，23种明暗度。如果我们用16Bit表示HSV的话，可以用7位存放H，4位存放S，5位存放V，即745或者655就可以满足我们的需要了。</p>
-<p>由于HSV是一种比较直观的颜色模型，所以在许多图像编辑工具中应用比较广泛，如Photoshop（在Photoshop中叫HSB）等等，但这也决定了<strong>它不适合使用在光照模型中，许多光线混合运算、光强运算等都无法直接使用HSV来实现。</strong></p>
-<h2 id="LAB"><a href="#LAB" class="headerlink" title="LAB"></a>LAB</h2><h3 id="基本概念-2"><a href="#基本概念-2" class="headerlink" title="基本概念"></a>基本概念</h3><p><a href="https://baike.baidu.com/item/Lab%E6%A8%A1%E5%BC%8F/7362402">Lab模式</a>是根据Commission International Eclairage（CIE）在1931年所制定的一种测定颜色的国际标准建立的。于1976年被改进，并且命名的一种色彩模式。Lab颜色模型弥补了<a href="https://baike.baidu.com/item/RGB/342517">RGB</a>和CMYK两种色彩模式的不足。它是一种<strong>设备无关的颜色模型</strong>，也是一种<strong>基于生理特征的颜色模型</strong>。 Lab颜色模型由三个要素组成，一个要素是亮度（L），a 和b是两个<a href="https://baike.baidu.com/item/%E9%A2%9C%E8%89%B2%E9%80%9A%E9%81%93/5706858">颜色通道</a>。a包括的颜色是从<a href="https://baike.baidu.com/item/%E6%B7%B1%E7%BB%BF%E8%89%B2/2192808">深绿色</a>（低亮度值）到灰色（中亮度值）再到亮粉红色（高亮度值）；b是从亮蓝色（低亮度值）到灰色（中亮度值）再到黄色（高亮度值）。因此，这种颜色混合后将产生具有明亮效果的色彩。</p>
-<h3 id="空间模型-2"><a href="#空间模型-2" class="headerlink" title="空间模型"></a>空间模型</h3><p><a href="https://baike.baidu.com/item/Lab%E6%A8%A1%E5%BC%8F/7362402">Lab模式</a>既不依赖光线，也不依赖于颜料，它是CIE组织确定的一个理论上包括了人眼可以看见的所有色彩的色彩模式。Lab模式弥补了<a href="https://baike.baidu.com/item/RGB/342517">RGB</a>和CMYK两种色彩模式的不足。同RGB颜色空间相比，Lab是一种不常用的色彩空间。它是一种设备无关的颜色系统，也是一种基于生理特征的颜色系统。这也就意味着，<strong>它是用数字化的方法来描述人的视觉感应</strong>。Lab颜色空间中的L分量用于表示像素的亮度，取值范围是[0,100],表示从纯黑到纯白；a表示从红色到绿色的范围，取值范围是[127,-128]；b表示从黄色到蓝色的范围，取值范围是[127,-128]。下图所示为Lab颜色空间的图示：</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9nc3MzLmJkc3RhdGljLmNvbS8tUG8zZFNhZ194STRraEdrcG9XSzFIRjZoaHkvYmFpa2UvYzAlM0RiYWlrZTgwJTJDNSUyQzUlMkM4MCUyQzI2L3NpZ249ZTM1OWY1YTZhNDRiZDExMzEwYzBiZjYwM2JjNmNmNmEvMDIzYjViYjVjOWVhMTVjZTFkMWZmMWRjYmYwMDNhZjMzYjg3YjI3NS5qcGc?x-oss-process=image/format,png"></p>
-<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><p><strong>Lab颜色空间比计算机显示器甚至比人类视觉的色域都要大 **，表示为Lab的位图比RGB或CMYK位图获得同样的精度需要要求更多的像素数据。<a href="https://baike.baidu.com/item/Lab%E6%A8%A1%E5%BC%8F/7362402">Lab模式</a>所定义的色彩最多，且与光线及设备无关并且</strong>处理速度与<a href="https://baike.baidu.com/item/RGB%E6%A8%A1%E5%BC%8F/7362104">RGB模式</a>同样快**，比<a href="https://baike.baidu.com/item/CMYK%E6%A8%A1%E5%BC%8F/305545">CMYK模式</a>快很多。因此，可以放心大胆的在图象编辑中使用Lab模 式。而且，Lab模式在转换成CMYK模式时色彩没有丢失或被替换。因此，最佳避免色彩损失的方法是：应用Lab模式编辑图象，再转换为CMYK模式打印输出。</p>
-<h2 id="CMYK"><a href="#CMYK" class="headerlink" title="CMYK"></a>CMYK</h2><h3 id="基本概念-3"><a href="#基本概念-3" class="headerlink" title="基本概念"></a>基本概念</h3><p>当阳光照射到一个物体上时，这个物体将吸收一部分光线，并将剩下的光线进行反射，反射的光线就是我们所看见的物体颜色。这是一种**减色<a href="https://baike.baidu.com/item/%E8%89%B2%E5%BD%A9%E6%A8%A1%E5%BC%8F/10209468">色彩模式</a>**，同时也是与<a href="https://baike.baidu.com/item/RGB%E6%A8%A1%E5%BC%8F">RGB模式</a>的根本不同之处。不但我们看物体的颜色时用到了这种减色模式，而且在纸上印刷时应用的也是这种减色模式。CMYK代表印刷上用的四种颜色，C代表青色（Cyan），M代表<a href="https://baike.baidu.com/item/%E6%B4%8B%E7%BA%A2%E8%89%B2/6833575">洋红色</a>（Magenta），Y代表黄色（Yellow），K代表黑色（Black）。因为在实际应用中，青色、洋红色和黄色很难叠加形成真正的黑色，最多不过是褐色而已。因此才引入了K——黑色。黑色的作用是强化暗调，加深暗部色彩。</p>
-<h3 id="打印模式"><a href="#打印模式" class="headerlink" title="打印模式"></a>打印模式</h3><p><strong>CMYK模式俗称四色打印模式，是最佳的打印模式</strong>。但是在进行实际打印时，两种模式存在转换问题，具体原因如下：</p>
-<ol>
-<li><p>CMYK模式编辑虽然能够避免色彩的损失，但运算速度很慢。主要原因如下：</p>
-<p>1）、即使在CMYK模式下工作，<a href="https://baike.baidu.com/item/Photoshop/133866">Photoshop</a>也必须将CMYK模式转变为显示器所使用的RGB模式。</p>
-<p>2）、对于同样的图像，RGB模式只需要处理三个<a href="https://baike.baidu.com/item/%E9%80%9A%E9%81%93">通道</a>即可，而CMYK模式则需要处理四个。</p>
-</li>
-<li><p> 用户所使用的扫描仪和显示器都是<a href="https://baike.baidu.com/item/RGB/342517">RGB</a>设备，所以无论什么时候使用CMYK模式工作都有把RGB模式转换为CMYK模式这样一个过程。因此，是否应用CMYK模式进行编辑都存在<a href="https://baike.baidu.com/item/RGB%E6%A8%A1%E5%BC%8F/7362104">RGB模式</a>和CMYK模式转换的问题。</p>
-</li>
-</ol>
-<p>对于<a href="https://baike.baidu.com/item/RGB%E6%A8%A1%E5%BC%8F/7362104">RGB模式</a>和CMYK模式转换的问题，可以先用RGB模式进行编辑工作，再用CMYK模式进行打印工作，在打印前才进行转换，然后加入必要的<a href="https://baike.baidu.com/item/%E8%89%B2%E5%BD%A9%E6%A0%A1%E6%AD%A3/10786529">色彩校正</a>，<a href="https://baike.baidu.com/item/%E9%94%90%E5%8C%96/2189784">锐化</a>和修整。这样虽然使<a href="https://baike.baidu.com/item/Photoshop/133866">Photoshop</a>在CMYK模式下速度慢一些，但可节省大部分编辑时间。这种打印前的模式转换，并不是避免图像损失最佳的途径，最佳方法是将<a href="https://baike.baidu.com/item/Lab%E6%A8%A1%E5%BC%8F">Lab模式</a>和CMYK模式相结合使用，这样可以最大程度的减少图像失真。</p>
-<h3 id="优缺点-1"><a href="#优缺点-1" class="headerlink" title="优缺点"></a>优缺点</h3><p>优点：可以满足打印的需求，解决RGB不能打印的问题</p>
-<p>缺点：一定程度上存在色彩的缺失，运行速度慢</p>
-]]></content>
-      <categories>
-        <category>三维视觉</category>
-      </categories>
-      <tags>
-        <tag>OpenCV</tag>
       </tags>
   </entry>
   <entry>
@@ -13481,36 +13481,6 @@ TODO
       </tags>
   </entry>
   <entry>
-    <title>论文阅读《Efficient Dense RGB-D SLAM in a Consistent Uncertainty-aware 3D Gaussian Field》</title>
-    <url>/2024/05/19/paper-reading-cg-slam/</url>
-    <content><![CDATA[<p><strong>项目主页：</strong><a href="https://zju3dv.github.io/cg-slam/">https://zju3dv.github.io/cg-slam/</a></p>
-<h1 id="论文阅读《Efficient-Dense-RGB-D-SLAM-in-a-Consistent-Uncertainty-aware-3D-Gaussian-Field》"><a href="#论文阅读《Efficient-Dense-RGB-D-SLAM-in-a-Consistent-Uncertainty-aware-3D-Gaussian-Field》" class="headerlink" title="论文阅读《Efficient Dense RGB-D SLAM in a Consistent Uncertainty-aware 3D Gaussian Field》"></a>论文阅读《Efficient Dense RGB-D SLAM in a Consistent Uncertainty-aware 3D Gaussian Field》</h1><p>本文介绍了一种基于高一致性和几何稳定性的新型三维高斯场的实时高斯溅射SLAM系统，即CG-SLAM。为此，我们首先对EWA(椭圆加权平均)溅射过程中相机姿态的导数进行了全面的数学分析[60]，并为SLAM任务开发了一个专门的CUDA框架，有效地解耦了跟踪和映射组件。其次，为了减少固有的过拟合问题，我们提出了一个尺度正则化项，适当地鼓励高斯椭球近似高斯球体，以减少各向异性，并在跟踪精度和渲染真实感之间实现良好的权衡。同时，我们观察到单独使用alpha混合深度不能对高斯基元的位置施加有效的约束。因此，为了实现高质量的映射，我们进一步对齐中值深度和alpha混合深度，以鼓励高斯原语在场景表面上很好地分布，从而促进具有更集中几何密度的一致高斯场。此外，为了进一步提高系统的精度和效率，我们设计了一种新的深度不确定性模型，以指导我们基于高斯的SLAM关注那些稳定且信息丰富的深度不确定性。我们在各种RGB-D数据集上对我们的系统进行了评估，实验结果表明我们的CG-SLAM在跟踪精度、重建质量和运行效率方面具有优越的性能。</p>
-<h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><p><img src="/images/paper-reading-CG-SLAM/image-20240513111128366.png"></p>
-<h3 id="Preliminary"><a href="#Preliminary" class="headerlink" title="Preliminary"></a>Preliminary</h3><p>基本都是3DGS的内容</p>
-<p>3DGS中3D投影到2D用的是02年的一篇文章，EWA splatting，本文分析了这个EWA splatting，推导了位姿的导数。</p>
-<h3 id="Uncertainty-Modeling"><a href="#Uncertainty-Modeling" class="headerlink" title="Uncertainty Modeling"></a>Uncertainty Modeling</h3><p>参考UncLe-SLAM实现了Uncertainty Modeling</p>
-<blockquote>
-<p>Sandström, E., Ta, K., Van Gool, L., Oswald, M.R.: Uncle-slam: Uncertainty learning for dense neural slam. arXiv preprint arXiv:2306.11048 (2023)</p>
-</blockquote>
-<p>这部分看起来就是希望不确定性尽量小，然后对深度影响最大的高斯尽可能的居中。</p>
-<h3 id="Mapping"><a href="#Mapping" class="headerlink" title="Mapping"></a>Mapping</h3><p>稀松平常的内容</p>
-<h3 id="Tracking"><a href="#Tracking" class="headerlink" title="Tracking"></a>Tracking</h3><p>稀松平常的内容</p>
-<p>提到了一个Sliding Bundle Adjustment，希望通过这个减小累积误差。</p>
-<p>这里的sliding window没有用基于视锥的方法，而是用NetVLAD预训练模型去处理。</p>
-<p><strong>疑惑：</strong></p>
-<p>这里tracking的内容写的好少，不知道这个导数什么的是怎么弄的啊。。。补充材料没有找到居然。。。</p>
-<p>又去找了一下，没找到，那只能等了。。。这篇文章虽然是章国峰组的，但是其实也没看到很突出的地方。。。</p>
-]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>隐式表示</tag>
-        <tag>3D Gaussian Splatting</tag>
-        <tag>视觉SLAM</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>3DGS SLAM泛读（一）</title>
     <url>/2024/03/06/paper-reading-3dgs-slam-1/</url>
     <content><![CDATA[<h1 id="3DGS-SLAM泛读（一）"><a href="#3DGS-SLAM泛读（一）" class="headerlink" title="3DGS SLAM泛读（一）"></a>3DGS SLAM泛读（一）</h1><h2 id="GS-SLAM"><a href="#GS-SLAM" class="headerlink" title="GS-SLAM"></a>GS-SLAM</h2><p><strong>贡献：</strong></p>
@@ -13771,6 +13741,36 @@ TODO
 <p><strong>实验部分</strong></p>
 <p>论文提到Photo-SLAM是用C++和CUDA写的，使用了ORB-SLAM3、3D Gaussian Splatting和LibTorch的框架。</p>
 <p>实验部分略过，但是有一个很大的疑惑：既然说了用了英伟达的Jetson平台，为什么没有指明到底用的什么平台？而且看Table 1，这种方法即使在Jetson上也需要4GB的显存，Laptop也是4GB，然后桌面端显存需要6GB。这个Jetson跑的效果也还行，渲染速率也是100fps左右。</p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>隐式表示</tag>
+        <tag>3D Gaussian Splatting</tag>
+        <tag>视觉SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文阅读《Efficient Dense RGB-D SLAM in a Consistent Uncertainty-aware 3D Gaussian Field》</title>
+    <url>/2024/05/19/paper-reading-cg-slam/</url>
+    <content><![CDATA[<p><strong>项目主页：</strong><a href="https://zju3dv.github.io/cg-slam/">https://zju3dv.github.io/cg-slam/</a></p>
+<h1 id="论文阅读《Efficient-Dense-RGB-D-SLAM-in-a-Consistent-Uncertainty-aware-3D-Gaussian-Field》"><a href="#论文阅读《Efficient-Dense-RGB-D-SLAM-in-a-Consistent-Uncertainty-aware-3D-Gaussian-Field》" class="headerlink" title="论文阅读《Efficient Dense RGB-D SLAM in a Consistent Uncertainty-aware 3D Gaussian Field》"></a>论文阅读《Efficient Dense RGB-D SLAM in a Consistent Uncertainty-aware 3D Gaussian Field》</h1><p>本文介绍了一种基于高一致性和几何稳定性的新型三维高斯场的实时高斯溅射SLAM系统，即CG-SLAM。为此，我们首先对EWA(椭圆加权平均)溅射过程中相机姿态的导数进行了全面的数学分析[60]，并为SLAM任务开发了一个专门的CUDA框架，有效地解耦了跟踪和映射组件。其次，为了减少固有的过拟合问题，我们提出了一个尺度正则化项，适当地鼓励高斯椭球近似高斯球体，以减少各向异性，并在跟踪精度和渲染真实感之间实现良好的权衡。同时，我们观察到单独使用alpha混合深度不能对高斯基元的位置施加有效的约束。因此，为了实现高质量的映射，我们进一步对齐中值深度和alpha混合深度，以鼓励高斯原语在场景表面上很好地分布，从而促进具有更集中几何密度的一致高斯场。此外，为了进一步提高系统的精度和效率，我们设计了一种新的深度不确定性模型，以指导我们基于高斯的SLAM关注那些稳定且信息丰富的深度不确定性。我们在各种RGB-D数据集上对我们的系统进行了评估，实验结果表明我们的CG-SLAM在跟踪精度、重建质量和运行效率方面具有优越的性能。</p>
+<h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><p><img src="/images/paper-reading-CG-SLAM/image-20240513111128366.png"></p>
+<h3 id="Preliminary"><a href="#Preliminary" class="headerlink" title="Preliminary"></a>Preliminary</h3><p>基本都是3DGS的内容</p>
+<p>3DGS中3D投影到2D用的是02年的一篇文章，EWA splatting，本文分析了这个EWA splatting，推导了位姿的导数。</p>
+<h3 id="Uncertainty-Modeling"><a href="#Uncertainty-Modeling" class="headerlink" title="Uncertainty Modeling"></a>Uncertainty Modeling</h3><p>参考UncLe-SLAM实现了Uncertainty Modeling</p>
+<blockquote>
+<p>Sandström, E., Ta, K., Van Gool, L., Oswald, M.R.: Uncle-slam: Uncertainty learning for dense neural slam. arXiv preprint arXiv:2306.11048 (2023)</p>
+</blockquote>
+<p>这部分看起来就是希望不确定性尽量小，然后对深度影响最大的高斯尽可能的居中。</p>
+<h3 id="Mapping"><a href="#Mapping" class="headerlink" title="Mapping"></a>Mapping</h3><p>稀松平常的内容</p>
+<h3 id="Tracking"><a href="#Tracking" class="headerlink" title="Tracking"></a>Tracking</h3><p>稀松平常的内容</p>
+<p>提到了一个Sliding Bundle Adjustment，希望通过这个减小累积误差。</p>
+<p>这里的sliding window没有用基于视锥的方法，而是用NetVLAD预训练模型去处理。</p>
+<p><strong>疑惑：</strong></p>
+<p>这里tracking的内容写的好少，不知道这个导数什么的是怎么弄的啊。。。补充材料没有找到居然。。。</p>
+<p>又去找了一下，没找到，那只能等了。。。这篇文章虽然是章国峰组的，但是其实也没看到很突出的地方。。。</p>
 ]]></content>
       <categories>
         <category>slam</category>
@@ -14905,90 +14905,6 @@ TODO
       </tags>
   </entry>
   <entry>
-    <title>论文阅读《Mini-Splatting：Representing Scenes with a Constrained Number of Gaussians》</title>
-    <url>/2024/07/21/paper-reading-mini-splatting/</url>
-    <content><![CDATA[<h1 id="论文阅读《Mini-Splatting-Representing-Scenes-with-a-Constrained-Number-of-Gaussians》"><a href="#论文阅读《Mini-Splatting-Representing-Scenes-with-a-Constrained-Number-of-Gaussians》" class="headerlink" title="论文阅读《Mini-Splatting: Representing Scenes with a Constrained Number of Gaussians》"></a>论文阅读《Mini-Splatting: Representing Scenes with a Constrained Number of Gaussians》</h1><h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><h3 id="Densification"><a href="#Densification" class="headerlink" title="Densification"></a>Densification</h3><h4 id="Blur-Split"><a href="#Blur-Split" class="headerlink" title="Blur Split"></a>Blur Split</h4><p>这个策略的目的是：解决高斯伪影。</p>
-<p>论文提到了，基于梯度的分割和克隆策略可能会在颜色过渡平滑的区域中失败，这会导致相应的过大尺寸的高斯会在优化过程中保留。不过3DGS也会根据投影的2D高斯分布，对屏幕空间中尺寸过大的高斯进行剪枝，但是这种方法也解决不了重建不足的问题。</p>
-<blockquote>
-<p>论文在这里说废话，这不是解决overlapping的问题才这么做的？</p>
-<p>3DGS看起来只是没有着重去解决under-reconstruction的问题，就像论文分析的，基于梯度的分割和克隆策略在弱纹理的区域效果不好，没有分裂或克隆足够的高斯点，就导致了under-reconstruction的问题。</p>
-</blockquote>
-<p>论文说他们记录了每个像素权重最大的高斯函数的索引$i_{max}(x)$，以及对这个像素实际影响最大的高斯函数的索引$i(x)$，并且观察到高斯伪影与$i_{max}(x)$更相关，这说明具有较大的”最大贡献面积“的高斯函数会导致under-reconstruction。</p>
-<blockquote>
-<p>我也觉得，因为既然已经造成了影响，说明这个高斯的权重会比较大。</p>
-<p>而伪影通常看起来不透明度都不是那么高（因为看着很模糊），有可能他们的不透明度很低，只是在深度排序里面比较靠前，导致alpha-blending中的权重就比较大了。</p>
-</blockquote>
-<p>因此，基于这个观察，论文根据公式（2）识别导致模糊的高斯函数，并且在优化过程中对其进行分割，这样可以增强图像清晰度。</p>
-<p><img src="/images/paper-reading-mini-splatting/image-20240721171315625.png"></p>
-<p>这部分的实验如下所示：</p>
-<p><img src="/images/paper-reading-mini-splatting/image-20240721163151587.png" alt="image-20240721163151587"></p>
-<h4 id="Depth-Reinitialization"><a href="#Depth-Reinitialization" class="headerlink" title="Depth Reinitialization"></a>Depth Reinitialization</h4><blockquote>
-<p>这部分做的没有意思，个人感觉比较牵强了。</p>
-<p>大家渲染深度基本都是用高斯中心的深度来进行渲染的，但是论文作者认为这个会产生误导，导致深度点云存在伪影。因此他们计算了相机射线与头球的交点，以交点的中点作为高斯的深度。</p>
-<blockquote>
-<p>好好看看3D高斯往2D高斯的投影，就会感觉，大家用的方法也没有问题。。。</p>
-<p>不过只是感觉。</p>
-</blockquote>
-<p>这里论文提到其实用高斯中心的深度页有相似的渲染质量。</p>
-<blockquote>
-<p>所以其实论文效果好只是单纯的只用权重最大的高斯深度作为相似的深度了，他这个计算交点中点的方法，个人感觉没必要。。。</p>
-</blockquote>
-</blockquote>
-<h3 id="Simplification"><a href="#Simplification" class="headerlink" title="Simplification"></a>Simplification</h3><p>这里没感觉到论文做了什么很突出的贡献，记录几个论文提到的观点：</p>
-<ul>
-<li>通过给每个高斯分布分配一个预定义的重要性值，我们可以简单地修剪低重要性的高斯分布。虽然这种策略对于去除有限数量的高斯函数是有效的，但当剪枝比相对较大时，它可能导致渲染质量的崩溃。主要问题在于<strong>高斯重要性只反映了简化前的重要性。直接剪枝很容易破坏局部几何</strong>，这反过来又降低了进一步优化后的最终渲染质量。</li>
-<li><strong>与确定性剪枝相比，随机采样策略可以更好地保持整体几何形状</strong>。我们将高斯重要性纳入每个高斯的抽样概率，这种重要性加权采样策略具有更强的保持几何质量的能力，从而增强了最终的渲染结果</li>
-</ul>
-<p>总结就是：根据重要性来剪枝不好，容易破坏局部的几何结构。最好的办法是结合高斯的权重进行随机采样剪枝。</p>
-<blockquote>
-<p>放到SLAM里面那就是learnable-mask * weight</p>
-<p>又是一个很方便实现而且比较有效的小技巧</p>
-<p>learnable-mask太棒了！</p>
-</blockquote>
-<h2 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h2><p>这篇论文做了很多有意思的实验，这里记录一下</p>
-<h3 id="剪枝和采样策略"><a href="#剪枝和采样策略" class="headerlink" title="剪枝和采样策略"></a>剪枝和采样策略</h3><p>论文提到减少高斯数最直接的方法是进行剪枝和采样，这里他们尝试了四种方法：(b) 计算每个高斯的重要性，重要性低的剪枝；(c) 随机采样；(d) 网格采样；(e) 密度保持采样。这些结果表明，在保持渲染质量的同时，解决高斯分布的低效和实现最小高斯表示需要进一步的努力。</p>
-<p><img src="/images/paper-reading-mini-splatting/image-20240721154422922.png"></p>
-<p>论文也提到了，修剪策略可以将高斯数量大幅减少，比如(b)方法可以从610w降低到60w，但是PSNR会降低，而且仍然会存在overlapping和under-reconstruction的问题。</p>
-<blockquote>
-<p>很显然啊，因为只是进行了修剪，而不是进行了更合理的density control。不管数量多寡，只要density是不合理的，就一定会存在overlapping和under-reconstruction。</p>
-<p>从这个实验和作者的分析可以进一步的出一个结论：</p>
-<ul>
-<li><p>首先，高斯的数量是可以通过简单的修剪或采样数量显著减少的，对PSNR等指标影响不大；</p>
-</li>
-<li><p>另外，重建的结果好坏，受高斯数量多寡的影响小，受density是否合理的影响大；</p>
-</li>
-<li><p>不影响其他指标的同时减少高斯的数量值得研究，而在这个基础上实现更合理的density分布更值得研究，减少高斯点数和更合理的density control是相辅相成的。</p>
-<blockquote>
-<p>论文也是同时研究了Densification和Simplification</p>
-</blockquote>
-</li>
-</ul>
-</blockquote>
-<h2 id="个人评价"><a href="#个人评价" class="headerlink" title="个人评价"></a>个人评价</h2><p>论文做了很多实验，讲了自己观察到的很多问题，并且针对性的研究了Densification和Simplification策略。</p>
-<p>不过其中个人觉得最创新的还是Densification中的Blur Split，而Depth Reinitialization就有点牵强了。另外，Simplification这里也提到了观察到的一个重要现象，即<strong>随机采样策略可以更好地保持整体几何形状</strong>，这个在Compact 3DGS一系列的工作中得到了验证。</p>
-<p>后续的话可以借鉴这篇论文的思路，围绕：</p>
-<ul>
-<li><p>更全面的Densification，而不是仅仅关注产生伪影的部分高斯；</p>
-<blockquote>
-<p>这个目前还是没有看到做的比较好的工作出现。</p>
-</blockquote>
-</li>
-<li><p>结合高斯权重和learnable-mask的Simplification策略。</p>
-<blockquote>
-<p>这个应该已经不创新了，但是效果很好。</p>
-</blockquote>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>NeRF&amp;3DGS</category>
-      </categories>
-      <tags>
-        <tag>隐式表示</tag>
-        <tag>3D Gaussian Splatting</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>论文阅读《Gaussian Splatting with Localized Points Management》</title>
     <url>/2024/07/20/paper-reading-lpm/</url>
     <content><![CDATA[<h1 id="论文阅读《Gaussian-Splatting-with-Localized-Points-Management》"><a href="#论文阅读《Gaussian-Splatting-with-Localized-Points-Management》" class="headerlink" title="论文阅读《Gaussian Splatting with Localized Points Management》"></a>论文阅读《Gaussian Splatting with Localized Points Management》</h1><h2 id="Motivation-Adaptive-Density-Control的局限性"><a href="#Motivation-Adaptive-Density-Control的局限性" class="headerlink" title="Motivation: Adaptive Density Control的局限性"></a>Motivation: Adaptive Density Control的局限性</h2><p>论文在Introduction部分提到了Adaptive Density Control存在几个问题：</p>
@@ -15071,6 +14987,90 @@ TODO
 </blockquote>
 <p>从实验结果来看：加入论文实现的LPM模块之后，PSNR、LPIPS等指标只有些微的提升，感觉可以忽略不计；不过训练时间、高斯点数等指标也没有特别大的影响。另外，论文还测试了自适应密度控制lower threshold下3DGS的结果，高斯点数、训练时间明显提升，但是效果不一定提升，这个现象我之前也发现了，所以自适应密度控制这种方法，确实不是很适合提升一些局部的细节。这样看的话，论文为3dgs局部细节的提升做了一定的贡献。</p>
 <p>此外，论文在最后的总结部分也提到了“While our method identifies the 3D Gaussian points that lead to rendering errors, it still follows the densification rules of 3DGS”，论文的方法本质上还是遵循3DGS的致密化规则，只是识别了导致渲染错误的3D高斯。所以如何寻找更好的致密化规则，还是值得研究的。</p>
+]]></content>
+      <categories>
+        <category>NeRF&amp;3DGS</category>
+      </categories>
+      <tags>
+        <tag>隐式表示</tag>
+        <tag>3D Gaussian Splatting</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文阅读《Mini-Splatting：Representing Scenes with a Constrained Number of Gaussians》</title>
+    <url>/2024/07/21/paper-reading-mini-splatting/</url>
+    <content><![CDATA[<h1 id="论文阅读《Mini-Splatting-Representing-Scenes-with-a-Constrained-Number-of-Gaussians》"><a href="#论文阅读《Mini-Splatting-Representing-Scenes-with-a-Constrained-Number-of-Gaussians》" class="headerlink" title="论文阅读《Mini-Splatting: Representing Scenes with a Constrained Number of Gaussians》"></a>论文阅读《Mini-Splatting: Representing Scenes with a Constrained Number of Gaussians》</h1><h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><h3 id="Densification"><a href="#Densification" class="headerlink" title="Densification"></a>Densification</h3><h4 id="Blur-Split"><a href="#Blur-Split" class="headerlink" title="Blur Split"></a>Blur Split</h4><p>这个策略的目的是：解决高斯伪影。</p>
+<p>论文提到了，基于梯度的分割和克隆策略可能会在颜色过渡平滑的区域中失败，这会导致相应的过大尺寸的高斯会在优化过程中保留。不过3DGS也会根据投影的2D高斯分布，对屏幕空间中尺寸过大的高斯进行剪枝，但是这种方法也解决不了重建不足的问题。</p>
+<blockquote>
+<p>论文在这里说废话，这不是解决overlapping的问题才这么做的？</p>
+<p>3DGS看起来只是没有着重去解决under-reconstruction的问题，就像论文分析的，基于梯度的分割和克隆策略在弱纹理的区域效果不好，没有分裂或克隆足够的高斯点，就导致了under-reconstruction的问题。</p>
+</blockquote>
+<p>论文说他们记录了每个像素权重最大的高斯函数的索引$i_{max}(x)$，以及对这个像素实际影响最大的高斯函数的索引$i(x)$，并且观察到高斯伪影与$i_{max}(x)$更相关，这说明具有较大的”最大贡献面积“的高斯函数会导致under-reconstruction。</p>
+<blockquote>
+<p>我也觉得，因为既然已经造成了影响，说明这个高斯的权重会比较大。</p>
+<p>而伪影通常看起来不透明度都不是那么高（因为看着很模糊），有可能他们的不透明度很低，只是在深度排序里面比较靠前，导致alpha-blending中的权重就比较大了。</p>
+</blockquote>
+<p>因此，基于这个观察，论文根据公式（2）识别导致模糊的高斯函数，并且在优化过程中对其进行分割，这样可以增强图像清晰度。</p>
+<p><img src="/images/paper-reading-mini-splatting/image-20240721171315625.png"></p>
+<p>这部分的实验如下所示：</p>
+<p><img src="/images/paper-reading-mini-splatting/image-20240721163151587.png" alt="image-20240721163151587"></p>
+<h4 id="Depth-Reinitialization"><a href="#Depth-Reinitialization" class="headerlink" title="Depth Reinitialization"></a>Depth Reinitialization</h4><blockquote>
+<p>这部分做的没有意思，个人感觉比较牵强了。</p>
+<p>大家渲染深度基本都是用高斯中心的深度来进行渲染的，但是论文作者认为这个会产生误导，导致深度点云存在伪影。因此他们计算了相机射线与头球的交点，以交点的中点作为高斯的深度。</p>
+<blockquote>
+<p>好好看看3D高斯往2D高斯的投影，就会感觉，大家用的方法也没有问题。。。</p>
+<p>不过只是感觉。</p>
+</blockquote>
+<p>这里论文提到其实用高斯中心的深度页有相似的渲染质量。</p>
+<blockquote>
+<p>所以其实论文效果好只是单纯的只用权重最大的高斯深度作为相似的深度了，他这个计算交点中点的方法，个人感觉没必要。。。</p>
+</blockquote>
+</blockquote>
+<h3 id="Simplification"><a href="#Simplification" class="headerlink" title="Simplification"></a>Simplification</h3><p>这里没感觉到论文做了什么很突出的贡献，记录几个论文提到的观点：</p>
+<ul>
+<li>通过给每个高斯分布分配一个预定义的重要性值，我们可以简单地修剪低重要性的高斯分布。虽然这种策略对于去除有限数量的高斯函数是有效的，但当剪枝比相对较大时，它可能导致渲染质量的崩溃。主要问题在于<strong>高斯重要性只反映了简化前的重要性。直接剪枝很容易破坏局部几何</strong>，这反过来又降低了进一步优化后的最终渲染质量。</li>
+<li><strong>与确定性剪枝相比，随机采样策略可以更好地保持整体几何形状</strong>。我们将高斯重要性纳入每个高斯的抽样概率，这种重要性加权采样策略具有更强的保持几何质量的能力，从而增强了最终的渲染结果</li>
+</ul>
+<p>总结就是：根据重要性来剪枝不好，容易破坏局部的几何结构。最好的办法是结合高斯的权重进行随机采样剪枝。</p>
+<blockquote>
+<p>放到SLAM里面那就是learnable-mask * weight</p>
+<p>又是一个很方便实现而且比较有效的小技巧</p>
+<p>learnable-mask太棒了！</p>
+</blockquote>
+<h2 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h2><p>这篇论文做了很多有意思的实验，这里记录一下</p>
+<h3 id="剪枝和采样策略"><a href="#剪枝和采样策略" class="headerlink" title="剪枝和采样策略"></a>剪枝和采样策略</h3><p>论文提到减少高斯数最直接的方法是进行剪枝和采样，这里他们尝试了四种方法：(b) 计算每个高斯的重要性，重要性低的剪枝；(c) 随机采样；(d) 网格采样；(e) 密度保持采样。这些结果表明，在保持渲染质量的同时，解决高斯分布的低效和实现最小高斯表示需要进一步的努力。</p>
+<p><img src="/images/paper-reading-mini-splatting/image-20240721154422922.png"></p>
+<p>论文也提到了，修剪策略可以将高斯数量大幅减少，比如(b)方法可以从610w降低到60w，但是PSNR会降低，而且仍然会存在overlapping和under-reconstruction的问题。</p>
+<blockquote>
+<p>很显然啊，因为只是进行了修剪，而不是进行了更合理的density control。不管数量多寡，只要density是不合理的，就一定会存在overlapping和under-reconstruction。</p>
+<p>从这个实验和作者的分析可以进一步的出一个结论：</p>
+<ul>
+<li><p>首先，高斯的数量是可以通过简单的修剪或采样数量显著减少的，对PSNR等指标影响不大；</p>
+</li>
+<li><p>另外，重建的结果好坏，受高斯数量多寡的影响小，受density是否合理的影响大；</p>
+</li>
+<li><p>不影响其他指标的同时减少高斯的数量值得研究，而在这个基础上实现更合理的density分布更值得研究，减少高斯点数和更合理的density control是相辅相成的。</p>
+<blockquote>
+<p>论文也是同时研究了Densification和Simplification</p>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+<h2 id="个人评价"><a href="#个人评价" class="headerlink" title="个人评价"></a>个人评价</h2><p>论文做了很多实验，讲了自己观察到的很多问题，并且针对性的研究了Densification和Simplification策略。</p>
+<p>不过其中个人觉得最创新的还是Densification中的Blur Split，而Depth Reinitialization就有点牵强了。另外，Simplification这里也提到了观察到的一个重要现象，即<strong>随机采样策略可以更好地保持整体几何形状</strong>，这个在Compact 3DGS一系列的工作中得到了验证。</p>
+<p>后续的话可以借鉴这篇论文的思路，围绕：</p>
+<ul>
+<li><p>更全面的Densification，而不是仅仅关注产生伪影的部分高斯；</p>
+<blockquote>
+<p>这个目前还是没有看到做的比较好的工作出现。</p>
+</blockquote>
+</li>
+<li><p>结合高斯权重和learnable-mask的Simplification策略。</p>
+<blockquote>
+<p>这个应该已经不创新了，但是效果很好。</p>
+</blockquote>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>NeRF&amp;3DGS</category>
@@ -15258,6 +15258,138 @@ TODO
       </tags>
   </entry>
   <entry>
+    <title>论文阅读PIN-SLAM(TRO 2024)</title>
+    <url>/2024/11/21/paper-reading-pin-slam/</url>
+    <content><![CDATA[<h1 id="论文阅读《PIN-SLAM-LiDAR-SLAM-Using-a-Point-Based-Implicit-Neural-Representation-for-Achieving-Global-Map-Consistency》"><a href="#论文阅读《PIN-SLAM-LiDAR-SLAM-Using-a-Point-Based-Implicit-Neural-Representation-for-Achieving-Global-Map-Consistency》" class="headerlink" title="论文阅读《PIN-SLAM: LiDAR SLAM Using a Point-Based Implicit Neural Representation for Achieving Global Map Consistency》"></a>论文阅读《PIN-SLAM: LiDAR SLAM Using a Point-Based Implicit Neural Representation for Achieving Global Map Consistency》</h1><p><img src="/images/paper-reading-pin-slam/image-20241115195333282.png"></p>
+<p><strong>论文想要解决的问题</strong>：These SLAM approaches <strong>lack support for direct loop closure corrections</strong> and are <strong>not able to build globally consistent maps of larger scenes</strong>. This is mainly due to the usage of regular grid-based local feature embeddings, which are not elastic and resilient to loop corrections.</p>
+<p><strong>论文的核心目标</strong>：The main focus of this work is a LiDAR SLAM system for building globally consistent maps using a PIN map representation.</p>
+<p><strong>论文为什么选择neural point表示场景</strong>：We opt to use a neural point-based implicit representation, which has two main advantages over grid-based representations: <strong>the flexibility of spatial distribution and the elasticity for transformations</strong>. Recent work (Point-SLAM) only makes use of the first advantage for neural RGB-D SLAM at the cost of scalability and inefficient neighborhood querying. Instead, we exploit the second and more important advantage to build a globally consistentmap that can be corrected while online mapping after closing a loop, which is essential for large-scale LiDAR-based SLAM.</p>
+<p>论文在Introduction提到，Mapping部分主要是基于之前的工作SHINE-Mapping，而Odometry部分是扩展了之前的工作LocNDF。</p>
+<blockquote>
+<p>工作是延续的，非常扎实，令人羡慕。</p>
+</blockquote>
+<p><strong>论文提出了四个key claims</strong>：</p>
+<ol>
+<li>Our SLAM system achieves <strong>localization accuracy better or on par with state-of-the-art</strong> LiDAR odometry/SLAM approaches and is more accurate than recent implicit neural SLAM methods on various datasets using different range sensors.</li>
+<li>Our method can conduct <strong>large-scale globally consistent mapping with loop closure</strong> thanks to the elastic neural point representation.</li>
+<li>Our map representation is <strong>more compact than the previous counterparts</strong> and <strong>can be used to reconstruct accurate and complete meshes at an arbitrary resolution</strong>.</li>
+<li>Our correspondence-free scan-to-implicit map registration and the efficient neural point indexing by voxel hashing enable our algorithm to <strong>run at the sensor frame rate on a single NVIDIA A4000</strong> graphics processing unit (GPU).</li>
+</ol>
+<p><strong>论文对基于Submap的方法的评价</strong>：The submap-based methods accumulate the observations as a submap and assume the submap is a locally defined rigid body. The pseudoglobal consistency is maintained by optimizing a graph linking submaps and their associated poses through submap-to-submap registrations. The usage of submaps decreases the number of nodes and edges in PGO, thus saving computational effort. However, these methods have issues of ambiguity in the overlapping region of the adjacent submaps and determining appropriate criteria for submap division to balance the rigidity and efficiency.</p>
+<p><strong>论文的Pipeline</strong>：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241115205159958.png"></p>
+<p>论文将他们的方法分成5个部分：</p>
+<ol>
+<li><strong>Preprocessing</strong>：对于输入点云$P$，通过体素下采样到用于registration的点云$P_r$和用于mapping的点云$P_m$；</li>
+<li><strong>Odometry</strong>：通过将点云$P_r$与local map $M_l$的implicit SDF进行配准来估计全局的位姿$T_{WC_t}$，并将前后两帧的变换$T_{C_{t-1}C_t}$作为一条边添加到Pose Graph $G$中。</li>
+<li><strong>Mapping</strong>：根据地图$M$过滤掉用于mapping的点云$P_m$中的动态点，并沿着从传感器到$P_m$中每个点的射线进行采样，得到训练样本$D$，并使用在Odometry中计算的位姿$T_{WC_t}$将其转换到世界坐标系中。使用靠近场景表面的样本$D_s \subset D$来初始化新的neural point，并且将他们附加到地图$M$上，并且重置local map $M_l$，让其以当前位置$T_{WC_t}$为中心。使用采样的点$D_s$来更新训练样本池$D_p$，并且使用$D_p$和SDF监督来优化local map $M_l$中的neural point feature。最后将更新之后的local map $M_l$分配回global map $M$中。</li>
+<li><strong>Loop closure detection</strong>：通过local map $M_l$生成一个本地极坐标上下文描述符$U_t$。之后通过比较当前帧和候选帧描述符之间的特征距离来搜索潜在的loop closure。一旦检测到当前帧$C_t$和候选帧$C_k$之间的存在闭环，就通过将当前帧点云$P_r$和以候选帧位置$t_{WC_k}$为中心的local map $M_l$进行配准，来验证是否真的存在闭环。如果配准成功，就将配准产生的变换$T_{C_kC_t}$作为新的边添加到Pose Graph $G$中。</li>
+<li><strong>Pose graph optimization</strong>：加入loop closure edge之后，对pose graph $G$进行优化。优化之后对global map $M$中每个neural point的位置和方向及其关联帧进行变换，以保证全局一致性。在完成loop correction之后，对训练样本池$D_p$进行变换，并且重置local map $M_l$。</li>
+</ol>
+<h2 id="Neural-Point-Based-Map-Representation"><a href="#Neural-Point-Based-Map-Representation" class="headerlink" title="Neural Point-Based Map Representation"></a>Neural Point-Based Map Representation</h2><p><strong>Map Representation</strong>：</p>
+<p>neural point $m_i$保存了自己的位置$x_i$，并且有一个四元数$q_i$表示自身坐标框架的方向，特征向量$f^g_i$编码了局部的几何形状，时间戳$t^c_i$表示这个neural point创建的时间，时间戳$t^u_i$表示这个neural point最后更新的时间，$\mu_i$表示该点是否活跃、是否稳定。通过将neural point $m_i$与$t^m_i$时刻的位姿$T_{WC_{t^m_i}}$相关联，可以通过更新所有时刻的位姿来直接操纵地图，其中$t^m_i = [(t^c_i + t^u_i)/2]$。</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241117154530033.png"></p>
+<p>其中这个四元数$q_i$，是用来保证neural point经过decoder解码得到的SDF对刚体变换具有不变性。如下图(a)部分所示，decoder$D^g_\theta$输入的是相邻neural point的feature $f^g_i$和在该neural point坐标系下被查询点的位置$d_i$，输出的是被查询点在该neural point影响下的SDF值$s_i$。整个过程与Point-NeRF和Point-SLAM计算体密度的过程基本一致。从下图(b)部分可以看到，这种策略使得预测的SDF值对局部的平移和旋转具有不变性，从而使得经过loop closure之后的地图具有弹性。</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241117160700343.png"></p>
+<p>笔者认为这一步做的非常巧妙。四元数$q_i$定义了每一个neural point自己的坐标系，查询SDF需要把neural point的feature和查询点在坐标系中的位置输入到网络，相当于是每一个neural point都有了自己的“形状”，这些“形状”叠到一起构成了一个局部的几何表面。经过loop closure之后每个“形状”也会相应的被旋转平移，而不是简单的把“形状”的中心挪到校正之后的位置去，这样的话就不需要通过子地图把每个点的相对位置绑起来也能保证loop closure之后局部的几何稳定了。</p>
+<p>这个过程有一点3DGS的味道了，但是单个3DGS很难像这里的单个neural point那样有非常明确的几何意义。</p>
+<blockquote>
+<p><strong>疑问</strong>：为什么Point-NeRF、Point-SLAM、Loopy-SLAM以及PIN-SLAM对于体密度或SDF值，都是单独解码之后，再通过逆距离加权？而颜色相关的，则是通过网络得到一个新的feature，将这个feature进行逆距离加权之后再解码得到颜色？</p>
+</blockquote>
+<p><strong>Map Data Structure</strong>：</p>
+<p>为了实现快速的neural point索引和邻域搜索，PIN-SLAM维护了一个voxel resolution固定为$v_p$和hash table size为$T$的voxel hashing data structure。这个数据结构用于组织地图中的neural point，保证每个voxel中的neural point不超过1个。</p>
+<p>PIN-SLAM借鉴了《Instant neural graphics primitives with a multiresolution hash encoding》和《“KISS-ICP: In defense ofpoint-to-point ICP–simple, accurate, and robust registration if done the right way》这两个工作，通过spatial hashing function $\kappa = h(p_W)$将$p_W \in \mathbb{R}^3$映射到hash table中的$\kappa \in \mathbb{Z}$。其中hash table中每一项存储地图中neural point的索引，默认值为-1，表示这一项暂时没有对应的neural point。</p>
+<p>与Point-SLAM相比，PIN-SLAM借助voxel structure，实现了更快的进行K近邻搜索。</p>
+<p><strong>Map Initialization and Update</strong>：</p>
+<p>PIN-SLAM会根据每个时刻输入的点云初始化或更新neural point。</p>
+<p>对于在时刻$t$获取的世界坐标系$W$下的某一个点$p_W$，满足以下任意一种情况时，会初始化一个新的neural point $m_k$放到地图$M$中，并且将对应的hash table中的项设置为该neural point的索引，即$\kappa = k$。</p>
+<ol>
+<li>对应的hash table中的项没有被占用，即$\kappa = -1$；</li>
+<li>存在哈希冲突，但是在voxel structure中，存储的neural point与希望被添加的neural point之间距离很远；</li>
+<li>存在哈希冲突，但是存储的neural point已经不再活跃，即$D(t) - D(t^u_\kappa) &gt; d_l$。</li>
+</ol>
+<p>新初始化的neural point $m_k$，位置$x = p_W$，而四元数被设置为单位四元数$ q = (1,0,0,0)$，特征向量被初始化为零向量$f^g=0$，创建时间和最后更新时间被设置为$t^c = t^u = t$，稳定性$\mu = 0$。</p>
+<p>对于存在哈希冲突的情况2和3，原来存储的neural point不会被删除，只会让hash table不再索引到该点，该点仍然会被保存在global map中。论文说这样做是为了loop closure correction和globally consistent map adjustment。</p>
+<p><strong>Local Map</strong>：</p>
+<p>PIN-SLAM使用local map是为了“avoid the alignment to the inconsistent historical observations caused by odometry drift”。</p>
+<blockquote>
+<p>有很多NeRF SLAM和3DGS SLAM是frame-to-model的，可以看《How NeRFs and 3D Gaussian Splatting are Reshaping SLAM: a Survey》的<a href="https://pic1.zhimg.com/v2-f388d6e1060fc226d00df0a36ba5582a_1440w.jpg">表格</a>。</p>
+<p>frame-to-model可能存在的问题是，model构建的不太好，导致frame的位姿计算的也不好，进而导致更新的model也不好，从而frame又在存在drift的model上再计算位姿。</p>
+<p>而PIN-SLAM这里使用了local map，一定程度上可以避免这个问题（吗？）</p>
+</blockquote>
+<p>论文提到之前一些工作中，local map是使用spatial window（比如MULLS、KISS-ICP）或temporal window（比如ElasticFusion）来定义的，论文觉得这两种方法可以结合起来使用，但又发现实际上里程计的drift可能与累计经过的距离成正比，而不是与时间成正比。因此，PIN-SLAM的temporal window用travel distance threshold来代替timestep threshold。</p>
+<p>具体来说，对于以$t$时刻的位置$t_{WC_t}$为中心的local map $M_l$，这个local map包括spatial window $| x_i - t_{WC_t} |_2 &lt; r_l$和temporal window $D(t) - D(t_i^c) &lt; d_l$。其中$r_l$是local spatial window的半径，$d_l$是前面提到的travel distance threshold。</p>
+<p><strong>Map Training Samples</strong>：</p>
+<p>和Point-SLAM的采样策略比较类似，PIN-SLAM是在表面采样一个点，再在表面附近采样$Ns$个点，表面附近的$N_s$个点的深度服从正态分布。另外，也会在表面到相机之间的空间中均匀采样$N_f$个点，在表面后的一定空间中均匀采样$N_b$个点。</p>
+<p>最终会得到如下所示的训练样本：<br>$$<br>D = {(u_j,\hat s_j , t) | j = 1,…,N_t}<br>$$<br>其中，$N_t = M_t(1+N_s+N_f+N_b)$，$M_t$是用于mapping的点云$P_m$中点的个数，$u_j$表示第$j$个采样点，$\hat s_j$表示SDF值，被定义为$\hat s_j = |p|_2 - d$。论文提到$\hat s_j$可能总是会被高估，但是计算速度很快，而且在样本接近表面的时候是一个很好的近似值。</p>
+<p>为了解决incremental mapping中的“catastrophic forgetting”，PIN-SLAM维护了一个训练样本池$D_p$，类似于Point-SLAM等方法中的关键帧。</p>
+<p><strong>Map Training Losses</strong>：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121153238442.png"></p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121153248786.png"></p>
+<h2 id="Preprocessing"><a href="#Preprocessing" class="headerlink" title="Preprocessing"></a>Preprocessing</h2><p>在介绍论文pipeline到时候提到，PIN-SLAM对于输入点云$P$，通过体素下采样到用于registration的点云$P_r$和用于mapping的点云$P_m$，其中用于registration的点云$P_r$使用了较大的voxel size，而用于mapping的点云$P_m$使用了较小的voxel size。降采样的过程中，每个voxel只保留最接近体素中心的那个点。</p>
+<p>Lidar存在因为运动导致的畸变，PIN-SLAM基于匀速运动模型，在该模型的基础上先通过逐点时间戳插值运动预测，在Odometry估计位姿之前对$P_r$进行去畸变，再通过Odometry估计的更准确的位姿来对$P_m$进行去畸变。</p>
+<h2 id="Odometry-Estimation"><a href="#Odometry-Estimation" class="headerlink" title="Odometry Estimation"></a>Odometry Estimation</h2><p>该部分是基于已有的工作《LocNDF: Neural distance field mapping for robot localization》，LocNDF实现的是针对已知地图进行定位的方法。</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121160918836.png"></p>
+<p>之前的一些neural implicit SLAM，比如iMAP、Point-SLAM、Vox-fusion、NICE-SLAM等，优化目标是depth rendering loss，可以认为是point-to-point metric。而PIN-SLAM优化目标是point-to-model SDF loss，类似于ICP中的point-to-plane metric。</p>
+<p>根据论文《Efficient variants of the ICP algorithm》的研究，后一种方法具有更快的收敛速度和更稳健的优化。</p>
+<h2 id="Mapping-and-Local-BA"><a href="#Mapping-and-Local-BA" class="headerlink" title="Mapping and Local BA"></a>Mapping and Local BA</h2><p>PIN-SLAM首先会去除动态点，只保留静态点用于Mapping。</p>
+<p>下面提到了一个比较有意思的做法，PIN-SLAM是在最初的$F_{mlp}$个时刻内，同时优化local map $M_l$中的neural point feature $f^g$和decoder的参数$D^g_\theta$，而在$F_{mlp}$个时刻之后，就freeze $D^g_\theta$了，只优化neural point feature了。这样可以避免因为decoder不断变化导致的灾难性遗忘。</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121170316273.png"></p>
+<p>对于local BA，论文中是这么描述的：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121171042766.png"></p>
+<h2 id="Loop-Closure-Detection"><a href="#Loop-Closure-Detection" class="headerlink" title="Loop Closure Detection"></a>Loop Closure Detection</h2><p>PIN-SLAM首先检测local loop closure。即，对于当前位置$t_t$和当前帧$C_t$，与历史位置$t_{t_i}$和历史帧$C_{t_i}$，其中$t_i &lt; t$而且$D(t) - D(t_i) &gt; d_l$，判断两个位置是否满足以下关系：<br>$$<br>| t_t - t_{t_i} |<em>2 &lt; d</em>{loop}<br>$$<br>这种local loop closure比较适合在drift较小的情况下，判断是否又回到了过去经过的位置。</p>
+<p>如果没有检测到local loop closure，PIN-SLAM会通过比较frame-wise descriptors来搜索global loop closure。PIN-SLAM针对典型的驾驶场景，参考Scan Context和Scan Context++等工作，提出了一种“neural point feature enhanced local map descriptor”，论文为每一个时刻$t$的local map生成对应的local context descriptor $U_t$。</p>
+<p>当检测到candidate loop，PIN-SLAM将当前帧点云$P_r$与候选帧$C_k$对应的local map $M_l$进行配准。</p>
+<ul>
+<li>对于local loop，使用单位矩阵进行初始化；</li>
+<li>对于global loop，使用semimetric localization的结果作为初值。</li>
+</ul>
+<p>如果配准成功，PIN-SLAM会将配准之后的变换$T_{C_kC_t}$作为pose graph $G$中连接节点$C_k$和$C_t$的loop closure edge。否则，这个candidate loop会被否定。</p>
+<h2 id="Globally-Consistent-Implicit-Neural-Map-Adjustment"><a href="#Globally-Consistent-Implicit-Neural-Map-Adjustment" class="headerlink" title="Globally Consistent Implicit Neural Map Adjustment"></a>Globally Consistent Implicit Neural Map Adjustment</h2><p>笔者认为这部分是PIN-SLAM中最吸引人的，不过在前面的章节中已经有很多铺垫，论文在这部分着墨并不多。</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121212323987.png"></p>
+<h2 id="EXTENSION-TO-RGB-D-OR-METRIC-SEMANTIC-SLAM"><a href="#EXTENSION-TO-RGB-D-OR-METRIC-SEMANTIC-SLAM" class="headerlink" title="EXTENSION TO RGB-D OR METRIC-SEMANTIC SLAM"></a>EXTENSION TO RGB-D OR METRIC-SEMANTIC SLAM</h2><p>论文在这个章节演示了如何将PIN-SLAM扩展到RGB-D或者Metric-Semantic SLAM。思路其实挺简单的，给每一个neural point增加对应的RGB或者Semantic的feature就可以了，然后创建对应的MLP作为decoder，当然为了进行训练，也会构建对应的损失函数。</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121214746710.png"></p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121215057434.png"></p>
+<h2 id="实验部分"><a href="#实验部分" class="headerlink" title="实验部分"></a>实验部分</h2><p>KITTI数据集上，论文的odometry与其他LIDAR odometry比较平均相对平移漂移误差（%）：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121215842185.png"></p>
+<p>KITTI数据集上，与不同的SLAM比较ATE RMSE：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121220046078.png"></p>
+<p>KITTI数据集上，Loop Closure的直观效果：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121220407142.png"></p>
+<p>Replica数据集上，拓展到RGB-D的PIN-SLAM与其他NeRF SLAM方法比较ATE RMSE：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121220626709.png"></p>
+<p>在kitti数据集的四个序列上，与传统方法（上）和基于学习的方法（中）比较loop closure detection的召回率：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121220855248.png"></p>
+<p>在NEWER COLLEGE数据集上和其他方法比较三维重建的质量：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121221021656.png"></p>
+<p>地图压缩率实验：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121221402200.png"></p>
+<p>在KITTI seq 00上不同子模块的处理时间：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121221557068.png"></p>
+<p>对KITTI seq 00-10的平均运算速度和定位误差的比较：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121221643870.png"></p>
+<h2 id="总结-amp-讨论"><a href="#总结-amp-讨论" class="headerlink" title="总结&amp;讨论"></a>总结&amp;讨论</h2><p>这篇文章非常扎实，工作做得非常完整，实验做得也非常充分。论文的工作、实验紧紧围绕SLAM(Simultaneous Localization and Mapping)中的localization和mapping，没有像其他NeRF SLAM、3DGS SLAM方法一样展示PSNR、SSIM等结果（笔者认为PSNR、SSIM主要是新视角合成的指标了，放在SLAM来展示有点奇怪，不过好像大家都爱比较这几个指标）。从实验结果上看，无论是localization还是mapping都非常有竞争力。</p>
+<p>令笔者眼前一亮的是论文中elastic neural point的设计，通过这一设计实现的loop closure能够调整场景中的neural point，非常惊艳。这还是笔者第一次在NeRF、3DGS的方法中见到可以调整场景表示（比如MLP、grid feature、neural point、3DGS）的方法。</p>
+<blockquote>
+<p>理论上也可以让每一帧对应一个MLP，或者每一帧对应一个submap，但是这样的方法笔者觉得不是很好。</p>
+</blockquote>
+<p>论文在Limitations and future work提到了几点：</p>
+<ul>
+<li>可以引入IMU来实现更准确、高效的SLAM系统；</li>
+<li>目前PIN-SLAM使用的是固定分辨率的neural point，后续可以考虑在场景中自适应的分布和移动neural point来提高重建的质量；</li>
+<li>可以使用i-Kdtree等方法，在不使用voxel的情况下实现高效的最近邻搜索；</li>
+<li>另外，也可以考虑借助语义信息进一步增强位姿估计和回环检测。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>隐式表示</tag>
+        <tag>视觉SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>论文阅读《Pixel-GS：Density Control with Pixel-aware Gradient for 3D Gaussian Splatting》</title>
     <url>/2024/07/23/paper-reading-pixel-gs/</url>
     <content><![CDATA[<h1 id="论文阅读《Pixel-GS-Density-Control-with-Pixel-aware-Gradient-for-3D-Gaussian-Splatting》"><a href="#论文阅读《Pixel-GS-Density-Control-with-Pixel-aware-Gradient-for-3D-Gaussian-Splatting》" class="headerlink" title="论文阅读《Pixel-GS: Density Control with Pixel-aware Gradient for 3D Gaussian Splatting》"></a>论文阅读《Pixel-GS: Density Control with Pixel-aware Gradient for 3D Gaussian Splatting》</h1><blockquote>
@@ -15312,6 +15444,129 @@ TODO
       <tags>
         <tag>隐式表示</tag>
         <tag>3D Gaussian Splatting</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文阅读《RTG-SLAM：Real-time 3D Reconstruction at Scale Using Gaussian Splatting》</title>
+    <url>/2024/06/05/paper-reading-rtg-slam/</url>
+    <content><![CDATA[<h1 id="论文阅读《RTG-SLAM-Real-time-3D-Reconstruction-at-Scale-Using-Gaussian-Splatting》"><a href="#论文阅读《RTG-SLAM-Real-time-3D-Reconstruction-at-Scale-Using-Gaussian-Splatting》" class="headerlink" title="论文阅读《RTG-SLAM: Real-time 3D Reconstruction at Scale Using Gaussian Splatting》"></a>论文阅读《RTG-SLAM: Real-time 3D Reconstruction at Scale Using Gaussian Splatting》</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>我们提出了实时高斯SLAM (RTG-SLAM)，这是一个基于RGBD相机的实时三维重建系统，用于大规模环境的高斯溅射。该系统具有紧凑的高斯表示和高效的实时高斯优化方案。<strong>我们迫使每个高斯函数要么是不透明的，要么是接近透明的，不透明的高斯函数拟合表面和主色，透明的高斯函数拟合剩余色。</strong>通过以不同于颜色渲染的方式渲染深度，我们<strong>让单个不透明高斯很好地拟合局部表面区域，而不需要多个重叠的高斯</strong>，从而大大降低了内存和计算成本。对于动态高斯优化，我们<strong>显式地为每帧三种类型的像素添加高斯:新观察到的，具有大颜色误差的，和具有大深度误差的。</strong>我们还将所有高斯函数分为稳定的和不稳定的，其中<strong>稳定的高斯函数被期望很好地拟合先前观察到的RGBD图像，否则不稳定</strong>。我们<strong>只优化不稳定高斯函数，只渲染被不稳定高斯函数占用的像素。</strong>这样，无论是需要优化的高斯数还是需要渲染的像素都大大减少，并且可以实时进行优化。我们展示了各种大型场景的实时重建。与最先进的基于nerf的RGBD SLAM相比，我们的系统实现了类似的高质量重建，但速度约为两倍，内存成本为一半，并且在新视图合成的真实感和相机跟踪精度方面表现出卓越的性能。</p>
+<blockquote>
+<p>看完Abstract，感觉这篇文章主要的工作是：<strong>研究了各种让SLAM结果变好的==策略==</strong></p>
+</blockquote>
+<h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><p><img src="/images/paper-reading-rtg-slam/image-20240605200843475-1717589324365-1.png"></p>
+<h3 id="Compact-Gaussian-Representation"><a href="#Compact-Gaussian-Representation" class="headerlink" title="Compact Gaussian Representation"></a>Compact Gaussian Representation</h3><p>使用Gaussian表示场景：</p>
+<ul>
+<li>每个高斯要么不透明，要么几乎透明。Each Gaussian is determined once after being added to be opaque (𝛼 = 0.99) for fitting the 3D surface and dominant color, or to be nearly transparent (𝛼 = 0.1) for fitting the residual color.</li>
+<li>每个高斯认为是一个ellipsoid disc或者surfel。We also treat each Gaussian as an ellipsoid disc (or surfel), and record the surfel parameters including the normal n𝑖 , the confidence count 𝜂𝑖 , and the initialization timestamp 𝑡𝑖 . </li>
+</ul>
+<p>对于image rendering，这里应该是和Gaussian Splatting一样的，没有做什么特殊的处理；</p>
+<p>对于depth rendering，论文说这是他们这部分的关键：</p>
+<ul>
+<li><p>当前的所有Gaussian SLAM渲染深度的方式都和渲染颜色的方式一样，用alpha blending。但是这会导致单个高斯渲染的深度是从中间到两边下降的，不适合用来单独拟合一些近似是平面的区域。论文这里放了一张图来展示；</p>
+<img src="/images/paper-reading-rtg-slam/image-20240605210350123.png" style="zoom:50%;">
+
+<blockquote>
+<p><strong>==疑问：目前对rendering部分理解的不是很透彻，有两个疑问==</strong></p>
+<ul>
+<li><p>为什么会导致深度从中间到两边是下降的呢，是因为3D向2D投影的过程导致的吗？</p>
+</li>
+<li><p>如果这样的话，RGB的渲染会不会也是从中间到两边下降的？或者说球谐可以解决这个问题，因为每个像素都是一条单独的射线？（如果球谐可以解决这种问题，还不如让深度单独带几个球谐系数）</p>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><p>每个高斯都能很好的拟合表面的局部区域，不需要多个高斯；</p>
+</li>
+<li><p><strong>depth rendering的核心思路是：</strong>对于每个像素，计算view ray与距离最近的不透明ellipsoid disc的交点来获得像素的深度。</p>
+<blockquote>
+<p>ellipsoid disc就是高斯椭球两个相对长的轴构成的椭圆面，因为论文前面提到了把短轴作为高斯的法向。</p>
+<img src="/images/paper-reading-rtg-slam/image-20240605212807029.png" style="zoom:67%;">
+
+<blockquote>
+<p>The normal vector is defined as the direction of the smallest eigenvector.</p>
+</blockquote>
+<p>看下面的公式，其实做的也挺保守：</p>
+<ul>
+<li>不相交就空着，当成-1（为什么会不相交呢）</li>
+<li>如果有个高斯和相机平面的夹角比较小，影响的像素点比较多，才会把这个高斯当成Ellipse Disc来看；</li>
+<li>而如果夹角比较大，影响的像素点少，当成Ellipse Disc处理可能误差也比较大，于是这部分的像素的深度都是根据高斯的中心点来算的。</li>
+</ul>
+</blockquote>
+<img src="/images/paper-reading-rtg-slam/image-20240605214130735.png" style="zoom:67%;">
+
+</li>
+</ul>
+<h3 id="Online-Reconstruction-Process"><a href="#Online-Reconstruction-Process" class="headerlink" title="Online Reconstruction Process"></a>Online Reconstruction Process</h3><blockquote>
+<p>这部分看来是把整个系统都讲了一遍</p>
+</blockquote>
+<h4 id="Input-pre-processing"><a href="#Input-pre-processing" class="headerlink" title="Input pre-processing"></a>Input pre-processing</h4><p>根据输入的RGB和Depth，计算local vertex map和local normal map，再利用估计的相机位姿转换成global vertex map和local normal map</p>
+<h4 id="Gaussians-adding"><a href="#Gaussians-adding" class="headerlink" title="Gaussians adding"></a>Gaussians adding</h4><p>这里评价了Gaussian Splatting的Density Control策略是低效的，然后说自己利用基于几何和外观的高斯添加策略是更有效更可靠的，具体是根据渲染的结果计算一个掩码来确定为哪些像素添加高斯：</p>
+<img src="/images/paper-reading-rtg-slam/image-20240608144803374.png" style="zoom:80%;">
+
+<p>这里$M_s$是应该添加新几何图形的区域，它的计算依据是：像素射线经过很少的高斯或者没有经过高斯，即新观测的区域；以及深度重渲染的误差过大，即新观测的表面区域与现有场景在这个视角下渲染的结果有区别。</p>
+<p>这里$M_c$表示几何上准确但颜色误差过大的区域。</p>
+<p>这里添加的策略是：</p>
+<ul>
+<li><p>对于$M_s$，添加高斯并且不透明度设置为0.99；</p>
+</li>
+<li><p>对于$M_c$​，它已经与场景中现有的不透明高斯相关联，如果是不稳定的高斯，就可以进一步优化来适应颜色，这样就不继续添加高斯；如果是稳定的高斯，那就在它的基础上加入一个不透明度为0.1的高斯来校正颜色误差。</p>
+<p>使用透明高斯光束的优点在于，这种低不透明度的高斯光束不会引起光能的明显衰减，对其他视图的颜色影响很小。另外，在深度渲染的过程中，它们会被算法自动过滤掉，因此不会影响深度渲染。对于不透明高斯点，它们的大小被初始化为尽可能多地覆盖场景，很少重叠，而透明高斯点的半径被限制在0.01m以下，以消除对其他像素渲染结果的干扰。</p>
+</li>
+</ul>
+<blockquote>
+<p>从这里看，论文更关注几何信息，而对于颜色信息则通过添加透明高斯并加以重重限制来保证不干扰深度渲染结果的同时让颜色的渲染尽可能准确。</p>
+</blockquote>
+<h4 id="Gaussian-optimization"><a href="#Gaussian-optimization" class="headerlink" title="Gaussian optimization"></a>Gaussian optimization</h4><ul>
+<li><p>根据时间顺序确定了一个窗口，每次优化都是从窗口内随机采样一帧。</p>
+</li>
+<li><p>不透明度的学习率设置为0，因此不透明度是固定的，不会被优化。</p>
+<blockquote>
+<p>直接不放到优化参数里不就好了，设置成0是因为，懒得改代码？</p>
+</blockquote>
+</li>
+<li><p>color和depth还是很经典的损失函数，这里论文希望透明高斯函数专注于在不影响其他区域的情况下精炼局部的颜色，因此设计了一个正则化项。总体的损失函数是:</p>
+<img src="/images/paper-reading-rtg-slam/image-20240608152744013.png" style="zoom:80%;">
+</li>
+<li><p>论文注意到优化后的高斯函数能很好拟合当前时间窗口，但是对于之前的视图，渲染质量会下降。这里他们提出了一种融合策略，通过加权平均的方法把当前的结果和以前的结果融合到一起，这样可以有效避免遗忘问题：</p>
+<img src="/images/paper-reading-rtg-slam/image-20240608153533128.png" style="zoom:80%;">
+</li>
+<li><p>优化所有高斯是非常耗时的，因此论文不优化稳定高斯，只关注受到不稳定高斯分布影响的像素，从而避免对所有像素的优化。</p>
+</li>
+</ul>
+<h4 id="State-management"><a href="#State-management" class="headerlink" title="State management"></a>State management</h4><p>一些稳定高斯和不稳定高斯之间的转换策略，以及错误高斯（长时间不稳定）的删除</p>
+<img src="/images/paper-reading-rtg-slam/image-20240608153855692.png" style="zoom:67%;">
+
+<h4 id="Camera-tracking"><a href="#Camera-tracking" class="headerlink" title="Camera tracking"></a>Camera tracking</h4><p><strong>使用frame-to-model的ICP算法作为front-end odometry</strong>，使用前一帧中优化的高斯函数来渲染深度图、法线图，并且转换到全局空间，然后给定当前帧，通过最小化3D反向投影误差得到位姿：</p>
+<img src="/images/paper-reading-rtg-slam/image-20240608154323318.png" style="zoom:67%;">
+
+<p>论文还提到为了减小大场景的累积漂移，用了类似ORB-SLAM2的后端优化线程，完成位姿估计的同时还会保留一组3D landmark用于后端的优化。</p>
+<blockquote>
+<p>和GS_ICP SLAM相比，这里ICP用的还是挺生硬的，需要保留一组3D landmark，存在数据冗余的情况。</p>
+<p>我怀疑这里用的就是ORB-SLAM2的RGB-D前端，因为实验部分Table 2的数据也太好看了，非常接近ORB-SLAM2的结果。</p>
+</blockquote>
+<h4 id="Keyframes-and-global-optimization"><a href="#Keyframes-and-global-optimization" class="headerlink" title="Keyframes and global optimization"></a>Keyframes and global optimization</h4><ul>
+<li>基于相机的运动构造关键帧列表，旋转角度或者相对平移超过了阈值就添加关键帧。</li>
+<li>只优化每个关键帧上误差前40%的像素，并且优化过程中不更新高斯的位置，使用0.1倍率的原始学习率来优化其他的参数。</li>
+</ul>
+<h2 id="EVALUATION"><a href="#EVALUATION" class="headerlink" title="EVALUATION"></a>EVALUATION</h2><p>见原论文</p>
+<h2 id="SUPPLEMENTARY-MATERIALS"><a href="#SUPPLEMENTARY-MATERIALS" class="headerlink" title="SUPPLEMENTARY MATERIALS"></a>SUPPLEMENTARY MATERIALS</h2><blockquote>
+<p>只记录个人认为值得注意的细节</p>
+</blockquote>
+<h3 id="GAUSSIAN-INITIALIZATION"><a href="#GAUSSIAN-INITIALIZATION" class="headerlink" title="GAUSSIAN INITIALIZATION"></a>GAUSSIAN INITIALIZATION</h3><p>每个新的高斯都会初始化为一个平面圆盘，根据最近的三个高斯来计算轴的长度，三个轴的比例为1：1：0.1</p>
+<img src="/images/paper-reading-rtg-slam/image-20240608155942944.png" style="zoom:67%;">
+
+<h3 id="IMPLEMENTATION-DETAILS"><a href="#IMPLEMENTATION-DETAILS" class="headerlink" title="IMPLEMENTATION DETAILS"></a>IMPLEMENTATION DETAILS</h3><p>系统由三个线程构成：高斯优化、前端在线跟踪、后端图优化。</p>
+<p>前端在线跟踪是用python+pytorch实现的，而后端优化部分是基于ORB-SLAM2用C语言实现的。</p>
+<h2 id="个人评价"><a href="#个人评价" class="headerlink" title="个人评价"></a>个人评价</h2><p>这篇文章主要是用了很多简单有效的改进策略，在工程上做了很多的工作。</p>
+<p>另外，这篇论文的前端里程计也是基于ICP的方法，后续可能会有越来越多的RGB-D高斯SLAM使用传统的点云配准方法来做前端的里程计。高斯毕竟还是显式地表示，和点云很相似，从基于渲染损失优化位姿到传统点云配准求解位姿的发展是必然的。</p>
+]]></content>
+      <categories>
+        <category>slam</category>
+      </categories>
+      <tags>
+        <tag>隐式表示</tag>
+        <tag>3D Gaussian Splatting</tag>
+        <tag>视觉SLAM</tag>
       </tags>
   </entry>
   <entry>
@@ -15473,129 +15728,6 @@ python3 RANSAC_3D.py<span aria-hidden="true" class="line-numbers-rows"><span></s
       </categories>
       <tags>
         <tag>点云</tag>
-        <tag>视觉SLAM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>论文阅读《RTG-SLAM：Real-time 3D Reconstruction at Scale Using Gaussian Splatting》</title>
-    <url>/2024/06/05/paper-reading-rtg-slam/</url>
-    <content><![CDATA[<h1 id="论文阅读《RTG-SLAM-Real-time-3D-Reconstruction-at-Scale-Using-Gaussian-Splatting》"><a href="#论文阅读《RTG-SLAM-Real-time-3D-Reconstruction-at-Scale-Using-Gaussian-Splatting》" class="headerlink" title="论文阅读《RTG-SLAM: Real-time 3D Reconstruction at Scale Using Gaussian Splatting》"></a>论文阅读《RTG-SLAM: Real-time 3D Reconstruction at Scale Using Gaussian Splatting》</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>我们提出了实时高斯SLAM (RTG-SLAM)，这是一个基于RGBD相机的实时三维重建系统，用于大规模环境的高斯溅射。该系统具有紧凑的高斯表示和高效的实时高斯优化方案。<strong>我们迫使每个高斯函数要么是不透明的，要么是接近透明的，不透明的高斯函数拟合表面和主色，透明的高斯函数拟合剩余色。</strong>通过以不同于颜色渲染的方式渲染深度，我们<strong>让单个不透明高斯很好地拟合局部表面区域，而不需要多个重叠的高斯</strong>，从而大大降低了内存和计算成本。对于动态高斯优化，我们<strong>显式地为每帧三种类型的像素添加高斯:新观察到的，具有大颜色误差的，和具有大深度误差的。</strong>我们还将所有高斯函数分为稳定的和不稳定的，其中<strong>稳定的高斯函数被期望很好地拟合先前观察到的RGBD图像，否则不稳定</strong>。我们<strong>只优化不稳定高斯函数，只渲染被不稳定高斯函数占用的像素。</strong>这样，无论是需要优化的高斯数还是需要渲染的像素都大大减少，并且可以实时进行优化。我们展示了各种大型场景的实时重建。与最先进的基于nerf的RGBD SLAM相比，我们的系统实现了类似的高质量重建，但速度约为两倍，内存成本为一半，并且在新视图合成的真实感和相机跟踪精度方面表现出卓越的性能。</p>
-<blockquote>
-<p>看完Abstract，感觉这篇文章主要的工作是：<strong>研究了各种让SLAM结果变好的==策略==</strong></p>
-</blockquote>
-<h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><p><img src="/images/paper-reading-rtg-slam/image-20240605200843475-1717589324365-1.png"></p>
-<h3 id="Compact-Gaussian-Representation"><a href="#Compact-Gaussian-Representation" class="headerlink" title="Compact Gaussian Representation"></a>Compact Gaussian Representation</h3><p>使用Gaussian表示场景：</p>
-<ul>
-<li>每个高斯要么不透明，要么几乎透明。Each Gaussian is determined once after being added to be opaque (𝛼 = 0.99) for fitting the 3D surface and dominant color, or to be nearly transparent (𝛼 = 0.1) for fitting the residual color.</li>
-<li>每个高斯认为是一个ellipsoid disc或者surfel。We also treat each Gaussian as an ellipsoid disc (or surfel), and record the surfel parameters including the normal n𝑖 , the confidence count 𝜂𝑖 , and the initialization timestamp 𝑡𝑖 . </li>
-</ul>
-<p>对于image rendering，这里应该是和Gaussian Splatting一样的，没有做什么特殊的处理；</p>
-<p>对于depth rendering，论文说这是他们这部分的关键：</p>
-<ul>
-<li><p>当前的所有Gaussian SLAM渲染深度的方式都和渲染颜色的方式一样，用alpha blending。但是这会导致单个高斯渲染的深度是从中间到两边下降的，不适合用来单独拟合一些近似是平面的区域。论文这里放了一张图来展示；</p>
-<img src="/images/paper-reading-rtg-slam/image-20240605210350123.png" style="zoom:50%;">
-
-<blockquote>
-<p><strong>==疑问：目前对rendering部分理解的不是很透彻，有两个疑问==</strong></p>
-<ul>
-<li><p>为什么会导致深度从中间到两边是下降的呢，是因为3D向2D投影的过程导致的吗？</p>
-</li>
-<li><p>如果这样的话，RGB的渲染会不会也是从中间到两边下降的？或者说球谐可以解决这个问题，因为每个像素都是一条单独的射线？（如果球谐可以解决这种问题，还不如让深度单独带几个球谐系数）</p>
-</li>
-</ul>
-</blockquote>
-</li>
-<li><p>每个高斯都能很好的拟合表面的局部区域，不需要多个高斯；</p>
-</li>
-<li><p><strong>depth rendering的核心思路是：</strong>对于每个像素，计算view ray与距离最近的不透明ellipsoid disc的交点来获得像素的深度。</p>
-<blockquote>
-<p>ellipsoid disc就是高斯椭球两个相对长的轴构成的椭圆面，因为论文前面提到了把短轴作为高斯的法向。</p>
-<img src="/images/paper-reading-rtg-slam/image-20240605212807029.png" style="zoom:67%;">
-
-<blockquote>
-<p>The normal vector is defined as the direction of the smallest eigenvector.</p>
-</blockquote>
-<p>看下面的公式，其实做的也挺保守：</p>
-<ul>
-<li>不相交就空着，当成-1（为什么会不相交呢）</li>
-<li>如果有个高斯和相机平面的夹角比较小，影响的像素点比较多，才会把这个高斯当成Ellipse Disc来看；</li>
-<li>而如果夹角比较大，影响的像素点少，当成Ellipse Disc处理可能误差也比较大，于是这部分的像素的深度都是根据高斯的中心点来算的。</li>
-</ul>
-</blockquote>
-<img src="/images/paper-reading-rtg-slam/image-20240605214130735.png" style="zoom:67%;">
-
-</li>
-</ul>
-<h3 id="Online-Reconstruction-Process"><a href="#Online-Reconstruction-Process" class="headerlink" title="Online Reconstruction Process"></a>Online Reconstruction Process</h3><blockquote>
-<p>这部分看来是把整个系统都讲了一遍</p>
-</blockquote>
-<h4 id="Input-pre-processing"><a href="#Input-pre-processing" class="headerlink" title="Input pre-processing"></a>Input pre-processing</h4><p>根据输入的RGB和Depth，计算local vertex map和local normal map，再利用估计的相机位姿转换成global vertex map和local normal map</p>
-<h4 id="Gaussians-adding"><a href="#Gaussians-adding" class="headerlink" title="Gaussians adding"></a>Gaussians adding</h4><p>这里评价了Gaussian Splatting的Density Control策略是低效的，然后说自己利用基于几何和外观的高斯添加策略是更有效更可靠的，具体是根据渲染的结果计算一个掩码来确定为哪些像素添加高斯：</p>
-<img src="/images/paper-reading-rtg-slam/image-20240608144803374.png" style="zoom:80%;">
-
-<p>这里$M_s$是应该添加新几何图形的区域，它的计算依据是：像素射线经过很少的高斯或者没有经过高斯，即新观测的区域；以及深度重渲染的误差过大，即新观测的表面区域与现有场景在这个视角下渲染的结果有区别。</p>
-<p>这里$M_c$表示几何上准确但颜色误差过大的区域。</p>
-<p>这里添加的策略是：</p>
-<ul>
-<li><p>对于$M_s$，添加高斯并且不透明度设置为0.99；</p>
-</li>
-<li><p>对于$M_c$​，它已经与场景中现有的不透明高斯相关联，如果是不稳定的高斯，就可以进一步优化来适应颜色，这样就不继续添加高斯；如果是稳定的高斯，那就在它的基础上加入一个不透明度为0.1的高斯来校正颜色误差。</p>
-<p>使用透明高斯光束的优点在于，这种低不透明度的高斯光束不会引起光能的明显衰减，对其他视图的颜色影响很小。另外，在深度渲染的过程中，它们会被算法自动过滤掉，因此不会影响深度渲染。对于不透明高斯点，它们的大小被初始化为尽可能多地覆盖场景，很少重叠，而透明高斯点的半径被限制在0.01m以下，以消除对其他像素渲染结果的干扰。</p>
-</li>
-</ul>
-<blockquote>
-<p>从这里看，论文更关注几何信息，而对于颜色信息则通过添加透明高斯并加以重重限制来保证不干扰深度渲染结果的同时让颜色的渲染尽可能准确。</p>
-</blockquote>
-<h4 id="Gaussian-optimization"><a href="#Gaussian-optimization" class="headerlink" title="Gaussian optimization"></a>Gaussian optimization</h4><ul>
-<li><p>根据时间顺序确定了一个窗口，每次优化都是从窗口内随机采样一帧。</p>
-</li>
-<li><p>不透明度的学习率设置为0，因此不透明度是固定的，不会被优化。</p>
-<blockquote>
-<p>直接不放到优化参数里不就好了，设置成0是因为，懒得改代码？</p>
-</blockquote>
-</li>
-<li><p>color和depth还是很经典的损失函数，这里论文希望透明高斯函数专注于在不影响其他区域的情况下精炼局部的颜色，因此设计了一个正则化项。总体的损失函数是:</p>
-<img src="/images/paper-reading-rtg-slam/image-20240608152744013.png" style="zoom:80%;">
-</li>
-<li><p>论文注意到优化后的高斯函数能很好拟合当前时间窗口，但是对于之前的视图，渲染质量会下降。这里他们提出了一种融合策略，通过加权平均的方法把当前的结果和以前的结果融合到一起，这样可以有效避免遗忘问题：</p>
-<img src="/images/paper-reading-rtg-slam/image-20240608153533128.png" style="zoom:80%;">
-</li>
-<li><p>优化所有高斯是非常耗时的，因此论文不优化稳定高斯，只关注受到不稳定高斯分布影响的像素，从而避免对所有像素的优化。</p>
-</li>
-</ul>
-<h4 id="State-management"><a href="#State-management" class="headerlink" title="State management"></a>State management</h4><p>一些稳定高斯和不稳定高斯之间的转换策略，以及错误高斯（长时间不稳定）的删除</p>
-<img src="/images/paper-reading-rtg-slam/image-20240608153855692.png" style="zoom:67%;">
-
-<h4 id="Camera-tracking"><a href="#Camera-tracking" class="headerlink" title="Camera tracking"></a>Camera tracking</h4><p><strong>使用frame-to-model的ICP算法作为front-end odometry</strong>，使用前一帧中优化的高斯函数来渲染深度图、法线图，并且转换到全局空间，然后给定当前帧，通过最小化3D反向投影误差得到位姿：</p>
-<img src="/images/paper-reading-rtg-slam/image-20240608154323318.png" style="zoom:67%;">
-
-<p>论文还提到为了减小大场景的累积漂移，用了类似ORB-SLAM2的后端优化线程，完成位姿估计的同时还会保留一组3D landmark用于后端的优化。</p>
-<blockquote>
-<p>和GS_ICP SLAM相比，这里ICP用的还是挺生硬的，需要保留一组3D landmark，存在数据冗余的情况。</p>
-<p>我怀疑这里用的就是ORB-SLAM2的RGB-D前端，因为实验部分Table 2的数据也太好看了，非常接近ORB-SLAM2的结果。</p>
-</blockquote>
-<h4 id="Keyframes-and-global-optimization"><a href="#Keyframes-and-global-optimization" class="headerlink" title="Keyframes and global optimization"></a>Keyframes and global optimization</h4><ul>
-<li>基于相机的运动构造关键帧列表，旋转角度或者相对平移超过了阈值就添加关键帧。</li>
-<li>只优化每个关键帧上误差前40%的像素，并且优化过程中不更新高斯的位置，使用0.1倍率的原始学习率来优化其他的参数。</li>
-</ul>
-<h2 id="EVALUATION"><a href="#EVALUATION" class="headerlink" title="EVALUATION"></a>EVALUATION</h2><p>见原论文</p>
-<h2 id="SUPPLEMENTARY-MATERIALS"><a href="#SUPPLEMENTARY-MATERIALS" class="headerlink" title="SUPPLEMENTARY MATERIALS"></a>SUPPLEMENTARY MATERIALS</h2><blockquote>
-<p>只记录个人认为值得注意的细节</p>
-</blockquote>
-<h3 id="GAUSSIAN-INITIALIZATION"><a href="#GAUSSIAN-INITIALIZATION" class="headerlink" title="GAUSSIAN INITIALIZATION"></a>GAUSSIAN INITIALIZATION</h3><p>每个新的高斯都会初始化为一个平面圆盘，根据最近的三个高斯来计算轴的长度，三个轴的比例为1：1：0.1</p>
-<img src="/images/paper-reading-rtg-slam/image-20240608155942944.png" style="zoom:67%;">
-
-<h3 id="IMPLEMENTATION-DETAILS"><a href="#IMPLEMENTATION-DETAILS" class="headerlink" title="IMPLEMENTATION DETAILS"></a>IMPLEMENTATION DETAILS</h3><p>系统由三个线程构成：高斯优化、前端在线跟踪、后端图优化。</p>
-<p>前端在线跟踪是用python+pytorch实现的，而后端优化部分是基于ORB-SLAM2用C语言实现的。</p>
-<h2 id="个人评价"><a href="#个人评价" class="headerlink" title="个人评价"></a>个人评价</h2><p>这篇文章主要是用了很多简单有效的改进策略，在工程上做了很多的工作。</p>
-<p>另外，这篇论文的前端里程计也是基于ICP的方法，后续可能会有越来越多的RGB-D高斯SLAM使用传统的点云配准方法来做前端的里程计。高斯毕竟还是显式地表示，和点云很相似，从基于渲染损失优化位姿到传统点云配准求解位姿的发展是必然的。</p>
-]]></content>
-      <categories>
-        <category>slam</category>
-      </categories>
-      <tags>
-        <tag>隐式表示</tag>
-        <tag>3D Gaussian Splatting</tag>
         <tag>视觉SLAM</tag>
       </tags>
   </entry>

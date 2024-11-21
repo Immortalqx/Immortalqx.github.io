@@ -6,7 +6,7 @@
   <link href="http://immortalqx.github.io/atom.xml" rel="self"/>
   
   <link href="http://immortalqx.github.io/"/>
-  <updated>2024-11-16T05:15:52.573Z</updated>
+  <updated>2024-11-21T15:18:01.786Z</updated>
   <id>http://immortalqx.github.io/</id>
   
   <author>
@@ -17,11 +17,38 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>论文阅读PIN-SLAM(TRO 2024)</title>
+    <link href="http://immortalqx.github.io/2024/11/21/paper-reading-pin-slam/"/>
+    <id>http://immortalqx.github.io/2024/11/21/paper-reading-pin-slam/</id>
+    <published>2024-11-21T15:05:22.000Z</published>
+    <updated>2024-11-21T15:18:01.786Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;论文阅读《PIN-SLAM-LiDAR-SLAM-Using-a-Point-Based-Implicit-Neural-Representation-for-Achieving-Global-Map-Consistency》&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Neural Point SLAM回顾</title>
     <link href="http://immortalqx.github.io/2024/11/16/neural-point-slam/"/>
     <id>http://immortalqx.github.io/2024/11/16/neural-point-slam/</id>
     <published>2024-11-16T04:20:01.000Z</published>
-    <updated>2024-11-16T05:15:52.573Z</updated>
+    <updated>2024-11-21T15:20:30.015Z</updated>
     
     
       
@@ -34,12 +61,12 @@
     
     
     
-    <category term="NeRF&amp;3DGS" scheme="http://immortalqx.github.io/categories/NeRF-3DGS/"/>
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
     
+    
+    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
     
     <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
-    
-    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
     
   </entry>
   
@@ -48,7 +75,7 @@
     <link href="http://immortalqx.github.io/2024/11/11/neural-point-rendering/"/>
     <id>http://immortalqx.github.io/2024/11/11/neural-point-rendering/</id>
     <published>2024-11-11T14:58:00.000Z</published>
-    <updated>2024-11-16T05:09:37.481Z</updated>
+    <updated>2024-11-21T15:12:15.371Z</updated>
     
     
       
@@ -64,9 +91,9 @@
     <category term="NeRF&amp;3DGS" scheme="http://immortalqx.github.io/categories/NeRF-3DGS/"/>
     
     
-    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
     
-    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
+    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
     
   </entry>
   
@@ -535,33 +562,6 @@
     
     
     <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
-    
-    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>NeRF based SLAM学习笔记（7）：从Point NeRF到Loopy SLAM</title>
-    <link href="http://immortalqx.github.io/2024/04/02/nerf-slam-6/"/>
-    <id>http://immortalqx.github.io/2024/04/02/nerf-slam-6/</id>
-    <published>2024-04-02T06:43:40.000Z</published>
-    <updated>2024-10-25T07:27:22.359Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;NeRF-based-SLAM学习笔记（7）：从Point-NeRF到Loopy-SLAM&quot;&gt;&lt;a href=&quot;#NeRF-based-SLAM学习笔记（7）：从Point-NeRF到Loopy-SLAM&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
-    
-    
-    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
     
     <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
     
