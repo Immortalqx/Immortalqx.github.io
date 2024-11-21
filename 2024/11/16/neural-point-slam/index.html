@@ -595,7 +595,7 @@
 <li><strong>Pose graph optimization</strong>：加入loop closure edge之后，对pose graph $G$进行优化。优化之后对global map $M$中每个neural point的位置和方向及其关联帧进行变换，以保证全局一致性。在完成loop correction之后，对训练样本池$D_p$进行变换，并且重置local map $M_l$。</li>
 </ol>
 <blockquote>
-<p>PIN-SLAM的内容非常多，可以移步：<a href="https://immortalqx.github.io/2024/11/21/paper-reading-pin-slam%E3%80%82">https://immortalqx.github.io/2024/11/21/paper-reading-pin-slam。</a></p>
+<p>PIN-SLAM的内容非常多，可以移步<a href="https://immortalqx.github.io/2024/11/21/paper-reading-pin-slam">这篇文章</a>。</p>
 </blockquote>
 <h2 id="总结-amp-讨论"><a href="#总结-amp-讨论" class="headerlink" title="总结&amp;讨论"></a>总结&amp;讨论</h2><p>在PIN-SLAM出来之前，笔者一直认为与NeRF、Neural Point相比，3DGS才是最“几何”的表示方法，毕竟3DGS显示的给出了点云，尽管这个点云有很多的噪声。</p>
 <p>而当时一些neural point的工作，比如Point-NeRF论文中说“we find that directly optimizing the location of the existing points makes the training unstable and cannot fill the large holes”，笔者便认为neural point效果好主要是因为feature + decoder这一套流程的差值能力好，以及neural point也避免了在空白区域采样。而neural point的位置几乎无法优化，直接使用输入的点云，并且通过一些简单的加剪枝策略添加和删除点，那“几何”肯定是很好的，不过怎么利用这一点是个难解决的问题。</p>
