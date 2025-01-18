@@ -1,0 +1,1501 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="论文阅读PIN-SLAM(TRO 2024), 所念皆星河">
+    <meta name="description" content="论文阅读《PIN-SLAM: LiDAR SLAM Using a Point-Based Implicit Neural Representation for Achieving Global Map Consistency》
+论文想要解">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>论文阅读PIN-SLAM(TRO 2024) | 所念皆星河</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">所念皆星河</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/homepage" class="waves-effect waves-light">
+      
+      <i class="fas fa-award" style="zoom: 0.6;"></i>
+      
+      <span>Homepage</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">所念皆星河</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/homepage" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-award"></i>
+			
+			Homepage
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/Immortalqx" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Follow me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/Immortalqx" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Follow me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">论文阅读PIN-SLAM(TRO 2024)</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                                <span class="chip bg-color">隐式表示</span>
+                            </a>
+                        
+                            <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                                <span class="chip bg-color">视觉SLAM</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/slam/" class="post-category">
+                                slam
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2024-11-21
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    4k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    16 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="论文阅读《PIN-SLAM-LiDAR-SLAM-Using-a-Point-Based-Implicit-Neural-Representation-for-Achieving-Global-Map-Consistency》"><a href="#论文阅读《PIN-SLAM-LiDAR-SLAM-Using-a-Point-Based-Implicit-Neural-Representation-for-Achieving-Global-Map-Consistency》" class="headerlink" title="论文阅读《PIN-SLAM: LiDAR SLAM Using a Point-Based Implicit Neural Representation for Achieving Global Map Consistency》"></a>论文阅读《PIN-SLAM: LiDAR SLAM Using a Point-Based Implicit Neural Representation for Achieving Global Map Consistency》</h1><p><img src="/images/paper-reading-pin-slam/image-20241115195333282.png"></p>
+<p><strong>论文想要解决的问题</strong>：These SLAM approaches <strong>lack support for direct loop closure corrections</strong> and are <strong>not able to build globally consistent maps of larger scenes</strong>. This is mainly due to the usage of regular grid-based local feature embeddings, which are not elastic and resilient to loop corrections.</p>
+<p><strong>论文的核心目标</strong>：The main focus of this work is a LiDAR SLAM system for building globally consistent maps using a PIN map representation.</p>
+<p><strong>论文为什么选择neural point表示场景</strong>：We opt to use a neural point-based implicit representation, which has two main advantages over grid-based representations: <strong>the flexibility of spatial distribution and the elasticity for transformations</strong>. Recent work (Point-SLAM) only makes use of the first advantage for neural RGB-D SLAM at the cost of scalability and inefficient neighborhood querying. Instead, we exploit the second and more important advantage to build a globally consistentmap that can be corrected while online mapping after closing a loop, which is essential for large-scale LiDAR-based SLAM.</p>
+<p>论文在Introduction提到，Mapping部分主要是基于之前的工作SHINE-Mapping，而Odometry部分是扩展了之前的工作LocNDF。</p>
+<blockquote>
+<p>工作是延续的，非常扎实，令人羡慕。</p>
+</blockquote>
+<p><strong>论文提出了四个key claims</strong>：</p>
+<ol>
+<li>Our SLAM system achieves <strong>localization accuracy better or on par with state-of-the-art</strong> LiDAR odometry/SLAM approaches and is more accurate than recent implicit neural SLAM methods on various datasets using different range sensors.</li>
+<li>Our method can conduct <strong>large-scale globally consistent mapping with loop closure</strong> thanks to the elastic neural point representation.</li>
+<li>Our map representation is <strong>more compact than the previous counterparts</strong> and <strong>can be used to reconstruct accurate and complete meshes at an arbitrary resolution</strong>.</li>
+<li>Our correspondence-free scan-to-implicit map registration and the efficient neural point indexing by voxel hashing enable our algorithm to <strong>run at the sensor frame rate on a single NVIDIA A4000</strong> graphics processing unit (GPU).</li>
+</ol>
+<p><strong>论文对基于Submap的方法的评价</strong>：The submap-based methods accumulate the observations as a submap and assume the submap is a locally defined rigid body. The pseudoglobal consistency is maintained by optimizing a graph linking submaps and their associated poses through submap-to-submap registrations. The usage of submaps decreases the number of nodes and edges in PGO, thus saving computational effort. However, these methods have issues of ambiguity in the overlapping region of the adjacent submaps and determining appropriate criteria for submap division to balance the rigidity and efficiency.</p>
+<p><strong>论文的Pipeline</strong>：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241115205159958.png"></p>
+<p>论文将他们的方法分成5个部分：</p>
+<ol>
+<li><strong>Preprocessing</strong>：对于输入点云$P$，通过体素下采样到用于registration的点云$P_r$和用于mapping的点云$P_m$；</li>
+<li><strong>Odometry</strong>：通过将点云$P_r$与local map $M_l$的implicit SDF进行配准来估计全局的位姿$T_{WC_t}$，并将前后两帧的变换$T_{C_{t-1}C_t}$作为一条边添加到Pose Graph $G$中。</li>
+<li><strong>Mapping</strong>：根据地图$M$过滤掉用于mapping的点云$P_m$中的动态点，并沿着从传感器到$P_m$中每个点的射线进行采样，得到训练样本$D$，并使用在Odometry中计算的位姿$T_{WC_t}$将其转换到世界坐标系中。使用靠近场景表面的样本$D_s \subset D$来初始化新的neural point，并且将他们附加到地图$M$上，并且重置local map $M_l$，让其以当前位置$T_{WC_t}$为中心。使用采样的点$D_s$来更新训练样本池$D_p$，并且使用$D_p$和SDF监督来优化local map $M_l$中的neural point feature。最后将更新之后的local map $M_l$分配回global map $M$中。</li>
+<li><strong>Loop closure detection</strong>：通过local map $M_l$生成一个本地极坐标上下文描述符$U_t$。之后通过比较当前帧和候选帧描述符之间的特征距离来搜索潜在的loop closure。一旦检测到当前帧$C_t$和候选帧$C_k$之间的存在闭环，就通过将当前帧点云$P_r$和以候选帧位置$t_{WC_k}$为中心的local map $M_l$进行配准，来验证是否真的存在闭环。如果配准成功，就将配准产生的变换$T_{C_kC_t}$作为新的边添加到Pose Graph $G$中。</li>
+<li><strong>Pose graph optimization</strong>：加入loop closure edge之后，对pose graph $G$进行优化。优化之后对global map $M$中每个neural point的位置和方向及其关联帧进行变换，以保证全局一致性。在完成loop correction之后，对训练样本池$D_p$进行变换，并且重置local map $M_l$。</li>
+</ol>
+<h2 id="Neural-Point-Based-Map-Representation"><a href="#Neural-Point-Based-Map-Representation" class="headerlink" title="Neural Point-Based Map Representation"></a>Neural Point-Based Map Representation</h2><p><strong>Map Representation</strong>：</p>
+<p>neural point $m_i$保存了自己的位置$x_i$，并且有一个四元数$q_i$表示自身坐标框架的方向，特征向量$f^g_i$编码了局部的几何形状，时间戳$t^c_i$表示这个neural point创建的时间，时间戳$t^u_i$表示这个neural point最后更新的时间，$\mu_i$表示该点是否活跃、是否稳定。通过将neural point $m_i$与$t^m_i$时刻的位姿$T_{WC_{t^m_i}}$相关联，可以通过更新所有时刻的位姿来直接操纵地图，其中$t^m_i = [(t^c_i + t^u_i)/2]$。</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241117154530033.png"></p>
+<p>其中这个四元数$q_i$，是用来保证neural point经过decoder解码得到的SDF对刚体变换具有不变性。如下图(a)部分所示，decoder$D^g_\theta$输入的是相邻neural point的feature $f^g_i$和在该neural point坐标系下被查询点的位置$d_i$，输出的是被查询点在该neural point影响下的SDF值$s_i$。整个过程与Point-NeRF和Point-SLAM计算体密度的过程基本一致。从下图(b)部分可以看到，这种策略使得预测的SDF值对局部的平移和旋转具有不变性，从而使得经过loop closure之后的地图具有弹性。</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241117160700343.png"></p>
+<p>笔者认为这一步做的非常巧妙。四元数$q_i$定义了每一个neural point自己的坐标系，查询SDF需要把neural point的feature和查询点在坐标系中的位置输入到网络，相当于是每一个neural point都有了自己的“形状”，这些“形状”叠到一起构成了一个局部的几何表面。经过loop closure之后每个“形状”也会相应的被旋转平移，而不是简单的把“形状”的中心挪到校正之后的位置去，这样的话就不需要通过子地图把每个点的相对位置绑起来也能保证loop closure之后局部的几何稳定了。</p>
+<p>这个过程有一点3DGS的味道了，但是单个3DGS很难像这里的单个neural point那样有非常明确的几何意义。</p>
+<blockquote>
+<p><strong>疑问</strong>：为什么Point-NeRF、Point-SLAM、Loopy-SLAM以及PIN-SLAM对于体密度或SDF值，都是单独解码之后，再通过逆距离加权？而颜色相关的，则是通过网络得到一个新的feature，将这个feature进行逆距离加权之后再解码得到颜色？</p>
+</blockquote>
+<p><strong>Map Data Structure</strong>：</p>
+<p>为了实现快速的neural point索引和邻域搜索，PIN-SLAM维护了一个voxel resolution固定为$v_p$和hash table size为$T$的voxel hashing data structure。这个数据结构用于组织地图中的neural point，保证每个voxel中的neural point不超过1个。</p>
+<p>PIN-SLAM借鉴了《Instant neural graphics primitives with a multiresolution hash encoding》和《“KISS-ICP: In defense ofpoint-to-point ICP–simple, accurate, and robust registration if done the right way》这两个工作，通过spatial hashing function $\kappa = h(p_W)$将$p_W \in \mathbb{R}^3$映射到hash table中的$\kappa \in \mathbb{Z}$。其中hash table中每一项存储地图中neural point的索引，默认值为-1，表示这一项暂时没有对应的neural point。</p>
+<p>与Point-SLAM相比，PIN-SLAM借助voxel structure，实现了更快的进行K近邻搜索。</p>
+<p><strong>Map Initialization and Update</strong>：</p>
+<p>PIN-SLAM会根据每个时刻输入的点云初始化或更新neural point。</p>
+<p>对于在时刻$t$获取的世界坐标系$W$下的某一个点$p_W$，满足以下任意一种情况时，会初始化一个新的neural point $m_k$放到地图$M$中，并且将对应的hash table中的项设置为该neural point的索引，即$\kappa = k$。</p>
+<ol>
+<li>对应的hash table中的项没有被占用，即$\kappa = -1$；</li>
+<li>存在哈希冲突，但是在voxel structure中，存储的neural point与希望被添加的neural point之间距离很远；</li>
+<li>存在哈希冲突，但是存储的neural point已经不再活跃，即$D(t) - D(t^u_\kappa) &gt; d_l$。</li>
+</ol>
+<p>新初始化的neural point $m_k$，位置$x = p_W$，而四元数被设置为单位四元数$ q = (1,0,0,0)$，特征向量被初始化为零向量$f^g=0$，创建时间和最后更新时间被设置为$t^c = t^u = t$，稳定性$\mu = 0$。</p>
+<p>对于存在哈希冲突的情况2和3，原来存储的neural point不会被删除，只会让hash table不再索引到该点，该点仍然会被保存在global map中。论文说这样做是为了loop closure correction和globally consistent map adjustment。</p>
+<p><strong>Local Map</strong>：</p>
+<p>PIN-SLAM使用local map是为了“avoid the alignment to the inconsistent historical observations caused by odometry drift”。</p>
+<blockquote>
+<p>有很多NeRF SLAM和3DGS SLAM是frame-to-model的，可以看《How NeRFs and 3D Gaussian Splatting are Reshaping SLAM: a Survey》的<a target="_blank" rel="noopener" href="https://pic1.zhimg.com/v2-f388d6e1060fc226d00df0a36ba5582a_1440w.jpg">表格</a>。</p>
+<p>frame-to-model可能存在的问题是，model构建的不太好，导致frame的位姿计算的也不好，进而导致更新的model也不好，从而frame又在存在drift的model上再计算位姿。</p>
+<p>而PIN-SLAM这里使用了local map，一定程度上可以避免这个问题（吗？）</p>
+</blockquote>
+<p>论文提到之前一些工作中，local map是使用spatial window（比如MULLS、KISS-ICP）或temporal window（比如ElasticFusion）来定义的，论文觉得这两种方法可以结合起来使用，但又发现实际上里程计的drift可能与累计经过的距离成正比，而不是与时间成正比。因此，PIN-SLAM的temporal window用travel distance threshold来代替timestep threshold。</p>
+<p>具体来说，对于以$t$时刻的位置$t_{WC_t}$为中心的local map $M_l$，这个local map包括spatial window $| x_i - t_{WC_t} |_2 &lt; r_l$和temporal window $D(t) - D(t_i^c) &lt; d_l$。其中$r_l$是local spatial window的半径，$d_l$是前面提到的travel distance threshold。</p>
+<p><strong>Map Training Samples</strong>：</p>
+<p>和Point-SLAM的采样策略比较类似，PIN-SLAM是在表面采样一个点，再在表面附近采样$Ns$个点，表面附近的$N_s$个点的深度服从正态分布。另外，也会在表面到相机之间的空间中均匀采样$N_f$个点，在表面后的一定空间中均匀采样$N_b$个点。</p>
+<p>最终会得到如下所示的训练样本：<br>$$<br>D = {(u_j,\hat s_j , t) | j = 1,…,N_t}<br>$$<br>其中，$N_t = M_t(1+N_s+N_f+N_b)$，$M_t$是用于mapping的点云$P_m$中点的个数，$u_j$表示第$j$个采样点，$\hat s_j$表示SDF值，被定义为$\hat s_j = |p|_2 - d$。论文提到$\hat s_j$可能总是会被高估，但是计算速度很快，而且在样本接近表面的时候是一个很好的近似值。</p>
+<p>为了解决incremental mapping中的“catastrophic forgetting”，PIN-SLAM维护了一个训练样本池$D_p$，类似于Point-SLAM等方法中的关键帧。</p>
+<p><strong>Map Training Losses</strong>：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121153238442.png"></p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121153248786.png"></p>
+<h2 id="Preprocessing"><a href="#Preprocessing" class="headerlink" title="Preprocessing"></a>Preprocessing</h2><p>在介绍论文pipeline到时候提到，PIN-SLAM对于输入点云$P$，通过体素下采样到用于registration的点云$P_r$和用于mapping的点云$P_m$，其中用于registration的点云$P_r$使用了较大的voxel size，而用于mapping的点云$P_m$使用了较小的voxel size。降采样的过程中，每个voxel只保留最接近体素中心的那个点。</p>
+<p>Lidar存在因为运动导致的畸变，PIN-SLAM基于匀速运动模型，在该模型的基础上先通过逐点时间戳插值运动预测，在Odometry估计位姿之前对$P_r$进行去畸变，再通过Odometry估计的更准确的位姿来对$P_m$进行去畸变。</p>
+<h2 id="Odometry-Estimation"><a href="#Odometry-Estimation" class="headerlink" title="Odometry Estimation"></a>Odometry Estimation</h2><p>该部分是基于已有的工作《LocNDF: Neural distance field mapping for robot localization》，LocNDF实现的是针对已知地图进行定位的方法。</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121160918836.png"></p>
+<p>之前的一些neural implicit SLAM，比如iMAP、Point-SLAM、Vox-fusion、NICE-SLAM等，优化目标是depth rendering loss，可以认为是point-to-point metric。而PIN-SLAM优化目标是point-to-model SDF loss，类似于ICP中的point-to-plane metric。</p>
+<p>根据论文《Efficient variants of the ICP algorithm》的研究，后一种方法具有更快的收敛速度和更稳健的优化。</p>
+<h2 id="Mapping-and-Local-BA"><a href="#Mapping-and-Local-BA" class="headerlink" title="Mapping and Local BA"></a>Mapping and Local BA</h2><p>PIN-SLAM首先会去除动态点，只保留静态点用于Mapping。</p>
+<p>下面提到了一个比较有意思的做法，PIN-SLAM是在最初的$F_{mlp}$个时刻内，同时优化local map $M_l$中的neural point feature $f^g$和decoder的参数$D^g_\theta$，而在$F_{mlp}$个时刻之后，就freeze $D^g_\theta$了，只优化neural point feature了。这样可以避免因为decoder不断变化导致的灾难性遗忘。</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121170316273.png"></p>
+<p>对于local BA，论文中是这么描述的：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121171042766.png"></p>
+<h2 id="Loop-Closure-Detection"><a href="#Loop-Closure-Detection" class="headerlink" title="Loop Closure Detection"></a>Loop Closure Detection</h2><p>PIN-SLAM首先检测local loop closure。即，对于当前位置$t_t$和当前帧$C_t$，与历史位置$t_{t_i}$和历史帧$C_{t_i}$，其中$t_i &lt; t$而且$D(t) - D(t_i) &gt; d_l$，判断两个位置是否满足以下关系：<br>$$<br>| t_t - t_{t_i} |<em>2 &lt; d</em>{loop}<br>$$<br>这种local loop closure比较适合在drift较小的情况下，判断是否又回到了过去经过的位置。</p>
+<p>如果没有检测到local loop closure，PIN-SLAM会通过比较frame-wise descriptors来搜索global loop closure。PIN-SLAM针对典型的驾驶场景，参考Scan Context和Scan Context++等工作，提出了一种“neural point feature enhanced local map descriptor”，论文为每一个时刻$t$的local map生成对应的local context descriptor $U_t$。</p>
+<p>当检测到candidate loop，PIN-SLAM将当前帧点云$P_r$与候选帧$C_k$对应的local map $M_l$进行配准。</p>
+<ul>
+<li>对于local loop，使用单位矩阵进行初始化；</li>
+<li>对于global loop，使用semimetric localization的结果作为初值。</li>
+</ul>
+<p>如果配准成功，PIN-SLAM会将配准之后的变换$T_{C_kC_t}$作为pose graph $G$中连接节点$C_k$和$C_t$的loop closure edge。否则，这个candidate loop会被否定。</p>
+<h2 id="Globally-Consistent-Implicit-Neural-Map-Adjustment"><a href="#Globally-Consistent-Implicit-Neural-Map-Adjustment" class="headerlink" title="Globally Consistent Implicit Neural Map Adjustment"></a>Globally Consistent Implicit Neural Map Adjustment</h2><p>笔者认为这部分是PIN-SLAM中最吸引人的，不过在前面的章节中已经有很多铺垫，论文在这部分着墨并不多。</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121212323987.png"></p>
+<h2 id="EXTENSION-TO-RGB-D-OR-METRIC-SEMANTIC-SLAM"><a href="#EXTENSION-TO-RGB-D-OR-METRIC-SEMANTIC-SLAM" class="headerlink" title="EXTENSION TO RGB-D OR METRIC-SEMANTIC SLAM"></a>EXTENSION TO RGB-D OR METRIC-SEMANTIC SLAM</h2><p>论文在这个章节演示了如何将PIN-SLAM扩展到RGB-D或者Metric-Semantic SLAM。思路其实挺简单的，给每一个neural point增加对应的RGB或者Semantic的feature就可以了，然后创建对应的MLP作为decoder，当然为了进行训练，也会构建对应的损失函数。</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121214746710.png"></p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121215057434.png"></p>
+<h2 id="实验部分"><a href="#实验部分" class="headerlink" title="实验部分"></a>实验部分</h2><p>KITTI数据集上，论文的odometry与其他LIDAR odometry比较平均相对平移漂移误差（%）：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121215842185.png"></p>
+<p>KITTI数据集上，与不同的SLAM比较ATE RMSE：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121220046078.png"></p>
+<p>KITTI数据集上，Loop Closure的直观效果：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121220407142.png"></p>
+<p>Replica数据集上，拓展到RGB-D的PIN-SLAM与其他NeRF SLAM方法比较ATE RMSE：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121220626709.png"></p>
+<p>在kitti数据集的四个序列上，与传统方法（上）和基于学习的方法（中）比较loop closure detection的召回率：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121220855248.png"></p>
+<p>在NEWER COLLEGE数据集上和其他方法比较三维重建的质量：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121221021656.png"></p>
+<p>地图压缩率实验：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121221402200.png"></p>
+<p>在KITTI seq 00上不同子模块的处理时间：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121221557068.png"></p>
+<p>对KITTI seq 00-10的平均运算速度和定位误差的比较：</p>
+<p><img src="/images/paper-reading-pin-slam/image-20241121221643870.png"></p>
+<h2 id="总结-amp-讨论"><a href="#总结-amp-讨论" class="headerlink" title="总结&amp;讨论"></a>总结&amp;讨论</h2><p>这篇文章非常扎实，工作做得非常完整，实验做得也非常充分。论文的工作、实验紧紧围绕SLAM(Simultaneous Localization and Mapping)中的localization和mapping，没有像其他NeRF SLAM、3DGS SLAM方法一样展示PSNR、SSIM等结果（笔者认为PSNR、SSIM主要是新视角合成的指标了，放在SLAM来展示有点奇怪，不过好像大家都爱比较这几个指标）。从实验结果上看，无论是localization还是mapping都非常有竞争力。</p>
+<p>令笔者眼前一亮的是论文中elastic neural point的设计，通过这一设计实现的loop closure能够调整场景中的neural point，非常惊艳。这还是笔者第一次在NeRF、3DGS的方法中见到可以调整场景表示（比如MLP、grid feature、neural point、3DGS）的方法。</p>
+<blockquote>
+<p>理论上也可以让每一帧对应一个MLP，或者每一帧对应一个submap，但是这样的方法笔者觉得不是很好。</p>
+</blockquote>
+<p>论文在Limitations and future work提到了几点：</p>
+<ul>
+<li>可以引入IMU来实现更准确、高效的SLAM系统；</li>
+<li>目前PIN-SLAM使用的是固定分辨率的neural point，后续可以考虑在场景中自适应的分布和移动neural point来提高重建的质量；</li>
+<li>可以使用i-Kdtree等方法，在不使用voxel的情况下实现高效的最近邻搜索；</li>
+<li>另外，也可以考虑借助语义信息进一步增强位姿估计和回环检测。</li>
+</ul>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Immortalqx</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://Immortalqx.github.io/2024/11/21/paper-reading-pin-slam/">http://Immortalqx.github.io/2024/11/21/paper-reading-pin-slam/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Immortalqx</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                                    <span class="chip bg-color">隐式表示</span>
+                                </a>
+                            
+                                <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                                    <span class="chip bg-color">视觉SLAM</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban,google,linkedin,twitter,facebook" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'bMq5alM79AoOmPl5Q65aeVqI-gzGzoHsz',
+        appKey: 'O0Q21Re9hVoBb41y6euVKCQq',
+        serverURLs: '',
+        notify: '' === 'true',
+        verify: '' === 'true',
+        visitor: '' === 'true',
+        avatar: 'retro',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '填上邮箱可以收到我的回复呦ฅ^ω^ฅ'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2024/11/26/nerf-3dgs-in-slam-robotics/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="NeRF &amp; 3DGS in SLAM &amp; Robotics">
+                        
+                        <span class="card-title">NeRF &amp; 3DGS in SLAM &amp; Robotics</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-11-26
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/slam/" class="post-category">
+                                    slam
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/3D-Gaussian-Splatting/">
+                        <span class="chip bg-color">3D Gaussian Splatting</span>
+                    </a>
+                    
+                    <a href="/tags/NeRF/">
+                        <span class="chip bg-color">NeRF</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2024/11/16/neural-point-slam/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/46.jpg" class="responsive-img" alt="Neural Point SLAM回顾">
+                        
+                        <span class="card-title">Neural Point SLAM回顾</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-11-16
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/slam/" class="post-category">
+                                    slam
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                        <span class="chip bg-color">隐式表示</span>
+                    </a>
+                    
+                    <a href="/tags/NeRF/">
+                        <span class="chip bg-color">NeRF</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2025</span>
+            
+            <a href="/about" target="_blank">Immortalqx</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">237.4k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2021";
+                    var startMonth = "2";
+                    var startDate = "1";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Immortalqx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:immortalqx@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1727854434" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1727854434" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+    
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <script src="/js/FunnyTitle.js"></script>
+    <!--script src="/live2d/autoload.js"></script-->
+</body>
+
+</html>

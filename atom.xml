@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>所念皆星河</title>
+  
+  <subtitle>克服己身，叫身服我</subtitle>
+  <link href="http://immortalqx.github.io/atom.xml" rel="self"/>
+  
+  <link href="http://immortalqx.github.io/"/>
+  <updated>2025-01-18T14:58:27.214Z</updated>
+  <id>http://immortalqx.github.io/</id>
+  
+  <author>
+    <name>Immortalqx</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Gaussian Splatting SLAM(MonoGS)代码梳理</title>
+    <link href="http://immortalqx.github.io/2025/01/18/code-reading-monogs/"/>
+    <id>http://immortalqx.github.io/2025/01/18/code-reading-monogs/</id>
+    <published>2025-01-18T14:53:20.000Z</published>
+    <updated>2025-01-18T14:58:27.214Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Gaussian-Splatting-SLAM-MonoGS-代码梳理&quot;&gt;&lt;a href=&quot;#Gaussian-Splatting-SLAM-MonoGS-代码梳理&quot; class=&quot;headerlink&quot; title=&quot;Gaussian Splatting</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>NeRF &amp; 3DGS in SLAM &amp; Robotics</title>
+    <link href="http://immortalqx.github.io/2024/11/26/nerf-3dgs-in-slam-robotics/"/>
+    <id>http://immortalqx.github.io/2024/11/26/nerf-3dgs-in-slam-robotics/</id>
+    <published>2024-11-26T13:47:36.000Z</published>
+    <updated>2025-01-18T15:01:44.599Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;NeRF-amp-3DGS-in-SLAM-amp-Robotics&quot;&gt;&lt;a href=&quot;#NeRF-amp-3DGS-in-SLAM-amp-Robotics&quot; class=&quot;headerlink&quot; title=&quot;NeRF &amp;amp; 3DGS in SLAM</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
+    
+    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>论文阅读PIN-SLAM(TRO 2024)</title>
+    <link href="http://immortalqx.github.io/2024/11/21/paper-reading-pin-slam/"/>
+    <id>http://immortalqx.github.io/2024/11/21/paper-reading-pin-slam/</id>
+    <published>2024-11-21T15:05:22.000Z</published>
+    <updated>2025-01-18T14:44:19.664Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;论文阅读《PIN-SLAM-LiDAR-SLAM-Using-a-Point-Based-Implicit-Neural-Representation-for-Achieving-Global-Map-Consistency》&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Neural Point SLAM回顾</title>
+    <link href="http://immortalqx.github.io/2024/11/16/neural-point-slam/"/>
+    <id>http://immortalqx.github.io/2024/11/16/neural-point-slam/</id>
+    <published>2024-11-16T04:20:01.000Z</published>
+    <updated>2025-01-18T14:44:19.661Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Neural-Point-SLAM回顾&quot;&gt;&lt;a href=&quot;#Neural-Point-SLAM回顾&quot; class=&quot;headerlink&quot; title=&quot;Neural Point SLAM回顾&quot;&gt;&lt;/a&gt;Neural Point SLAM回顾&lt;/h1&gt;&lt;h2</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Neural Point Rendering回顾</title>
+    <link href="http://immortalqx.github.io/2024/11/11/neural-point-rendering/"/>
+    <id>http://immortalqx.github.io/2024/11/11/neural-point-rendering/</id>
+    <published>2024-11-11T14:58:00.000Z</published>
+    <updated>2025-01-18T14:44:19.660Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Neural-Point-Rendering回顾&quot;&gt;&lt;a href=&quot;#Neural-Point-Rendering回顾&quot; class=&quot;headerlink&quot; title=&quot;Neural Point Rendering回顾&quot;&gt;&lt;/a&gt;Neural Point</summary>
+        
+      
+    
+    
+    
+    <category term="NeRF&amp;3DGS" scheme="http://immortalqx.github.io/categories/NeRF-3DGS/"/>
+    
+    
+    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>论文阅读：Scaffold-GS和Octree-GS</title>
+    <link href="http://immortalqx.github.io/2024/10/11/paper-reading-scaffold-octreegs/"/>
+    <id>http://immortalqx.github.io/2024/10/11/paper-reading-scaffold-octreegs/</id>
+    <published>2024-10-11T03:17:35.000Z</published>
+    <updated>2025-01-18T14:44:19.663Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;论文阅读：Scaffold-GS和Octree-GS&quot;&gt;&lt;a href=&quot;#论文阅读：Scaffold-GS和Octree-GS&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="NeRF&amp;3DGS" scheme="http://immortalqx.github.io/categories/NeRF-3DGS/"/>
+    
+    
+    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>论文阅读《GaussianPro：3D Gaussian Splatting with Progressive Propagation》</title>
+    <link href="http://immortalqx.github.io/2024/09/18/paper-reading-gaussianpro/"/>
+    <id>http://immortalqx.github.io/2024/09/18/paper-reading-gaussianpro/</id>
+    <published>2024-09-18T02:40:01.000Z</published>
+    <updated>2025-01-18T14:44:19.662Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;论文阅读《GaussianPro-3D-Gaussian-Splatting-with-Progressive-Propagation》&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="NeRF&amp;3DGS" scheme="http://immortalqx.github.io/categories/NeRF-3DGS/"/>
+    
+    
+    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>论文阅读《GaussReg：Fast 3D Registration with Gaussian Splatting》</title>
+    <link href="http://immortalqx.github.io/2024/08/16/paper-reading-gaussianreg/"/>
+    <id>http://immortalqx.github.io/2024/08/16/paper-reading-gaussianreg/</id>
+    <published>2024-08-16T02:27:10.000Z</published>
+    <updated>2025-01-18T14:44:19.662Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;论文阅读《GaussReg-Fast-3D-Registration-with-Gaussian-Splatting》&quot;&gt;&lt;a href=&quot;#论文阅读《GaussReg-Fast-3D-Registration-with-Gaussian-Splatting》&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="NeRF&amp;3DGS" scheme="http://immortalqx.github.io/categories/NeRF-3DGS/"/>
+    
+    
+    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
+    
+    <category term="点云" scheme="http://immortalqx.github.io/tags/%E7%82%B9%E4%BA%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>论文阅读《Pixel-GS：Density Control with Pixel-aware Gradient for 3D Gaussian Splatting》</title>
+    <link href="http://immortalqx.github.io/2024/07/23/paper-reading-pixel-gs/"/>
+    <id>http://immortalqx.github.io/2024/07/23/paper-reading-pixel-gs/</id>
+    <published>2024-07-23T07:14:27.000Z</published>
+    <updated>2025-01-18T14:44:19.664Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;论文阅读《Pixel-GS-Density-Control-with-Pixel-aware-Gradient-for-3D-Gaussian-Splatting》&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="NeRF&amp;3DGS" scheme="http://immortalqx.github.io/categories/NeRF-3DGS/"/>
+    
+    
+    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>论文阅读《Mini-Splatting：Representing Scenes with a Constrained Number of Gaussians》</title>
+    <link href="http://immortalqx.github.io/2024/07/21/paper-reading-mini-splatting/"/>
+    <id>http://immortalqx.github.io/2024/07/21/paper-reading-mini-splatting/</id>
+    <published>2024-07-21T07:44:37.000Z</published>
+    <updated>2025-01-18T14:44:19.663Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;论文阅读《Mini-Splatting-Representing-Scenes-with-a-Constrained-Number-of-Gaussians》&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="NeRF&amp;3DGS" scheme="http://immortalqx.github.io/categories/NeRF-3DGS/"/>
+    
+    
+    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>论文阅读《Gaussian Splatting with Localized Points Management》</title>
+    <link href="http://immortalqx.github.io/2024/07/20/paper-reading-lpm/"/>
+    <id>http://immortalqx.github.io/2024/07/20/paper-reading-lpm/</id>
+    <published>2024-07-20T08:26:22.000Z</published>
+    <updated>2025-01-18T14:44:19.663Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;论文阅读《Gaussian-Splatting-with-Localized-Points-Management》&quot;&gt;&lt;a href=&quot;#论文阅读《Gaussian-Splatting-with-Localized-Points-Management》&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="NeRF&amp;3DGS" scheme="http://immortalqx.github.io/categories/NeRF-3DGS/"/>
+    
+    
+    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>论文阅读《MotionGS：Compact Gaussian Splatting SLAM by Motion Filter》</title>
+    <link href="http://immortalqx.github.io/2024/07/01/paper-reading-motiongs/"/>
+    <id>http://immortalqx.github.io/2024/07/01/paper-reading-motiongs/</id>
+    <published>2024-07-01T02:26:24.000Z</published>
+    <updated>2025-01-18T14:44:19.662Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;论文阅读《MotionGS-Compact-Gaussian-Splatting-SLAM-by-Motion-Filter》&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ICP算法详解</title>
+    <link href="http://immortalqx.github.io/2024/06/28/icp-algorithm-explanation/"/>
+    <id>http://immortalqx.github.io/2024/06/28/icp-algorithm-explanation/</id>
+    <published>2024-06-28T08:56:04.000Z</published>
+    <updated>2025-01-18T14:44:19.657Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;ICP算法详解&quot;&gt;&lt;a href=&quot;#ICP算法详解&quot; class=&quot;headerlink&quot; title=&quot;ICP算法详解&quot;&gt;&lt;/a&gt;ICP算法详解&lt;/h1&gt;&lt;h2</summary>
+        
+      
+    
+    
+    
+    <category term="三维视觉" scheme="http://immortalqx.github.io/categories/%E4%B8%89%E7%BB%B4%E8%A7%86%E8%A7%89/"/>
+    
+    
+    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
+    
+    <category term="点云" scheme="http://immortalqx.github.io/tags/%E7%82%B9%E4%BA%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>论文阅读《RTG-SLAM：Real-time 3D Reconstruction at Scale Using Gaussian Splatting》</title>
+    <link href="http://immortalqx.github.io/2024/06/05/paper-reading-rtg-slam/"/>
+    <id>http://immortalqx.github.io/2024/06/05/paper-reading-rtg-slam/</id>
+    <published>2024-06-05T12:08:42.000Z</published>
+    <updated>2025-01-18T14:44:19.664Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;论文阅读《RTG-SLAM-Real-time-3D-Reconstruction-at-Scale-Using-Gaussian-Splatting》&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Gaussian Splatting中球谐的使用</title>
+    <link href="http://immortalqx.github.io/2024/05/31/3dgs-notes-1/"/>
+    <id>http://immortalqx.github.io/2024/05/31/3dgs-notes-1/</id>
+    <published>2024-05-31T09:21:01.000Z</published>
+    <updated>2025-01-18T14:44:19.653Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Gaussian-Splatting中球谐的使用&quot;&gt;&lt;a href=&quot;#Gaussian-Splatting中球谐的使用&quot; class=&quot;headerlink&quot; title=&quot;Gaussian Splatting中球谐的使用&quot;&gt;&lt;/a&gt;Gaussian</summary>
+        
+      
+    
+    
+    
+    <category term="NeRF&amp;3DGS" scheme="http://immortalqx.github.io/categories/NeRF-3DGS/"/>
+    
+    
+    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Colmap和Gaussian Splatting保存出来的ply文件格式解析</title>
+    <link href="http://immortalqx.github.io/2024/05/30/3dgs-notes-0/"/>
+    <id>http://immortalqx.github.io/2024/05/30/3dgs-notes-0/</id>
+    <published>2024-05-30T14:00:00.000Z</published>
+    <updated>2025-01-18T14:44:19.653Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Colmap和Gaussian-Splatting保存出来的ply文件格式解析&quot;&gt;&lt;a href=&quot;#Colmap和Gaussian-Splatting保存出来的ply文件格式解析&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="NeRF&amp;3DGS" scheme="http://immortalqx.github.io/categories/NeRF-3DGS/"/>
+    
+    
+    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Compact 3DGS代码阅读</title>
+    <link href="http://immortalqx.github.io/2024/05/25/code-reading-compact-3dgs/"/>
+    <id>http://immortalqx.github.io/2024/05/25/code-reading-compact-3dgs/</id>
+    <published>2024-05-25T14:55:23.000Z</published>
+    <updated>2025-01-18T14:44:19.654Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Compact-3DGS代码阅读&quot;&gt;&lt;a href=&quot;#Compact-3DGS代码阅读&quot; class=&quot;headerlink&quot; title=&quot;Compact 3DGS代码阅读&quot;&gt;&lt;/a&gt;Compact 3DGS代码阅读&lt;/h1&gt;&lt;h2</summary>
+        
+      
+    
+    
+    
+    <category term="NeRF&amp;3DGS" scheme="http://immortalqx.github.io/categories/NeRF-3DGS/"/>
+    
+    
+    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>论文阅读《Compact 3D Gaussian Representation for Radiance Field》</title>
+    <link href="http://immortalqx.github.io/2024/05/21/paper-reading-compact-3dgs/"/>
+    <id>http://immortalqx.github.io/2024/05/21/paper-reading-compact-3dgs/</id>
+    <published>2024-05-21T08:30:22.000Z</published>
+    <updated>2025-01-18T14:44:19.662Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;论文阅读《Compact-3D-Gaussian-Representation-for-Radiance-Field》&quot;&gt;&lt;a href=&quot;#论文阅读《Compact-3D-Gaussian-Representation-for-Radiance-Field》&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="NeRF&amp;3DGS" scheme="http://immortalqx.github.io/categories/NeRF-3DGS/"/>
+    
+    
+    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>论文阅读《Efficient Dense RGB-D SLAM in a Consistent Uncertainty-aware 3D Gaussian Field》</title>
+    <link href="http://immortalqx.github.io/2024/05/19/paper-reading-cg-slam/"/>
+    <id>http://immortalqx.github.io/2024/05/19/paper-reading-cg-slam/</id>
+    <published>2024-05-19T08:50:07.000Z</published>
+    <updated>2025-01-18T14:44:19.662Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;strong&gt;项目主页：&lt;/strong&gt;&lt;a href=&quot;https://zju3dv.github.io/cg-slam/&quot;&gt;https://zju3dv.github.io/cg-slam/&lt;/a&gt;&lt;/p&gt;
+&lt;h1</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>论文阅读《Compact 3D Gaussian Splatting For Dense Visual SLAM》</title>
+    <link href="http://immortalqx.github.io/2024/05/14/paper-reading-compact-gsslam/"/>
+    <id>http://immortalqx.github.io/2024/05/14/paper-reading-compact-gsslam/</id>
+    <published>2024-05-14T11:09:36.000Z</published>
+    <updated>2025-01-18T14:44:19.662Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;论文阅读《Compact-3D-Gaussian-Splatting-For-Dense-Visual-SLAM》&quot;&gt;&lt;a href=&quot;#论文阅读《Compact-3D-Gaussian-Splatting-For-Dense-Visual-SLAM》&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    
+    
+    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
+    
+  </entry>
+  
+</feed>

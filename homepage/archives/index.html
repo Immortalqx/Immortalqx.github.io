@@ -1,0 +1,138 @@
+<!DOCTYPE html><html lang="EN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"><title>Quanxiang's Homepage</title><meta name="author" content="Quanxiang Liu"><link rel="shortcut icon" href="/homepage/img/favicon.png"><link rel="stylesheet" href="/homepage/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/homepage/atom.xml" title="Quanxiang's Homepage" type="application/atom+xml">
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head><body><header id="page_header"><div class="header_wrap"><div id="blog_name"><a class="blog_title" id="site-name" href="/homepage/">Quanxiang's Homepage</a></div><button class="menus_icon"><div class="navicon"></div></button><ul class="menus_items"><li class="menus_item"><a class="site-page" href="/homepage/"> About Me</a></li><li class="menus_item"><a class="site-page" href="/homepage/#News"> News</a></li><li class="menus_item"><a class="site-page" href="/homepage/#Projects"> Projects</a></li><li class="menus_item"><a class="site-page" href="/homepage/#Honors-and-Awards"> Honors and Awards</a></li><li class="menus_item"><a class="site-page" href="/homepage/#Educations"> Educations</a></li><li class="menus_item"><a class="site-page" href="https://immortalqx.github.io"> Blog</a></li></ul></div></header><main id="page_main"><div class="side-card sticky"><div class="card-wrap" itemscope itemtype="http://schema.org/Person"><div class="author-avatar"><img class="avatar-img" src="/homepage/img/avatar.jpg" onerror="this.onerror=null;this.src='/homepage/img/profile.jpg'" alt="avatar"></div><div class="author-discrip"><h3>Quanxiang Liu</h3><p class="author-bio">Focusing on NeRF, 3DGS, SLAM and Robotics.</p></div><div class="author-links"><button class="btn m-social-links">Links</button><ul class="social-icons"><li><a class="social-icon" href="/homepage/img/qq_qrcode.jpg" target="_blank"><i class="fab fa-qq" aria-hidden="true"></i></a></li><li><a class="social-icon" href="/homepage/img/wechat_qrcode.jpg" target="_blank"><i class="fab fa-weixin" aria-hidden="true"></i></a></li><li><a class="social-icon" href="https://github.com/Immortalqx" target="_blank"><i class="fab fa-github" aria-hidden="true"></i></a></li><li><a class="social-icon" href="mailto:immortalqx@gmail.com" target="_blank"><i class="fas fa-envelope" aria-hidden="true"></i></a></li></ul></div><a class="cv-links" href="/homepage/attaches/CV_20241101.pdf" target="_blank"><i class="fas fa-file-pdf" aria-hidden="true"><span>CV</span></i></a></div></div><div class="page" itemscope itemtype="http://schema.org/CreativeWork"><article><p><strong>Sorry, the content below has expired. You can download my resume, which has been updated.</strong></p>
+<p><a href="/homepage/attaches/CV_20241101.pdf">CV</a></p>
+<p><a href="/homepage/attaches/CV_CN_20241101.pdf">中文简历</a></p>
+<p>Hello, my name is Quanxiang Liu(刘权祥), an undergraduate student majoring in software engineering at Northwestern Polytechnic University. I have been a member of the Northwestern Polytechnic University V5++ robotics team (an undergraduate team focused on simulating 5 vs 5 soccer game, RoboMaster University AI Challenge and UAV) since March 2020 and became the leader of the V5++ robotics team SLAM technology group since March 2021.</p>
+<p>I am interested in computer vision, SLAM and UAV.</p>
+<p>You can contact me with <a href="mailto:immortalqx@gmail.com">immortalqx@gmail.com</a>.</p>
+<h1 id="News"><a href="#News" class="headerlink" title="News"></a>News</h1><ul>
+<li>No news at present……</li>
+</ul>
+<h1 id="Projects"><a href="#Projects" class="headerlink" title="Projects"></a>Projects</h1><h2 id="Logistics-UAV"><a href="#Logistics-UAV" class="headerlink" title="Logistics UAV"></a>Logistics UAV</h2><p>We originally designed this logistics UAV for 2020 China Robot Competition Logistics UAV Project.<br>This UAV is lightweight and can carry three standard small courier boxes weighing less than 500 grams and place them in specific locations based on visual information. It has a tracking camera to help locate itself indoor, in version 1.0 it had a depth camera to provide obstacle information to the navigation program, and in version 2.0 we replaced it with the Rplidar A3.</p>
+<h3 id="Version-1-0"><a href="#Version-1-0" class="headerlink" title="Version 1.0"></a>Version 1.0</h3><figure class="half" align="center">
+    <img src="/homepage/images/1-1-1.jpg" style="zoom:30%;">
+    <img src="/homepage/images/1-1-2.jpg" style="zoom:30%;">
+    <img src="/homepage/images/1-1-3.jpg" style="zoom:30%;">
+    <img src="/homepage/images/1-1-4.jpg" style="zoom:30%;">
+</figure>
+This is our first generation logistics UAV, we participated in 2020 China Robot Competition Logistics UAV Project and won the 3rd place!
+
+<p>But there are some problems with this UAV:</p>
+<ul>
+<li><p>The precision of localization is not enough.</p>
+<p>The scale after SLAM initialization is not good, for example, calculating 5 meters as 3 or 6 meters. This somewhat affects the accuracy of UAV delivery.</p>
+</li>
+<li><p>Only the drop target was identified, and the position of the drop target center relative to the UAV was not calculated.</p>
+<p>In order to ensure the accuracy of delivery, we ensure that the UAV can deliver express to the delivery target center by keeping the delivery target center in the down view image center. Although this can solve the problem, it is too difficult to control (it is difficult to determine which direction and how many meters the UAV should move), which also affects the accuracy of UAV delivery.</p>
+</li>
+<li><p>The design of UAV is too bulky and difficult to control in flight.</p>
+<p>When the target is detected, we want to control the drone to drop a certain height to complete a more accurate drop, but when the weight of the courier carried by the drone is too heavy, the drone will be far more than expected in the drop height, only by reducing the weight of the courier to ensure that the drone works properly.</p>
+</li>
+</ul>
+<p><strong>My works:</strong></p>
+<ul>
+<li>Learn about open-vins visual-inertial system, and other famous visual slam systems.</li>
+<li>Install the realsense D435i camera and the realsense T265 camera for the UAV and calibrated both cameras.</li>
+<li>Deploy open-vins on the UAV to ensure that the drone can locate itself indoor.</li>
+<li>Learn docker and build docker containers to reduce the effort of environment configuration while speeding up the deployment of algorithms on different UAVs.</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://youtu.be/qDxkNu6YHjc">video</a>/ <a target="_blank" rel="noopener" href="https://github.com/Immortalqx/open_vins">code</a></p>
+<h3 id="Version-2-0"><a href="#Version-2-0" class="headerlink" title="Version 2.0"></a>Version 2.0</h3><figure class="half" align="center">
+    <img src="/homepage/images/1-2-1.jpg" style="zoom:20%;">
+    <img src="/homepage/images/1-2-2.jpg" style="zoom:20%;">
+    <img src="/homepage/images/1-2-3.jpg" style="zoom:20%;">
+</figure>
+
+
+<p>This is our second-generation logistics UAV. We have made great improvements on the basis of the first generation UAV, trying to solve some problems we have encountered before.</p>
+<p><strong>My works:</strong></p>
+<ul>
+<li><p>For the problem of low localization accuracy:</p>
+<ul>
+<li>Previously I just calibrated the camera and used the default values for the imu parameter in open-vins. But this time I did a joint calibration of the camera and imu, which allows the UAV to get more accurate localization.</li>
+<li>open-vins is only able to obtain the pose in the camera coordinate system, and a coordinate transformation is required for the UAV. So I created a ROS program called “pose remap” for converting a pose into the desired pose for the robot. </li>
+</ul>
+</li>
+<li><p>For the problem of low accuracy of UAV delivery:</p>
+<p>Our previous scheme was difficult to guarantee the accuracy of the delivery, so this time I designed a program to calculate the position of the center of the falling target relative to the UAV. As long as the height of the drone relative to the ground is known, the program can accurately calculate this relative position.</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://youtu.be/BLO7OvEVvkc">video</a>/ <a target="_blank" rel="noopener" href="https://github.com/Immortalqx/pose_remap">code</a></p>
+<h2 id="Multi-Sensor-Fusion-based-Cave-Exploration-UAV"><a href="#Multi-Sensor-Fusion-based-Cave-Exploration-UAV" class="headerlink" title="Multi-Sensor Fusion-based Cave Exploration UAV"></a>Multi-Sensor Fusion-based Cave Exploration UAV</h2><figure class="half" align="center">
+    <img src="/homepage/images/2-1.jpg" style="zoom:30%;">
+    <img src="/homepage/images/2-2.jpg" style="zoom:30%;">
+</figure>
+
+<p><img align="right" src="/homepage/images/2-3.png" style="zoom:25%;">This is a national college student innovation and entrepreneurship training program starting in 2021 and I am the leader of this project.</p>
+<p>The aim of this project is to design a cave exploration UAV based on multi-sensor fusion. This UAV will be equipped with a variety of sensors, including infrared cameras, solid-state lidars, GPS, IMU, etc., and can detect the outside world even in complete darkness. It does not require human intervention, and can perform 3D mapping of the cave in real time and return autonomously.</p>
+<p>We hope that this UAV will be able to enter caves for preliminary exploration before humans enter them, effectively reducing the risk of cave exploration accidents. </p>
+<p><img align="right" src="/homepage/images/2-4.png" style="zoom:25%;"><strong>My main work is as follows:</strong></p>
+<ul>
+<li>Manage this project.</li>
+<li>Select and calibrate the sensors.</li>
+<li>Select the appropriate VIO system and deploy it to the UAV.</li>
+<li>Select the appropriate LIO system and deploy it to the UAV.</li>
+<li>Merging VIO system with LIO system (in progress).</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://youtu.be/3trAbwnQefQ">video1</a>/ <a target="_blank" rel="noopener" href="https://youtu.be/DUJDalVcMHQ">video2</a>/ code</p>
+<h2 id="Pi-SLAM-Fusion-UAV-Image-Mosaicing-based-on-Pi-SLAM-and-Map2DFusion"><a href="#Pi-SLAM-Fusion-UAV-Image-Mosaicing-based-on-Pi-SLAM-and-Map2DFusion" class="headerlink" title="Pi-SLAM-Fusion: UAV Image Mosaicing based on Pi-SLAM and Map2DFusion"></a>Pi-SLAM-Fusion: UAV Image Mosaicing based on Pi-SLAM and Map2DFusion</h2><p><img src="/homepage/images/3-1.png"></p>
+<p>This is a UAV mapping program based on <a target="_blank" rel="noopener" href="https://gitee.com/pi-lab/pi-slam">Pi-SLAM</a> and <a target="_blank" rel="noopener" href="https://gitee.com/pi-lab/Map2DFusion">Map2DFusion</a>, guided by <a target="_blank" rel="noopener" href="http://www.adv-ci.com/blog">Prof. Shuhui Bu</a>.</p>
+<p><strong>My main work is as follows:</strong></p>
+<ul>
+<li>Learning about SLAM (Simultaneous Localization and Mapping).<ul>
+<li>Familiar with SLAM System.</li>
+<li>Learning about Map2DFusion (paper and source code).</li>
+<li>Learning about Pi-SLAM (source code only).</li>
+</ul>
+</li>
+<li>Combining Pi-SLAM and Map2DFusion into one program.<ul>
+<li>Resolve the conflicting prerequisites in Pi-SLAM and Map2DFusion.</li>
+<li>Insert the RANSAC algorithm into the Pi-SLAM code for fitting the ground plane in the point cloud (default camera-to-ground shot).</li>
+<li>Map2DFusion is merged in as a thread of Pi-SLAM. After PI slam is started, it will calculate the pose and point cloud of a certain number of frames, and use RANSAC algorithm to fit the ground plane in the point cloud. After fitting, it will send the result to map2dfusion thread to start it. After that, Map2DFusion will receive the frame calculated by pi-SLAM and start the image mosaicing .</li>
+</ul>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://youtu.be/y3ke9PaKzyk">video</a>/ <a target="_blank" rel="noopener" href="https://github.com/Immortalqx/pi-slam-fusion">code</a></p>
+<h2 id="Qt-based-LIDAR-Mapping-Simulator"><a href="#Qt-based-LIDAR-Mapping-Simulator" class="headerlink" title="Qt-based LIDAR Mapping Simulator"></a>Qt-based LIDAR Mapping Simulator</h2><p><img align="right" src="/homepage/images/4-2.png" style="zoom:15%;">This is a Qt-based LIDAR simulation mapping software that helps people visualize how LIDAR scans things around them. This software also supports adding and removing obstacles from the simulated environment, as well as creating maps, which makes the software even more interesting.</p>
+<p><img align="right" src="/homepage/images/4-1.png" style="zoom:15%;">I developed this software alone, and here is what I learned from the development process:</p>
+<ol>
+<li>Qt programming</li>
+<li>2D collision detection algorithm</li>
+</ol>
+<p>video/ <a target="_blank" rel="noopener" href="https://github.com/Immortalqx/Qt-based-LIDAR-mapping-simulator.git">code</a></p>
+<h2 id="NWPU-Soccer-Robot-Base-SLAM-Group-Learning-Tutorial"><a href="#NWPU-Soccer-Robot-Base-SLAM-Group-Learning-Tutorial" class="headerlink" title="NWPU Soccer Robot Base SLAM Group Learning Tutorial"></a>NWPU Soccer Robot Base SLAM Group Learning Tutorial</h2><p>This project was initiated by the NWPU Soccer Robot Base SLAM Group, and I am the main leader.</p>
+<div align="center">
+<img src="/homepage/images/5-1.png" alt="" style="zoom: 50%;">
+</div>
+
+<p>We made this tutorial for better and more standardized recruiting training at the base, and of course we hope to help students who are interested in SLAM technology. Through the tutorial, we hope to give the team members an overall knowledge of SLAM, and to quickly master the basic positioning techniques so that they can be used in the base’s competitions or projects.</p>
+<p>PS: This project is still in the development stage and there are some tutorials that are not yet completed.</p>
+<p>video/ <a target="_blank" rel="noopener" href="https://github.com/NWPU-Soccer-Robot-Base-SLAM-Group/Learn-SLAM">code</a>/ <a target="_blank" rel="noopener" href="https://nwpu-soccer-robot-base-slam-group.github.io/">project page</a></p>
+<h1 id="Honors-and-Awards"><a href="#Honors-and-Awards" class="headerlink" title="Honors and Awards"></a>Honors and Awards</h1><p><strong>Honors:</strong></p>
+<ul>
+<li><em>2021.09</em> 2021 Northwestern Polytechnic University Special Scholarship (rank 4.2%)</li>
+<li><em>2021.09</em> 2021 Northwestern Polytechnic University First Class Scholarship (rank 4.2%)</li>
+<li><em>2021.09</em> 2021 Northwestern Polytechnic University Outstanding Undergraduate Student</li>
+<li><em>2021.09</em> 2021 Northwestern Polytechnic University Academic Advanced Undergraduate Student</li>
+<li><em>2020.09</em> 2020 Northwestern Polytechnic University Second Class Scholarship (rank 10.9%)</li>
+<li><em>2020.09</em> 2020 Northwestern Polytechnic University Outstanding Undergraduate Student</li>
+</ul>
+<p><strong>Awards:</strong></p>
+<ul>
+<li><em>2021.11</em> Third Prize in Developer Testing, National University Software Testing Competition Finals, 2021</li>
+<li><em>2021.09</em> Second Prize of the 7th CCB Cup China International “Internet+” Student Innovation and Entrepreneurship Competition Intra-college Competition</li>
+<li><em>2021.08</em> First Prize of the 23rd China Robotics and Artificial Intelligence Competition (Shaanxi Region)</li>
+<li><em>2021.05</em> 2021 Northwestern Polytechnical University E-Commerce “Innovation, Creativity and Entrepreneurship” Challenge Third Prize</li>
+<li><em>2021.05</em> Third Prize of Innovation Track of the 19th “SanHang Cup” Extra-curricular Academic Science and Technology Works Competition for College Students</li>
+<li><em>2021.05</em> Second Prize of the 2021 Northwestern Polytechnic University C Programming Experimental Skills Competition</li>
+<li><em>2021.01</em> Second prize of the 2021 Northwestern Polytechnical University “Programming Star” programming challenge</li>
+<li><em>2020.12</em> The first prize of the 22nd National Robotics Championship in the category of practical application of aerial flying robots</li>
+<li><em>2020.11</em> Third runner-up (second prize) in the 2020 China Robotics Competition Drone Challenge</li>
+<li><em>2020.05</em> Second prize in the 2020 Northwestern Polytechnic University Programming Competition</li>
+</ul>
+<h1 id="Educations"><a href="#Educations" class="headerlink" title="Educations"></a>Educations</h1><ul>
+<li><em>2019.09 - present</em>, Undergraduate, School of Software, Northwestern Polytechnic University, Xi’an, Shaanxi Province, China.</li>
+</ul>
+</article></div></main><div class="nav-wrap"><div class="nav"><button class="site-nav"><div class="navicon"></div></button><ul class="nav_items"><li class="nav_item"><a class="nav-page" href="/homepage/"> About Me</a></li><li class="nav_item"><a class="nav-page" href="/homepage/#News"> News</a></li><li class="nav_item"><a class="nav-page" href="/homepage/#Projects"> Projects</a></li><li class="nav_item"><a class="nav-page" href="/homepage/#Honors-and-Awards"> Honors and Awards</a></li><li class="nav_item"><a class="nav-page" href="/homepage/#Educations"> Educations</a></li><li class="nav_item"><a class="nav-page" href="https://immortalqx.github.io"> Blog</a></li></ul></div><div class="cd-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></div></div><footer id="page_footer"><div class="footer_wrap"><div class="copyright">&copy;2022 - 2025 by Quanxiang Liu</div><div class="theme-info">Powered by <a target="_blank" href="https://hexo.io" rel="nofollow noopener">Hexo</a> & <a target="_blank" href="https://github.com/PhosphorW/hexo-theme-academia" rel="nofollow noopener">Academia Theme</a></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery-pjax@latest/jquery.pjax.min.js"></script><script src="/homepage/js/main.js"></script></body></html>

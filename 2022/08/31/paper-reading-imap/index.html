@@ -1,0 +1,1462 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="论文阅读《iMAP：Implicit Mapping and Positioning in Real-Time 》, 所念皆星河">
+    <meta name="description" content="论文阅读《iMAP: Implicit Mapping and Positioning in Real-Time 》Abstract我们首次展示了多层感知器 (MLP) 可以作为手持 RGB-D 相机的实时 SLAM 系统中唯一的场景表示。">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>论文阅读《iMAP：Implicit Mapping and Positioning in Real-Time 》 | 所念皆星河</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">所念皆星河</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/homepage" class="waves-effect waves-light">
+      
+      <i class="fas fa-award" style="zoom: 0.6;"></i>
+      
+      <span>Homepage</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">所念皆星河</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/homepage" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-award"></i>
+			
+			Homepage
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/Immortalqx" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Follow me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/Immortalqx" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Follow me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">论文阅读《iMAP：Implicit Mapping and Positioning in Real-Time 》</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                                <span class="chip bg-color">隐式表示</span>
+                            </a>
+                        
+                            <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                                <span class="chip bg-color">视觉SLAM</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/slam/" class="post-category">
+                                slam
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-08-31
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    21 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="论文阅读《iMAP-Implicit-Mapping-and-Positioning-in-Real-Time-》"><a href="#论文阅读《iMAP-Implicit-Mapping-and-Positioning-in-Real-Time-》" class="headerlink" title="论文阅读《iMAP: Implicit Mapping and Positioning in Real-Time 》"></a>论文阅读《iMAP: Implicit Mapping and Positioning in Real-Time 》</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>我们首次展示了多层感知器 (MLP) 可以作为手持 RGB-D 相机的实时 SLAM 系统中唯一的场景表示。 我们的网络在没有先验数据的情况下进行实时操作训练，构建了一个稠密的、特定场景的隐式 3D 占用和颜色模型，该模型也可立即用于跟踪。</p>
+<p>通过针对实时图像流持续训练神经网络来实现实时 SLAM 需要重大创新。 我们的 iMAP 算法使用关键帧结构和多处理计算流程，采用动态信息引导像素采样提高速度，跟踪频率为 10 Hz，全局地图更新频率为 2 Hz。 与标准稠密 SLAM 技术相比，隐式 MLP 的优势包括具有自动细节控制的高效几何表示以及对未观察区域（例如对象的后表面）的平滑、合理填充。</p>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>用于智能体现设备的实时同步定位和映射 (SLAM) 系统必须逐步构建 3D 世界的表示，以实现定位和场景理解。理想的表示应该精确地编码几何图形，但也应该是高效的，可用的内存容量可以根据场景大小和复杂性自适应地使用； 预测性的，能够合理地估计未直接观察到的区域的形状； 灵活，无需大量训练数据或手动调整即可在新场景下运行。</p>
+<p>隐式神经表示是离线重建的一个有前途的最新进展，它使用多层感知器 (MLP) 将 3D 点映射到占用或颜色，并从头开始对其进行优化以适应特定场景。  MLP 是一种通用的隐式函数逼近器，能够用很少的参数表示可变细节并且没有量化伪影。即使没有事先的训练，网络结构中存在的固有先验也允许它从部分数据中做出稠密的几何估计，并合理地完成未观察到的区域。</p>
+<p>在本文中，我们首次展示了 MLP 可以用作使用手持 RGB-D 相机的实时 SLAM 系统中的唯一场景表示。 我们随机初始化的网络是在实时操作中训练的，我们不需要任何先前的训练数据。 我们的 iMAP 系统设计有关键帧结构和多处理计算流程，让人想起 PTAM 。 在以超过 10 Hz 运行的跟踪过程中，我们将实时 RGB-D 观察与来自 MLP 场景地图的渲染深度和颜色预测对齐。 同时，映射过程选择并维护一组视点跨越场景的历史关键帧，并使用这些关键帧不断训练和改进 MLP，同时联合优化关键帧姿势。</p>
+<p>在跟踪和映射中，我们动态地对信息量最大的 RGB-D 像素进行采样，以减少几何不确定性，实现实时速度。 我们的系统在 Python 中运行，所有优化都是通过单个桌面 CPU/GPU 系统上的标准 PyTorch 框架。</p>
+<p>通过将 SLAM 视为一个持续学习问题，我们实现了一种表示，该表示可以有效地表示具有连续和自适应分辨率的场景，并且具有出色的平滑插值能力以实现完整的、无懈可击的重建（图 1）。 使用大约 10~20 个关键帧和一个只有 1 MB 参数的 MLP，我们可以准确地映射整个房间。 我们的场景表示没有固定的分辨率； 关键帧的分布自动实现高效的多尺度映射。</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830223022639.png" alt="图 1：使用 Azure Kinect RGB-D 摄像头从实时 iMAP 重建房间，显示稠密场景模型、摄像头跟踪和自动关键帧集。"></p>
+<p>我们在各种真实世界序列上展示了我们的系统，并对来自房间规模的副本数据集的 8 个场景进行了详尽的评估和烧蚀分析。 我们表明，与标准稠密 SLAM 系统相比，iMAP 可以进行更完整的场景重建，并且内存占用明显更小。 我们在 TUM RGB-D 数据集上展示了与最先进的 SLAM 系统相比具有竞争力的跟踪性能。</p>
+<p>总而言之，这篇论文的主要贡献是：</p>
+<ul>
+<li>第一个使用隐式神经场景表示并能够联合优化完整 3D 地图和相机姿势的稠密实时 SLAM 系统。</li>
+<li>通过自动关键帧选择和损失引导稀疏主动采样实现实时增量训练隐式场景网络的能力。</li>
+<li>我们提出的SLAM公式的并行实现（完全在PyTorch中多处理），它与手持RGB-D相机联机工作。</li>
+</ul>
+<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2. Related Work"></a>2. Related Work</h2><p><strong>视觉 SLAM 系统 Visual SLAM Systems</strong>    用于建模环境的实时视觉 SLAM 系统通常以分层方式构建，其中稀疏表示用于定位，更详细的几何或语义分层。 然而，在这里，我们在“稠密 SLAM”范式中工作，其中统一的稠密场景表示也是相机跟踪的基础。 稠密表示避免了任意抽象，例如关键点，能够以稳健的不变方式进行跟踪和重新定位，并且作为与传感器无关的、统一的、完整的空间表示具有长期吸引力。</p>
+<p>稠密 SLAM 中的一些方法明确表示表面，但需要直接表示体积以实现全面的应用，例如规划。 如果使用固定分辨率，则使用占用或有符号距离函数的体积标准表示在内存方面代价很大。 分层方法更有效，但实现起来很复杂，并且通常只提供小范围的详细信息。 在任何一种情况下，表示都是相当严格的，并且由于它们使用了大量的参数，因此不适合与相机姿势进行联合优化。</p>
+<p>机器学习可以发现密集结构的低维嵌入，从而实现高效、联合优化的表示。  CodeSLAM就是一个例子，但使用深度图视图表示而不是完整的体积 3D。 学习技术也被用于改进密集重建，但需要现有的扫描或先验的训练数据。</p>
+<p><strong>使用 MLP 进行隐式场景表示 Implicit Scene Representation with MLPs</strong>    在利用隐式MLP神经模型进行目标重建、目标压缩、新的视图合成和场景完成方面，场景表示和图形显示取得了很大进展。最近的两篇论文 [35,39] 也探讨了相机姿态优化。但是到目前为止，这些方法被认为是一个离线工具，计算要求是几小时、几天或几周。结果表明，当深度图像可用时，利用引导稀疏采样进行渲染和训练时，这些方法适用于实时SLAM。</p>
+<p><strong>持续学习 Continual Learning</strong>    通过使用单个 MLP 作为主场景模型，我们将实时 SLAM 视为在线持续学习。 一个有效的持续学习系统应该展示可塑性（获取新知识的能力）和稳定性（保留旧知识）。 灾难性遗忘是神经网络的一个众所周知的特性，并且是稳定性的失败，新的经历会覆盖记忆。</p>
+<p>减轻灾难性遗忘的一项工作重点是使用相对权重来保护表示免受新数据的影响。 这让人想起 SLAM 中的经典过滤方法，例如 EKF，值得未来研究。 在对每个单独的任务进行训练后冻结或合并子网络的方法对于 SLAM 来说可能过于简单和离散。</p>
+<p>相反，我们将注意力转向基于重放的持续学习方法，其中先前的知识要么直接存储在缓冲区中，要么压缩在生成模型中。 我们使用一种简单的方法，自动选择关键帧来存储和压缩过去的记忆。 我们在持续运行的地图更新过程中使用这些关键帧的损失引导随机抽样来定期重播和加强先前观察到的场景区域，同时继续通过新的关键帧添加信息。 在 SLAM 术语中，这种方法类似于 PTAM 开创的方法，其中历史关键帧集和重复的全局束调整作为长期场景表示。</p>
+<h2 id="3-iMAP-A-Real-Time-Implicit-SLAM-System"><a href="#3-iMAP-A-Real-Time-Implicit-SLAM-System" class="headerlink" title="3. iMAP: A Real-Time Implicit SLAM System"></a>3. iMAP: A Real-Time Implicit SLAM System</h2><h3 id="3-1-System-Overview"><a href="#3-1-System-Overview" class="headerlink" title="3.1. System Overview"></a>3.1. System Overview</h3><p>图2概述了iMAP的工作原理。使用将3D坐标映射到颜色和体积密度的全连接神经网络$ F_\theta $来表示3D体积图 (第3.2节)。给定相机的姿态，我们可以通过累积来自反向投影射线中的样本的网络查询来渲染像素的颜色和深度 (第3.3节)。</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830225347891.png" alt="图2：iMAP system pipeline."></p>
+<p>我们通过相对于一组稀疏的主动采样测量值（第 3.6 节）逐步优化网络权重和相机位姿，从深度和彩色视频中映射场景。 两个进程同时运行：跟踪（第 3.4 节），它优化当前帧相对于锁定网络的位姿； 和映射（第 3.4 节），它联合优化所选关键帧的网络和相机位姿，根据信息增益增量选择（第 3.5 节）。</p>
+<h3 id="3-2-Implicit-Scene-Neural-Network"><a href="#3-2-Implicit-Scene-Neural-Network" class="headerlink" title="3.2. Implicit Scene Neural Network"></a>3.2. Implicit Scene Neural Network</h3><p>遵循 NeRF 中的网络架构，我们使用具有 4 个特征大小为 256 的隐藏层的 MLP，以及将 3D 坐标$ \mathrm p = (x, y, z) $映射到颜色和体积密度值的两个输出头：$ F_\theta{\mathrm p} = (\mathrm c , \rho)$。 与 NeRF 不同，我们不考虑观察方向，因为我们对镜面反射建模不感兴趣。</p>
+<p>我们应用傅里叶特征网络中提出的高斯位置嵌入将输入 3D 坐标提升到 n 维空间：sin(<strong>Bp</strong>)，其中 <strong>B</strong> 是从具有标准偏差$ \sigma $的正态分布采样的 [n×3] 矩阵。 该嵌入用作 MLP 的输入，也连接到网络的第二个激活层。 从 SIREN [27] 中汲取灵感，我们允许优化嵌入矩阵 <strong>B</strong>，实现为具有正弦激活的单个全连接层。</p>
+<h3 id="3-3-Depth-and-Colour-Rendering"><a href="#3-3-Depth-and-Colour-Rendering" class="headerlink" title="3.3. Depth and Colour Rendering"></a>3.3. Depth and Colour Rendering</h3><p>我们的新可微渲染引擎受 NeRF 和 NodeSLAM 的启发，查询场景网络以从给定视图获取深度和彩色图像。</p>
+<p>给定一个相机位姿$ T_{WC} $和一个像素坐标$ [u, v] $，我们首先反向投影一个归一化的观察方向并将其转换为世界坐标：$ r = T_{WC}K^{−1}[u, v]$，相机内在矩阵$ K $。 我们沿着射线$ \mathrm p_i = d_i\mathrm r $取一组$ N $个样本，具有相应的深度值$ {d_1,····, d_N}$，并在网络中查询颜色和体积密度$ (\mathrm c_i, \rho_i) = F_\theta(\mathrm p_i)$。我们遵循 NeRF 的分层和分层体积采样策略。</p>
+<p>体积密度通过乘以样本间距离$ \delta_i = d_{i+1} - d_i $并通过激活函数$ o_i = 1 - exp(-\rho_i \delta_i) $转换为占用概率。然后每个样本的射线终止概率可以 计算为$\omega_i = o_i \prod_{j = 1}^{i - 1}(1 - o_j)$。 最后，深度和颜色被渲染为期望值：</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830225234185.png"></p>
+<p>我们可以将沿射线的深度方差计算为：</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830225300639.png"></p>
+<h3 id="3-4-Joint-optimisation"><a href="#3-4-Joint-optimisation" class="headerlink" title="3.4. Joint optimisation"></a>3.4. Joint optimisation</h3><p>我们联合优化了隐式场景网络参数$ \theta $和不断增长的$ W $关键帧集的相机姿态，每个关键帧都有相关的颜色和深度测量以及初始姿态估计：${I_i,D_i,T_i}$。</p>
+<p>我们的渲染函数对于这些变量是可微的，因此我们执行迭代优化以最小化每个关键帧中选定数量的渲染像素$ s_i $的几何和光度误差。</p>
+<p>光度损失是渲染和测量颜色值$ e_i^p[u,v] = \left| I_i[u,v] - \hat I_i[u,v] \right| $之间的 L1 范数，用于$ M $个像素样本：</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830225657705.png"></p>
+<p>几何损失测量深度差异$ e_i^g[u,v] = \left| D_i[u,v] - \hat D_i[u,v] \right| $并使用深度方差作为归一化因子，在对象边界等不确定区域降低损失：</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830225809862.png"></p>
+<p>我们将 Adam优化器应用于两个损失的加权和，因子$ \lambda_p $调整赋予光度误差的权重：</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830225854970.png"></p>
+<p><strong>相机追踪 Camera Tracking</strong>    在在线 SLAM 中，接近帧率的摄像机跟踪很重要，因为对较小位移的优化更加稳健。 我们运行一个并行跟踪过程，在使用相同的损失和优化器的同时，以比联合优化高得多的帧速率连续优化最新帧相对于固定场景网络的位姿。 跟踪的姿势初始化在选定关键帧的映射过程中被细化。</p>
+<h3 id="3-5-Keyframe-Selection"><a href="#3-5-Keyframe-Selection" class="headerlink" title="3.5. Keyframe Selection"></a>3.5. Keyframe Selection</h3><p>使用来自视频流的所有图像联合优化网络参数和相机位姿在计算上是不可行的。 然而，由于视频图像中存在巨大的冗余，我们可以用一组稀疏的代表性关键帧来表示一个场景，这些关键帧是根据信息增益增量选择的。 始终选择第一帧来初始化网络并固定世界坐标系。 每次添加新的关键帧时，我们都会锁定我们网络的副本以表示我们在那个时间点的 3D 地图的快照。 随后的帧将根据该副本进行检查，如果它们看到一个显着的新区域，则选择它们。</p>
+<p>为此，我们渲染一组统一的像素样本$ s $并计算归一化深度误差小于阈值$ t_D = 0.1 $的比例$ P $，以测量我们的地图快照已经解释的帧的比例：</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830230036340.png"></p>
+<p>当该比例低于阈值$ P &lt; t_P $（我们将$ t_P $设置为0.65）时，该帧将添加到关键帧集。归一化深度误差会产生自适应关键帧选择，当相机更靠近物体时，需要更高的精度，因此需要更紧密的关键帧。</p>
+<p>在映射过程中接收到的每一帧都用于联合优化几次迭代（10 到 20 次之间），因此我们的关键帧集总是由所选集以及不断变化的最新帧组成。</p>
+<h3 id="3-6-Active-Sampling"><a href="#3-6-Active-Sampling" class="headerlink" title="3.6. Active Sampling"></a>3.6. Active Sampling</h3><p><strong>图像主动采样 Image Active Sampling</strong>    渲染和优化所有图像像素在计算和内存方面代价很大。 我们利用图像规律性在每次迭代中仅渲染和优化一组非常稀疏的随机像素（每张图像 200 个）。 此外，我们使用渲染损失来指导在具有更高细节的信息区域或重建尚不精确的信息区域中的主动采样。</p>
+<p>每次联合优化迭代分为两个阶段。首先，我们采样一组$ s_i $像素，均匀分布在每个关键帧的深度和颜色图像上。这些像素用于更新网络和相机位姿，并计算损失统计。 为此，我们将每张图像划分为 [8×8] 网格，并计算每个正方形区域$ R_j $内的平均损失，其中$ j = {1, 2, · · · , 64} $：</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830230713156.png"></p>
+<p>其中$ r_j = s_i \cap R_j $是从$ R_j $均匀采样的像素。 我们将这些统计数据归一化为概率分布：</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830230837596.png"></p>
+<p>我们使用这个分布对每个区域重新采样一组新的$ n_i \cdot f_i[j] $个均匀样本（$ n_i $是每个关键帧中的总样本），将更多样本分配到具有高损失的区域。 场景网络使用来自活动样本的损失进行更新（在相机跟踪中仅使用统一采样）。 图像主动采样如图 3 所示。</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830230953670.png" alt="图 3：图像主动采样。 左：使用一组均匀样本的几何损失计算整个图像网格的损失分布。 右图：根据损失分布进一步分配活动样本。"></p>
+<p><strong>关键帧主动采样 Keyframe Active Sampling</strong>    在 iMAP 中，我们使用一组选定的关键帧不断优化我们的场景地图，作为记忆库来避免网络遗忘。 我们希望将更多样本分配给具有更高损失的关键帧，因为它们与新探索的、高度详细的或网络开始忘记的区域相关。 我们遵循类似于图像主动采样的过程，并将 ni 个样本分配给每个关键帧，与关键帧之间的损失分布成比例，见图 4。</p>
+<p><strong>有界关键帧选择 Bounded Keyframe Selection</strong>    随着相机移动到新的和未探索的区域，我们的关键帧集不断增长。 为了绑定联合优化计算，我们在每次迭代中选择一个固定数量的关键帧（实时系统中为 3 个），根据损失分布随机采样。 我们总是在联合优化中包含最后一个关键帧和当前实时帧，以组成一个$ W = 5 $不断变化的帧的有界窗口。 参见图 4。</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830231107081-16618741509601.png" alt="图4: 关键帧主动采样。我们在注册的关键帧上保持损耗分布。该分布用于对关键帧 (红色框) 的有界窗口进行采样，并用于在每个关键帧中分配像素样本。"></p>
+<h2 id="4-Experimental-Results"><a href="#4-Experimental-Results" class="headerlink" title="4. Experimental Results"></a>4. Experimental Results</h2><p>通过综合实验，我们评估了 iMAP 的 3D 重建和跟踪，并对设计选择的准确性和速度进行了详细的烧蚀分析。</p>
+<h3 id="4-1-Experimental-Setup"><a href="#4-1-Experimental-Setup" class="headerlink" title="4.1. Experimental Setup"></a>4.1. Experimental Setup</h3><p><strong>数据集</strong>    我们在模拟和真实序列上进行实验。 对于重建评估，我们使用 Replica 数据集，这是对真实房间规模环境的高质量 3D 重建，有 5 个办公室和 3 个公寓。 对于每个 Replica 场景，我们渲染 2000 个 RGB-D 帧的随机轨迹。 对于原始摄像机记录，我们使用手持式 Microsoft Azure Kinect 在各种环境中捕获 RGB-D 视频，并在 TUM RGB-D 数据集上进行测试以评估摄像机跟踪。</p>
+<p><strong>实施细节</strong>    对于所有实验，我们设置以下默认参数：关键帧配准阈值$ t_P = 0.65 $，光度损失加权$ \lambda_p = 5 $，关键帧窗口大小$ W = 5 $，像素样本$ |s_i|  = 200 $，位置嵌入大小$ m = 93 $和$ \sigma = 25$，以及 32 个粗分类和 12 个细分类用于渲染。  3D 点坐标通过$\frac {1}{10}$归一化以接近 [0, 1] 范围。</p>
+<p>在手持相机的在线操作中，到达处理帧之间的流式图像被丢弃。 对于此处介绍的实验，每个捕获的帧都被处理，以 10 Hz 运行。 如果需要，我们通过在统一体素网格中从网络查询占用值，然后运行行进立方体来恢复网格重建。 网格化用于可视化和评估目的，不构成我们的 SLAM 系统的一部分。</p>
+<h3 id="4-2-Scene-Reconstruction-Evaluation"><a href="#4-2-Scene-Reconstruction-Evaluation" class="headerlink" title="4.2. Scene Reconstruction Evaluation"></a>4.2. Scene Reconstruction Evaluation</h3><p><strong>尺度</strong>    我们从地面实况和重建网格中采样了200000个点，并计算了三个定量指标：精度（cm）：重建网格中的采样点与最近地面实况点之间的平均距离；完成度（cm）：采样点与地面真实网格和最近重建点之间的平均距离；和完成率（&lt;5cm%）：重建网格中完成小于5cm的点的百分比。</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830233300102.png" alt="图 5：Replica room-0 的重建和跟踪结果以及注册的关键帧。"></p>
+<p><img src="/images/paper-reading-iMAP/image-20220830233317768.png" alt="图 6：iMAP（左）设法填充未观察到的区域，这些区域可被视为 TSDF 融合中的漏洞（右）。"></p>
+<p>联合优化 3D 地图和相机位姿的能力使我们的系统能够构建完整的全局连贯场景重建，如图 1 和 7 所示，以及准确的相机跟踪，如图 5 所示。iMAP 的鲁棒性和多功能性 通过图 9 和 8 中的重建，在各种真实世界的录音中得到了证明，这些重建显示了它在从整个房间到小物体和薄结构的规模上工作的能力。</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830233059436.png" alt="图 7：副本重建，突出显示 iMAP 如何填充未观察到的区域，这些区域是 TSDF 融合中的白洞。"></p>
+<p><img src="/images/paper-reading-iMAP/image-20220830233041963.png" alt="图 8：使用 Azure Kinect 映射的各种真实场景的对比重建结果。  TDSF 融合结果中的白洞似乎由 iMAP 填充。"></p>
+<p><img src="/images/paper-reading-iMAP/image-20220830233021258.png" alt="图 9：iMAP 在各种现实世界设置中的实时重建结果。"></p>
+<p>我们将iMAP中的场景重建与TSDF fusion进行了比较，后者是基于融合的密集SLAM方法的代表。为了隔离重建，我们使用iMAP生成的摄像机跟踪进行TSDF fusion。我们的隐式表示最显著的优势是能够在未观察到的区域填充，如图7和图8所示。iMAP在所有8个复制场景中平均实现了4%的高完成率，如表1所示，office-3的完成率提高了11%。</p>
+<p>具有不同配置设置的 iMAP 和 TSDF 融合的内存消耗如表 2 所示。在 TSDF 融合中默认值为 2563 体素分辨率和 iMAP 中的网络宽度为 256 时，我们的系统可以表示内存使用量减少 60 倍的场景，同时获得相似的 重建精度如表 1 所示。</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830233129794.png" alt="表1：8个室内复制场景的重建结果。我们报告了每个场景中最高的完成率，以及相应的准确性和完成率值。"></p>
+<p><img src="/images/paper-reading-iMAP/image-20220830232944402.png" alt="表 2：内存消耗：对于 iMAP 作为网络大小的函数，对于体素分辨率的 TSDF 融合。"></p>
+<p>当使用真实相机时，除了更好地完成外，我们的方法在深度相机无法提供准确读数的地方（如黑色物体（图8d）和反射或透明表面（图6））优于TSDF融合。这种性能可归因于重建的光度损失以及地图网络的插值能力。</p>
+<h3 id="4-3-TUM-Evaluation"><a href="#4-3-TUM-Evaluation" class="headerlink" title="4.3. TUM Evaluation"></a>4.3. TUM Evaluation</h3><p>我们在来自 TUM RGB-D 的三个序列上运行 iMAP。 跟踪 ATE RMSE 如表 3 所示。我们与基于面元的 BAD-SLAM、TSDF 融合 Kintinuous和稀疏 ORB-SLAM2 等最先进的 SLAM 系统进行了比较。 在姿势准确性方面，iMAP 的表现并不优于它们，但在 2 到 6 厘米的误差方面具有竞争力。 网格重建如图 10 所示。在图 11 中，我们强调了 iMAP 如何填充未观察区域中的孔，这与 BAD-SLAM 不同。</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830232831812.png" alt="表 3：在 TUM RGB-D 数据集上以厘米为单位的 ATE RMSE。"></p>
+<p><img src="/images/paper-reading-iMAP/image-20220830232809469.png" alt="图 10：TUM 数据集的 iMAP 重建结果。"></p>
+<p><img src="/images/paper-reading-iMAP/image-20220830232904051.png" alt="图 11：iMAP（顶部）对 BAD-SLAM（底部）的孔填充能力。"></p>
+<h3 id="4-4-Ablative-Analysis"><a href="#4-4-Ablative-Analysis" class="headerlink" title="4.4. Ablative Analysis"></a>4.4. Ablative Analysis</h3><p>我们使用最大的 Replica 场景分析影响我们系统的设计选择：office-2 和三个不同的随机种子。 完成率结果和时序如表 4 所示。我们发现网络$ width = 256 $，关键帧窗口大小限制为$ W = 5 $，每帧 200 像素样本提供了收敛速度和准确性的最佳折衷。我们在图 12 中进一步表明，主动采样比随机采样能够实现更快的精度收敛和更高的场景完成度。</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830232727343.png" alt="表 4：跟踪（6 次迭代）和映射（10 次迭代）的时序结果，在同一 GPU 上同时运行。 默认配置：网络宽度 256，窗口大小 5，每个关键帧 200 个样本。 最后一行：副本 office-2 的完成率。"></p>
+<p>这些设计选择使我们的在线隐式SLAM系统能够以10Hz的频率运行以进行跟踪，以2Hz的频率进行映射。我们的实验证明了随机抽样在优化中的作用，并强调了关键发现，即使用随机变化的信息进行快速迭代比使用密集和缓慢迭代更好。</p>
+<p>将几何和光度损失结合起来，使我们的系统能够从几个关键帧获得全房间尺度的重建；对于表1中的8个复制场景，平均为13。如表5所示，使用更多关键帧对进一步提高场景完成率几乎没有作用。</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830232657552.png" alt="表 5：Replica office-2 中不同选择阈值的关键帧数和完成率结果。"></p>
+<p>隐式场景网络具有在添加高频场景细节之前快速收敛到低频形状的特性。 图 13 显示了来自静态摄像机的网络训练，平均超过 5 个不同的真实场景。 深度损失在一秒钟内降至 5 厘米以下； 在 4 秒内低于 2 厘米； 然后继续缓慢下降。当映射一个新场景时，我们的系统需要几秒钟来进行粗略的重建，并需要几分钟来添加精细的细节。 在图 14 中，我们展示了系统如何从粗略重建开始，并随着网络训练和相机靠近物体而添加细节。 这是 SLAM 中的一个有用属性，因为它使实时跟踪即使在移动到未探索区域时也能正常工作。</p>
+<p><img src="/images/paper-reading-iMAP/image-20220830232622823.png" alt="图 13：达到 5cm、2cm、1cm 和 0.75cm 深度误差分别需要大约 1、4、20、43 秒。"></p>
+<p><img src="/images/paper-reading-iMAP/image-20220830232552221.png" alt="图 14：重建细节的演变。"></p>
+<h2 id="5-Conclusions"><a href="#5-Conclusions" class="headerlink" title="5. Conclusions"></a>5. Conclusions</h2><p>我们将密集 SLAM 视为实时持续学习，并表明 MLP 可以作为实时系统中唯一的场景表示从头开始训练，从而使 RGB-D 相机能够构建和跟踪完整且准确的体积模型 房间规模的场景。 我们方法的实时但长期 SLAM 性能的关键是：并行跟踪和映射、用于快速优化的损失引导像素采样以及智能关键帧选择作为重放以避免网络遗忘。  iMAP 的未来方向包括如何制作更结构化和组合性的表示，以明确地推理场景中的自相似性。</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Immortalqx</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://Immortalqx.github.io/2022/08/31/paper-reading-imap/">http://Immortalqx.github.io/2022/08/31/paper-reading-imap/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Immortalqx</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                                    <span class="chip bg-color">隐式表示</span>
+                                </a>
+                            
+                                <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                                    <span class="chip bg-color">视觉SLAM</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban,google,linkedin,twitter,facebook" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'bMq5alM79AoOmPl5Q65aeVqI-gzGzoHsz',
+        appKey: 'O0Q21Re9hVoBb41y6euVKCQq',
+        serverURLs: '',
+        notify: '' === 'true',
+        verify: '' === 'true',
+        visitor: '' === 'true',
+        avatar: 'retro',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '填上邮箱可以收到我的回复呦ฅ^ω^ฅ'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/10/12/cs231a-lecture2/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/58.jpg" class="responsive-img" alt="CS231A Lecture 2：Camera Models">
+                        
+                        <span class="card-title">CS231A Lecture 2：Camera Models</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-10-12
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E4%B8%89%E7%BB%B4%E8%A7%86%E8%A7%89/" class="post-category">
+                                    三维视觉
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CS231A/">
+                        <span class="chip bg-color">CS231A</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/08/30/paper-reading-nice-slam/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/38.jpg" class="responsive-img" alt="论文阅读《NICE-SLAM：Neural Implicit Scalable Encoding for SLAM》">
+                        
+                        <span class="card-title">论文阅读《NICE-SLAM：Neural Implicit Scalable Encoding for SLAM》</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-30
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/slam/" class="post-category">
+                                    slam
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                        <span class="chip bg-color">隐式表示</span>
+                    </a>
+                    
+                    <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                        <span class="chip bg-color">视觉SLAM</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2025</span>
+            
+            <a href="/about" target="_blank">Immortalqx</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">237.4k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2021";
+                    var startMonth = "2";
+                    var startDate = "1";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Immortalqx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:immortalqx@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1727854434" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1727854434" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+    
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <script src="/js/FunnyTitle.js"></script>
+    <!--script src="/live2d/autoload.js"></script-->
+</body>
+
+</html>

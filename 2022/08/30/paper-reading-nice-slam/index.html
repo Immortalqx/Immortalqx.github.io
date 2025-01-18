@@ -1,0 +1,1468 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="论文阅读《NICE-SLAM：Neural Implicit Scalable Encoding for SLAM》, 所念皆星河">
+    <meta name="description" content="论文阅读《NICE-SLAM: Neural Implicit Scalable Encoding for SLAM》
+摘要神经隐式表征最近在各个领域都显示出了令人鼓舞的结果，包括在同步定位和建图(SLAM)方面的良好进展。然而，现有的方法">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>论文阅读《NICE-SLAM：Neural Implicit Scalable Encoding for SLAM》 | 所念皆星河</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">所念皆星河</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/homepage" class="waves-effect waves-light">
+      
+      <i class="fas fa-award" style="zoom: 0.6;"></i>
+      
+      <span>Homepage</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">所念皆星河</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/homepage" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-award"></i>
+			
+			Homepage
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/Immortalqx" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Follow me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/Immortalqx" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Follow me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/38.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">论文阅读《NICE-SLAM：Neural Implicit Scalable Encoding for SLAM》</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                                <span class="chip bg-color">隐式表示</span>
+                            </a>
+                        
+                            <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                                <span class="chip bg-color">视觉SLAM</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/slam/" class="post-category">
+                                slam
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-08-30
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    7.7k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    27 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="论文阅读《NICE-SLAM-Neural-Implicit-Scalable-Encoding-for-SLAM》"><a href="#论文阅读《NICE-SLAM-Neural-Implicit-Scalable-Encoding-for-SLAM》" class="headerlink" title="论文阅读《NICE-SLAM: Neural Implicit Scalable Encoding for SLAM》"></a>论文阅读《NICE-SLAM: Neural Implicit Scalable Encoding for SLAM》</h1><p><img src="/images/paper-reading-nice-slam/poster_nice-slam_00.png"></p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>神经隐式表征最近在各个领域都显示出了令人鼓舞的结果，包括在同步定位和建图(SLAM)方面的良好进展。然而，现有的方法会产生过度平滑的场景重建，并难以扩展到大型场景。这些限制主要是由于它们简单的全连接网络架构，没有在观测中包含局部信息。在本文中，提出了<strong>NICE-SLAM</strong>，一种通过引入<strong>层次式场景表示（hierarchical scene representation）</strong>来整合多层局部信息的稠密SLAM系统。用预先训练好的几何先验来优化这种表示，可以在大型室内场景上进行稠密重建。与最近的神经隐式SLAM系统相比，我们的方法更具可扩展性、高效和鲁棒性。在5个具有挑战性的数据集上的实验表明，NICE-SLAM在建图和跟踪质量方面都具有竞争性的结果。</p>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>稠密视觉SLAM是3D计算机视觉的一个基础问题，在自动驾驶、室内机器人、混合现实等领域有着广泛的应用。为了使SLAM系统在实际应用程序中真正有用，以下属性是必不可少的。<strong>首先</strong>，我们希望SLAM系统能够是实时的。<strong>接下来</strong>，该系统应该有能力对没有观测的区域做出合理的预测。<strong>此外</strong>，该系统应该能够扩展到大型场景。<strong>最后</strong>，对有噪声或观测缺失的情况具有鲁棒性是至关重要的。</p>
+<p>在实时稠密视觉SLAM系统的范围内，近几年RGB-D相机已经引入了许多方法。传统的稠密视觉SLAM系统满足实时需求，可以用于大规模场景，但他们<strong>无法对未观测到的区域做出合理的几何估计</strong>。另一方面，基于学习的SLAM方法获得一定水平的预测能力，因为它们通常在特定任务的数据集上进行训练。此外，<strong>基于学习的方法往往能更好地处理噪声和异常值</strong>。然而，这些方法通常只在具有多个对象的小场景中工作。最近，Sucar等人在实时稠密SLAM系统（称为<strong>iMAP</strong>）中应用了<strong>神经隐式表示（neural implicit representation）</strong>，他们对房间大小的数据集显示了良好的跟踪和建图结果。然而，当扩展到更大的场景时，例如，一个由多个房间组成的公寓，在稠密重建和相机跟踪精度方面都可以观察到显著的性能下降。</p>
+<p>iMAP的关键限制因素源于它使用了一个单一的多层感知器(MLP)来表示整个场景，它只能随着每一个新的、潜在的部分场景而进行全局更新RGB-D观测。相比之下，最近的工作证明，建立基于多级网格特征可以帮助保存几何细节和重建复杂的场景，但这些都是没有实时功能的离线方法。</p>
+<p>在这项工作中，我们试图结合<strong>分层场景表征（hierarchical scene representation）</strong>和<strong>神经隐式表征（neural implicit representation）</strong>的优势，以完成稠密RGB-D SLAM的任务。为此，我们引入了NICE-SLAM，这是一种稠密的RGB-D SLAM系统，可以应用于大规模场景，同时保持预测能力。我们的关键思想是<strong>用层次特征网格来表示场景的几何形状和外观</strong>，并结合在不同空间分辨率下预训练的神经隐式解码器的<strong>归纳偏差（inductive biases）</strong>。通过从占用率和彩色解码器输出中得到的渲染后的深度和彩色图像，我们可以通过最小化<strong>重渲染损失（re-rendering losses）</strong>，只在可视范围内优化特征网格。我们对各种室内RGB-D序列进行了广泛的评估，并证明了我们的方法的可扩展性和预测能力。总的来说，我们做出了以下贡献：</p>
+<ul>
+<li>我们提出了<strong>NICE-SLAM</strong>，一个稠密的RGB-D SLAM系统，对于各种具有挑战性的场景具有实时能力、可扩展性、可预测性以及鲁棒性。</li>
+<li>NICE-SLAM的核心是一个<strong>层次化的、基于网格的神经隐式编码</strong>。与全局神经场景编码相比，这种表示<strong>允许局部更新</strong>，这是针对大规模方法的先决条件。</li>
+<li>我们对各种数据集进行了广泛的评估，从而证明了在建图和跟踪方面的竞争性能。</li>
+</ul>
+<h2 id="2-相关工作"><a href="#2-相关工作" class="headerlink" title="2. 相关工作"></a>2. 相关工作</h2><p><strong>稠密视觉SLAM</strong>。大多数现代的视觉SLAM方法都遵循了Klein等人的开创性工作中引入的整体架构，将任务分解为建图和跟踪。地图表示通常可以分为两类：<strong>以视图为中心（view-centric）</strong>和<strong>以世界为中心（world-centric）</strong>。第一个是<strong>将三维几何图形锚定到特定的关键帧上</strong>，通常在密集的设置中表示为深度图。这类产品早期的例子之一是DTAM。由于其简单性，DTAM已被广泛应用于最近许多基于学习的SLAM系统。例如，DeepV2D在回归深度和姿态估计之间交替，但使用了测试时间优化。BA-Net和DeepFactor通过使用一组基础深度图简化了优化问题。还有一些方法，如CodeSLAM、Scene和NodeSLAM，它们可以优化一个可解码成关键帧或对象深度图的潜在表示。Droid-SLAM使用回归光流来定义几何残差进行细化。TANDEM结合了多视图立体几何和DSO的实时稠密SLAM系统。另一方面，以世界为中心的地图表示将三维几何图形固定在统一的世界坐标中，可以进一步划分为表面（surfels）和体素网格（voxel grids），通常存储占用概率或TSDF值。体素网格已广泛应用于RGB-D SLAM，例如Kinect-Fusion。在我们提出的管道中，我们也<strong>采用了体素网格表示</strong>。与以前的SLAM方法相比，我们存储几何的隐式潜在编码，并在建图过程中直接优化它们。这种更丰富的表示方式允许我们在较低的网格分辨率下实现更精确的几何图形。</p>
+<p><strong>神经隐式表示</strong>。最近，神经隐式表示在对象几何表示、场景补全、新视图合成还有生成模型方面显示出了很好的结果。最近的几篇论文试图用RGB-(D)输入来预测场景级的几何形状，但它们都假设了给定的相机姿态。另一组工作解决了相机姿态优化的问题，但它们需要一个相当长的优化过程，这并<strong>不适合实时应用</strong>。与我们的方法最相关的工作是<strong>iMAP</strong>。给定一个RGB-D序列，他们引入了一个实时稠密SLAM系统，该系统使用一个单一的多层感知器(MLP)来紧凑地表示完整的场景。然而，由于<strong>单个MLP多层感知机模型容量有限，iMAP不能产生详细的场景几何形状和精确的摄像机跟踪，特别是对于较大的场景</strong>。相比之下，我们提供了一个类似于iMAP的可扩展的解决方案，它结合了可学习的潜在嵌入和一个预先训练的连续隐式解码器。通过这种方式，我们的方法可以重建复杂的几何形状和为更大的室内场景预测详细的纹理，同时保持更少的计算和更快的收敛。值得注意的是，有的工作还将传统的网格结构与学习到的特征表示结合起来，以实现可扩展性，但它们都不是实时的。此外，DI-Fusion也优化了给定RGB-D序列的特征网格，但它们的重建通常包含孔洞，它们的相机跟踪对纯表面渲染损失没有鲁棒性。</p>
+<h2 id="3-方法"><a href="#3-方法" class="headerlink" title="3. 方法"></a>3. 方法</h2><p>我们在图2中概述了我们的方法。我们使用四个特征网格及其相应的解码器来表示场景几何结构和外观（第3.1节）。我们使用估计的cam-era校准来跟踪每个像素的观察光线。通过沿观察光线采样点并查询网络，我们可以渲染该光线的深度和颜色值（第3.2节）。通过最小化深度和颜色的重新渲染损失，我们能够以交替方式（第3.3节）优化选定关键帧（第3-4节）的相机姿态和场景几何体。</p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830095757113.png" alt="图2. 系统概述。方法以RGB-D图像流作为输入，并输出相机姿态和学习到的分层特征网格形式的场景表示。从右到左的pipeline可解释为一个生成模型，它从给定的场景表示和相机姿态中呈现深度和彩色图像。在测试时，我们通过通过可微分渲染器（从左到右）反向传播图像和深度重建损失，通过求解逆问题来估计场景表示和相机姿态。这两个实体都在交替优化中进行估计：映射：反向传播仅更新分层场景表示；跟踪：反向传播仅更新相机姿势。为了更好的可读性，我们将几何编码的精细比例网格与大小相同的颜色网格连接起来，并将其显示为具有两个属性（红色和橙色）的一个网格。"></p>
+<h3 id="3-1-分层场景表示-Hierarchical-Scene-Representation"><a href="#3-1-分层场景表示-Hierarchical-Scene-Representation" class="headerlink" title="3.1 分层场景表示 Hierarchical Scene Representation"></a>3.1 分层场景表示 Hierarchical Scene Representation</h3><p>我们现在介绍了我们的分层场景表示，它结合了多层次网格特征和预先训练的解码器的占用预测。该几何图形被编码到三个特征网格$\phi_\theta^l$中，对应的MLP多层感知机解码 $f^l $，其中$ l \in  \{ 0 , 1 , 2  \}  $指的是<strong>粗糙层（coarse）、中间层（mid-level）以及精细层（fine-level）</strong>场景细节。此外，我们也有一个单独的特征网格$ \psi_\omega $以及解码器$ g_\omega $去建模场景外观。这里$ \theta $和$ \omega $分别指的是几何和颜色的优化参数，比如，网格中的特征以及颜色解码器中的权重。</p>
+<p><strong>中间层（Mid-level）和精细层( Fine-level )几何表示</strong>。观测的场景几何是表示在中间层和精细层特征网格中的。在重建过程中，我们以一种从粗到细的方式使用这两个网格，首先通过优化中层特征网格来重建几何结构，然后使用精细级进行细化。在实现中，我们使用边长分别为32cm和16cm的体素网格，除了TUM RGBD（16cm和8cm）外。对于中间层几何表示，这些特征被使用相关的MLP多层感知机直接解码为占用概率值$ f^1 $。对于任何点$ \mathrm p \in \mathbb{R}^3 $，我们可以得到占用概率值为</p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830103457027.png"></p>
+<p>其中$ \phi_\theta^1(\mathrm p) $表示特征网格在点$ \mathrm p $处进行<strong>三线性插值（tri-linearly interpolated）</strong>。相对低的分辨率允许我们高效的优化网格特征去拟合观测值。为了在场景几何图形中捕捉更小的高频细节，我们以<strong>残差（residual）</strong>的方式添加到<strong>精细层fine-level</strong>的特征中。特别地，精细层特征解码器将相应的中间层特征和精细层特征作为输入，并输出一个来自中间层占用的偏移量，比如：</p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830103443393.png"></p>
+<p>其中，一个点的最终占用值表示如下：</p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830103422480.png"></p>
+<p>注意，我们固定预训练的解码器$ f^1 $和$ f^2 $，并通过完整的优化过程仅优化特征网格$ \phi_\theta^1 $和。我们$ \phi_\theta^2 $证明，这有助于稳定优化和学习一致的几何图形。</p>
+<p><strong>粗糙层（Coarse-level）几何表示。</strong>粗糙层特征网格的目的是捕捉场景的高级几何图形（例如，墙壁、地板等），并独立于中间层和精细层进行优化。粗糙网格的目标是能够预测观测到的几何图形（在中间层/精细层中进行编码）之外的近似占用值，即使每个粗糙体素只有被部分观测。因此，我们使用了一个非常低的分辨率，在实现中它的边长为2米。与中间层网格类似，我们通过插值特征并通过多层感知机直接解码为占用值，比如：</p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830103650838.png"></p>
+<p>在跟踪过程中，粗糙层占用值仅用于预测以前未观测到的场景部分。这种预测的几何形状允许我们跟踪，即使是当当前大部分图像以前是没看到过的。</p>
+<p><strong>预训练特征编码器（Pre-training Feature Decoders）</strong>。在我们的框架中，我们使用三种不同的固定的多层感知机来将网格特征解码为占用值。粗糙和中间层解码器作为ConvONet的一部分进行预训练，它由一个CNN编码器和一个MLP解码器组成。我们使用预测值和真值GT之间的<strong>二进制交叉熵损失（binary cross-entropy）</strong>来训练编码器/解码器。经过训练后，我们只使用多层感知机MLP解码器，因为我们将直接优化特征，以适应我们的重建管道中的观测值。通过这种方式，预先训练好的解码器可以在解码我们优化后的特征时，利用从训练集学习到的<strong>特定于分辨率（resolution-specific）</strong>的先验。</p>
+<p>同样的策略也用于预训练精细层解码器，除了我们只是在输入到解码器之前将中间层特征$ \phi_\theta^1(\mathrm p) $与精细层特征$ \phi_\theta^2(\mathrm p) $连接在一起。</p>
+<p><strong>颜色表示（Color representation）</strong>。虽然我们主要对场景几何形状感兴趣，但我们也对颜色信息进行编码，允许我们渲染RGB图像，从而为跟踪提供了额外的信号。为了在场景中编码颜色信息，我们应用了其它特征网格$ \psi_\omega $和解码器$ g_\omega $：</p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830104042286.png"></p>
+<p>其中，$ \omega $表示在优化过程中的可学习参数，不同于具有较强先验信息的几何结构，我们发现，联合优化颜色特征$ \psi_\omega $和解码器$ g_\omega $可以提高跟踪性能，如表5所示。请注意，与iMAP类似，这可能会导致遗忘问题，而且颜色只在局部保持一致。如果我们想可视化整个场景的颜色，它可以进行全局优化作为后处理步骤。</p>
+<p><strong>网络设计（Network Design）</strong>。对于所有的MLP多层感知机解码器，我们使用了32个和5个全连接块的隐藏特征维度。除了粗糙层的几何表示外，作为MLP解码器的输入之前，我们在点$ \mathrm{p} $处应用了一个可学习的高斯位置编码。我们观察到，这允许发现几何形状和外观的高频细节。</p>
+<h3 id="3-2-深度和颜色渲染-Depth-and-Color-Rendering"><a href="#3-2-深度和颜色渲染-Depth-and-Color-Rendering" class="headerlink" title="3.2 深度和颜色渲染 Depth and Color Rendering"></a>3.2 深度和颜色渲染 Depth and Color Rendering</h3><p>最近受神经辐射场NeRF中体积渲染成功的启发，我们还建议使用一个可微渲染过程，该过程集成了来自3.1小节我们的场景表示中预测占用率和颜色。</p>
+<p>给定相机内参和当前相机的位姿，我们可以计算一个像素坐标的视线朝向。我们首先沿着射线上的$ N_{strat} $个点进行分层采样，并且在深度值附近均匀采样$ N_{imp} $个点，每条射线共采样$  N=N_{strat}+N_{imp} $个点。更正式一点，令$  \mathrm{p}_i  =  \mathrm{o}  + d_i\mathrm{r}  ,  i   \in  \{ 1 , … , N \}  $表示给定相机原点$ \mathrm{o} $的射线$ \mathrm{r} $上的采样点，$ d_i $对应于沿该射线上点$ \mathrm p_i $的深度值。</p>
+<p>对于每个点$ \mathrm p_i $，采用公式(4)、公式（3）、公式（5），我们能分别计算出粗糙层的占用概率值$ o_{\mathrm p_i}^0 $，精细层占用概率值$ o_{\mathrm p_i} $，以及颜色值$ c_{\mathrm p_i} $。我们在点$\mathrm p_i$上建模射线的<strong>终止概率（termination probability）</strong>，在粗糙层上：$\omega_i^c = o_{\mathrm p_i}^0  \prod_{ j = 1 }^{ i - 1 } (1 - o_{\mathrm p_j}^0 ) $，在精细层上：$\omega_i^f = o_{\mathrm p_i}  \prod_{j = 1}^{i - 1} (1 - o_{\mathrm p_j}) $ 。</p>
+<p>最后，对于每条射线，粗糙层和精细层的深度和颜色都可以渲染为：</p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830105607305.png"></p>
+<p>此外，沿着射线我们也计算<strong>深度方差（depth variances）</strong>：</p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830105621987.png"></p>
+<h3 id="3-3-建图和跟踪Mapping-and-Tracking"><a href="#3-3-建图和跟踪Mapping-and-Tracking" class="headerlink" title="3.3 建图和跟踪Mapping and Tracking"></a>3.3 建图和跟踪Mapping and Tracking</h3><p>在本节中，我们将详细提供我们分层场景表示中的场景几何$ \theta $和外观$ \omega $参数，以及相机姿态的优化。</p>
+<p><strong>建图（Mapping）</strong>。为了优化3.1小节中提到的场景表示，我们从当前帧和所选的关键帧中统一采样总M个像素。接下来，我们将以一种分阶段的方式来执行优化以最小化<strong>几何损失（geometric loss）和光度损失（photometric loss）</strong>。</p>
+<p><strong>几何损失</strong>只是在粗糙层和精细层上观测深度和预测深度之间的$ L_1 $损失：</p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830110038114.png"></p>
+<p><strong>光度损失</strong>是$M$个采样像素点上渲染颜色和观测颜色值之间的一个$L_1$损失：</p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830110106917.png"></p>
+<p>在第一阶段，我们只使用公式（8）中的几何损失$ \mathcal L_g^f $来优化中间层的特征网格 $\phi_\theta^1$。接下来，我们共同优化了中间层和精细层的 $\phi_\theta^1$，$\phi_\theta^2$特征，具有相同的精细层的深度损失$ \mathcal L_g^f $。最后，我们进行<strong>局部BA优化，共同优化所有层次的特征网格、颜色解码器以及$K$个选定关键帧的相机外参</strong>$ {\mathrm R_i,\mathrm t_i} $。</p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830110419117.png"></p>
+<p>其中，$ \lambda_p$是损失权重因子。</p>
+<p>这种多阶段优化方案可以更好地收敛，因为更高分辨率的外观和精细层特征可以依赖于来自中间层特征网格的已经细化的几何形状。</p>
+<p>请注意，我们在三个线程中并行化系统以加快优化过程：一个线程用于粗糙层建图，第二个线程用于中间层和精细层几何和颜色优化，第三个线程用于相机跟踪。</p>
+<p><strong>相机跟踪（Camera Tracking）</strong>。除了优化场景表示之外，我们还并行运行相机跟踪来优化当前帧的相机姿态，比如，旋转矩阵和平移向量。最后，我们在当前帧中采样$ M_t $个像素并在公式（9）中应用相同的光度损失，但使用了修改后的几何损失：</p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830110515715.png"></p>
+<p>修正后的损失减小了重建几何中的某些区域，如物体边缘。相机跟踪最终被表述为以下最小化问题：</p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830110533217.png"></p>
+<p>粗糙层的特征网格能够对场景几何图形进行短程预测。当相机移动到以前未观察到的区域时，这种推算出的几何形状为跟踪提供了一个有意义的信号。使其对突然帧丢失或相机快速相机移动更加鲁棒。我们在补充材料中提供了实验内容。</p>
+<p><strong>对动态物体的鲁棒性（Robustness to Dynamic Objects）</strong>。为了使优化在跟踪过程中对动态对象更加鲁棒，我们使用大的深度/颜色重渲染损失来过滤像素。我们从优化中删除那些，公式（12）中损失大于当前帧中所有像素的10倍损失中值的像素。图6显示了一个动态对象被忽略，因为它不在渲染的RGB和深度图像中。请注意，对于这个任务，我们只在建图过程中优化场景表示。在动态环境下联合优化相机参数和场景表示是不重要的，我们把它看作是一个未来有意思的发展方向。</p>
+<h3 id="3-4-关键帧选取-Keyframe-Selection"><a href="#3-4-关键帧选取-Keyframe-Selection" class="headerlink" title="3.4 关键帧选取 Keyframe Selection"></a>3.4 关键帧选取 Keyframe Selection</h3><p>与其他SLAM系统类似，我们使用一组选定的关键帧不断优化我们的分层场景表示。我们按照与iMAP相同的策略，<strong>维护一个全局关键帧列表</strong>，其中我们<strong>根据信息增益逐步添加新的关键帧</strong>。然而，与iMAP相比，我们只包含在优化场景几何图形时，与当前帧有视觉重叠的关键帧。这是可能的，因为我们能够对基于网格的表示进行局部更新，而且我们不会遭受同样的遗忘问题。这种关键帧选择策略不仅确保了当前视图之外的几何图形保持静态，而且还导致了一个非常有效的优化问题，因为每次我们只优化必要的参数。在实际应用中，我们首先随机采样像素，并使用优化的相机姿态反向投影对应的深度。然后，我们将点云投影到全局关键帧列表中的每个关键帧上。从那些有投影点的关键帧中，我们随机选择了$ K−2 $帧。此外，我们还在场景表示优化中包括了最近的关键帧和当前帧，形成总共$ K $个活动帧。关于关键帧选择策略的消融研究（Ablation Study），请参阅第4.4节。</p>
+<h2 id="4-实验"><a href="#4-实验" class="headerlink" title="4. 实验"></a>4. 实验</h2><p>我们在多种数据集上评估我们的SLAM框架，包括真实的和合成的，不同的大小和复杂性。我们还进行了一项全面的消融研究来支持我们的设计选择。</p>
+<h3 id="4-1-实验设置"><a href="#4-1-实验设置" class="headerlink" title="4.1 实验设置"></a>4.1 实验设置</h3><p><strong>数据集Datasets</strong>。我们考虑了5个通用数据集：Replica、ScanNet、TUM RGB-D数据集、Co-Fusion数据集，以及一个有多个房间的自己获取的大公寓。我们遵循TUM RGB-D数据集相同的预处理步骤。</p>
+<p><strong>基准Baselines</strong>。我们将TSDF-Fusion与我们的相机位姿进行了比较，体素网格分辨率为 2563 ，DI-Fusion使用其官方实现，以及我们针对iMAP的重新实现：iMAP∗。我们的重新实现在两个场景重建和相机跟踪中具有与原始iMAP相似的性能。</p>
+<p><strong>度量指标Metrics</strong>。我们同时使用二维和三维的度量值来评估场景的几何图形。对于二维度量，我们评估了来自重建网格和GT真值网格的1000个随机采样的深度图上的L1损失。为了进行公平的比较，我们在计算平均L1损失之前，将双边求解器应用于DI-Fusion和TSDF-Fusion来填充深度孔洞。对于3D指标，我们遵循iMAP论文的做法，并考虑精度Accuracy[cm]、完成Completion[cm]和完成率[&lt;5cm%]，除了我们删除了不在任何相机的观察障碍内的不可见区域。对于相机跟踪的评估，我们使用了ATE RMSE。如果没有另外指定，在默认情况下，我们将报告5次运行的平均结果。</p>
+<p><strong>实现细节Implementation Details</strong>。我们在一台拥有3.80GHz Intel i7-10700K CPU与NVIDIA RTX 3090 GPU的台式电脑上运行我们的SLAM系统。在我们所有的实验中，我们使用了射线 $N_{strat}=32$ 和 $N_{imp}=16$ 上的采样点数，光度损失加权$ \lambda_p=0.2 $和$ \lambda_{pt}=0.5 $。对于小规模的合成数据集（Replica和Co-Fusion），我们选择了$ K=5 $个关键帧和分别采样$ M=1000 $和$ M_t=200 $个像素。对于大规模的真实数据集(ScanNet和自捕获场景)，我们使用$ K=10 ， M=5000 ， M_t=1000 $。对于具有挑战性的TUM RGB-D数据集，我们使用了$K=10 ， M=5000 ， M_t=5000$。对于我们重新实现的iMAP∗，我们遵循文献中提到的所有超参数，除了我们将采样像素的数量设置为5000，因为它在重建和跟踪中都有更好的性能。</p>
+<h3 id="4-2-建图和跟踪的评估-Evaluation-of-Mapping-and-Tracking"><a href="#4-2-建图和跟踪的评估-Evaluation-of-Mapping-and-Tracking" class="headerlink" title="4.2 建图和跟踪的评估 Evaluation of Mapping and Tracking"></a>4.2 建图和跟踪的评估 Evaluation of Mapping and Tracking</h3><p><strong>Replica数据集上的评估</strong>。为了评估Replica，我们使用了由iMAP的作者提供的相同的渲染RGB-D序列。通过分层的场景表示，我们的方法能够在有限的迭代中精确地重建几何图形。如<strong>表1</strong>所示，NICE-SLAM在几乎所有指标上都显著优于baseline基准方法，同时保持了合理的内存消耗。定性地说，我们可以从<strong>图3</strong>中看到，我们的方法产生了更清晰的几何形状和更少的伪影。</p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830100300984.png" alt="表1. Replica数据集上的重建结果。iMAP∗表示我们重新实现的iMAP。TSDF-Fusion使用来自NICE-SLAM的相机位姿。每个场景的详细度量标准可以在补充文件中找到。"></p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830100311009.png" alt="图3. Replica数据集上的重建结果。iMAP∗是指我们重新实现的iMAP。"></p>
+<p><strong>TUM RGB-D数据集上的评估</strong>。我们还评估了在小型TUM RGB-D数据集上的相机跟踪性能。如<strong>表2</strong>所示，我们的方法优于iMAP和DI-Fusion，尽管我们的设计更适合大场景。可以注意到，跟踪最好的方法（BAD-SLAM，ORB-SLAM2）仍然优于基于隐式场景表示的方法（iMAP和我们的方法）。然而，我们的方法<strong>显著地减少了这两类方法之间的差距，同时保留了隐式表示的表征优势</strong>。</p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830100359426.png" alt="表2. TUM RGB-D数据集上的相机跟踪结果。 采用ATE RMSE[cm]（↓）作为评价指标。NICE-SLAM减少了使用神经隐式表示的SLAM方法与传统方法之间的差距。我们报告了这个表中所有方法的5次运行中最好的一次。取iMAP、badslam、Kintinuous和ORB-SLAM2的数据。"></p>
+<p><strong>ScanNet数据集上的评估</strong>。我们从ScanNet中选择多个大型场景来基准测试不同方法的可扩展性。对于图4中所示的几何形状，我们可以清楚地注意到，比起TSDF-Fusion、DI-Fusion和iMAP∗，<strong>NICE-SLAM产生了更清晰、更详细的几何形状</strong>。在跟踪方面，我们可以观察到，iMAP∗和DI-Fusion要么完全失败，要么引入了较大的漂移，而我们的方法<strong>成功地重建了整个场景</strong>。在跟踪方面，我们可以观察到，iMAP∗和DI-Fusion要么完全失败，要么引入了较大的漂移，而我们的方法成功地重建了整个场景。从定量上来说，我们的跟踪结果也明显比DI-Fusion和iMAP∗更准确，如<strong>表3</strong>所示。</p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830100510404.png" alt="表3. ScanNet数据集上的相机跟踪结果。我们方法在这个数据集上始终产生更好的结果。采用ATE RMSE（↓）作为评价度量。"></p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830100518979.png" alt="图4. ScanNet数据集上的3D重建和跟踪。 黑色轨迹是来自ScanNet，红色轨迹是本文方法的跟踪结果。我们尝试了iMAP∗的各种超参数，结果最好，但大多较差"></p>
+<p><strong>在更大场景数据集上的评估</strong>。为了评估我们的方法的可扩展性，我们在一个有多个房间的大公寓中捕获了一个序列。<strong>图1</strong>和<strong>图5</strong>显示了使用NICE-SLAM、DI-Fusion和iMAP*获得的重建结果。作为参考，我们还展示了在Open3D中使用离线工具Redwoud的三维重建。我们可以看到，NICE-SLAM与离线方法具有相似的结果，而iMAP∗和DI-FusioN无法重建整个序列。</p>
+<img src="/images/paper-reading-nice-slam/image-20220830100553865.png" alt="图1. 采用NICE-SLAM进行多个房间公寓的三维重建。一个层次化的特征网格联合编码几何图形和颜色信息，并同时用于建图和跟踪。我们描述了最终的面片和相机跟踪轨迹。" style="zoom:50%;">
+
+<p><img src="/images/paper-reading-nice-slam/image-20220830100608619.png" alt="图5. 在多房间公寓数据集上的三维重建和跟踪。相机跟踪轨迹用红色显示。iMAP*和DI-Fusion未能重建出整个序列。我们还显示了离线方法的结果作为参考"></p>
+<h3 id="4-3-性能分析-Performance-Analysis"><a href="#4-3-性能分析-Performance-Analysis" class="headerlink" title="4.3 性能分析 Performance Analysis"></a>4.3 性能分析 Performance Analysis</h3><p>除了对不同数据集上的场景重建和相机跟踪的评估外，下面我们还评估了所提出方案的其他特性。</p>
+<p><strong>计算复杂度Computation Complexity</strong>。首先，我们比较了查询一个3D点的颜色和占用率/体积密度所需的浮点操作(FLOPs)的数量，见<strong>表4</strong>。我们的方法只需要iMAP 1/4 的FLOP。值得一提的是，即使在非常大的场景中，我们方法中的流程也保持不变。相比之下，由于iMAP中使用单一MLP，MLP的容量限制可能需要更多的参数，这就导致更多的FLOPS。</p>
+<p><strong>运行时Runtime</strong>。我们还在<strong>表4</strong>中比较了使用相同数量的像素样本（$ M_t=200 $用于跟踪和$ M=1000 $用于建图）。我们可以注意到，我们的方法在跟踪和建图方面比iMAP分别快2倍和3倍。这表明使用浅的多层感知机MLP解码器的特征网格比单一深层MLP的优势。</p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830100739492.png" alt="表4. 计算复杂度与运算时间。我们的场景表示不仅提高了重建和跟踪的质量，而且速度更快。iMAP的运行时取自其论文[47]中的数据。"></p>
+<p><strong>对于动态物体的鲁棒性Robustness to Dynamic Objects</strong>。这里我们考虑包含动态移动对象的Co-Fusion数据集。如<strong>图6</strong>所示，我们的方法在优化过程中正确地识别并忽略了属于动态对象的像素样本，这将导致更好的场景表示建模（参见渲染的RGB和深度）。此外，我们还与iMAP∗在相同序列上进行了相机跟踪比较。我们方法和iMAP∗的ATE RMSE评分分别为<strong>1.6cm</strong>和7.8cm，这清楚地证明了我们对动态对象的鲁棒性。</p>
+<p><strong>几何预测和孔洞填充Geometry Forecast and Hole Filling</strong>。如<strong>图7</strong>所示，由于使用粗糙层场景，我们能够补全未观察到的场景区域。相比之下，由iMAP∗重建的看不见的区域噪声很大，因为在iMAP∗中没有编码场景先验知识。</p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830100816351.png" alt="图6. 对于动态物体的鲁棒性。我们展示了覆盖在图像上的采样像素的中间（左）、渲染的RGB（中间）和渲染的深度（右），以说明处理动态环境的能力。跟踪过程中的掩码像素样本用黑色表示，而使用的像素样本用红色表示。"></p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830100840244.png" alt="图7. 几何预测和空洞填充。白色区域是观测过的区域，青色表示未观测但被预测的区域。由于使用了粗糙层的场景先验，我们的方法比iMAP∗具有更好的预测能力。这反过来也提高了我们的跟踪性能。"></p>
+<h3 id="4-4-消融实验Ablation-Study"><a href="#4-4-消融实验Ablation-Study" class="headerlink" title="4.4 消融实验Ablation Study"></a>4.4 消融实验Ablation Study</h3><p>在本节中，我们将研究我们的分层结构的选择和颜色表示的重要性。</p>
+<p><strong>分层结构Hierarchical Architecture</strong>。<strong>图8</strong>将我们的分层架构与其他两种情况进行比较：a）一个特征网格与我们的精细层表示具有相同的分辨率（只有高分辨率）；b）一个具有中间层分辨率的特征网格（只有低分辨率）。当精细层的表示参与优化时，我们的层次结构可以快速地添加几何细节，这也导致了更好的收敛性。</p>
+<p><strong>局部光束平差 Local BA</strong>。我们在ScanNet上验证了局部捆机调整的有效性。如果我们不联合优化K个关键帧的相机姿态和场景表示（在<strong>表5</strong>中没有局部BA），则相机跟踪不仅精度明显降低，而且可靠性也较差。</p>
+<p><strong>颜色表示Color Representation</strong>。在<strong>表5</strong>中，我们比较了公式（9）中没有光度损失$ \mathcal{L}_p $的方法。这表明，虽然由于有限的优化预算和缺乏样本，我们估计的颜色并不完美点，学习这种颜色表示仍然对精确的相机跟踪起着重要的作用。</p>
+<p><strong>关键帧选取KeyFrame Selection</strong>。我们使用iMAP的关键帧选择策略（表5中的w/iMAP关键帧）来测试我们的方法，其中他们从整个场景中选择关键帧。这对于iMAP是必要的，以防止其简单的多层感知机忘记了之前的几何形状。然而，它也会导致收敛缓慢和不准确的跟踪。</p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830101405391.png" alt="表5. 消融实验。我们研究了局部BA、颜色表示以及我们的关键帧选择策略的有效性。每个场景运行5次，并计算其ATE RMSE的平均值和标准差。我们在ScanNet中报告了6个场景的平均值"></p>
+<p><img src="/images/paper-reading-nice-slam/image-20220830101414155.png" alt="图8. 分层结构消融实验。具有在不同结构的Replica数据集上对单个深度图像的几何优化。为了更平滑，曲线可以更好地可视化。"></p>
+<h2 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h2><p>我们提出了<strong>NICE-SLAM</strong>，一种稠密视觉SLAM方法，它结合了神经隐式表示的优势和基于层次网格的场景表示的可扩展性。与单个大的多层感知机MLP的场景表示相比，我们的实验证明，我们的表示（浅层的MLPs+多分辨率特征网格）不仅保证了精细的建图和高的跟踪精度，但由于局部场景更新的好处，速度更快和计算更少。此外，我们的网络能够填补小洞，并将场景几何推断到未观察到的区域，从而稳定相机的跟踪。</p>
+<p><strong>局限性Limitations</strong>。该方法的预测能力仅限于粗糙表示的尺度。此外，我们的方法不执行闭环检测，这是一个有趣的未来方向。最终，虽然传统方法缺乏一些特征，但与基于学习的方法相比，仍然存在着性能差距需要去缩小。</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Immortalqx</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://Immortalqx.github.io/2022/08/30/paper-reading-nice-slam/">http://Immortalqx.github.io/2022/08/30/paper-reading-nice-slam/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Immortalqx</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                                    <span class="chip bg-color">隐式表示</span>
+                                </a>
+                            
+                                <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                                    <span class="chip bg-color">视觉SLAM</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban,google,linkedin,twitter,facebook" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'bMq5alM79AoOmPl5Q65aeVqI-gzGzoHsz',
+        appKey: 'O0Q21Re9hVoBb41y6euVKCQq',
+        serverURLs: '',
+        notify: '' === 'true',
+        verify: '' === 'true',
+        visitor: '' === 'true',
+        avatar: 'retro',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '填上邮箱可以收到我的回复呦ฅ^ω^ฅ'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/08/31/paper-reading-imap/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="论文阅读《iMAP：Implicit Mapping and Positioning in Real-Time 》">
+                        
+                        <span class="card-title">论文阅读《iMAP：Implicit Mapping and Positioning in Real-Time 》</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-08-31
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/slam/" class="post-category">
+                                    slam
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                        <span class="chip bg-color">隐式表示</span>
+                    </a>
+                    
+                    <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                        <span class="chip bg-color">视觉SLAM</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/08/29/harry-shum-you-are-what-you-write/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Harry Shum &#34;You are what you write&#34;">
+                        
+                        <span class="card-title">Harry Shum &#34;You are what you write&#34;</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-29
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%85%B6%E4%BB%96/" class="post-category">
+                                    其他
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/">
+                        <span class="chip bg-color">经验分享</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2025</span>
+            
+            <a href="/about" target="_blank">Immortalqx</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">237.4k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2021";
+                    var startMonth = "2";
+                    var startDate = "1";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Immortalqx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:immortalqx@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1727854434" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1727854434" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+    
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <script src="/js/FunnyTitle.js"></script>
+    <!--script src="/live2d/autoload.js"></script-->
+</body>
+
+</html>

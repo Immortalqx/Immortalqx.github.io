@@ -1,0 +1,1869 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="3D Gaussian Splatting学习笔记, 所念皆星河">
+    <meta name="description" content="3D Gaussian Splatting学习笔记视频笔记：Point-based NeRF
+【【综述】基于点的神经辐射场，用点云实现真实的新视角渲染】 https://www.bilibili.com/video/BV1LX4y1H7a1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>3D Gaussian Splatting学习笔记 | 所念皆星河</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">所念皆星河</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/homepage" class="waves-effect waves-light">
+      
+      <i class="fas fa-award" style="zoom: 0.6;"></i>
+      
+      <span>Homepage</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">所念皆星河</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/homepage" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-award"></i>
+			
+			Homepage
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/Immortalqx" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Follow me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/Immortalqx" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Follow me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/25.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">3D Gaussian Splatting学习笔记</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                                <span class="chip bg-color">隐式表示</span>
+                            </a>
+                        
+                            <a href="/tags/3D-Gaussian-Splatting/">
+                                <span class="chip bg-color">3D Gaussian Splatting</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/NeRF-3DGS/" class="post-category">
+                                NeRF&3DGS
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-12-21
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    9.9k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    35 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="3D-Gaussian-Splatting学习笔记"><a href="#3D-Gaussian-Splatting学习笔记" class="headerlink" title="3D Gaussian Splatting学习笔记"></a>3D Gaussian Splatting学习笔记</h1><h2 id="视频笔记：Point-based-NeRF"><a href="#视频笔记：Point-based-NeRF" class="headerlink" title="视频笔记：Point-based NeRF"></a>视频笔记：Point-based NeRF</h2><blockquote>
+<p>【【综述】基于点的神经辐射场，用点云实现真实的新视角渲染】 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1LX4y1H7a1/?share_source=copy_web&amp;vd_source=5040c17d0665f566f786d3874bbfd13d">https://www.bilibili.com/video/BV1LX4y1H7a1/?share_source=copy_web&amp;vd_source=5040c17d0665f566f786d3874bbfd13d</a></p>
+</blockquote>
+<p><strong>PCD to NeRF：</strong></p>
+<p><img src="/images/paper-reading-3d-gaussian-splatting.assets/image-20231220162009917.png"></p>
+<p><strong>NeRF to PCD：</strong></p>
+<p><img src="/images/paper-reading-3d-gaussian-splatting.assets/image-20231220162628110.png"></p>
+<blockquote>
+<p>弹幕讨论：这里说的点云更容易接入SLAM的优势不成立，现在很多SLAM的前端也都是基于2D Image来估计位姿的</p>
+</blockquote>
+<p><strong>相关工作：</strong></p>
+<blockquote>
+<p>我觉得这里面最重要的是Plenoxels和Point-NeRF，这两个工作后面还需要好好了解。</p>
+</blockquote>
+<p><img src="/images/paper-reading-3d-gaussian-splatting.assets/image-20231220204222632.png"></p>
+<p><img src="/images/paper-reading-3d-gaussian-splatting.assets/image-20231220204200344.png"></p>
+<p><img src="/images/paper-reading-3d-gaussian-splatting.assets/image-20231220164344891.png"></p>
+<blockquote>
+<p>感觉就像是，把feature grid换成了点云，取采样点一定半径内的点云特征向量进行插值，再用小MLP解码。</p>
+</blockquote>
+<p><img src="/images/paper-reading-3d-gaussian-splatting.assets/image-20231220164600991.png"></p>
+<blockquote>
+<p>问题：</p>
+<ul>
+<li><p>查询MLP的次数和原版NeRF差不多，拖慢了渲染速度；</p>
+<p>比如，这里可以用上SNeRG[20] Baking Neural Radiance Fields for Real-Time View Synthesis. ICCV 2021. 这样的延迟渲染模型来加速，把一条射线上的采样点的特征融合之后再拿去解码，从而减少MLP查询次数；</p>
+</li>
+<li><p>点云密度和渲染质量之间需要平衡；</p>
+<ul>
+<li>点云密度高，显存占用增加</li>
+<li>降低点云密度，会降低渲染质量</li>
+</ul>
+<p>小模型这样的问题不明显，但是场景扩大就有问题了；</p>
+</li>
+</ul>
+</blockquote>
+<p><img src="/images/paper-reading-3d-gaussian-splatting.assets/image-20231220165848975.png"></p>
+<blockquote>
+<p>随着地图的扩展，需要合适的策略平滑点云的密度，并且自适应的对点云分布进行调整；</p>
+<p>Point-NeRF里面有对点云的生长和修建，但这是为了补全模型、剔除外点，而且效率并不高，因为点的变动就意味着这个局部位置相关的神经描述子都得再次优化。</p>
+<p>Point-SLAM的遗憾：</p>
+<ul>
+<li>没有针对Point-NeRF的问题做些什么；</li>
+<li>没有用上基于特征点的视觉里程计来进行位姿估计，后端已经是点云估计模型了，而前端还在用基于优化的这种很低效的方法</li>
+<li>不过使用视觉里程计前端，那么前端的几何特征怎么和后端的神经描述子相统一或融合，也是值得研究的问题</li>
+</ul>
+</blockquote>
+<p><img src="/images/paper-reading-3d-gaussian-splatting.assets/image-20231220170921117.png"></p>
+<blockquote>
+<p>用CG的很多成熟的工具加速了Point-NeRF的很多流程，非常讨巧</p>
+</blockquote>
+<p><strong>总结：</strong></p>
+<p><img src="/images/paper-reading-3d-gaussian-splatting.assets/image-20231220171425698.png"></p>
+<blockquote>
+<p>我发现如果结合点云的话，CG里面有很多现成的工具可以用，点云是一个把CG和CV结合起来的桥梁。</p>
+</blockquote>
+<h2 id="视频笔记：3D-Gaussian-Splatting"><a href="#视频笔记：3D-Gaussian-Splatting" class="headerlink" title="视频笔记：3D Gaussian Splatting"></a>视频笔记：3D Gaussian Splatting</h2><blockquote>
+<p>【【论文讲解】用点云结合3D高斯构建辐射场，成为快速训练、实时渲染的新SOTA！】 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1uV4y1Y7cA/?share_source=copy_web&amp;vd_source=5040c17d0665f566f786d3874bbfd13d">https://www.bilibili.com/video/BV1uV4y1Y7cA/?share_source=copy_web&amp;vd_source=5040c17d0665f566f786d3874bbfd13d</a></p>
+</blockquote>
+<p>这个视频讲的比较简单，主要着力于公式推导方面，所以笔记就不做了。后面加到论文阅读笔记里面。</p>
+<h2 id="论文阅读笔记"><a href="#论文阅读笔记" class="headerlink" title="论文阅读笔记"></a>论文阅读笔记</h2><blockquote>
+<p>主要是梳理整篇论文的结构，对一些细节的讨论不会展开。</p>
+<blockquote>
+<p>第7部分由于我没有做过相关的实验，所以暂时只对Limitations感兴趣，只整理这部分的笔记；</p>
+<p>附录的公式推导感觉也很常规，不太需要做什么笔记整理。</p>
+</blockquote>
+<p>后续可能会针对某些部分写新的文章进行讨论，并且会整理需要了解的一些相关工作。</p>
+</blockquote>
+<h3 id="0-ABSTRACT-amp-1-INTRODUCTION"><a href="#0-ABSTRACT-amp-1-INTRODUCTION" class="headerlink" title="0 ABSTRACT&amp; 1 INTRODUCTION"></a>0 ABSTRACT&amp; 1 INTRODUCTION</h3><p><strong>Background</strong></p>
+<p>论文指出，常见的3D场景表示方法，mesh和point都是显示的，并且非常适合fast GPU/CUDA-based rasterization。而NeRF的方法建立在连续场景表示的基础上，通常通过对体积射线行进的多层感知器（MLP）进行优化，以实现对捕捉场景的新视图合成，但是这些方法在渲染过程中需要进行的随机采样成本昂贵，可能导致图像中的噪声。</p>
+<p><strong>Motivation</strong></p>
+<p>论文发现了以下三个问题：</p>
+<ol>
+<li><strong>高成本的训练和渲染：</strong> 传统的Radiance Field方法通常需要昂贵的训练和渲染成本，限制了其在实际应用中的可行性。</li>
+<li><strong>速度与质量的权衡：</strong> 最近的更快方法通常在速度和合成质量之间做出权衡，难以在实时性和高质量之间找到平衡。</li>
+<li><strong>对于无边界和完整场景的实时显示：</strong> 针对无边界和完整场景的合成，特别是在高分辨率（1080p）下，目前的方法无法实现实时显示。</li>
+</ol>
+<p><strong>Goal</strong></p>
+<p>对此，论文提出了本文的目标：在Radiance Field方法中提出一种综合的解决方案，以克服传统方法中存在的训练和渲染成本高昂、速度与质量之间的权衡问题，实现对捕获场景的实时高质量新视角合成。</p>
+<p><strong>Solutions</strong></p>
+<ol>
+<li><strong>3D Gaussians作为场景表示：</strong> 论文的第一组成部分引入了3D Gaussians作为一种灵活而富有表现力的场景表示方法。作者首先使用与以前的NeRF-like方法相同的输入，即通过结构从运动（Structure-from-Motion，SfM）[Snavely等人，2006]进行校准的相机，并使用SfM过程中产生的稀疏点云初始化了3D Gaussians集合。与大多数基于点的解决方案需要多视图立体匹配（Multi-View Stereo，MVS）数据不同，作者仅使用SfM点作为输入，就能够获得高质量的结果。作者强调3D Gaussians的优越性，因为它们是可微的体积表示，但也可以通过投影到2D并应用标准的 𝛼-混合（alpha-blending）非常高效地光栅化，使用与NeRF相同的等效图像形成模型。</li>
+<li><strong>3D Gaussians属性优化和密度控制：</strong> 该方法的第二个组成部分涉及对3D Gaussians的属性进行优化，包括3D位置、不透明度𝛼、各向异性协方差和球谐（Spherical Harmonic，SH）系数。这些优化与自适应密度控制步骤交替进行，其中在优化过程中添加和偶尔删除3D Gaussians。这一优化过程产生了场景的合理紧凑、非结构化和精确表示（在测试的所有场景中，1-5百万个高斯函数）。</li>
+<li><strong>实时渲染解决方案：</strong> 该方法的第三个和最后一个元素是实时渲染解决方案，使用快速GPU排序算法，灵感来自基于瓦片的光栅化的最新工作[Lassner和Zollhofer，2021]。由于采用了3D Gaussians表示，作者能够执行各向异性喷溅，通过排序和𝛼混合来保持可见性顺序，并通过跟踪所需的已排序喷溅的遍历来实现快速且准确的反向传播。这一部分的设计使得论文的方法能够实现对多个先前发布数据集的SOTA质量的实时渲染，尤其是在1080p分辨率下。</li>
+</ol>
+<p>总体来说，这三个组成部分共同构成了一种新颖而高效的方法，通过综合运用3D Gaussians表示、属性优化与密度控制，以及实时渲染解决方案，成功地解决了现有方法在速度和质量之间的权衡问题。</p>
+<p><strong>Contributions</strong></p>
+<ol>
+<li><strong>引入各向异性的3D Gaussians：</strong> 论文首次引入了各向异性的3D Gaussians，作为对辐射场的高质量、非结构化的表示。这种表示方法具有灵活性和表现力，为场景提供了一种新的、优越的建模方式。</li>
+<li><strong>3D Gaussians属性优化和自适应密度控制：</strong> 论文提供了一种优化3D Gaussians属性的方法，与自适应密度控制相互交替，从而创建了对捕获场景的高质量表示。这一优化过程确保了对场景的紧凑、非结构化和准确的建模，同时在训练过程中具有竞争力的时间成本。</li>
+<li><strong>快速、可微的GPU渲染方法：</strong> 论文提供了一种快速的、可微的GPU渲染方法，该方法具有视觉感知性，允许各向异性的喷溅，并通过快速的反向传播实现了高质量的新视图合成。这一渲染方法对GPU进行了优化，能够在实时性和视觉质量之间找到平衡，实现了对1080p分辨率下的多个数据集的先进质量的实时渲染。</li>
+</ol>
+<h3 id="2-RELATED-WORK"><a href="#2-RELATED-WORK" class="headerlink" title="2 RELATED WORK"></a>2 RELATED WORK</h3><blockquote>
+<p>据说这篇论文Related Work写的很好，我结合Chart GPT把这部分总结一下。</p>
+</blockquote>
+<h4 id="2-1-Traditional-Scene-Reconstruction-and-Rendering"><a href="#2-1-Traditional-Scene-Reconstruction-and-Rendering" class="headerlink" title="2.1 Traditional Scene Reconstruction and Rendering"></a>2.1 Traditional Scene Reconstruction and Rendering</h4><p>在这个部分，作者首先回顾了传统的场景重建和渲染方法：</p>
+<ol>
+<li><strong>基于光场的方法：</strong> 早期的新视角合成方法基于光场，首先是对光场进行密集采样[Gortler等人，1996；Levoy和Hanrahan，1996]，然后发展到允许非结构化捕获[Buehler等人，2001]。这一方法的进展使得对场景的不同角度的合成变得可能。</li>
+<li><strong>结构运动（Structure-from-Motion，SfM）的出现：</strong> SfM的出现开创了一个全新的领域，其中可以使用一系列照片来合成新的视图[Snavely等人，2006]。在相机校准期间，SfM估计了一个稀疏点云，最初用于简单的三维空间可视化。</li>
+<li><strong>多视图立体匹配（Multi-View Stereo，MVS）：</strong> 随后的多视图立体匹配（MVS）算法在多年内产生了引人注目的全三维重建算法[Goesele等人，2007]，为多种视图合成算法的发展提供了基础[Chaurasia等人，2013；Eisemann等人，2008；Hedman等人，2018；Kopanas等人，2021]。这些方法通过将输入图像重新投影并混合到新视图相机中，并利用几何信息来引导这一重新投影。尽管这些方法在许多情况下产生了出色的结果，但通常无法完全恢复未重建区域，或者无法处理MVS生成虚构几何的“过度重建”。</li>
+<li><strong>最近的神经渲染算法：</strong> 近期的神经渲染算法[Tewari等人，2022]在很大程度上减少了这些伪影，并避免了在GPU上存储所有输入图像的巨大成本，从而在大多数方面优于传统方法。</li>
+</ol>
+<p>这一部分提供了关于传统场景重建和渲染方法的概述，强调了SfM和MVS的作用，并引入了最近的神经渲染算法，为读者提供了背景知识，以便更好地理解接下来讨论的新方法。</p>
+<h4 id="2-2-Neural-Rendering-and-Radiance-Fields"><a href="#2-2-Neural-Rendering-and-Radiance-Fields" class="headerlink" title="2.2 Neural Rendering and Radiance Fields"></a>2.2 Neural Rendering and Radiance Fields</h4><p>首先讨论深度学习技术在新视角合成方面的早期应用，以及一些问题和限制，这为引入Radiance Fields方法提供了一个背景，强调了Radiance Fields方法旨在克服这些问题：</p>
+<ol>
+<li><strong>早期深度学习在新视角合成中的应用：</strong> 作者指出，深度学习技术早期就被用于新视角合成[Flynn等人，2016；Zhou等人，2016]。具体而言，卷积神经网络（CNNs）被用于估计混合权重[Hedman等人，2018]，或者用于纹理空间的解决方案[Riegler和Koltun，2020；Thies等人，2019]。</li>
+<li><strong>MVS-based geometry的主要缺陷：</strong> 作者指出，这些方法中大多数采用了基于多视图立体匹配（MVS）的几何信息，但强调了这一方法的一个主要缺陷。具体而言，使用MVS的几何信息可能存在一些问题或限制，尽管这并未在这一段具体阐述。</li>
+<li><strong>CNNs用于最终渲染的潜在问题：</strong> 作者提到，将CNNs用于最终渲染的方法经常导致时间上的闪烁现象（temporal flickering）。这表明在这些方法中，使用深度学习进行最终渲染时可能出现视觉上不稳定的问题。</li>
+</ol>
+<p>接下来，作者讨论了新视角合成中的体积表示方法，特别是涉及到Soft3D、Neural Radiance Fields (NeRFs)以及Mip-NeRF360等方法：</p>
+<ol>
+<li><strong>体积表示的起源：</strong> 作者提到，对于新视角合成的体积表示方法的起源可以追溯到Soft3D[Pennser和Zhang，2017]。Soft3D采用了深度学习技术，并结合了体积射线行进，用一个连续可微的密度场表示几何。</li>
+<li><strong>深度学习与体积射线行进的结合：</strong> 随后，一些研究提出了采用深度学习技术与体积射线行进相结合的方法[Henzler等人，2019；Sitzmann等人，2019]，这些方法基于连续可微的密度场来表示几何形状。然而，使用体积射线行进进行渲染需要大量的样本，因此渲染的成本相当高。</li>
+<li><strong>Neural Radiance Fields (NeRFs)的引入：</strong> Neural Radiance Fields (NeRFs) [Mildenhall等人，2020]引入了重要性采样和位置编码以提高渲染质量，但是采用了大型的多层感知器（Multi-Layer Perceptron），对速度产生了负面影响。</li>
+<li><strong>NeRF方法的影响：</strong> NeRF的成功引发了许多后续方法的出现，这些方法致力于解决质量和速度之间的平衡问题，通常通过引入正则化策略来实现。目前新视角合成中图像质量的最新进展是Mip-NeRF360[Barron等人，2022]。</li>
+<li><strong>质量与速度的平衡：</strong> 作者指出，尽管Mip-NeRF360在渲染质量方面表现出色，但训练和渲染时间仍然非常长。作者声称他们的方法在提供等同或在某些情况下超越Mip-NeRF360的图像质量的同时，实现了快速的训练和实时渲染。</li>
+</ol>
+<p>在这之后，作者探讨了最近的方法在提高训练和/或渲染速度方面的一些设计选择，主要包括利用空间数据结构、不同的编码方式以及多层感知器（MLP）的容量调整。研究者们试图优化现有的方法，以在保持图像质量的同时提高方法的效率。这一多样性反映了领域中不断寻找速度和质量平衡的努力：</p>
+<ol>
+<li><strong>加速训练和渲染的设计选择：</strong> 作者指出，最近的方法在加速训练和渲染方面主要集中在三个设计选择上。这些选择涉及使用空间数据结构来存储（神经）特征，随后在体积射线行进过程中进行插值，采用不同的编码方式，以及调整MLP的容量。</li>
+<li><strong>方法的多样性：</strong> 这些方法包括空间离散化的不同变体[Chen等人，2022b,a；Fridovich-Keil和Yu等人，2022；Garbin等人，2021；Hedman等人，2021；Reiser等人，2021；Takikawa等人，2021；Wu等人，2022；Yu等人，2021]，codebook[ Takikawa等人，2022]以及使用哈希表等编码[Müller等人，2022]的方法，允许使用较小的MLP或完全放弃神经网络[Fridovich-Keil和Yu等人，2022；Sun等人，2022]。</li>
+</ol>
+<p>最后，作者介绍了两个最著名的方法，即InstantNGP和Plenoxels，并对它们的特点进行了讨论：</p>
+<ol>
+<li><strong>InstantNGP：</strong> InstantNGP [Müller等人，2022] 是使用哈希网格和占用网格来加速计算的方法。它采用较小的MLP来表示密度和外观。该方法使用球谐函数（Spherical Harmonics）直接表示方向效应。</li>
+<li><strong>Plenoxels：</strong> Plenoxels [Fridovich-Keil和Yu等人，2022] 则采用了稀疏的体素网格来插值一个连续的密度场，并且可以完全放弃神经网络。Plenoxels 也依赖于球谐函数，前者用于直接表示方向效应，后者用于将输入编码到颜色网络。</li>
+<li><strong>方法的局限性：</strong> 尽管这两种方法提供了出色的结果，但它们仍然可能在有效表示空白空间方面遇到困难，这在一定程度上取决于场景/捕获类型。此外，图像质量很大程度上受限于用于加速的结构化网格的选择，而渲染速度则受到需要查询许多样本以进行给定射线行进步骤的影响。</li>
+<li><strong>作者的方法：</strong> 作者声称，他们所采用的非结构化、明确的GPU友好的3D高斯方法可以在没有神经组件的情况下实现更快的渲染速度和更好的质量。这表明作者的方法旨在解决一些现有方法可能遇到的问题，如空白空间表示和结构化网格对图像质量和渲染速度的影响。</li>
+</ol>
+<h4 id="2-3-Point-Based-Rendering-and-Radiance-Fields"><a href="#2-3-Point-Based-Rendering-and-Radiance-Fields" class="headerlink" title="2.3 Point-Based Rendering and Radiance Fields"></a>2.3 Point-Based Rendering and Radiance Fields</h4><blockquote>
+<p>这部分Chart GPT表现得很差，总结的不太到位。</p>
+</blockquote>
+<p>在这个部分，作者首先介绍了基于点云的渲染方法：</p>
+<ol>
+<li><strong>点云渲染的有效性：</strong> 作者指出，基于点的方法能够高效地渲染断开连接（disconnected）和非结构化的几何样本（unstructured geometry samples），即点云[Gross和Pfister，2011]。</li>
+<li><strong>点采样渲染的简单形式：</strong> 在其最简单的形式中，点采样渲染[Grossman和Dally，1998]会对一组具有固定大小的非结构化点进行光栅化。该过程可能利用图形API本地支持的点类型[Sainz和Pajarola，2004]，也可能在GPU上通过并行软件光栅化[Laine和Karras，2011；Schütz等人，2022]进行。</li>
+<li><strong>点采样渲染的问题：</strong> 尽管点采样渲染在保持底层数据的真实性方面表现出色，但它存在一些问题，包括出现孔洞、导致走样，并且严格是不连续的。</li>
+<li><strong>高质量的点渲染方法：</strong> 为了解决这些问题，关于高质量点渲染的开创性工作采用了一种称为“splatting”的方法，该方法将点原语映射为超过一个像素的范围，例如圆形或椭圆形盘、椭球体或曲面元素[Botsch等人，2005；Pfister等人，2000；Ren等人，2002；Zwicker等人，2001b]。</li>
+</ol>
+<p>之后开始介绍最近对可微分基于点云的渲染技术开展的研究工作：</p>
+<ol>
+<li><strong>可微分的点渲染技术的近期兴趣：</strong> 作者指出了对不同iable point-based rendering techniques（可微分的基于点的渲染技术）的最近兴趣。引文[Wiles等人，2020；Yifan等人，2019]可能是与这一领域相关的最新研究，表明了学术界对这种技术的关注。</li>
+<li><strong>点云增强和神经网络渲染：</strong> 该部分提到了点云被增强为神经特征，并使用卷积神经网络（CNN）进行渲染的技术。引文[Aliev等人，2020；Rückert等人，2022]可能提供了这些技术的实现细节和背后的原理。这些方法可以实现快速甚至实时的视图合成，但仍然依赖于多视图立体匹配（MVS）以获取初始几何信息，因此在一些难以处理的情况下，例如无特征/闪光区域或细小结构中，仍然会受到MVS的影响，尤其是过度或不足的重建。</li>
+<li><strong>依赖MVS的局限性：</strong> 作者强调了这些可微分的点渲染技术的一个局限性，即它们仍然依赖于多视图立体匹配（MVS）来获得初始几何信息。这种依赖可能导致一些问题，特别是在处理一些复杂场景时，如缺乏特征或表面反射光滑的区域，以及细小结构。在这些情况下，MVS可能会产生过度或不足的重建，从而影响最终的渲染效果。</li>
+</ol>
+<p>进行了上面的一些铺垫之后，作者开始指出<strong>基于点云的 𝛼-blending 和 NeRF 风格的体积渲染本质上共享相同的图像形成模型，但是图像的渲染算法却不同</strong>：</p>
+<ul>
+<li>NeRF是一种连续表示，隐式地表示了空/占用的空间，为了渲染图象，需要进行昂贵的随机采样，从而导致噪声和计算开销。</li>
+<li>而点云是一种非结构化、离散的表示，足够灵活，可以允许几何体的创建、销毁和移动。</li>
+</ul>
+<p>之后，作者开始讨论快速渲染相关的工作：</p>
+<ul>
+<li>Pulsar [Lassner and Zollhofer 2021] 实现了快速的球体光栅化，这启发了作者开发瓦片和排序渲染器。在上文的分析基础上，作者决定保持对排序点进行（近似的）传统 𝛼-混合，这一决策旨在保留体积表示的优势。作者的光栅化过程在处理排序后的点时尊重能见度顺序，与 Pulsar 的无序方法形成对比。</li>
+<li>前述提到的其他方法使用卷积神经网络（CNNs）进行渲染，但这可能导致时间上的不稳定性。尽管如此，Pulsar [Lassner and Zollhofer 2021] 和 ADOP [Rückert et al. 2022] 的渲染速度仍然作为激发因素，驱使作者开发出快速渲染解决方案。</li>
+</ul>
+<p>接下来作者讨论了一些相关的工作：</p>
+<ol>
+<li><strong>Neural Point Catacaustics [Kopanas et al. 2022]的特点：</strong><ul>
+<li>该方法专注于处理镜面效果。在扩散点渲染方面，通过使用多层感知器（MLP），该方法克服了渲染过程中的时间不稳定性。然而，仍然需要多视图立体匹配（MVS）几何作为输入。</li>
+</ul>
+</li>
+<li><strong>最新方法 [Zhang et al. 2022] 的特点：</strong><ul>
+<li>在同一类别中，最近的方法[Zhang et al. 2022]不需要 MVS，并使用球谐（SH）来表示方向。然而，该方法只能处理单一物体的场景，并需要蒙版进行初始化。</li>
+<li>尽管在小分辨率和低点数的情况下渲染速度较快，但对于典型数据集的场景如何扩展仍然不明确，特别是在处理典型数据集[Barron et al. 2022; Hedman et al. 2018; Knapitsch et al. 2017]时的表现。、</li>
+</ul>
+</li>
+<li><strong>最新方法 [Xu et al. 2022] 的特点：</strong><ul>
+<li>这一最新的方法使用点来表示一个辐射场，采用径向基函数方法。</li>
+<li>在优化过程中，该方法采用了点修剪和稠密化技术。尽管采取了这些优化措施，但该方法仍然使用体积光线投射（volumetric ray-marching），无法达到实时显示速率。</li>
+</ul>
+</li>
+<li><strong>作者的方法的优势：</strong><ul>
+<li>作者采用了三维高斯分布作为更灵活的场景表示，避免了对MVS几何的需求，并通过瓦片渲染算法实现了对投影高斯分布的实时渲染。这使得他们的方法在实时渲染方面具有优势。</li>
+</ul>
+</li>
+</ol>
+<p>最后作者提到了自己为什么选择选择3D高斯分布：</p>
+<ol>
+<li><strong>在人体性能捕捉领域的应用：</strong><ul>
+<li>3D高斯分布曾被用于表示捕捉到的人体[Rhodin et al. 2015; Stoll et al. 2011]，最近还在视觉任务中与体积光线投射一起使用[Wang et al. 2023]。</li>
+<li>在类似的背景下，一些方法提出了神经体积基元[Lombardi et al. 2021]。这些方法启发了选择3D高斯分布作为场景表示的决策。</li>
+</ul>
+</li>
+<li><strong>对比与其他方法的区别：</strong><ul>
+<li>虽然这些方法启发了选择3D高斯分布，但它们主要专注于重建和渲染单个孤立对象（如人体或面部），导致场景具有较小的深度复杂性。</li>
+<li>与之相反，作者的方法通过优化各向异性协方差、交错的优化/密度控制以及有效的深度排序渲染，使其能够处理完整、复杂的场景，包括室内外背景，并具有较大的深度复杂性。</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-OVERVIEW"><a href="#3-OVERVIEW" class="headerlink" title="3 OVERVIEW"></a>3 OVERVIEW</h3><p><img src="/images/paper-reading-3d-gaussian-splatting.assets/image-20231220230130536.png"></p>
+<ol>
+<li><p><strong>输入：</strong></p>
+<ul>
+<li>方法的输入是一个静态场景的图像集，以及由SfM（Structure from Motion）[Schönberger and Frahm 2016]校准的相应相机，这产生了一个稀疏点云。</li>
+<li>从这些点中，创建了一组3D高斯分布，这些高斯分布由位置（均值）、协方差矩阵和不透明度 𝛼 定义，从而实现了非常灵活的优化过程。</li>
+</ul>
+</li>
+<li><p><strong>场景表示：</strong></p>
+<ul>
+<li>使用3D高斯分布对场景进行表示，包括位置、协方差矩阵和不透明度 𝛼。这使得可以灵活地进行优化，并在一定程度上实现了对3D场景的紧凑表示。</li>
+<li>利用各向异性的体积斑点可以紧凑地表示细小结构。</li>
+</ul>
+</li>
+<li><p><strong>辐射场的方向外观组件：</strong></p>
+<ul>
+<li>辐射场的方向外观组件（颜色）通过球谐函数（SH）表示，符合标准实践[Fridovich-Keil and Yu et al. 2022; Müller et al. 2022]。</li>
+</ul>
+</li>
+<li><p><strong>辐射场表示的创建：</strong></p>
+<ul>
+<li>算法通过一系列对3D高斯分布参数的优化步骤进行辐射场表示的创建，包括位置、协方差、𝛼和SH系数的交替操作，以及用于自适应控制高斯密度的操作。</li>
+</ul>
+</li>
+<li><p><strong>方法的效率关键：</strong></p>
+<ul>
+<li>方法的效率关键在于其基于瓦片的光栅化器，它允许各向异性斑点的 𝛼-混合，并通过快速排序实现了对可见性顺序的尊重。</li>
+<li>快速光栅化器还包括一个快速的反向传递过程，通过跟踪累积的 𝛼 值，而不限制可以接收梯度的高斯分布的数量。</li>
+</ul>
+</li>
+<li><p><strong>方法概览：</strong></p>
+<p><strong>优化起点：</strong>优化的起点是稀疏的SfM点云，该点云通过优化生成一组3D高斯分布。</p>
+<p><strong>密度自适应控制：</strong>对这组高斯分布进行密度的优化和自适应控制。</p>
+<p><strong>光栅化器的运用：</strong>在优化过程中，使用了快速基于瓦片的渲染器，使得训练时间与当前领先的快速辐射场方法相比具有竞争力。</p>
+<p><strong>训练后的渲染器：</strong>训练完成后，该渲染器能够实现对各种场景的实时导航，为用户提供高效的渲染性能。</p>
+</li>
+</ol>
+<h3 id="4-DIFFERENTIABLE-3D-GAUSSIAN-SPLATTING"><a href="#4-DIFFERENTIABLE-3D-GAUSSIAN-SPLATTING" class="headerlink" title="4 DIFFERENTIABLE 3D GAUSSIAN SPLATTING"></a>4 DIFFERENTIABLE 3D GAUSSIAN SPLATTING</h3><blockquote>
+<p>和GPT聊一聊$\exp\left(-\frac{1}{2} \mathbf{x}^T \boldsymbol{\Sigma}^{-1} \mathbf{x}\right)$，并且指定$\Sigma=RSS^TR^T$的情况下会发生什么。</p>
+<p>链接：<a target="_blank" rel="noopener" href="https://chat.openai.com/share/0cfb56e4-30a5-4bd8-9c23-89aa36660d7f">https://chat.openai.com/share/0cfb56e4-30a5-4bd8-9c23-89aa36660d7f</a></p>
+<p>下面是聊的内容。</p>
+</blockquote>
+<ul>
+<li><p>三维高斯分布的公式是什么？</p>
+<p><img src="/images/paper-reading-3d-gaussian-splatting.assets/image-20231222145534792.png"></p>
+</li>
+<li><p>假设$\mu=0$，忽略掉除了exp()之外的东西，写出这个表达式</p>
+<p><img src="/images/paper-reading-3d-gaussian-splatting.assets/image-20231222145611221.png"></p>
+</li>
+<li><p>忽略掉前面我们交流的内容，我们现在只看这个表达式： $\exp\left(-\frac{1}{2} \mathbf{x}^T \boldsymbol{\Sigma}^{-1} \mathbf{x}\right)$，请注意$x$是三维向量。这个表达式的几何意义是什么呢？</p>
+<p><img src="/images/paper-reading-3d-gaussian-splatting.assets/image-20231222145651137.png"></p>
+</li>
+<li><p>为了继续讨论，接下来我们定义旋转矩阵$R$，缩放矩阵$S$，请注意我们讨论的都是在三维空间下。</p>
+<p><img src="/images/paper-reading-3d-gaussian-splatting.assets/image-20231222150037855.png"></p>
+</li>
+<li><p>如果我令$\Sigma=RSS^TR^T$，那么此时的$\Sigma$对于高斯分布$\exp\left(-\frac{1}{2} \mathbf{x}^T \boldsymbol{\Sigma}^{-1} \mathbf{x}\right)$起了什么样的作用？</p>
+<p><img src="/images/paper-reading-3d-gaussian-splatting.assets/image-20231222150124805.png"></p>
+</li>
+<li><p>具体来说不同的$R$和$S$将如何影响这个高斯分布？</p>
+<p><img src="/images/paper-reading-3d-gaussian-splatting.assets/image-20231222150148188.png"></p>
+</li>
+<li><p>向量$x$对高斯分布有什么样的影响？</p>
+<p><img src="/images/paper-reading-3d-gaussian-splatting.assets/image-20231222150219404.png"></p>
+</li>
+<li><p>那么，再给定$\Sigma=RSS^TR^T$的前提下，$\exp\left(-\frac{1}{2} \mathbf{x}^T \boldsymbol{\Sigma}^{-1} \mathbf{x}\right)$其实就是表示了在位置$\mathbf{x}$处的一个高斯分布，而且这个高斯分布接近一个椭球，椭球的形状受到了旋转矩阵R和缩放矩阵S的影响，我这样理解对吗？</p>
+<p><img src="/images/paper-reading-3d-gaussian-splatting.assets/image-20231222150244397.png"></p>
+</li>
+</ul>
+<h3 id="5-OPTIMIZATION-WITH-ADAPTIVE-DENSITY-CONTROL-OF-3D-GAUSSIANS"><a href="#5-OPTIMIZATION-WITH-ADAPTIVE-DENSITY-CONTROL-OF-3D-GAUSSIANS" class="headerlink" title="5 OPTIMIZATION WITH ADAPTIVE DENSITY CONTROL OF 3D GAUSSIANS"></a>5 OPTIMIZATION WITH ADAPTIVE DENSITY CONTROL OF 3D GAUSSIANS</h3><ol>
+<li><strong>优化步骤核心</strong>：<ul>
+<li>论文方法的核心在于优化步骤，其目标是创建一个密集的3D高斯集合，以准确表示用于自由视角合成的场景。</li>
+</ul>
+</li>
+<li><strong>参数优化</strong>：<ul>
+<li>优化的参数包括位置 (𝑝)、方向 (𝛼) 和协方差 (Σ)。</li>
+<li>此外，还对代表每个高斯颜色 (𝑐) 的球谐系数（SH coefficients）进行优化，以正确捕捉场景的视角相关外观。</li>
+</ul>
+</li>
+<li><strong>步骤交织</strong>：<ul>
+<li>这些参数的优化过程与控制高斯密度的步骤交织在一起。</li>
+<li>通过这种方式，实现对高斯密度的精细控制，以更好地表示场景。</li>
+</ul>
+</li>
+</ol>
+<h4 id="5-1-Optimization"><a href="#5-1-Optimization" class="headerlink" title="5.1 Optimization"></a>5.1 Optimization</h4><ol>
+<li><strong>基于迭代的优化过程</strong>：<ul>
+<li>优化的核心在于通过渲染和比较生成的图像与训练数据集中的视图进行迭代。</li>
+<li>由于3D到2D投影的不确定性，可能导致几何元素被错误放置。</li>
+<li>优化过程需要能够创建、破坏或移动几何元素，以纠正错误的位置。</li>
+<li>3D高斯的协方差参数质量对表示的紧凑性至关重要，因为少量大型各向异性高斯可以捕捉大块均匀区域。</li>
+</ul>
+</li>
+<li><strong>使用随机梯度下降的优化技术</strong>：<ul>
+<li>采用随机梯度下降技术，充分利用GPU加速框架和自定义CUDA内核。</li>
+<li>快速光栅化是优化过程的主要计算瓶颈。</li>
+</ul>
+</li>
+<li><strong>激活函数的选择</strong>：<ul>
+<li>对于方向𝛼，采用sigmoid激活函数，将其限制在 [0, 1) 范围内，并获得平滑的梯度。</li>
+<li>对于协方差尺度，选择指数激活函数，同样是为了获得平滑的梯度。</li>
+</ul>
+</li>
+<li><strong>初始协方差矩阵的估计和损失函数设计</strong>：<ul>
+<li>估计初始协方差矩阵时，采用各向同性高斯，其轴长度由到最近的三个点的距离均值确定。</li>
+<li>使用标准的指数衰减调度技术，但仅用于位置参数。</li>
+<li>损失函数包括L1损失和D-SSIM项的组合，通过权衡参数𝜆 = 0.2进行组合。</li>
+<li>有关学习调度和其他细节，详细信息可在第7.1节中找到。</li>
+</ul>
+</li>
+</ol>
+<p>通过以上步骤，优化过程能够克服3D到2D投影的不确定性，通过迭代优化提高场景表示的准确性，并通过自适应密度控制的手段灵活处理几何元素的位置，以实现更精确的场景合成。</p>
+<h4 id="5-2-Adaptive-Control-of-Gaussians"><a href="#5-2-Adaptive-Control-of-Gaussians" class="headerlink" title="5.2 Adaptive Control of Gaussians"></a>5.2 Adaptive Control of Gaussians</h4><ol>
+<li><p><strong>初始步骤</strong>：</p>
+<ul>
+<li>从Structure from Motion（SfM）获取初始稀疏点集。</li>
+<li>通过自适应控制，调整高斯的数量和密度，从初始的稀疏高斯集合过渡到更密集的集合。</li>
+</ul>
+</li>
+<li><p><strong>重点区域的控制</strong>：</p>
+<p>自适应控制着眼于两种关键区域：</p>
+<ul>
+<li>“under-reconstruction”区域，即缺乏几何特征的区域。<ul>
+<li>针对这些区域，自适应控制通过克隆操作调整高斯，以覆盖新创建的几何，确保这些区域能够得到更好的表示。</li>
+</ul>
+</li>
+<li>“over-reconstruction”区域，即高斯覆盖大面积的区域。<ul>
+<li>针对这些区域，通过分割操作将大的高斯替换为两个较小的高斯，以更好地适应场景中的细节和变化。</li>
+</ul>
+</li>
+</ul>
+<p>在这两种情况下，区域的视角空间位置梯度被用来指导高斯的调整，因为这些区域可能是场景中尚未充分重建或者已经过度重建的部分。</p>
+</li>
+<li><p><strong>密集化操作的条件</strong>：</p>
+<ul>
+<li>高斯密集化的条件是，具有视角空间位置梯度的平均幅度超过阈值 𝜏pos。</li>
+<li>阈值设置为0.0002。</li>
+</ul>
+</li>
+<li><p><strong>高斯调整的具体步骤</strong>：</p>
+<ul>
+<li>对于小高斯，位于“under-reconstructed”区域，通过克隆操作覆盖新创建的几何。</li>
+<li>对于大高斯，位于高方差区域，通过分割操作替换为两个新的高斯，同时将它们的尺度缩小一个经验确定的因子 𝜙 = 1.6。</li>
+</ul>
+</li>
+<li><p><strong>对高斯数量的控制</strong>：</p>
+<ul>
+<li>处理两种情况：一种增加系统总体积和高斯数量，另一种保持总体积不变但增加高斯数量。</li>
+<li>避免浮点数接近输入相机时导致高斯密度不合理地增加的问题。</li>
+<li>通过每3000次迭代将 𝛼 值设置接近零，然后根据需要增加 𝛼 值，并通过裁剪方法删除 𝛼 值小于 𝜖𝛼 的高斯。</li>
+<li>定期删除在世界空间中非常大或在视图空间中占据大面积的高斯，以有效控制总高斯数量。</li>
+</ul>
+</li>
+<li><p><strong>高斯的基本性质</strong>：</p>
+<ul>
+<li>高斯在Euclidean空间中保持为基元，不需要采用复杂的空间压缩、变形或投影策略。</li>
+<li>与其他方法不同，该模型不要求对远距离或大型高斯采取额外处理的方法，保持了高斯在欧几里得空间中的基本特性。</li>
+<li>这一特点使得模型更加直观和可理解，同时简化了整个处理流程，避免了复杂的空间变换对场景表示的不必要干预。</li>
+</ul>
+</li>
+</ol>
+<p>通过这一自适应控制的过程，能够更好地适应场景的几何特征，同时有效地控制高斯的数量和密度，确保了场景表示的准确性。</p>
+<h3 id="6-FAST-DIFFERENTIABLE-RASTERIZER-FOR-GAUSSIANS"><a href="#6-FAST-DIFFERENTIABLE-RASTERIZER-FOR-GAUSSIANS" class="headerlink" title="6 FAST DIFFERENTIABLE RASTERIZER FOR GAUSSIANS"></a>6 FAST DIFFERENTIABLE RASTERIZER FOR GAUSSIANS</h3><ol>
+<li><strong>设计目标和渲染流程概述</strong>：<ul>
+<li>设计目标：实现快速渲染和排序，支持 𝛼 混合和各向异性斑点。</li>
+<li>提出瓦片光栅化器，避免每像素排序的开销。</li>
+<li>允许处理任意深度复杂度的场景，无需特定超参数调整。</li>
+</ul>
+</li>
+<li><strong>瓦片光栅化流程</strong>：<ul>
+<li>屏幕划分为16×16瓦片，3D Gaussians剔除和实例化。</li>
+<li>利用GPU Radix排序，避免额外的每像素排序。</li>
+<li>混合基于初始排序，无额外每像素排序，提高效率。</li>
+</ul>
+</li>
+<li><strong>优化和并行处理</strong>：<ul>
+<li>利用瓦片列表生成，线程块协同加载数据包。</li>
+<li>并行处理数据加载/共享和处理，周期性检查线程和像素饱和，终止瓦片处理。</li>
+<li>详细优化：<ul>
+<li>利用共享内存协同加载数据包，提高数据加载效率。</li>
+<li>定期检查线程和像素饱和，提前终止瓦片处理，节省计算资源。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>处理深度复杂度</strong>：<ul>
+<li>允许任意深度复杂度的场景，无需特定超参数调整。</li>
+<li>反向传播中通过遍历瓦片列表处理混合点序列，增加模型灵活性。</li>
+<li>详细处理：<ul>
+<li>反向传播期间，通过遍历瓦片列表处理混合点序列，适应不同深度复杂度的场景。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>高效的反向传播</strong>：<ul>
+<li>从最后影响像素的点开始遍历，协同加载数据到共享内存。</li>
+<li>优化：像素只处理深度低于或等于正向传播期间为其颜色做出贡献的最后一个点。</li>
+<li>通过存储正向传播结束时的总累积不透明度，恢复中间不透明度，减少计算复杂性。</li>
+<li>详细反向传播优化：<ul>
+<li>从最后影响像素的点开始遍历，协同加载数据到共享内存，提高效率。</li>
+<li>优化像素处理，只处理正向传播期间对颜色有贡献的点。</li>
+<li>存储总累积不透明度，通过反向遍历计算中间不透明度，降低计算复杂性。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="7-Limitations"><a href="#7-Limitations" class="headerlink" title="7 Limitations"></a>7 Limitations</h3><ol>
+<li><strong>有限观测区域的问题</strong>：<ul>
+<li>在场景观测不充分的区域可能出现伪影。</li>
+<li>其他方法在类似情况下也存在困难，例如Mip-NeRF360的情况。</li>
+</ul>
+</li>
+<li><strong>各向异性高斯的缺陷</strong>：<ul>
+<li>各向异性高斯在某些情况下可能生成细长伪影或“斑点状”高斯。</li>
+<li>先前的方法在类似情况下也存在困难。</li>
+</ul>
+</li>
+<li><strong>大高斯生成的爆裂伪影</strong>：<ul>
+<li>在创建大高斯时，可能偶尔出现“爆裂”伪影，尤其是在具有视角相关外观的区域。</li>
+<li>爆裂伪影的一个原因是在光栅化器中通过防护带微不足道地拒绝高斯，引入更有原则的剔除方法可能有助于减轻这些伪影。</li>
+<li>另一个因素是简单的可见性算法，可能导致高斯突然切换深度/混合顺序，这可以通过引入抗锯齿技术解决，但这是留作未来工作的。</li>
+</ul>
+</li>
+<li><strong>缺乏优化的正则化</strong>：<ul>
+<li>目前的优化过程没有应用任何正则化，这可能有助于处理未观测区域和爆裂伪影。</li>
+<li>引入正则化被提出作为解决方案，有望改善这些问题。</li>
+</ul>
+</li>
+<li><strong>同一超参数的使用</strong>：<ul>
+<li>尽管在完整评估中使用了相同的超参数，早期实验表明，在非常大的场景（如城市数据集）中，减小位置学习速率可能是为了收敛而必要的。</li>
+</ul>
+</li>
+<li><strong>相对紧凑但内存消耗较高</strong>：<ul>
+<li>尽管与之前的基于点的方法相比，方法相对紧凑，但内存消耗明显高于NeRF等基于神经场景的解决方案。</li>
+<li>优化逻辑的低级实现可能显著减少内存消耗。</li>
+</ul>
+</li>
+<li><strong>训练和渲染的内存需求</strong>：<ul>
+<li>渲染经过训练的场景需要足够的GPU内存来存储完整模型，以及额外的内存用于光栅化器。</li>
+<li>存在许多降低内存消耗的机会，包括点云的压缩技术，这个领域是一个研究方向。</li>
+</ul>
+</li>
+</ol>
+<h3 id="8-DISCUSSION-AND-CONCLUSIONS"><a href="#8-DISCUSSION-AND-CONCLUSIONS" class="headerlink" title="8 DISCUSSION AND CONCLUSIONS"></a>8 DISCUSSION AND CONCLUSIONS</h3><ol>
+<li><strong>创新性贡献</strong>：<ul>
+<li>提出了首个真正允许在各种场景和捕捉风格中进行实时、高质量辐射场渲染的方法。</li>
+<li>选择了3D高斯原语，既保留了优化的体积渲染特性，又直接实现了快速的基于splat的光栅化。</li>
+</ul>
+</li>
+<li><strong>培训时间和性能</strong>：<ul>
+<li>在培训时间方面与先前最快的方法相竞争，证明了方法的高效性。</li>
+<li>大约80%的培训时间用于Python代码，为了方便其他人使用，方法构建在PyTorch上。</li>
+<li>只有光栅化例程实现为优化的CUDA核。将其余优化完全移植到CUDA可能会在对性能要求很高的应用中实现显著的加速，例如InstantNGP。</li>
+</ul>
+</li>
+<li><strong>实时渲染原则</strong>：<ul>
+<li>展示了建立在实时渲染原则之上的重要性，充分利用GPU的性能和软件光栅化管线架构的速度。</li>
+<li>这些设计选择是培训和实时渲染性能的关键，相对于先前的体积射线行进提供了竞争优势。</li>
+</ul>
+</li>
+<li><strong>未来研究方向</strong>：<ul>
+<li>探讨了高斯是否可用于执行捕捉场景的网格重建，以更好地了解方法在体积和表面表示之间的确切位置。</li>
+<li>强调了对于网格的广泛使用，这可能具有实际意义。</li>
+</ul>
+</li>
+<li><strong>结论</strong>：<ul>
+<li>提出了首个实时辐射场渲染解决方案，其渲染质量与昂贵的先前方法相匹配，培训时间与最快的现有解决方案相竞争。</li>
+</ul>
+</li>
+</ol>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><p>下面是一些可能有用的链接：</p>
+<ul>
+<li><p>3D Gaussian Splatting中的数学推导 - 八氨合氯化钙的文章 - 知乎<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/666465701">https://zhuanlan.zhihu.com/p/666465701</a></p>
+<blockquote>
+<p>这篇文章非常不错，基本所有需要的公式推导都在这里了</p>
+</blockquote>
+</li>
+<li><p>[NeRF坑浮沉记]3D Gaussian Splatting入门：如何表达几何 - 御币Soft的文章 - 知乎<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/661569671">https://zhuanlan.zhihu.com/p/661569671</a></p>
+<blockquote>
+<p>这篇文章提到了一个以椭球为基础元素的游戏，很直观的感受了一下用椭球表达场景是什么样子</p>
+</blockquote>
+</li>
+<li><p>Splatting 抛雪球法简介 - bo233的文章 - 知乎<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/660512916">https://zhuanlan.zhihu.com/p/660512916</a></p>
+<blockquote>
+<p>3D Gaussian Splatting这篇论文的公式是真的少，Splatting这部分可以借助这篇文章了解一下</p>
+</blockquote>
+</li>
+<li><p>《3D Gaussian Splatting for Real-Time Radiance Field Rendering》3D高斯的理论理解 - 剪月光者的文章 - 知乎<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/664725693">https://zhuanlan.zhihu.com/p/664725693</a></p>
+<blockquote>
+<p>可以作为前面对3D Gaussian的补充</p>
+</blockquote>
+</li>
+<li><p>A beginner friendly introduction to 3D Gaussian Splats and tutorial on how to train them</p>
+<p><a target="_blank" rel="noopener" href="https://www.reshot.ai/3d-gaussian-splatting">https://www.reshot.ai/3d-gaussian-splatting</a></p>
+<blockquote>
+<p>一个很详细的教程，虽然3D Gaussian Splatting的README写的也很详细</p>
+</blockquote>
+</li>
+</ul>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Immortalqx</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://Immortalqx.github.io/2023/12/21/paper-reading-3d-gaussian-splatting/">http://Immortalqx.github.io/2023/12/21/paper-reading-3d-gaussian-splatting/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Immortalqx</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                                    <span class="chip bg-color">隐式表示</span>
+                                </a>
+                            
+                                <a href="/tags/3D-Gaussian-Splatting/">
+                                    <span class="chip bg-color">3D Gaussian Splatting</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban,google,linkedin,twitter,facebook" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'bMq5alM79AoOmPl5Q65aeVqI-gzGzoHsz',
+        appKey: 'O0Q21Re9hVoBb41y6euVKCQq',
+        serverURLs: '',
+        notify: '' === 'true',
+        verify: '' === 'true',
+        visitor: '' === 'true',
+        avatar: 'retro',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '填上邮箱可以收到我的回复呦ฅ^ω^ฅ'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2024/03/01/nerf-slam-5/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="NeRF based SLAM学习笔记（6）：关于co-slam中提到的one-blob编码">
+                        
+                        <span class="card-title">NeRF based SLAM学习笔记（6）：关于co-slam中提到的one-blob编码</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-03-01
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/slam/" class="post-category">
+                                    slam
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/NeRF/">
+                        <span class="chip bg-color">NeRF</span>
+                    </a>
+                    
+                    <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                        <span class="chip bg-color">视觉SLAM</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/08/16/nerf-slam-4/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/29.jpg" class="responsive-img" alt="NeRF based SLAM学习笔记（5）：NICE-SLAM源码阅读笔记（1）">
+                        
+                        <span class="card-title">NeRF based SLAM学习笔记（5）：NICE-SLAM源码阅读笔记（1）</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-08-16
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/slam/" class="post-category">
+                                    slam
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/NeRF/">
+                        <span class="chip bg-color">NeRF</span>
+                    </a>
+                    
+                    <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                        <span class="chip bg-color">视觉SLAM</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2025</span>
+            
+            <a href="/about" target="_blank">Immortalqx</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">237.4k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2021";
+                    var startMonth = "2";
+                    var startDate = "1";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Immortalqx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:immortalqx@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1727854434" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1727854434" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+    
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <script src="/js/FunnyTitle.js"></script>
+    <!--script src="/live2d/autoload.js"></script-->
+</body>
+
+</html>

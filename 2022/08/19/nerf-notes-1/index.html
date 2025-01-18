@@ -1,0 +1,1452 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="NeRF学习笔记（一）：论文翻译, 所念皆星河">
+    <meta name="description" content="NeRF学习笔记（一）：论文翻译
+NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis
+
+Abstract我们提出了一种方法，通过使用稀疏的输入视图集来">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>NeRF学习笔记（一）：论文翻译 | 所念皆星河</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">所念皆星河</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/homepage" class="waves-effect waves-light">
+      
+      <i class="fas fa-award" style="zoom: 0.6;"></i>
+      
+      <span>Homepage</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">所念皆星河</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/homepage" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-award"></i>
+			
+			Homepage
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/Immortalqx" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Follow me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/Immortalqx" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Follow me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">NeRF学习笔记（一）：论文翻译</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/NeRF/">
+                                <span class="chip bg-color">NeRF</span>
+                            </a>
+                        
+                            <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+                                <span class="chip bg-color">深度学习</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/NeRF-3DGS/" class="post-category">
+                                NeRF&3DGS
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-08-19
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    6.9k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    24 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="NeRF学习笔记（一）：论文翻译"><a href="#NeRF学习笔记（一）：论文翻译" class="headerlink" title="NeRF学习笔记（一）：论文翻译"></a>NeRF学习笔记（一）：论文翻译</h1><blockquote>
+<p>NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis</p>
+</blockquote>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>我们提出了一种方法，通过使用稀疏的输入视图集来优化底层的连续体积场景函数，来实现合成复杂场景的新视图的最新结果。我们的算法使用一个全连接（非卷积）深度网络表示一个场景，该网络的输入是一个连续的5D坐标（空间位置$(x, y, z)$和观看方向$(\theta, \varphi)$），其输出是该空间位置的体积密度和视图相关的发射辐射。我们通过查询沿着相机光线的5D坐标来合成视图，并使用经典的体积渲染技术将输出的颜色和密度投影到图像中。因为体积渲染是自然可微的，优化我们的表示所需的唯一输入是一组具有已知相机姿态的图像。我们描述了如何有效地优化神经辐射场，以呈现具有复杂的几何形状和外观的场景的逼真的新观点，并展示了优于之前的神经渲染和观点合成工作的结果。</p>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1 Introduction"></a>1 Introduction</h2><p>在这项工作中，我们通过直接优化连续5D场景表示的参数来最小化网络输出值与捕获图像之间的误差，解决了长期存在的视图合成问题。</p>
+<p><img src="/images/nerf-notes-1/image-20220818203438571.png" alt="图1：我们提出了一种方法，从一组输入图像中优化场景的连续5D神经辐射场表示（在任何连续位置的体积密度和取决于视图的颜色）。我们使用来自体积渲染的技术，沿着射线积累这个场景表示的样本，从任何视角渲染场景。在这里，我们可视化了在周围半球上随机捕获的合成Drums场景的100个输入视图，并展示了从我们优化的NeRF表示中渲染的两个新视图。"></p>
+<p>我们将静态场景表示为连续的5D函数，该函数的输出值是空间中每个点$(x，y，z)$在每个方向$(\theta，\varphi)$上发射的辐射度，以及每个点处的密度。该密度类似于可微分的不透明度，代表光线通过$(x，y，z)$时累积的辐射量。我们的方法通过从单一的5D坐标$(x，y，z，\theta，\varphi)$回归到体积密度和与视角有关的RGB颜色，来优化没有任何卷积层的深度完全连接的神经网络，用这个网络来表示该函数。为了渲染NERF，我们：（1）使相机光线穿过场景以生成一组采样的3D点；（2）使用这些点及其对应的2D观察方向作为神经网络的输入以产生一组输出的颜色和密度，以及（3）使用经典立体渲染技术将这些颜色和密度累积到2D图像中。因为这个过程自然是可微的，所以我们可以使用梯度下降来优化这个模型，方法是最小化每个观察图像和从我们的表示呈现的对应视图之间的误差。在多个视图上最小化该误差，鼓励网络通过向包含真实基础场景内容的位置分配高体积密度和准确的颜色来预测场景的连贯模型。图2直观地显示了这个整体管道。</p>
+<p><img src="/images/nerf-notes-1/image-20220818203247431.png" alt="图2：我们的神经辐射场场景表示和可区分的渲染程序的概述。我们通过沿相机射线的5D坐标（位置和观察方向）采样来合成图像（a），将这些位置输入MLP以产生颜色和体积密度（b），并使用体积渲染技术将这些值合成为图像（c）。这个渲染函数是可微分的，所以我们可以通过最小化合成图像和地面真实观察图像之间的残差来优化我们的场景表现（d）。"></p>
+<p>我们发现，NERF的基础实现不能收敛到足够高的分辨率表示，并且在每条相机光线所需的样本数很庞杂。我们通过使用位置编码来变换输入的5D坐标来解决这些问题，该位置编码使得MLP能够表示更高频率的函数，并且我们提出了分层采样过程来减少实现高频率采样过程所需要的数据点。</p>
+<p>我们的方法继承了体积表示的优点：两者都可以表示复杂的真实世界几何和外观，并且非常适合使用基于梯度的优化方法。重要的是，我们的方法克服了在高分辨率下建模复杂场景时，存储离散化体素网格所需要的高昂成本。总的来说，我们的工作可以概括为以下几点：</p>
+<p>（1）一种将具有复杂几何形状和材料的连续场景表示为5D神经辐射场的方法，参数化为基本MLP网络。</p>
+<p>（2）一个基于经典体积渲染技术的可区分的渲染程序，我们用它来优化这些来自标准RGB图像的表示。这包括一个分层采样策略，将MLP的能力分配给具有可见场景内容的空间。</p>
+<p>（3）将每个输入的5D坐标映射到更高的维度空间的位置编码，这使我们能够成功地优化神经辐射场以表示高频的场景内容。</p>
+<p>我们证明了我们所得到的神经辐射场方法在数量和质量上都优于最先进的视图合成方法，包括将神经三维表征适合于场景的作品，以及训练深度卷积网络以预测采样体积表征的作品。据我们所知，本文提出了第一个连续的神经场景表征，能够从自然环境中拍摄的RGB图像中呈现出真实物体和场景的高分辨率逼真的新视图。</p>
+<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2 Related Work"></a>2 Related Work</h2><p>计算机视觉的一个很有前途的方向是在MLP的权重中编码对象和场景，它直接从三维空间位置映射到形状的隐式表示。然而，到目前为止，这些方法还无法以与使用三角形网格或体素网格等离散表示场景相同的保真度再现具有复杂几何形状的真实场景。在本节中，我们将回顾这两项工作，并将它们与我们的方法进行对比，这增强了神经场景表示的能力，以产生渲染复杂的现实场景的最先进的结果。</p>
+<h3 id="2-1-Neural-3D-shape-representations"><a href="#2-1-Neural-3D-shape-representations" class="headerlink" title="2.1 Neural 3D shape representations"></a>2.1 Neural 3D shape representations</h3><p>最近的工作通过优化将$xyz$坐标映射到有符号的距离函数或占用场的深度网络，研究了连续三维形状作为水平集的隐式表示。然而，这些模型受到其访问地面真实三维几何的需求的限制，通常来自合成的三维形状数据集，如ShapeNet。随后的工作通过制定可微渲染函数，放宽了对地面真实三维形状的要求，允许神经隐式形状表示仅使用二维图像进行优化。Niemeyer等人将曲面表示为三维占用场，并使用数值方法找到每条光线的曲面交点，然后使用隐式微分计算精确的导数。每个射线交叉位置作为神经三维纹理域的输入，该域预测该点的漫反射颜色。Sitzmann等人使用一种不那么直接的神经三维表示，只需在每个连续的三维坐标上输出一个特征向量和RGB颜色，并提出一个由沿着每条射线行进来决定表面的位置的递归神经网络组成的可微呈现函数。</p>
+<p>虽然这些技术可能代表复杂和高分辨率的几何，但到目前为止，它们仅限于低几何复杂度的简单形状，导致过度平滑渲染。我们展示了一种优化网络编码5维辐射场（具有二维视觉相关外观的三维体积）的替代策略，可以代表更高分辨率的几何形状和外观，以呈现复杂场景的逼真的新视图。</p>
+<h3 id="2-2-View-synthesis-and-image-based-rendering"><a href="#2-2-View-synthesis-and-image-based-rendering" class="headerlink" title="2.2 View synthesis and image-based rendering"></a>2.2 View synthesis and image-based rendering</h3><p>计算机视觉和图像社区通过从观察到的图像中预测传统的几何图形和外观表示，在新视图合成的任务上取得了重大进展。一种流行的方法是使用基于网格的场景表示。可微分栅格器或示踪器可以直接优化网格表示，使用梯度下降复制一组输入图像。然而，基于图像重投影的基于梯度的网格优化往往是困难的，可能是由于局部最小值或损失景观的条件较差。此外，该策略要求在优化之前提供一个具有固定拓扑的模板网格作为初始化，这对于无约束的真实场景通常是不可用的。</p>
+<p>另一类方法使用体积表示来解决从一组输入的RGB图像中进行高质量逼真的视点合成的任务。体积方法能够实际地表示复杂的形状和材料，非常适合基于梯度的优化，并且往往比基于网格的方法产生更少的视觉上分散注意力的伪影。早期的体积测量方法使用观察到的图像来直接彩色体素网格。最近，一些方法使用多个场景的大型数据集来训练深度网络，从一组输入图像中预测采样的体积表示，然后使用alpha合成或学习合成在测试时呈现新的视图。其他工作针对每个特定场景优化了 CNN 和采样体素网格的组合，使得 CNN 可以补偿来自低分辨率体素网格的离散化伪影，或者允许预测的体素网格根据输入时间或动画控制而变化。尽管这些体积技术在新视图合成方面取得了令人印象深刻的结果，但由于其离散采样，其扩展到更高分辨率图像的能力受到时间和空间复杂性的根本限制——渲染更高分辨率的图像需要更精细的三维空间采样。我们通过在深度全连接神经网络的参数中编码一个连续的体积来规避这个问题，这不仅产生比之前的体积方法明显更高质量的渲染，而且只需要这些采样体积表示的存储成本的一小部分。</p>
+<h2 id="3-Neural-Radiance-Field-Scene-Representation"><a href="#3-Neural-Radiance-Field-Scene-Representation" class="headerlink" title="3 Neural Radiance Field Scene Representation"></a>3 Neural Radiance Field Scene Representation</h2><p>我们将连续场景表示为5D矢量函数，其输入是3D位置$x=(x，y，z)$和2D观察方向$(\theta，\varphi)$的组合，其输出是从某个视角看到的某点颜色$c=(r，g，b)$和体积密度$\sigma$。实际处理中，我们用MLP网络逼近这种连续的5D场景表示，并优化其权重$\Theta$，从每个输入的5D坐标映射到其相应的体积密度和定向发射颜色。</p>
+<p>为了让表示的多视图一致，我们通过限制网络预测体积密度$\sigma$仅作为位置$x$的函数，同时允许RGB颜色$c$作为位置和观看方向的函数来预测。为了实现这一点，MLP$F_\Theta$首先处理具有8个完全连接层的输入3D坐标$x$（使用ReLU激活和每层256个通道），并输出$\sigma$和一个256维的特征向量。然后，这个特征向量与相机射线的查看方向连接起来，并传递到一个额外的完全连接层（使用ReLU激活和128个通道），输出与视图相关的RGB颜色。</p>
+<p>关于我们的方法如何使用输入查看方向（the input viewing direction）来表示非兰伯式（non-Lambertian）的效果，请参见图3。</p>
+<p><img src="/images/nerf-notes-1/image-20220819170634947-16609183673502.png" alt="图3：一种与视图相关的发射辐射的可视化方法。我们的神经辐射场表示输出RGB颜色作为空间位置x和观察方向d的5D函数。在这里，我们在船舶场景的神经表示中可视化两个空间位置的方向颜色分布。在（a）和（b）中，我们展示了来自两个不同的相机位置的两个固定的3D点的外观：一个在船的一侧（橙色插图），另一个在水面上（蓝色插图）。我们的方法预测了这两个三维点的不断变化的镜面外观，并且在（c）中，我们展示了这种行为如何在观看方向的整个半球连续地推广。"></p>
+<p>如图4所示，在没有视图依赖性的情况下训练的模型（仅$x$作为输入）难以表示镜面反射。</p>
+<p><img src="/images/nerf-notes-1/image-20220819170644501.png" alt="图4：在这里，我们展示了我们的完整模型如何从表示与视图相关的辐射亮度和通过高频位置编码传递输入坐标中获益。移除视图相关性可防止模型在推土机踏板上重新创建镜面反射。删除位置编码会大大降低模型表示高频几何体和纹理的能力，从而导致过度平滑的外观。"></p>
+<h2 id="4-Volume-Rendering-with-Radiance-Fields"><a href="#4-Volume-Rendering-with-Radiance-Fields" class="headerlink" title="4 Volume Rendering with Radiance Fields"></a>4 Volume Rendering with Radiance Fields</h2><p>我们的5D神经辐射场将场景表示为空间中任意点的体积密度和点的颜色。我们使用经典立体渲染的原理来渲染通过场景的任何光线的颜色。体积密度$\sigma(x)$可以解释为一条射线在$x$位置的无穷小粒子处终止的微分概率。</p>
+<p>具有近边界和远边界$t_n$和$t_f$的相机射线$r(t)=o+td$的预期颜色$C(r)$为：</p>
+<p><img src="/images/nerf-notes-1/image-20220819180135061.png"></p>
+<p>函数$T(t)$表示沿射线从$t_n$到$t$的累积透过率，即射线从$t_n$传播到$t$而没有击中任何其他粒子的概率。从我们的连续神经辐射场渲染一个视图，需要估计通过所需的虚拟相机的每个像素跟踪的相机射线的这个积分$C(r)$。</p>
+<p>我们用求积法对这个连续积分进行了数值估计。确定性求交通常用于渲染离散体素网格，它将有效地限制我们的表示的分辨率，因为MLP只能在一个固定的离散位置集上被查询。相反，我们使用分层抽样方法，我们将$[t_n，t_f]$划分为$N$个均匀间隔的间隔，然后从每个间隔中均匀随机抽取一个样本：</p>
+<p><img src="/images/nerf-notes-1/image-20220819180214509.png"></p>
+<p>虽然我们使用一组离散的样本来估计积分，但分层抽样使我们能够表示一个连续的场景表示，因为它导致MLP在优化过程中在连续的位置进行评估。我们使用这些样本来估计$C(r)$与Max讨论的体积渲染审查中的求积规则：</p>
+<p><img src="/images/nerf-notes-1/image-20220819180728845.png"></p>
+<p>其中$\delta_i = t_{i+1}-t_i$是相邻样本之间的距离。从$(c_i，\sigma_i)$区间计算$\hat C(r)$的函数是可微的，并且可以简化为传统的$\alpha$合成，其中$\alpha=1-exp(-\sigma_i\delta_i)$。</p>
+<h2 id="5-Optimizing-a-Neural-Radiance-Field"><a href="#5-Optimizing-a-Neural-Radiance-Field" class="headerlink" title="5 Optimizing a Neural Radiance Field"></a>5 Optimizing a Neural Radiance Field</h2><p>在上一节中，我们描述了将场景建模为神经辐射场并从该表示中渲染新视图所需的核心组件。然而，我们观察到，这些组件不足以实现最好的质量。我们引入了两种改进方法来表示高分辨率复杂场景。第一种是<strong>对输入坐标进行位置编码</strong>，有助于MLP表示高频函数，第二种是<strong>分层采样</strong>，使我们能够有效地对这种高频表示进行采样。</p>
+<h3 id="5-1-Positional-encoding"><a href="#5-1-Positional-encoding" class="headerlink" title="5.1 Positional encoding"></a>5.1 Positional encoding</h3><p>尽管神经网络是通用函数逼近器，但我们发现，让网络$F_\Theta$直接操作$xyz\theta\varphi$输入坐标会导致渲染在表示颜色和几何结构的高频变化方面表现不佳。这与Rahaman等人最近的工作一致，这表明深层网络偏向于学习低频函数。他们还表明，在将输入传递到网络之前，使用高频函数将输入映射到更高维空间，能够更好地拟合包含高频变化的数据。</p>
+<p>我们在神经场景表示的背景下利用了这些发现，将$F_\Theta$重新定义为两个函数$F_\Theta=F’_\Theta◦\gamma$（一个是学习的，一个不是学习的）的组合，这样显著的提高了性能。这里，$\gamma$是从$\mathbb R$到高维空间$\mathbb R^{2L}$的映射，而$F’_\Theta$仍然只是一个正则MLP。形式上，我们使用的编码函数是：</p>
+<p><img src="/images/nerf-notes-1/image-20220819202905807.png"></p>
+<p>该函数$\gamma(·)$分别应用于$x$中的三个坐标值中的每一个（它们被归一化为$[−1,1]$）和笛卡尔观察方向单位向量$d$的三个分量（其通过构造位于$[−1, 1]$）。在我们的实验中，我们将$\gamma(x)$设为$L=10$，$\gamma(d)$设为$L=4$。</p>
+<p>在流行的 Transformer 架构中使用了类似的映射，它被称为位置编码。 然而，Transformers 将它用于不同的目标，即提供序列中令牌的离散位置作为不包含任何顺序概念的架构的输入。 相反，我们使用这些函数将连续输入坐标映射到更高维空间，以使我们的 MLP 更容易逼近更高频率的函数。 </p>
+<h3 id="5-2-Hierarchical-volume-sampling"><a href="#5-2-Hierarchical-volume-sampling" class="headerlink" title="5.2 Hierarchical volume sampling"></a>5.2 Hierarchical volume sampling</h3><p>我们在沿每条相机光线的 $N$ 个查询点处密集评估神经辐射场网络的渲染策略是低效的：对渲染图像没有贡献的自由空间和遮挡区域仍然被重复采样。 我们从体积渲染的早期工作中汲取灵感，并提出了一种分层表示，通过按比例分配样本对最终渲染的预期影响来提高渲染效率。</p>
+<p>我们不只是使用单个网络来表示场景，而是同时优化两个网络：一个“粗”和一个“精细”。我们首先使用分层抽样对一组$N_c$位置进行抽样，并评估这些位置的“粗略”网络，如方程式（2）和（3）中所述。给定这个“粗略”网络的输出，然后我们沿着每条射线产生更有信息量的点采样，其中样本偏向体积的相关部分。为此，我们首先从方程式（3）中重写来自粗网络 $\hat C_c(r)$ 的 alpha 合成颜色作为沿射线的所有采样颜色$c_i$的加权和：</p>
+<p><img src="/images/nerf-notes-1/image-20220819211125521.png"></p>
+<p>将这些权重归一化为$\hat w_i=w_i/\sum^{N_c}_{j=1}w_j$沿射线生成分段常数 PDF。我们使用逆变换采样从该分布中采样第二组$N_f$个位置，在第一组和第二组样本的并集处评估我们的“精细”网络，并使用公式（3），不过是使用所有$N_c+N_f$样本计算光线$\hat C_f(r)$的最终渲染颜色。此过程将更多样本分配给我们希望包含可见内容的区域。这与重要性采样的目标类似，但我们使用采样值作为整个积分域的非均匀离散化，而不是将每个样本视为整个积分的独立概率估计。</p>
+<h3 id="5-3-Implementation-details"><a href="#5-3-Implementation-details" class="headerlink" title="5.3 Implementation details"></a>5.3 Implementation details</h3><p>我们为每个场景优化单独的神经连续体积表示网络。这只需要场景的捕获RGB图像数据集、相应的摄像机姿态和内在参数以及场景边界（我们使用地面真实摄像机姿态、内在参数和合成数据的边界，并使用COLMAP来估计真实数据的这些参数）。在每次优化迭代中，我们从数据集中所有像素的集合中随机采样一批摄像机光线，然后按照第5.2节所述的分层采样，从粗网络中查询$N_c$样本，从细网络中查询$N_c+N_f$样本。然后，我们使用第4节中描述的体渲染过程来渲染两组样本中每个光线的颜色。我们的损失函数是粗略和精细渲染的渲染像素颜色和真实像素颜色之间的总平方误差：</p>
+<p><img src="/images/nerf-notes-1/image-20220819213135323.png"></p>
+<p>其中，$R$是每个批次中的光线集，$C(R)$、$\hat C(R)$和$\hat C_f(r)$分别是光线$R$的基本真值、粗体积预测和细体积预测RGB颜色。请注意，即使最终渲染来自$\hat C_f(r)$，我们也将$\hat C_c(r)$的损失最小化，以便粗网络的权重分布可用于在细网络中分配样本。</p>
+<p>在我们的实验中，我们使用了4096条射线的批量大小，每个射线在粗体积中的$N_c=64$个坐标处采样，在细体积中的$N_f=128$个附加坐标处采样。我们使用Adam优化器，学习速率从$5×10^{-4}$开始，在优化过程中指数衰减到$5×10^{−5}$（其他Adam超参数保留为默认值$β_1=0.9$，$β_2=0.999$，以及 $\epsilon= 10^{−7}$)。在单个NVIDIA V100 GPU上，单个场景的优化通常需要大约100-300k次迭代才能收敛（大约1-2天）。</p>
+<h2 id="6-Results"><a href="#6-Results" class="headerlink" title="6 Results"></a>6 Results</h2><p>我们定量（表 1）和定性（图 5 和 6）表明我们的方法优于以前的工作，并提供广泛的消融研究来验证我们的设计选择（表 2）。 我们敦促读者观看我们的补充视频，以更好地了解我们的方法在渲染新颖视图的平滑路径时对基线方法的显着改进。</p>
+<h3 id="6-1-Datasets"><a href="#6-1-Datasets" class="headerlink" title="6.1 Datasets"></a>6.1 Datasets</h3><h4 id="Synthetic-renderings-of-objects"><a href="#Synthetic-renderings-of-objects" class="headerlink" title="Synthetic renderings of objects"></a>Synthetic renderings of objects</h4><p>我们首先展示了两个物体合成渲染数据集的实验结果（表1，“Diffuse synthetic 360◦” 和“现实合成360”◦”). 深度体素[40]数据集包含四个具有简单几何结构的朗伯对象。从上半球采样的视点以512×512像素渲染每个对象（479作为输入，1000用于测试）。此外，我们还生成了自己的数据集，其中包含八个对象的路径跟踪图像，这些对象具有复杂的几何结构和真实的非朗伯材质。六个是从上半球采样的视点渲染的，两个是从整个球体采样的视点绘制的。我们渲染每个场景的100个视图作为输入，200个视图用于测试，所有视图均为800×800像素。</p>
+<p><img src="/images/nerf-notes-1/image-20220819214247424.png" alt="表1：我们的方法在合成图像和真实图像数据集上的定量性能优于先前的工作。我们报告了PSNR/SSIM（越高越好）和LPIPS（越低越好）。深度体素数据集由4个具有简单几何结构的不同对象组成。我们的真实合成数据集由8个具有复杂非朗伯材质的几何复杂对象的路径跟踪渲染组成。真实数据集由8个真实场景的手持前向捕捉组成（NV无法在此数据上进行评估，因为它仅重建有界体积内的对象）。虽然LLFF实现了略好的LPIP，但我们敦促读者观看我们的补充视频，其中我们的方法实现了更好的多视图一致性，并产生了比所有基线更少的伪影。"></p>
+<h4 id="Real-images-of-complex-scenes"><a href="#Real-images-of-complex-scenes" class="headerlink" title="Real images of complex scenes"></a>Real images of complex scenes</h4><p>我们展示了使用大致前向图像捕获的复杂现实世界场景的结果（表 1，“Real ForwardFacing”）。 该数据集包含用手持手机拍摄的 8 个场景（5 个取自 LLFF 论文，3 个我们拍摄），用 20 到 62 张图像拍摄，其中$ 1/8 $用于测试集。 所有图像均为$ 1008×756 $像素。</p>
+<h3 id="6-2-Comparisons"><a href="#6-2-Comparisons" class="headerlink" title="6.2 Comparisons"></a>6.2 Comparisons</h3><p>为了评估我们的模型，我们将其与当前性能最佳的视图合成技术进行比较，详情如下。除局部光场融合外，所有方法都使用相同的输入视图集为每个场景训练单独的网络，该方法在大型数据集上训练单个3D卷积网络，然后使用相同的训练网络在测试时处理新场景的输入图像。</p>
+<h4 id="Neural-Volumes（NV）"><a href="#Neural-Volumes（NV）" class="headerlink" title="Neural Volumes（NV）"></a>Neural Volumes（NV）</h4><p>合成完全位于不同背景前面的有界体积内的对象的新颖视图（必须在没有感兴趣对象的情况下单独捕获）。它优化了深度三维卷积网络，以预测具有1283个样本的离散化RGB$\alpha$体素网格以及具有323个样本的三维扭曲网格。该算法通过使摄像机光线行进通过扭曲的体素网格来渲染新视图。</p>
+<h4 id="Scene-Representation-Networks（SRN）"><a href="#Scene-Representation-Networks（SRN）" class="headerlink" title="Scene Representation Networks（SRN）"></a>Scene Representation Networks（SRN）</h4><p>将连续场景表示为不透明表面，由将每个$(x，y，z)$坐标映射到特征向量的MLP隐式定义。他们训练一个递归神经网络，通过使用任何3D坐标处的特征向量来预测沿着光线的下一步大小，沿着光线在场景表示中行进。最后一步的特征向量被解码为曲面上该点的单一颜色。</p>
+<h4 id="Local-Light-Field-Fusion（LLFF）"><a href="#Local-Light-Field-Fusion（LLFF）" class="headerlink" title="Local Light Field Fusion（LLFF）"></a>Local Light Field Fusion（LLFF）</h4><p>LLFF设计用于为采样良好的前向场景生成真实感新颖的视图。它使用经过训练的三维卷积网络直接预测每个输入视图的离散化截头体采样RGB$\alpha$网格（多平面图像或MPI），然后通过$\alpha$合成和将附近的MPI混合到新视点中来渲染新视图。</p>
+<p><img src="/images/nerf-notes-1/image-20220819214609455.png" alt="图5：使用基于物理的渲染器生成的新合成数据集的场景的测试集视图比较。我们的方法能够恢复几何结构和外观的细节，如船的索具、乐高的齿轮和踏板、麦克风的闪亮支架和网格格栅以及材料的非朗伯反射。LLFF展示了麦克风支架上的带状伪影和材料的物体边缘，以及船桅杆和乐高物体内部的重影伪影。SRN在任何情况下都会产生模糊和扭曲的渲染。神经体积无法捕捉麦克风格栅或乐高齿轮上的细节，也完全无法恢复船上索具的几何结构。"></p>
+<p><img src="/images/nerf-notes-1/image-20220819214638645.png" alt="图6：真实世界场景的测试集视图的比较。LLFF专为该用例设计（真实场景的前向捕捉）。我们的方法能够在渲染视图中比LLFF更一致地表示精细几何体，如T-rex中的蕨类植物叶子和骨架肋骨和栏杆所示。我们的方法还正确重建LLFF难以清晰渲染的部分遮挡区域，例如底部蕨类作物叶子后面的黄色架子和底部兰花作物背景中的绿色叶子。多重渲染之间的混合也可能导致LLFF中的重复边缘，如顶部兰花作物中所示。SRN捕捉每个场景中的低频几何和颜色变化，但无法再现任何细节。"></p>
+<h3 id="6-3-Discussion"><a href="#6-3-Discussion" class="headerlink" title="6.3 Discussion"></a>6.3 Discussion</h3><p>我们彻底超越了在所有场景中优化每个场景（NV 和 SRN）的单独网络的两个基线。 此外，与 LLFF（除一个指标外的所有指标）相比，我们产生了质量和数量上更优越的渲染，同时仅使用它们的输入图像作为我们的整个训练集。</p>
+<p>SRN方法产生高度平滑的几何体和纹理，其视图合成的表示能力受到限制，因为每个相机光线仅选择一个深度和颜色。NV基线能够捕获合理详细的体积几何结构和外观，但其使用的底层显式1283体素网格阻止其缩放以高分辨率表示精细细节。LLFF特别提供了一个“采样准则”，输入视图之间的视差不超过64像素，因此它经常无法估计合成数据集中的正确几何体，其中包含多达400-500像素的视图之间视差。此外，LLFF在不同场景表示之间进行混合，以呈现不同的视图，导致视觉上分散注意力的不一致性，这在我们的补充视频中很明显。</p>
+<p>这些方法之间最大的实际权衡是时间与空间。所有比较的单场景方法每个场景至少需要12小时的训练。相比之下，LLFF可以在10分钟内处理一个小的输入数据集。然而，LLFF为每个输入图像生成一个大的三维体素网格，导致巨大的存储需求（一个“真实合成”场景超过15GB）。我们的方法只需要5 MB的网络权重（与LLFF相比，相对压缩为3000×），这甚至比我们任何数据集中单个场景的输入图像的内存更少。</p>
+<h3 id="6-4-Ablation-studies"><a href="#6-4-Ablation-studies" class="headerlink" title="6.4 Ablation studies"></a>6.4 Ablation studies</h3><p>我们通过表2中的广泛消融研究验证了算法的设计选择和参数。我们在“真实合成360°” 场景。第9行显示了作为参考点的完整模型。第1行显示了我们模型的最小版本，没有位置编码（$PE$）、视图相关性（$VD$）或分层采样（$H$）。在第2-4行中，我们从完整模型中一次一个地删除这三个组件，观察到位置编码（第2行）和视图相关性（第3行）提供了最大的定量效益，随后是分层采样（第4行）。第5-6行显示了随着输入图像数量的减少，我们的性能如何下降。请注意，当提供100幅图像时，我们的方法仅使用25幅输入图像的性能在所有度量中仍超过NV、SRN和LLFF（见补充材料）。在第7-8行中，我们验证了在$x$的位置编码中使用的最大频率$L$的选择（用于$d$的最大频率按比例缩放）。仅使用5个频率会降低性能，但将频率数从10个增加到15个不会提高性能。我们认为，一旦$2^L$超过采样输入图像中存在的最大频率（我们的数据中约为1024），增加$L$的益处就会受到限制。</p>
+<p><img src="/images/nerf-notes-1/image-20220819215424287.png" alt="表2：我们模型的消融研究。这些度量是我们真实合成数据集中8个场景的平均值。详细说明见第6.4节。"></p>
+<h2 id="7-Conclusion"><a href="#7-Conclusion" class="headerlink" title="7 Conclusion"></a>7 Conclusion</h2><p>我们的工作直接解决了以前使用MLP将对象和场景表示为连续函数的工作的不足。我们证明，将场景表示为5D神经辐射场（输出体积密度和视为3D位置和2D观看方向的函数的视相关发射辐射的MLP）比之前主要的训练深度卷积网络以输出离散体素表示的方法产生更好的渲染。</p>
+<p>尽管我们提出了一种分层采样策略，以提高渲染的采样效率（用于训练和测试），但在研究有效优化和渲染神经辐射场的技术方面仍有更多的进展。未来工作的另一个方向是可解释性：体素网格和网格等采样表示允许对渲染视图的预期质量和故障模式进行推理，但不清楚当我们在深度神经网络的权重中编码场景时如何分析这些问题。我们相信，这项工作在基于真实世界图像的图形管道方面取得了进展，其中复杂场景可以由从实际对象和场景的图像优化的神经辐射场组成。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43620967/article/details/124467551">NeRF论文翻译笔记</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/542200751">NeRF论文阅读</a></li>
+</ol>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Immortalqx</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://Immortalqx.github.io/2022/08/19/nerf-notes-1/">http://Immortalqx.github.io/2022/08/19/nerf-notes-1/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Immortalqx</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/NeRF/">
+                                    <span class="chip bg-color">NeRF</span>
+                                </a>
+                            
+                                <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+                                    <span class="chip bg-color">深度学习</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban,google,linkedin,twitter,facebook" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'bMq5alM79AoOmPl5Q65aeVqI-gzGzoHsz',
+        appKey: 'O0Q21Re9hVoBb41y6euVKCQq',
+        serverURLs: '',
+        notify: '' === 'true',
+        verify: '' === 'true',
+        visitor: '' === 'true',
+        avatar: 'retro',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '填上邮箱可以收到我的回复呦ฅ^ω^ฅ'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/08/21/nerf-notes-2/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/62.jpg" class="responsive-img" alt="NeRF学习笔记（二）：论文阅读与思考">
+                        
+                        <span class="card-title">NeRF学习笔记（二）：论文阅读与思考</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-08-21
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/NeRF-3DGS/" class="post-category">
+                                    NeRF&3DGS
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/NeRF/">
+                        <span class="chip bg-color">NeRF</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+                        <span class="chip bg-color">深度学习</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/08/17/geometry-notes-1/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/59.jpg" class="responsive-img" alt="几何的隐式表示与显示表示">
+                        
+                        <span class="card-title">几何的隐式表示与显示表示</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-17
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E4%B8%89%E7%BB%B4%E8%A7%86%E8%A7%89/" class="post-category">
+                                    三维视觉
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                        <span class="chip bg-color">隐式表示</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%98%BE%E7%A4%BA%E8%A1%A8%E7%A4%BA/">
+                        <span class="chip bg-color">显示表示</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2025</span>
+            
+            <a href="/about" target="_blank">Immortalqx</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">237.4k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2021";
+                    var startMonth = "2";
+                    var startDate = "1";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Immortalqx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:immortalqx@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1727854434" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1727854434" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+    
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <script src="/js/FunnyTitle.js"></script>
+    <!--script src="/live2d/autoload.js"></script-->
+</body>
+
+</html>

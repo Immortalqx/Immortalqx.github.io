@@ -1,0 +1,1480 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="基于神经网络的三维重建, 所念皆星河">
+    <meta name="description" content="基于神经网络的三维重建1 对NeRF的思考NeRF的核心是场景的隐式表示，给定一组影像，网络去学习这个三维场景，然后当指定任意一个位姿的时候，就输出它对应的图片。这其实和传统的SfM的流程是一样的，没什么新鲜的。唯一不同的是SfM构建的是场">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>基于神经网络的三维重建 | 所念皆星河</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">所念皆星河</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/homepage" class="waves-effect waves-light">
+      
+      <i class="fas fa-award" style="zoom: 0.6;"></i>
+      
+      <span>Homepage</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">所念皆星河</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/homepage" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-award"></i>
+			
+			Homepage
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/Immortalqx" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Follow me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/Immortalqx" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Follow me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">基于神经网络的三维重建</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/NeRF/">
+                                <span class="chip bg-color">NeRF</span>
+                            </a>
+                        
+                            <a href="/tags/%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA/">
+                                <span class="chip bg-color">三维重建</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/NeRF-3DGS/" class="post-category">
+                                NeRF&3DGS
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-04-25
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    6.7k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    23 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="基于神经网络的三维重建"><a href="#基于神经网络的三维重建" class="headerlink" title="基于神经网络的三维重建"></a>基于神经网络的三维重建</h1><h2 id="1-对NeRF的思考"><a href="#1-对NeRF的思考" class="headerlink" title="1 对NeRF的思考"></a>1 对NeRF的思考</h2><p>NeRF的核心是场景的隐式表示，给定一组影像，网络去学习这个三维场景，然后当指定任意一个位姿的时候，就输出它对应的图片。这其实和传统的SfM的流程是一样的，没什么新鲜的。唯一不同的是SfM构建的是场景的显式表达，而NeRF是通过神经网络进行了表达。现在很多NeRF的宣传都是一张静态图片搭配小幅度移动视角的动图，比如下面这样。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-14-44.gif"></p>
+<p>但这样宣传有些误导性。下面简单描述。</p>
+<h3 id="1-1-NeRF并非只利用单张影像"><a href="#1-1-NeRF并非只利用单张影像" class="headerlink" title="1.1 NeRF并非只利用单张影像"></a>1.1 NeRF并非只利用单张影像</h3><p>第一点，NeRF不是由单张影像得到的。上面这样宣传，很容易让人以为是单张图片得到了可以小幅移动视角的三维场景。这是不对的。如果从单张影像生成三维场景，这就是一个玄学问题了。NeRF并不是只利用单张影像估计三维场景。</p>
+<p>我的个人看法是利用单张影像永远也无法恢复出准确的三维场景。这是一个病态问题。就如同单张影像深度估计一样，很多时候都是玄学问题。对于单张影像深度估计，我认为这个问题的核心在于两点：一是这是一个“无中生有”的信息缺失补全问题。如果说可以利用其它模态的数据作为参考，也许是有物理意义的，但仅靠单张图像是站不住脚的。二是深度本身和图像中的纹理、语义等没有明显的关联关系。对于这种没有明显对应关系的两个变量，深度学习能力再强，也很难学到真正有价值的东西。一个简单的例子就是，比如我有一面白墙，拍了一张照片，然后我在墙上挂了一幅山水画，又拍了一张，最后，我关灯了，墙变黑了，我又拍了一张。一共有三张照片。从常识都知道，这三张照片的深度不会有变化(如果考虑画的厚度，反映在深度图上会是一个规则的突出矩形)。但事实上，目前应该鲜有网络能真正准确估计——如果它学到的是和图片位置相关的知识，那么白墙从上到下的深度就不同；如果它学到的是灰度相关的知识，那么它估计的白墙和黑墙的深度就不同；如果它学到的是纹理的知识，那么在山水画上，它就会估计出不同的深度(但显然它只是一幅画而已，我们作为人是不会把它真的有深度的)。</p>
+<p>当然你可能会反驳我，那现在有些单张影像深度估计做的很好的工作啊？难道没有意义吗？我的回答是，在某些特定场景下可能有意义。比如某个深度估计网络，它利用KITTI数据进行训练。由于KITTI数据都是采用同一套传感器在相似场景下拍摄的，它拍摄的所有影像都有相似的内容和深度分布，比如靠近图像下方的都是路面，图像上方中间的一般为天空等。深度网络确实可能学到这些与位置有关的信息(天空纹理较少、路面纹理较多、天空比路面深度更深等)，进而给出深度估计。那么当输入一个和KITTI类似的影像的时候，它也可以估计出一个还不错的深度图。但是如果换了一个配置，比如输入EuRoC的数据，尽管它本身的内容、深度分布和KITTI相差很大，但网络还是按照KITTI的那一套估计深度，结果就显而易见了，所以泛化性较差。因此，在我看来这种数据驱动的方法还是没能从根本上解决这个问题，难以给出令人信服的解释。场景的几何结构是其固有属性，与外界的观测无关，不管你怎么观测，它都不会改变。但深度估计的网络恰恰就是依靠这种不可靠的“观测”学到的。利用缺失的信息是没有办法真正恢复三维场景的，至少说很困难。</p>
+<h3 id="1-2-NeRF并非只能合成特定视角影像"><a href="#1-2-NeRF并非只能合成特定视角影像" class="headerlink" title="1.2 NeRF并非只能合成特定视角影像"></a>1.2 NeRF并非只能合成特定视角影像</h3><p>第二点，NeRF是三维场景的隐式表达，也就是说其包含了完整的三维场景。基于训练好的NeRF，我们有能力合成该场景任意视角的影像，比如360旋转的视角，而非仅仅只是可以小幅度移动视角的模型。所以，个人觉得最正确的NeRF表现形式应该是一堆图片+360旋转视角的动图。</p>
+<h3 id="1-3-没有图片位姿可以训练NeRF吗"><a href="#1-3-没有图片位姿可以训练NeRF吗" class="headerlink" title="1.3 没有图片位姿可以训练NeRF吗"></a>1.3 没有图片位姿可以训练NeRF吗</h3><p>对于一堆原本没有位姿的图片，可以训练NeRF吗？答案是否定的。NeRF的输入必须是影像+位姿。但是，我们可以“曲线救国”——我们可以先用COLMAP等传统的SfM软件对场景进行重建，重建好以后，当然就可以获得每张图片的位姿。事实上，不一定需要COLMAP，只要能输出影像间的相对位姿都可以，所以对于序列影像我们甚至可以拿SLAM来获得位姿。我们拿着这些位姿，配上图像，就可以输入NeRF进行训练了。</p>
+<h3 id="1-4-NeRF不能无中生有"><a href="#1-4-NeRF不能无中生有" class="headerlink" title="1.4 NeRF不能无中生有"></a>1.4 NeRF不能无中生有</h3><p>NeRF还有一个值得注意的地方，就是NeRF作为某个特定场景的隐式表达，我们就可以把它理解为是一个三维模型。所以说，它只能合成出这个场景的不同视角影像，没有办法合成出新的场景的影像。另外，如果拿一张其它场景的影像，它也没有办法去匹配找到正确的位姿(因为就完全不在这个三维模型里)。</p>
+<h3 id="1-5-NeRF的应用场景"><a href="#1-5-NeRF的应用场景" class="headerlink" title="1.5 NeRF的应用场景"></a>1.5 NeRF的应用场景</h3><p>除了上面提到的合成新视角影像、辅助计算机视觉任务等，从某种程度上来说，NeRF可以用于逆向工程。对于一个没有精确三维模型的零部件，我们拍一堆图像(已知位姿)，然后训练一个场景表示，最终把这个场景表示导出成三维模型。当然你可能会问，如果说你都拍了一堆图像(已知位姿)，为什么不用传统的视觉方法重建场景呢？这就是一个典型的SfM问题啊。关于这个问题我也没有答案。是不是NeRF建出的模型更稠密、精度更高呢？</p>
+<blockquote>
+<p>传统的方法重建场景还是比较麻烦的，我理解的狭义的sfm还只是到了稀疏点云的那一步，后续还有稠密重建、点云融合、网格重建、网格优化、纹理贴图这些MVS的步骤才能有一个实质的模型。</p>
+<p>感觉NeRF从效果上讲应该是和后面的MVS作对比，因为他的输入就是稀疏重建的输出（图像位姿和稀疏点云，有些nerf网络好像需要点云这个输入），从方法上来说NeRF更一步到位，从稠密度来说，NeRF更加稠密。</p>
+</blockquote>
+<h3 id="1-6-NeRF与SLAM的结合"><a href="#1-6-NeRF与SLAM的结合" class="headerlink" title="1.6 NeRF与SLAM的结合"></a>1.6 NeRF与SLAM的结合</h3><p>NeRF与SLAM从某些角度上来看具有一定的相似性。可能在地图存储、位姿估计方面有一定的结合点。比如现在的SLAM地图都是显式的存储三维点云，但如果可以用NeRF隐式地存储，也许会有一些新的应用。</p>
+<h2 id="2-Multi-view-Reconstruction-with-SDF"><a href="#2-Multi-view-Reconstruction-with-SDF" class="headerlink" title="2 Multi-view Reconstruction with SDF"></a>2 Multi-view Reconstruction with SDF</h2><h3 id="2-1-什么是SDF"><a href="#2-1-什么是SDF" class="headerlink" title="2.1 什么是SDF"></a>2.1 什么是SDF</h3><p>有向距离场的定义如下</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-26-23.png"></p>
+<p>简单来说就是，对于空间中的点，计算它距离最近表面的距离。如果在表面内就为负，表面外就为正。需要注意的是SDF它是一种思路与方法，它不仅仅可以用于场景的三维表示，还可以用于字体渲染等领域。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-26-24.png"></p>
+<p>在SDF领域，有个DeepSDF的工作，如上图所示。其主要内容就是通过深度网络来给出空间中某个点的SDF的值。NeRF的网络结构设计在一定程度上就是受这个网络的启发。</p>
+<h3 id="2-2-如何用SDF建模"><a href="#2-2-如何用SDF建模" class="headerlink" title="2.2 如何用SDF建模"></a>2.2 如何用SDF建模</h3><p><img src="/images/3D-Reconstruction-1/2022-05-26-25.png"></p>
+<p>上面，我们介绍了什么是SDF，那么如何用SDF来进行重建呢？不妨先回忆一下NeRF的训练过程。我们得到一个密度场和一个颜色场，然后利用渲染方程，得到合成的图像，并将其与真值做Loss，不断迭代，减小误差。这是比较容易理解的。但前面也说了，基于密度场的重建效果是比较差的。进一步，我们能不能把NeRF流程里的密度场替换成SDF场呢？如果可以的话，那么我们就可以基于SDF得到质量较高的三维模型了。这样想法没错。但是如果真的这样替换的话又会有新的问题。直观来说，NeRF输出的2D影像就是基于密度和颜色渲染出来的。你现在直接把密度场给丢掉了，还怎么渲染影像呢？能不能把积分公式中的密度换成SDF呢？不行，因为NeRF中对密度进行积分是有物理意义的。所以这个问题的核心是，我们如何找到一种转换，把SDF转换成NeRF中的密度。如果可以的话，就可以继续使用NeRF的框架，并且还可以得到SDF。一个可用的工作就是NeuS，将密度场和有向距离场联系起来，如上图所示。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-26-26.png"></p>
+<p>首先，我们可以模仿一下渲染方程里的密度函数σ，我们也找一个概率密度函数把SDF表示起来。在论文中，作者选用了一个Logistic的分布函数，它是Sigmoid函数的导数。事实上，我们可以选择不同的概率密度函数，只要它是单峰的、且以0为中心就可以了。进一步，对于体积渲染方程，我们可以简化成上图中最下面公式的样子。把T(t)和σ(r(t))变成一个权重w(t)。这样的意义就是，我们把某个像素最终的渲染结果看做是由某条光线上所有采样点的颜色加权求和得到(这里我们把密度作为权重的一部分了)。进一步我们思考这个权重应该具备什么性质？至少有两个：第一是无偏的。无偏是指在最合适的地方有最合适的值。举个例子，某条光线穿过一个表面。那么这个像素的颜色应该由在这个表面的那一点的颜色决定，权重最高。但如果还没到表面点的时候，权重就很大了，这显然就是不合适的。第二是可以反应遮挡的。举个例子，空间中有一个球体，一条光线穿过它，显然会有两个点(入射点和出射点)。从SDF而言，这两个点的SDF值都为0。但从渲染的角度，显然是里我们最近的那个点应该具有最大的权重，而不是远处的那个点，或者两个点等权。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-26-27.png"></p>
+<p>基于上面提到的两点，我们寻找最优的权重的表示，如上图所示。一个简单的想法是，我们把SDF外面套一个Logistic分布，就可以得到新的σ(t)。然后以此组成新的权重w(t)。这样其实得到的是有偏的权重，如右图左边部分所示。蓝色表示SDF函数，在物体表面时，SDF=0。由于我们选用的又是Logistic分布，所以概率密度应该如红色曲线所示。看起来还不错。但如果我们把这个σ(t)函数积分出来，就会发现这个权重在还没有到达表面的时候就已经到达了峰值。这显然就是有偏的。所以在NeuS工作中，首先将Logistic积到了Sigmoid函数，然后利用它作为权重。如上图中右边所示。可以看到，当在物体表面的时候，w(t)有最大值，也就是最大权重，这是一个无偏的表示。进一步，可以对比NeRF和NeuS的渲染方程如下。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-26-28.png"></p>
+<p>NeuS采用的Loss如下。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-26-29.png"></p>
+<p>此外，上图中可以看到NeuS和NeRF的对比。NeuS比NeRF更加光滑、干净的三维结果。事实上，上面说的这些，核心的思路还是寻找密度和SDF之间的关联，找到这种关联以后，就可以把SDF应用到NeRF的框架中去。所以，NeuS是一种办法，当然也会有其它办法，如下图所示。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-26-30.png"></p>
+<p>比如VolSDF利用拉普拉斯分布表示密度和SDF之间的变换。Unisurf则是采用Occupancy Field，而不是SDF。此外，除了关注前景，我们还可以同时关注背景，这方面的工作是NeRF++。通过将前景放到圆里，背景放到圆外，分别训练两个模型来分别合成。</p>
+<h2 id="3-场景三维重建"><a href="#3-场景三维重建" class="headerlink" title="3 场景三维重建"></a>3 场景三维重建</h2><h3 id="3-1-传统COLMAP"><a href="#3-1-传统COLMAP" class="headerlink" title="3.1 传统COLMAP"></a>3.1 传统COLMAP</h3><p><img src="/images/3D-Reconstruction-1/2022-05-27-03.png"></p>
+<p>如上图所示，展示了COLMAP进行三维场景重建的步骤。简单来说就是首先对输入的影像进行特征提取与匹配等操作，找到对应关系，得到相机的位姿。然后在此基础上进行增量式重建。当然这个过程不可避免地会引入一些误差，所以会用BA等进行优化。上面提到的是用COLMAP进行三维重建的流程。如果用NeRF进行三维重建，应该有什么样的流程呢？</p>
+<h3 id="3-2-NeRF"><a href="#3-2-NeRF" class="headerlink" title="3.2 NeRF"></a>3.2 NeRF</h3><p><img src="/images/3D-Reconstruction-1/2022-05-27-04.png"></p>
+<p>利用NeRF进行三维重建，首先要有一堆拍摄的影像。然后我们还要有对应的每一张影像的位姿。这个位姿可以是通过SfM的方法获得，也可以通过SLAM获得，或者说外部直接测量提供都可以。然后将影像+位姿输入NeRF进行训练。训练好以后，给定一个位置和视角，网络就可以给出密度场和颜色场，基于此就可以渲染出合成视角影像。那么相比于传统COLMAP，NeRF有什么优劣呢？主要体现在两个方面：第一，NeRF的重建结果相比于COLMAP而言是更加稠密的；第二，根据上面的介绍也可以看出，NeRF相比于传统方法，流程会更加简单。一句话概括就是：用更简单的流程获得了更稠密的重建。</p>
+<h2 id="4-场景重建中的挑战"><a href="#4-场景重建中的挑战" class="headerlink" title="4 场景重建中的挑战"></a>4 场景重建中的挑战</h2><p><img src="/images/3D-Reconstruction-1/2022-05-27-10.png"></p>
+<p>毫无疑问，NeRF跟传统重建技术的区别主要还是在于NeRF可以隐式地学习体素的表示。通过带有位姿的多视影像，NeRF可以学习到场景的表达，最终合成新视角影像。进一步，我们分析各个步骤，如下。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-11.png"></p>
+<p>首先，我们的网络在训练阶段对于输入是有一定要求的。首先是相机位姿，我们需要输入的相机位姿是非常准确的，不然训练的网络效果不会很好。另外一个输入是多视影像，我们自然希望是要有稳定、统一的光照。不然就如同RGB-D SLAM一样，建出的图颜色不均匀。第二个是自然希望场景中没有运动物体，不然这种不统一的运动会给位姿估计带来影响。最后，可能出现真实的大场景，如何平衡性能，进行优化也是值得思考的问题。所以之后的内容主要围绕输入影像、输入位姿以及大场景这三个方面介绍。</p>
+<h2 id="5-Neural-Approach-to-Scene-Reconstruction"><a href="#5-Neural-Approach-to-Scene-Reconstruction" class="headerlink" title="5 Neural Approach to Scene Reconstruction"></a>5 Neural Approach to Scene Reconstruction</h2><h3 id="5-1-位姿优化"><a href="#5-1-位姿优化" class="headerlink" title="5.1 位姿优化"></a>5.1 位姿优化</h3><p><img src="/images/3D-Reconstruction-1/2022-05-27-13.png"></p>
+<p>前面说了，NeRF的输入之一是相机的位姿，除了物理意义上通过外部测量直接获得位姿真值，我们也可以通过各种手段去算位姿：</p>
+<ul>
+<li>第一种方法是，我们可以用各种标定板，如Chessboard、AprilTag、ArUco board等，通过特殊的算法，就可以求得相机相对于标定板的位姿；</li>
+<li>第二种方法是使用各种SLAM方法进行位姿估计；</li>
+<li>第三种方法是使用SfM方法，如COLMAP等；</li>
+<li>第四种方法是基于NeRF，比如之前提到的iNeRF工作，通过给定一个影像，得到该影像相对于场景的相对位姿。</li>
+</ul>
+<p>这四种方法各有千秋：</p>
+<ul>
+<li>对于基于标定板的方法，显然只适合于小场景，对于室外等大场景就比较无能为力；</li>
+<li>对于SLAM方法，其本身没有场景大小的限制。但是由于其更关注于实时性，在一定程度上牺牲了一定的精度，导致其估计的位姿相比于SfM方法精度要差一些。</li>
+<li>对于SfM方法，相比于SLAM方法则是相反，其更关注于精度，但是运行效率会差一些，更加耗时，只能离线处理。</li>
+</ul>
+<p>因此，我们也就进一步回答了之前“没有图片位姿可以训练NeRF吗”。但显然的，除非是非常高精度设备测量的位姿，否则算出来的位姿或多或少都会有点噪声或者说不准确。所以我们就想，能不能让网络有一定的噪声容忍能力，所以BARF就出现了，来自于CMU，如下：</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-14.png"></p>
+<p>在这个工作中，作者利用传统SLAM中的BA方法优化影像位姿，如上图所示。一般NeRF需要精确的位姿，但是BARF输入的位姿可以是有误差的，通过他们的方法可以调整这种误差，最终得到和NeRF相同的效果。</p>
+<p>一些基本的三维重建坐标系介绍如下，此处不再赘述</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-15.png"></p>
+<p>在BARF中是怎么做呢？如下图所示。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-16.png"></p>
+<p>我们做一个帧间BA，使得重投影误差最小。当然学过SLAM的应该知道，这一块理论推导还是挺难的，如果从实际应用的角度，可能会简单一些，因为很多东西已经写好了，我们只需要拿来用就可以了，如下。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-17.png"></p>
+<p>但还有个问题，那就是我们前面提到过的NeRF中的positional encoding。我们利用这种手段使得网络有能力感知到影像中的低频和高频信息，而不是简单的x、y、z坐标。但这确实会给位姿优化带来困难。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-18.png"></p>
+<p>我们如果对positional encoding求导，就会得到左下角的式子，可以看到有个比例系数。而且这个系数与层级有关，层级越高，代表频率越高，但是权重越大。这样的结果就是对于高频和低频的信息表达是不均衡的，网络更容易学到一些高频的部分。</p>
+<p>因此，BARF提供了一种新的机制，如下。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-19.png"></p>
+<p>可以看到，BARF采用了退火机制。本质上来说就是对positional encoding增加了一个权重。简单来说就是，在网络刚开始训练的时候，只开放了低频的响应，而随着训练次数的增加，逐渐开放高频部分。这也是一种由粗到细的策略，可以保证网络在一开始的时候就不会学到什么奇奇怪怪的东西。</p>
+<p>下图是BARF的效果展示。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-20.png"></p>
+<p>可以看到，加了BARF以后，场景的细节恢复地非常好。然后，另一个工作iNeRF，如下所示。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-21.png"></p>
+<p>在有了一个训练好的NeRF以后，我们可以实现基于影像的定位。</p>
+<h3 id="5-2-影像优化"><a href="#5-2-影像优化" class="headerlink" title="5.2 影像优化"></a>5.2 影像优化</h3><p>在处理完了位姿不准的问题以后，另一个问题就是要对图像进行优化，如上面描述，又主要分为光照变化和动态物体两个方面，下面分别介绍。</p>
+<h4 id="5-2-1-光照变化"><a href="#5-2-1-光照变化" class="headerlink" title="5.2.1 光照变化"></a>5.2.1 光照变化</h4><p><img src="/images/3D-Reconstruction-1/2022-05-27-22.png"></p>
+<p>这个问题的核心在于，我们输入NeRF的影像自然是希望每张影像光照都比较均匀，变化较小。这在光照条件控制较好的室内或者小场景中还比较容易，但是对于室外等大场景几乎是不可能的。如何对这些不均匀的光照进行优化，是这部分要讨论的问题。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-23.png"></p>
+<p>一种解决策略是在RGB域建模，通过设置某个可调整的参数，使得网络具备调整影像的能力。另一种是在第一种的基础上更进一步，把ISP处理pipeline中的步骤同样进行建模，让网络学习。最后一种是直接对传感器直出的RAW数据进行训练，得到NeRF。</p>
+<p>这方面的第一个工作是NeRF in the Wild，如下。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-24.png"></p>
+<p>左侧为原始NeRF的流程。右侧作者增加了appearance embedding和transient embedding这两个变量来学习颜色的变化。结果如下。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-25.png"></p>
+<p>进一步，我们如果考虑ISP处理的一些步骤，也可以对其进行建模。这是ADOP的工作，如下。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-26.png"></p>
+<p>可以看到，网络有能力学习到场景的一些本征的颜色。比如黄色的沙发因为逆光在真实影像中偏暗，但是在合成的影像中，就被恢复的比较好了。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-27.png"></p>
+<p>最后一种思路是在Raw数据上做NeRF，这是NeRF in the dark的工作，如下。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-28.png"></p>
+<p>其实想法也比较简单。常规的NeRF拿到的影像是经过ISP处理以后的影像，这种处理引入了各种非线性变换，那么网络去拟合这种变换其实是比较困难的事情。另外，在处理的过程中，也会压缩位宽，导致一些信息损失。所以作者就直接在RAW数据上训练NeRF。</p>
+<h4 id="5-2-2-动态物体"><a href="#5-2-2-动态物体" class="headerlink" title="5.2.2 动态物体"></a>5.2.2 动态物体</h4><p>在处理了光照不均衡的情况以后，影像相关的另一个挑战就是动态物体。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-29.png"></p>
+<p>解决这个问题一般来说有两种做法，如下。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-30.png"></p>
+<p>一个简单的想法就是，利用语义信息识别出一些可能运动的物体，然后把它们忽略掉(上图左边)。但这样有个潜在的问题，如果被擦除的物体在其它视角下也没见过，那么就会产生空洞。另一种办法就是，真正的对动态物体的重建完成，具体可以通过光线变换来重建动态物体(上图右边)。</p>
+<p>一个工作Neural Scene Graphs就是这样一个工作，如下图所示。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-31.png"></p>
+<p>作者通过场景图将场景和运动目标分割开，如上图所示。各个节点之间的关系是通过相对变换得到的。在训练过程中，背景单独用NeRF训练。而对于前景目标，有两种不同的做法，如下图所示。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-32.png"></p>
+<p>一种方法是，我们可以对每一个运动物体单独用一个很小的NLP来学习，通过多个NLP最终对每个运动目标进行恢复。另一种则是，对于一类物体，共享一个大的NLP，通过学习latent code来区分不同的实例。这两种方式需要根据具体场景决定。当场景中车辆很多的时候，前者的参数量或者学习难度是随着数量而线性增长的，而后者因为共享参数则不会有明显的增长。但如果我们需要对每个车进行精细的建模，那么显然前者更加合适一些。实际渲染过程与结果如下图所示。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-33.png"></p>
+<h3 id="5-3-大场景挑战"><a href="#5-3-大场景挑战" class="headerlink" title="5.3 大场景挑战"></a>5.3 大场景挑战</h3><p>最后一部分是NeRF在大场景中的挑战，如何平衡性能与精度等问题，如下所示。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-34.png"></p>
+<p>如上图所示，对于一些较小的场景，观测一般都是由外向内进行聚合的。这样我们很容易得到被摄物体的三维包围框。但在室外等大场景中，很难有一个三维的包围框可以把整个场景包含在里面。另外，对于室外的场景，还不可避免的有“天空”问题。在采集过程中，很多视角都会采集到天空的像素，但事实上这些像素是我们重建中不需要考虑(简单的方法是增加mask)。此外还有远处场景的细节优化问题等。对于大场景的建模，还是相对复杂的。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-35.png"></p>
+<p>如上图所示，在最左边的图中，我们给远处分配较大权重，那么近处就会相对模糊。反之，近处权重高以后，远处又会变模糊。所以其实是比较难的问题。在KITTI数据上也是一样，远处的树木可能发生一些偏移。所以总结起来就是，我们没有办法通过有限的资源来掌握场景中的所有细节。尽管很困难，但还是有相关工作，如下。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-36.png"></p>
+<p>Block NeRF主要是针对街景数据的处理，通过对场景进行分块，并保证各个块之间有重叠，实现多个NeRF的联合。Mega NeRF主要是针对无人机数据的处理。它的思路和Instant NGP和KiloNeRF有一定的相似之处。下图展示了Block NeRF更细节的内容。</p>
+<p><img src="/images/3D-Reconstruction-1/2022-05-27-37.png"></p>
+<p>这里还引入了Visibility概念。简单来说就是，如果我们要渲染某个位置的影像，理论上来说我们要查询所有的NeRF网络，找到那些和当前视角相关的进行渲染。但这样每个NeRF网络都查询，显然是非常耗时的。所以作者又训练了一个小网络。这个网络的作用是判断某个位置是否在当前NeRF的场景中。这样只需要查询相关的NeRF网络就可以，而不需要每个都遍历，提升了效率。</p>
+<h2 id="6-参考资料"><a href="#6-参考资料" class="headerlink" title="6 参考资料"></a>6 参考资料</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://zhaoxuhui.top/blog/2022/05/14/megvii-cv-master-nerf-note-1.html">旷视CV Master基于神经网络的3D重建训练营课程笔记1</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhaoxuhui.top/blog/2022/05/26/megvii-cv-master-nerf-note-2.html">旷视CV Master基于神经网络的3D重建训练营课程笔记2</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhaoxuhui.top/blog/2022/05/27/megvii-cv-master-nerf-note-3.html">旷视CV Master基于神经网络的3D重建训练营课程笔记3</a></li>
+</ol>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Immortalqx</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://Immortalqx.github.io/2023/04/25/3d-reconstruction-1/">http://Immortalqx.github.io/2023/04/25/3d-reconstruction-1/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Immortalqx</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/NeRF/">
+                                    <span class="chip bg-color">NeRF</span>
+                                </a>
+                            
+                                <a href="/tags/%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA/">
+                                    <span class="chip bg-color">三维重建</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban,google,linkedin,twitter,facebook" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'bMq5alM79AoOmPl5Q65aeVqI-gzGzoHsz',
+        appKey: 'O0Q21Re9hVoBb41y6euVKCQq',
+        serverURLs: '',
+        notify: '' === 'true',
+        verify: '' === 'true',
+        visitor: '' === 'true',
+        avatar: 'retro',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '填上邮箱可以收到我的回复呦ฅ^ω^ฅ'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2023/04/26/meeting-4/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="Exploring NeRF-My Journey Through Research and Code">
+                        
+                        <span class="card-title">Exploring NeRF-My Journey Through Research and Code</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-04-26
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%85%B6%E4%BB%96/" class="post-category">
+                                    其他
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/">
+                        <span class="chip bg-color">经验分享</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/04/06/meeting-3/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/25.jpg" class="responsive-img" alt="读博的选择、过程、出路">
+                        
+                        <span class="card-title">读博的选择、过程、出路</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-04-06
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%85%B6%E4%BB%96/" class="post-category">
+                                    其他
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/">
+                        <span class="chip bg-color">经验分享</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2025</span>
+            
+            <a href="/about" target="_blank">Immortalqx</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">237.4k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2021";
+                    var startMonth = "2";
+                    var startDate = "1";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Immortalqx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:immortalqx@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1727854434" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1727854434" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+    
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <script src="/js/FunnyTitle.js"></script>
+    <!--script src="/live2d/autoload.js"></script-->
+</body>
+
+</html>

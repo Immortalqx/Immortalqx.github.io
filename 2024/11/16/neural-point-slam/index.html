@@ -1,0 +1,1577 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Neural Point SLAM回顾, 所念皆星河">
+    <meta name="description" content="Neural Point SLAM回顾引言上一篇文章笔者回顾了Neural Point Rendering相关的工作，这篇文章笔者将聚焦于Neural Point在SLAM上的一些应用。
+在NeRF时代出现的iMAP、NICE-SLAM、C">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Neural Point SLAM回顾 | 所念皆星河</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">所念皆星河</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/homepage" class="waves-effect waves-light">
+      
+      <i class="fas fa-award" style="zoom: 0.6;"></i>
+      
+      <span>Homepage</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">所念皆星河</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/homepage" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-award"></i>
+			
+			Homepage
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/Immortalqx" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Follow me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/Immortalqx" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Follow me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/46.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Neural Point SLAM回顾</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                                <span class="chip bg-color">隐式表示</span>
+                            </a>
+                        
+                            <a href="/tags/NeRF/">
+                                <span class="chip bg-color">NeRF</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/slam/" class="post-category">
+                                slam
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2024-11-16
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    4.8k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    19 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="Neural-Point-SLAM回顾"><a href="#Neural-Point-SLAM回顾" class="headerlink" title="Neural Point SLAM回顾"></a>Neural Point SLAM回顾</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p><a href="https://immortalqx.github.io/2024/11/11/neural-point-rendering">上一篇文章</a>笔者回顾了Neural Point Rendering相关的工作，这篇文章笔者将聚焦于Neural Point在SLAM上的一些应用。</p>
+<p>在NeRF时代出现的iMAP、NICE-SLAM、Co-SLAM等工作，他们的tracking基本都是渲染图像-计算损失-反向优化位姿；尽管也有Orbeez-SLAM、GO-SLAM等工作，但他们都借助了ORB-SLAM、Droid-SLAM等External Tracker，并不是在NeRF表示的场景之上直接做tracking的。</p>
+<p>而到了3DGS时代，或许是因为研究惯性，早期的3DGS SLAM工作还是沿用了老一套的tracking方法：渲染图像-计算损失-反向优化位姿。</p>
+<blockquote>
+<p>是不是NeRF SLAM做一半转3DGS了，偷看(/ω＼*)……… (/ω•＼*)</p>
+</blockquote>
+<p>而到现在笔者写这篇文章，也没有了解到多少直接在3DGS上进行tracking的SLAM工作。另外，无论是NeRF SLAM还是3DGS SLAM，绝大部分工作都是通过子地图拼接来实现loop closure，或者只是通过位姿图优化(PGO)等方法在回环时调整了每一帧的位姿，并且需要进行额外的迭代优化来矫正地图。</p>
+<blockquote>
+<p>如果有笔者没有注意到的工作，欢迎在评论区讨论分享！！！</p>
+<p>RGBD GS-ICP SLAM可以算一篇在3DGS上进行tracking的工作，但代码实现上看着很奇怪。。。</p>
+</blockquote>
+<p><img src="/images/neural-point-slam/image-20241111205712720-1731733908093-1.png" alt="《How NeRFs and 3D Gaussian Splatting are Reshaping SLAM: a Survey》中的表格"></p>
+<p>不过，自从Point-NeRF等工作出现后，基于Neural Point的SLAM逐渐涌现。Point-SLAM将Neural Point的思路引入SLAM领域，而Point-SLAM的作者进一步提出了后续工作——Loopy-SLAM，在Point-SLAM的基础上实现了基于子地图拼接的Loop Closure。之后PIN-SLAM在Neural Point表示场景的框架下，实现了无需子地图的Loop Closure。</p>
+<p>接下来笔者将着重介绍这三篇工作。</p>
+<h2 id="Point-SLAM-Dense-Neural-Point-Cloud-based-SLAM-ICCV-2023"><a href="#Point-SLAM-Dense-Neural-Point-Cloud-based-SLAM-ICCV-2023" class="headerlink" title="Point-SLAM: Dense Neural Point Cloud-based SLAM (ICCV 2023)"></a>Point-SLAM: Dense Neural Point Cloud-based SLAM (ICCV 2023)</h2><p><img src="/images/neural-point-slam/image-20241113160839894-1731733908093-2.png"></p>
+<p><strong>论文想要解决的问题</strong>：Can point-based neural scene representations be used for tracking and mapping for real-time capable SLAM?</p>
+<p><strong>论文的贡献</strong>：</p>
+<ul>
+<li>We present Point-SLAM, a real-time capable dense RGBD SLAM approach which anchors neural features in a point cloud that grows iteratively in a data-driven manner during scene exploration. We demonstrate that the proposed neural point-based scene representation can be effectively used for both mapping and tracking.</li>
+<li>We propose a dynamic point density strategy which allows for computational and memory efficiency gains and trade reconstruction accuracy against speed and memory.</li>
+<li>Our approach shows clear benefits on a variety of datasets in terms of tracking, rendering and mapping accuracy.</li>
+</ul>
+<p><strong>论文的Pipeline</strong>：</p>
+<p><img src="/images/neural-point-slam/image-20241112210239564-1731733908093-3.png"></p>
+<h3 id="Neural-Point-Cloud-Representation"><a href="#Neural-Point-Cloud-Representation" class="headerlink" title="Neural Point Cloud Representation"></a>Neural Point Cloud Representation</h3><p><strong>场景表示</strong>：场景被表示为neural point cloud，每一个neural point包括位置、几何特征、颜色特征。</p>
+<p><img src="/images/neural-point-slam/image-20241112210614858-1731733908093-4.png"></p>
+<p><strong>Point Adding Strategy</strong>：</p>
+<ul>
+<li>采样阶段：在图像平面上均匀采样$X$个像素，并且在具有最高颜色梯度幅度的前$10Y$个像素中采样$Y$个像素。</li>
+<li>判断是否需要添加点：利用深度图的信息，将像素点转换到三维空间，并且在每个点的半径$r$内查找是否有neural point。如果没有neural point，则需要添加neural point。</li>
+<li>添加新的neural point：对于半径$r$内没有查找到neural point的那些像素点，需要沿着该像素的射线添加3个neural point，这三个点以该像素点的深度$D$为中心，偏移量为$(1-\rho)D$和$(1+\rho)D$，其中$\rho \in (0,1)$，是一个超参数，表示期望深度噪声。</li>
+<li>初始化新的neural point：使用正态分布初始化每一个neural point的特征向量。</li>
+</ul>
+<p>这个添加点的策略允许在不提前知道场景边界的情况下进行建图，并且可以在场景探索过程中动态地调整特征点的分布，即使是不再访问新的场景部分，它也会收敛到有限的点集。</p>
+<p><strong>Dynamic Resolution</strong>：</p>
+<p>为了节省计算和内存资源，每个区域点的数量、密度都是动态调整的。</p>
+<p>颜色梯度比较大的地方，可能信息比较丰富，就需要更大的点密度，Point Adding Strategy的搜索半径就可以设置的小一些。反过来，颜色梯度非常小的地方，那说明信息很少，可以更低的点密度，Point Adding Strategy的搜索半径可以更大一些。</p>
+<p><img src="/images/neural-point-slam/image-20241112225654506-1731733908093-5.png"></p>
+<h3 id="Rendering"><a href="#Rendering" class="headerlink" title="Rendering"></a>Rendering</h3><p><strong>解码器设计</strong>：Point-SLAM吸收了NICE-SLAM中decoder的设计思路，使用与NICE-SLAM相同结构的解码器。其中geometry decoder表示为$h$，和NICE-SLAM一样都是预训练好的网络，网络参数被固定住不再优化；而color decoder表示为$g_\xi$，和NICE-SLAM一样，网络的参数$\xi$是需要训练的。</p>
+<p><strong>采样策略</strong>：与NICE-SLAM采样策略不同的是，Point-NeRF对于有深度的像素，在$(1-\rho)D$和$(1+\rho)D$之间均匀采样5个点，而对于没有深度的像素，在5cm和$1.2D_{max}$之间采样25个点。</p>
+<p><strong>Neural Point查找</strong>：对于每一个采样点，在半径$2r$内查找neural point，至少需要查找到两个点，否则该点的占用率为0。如果存在多个点，就只取最近的8个点来计算。</p>
+<p><strong>渲染过程</strong>：与NICE-SLAM、Point-NeRF等工作一样，都是采用体渲染得到深度和颜色。</p>
+<p><strong>与Point-NeRF在渲染上的区别</strong>：Point-SLAM像NICE-SLAM一样，设计了geometry feature和color feature，而Point-NeRF只有color feature。另外，Point-SLAM对color feature采用了“Per-point processing”的处理，而geometry feature没有经过这个处理。</p>
+<h3 id="Mapping-and-Tracking"><a href="#Mapping-and-Tracking" class="headerlink" title="Mapping and Tracking"></a>Mapping and Tracking</h3><p><strong>Mapping阶段</strong>：在Mapping阶段，Point-SLAM在RGBD帧上均匀渲染$M$个像素，并且使用如下所示的损失函数。在最开始的迭代中，Point-SLAM只使用深度项进行优化，之后剩下的60%次迭代中才会引入颜色项。</p>
+<p><img src="/images/neural-point-slam/image-20241113151534897-1731733908093-6.png"></p>
+<p><strong>Tracking阶段</strong>：Point-SLAM在每一帧中采样$M_t$个像素，并且使用恒速运动模型来初始化位姿。tracking使用的损失函数为：</p>
+<p><img src="/images/neural-point-slam/image-20241113151854777-1731733908093-7.png"></p>
+<h3 id="Exposure-Compensation"><a href="#Exposure-Compensation" class="headerlink" title="Exposure Compensation"></a>Exposure Compensation</h3><p>对于帧间曝光变化较大的场景，论文使用额外的模块来减少相应像素之间的色差。</p>
+<h3 id="实验部分"><a href="#实验部分" class="headerlink" title="实验部分"></a>实验部分</h3><blockquote>
+<p>论文展示了非常多的实验结果，下面只截取一部分。</p>
+</blockquote>
+<p><img src="/images/neural-point-slam/image-20241113160505424-1731733908093-8.png"></p>
+<p><img src="/images/neural-point-slam/image-20241113160526160-1731733908093-9.png"></p>
+<p><img src="/images/neural-point-slam/image-20241113160601067-1731733908093-10.png"></p>
+<p><img src="/images/neural-point-slam/image-20241113160540402-1731733908093-11.png"></p>
+<p><img src="/images/neural-point-slam/image-20241113160627377-1731733908093-12.png"></p>
+<blockquote>
+<p>为什么fr1/desk2和fr1/room，传统的几个SLAM方法都跑失败了？？？</p>
+</blockquote>
+<h3 id="局限性"><a href="#局限性" class="headerlink" title="局限性"></a>局限性</h3><ul>
+<li><p>如果允许对neural point的位置进行动态优化，可以更好的处理深度噪声。</p>
+<blockquote>
+<p>不过3DGS优化了每一个高斯的位置，也还是有比较严重的噪声。</p>
+</blockquote>
+</li>
+<li><p>点密度的局部自适应基于简单的启发式方法，理想情况下，这一过程可以通过学习的方法来实现。</p>
+</li>
+<li><p>对运动模糊和高光反射比较敏感。</p>
+</li>
+</ul>
+<h2 id="Loopy-SLAM-Dense-Neural-SLAM-with-Loop-Closures-CVPR-2024"><a href="#Loopy-SLAM-Dense-Neural-SLAM-with-Loop-Closures-CVPR-2024" class="headerlink" title="Loopy-SLAM: Dense Neural SLAM with Loop Closures (CVPR 2024)"></a>Loopy-SLAM: Dense Neural SLAM with Loop Closures (CVPR 2024)</h2><p><img src="/images/neural-point-slam/image-20241113161118522-1731733908093-13.png"></p>
+<p><strong>论文提到的观点</strong>：</p>
+<p>作者认为SLAM可以分为耦合和解耦合的方法，其中<strong>耦合的方法指的是使用相同的场景表示来进行tracking和mapping，解耦的方法对每个任务都使用独立的框架</strong>。</p>
+<ul>
+<li><p>目前解耦的方法能够实现更好的跟踪精度，但是会产生不期望的数据冗余和独立性。耦合方法中，除了MIPS_Fusion之外，其他所有方法都是实现的frame-to-model tracking，这会导致面对现实场景中带有噪声的数据，估计的位姿会产生显著的漂移。</p>
+<blockquote>
+<p>但是frame-to-frame不应该更容易漂移？只不过frame-to-model太容易受到噪声影响了，毕竟model构建的不好，新来的frame估计的位姿也不好，又导致更新之后的model更差了，开始滚雪球了。</p>
+</blockquote>
+<p>作者提到的解耦的方法：</p>
+<ul>
+<li>Orbeez-slam</li>
+<li>Newton: Neural view-centric mapping for on-the-fly large-scale slam.</li>
+<li>NeRF-SLAM: Real-Time Dense Monocular SLAM with Neural Radiance Fields</li>
+<li>Go-slam: Global optimization for consistent 3d instant reconstruction.</li>
+</ul>
+</li>
+<li><p>作者认为tracking和mapping是耦合的任务，可以用相同的场景表示。但是解耦方法基本都使用多分辨率哈希网格，这样不容易进行地图校正，而<strong>基于点的表示方法特别适合进行地图校正</strong>。（论文的motivation）</p>
+<p>作者提到的耦合的方法：</p>
+<ul>
+<li>Eslam: Efficient dense slam system based on hybrid representation of signed distance fields</li>
+<li>Point-slam: Dense neural point cloud-based slam.</li>
+<li>iMAP: Implicit Mapping and Positioning in Real-Time.</li>
+<li>Co-slam: Joint coordinate and sparse parametric encodings for neural real-time slam</li>
+<li>Vox-fusion: Dense tracking and mapping with voxel-based neural implicit representation.</li>
+<li>Nice-slam: Neural implicit scalable encoding for slam.</li>
+</ul>
+</li>
+</ul>
+<p><strong>论文的贡献</strong>：</p>
+<ul>
+<li>We propose Loopy-SLAM, a dense RGBD SLAM approach which anchors neural features in point cloud submaps that grow iteratively in a data-driven manner during scene exploration. We dynamically create submaps depending on the camera motion and progressively build a pose graph between the submap keyframes. Global place recognition is used to detect loop closures online and to globally align the trajectory and the submaps with simple and efficient rigid corrections directly on the scene representation.</li>
+<li>We propose a direct way of implementing loop closure for dense neural SLAM that does not require any gradient updates of the scene representation or reintegration strategies, contrary to previous works.</li>
+<li>Traditionally, rigid submap registration may create visible seams in the overlapping regions. Our approach based on neural point clouds avoids this and we apply feature refinement of color and geometry at the end of the trajectory capture. We further introduce a feature fusion strategy of the submaps in the overlapping regions to avoid excessive memory usage and to improve the rendering performance.</li>
+</ul>
+<p><strong>论文的Pipeline</strong>：</p>
+<p><img src="/images/neural-point-slam/image-20241114154645443-1731733908093-14.png"></p>
+<h3 id="Neural-Point-Cloud-based-SLAM"><a href="#Neural-Point-Cloud-based-SLAM" class="headerlink" title="Neural Point Cloud-based SLAM"></a>Neural Point Cloud-based SLAM</h3><p>这部分基本与Point-SLAM是一样的，多了子地图构建的内容。</p>
+<p>子地图的第一帧作为global keyframe，在当前子地图中，当前帧与对应的global keyframe的旋转角度或者相对平移超过设定的阈值，就会创建新的子地图。</p>
+<p>在每个子地图中还会间隔一定帧选择一次local keyframe，用于优化子地图。但是当新的子地图被初始化时，这些local keyframe会被删除。</p>
+<h3 id="Loop-Closure-and-Refinement"><a href="#Loop-Closure-and-Refinement" class="headerlink" title="Loop Closure and Refinement"></a>Loop Closure and Refinement</h3><p>与MIPS-Fusion相比的话，Loopy-SLAM的loop closure比较功利，每次开始新的submap就检测一次回环。MIPS-Fusion是开启新的submap之后，如果再回到之前submap的subvolume中才会检测，而且还有额外的条件。</p>
+<p><strong>Global Place Recognition</strong>：每个全局关键帧都被添加到视觉词袋Bow数据库中用于全局位置识别。这里论文cue了一下MIPS-Fusion，作者认为MIPS-Fusion这种通过重叠的submap去检测回环，只适合较小漂移的校正。</p>
+<p><strong>Pose Graph Optimization</strong>：每个节点$T_s \in SE(3)$表示global keyframe在世界坐标系下的位姿的correction。姿态图中包括了两种边，其中odometry edge连接了相邻子地图的global keyframe，并且使用单位矩阵作为约束；loop edge连接不相邻的子地图的global keyframe，每次完成一个子地图就查询词袋（Bow）数据库，根据查询结果添加loop edge。PGO最终的输出是对global keyframe姿态的一组刚性校正变换$T$。</p>
+<p><strong>Loop Edge Constraints</strong>：对于子地图$P^s$和$P^t$之间的loop edge，需要计算约束条件$T_{st}$。论文提到，直接使用子地图中的neural point cloud是不稳定的，有两个原因：</p>
+<ol>
+<li>密集表面配准方法需要在表面均匀采样，但是子地图的分辨率是动态的；</li>
+<li>子地图中的锚定点（应该就是地图中的neural point）来自单个深度观测，可能会存在噪声，从而影响配准的结果。</li>
+</ol>
+<p>因此，论文使用由粗到精的方法来对齐两个子地图，为了减轻上面提到的问题，论文通过volumetric TSDF Fusion来整合与子地图相关联的所有深度帧，并通过marching cubes提取表面，在表面上均匀采样得到新的点云$S^s$和$S^t$。</p>
+<p>粗对齐阶段，论文使用Rusu等人（Fast point feature histograms (fpfh) for 3d registration）的全局配准方法。</p>
+<p>精配准阶段，论文使用ICP在完整分辨率的点云上进行配准。</p>
+<p><strong>Feature Fusion and Refinement</strong>：在Tracking结束之后，Loopy SLAM会将所有子地图连接到一起组成一个global neural point cloud。这个过程首先在重叠的子地图区域进行特征融合来压缩模型，由于Loopy SLAM是基于Point SLAM的工作，本质上还是feature+decoder的结构，这里论文选择的是特征融合之后固定decoder，然后把color和geometry feature再进行优化。</p>
+<h3 id="实验部分-1"><a href="#实验部分-1" class="headerlink" title="实验部分"></a>实验部分</h3><p>论文主要在Replica、TUM-RGBD、ScanNet上做了实验。</p>
+<p>Tracking的结果：</p>
+<p><img src="/images/neural-point-slam/image-20241115160846971-1731733908093-15.png"></p>
+<p><img src="/images/neural-point-slam/image-20241115160900284-1731733908093-16.png"></p>
+<p><img src="/images/neural-point-slam/image-20241115160948491-1731733908093-17.png"></p>
+<p>Rendering和Reconstruction的结果：</p>
+<p><img src="/images/neural-point-slam/image-20241115161116456-1731733908093-18.png"></p>
+<p><img src="/images/neural-point-slam/image-20241115161139043-1731733908093-19.png"></p>
+<p><img src="/images/neural-point-slam/image-20241115161202262-1731733908093-20.png"></p>
+<p>运行时间、内存占用的结果：</p>
+<p><img src="/images/neural-point-slam/image-20241115161255244-1731733908093-21.png"></p>
+<p>场景中点的数量：</p>
+<p><img src="/images/neural-point-slam/image-20241115161410425-1731733908093-22.png"></p>
+<h3 id="局限性-1"><a href="#局限性-1" class="headerlink" title="局限性"></a>局限性</h3><p>下面是论文提到的局限性：</p>
+<ul>
+<li><p>可以结合使用frame-to-model和frame-to-frame queues的组合来构建更健壮的tracker；</p>
+<blockquote>
+<p>类似于构建local map，实现frame-to-local model？</p>
+</blockquote>
+</li>
+<li><p>loopy-slam只利用了3D点特征，其实还可以利用关联关键帧的图像特征，从而实现更鲁棒更快速的配准；</p>
+</li>
+<li><p>位置识别可以通过学习的方法来提升；</p>
+</li>
+<li><p>loopy-slam没有实现relocalization。</p>
+<blockquote>
+<p>relocalization指的是tracking失败的时候，重新定位相机所在的位置，恢复tracking。</p>
+</blockquote>
+</li>
+</ul>
+<p>下面是笔者认为的局限性：</p>
+<ul>
+<li>没有在更大的场景中验证loop closure的有效性，比如TUM-RGBD fr3有两个专门用于回环检测的场景；</li>
+<li>还是基于子地图拼接的思路实现的loop closure，不能够调整子地图中neural point之间的结构。</li>
+</ul>
+<h2 id="PIN-SLAM-LiDAR-SLAM-Using-a-Point-Based-Implicit-Neural-Representation-for-Achieving-Global-Map-Consistency-TRO-2024"><a href="#PIN-SLAM-LiDAR-SLAM-Using-a-Point-Based-Implicit-Neural-Representation-for-Achieving-Global-Map-Consistency-TRO-2024" class="headerlink" title="PIN-SLAM: LiDAR SLAM Using a Point-Based Implicit Neural Representation for Achieving Global Map Consistency (TRO 2024)"></a>PIN-SLAM: LiDAR SLAM Using a Point-Based Implicit Neural Representation for Achieving Global Map Consistency (TRO 2024)</h2><p><img src="/images/neural-point-slam/image-20241115195333282-1731733908093-23.png"></p>
+<p><strong>论文想要解决的问题</strong>：These SLAM approaches <strong>lack support for direct loop closure corrections</strong> and are <strong>not able to build globally consistent maps of larger scenes</strong>. This is mainly due to the usage of regular grid-based local feature embeddings, which are not elastic and resilient to loop corrections.</p>
+<p><strong>论文为什么选择neural point表示场景</strong>：We opt to use a neural point-based implicit representation, which has two main advantages over grid-based representations: <strong>the flexibility of spatial distribution and the elasticity for transformations</strong>. Recent work (Point-SLAM) only makes use of the first advantage for neural RGB-D SLAM at the cost of scalability and inefficient neighborhood querying. Instead, we exploit the second and more important advantage to build a globally consistentmap that can be corrected while online mapping after closing a loop, which is essential for large-scale LiDAR-based SLAM.</p>
+<p>论文在Introduction提到，Mapping部分主要是基于之前的工作SHINE-Mapping，而Odometry部分是扩展了之前的工作LocNDF。</p>
+<blockquote>
+<p>工作是延续的，非常扎实，令人羡慕。</p>
+</blockquote>
+<p><strong>论文提出了四个key claims</strong>：</p>
+<ol>
+<li>Our SLAM system achieves <strong>localization accuracy better or on par with state-of-the-art</strong> LiDAR odometry/SLAM approaches and is more accurate than recent implicit neural SLAM methods on various datasets using different range sensors.</li>
+<li>Our method can conduct <strong>large-scale globally consistent mapping with loop closure</strong> thanks to the elastic neural point representation.</li>
+<li>Our map representation is <strong>more compact than the previous counterparts</strong> and <strong>can be used to reconstruct accurate and complete meshes at an arbitrary resolution</strong>.</li>
+<li>Our correspondence-free scan-to-implicit map registration and the efficient neural point indexing by voxel hashing enable our algorithm to <strong>run at the sensor frame rate on a single NVIDIA A4000</strong> graphics processing unit (GPU).</li>
+</ol>
+<p><strong>论文对基于Submap的方法的评价</strong>：The submap-based methods accumulate the observations as a submap and assume the submap is a locally defined rigid body. The pseudoglobal consistency is maintained by optimizing a graph linking submaps and their associated poses through submap-to-submap registrations. The usage of submaps decreases the number of nodes and edges in PGO, thus saving computational effort. However, these methods have issues of ambiguity in the overlapping region of the adjacent submaps and determining appropriate criteria for submap division to balance the rigidity and efficiency.</p>
+<p><strong>论文的Pipeline</strong>：</p>
+<p><img src="/images/neural-point-slam/image-20241115205159958-1731733908093-24.png"></p>
+<p>论文将他们的方法分成5个部分：</p>
+<ol>
+<li><strong>Preprocessing</strong>：对于输入点云$P$，通过体素下采样到用于registration的点云$P_r$和用于mapping的点云$P_m$；</li>
+<li><strong>Odometry</strong>：通过将点云$P_r$与local map $M_l$的implicit SDF进行配准来估计全局的位姿$T_{WC_t}$，并将前后两帧的变换$T_{C_{t-1}C_t}$作为一条边添加到Pose Graph $G$中。</li>
+<li><strong>Mapping</strong>：根据地图$M$过滤掉用于mapping的点云$P_m$中的动态点，并沿着从传感器到$P_m$中每个点的射线进行采样，得到训练样本$D$，并使用在Odometry中计算的位姿$T_{WC_t}$将其转换到世界坐标系中。使用靠近场景表面的样本$D_s \subset D$来初始化新的neural point，并且将他们附加到地图$M$上，并且重置local map $M_l$，让其以当前位置$T_{WC_t}$为中心。使用采样的点$D_s$来更新训练样本池$D_p$，并且使用$D_p$和SDF监督来优化local map $M_l$中的neural point feature。最后将更新之后的local map $M_l$分配回global map $M$中。</li>
+<li><strong>Loop closure detection</strong>：通过local map $M_l$生成一个本地极坐标上下文描述符$U_t$。之后通过比较当前帧和候选帧描述符之间的特征距离来搜索潜在的loop closure。一旦检测到当前帧$C_t$和候选帧$C_k$之间的存在闭环，就通过将当前帧点云$P_r$和以候选帧位置$t_{WC_k}$为中心的local map $M_l$进行配准，来验证是否真的存在闭环。如果配准成功，就将配准产生的变换$T_{C_kC_t}$作为新的边添加到Pose Graph $G$中。</li>
+<li><strong>Pose graph optimization</strong>：加入loop closure edge之后，对pose graph $G$进行优化。优化之后对global map $M$中每个neural point的位置和方向及其关联帧进行变换，以保证全局一致性。在完成loop correction之后，对训练样本池$D_p$进行变换，并且重置local map $M_l$。</li>
+</ol>
+<blockquote>
+<p>PIN-SLAM的内容非常多，可以移步<a href="https://immortalqx.github.io/2024/11/21/paper-reading-pin-slam">这篇文章</a>。</p>
+</blockquote>
+<h2 id="总结-amp-讨论"><a href="#总结-amp-讨论" class="headerlink" title="总结&amp;讨论"></a>总结&amp;讨论</h2><p>在PIN-SLAM出来之前，笔者一直认为与NeRF、Neural Point相比，3DGS才是最“几何”的表示方法，毕竟3DGS显示的给出了点云，尽管这个点云有很多的噪声。</p>
+<p>而当时一些neural point的工作，比如Point-NeRF论文中说“we find that directly optimizing the location of the existing points makes the training unstable and cannot fill the large holes”，笔者便认为neural point效果好主要是因为feature + decoder这一套流程的差值能力好，以及neural point也避免了在空白区域采样。而neural point的位置几乎无法优化，直接使用输入的点云，并且通过一些简单的加剪枝策略添加和删除点，那“几何”肯定是很好的，不过怎么利用这一点是个难解决的问题。</p>
+<p>在Point-SLAM和Loopy-SLAM中，neural point是从RGB-D输入得到的，但是它们没有用传统的点云配准方法实现tracking，而是渲染图像-计算损失-反向优化位姿，其中Loopy-SLAM的loop closure也还是通过子地图的方式实现的，与之前一些基于feature grid的nerf slam没有太大的区别，并没有利用到neural point在几何上的优点。</p>
+<p>而PIN-SLAM对neural point的开发很深入，不但实现了在neural point上进行tracking，也实现了不使用子地图的loop closure，工作做得非常完整。PIN-SLAM主要是面向lidar的，不过也扩展到了RGB-D的输入上，论文的实验部分展示了在Replica数据集上与一众RGB-D NeRF SLAM方法的对比，位姿精度遥遥领先。</p>
+<p>笔者认为科研创新不是一蹴而就的，解决问题应该建立在完全认知问题的基础上。笔者目前在3DGS SLAM的研究上遇到一些困难，因此回顾了与3DGS很相似的Neural Point系列的方法，写了这两篇文章，希望能从中得到一些灵感，更全面的认识问题，也期待能和大家交流讨论。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li>How NeRFs and 3D Gaussian Splatting are Reshaping SLAM: a Survey</li>
+<li>Point-SLAM: Dense Neural Point Cloud-based SLAM</li>
+<li>Loopy-SLAM: Dense Neural SLAM with Loop Closures</li>
+<li>PIN-SLAM: LiDAR SLAM Using a Point-Based Implicit Neural Representation for Achieving Global Map Consistency</li>
+</ol>
+<p><strong>注：本文是笔者学习研究过程中的思考整理，如有错误疏漏，请各路大佬批评斧正！</strong></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Immortalqx</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://Immortalqx.github.io/2024/11/16/neural-point-slam/">http://Immortalqx.github.io/2024/11/16/neural-point-slam/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Immortalqx</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                                    <span class="chip bg-color">隐式表示</span>
+                                </a>
+                            
+                                <a href="/tags/NeRF/">
+                                    <span class="chip bg-color">NeRF</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban,google,linkedin,twitter,facebook" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'bMq5alM79AoOmPl5Q65aeVqI-gzGzoHsz',
+        appKey: 'O0Q21Re9hVoBb41y6euVKCQq',
+        serverURLs: '',
+        notify: '' === 'true',
+        verify: '' === 'true',
+        visitor: '' === 'true',
+        avatar: 'retro',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '填上邮箱可以收到我的回复呦ฅ^ω^ฅ'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2024/11/21/paper-reading-pin-slam/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="论文阅读PIN-SLAM(TRO 2024)">
+                        
+                        <span class="card-title">论文阅读PIN-SLAM(TRO 2024)</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-11-21
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/slam/" class="post-category">
+                                    slam
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                        <span class="chip bg-color">隐式表示</span>
+                    </a>
+                    
+                    <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                        <span class="chip bg-color">视觉SLAM</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2024/11/11/neural-point-rendering/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/61.jpg" class="responsive-img" alt="Neural Point Rendering回顾">
+                        
+                        <span class="card-title">Neural Point Rendering回顾</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-11-11
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/NeRF-3DGS/" class="post-category">
+                                    NeRF&3DGS
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                        <span class="chip bg-color">隐式表示</span>
+                    </a>
+                    
+                    <a href="/tags/NeRF/">
+                        <span class="chip bg-color">NeRF</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2025</span>
+            
+            <a href="/about" target="_blank">Immortalqx</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">237.4k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2021";
+                    var startMonth = "2";
+                    var startDate = "1";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Immortalqx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:immortalqx@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1727854434" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1727854434" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+    
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <script src="/js/FunnyTitle.js"></script>
+    <!--script src="/live2d/autoload.js"></script-->
+</body>
+
+</html>

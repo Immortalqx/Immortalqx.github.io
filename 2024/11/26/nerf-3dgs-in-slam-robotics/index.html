@@ -1,0 +1,1567 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="NeRF &amp; 3DGS in SLAM &amp; Robotics, 所念皆星河">
+    <meta name="description" content="NeRF &amp;amp; 3DGS in SLAM &amp;amp; RoboticsHow NeRFs and 3DGS are Reshaping SLAM
+关于 ideal SLAM criteria：As we outline the ide">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>NeRF &amp; 3DGS in SLAM &amp; Robotics | 所念皆星河</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">所念皆星河</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/homepage" class="waves-effect waves-light">
+      
+      <i class="fas fa-award" style="zoom: 0.6;"></i>
+      
+      <span>Homepage</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">所念皆星河</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/homepage" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-award"></i>
+			
+			Homepage
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/Immortalqx" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Follow me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/Immortalqx" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Follow me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">NeRF &amp; 3DGS in SLAM &amp; Robotics</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/3D-Gaussian-Splatting/">
+                                <span class="chip bg-color">3D Gaussian Splatting</span>
+                            </a>
+                        
+                            <a href="/tags/NeRF/">
+                                <span class="chip bg-color">NeRF</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/slam/" class="post-category">
+                                slam
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2024-11-26
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    5.3k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    27 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="NeRF-amp-3DGS-in-SLAM-amp-Robotics"><a href="#NeRF-amp-3DGS-in-SLAM-amp-Robotics" class="headerlink" title="NeRF &amp; 3DGS in SLAM &amp; Robotics"></a>NeRF &amp; 3DGS in SLAM &amp; Robotics</h1><h2 id="How-NeRFs-and-3DGS-are-Reshaping-SLAM"><a href="#How-NeRFs-and-3DGS-are-Reshaping-SLAM" class="headerlink" title="How NeRFs and 3DGS are Reshaping SLAM"></a>How NeRFs and 3DGS are Reshaping SLAM</h2><p><img src="/images/nerf-3dgs-in-slam-robotics/image-20241126212310183.png"></p>
+<p><strong>关于 ideal SLAM criteria</strong>：As we outline the ideal SLAM criteria, several key aspects emerge. These include global consistency, robust camera tracking, accurate surface modeling, real-time performance, accurate prediction in unobserved regions, scalability to large scenes, and robustness to noisy data. 即，全局一致性、稳健的相机跟踪、精确的表面建模、实时性能、未观察区域的准确预测、大型场景的可扩展性以及对噪声数据的鲁棒性。</p>
+<p><strong>NeRF、3DGS与传统方法相比具备的优点</strong>：including continuous surface modeling, reduced memory requirements, improved noise/outlier handling, and enhanced hole filling and scene inpainting capabilities for occluded or sparse observations. In addition, they have the potential to produce denser and more compact maps that can be reconstructed as 3D meshes at arbitrary resolutions. However, it is important to note that at this early stage, the strengths of each technique coexist with specific challenges and limitations. 即，连续表面建模，减少内存需求，改进噪声/异常值处理，增强孔填充和场景绘制能力，用于遮挡或稀疏观测。此外，它们有可能产生更密集、更紧凑的地图，可以以任意分辨率重建为3D网格。</p>
+<blockquote>
+<p>个人认为，不能仅仅局限在SLAM这个话题上，SLAM主要是面向Robotics的。</p>
+<p>在Robotics中，如果有了NeRF、3DGS表示的地图，可以进行更多的拓展。</p>
+</blockquote>
+<p><strong>新一代的SLAM最主要的问题</strong>：This analysis highlights how, despite the great promise brought by this new generation of SLAM systems, most of them are still unsatisfactory in terms of hardware and runtime requirements, making them not yet ready for realtime applications. 即，大多数方法在硬件和运行时需求方面仍然令人不满意，这使得它们尚未为实时应用程序做好准备。</p>
+<img src="/images/nerf-3dgs-in-slam-robotics/image-20241122200927453.png" style="zoom: 67%;">
+
+<p><strong>3DGS的问题</strong>：However, these methods have several limitations, including a heavy reliance on initialization and a lack of control over primitive growth in unobserved regions. Furthermore, the original 3DGS-based scene representation requires a large number of 3D Gaussian primitives to achieve high-fidelity reconstruction, resulting in substantial memory consumption. </p>
+<blockquote>
+<p>这个问题我也观察到了，初始化很大程度决定了训练的上限，观察区域边缘的3DGS会一直膨胀，这是一个非常不好的现象。</p>
+</blockquote>
+<p><strong>NeRF vs. 3DGS in SLAM</strong>：NeRF-style SLAM, which relies mostly on MLP(s), is well suited for novel view synthesis, mapping and tracking but faces challenges such as oversmoothing, susceptibility to catastrophic forgetting, and computational inefficiency due to its reliance on perpixel ray marching. 3DGS bypasses per-pixel ray marching and exploits sparsity through differentiable rasterization over primitives. This benefits SLAM with an explicit volumetric representation, fast rendering, rich optimization, direct gradient flow, increased map capacity, and explicit spatial extent control. Thus, while NeRF shows a remarkable ability to synthesize novel views, its slow training speed and difficulty in adapting to SLAM are significant drawbacks. 3DGS, with its efficient rendering, explicit representation, and rich optimization capabilities, emerges as a powerful alternative. Despite its advantages, current 3DGS-style SLAM approaches have limitations. These include scalability issues for large scenes, the lack of a direct mesh extraction algorithm (although recent methods such as [192] have been proposed), the inability to accurately encode precise geometry and, among others, the potential for uncontrollable Gaussian growth into unobserved areas, causing artifacts in rendered views and the underlying 3D structure. Moreover, the computational complexity of 3DGS-based SLAM systems is significantly higher than NeRF-based methods, which can hinder real-time performance and practical deployment, especially on resource-constrained devices. In order to mitigate these issues, recent research efforts, such as CompactGSSLAM [114], have focused on developing compact 3D Gaussian scene representations that optimize storage efficiency while maintaining high-quality reconstruction, rapid training convergence, and real-time rendering capabilities.</p>
+<blockquote>
+<p>总结就是：</p>
+<ul>
+<li><p>NeRF SLAM在新视角合成、跟踪、建图上有优势；但是存在过度平滑、容易遗忘和计算效率过低的问题；</p>
+<p>这导致NeRF的方法相对于3DGS来说，其实不是很适合SLAM。</p>
+</li>
+<li><p>3DGS SLAM有显示表示，渲染和优化更快，有直接的梯度流动，更高的地图容量，可以显示控制地图范围；但是3DGS目前扩展性差、大场景下表现不好、缺乏直接的mesh提取算法、几何精度比较差、未观测区域的高斯增长可能导致伪影、计算复杂度高。</p>
+<p>不过3DGS主要凭借高效的渲染和显示的表示，在SLAM中更加有优势。</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="SLAM-Meets-NeRF"><a href="#SLAM-Meets-NeRF" class="headerlink" title="SLAM Meets NeRF"></a>SLAM Meets NeRF</h2><p><strong>在NeRF SLAM中，用SDF取代volume density的优势</strong>：</p>
+<ul>
+<li>SDF values and volume densities decoded by MLP networks cannot be mutated without losing texture features. However, since zero iso-surface decision boundaries are abrupt, the use of SDF values can enable the extraction of surfaces containing texture features.</li>
+<li>A loss function based on SDF values constrains the on-surface points and off-surface points, so SDF values can provide more geometric information.</li>
+<li>The loss function of an SDF sets the SDF value away from the surface of the object as a cut-off value. Combined with the voxel skipping strategy, unnecessary calculations can be avoided, while the volume density is affected by floating objects in the air, which requires more sampling points and more calculations. Combined with the voxel skipping strategy, unnecessary calculations can be avoided. And because the volume density is affected by floating objects in the air, the calculation cost is large.</li>
+<li>An SDF value can visually describe the distance between a sampling point and an object’s surface, which is conducive to the realization of AR and VR.</li>
+</ul>
+<p>不过这样也会导致新的问题：SDF代替volume density会导致孔洞填补的能力减弱。</p>
+<h2 id="Neural-Fields-in-Robotics"><a href="#Neural-Fields-in-Robotics" class="headerlink" title="Neural Fields in Robotics"></a>Neural Fields in Robotics</h2><blockquote>
+<p>这篇综述主要关注：pose estimation, manipulation, navigation, physics, and autonomous driving</p>
+</blockquote>
+<p><img src="/images/nerf-3dgs-in-slam-robotics/image-20241126212040417.png"></p>
+<p><strong>Typical robotic pipeline</strong>：At the core of a typical robotic pipeline is <strong>the synergy between perception and action.</strong> The perception system gathers sensory data from devices such as RGB cameras, LiDAR, and depth sensors and transforms them into a coherent model of the environment — such as a 3D map that enables the robot to maneuver through dynamic, obstacle-rich spaces. The quality of this representation directly impacts the robot’s decision-making or policy, which translates the perceived environment into actions, enabling it to avoid moving forklifts, pick up scattered objects, or plan a safe path in an emergency.</p>
+<p><strong>Typical robotic pipeline中对环境建模的方法存在的问题</strong>：Traditionally, robots have modeled their environments using data structures like point clouds, voxel grids, meshes, and Truncated Signed Distance Functions (TSDF). While these representations have advanced robotic capabilities, they struggle to capture fine geometric details, particularly in complex or dynamic environments, leading to suboptimal performance in adaptable scenarios. 即，这些方法难以捕捉精细的几何细节，特别是在复杂或动态环境中，导致在适应场景中性能不佳。</p>
+<p><strong>与传统地图表示方法相比，NeRF在Robotics中的优势</strong>：</p>
+<ul>
+<li><p><strong>High-Quality 3D Reconstructions</strong>: NFs generate detailed 3D representations of environments, which are crucial for tasks like <strong>navigation, manipulation, and scene understanding</strong> [24–28].</p>
+<blockquote>
+<p>对机器人的导航、操作、场景理解很有帮助。</p>
+</blockquote>
+</li>
+<li><p><strong>Multi-Sensor Integration</strong>: NFs can seamlessly integrate data from multiple sensors, such as LiDAR and RGB cameras, providing a more robust and adaptable perception of the environment [29, 30].</p>
+<blockquote>
+<p>在3DGS中，这个优势更加明显了，Lidar和Camera更容易结合起来了。</p>
+<p><strong>注</strong>：这个点还不确定，可能得看看LVI-SAM、R2live、R3live等基于传统方法的工作。</p>
+</blockquote>
+</li>
+<li><p><strong>Continuous and Compact Representations</strong>: Unlike voxel grids or point clouds, which are inherently discrete, NFs offer continuous representations that capture fine spatial details using fewer parameters, enhancing computational efficiency [22, 31].</p>
+<blockquote>
+<p>更少的参数，更精细的空间细节</p>
+</blockquote>
+</li>
+<li><p><strong>Generalization and Adaptation</strong>: Once trained, NFs can generate novel viewpoints of a scene, even from previously unseen perspectives, which is particularly valuable for exploration or manipulation tasks. This ability is enabled by generalizable NeRF methods [32–34].</p>
+<blockquote>
+<p>新视角生成对探索、操作等任务特别有价值</p>
+</blockquote>
+</li>
+<li><p><strong>Integration with Foundation Models</strong>: NFs can be combined with foundation models like CLIP [35] or DINO [36], enabling robots to interpret and respond to natural language queries or other semantic inputs [37, 38].</p>
+<blockquote>
+<p>可以和foundation model进行结合</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="/images/nerf-3dgs-in-slam-robotics/image-20241126212027493.png"></p>
+<p><img src="/images/nerf-3dgs-in-slam-robotics/image-20241126212150042.png"></p>
+<h3 id="Neural-Fields-for-Pose-Estimation"><a href="#Neural-Fields-for-Pose-Estimation" class="headerlink" title="Neural Fields for Pose Estimation"></a>Neural Fields for Pose Estimation</h3><p><strong>Camera Pose Estimation</strong>：对定位、建图等任务很重要。</p>
+<p>略，这部分太熟悉了。。。</p>
+<p><strong>Object Pose Estimation</strong>：对操作、交互等任务很重要。</p>
+<p>论文描述的工作基本上是围绕如何估计场景中物体的3D bounding box，也提到了一些同时估计物体姿态和对物体进行重建的。</p>
+<p><strong>Takeaways and Open Challenges in Neural Fields for Pose Estimation</strong>：</p>
+<ul>
+<li>在静态场景中有了重大进展，但是面对动态场景，还有很多值得探索的空间；</li>
+<li>open-vocabulary 6D object pose estimation。</li>
+</ul>
+<h3 id="Neural-Fields-for-Robotic-Manipulation"><a href="#Neural-Fields-for-Robotic-Manipulation" class="headerlink" title="Neural Fields for Robotic Manipulation"></a>Neural Fields for Robotic Manipulation</h3><p><strong>Manipulation的关键问题</strong>：One of the key challenges in robotic manipulation is obtaining a precise geometric representation of both the objects and the environment involved in the task. An effective representation must also capture the environment dynamics, offering a robust 3D understanding of the objects. 即，获得任务中涉及的物体和环境的精确几何表示，并且最好是捕捉环境的动态变化，提供对object的鲁棒3D理解。</p>
+<p>机械臂、灵巧手如果想要操纵物体、控制物体的话，需要生成“抓点”，grasps。有一些方法已经可以合成3-DoF的grasps了，但是缺乏精确的方向控制。而6-DoF的方法可以完全控制RPY，操纵能力更强。</p>
+<p>综述提到了很多论文针对“透明”或者“镜面”物体展开了工作，看起来NeRF、3DGS可能在这方面做得比较好。</p>
+<p>另外，综述提到了GaussianGrasper，这个工作提出了6-DoF的抓取方法，支持对open-vocabulary object进行抓取，这能够让机器人理解和执行基于自然语言指令的任务。</p>
+<p>也有一些工作比如SplatSim，用于实现Sim2Real传输，减少合成数据和真实数据之间的偏移。</p>
+<blockquote>
+<p>这个在知乎上也有人讨论，不过单看指标还是存在较大的偏移，只不过肉眼看这感觉要好很多了。。。</p>
+</blockquote>
+<p><strong>Takeaways and Open Challenges in Neural Fields for Manipulation</strong>:</p>
+<ul>
+<li><p>NFs have emerged as powerful techniques for robust 3D understanding in robotic manipulation tasks, such as grasping and pick-and-place. These representations capture detailed geometrical information and support generalization across diverse object shapes and categories. NFs have also been employed to identify optimal grasp points, improving the success rate of robotic grasps in cluttered environments. Additionally, some methods integrate these representations with language models, enabling open-vocabulary manipulation through natural language instructions.</p>
+<p>即，为机器人操纵抓取等任务提供了强大的3D理解能力。这些表示方法捕获了详细的几何信息，并且支持跨不同对象形状和类别的泛化。另外也可以用于识别最佳抓取点，提高了机器人在杂乱环境中抓取的成功率。也可以和一些语言模型集成在一起，通过自然语言指令实现开放词汇操作。</p>
+</li>
+<li><p>Despite these advancements, significant challenges remain. Current approaches rely on extensive multi-view inputs or costly per-scene optimization, limiting their applicability in complex, dynamic, or unstructured environments. Furthermore, incorporating physical intuitions about object affordances and robot dynamics into the learned representations could lead to more physically grounded manipulation policies (see Sec. III-D). Finally, scaling these methods to dynamic scenes with multiple agents or articulated objects is an ongoing challenge that must be addressed for real-world deployment.</p>
+<p>即，当前的方法依赖于足够的多视图输入和逐场景的优化，限制了这种方法在复杂、动态或者非结构化环境中的适用性。</p>
+</li>
+</ul>
+<h3 id="Neural-Fields-for-Navigation"><a href="#Neural-Fields-for-Navigation" class="headerlink" title="Neural Fields for Navigation"></a>Neural Fields for Navigation</h3><p>这篇综述将Navigation分为四个部分：Planning, Exploration, Visual Localization, and Feature Fields。</p>
+<p><strong>Takeaways and Open Challenges in Neural Fields for Navigation</strong>:</p>
+<ul>
+<li><p>While Neural Fields have made significant strides in navigation, key challenges still remain. Current methods focus mainly on static environments and tasks like image-goal and vision-language navigation. Future work could extend NFs to dynamic settings, incorporating fast reconstruction techniques for real-time updates in evolving environments [186]. Another crucial direction is dynamic scene pose estimation (Sec. III-A3) to aid reconstruction and navigation in dynamic environments.</p>
+<p>即，当前的方法侧重于静态环境和图像目标和视觉语言导航等任务，未来可以考虑扩展到动态场景。</p>
+</li>
+<li><p>The integration of generative NFs also holds great potential. Recent diffusion model advances [39, 187] could facilitate efficient scene editing and environment creation, narrowing the sim-to-real gap. Additionally, leveraging foundation models for large-scale mobile manipulation and scene generalization could unlock further advancements. Integrating Vision-Language Models (VLMs) with implicit representations for enhanced commonsense reasoning within NFs offers another promising frontier for future exploration.</p>
+<p>即，将VLM和隐式表示相结合。</p>
+</li>
+</ul>
+<h3 id="Neural-Fields-for-Physics"><a href="#Neural-Fields-for-Physics" class="headerlink" title="Neural Fields for Physics"></a>Neural Fields for Physics</h3><p>略，不太看得懂。放过自己。</p>
+<h3 id="Neural-Fields-in-Autonomous-Driving"><a href="#Neural-Fields-in-Autonomous-Driving" class="headerlink" title="Neural Fields in Autonomous Driving"></a>Neural Fields in Autonomous Driving</h3><p>综述开头这一段的观点和知乎上一些讨论很相近：High-quality mapping of large-scale environments is essential for autonomous driving systems. A high-fidelity map of the entire operating domain serves as a powerful prior for various tasks, including robot localization (see Sec. III-A), navigation, and collision avoidance (see Sec. III-C). Additionally, largescale scene reconstructions facilitate closed-loop robotic simulations. Autonomous driving systems are often evaluated by re-simulating previously encountered scenarios; however, any deviation from the original encounter can alter the vehicle’s trajectory, necessitating high-fidelity novel view renderings along the adjusted path. In addition to basic view synthesis, scene-conditioned NeRFs can modify environmental lighting conditions, such as camera exposure, weather, or time of day, further enhancing simulation scenarios.</p>
+<p>Neural Fields have become a prominent framework in autonomous driving due to their ability to generate photorealistic 3D environments from RGB images. These environments are highly valuable for constructing immersive simulation systems with several key features, as previously discussed: First, NFs offer extensive manipulability and compositionality (Sec. III-E1), allowing for the seamless integration and manipulation of objects within a scene. This facilitates the simulation of complex scenarios, such as collisions, which are difficult to replicate in physical settings. Second, they produce scenes with impressive photorealism (Sec. III-E2), enabling realistic simulations from visual data. Finally, their strong generalizability (Sec. III-E3) from sparse inputs allows for creating accurate, scalable environments, enhancing research in embodied AI. These traits, as discussed in the following subsections, enable the creation of simulated environments that faithfully represent real-world scenarios, thereby facilitating research in embodied AI.</p>
+<blockquote>
+<p>主要说的是，有助于闭环模拟，而且NeRF、3DGS可以进行场景编辑甚至修改照明条件。</p>
+<p>NeRF、3DGS在自动驾驶中关注度确实非常高的。</p>
+</blockquote>
+<p><strong>Takeaways and Open Challenges in Neural Fields for Autonomous Driving</strong>:</p>
+<ul>
+<li>Despite the promising progress in NFs for autonomous driving, several open challenges remain. Current methods focus on photorealistic simulators, which are dynamic, compositional, and realistic. One avenue of future work is training policies in such NF-based simulators and transferring them to the real-world. Connecting the success of NFs in autonomous driving with real-world deployment is an exciting avenue for future work. Generalizable reconstruction has seen some early signs of life with recent works but still remains largely underexplored. Future works could look at the efficiency of generalizable outdoor scene reconstruction methods, as well as advances that focus on sim2real transfer and pose-free reconstruction. This avenue of research is exciting as it opens the door for creating photorealistic simulators from a few images in the real world.</li>
+<li>Another promising direction for autonomous driving research is integrating generative methods like diffusion models with the NFs’ paradigm. Future work could look at creating new scenarios via NF editing that are difficult to create in the real world, such as collision avoidance to train policies via reward models in NFs’ simulation. Generative asset creation through a few images from the real world is another potential avenue for NF’s research for autonomous driving.</li>
+<li>Furthermore, the integration of NFs into generative models such as shown in Lift3D [220] and Adv3D [221] facilitates data augmentation, addressing the challenges posed by the diversity of driving scenes. Given the high costs associated with capturing all potential scenarios, data augmentation emerges as a valuable strategy and promising future direction for expanding training datasets and improving model performance.</li>
+</ul>
+<h3 id="OPEN-CHALLENGES-OF-NEURAL-FIELDS-IN-ROBOTICS"><a href="#OPEN-CHALLENGES-OF-NEURAL-FIELDS-IN-ROBOTICS" class="headerlink" title="OPEN CHALLENGES OF NEURAL FIELDS IN ROBOTICS"></a>OPEN CHALLENGES OF NEURAL FIELDS IN ROBOTICS</h3><ul>
+<li><strong>Efficiency</strong>: NFs are computationally intensive and may not naturally operate in real-time, which is often a critical requirement for robotics applications. There is a need for significant optimization or simplification to make these models run efficiently on robotics hardware, which may have limited computational resources compared to dedicated GPUs used in data centers.</li>
+<li><strong>Dynamic environments</strong>: Robotics often involve operating in dynamic environments where objects and scene configurations change over time. Capturing and updating NFs to reflect these changes in real-time remains a challenging task.</li>
+<li><strong>Sensor integration</strong>: Effectively integrating data from various sensors (e.g., LiDAR, RGB cameras, depth sensors) to enhance the robustness and performance of NFs is relatively under-explored. Advanced sensor fusion techniques could potentially bridge this gap.</li>
+<li><strong>Generalization</strong>: Existing techniques often require dense input data and struggle with sensor noise or occlusions. Developing methods that can leverage priors learned from web-scale datasets to generalize across varied scenarios offers a promising direction.</li>
+<li><strong>Physical information</strong>: While NFs excel at representing visual aspects, they do not inherently understand physical properties like weight or friction. Extending NFs to incorporate physics simulations could enable more realistic interactions for robots.</li>
+<li><strong>Data efficiency and augmentation</strong>: Current approaches are data-hungry, which is impractical for real-world applications. Innovations in data-efficient learning techniques and realistic data augmentation could help in overcoming these limitations.</li>
+<li><strong>Multi-modal, multi-task, and efficient scene understanding</strong>: Developing neural field approaches that can handle multiple tasks and modalities simultaneously while maintaining efficiency in scene understanding is crucial for holistic robotic perception.</li>
+<li><strong>Performance evaluation</strong>: Establishing standardized metrics and benchmarks for evaluating the performance of NFs in robotic applications will be essential for tracking progress and comparing different approaches.</li>
+<li><strong>Collaborative frameworks</strong>: There is a need for frameworks that support collaboration between robots using NFs, enabling them to share learnings and improve collective understanding and decision-making in complex environments.</li>
+</ul>
+<h2 id="NeRF-in-Robotics"><a href="#NeRF-in-Robotics" class="headerlink" title="NeRF in Robotics"></a>NeRF in Robotics</h2><p><img src="/images/nerf-3dgs-in-slam-robotics/image-20241126153553406.png"></p>
+<p>这篇文章基本上是对各种工作的总结。</p>
+<h2 id="3D-Gaussian-Splatting-in-Robotics-A-Survey"><a href="#3D-Gaussian-Splatting-in-Robotics-A-Survey" class="headerlink" title="3D Gaussian Splatting in Robotics: A Survey"></a>3D Gaussian Splatting in Robotics: A Survey</h2><p><img src="/images/nerf-3dgs-in-slam-robotics/image-20241126163019699.png"></p>
+<p>这篇文章和上一篇文章结构几乎一模一样，不过做了一些讨论。</p>
+<p><strong>关于Robust Tracking</strong>：Existing 3DGS-based SLAM methods, although demonstrating high accuracy in dense mapping, typically fail to achieve accurate and robust tracking, especially in complex real-world scenarios. This limitation in current 3DGS-based SLAM systems is due to their reliance on directly using RGB information of image for pose optimization. Such reliance heavily depends on the quality and texture information of the images. However, in real-world robotic applications, image quality is prone to camera motion blur, degrading the performance of 3DGS-based SLAM. Moreover, there are some scenes with limited texture information, such as sky or walls, leading to insufficient constraints for pose estimation. The following presents corresponding directions to improve the robustness of tracking.</p>
+<ul>
+<li><strong>Camera motion blur.</strong> Camera motion blur is primarily caused by rapid movements of the robot and slow shutter speed of the camera, leading to blurry images. Although deblurring methods have been researched (Section 4.1.1) and used in SLAM [116], these methods fail to directly convert captured blurry images into sharp ones. Instead, they simulate motion blur by averaging virtual sharp images captured during the camera exposure time to synthesize blurry images. These synthesized blurry images are then used to construct loss with the observed blurry images for Gaussian optimization, ensuring that the constructed scene is deblurred. However, such methods fail to address the degradation of image quality in the observed images caused by motion blur, which adversely affects tracking performance that relies on high-quality images for pose optimization. A suitable research direction is to leverage the advantages of 3DGS representation, such as geometric information and spatial distribution, to perform tracking. This method can reduce the reliance on image quality.</li>
+<li><strong>Limited texture information.</strong> In real-world scenes, there are some corner cases where the environmental texture information is limited, leading to insufficient constraints for pose optimization that solely relies on image quality. Although some 3DGS-based SLAM methods [128], [129] have utilized multi-sensor fusion traditional SLAM as odometry for tracking, these methods fail when traditional SLAM is unable to handle complex corner cases. A potential research direction is to incorporate original sensor data of multiple sensors, such as IMU, wheel encoders, and LiDAR, with 3D Gaussian representation to provide sufficient constraints for pose optimization. This approach not only leverages the spatial structural information and dense scene representation offered by 3DGS, but also exploits the various constraints from multi-sensor information.</li>
+</ul>
+<p><strong>关于Lifelong Mapping and Localization</strong>：Current 3DGS methods primarily focus on short-term reconstruction and localization. However, in most real-world scenarios, the environment undergoes constant changes over time. A prebuilt map that fails to consider these changes may quickly become outdated and unreliable. Consequently, it is crucial to maintain an up-to-date model of the environment to facilitate the long-term operation or navigation of robots. Although some traditional methods [217], [218] have achieved long-term mapping, these approaches focus on constructing and updating sparse maps, which are insufficient for downstream robotic tasks. Therefore, a promising research direction is lifelong 3DGS-based dense mapping and localization. Since 3DGS is an explicit and dense representation, the dynamic update and refinement of the Gaussian map can be achieved through explicit editing of Gaussian primitives. Additionally, we believe that the inconsistencies in the Gaussian map caused by longterm dynamic changes can be optimized by leveraging the inner constraints between Gaussian primitives. Therefore, by harnessing the explicit representation and inherent constraints among Gaussian primitives, lifelong mapping and localization can be achieved.</p>
+<blockquote>
+<p>有一点个人很喜欢：虽然一些传统方法[217]，[218]已经实现了长期的映射，但这些方法主要集中在<strong>构建和更新稀疏地图，这对于下游机器人任务来说是不够的</strong>。因此，基于3dgs的终身密集映射与定位是一个很有前景的研究方向。</p>
+</blockquote>
+<p><strong>关于Large-scale Relocalization</strong>：In robotic applications, it is necessary for robots to relocate their current poses upon entering a pre-established map. However, existing 3DGS-based relocalization methods [144], [145] either require a coarse initial pose or are only capable of achieving relocalization in small indoor scenes. These methods struggle to perform relocalization in large-scale outdoor scenes without an initial pose. Unfortunately, it is challenging to obtain a coarse initial pose for relocalization in practical robotic applications. Therefore, a meaningful research direction is large-scale relocalization without prior poses. We believe that constructing a submap index library or descriptor based on 3DGS representation facilitates coarse pose regression. In addition, the coarse pose can be refined through a registration process that leverages geometric and appearance features within the 3DGS representation.</p>
+<blockquote>
+<p>无先验姿态的大规模再定位是一个有意义的研究方向</p>
+</blockquote>
+<p><strong>关于Sim-to-Real Manipulation</strong>：Collecting real-world manipulation datasets is challenging, leading to a scarcity of data for training effective grasping in real scenarios. Therefore, grasping methods often require initial training in simulation environments before being transferred to real-world settings. Although 3DGS-based sim-to-real method [219] has been explored, it has limitation in generalization. Specifically, this approach heavily depends on scene-specific training, which hinders its ability to generalize and transfer learned knowledge between similar task scenarios. Consequently, this method still requires a substantial amount of real-world datasets for training. Furthermore, the discrepancies in material and physical properties between simulation and reality environments can lead to significant differences in training data distributions for manipulation tasks. These discrepancies may potentially result in entirely different operation strategies. However, existing method [220] only enables modeling the physical properties of real-world scenarios. Therefore, a promising research direction involves directly incorporating uncertainty and environmental features into the 3DGS representation to enhance generalization and property modeling.</p>
+<h2 id="Foundation-Models-in-Robotics-Applications-Challenges-and-the-Future"><a href="#Foundation-Models-in-Robotics-Applications-Challenges-and-the-Future" class="headerlink" title="Foundation Models in Robotics: Applications, Challenges, and the Future"></a>Foundation Models in Robotics: Applications, Challenges, and the Future</h2><p><img src="/images/nerf-3dgs-in-slam-robotics/image-20241126170838896.png"></p>
+<p>看起来NeRF相关的内容主要集中在“Perception”部分：</p>
+<ul>
+<li><p><strong>Open-Vocabulary 3D Scene and Object Representations</strong></p>
+<p>Scene representations allow robots to understand their surroundings, facilitate spatial reasoning, and provide contextual awareness. Language-driven scene representations align textual descriptions with visual scenes, enabling robots to associate words with objects, locations, and relationships.</p>
+<ul>
+<li><p><strong>Language Grounding in 3D Scene:</strong> </p>
+<p>NeRF可以为机器人提供强几何先验，但其并不是foundation model。然而，CLIP这样的foundation model却可以和NeRF相结合，从环境中提取语义信息。因此后面出现了LERF，结合CLIP和NeRF。</p>
+<p>目前的VLM可以对2D图像进行推理，但是并没有专门去考虑3D上的问题。但是可以用2D的VLM来监督3D的模型，比如FeatureNeRF。</p>
+</li>
+<li><p><strong>Scene Editing</strong></p>
+<p>When an embodied agent relies on an implicit representation of the world, the capability to edit and update this representation enhances the robot’s adaptability. For instance, consider a scenario where a robot utilizes a pretrained NeRF model of an environment for navigation and manipulation. If a portion of the environment changes, being able to adjust the NeRF without retraining the model from scratch saves time and resources.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p>Paper &amp; Workshop：</p>
+<ul>
+<li>How NeRFs and 3D Gaussian Splatting are Reshaping SLAM: a Survey, <em>arXiv, 2024</em>. [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2402.13255.pdf">Paper</a>]</li>
+<li>SLAM Meets NeRF: A Survey of Implicit SLAM Methods, <em>World Electric Vehicle Journal, 2024</em>. [<a target="_blank" rel="noopener" href="https://www.mdpi.com/2032-6653/15/3/85">Paper</a>]</li>
+<li>Neural Fields in Robotics: A Survey, <em>arXiv, 2024</em>.[<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2410.20220">Paper</a>]</li>
+<li>NeRF in Robotics: A Survey, <em>arXiv, 2024</em>.[<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2405.01333">Paper</a>]</li>
+<li>3D Gaussian Splatting in Robotics: A Survey, arXiv, 2024.[<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2410.12262">Paper</a>]</li>
+<li>Foundation Models in Robotics: Applications, Challenges, and the Future, arXiv, 2023. [<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2312.07843">Paper</a>]</li>
+<li><strong>RoboNerF</strong>: 1st Workshop on Neural Fields in Robotics, <em>ICRA, 2024</em>. [<a target="_blank" rel="noopener" href="https://robonerf.github.io/2024/">Website</a>] [<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=jyEZtbXs3fg">Video</a>]</li>
+</ul>
+<p>知乎上相关的讨论：</p>
+<ul>
+<li><p>nerf或者是跟其相关的3D重建方法怎么应用在自动驾驶或者机器人领域？ - 刘斯坦的回答 - 知乎<br><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/578721901/answer/3476777188">https://www.zhihu.com/question/578721901/answer/3476777188</a></p>
+<blockquote>
+<p>这个回答讲的主要是如何将NeRF用于闭环仿真。所谓闭环仿真，就是穿越回到某个历史节点后，优化你的行为，然后对造成的后果进行仿真，修改历史。并且讨论了NeRF的Domain Gap有多大，提到了一个叫做NDS的指标，表示NeRF目前只是堪堪可用的。另外提到了有很多现实生活中的物体并不适合mesh建模，比如树叶、头发丝。</p>
+</blockquote>
+</li>
+<li><p>NeRF/3DGS&amp;Beyond10.17（3DGS机器人综述、GS^3、Long-LRM、SplatPose+、LoGS、GSORB-SLAM、4-LEGS、Magnituder Layers等） - NeRF 3DGS日报的文章 - 知乎<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/1563839191">https://zhuanlan.zhihu.com/p/1563839191</a></p>
+<blockquote>
+<p>这篇文章提到的第二篇论文，还挺有意思，传统方法不能操作豆子、坚果、大米，但是他们在3DGS上面做到了。</p>
+</blockquote>
+</li>
+<li><p>机器人技术中的 3D 高斯splatting：综述 - 黄浴的文章 - 知乎<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/4309431179">https://zhuanlan.zhihu.com/p/4309431179</a></p>
+<blockquote>
+<p>昨天早上发的，还挺巧。</p>
+</blockquote>
+</li>
+</ul>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Immortalqx</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://Immortalqx.github.io/2024/11/26/nerf-3dgs-in-slam-robotics/">http://Immortalqx.github.io/2024/11/26/nerf-3dgs-in-slam-robotics/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Immortalqx</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/3D-Gaussian-Splatting/">
+                                    <span class="chip bg-color">3D Gaussian Splatting</span>
+                                </a>
+                            
+                                <a href="/tags/NeRF/">
+                                    <span class="chip bg-color">NeRF</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban,google,linkedin,twitter,facebook" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'bMq5alM79AoOmPl5Q65aeVqI-gzGzoHsz',
+        appKey: 'O0Q21Re9hVoBb41y6euVKCQq',
+        serverURLs: '',
+        notify: '' === 'true',
+        verify: '' === 'true',
+        visitor: '' === 'true',
+        avatar: 'retro',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '填上邮箱可以收到我的回复呦ฅ^ω^ฅ'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2025/01/18/code-reading-monogs/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/59.jpg" class="responsive-img" alt="Gaussian Splatting SLAM(MonoGS)代码梳理">
+                        
+                        <span class="card-title">Gaussian Splatting SLAM(MonoGS)代码梳理</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2025-01-18
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/slam/" class="post-category">
+                                    slam
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/3D-Gaussian-Splatting/">
+                        <span class="chip bg-color">3D Gaussian Splatting</span>
+                    </a>
+                    
+                    <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                        <span class="chip bg-color">视觉SLAM</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2024/11/21/paper-reading-pin-slam/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="论文阅读PIN-SLAM(TRO 2024)">
+                        
+                        <span class="card-title">论文阅读PIN-SLAM(TRO 2024)</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-11-21
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/slam/" class="post-category">
+                                    slam
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                        <span class="chip bg-color">隐式表示</span>
+                    </a>
+                    
+                    <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                        <span class="chip bg-color">视觉SLAM</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2025</span>
+            
+            <a href="/about" target="_blank">Immortalqx</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">237.4k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2021";
+                    var startMonth = "2";
+                    var startDate = "1";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Immortalqx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:immortalqx@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1727854434" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1727854434" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+    
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <script src="/js/FunnyTitle.js"></script>
+    <!--script src="/live2d/autoload.js"></script-->
+</body>
+
+</html>

@@ -1,0 +1,1556 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Neural Point Rendering回顾, 所念皆星河">
+    <meta name="description" content="Neural Point Rendering回顾引言3D Gaussian Splatting这两年非常火，已经取代NeRF成为了计算机视觉、SLAM等领域的新热点，每周都能看到很多3DGS的工作出现。
+笔者自己是研究3DGS SLAM的，">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Neural Point Rendering回顾 | 所念皆星河</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">所念皆星河</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/homepage" class="waves-effect waves-light">
+      
+      <i class="fas fa-award" style="zoom: 0.6;"></i>
+      
+      <span>Homepage</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">所念皆星河</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/homepage" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-award"></i>
+			
+			Homepage
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/Immortalqx" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Follow me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/Immortalqx" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Follow me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/61.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Neural Point Rendering回顾</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                                <span class="chip bg-color">隐式表示</span>
+                            </a>
+                        
+                            <a href="/tags/NeRF/">
+                                <span class="chip bg-color">NeRF</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/NeRF-3DGS/" class="post-category">
+                                NeRF&3DGS
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2024-11-11
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    4.9k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    19 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="Neural-Point-Rendering回顾"><a href="#Neural-Point-Rendering回顾" class="headerlink" title="Neural Point Rendering回顾"></a>Neural Point Rendering回顾</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>3D Gaussian Splatting这两年非常火，已经取代NeRF成为了计算机视觉、SLAM等领域的新热点，每周都能看到很多3DGS的工作出现。</p>
+<p>笔者自己是研究3DGS SLAM的，在学习和做实验的过程中发现，3DGS作为一种显示的表示方法，其几何性质却没有那么好，与传统的点云数据相比，3DGS的点云只捕获了粗糙的几何结构，而且通常存在噪声，这导致3DGS虽然提供了显示的点云，但是在上面做配准很困难。目前笔者了解到在3DGS上做配准的工作只有《GaussReg: Fast 3D Registration with Gaussian Splatting》这一篇，具体可以看笔者的<a href="https://immortalqx.github.io/2024/08/16/paper-reading-gaussianreg">博客文章</a>。</p>
+<p>与3DGS相比，笔者认为Neural Point的表示方法在几何上更有优势，因此笔者选择了neural point相关的几篇工作，做一个回顾整理。</p>
+<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><h3 id="Neural-Point-Based-Graphics-ECCV-2020"><a href="#Neural-Point-Based-Graphics-ECCV-2020" class="headerlink" title="Neural Point-Based Graphics (ECCV 2020)"></a>Neural Point-Based Graphics (ECCV 2020)</h3><p><img src="/images/neural-point-rendering/image-20241107193256641.png"></p>
+<p>如下图所示，该方法使用raw point cloud作为场景几何表示，每个点都带有一个learnable neural descriptor，这个descriptor编码了局部的几何形状和外观；之后根据相机位姿，在不同的分辨率下通过z-buffer对点云进行栅格化，得到不同分辨率下的raw images，这些raw images的像素就是对应点云的descriptor；之后把这一组不同分辨率下的raw images通过类似U-net的Rendering network，可以得到最终渲染的图像。</p>
+<p><img src="/images/neural-point-rendering/image-20241105204710606.png"></p>
+<p>根据论文Method部分的描述，上面的具体流程为：</p>
+<h4 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h4><p>场景被表示为带有$M$维神经描述符$D = {d_1,d_2,…,d_N}$的点云$P={p_1,p_2,…,p_N}$。需要渲染在相机$C$（提供了相机位姿和内参）下的新视图，新视图具有$W \times H$的像素网格，并且viewpoint为$p_0$。</p>
+<h4 id="渲染过程（forward）"><a href="#渲染过程（forward）" class="headerlink" title="渲染过程（forward）"></a>渲染过程（forward）</h4><p>创建一个$M$通道、分辨率为$W \times H$的raw image，记为$S(\mathrm {P},\mathrm {D},C)$；</p>
+<p>将场景中的点投影到目标视图上，比如对于某个点$p_i$，投影到raw image中的$(x,y)$处：<br>$$<br>S(\mathrm {P},\mathrm {D},C)[[x],[y]] = d_i<br>$$<br>由于可能存在很多点投影到相同的像素上，因此论文使用z-buffer算法来过滤被遮挡的点，只保留距离像素平面最近的那个点。但是点云缺乏拓扑信息，很容易出现孔洞，这会导致被遮挡表面的点或来自背景的点被投影到了图像上，即bleeding problem。</p>
+<blockquote>
+<p>可以看这个<a target="_blank" rel="noopener" href="https://gamedev.stackexchange.com/questions/46963/how-to-avoid-texture-bleeding-in-a-texture-atlas">链接</a>，简单了解一下texture bleeding的现象</p>
+</blockquote>
+<p>论文提到，传统的解决思路是通过splatting，而他们选择创建很多不同分辨率的raw image，$S[1],S[2],…S[T]$，其中对于第i张raw image，分辨率为$\frac{W}{2^t} \times \frac{H}{2^t}$。这样的话，分辨率越高的raw image，包含的细节最多，但是bleeding的问题越严重，而分辨率越低的图像，包含了粗糙的几何细节，同时bleeding的问题越轻微。</p>
+<blockquote>
+<p>splatting？3D Gaussian Splatting启动！</p>
+<p>话说这里的splatting是什么？也没有见它引用文献。。。</p>
+<blockquote>
+<p>可以看看这篇文章：</p>
+<p>Splatting 抛雪球法简介 - bo233的文章 - 知乎<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/660512916">https://zhuanlan.zhihu.com/p/660512916</a></p>
+</blockquote>
+</blockquote>
+<p>得到不同分辨率的raw images之后，就可以通过论文的rendering network，得到最终的RGB图像了。</p>
+<p><img src="/images/neural-point-rendering/image-20241105222855468.png"></p>
+<h4 id="训练过程（backward）"><a href="#训练过程（backward）" class="headerlink" title="训练过程（backward）"></a>训练过程（backward）</h4><p><img src="/images/neural-point-rendering/image-20241105223310293.png"></p>
+<p>论文是通过优化rendering network的参数$\theta$和神经描述符$D = {d_1,d_2,…,d_N}$来拟合场景的。</p>
+<p>值得注意的是，论文提到rendering network的训练被分为两个阶段：第一阶段是在一组特定类型的场景上进行预训练，第二个阶段是在新场景上进行fine-tune。因此对于新场景的拟合，是fine-tune预训练好的rendering network和从头开始训练每一个点的descriptor。</p>
+<h4 id="实验部分"><a href="#实验部分" class="headerlink" title="实验部分"></a>实验部分</h4><p>略，看原论文吧~</p>
+<h4 id="局限性"><a href="#局限性" class="headerlink" title="局限性"></a>局限性</h4><ul>
+<li><p>论文提到他们的模型不能填补较大的空洞，另外也没有研究在动态场景中的性能。</p>
+</li>
+<li><p>看论文中的TABLE2，每一个点的descriptor也不大，descriptor的长度和点的数量对场景的影响似乎较小。从这里看的话，这个工作渲染质量的瓶颈应该是Pipeline中的Rendering network。</p>
+<p><img src="/images/neural-point-rendering/image-20241107191530848.png"></p>
+</li>
+</ul>
+<h3 id="Point-NeRF-Point-based-Neural-Radiance-Fields-CVPR-2022"><a href="#Point-NeRF-Point-based-Neural-Radiance-Fields-CVPR-2022" class="headerlink" title="Point-NeRF: Point-based Neural Radiance Fields (CVPR 2022)"></a>Point-NeRF: Point-based Neural Radiance Fields (CVPR 2022)</h3><p><img src="/images/neural-point-rendering/image-20241107193322757.png"></p>
+<p><strong>论文的Motivation：</strong>long reconstruction times due to the slow per-scene network fitting and the unnecessary sampling of vast empty space.</p>
+<p><strong>论文的Pipeline：</strong></p>
+<p><img src="/images/neural-point-rendering/image-20241107193636916.png"></p>
+<p>论文在这张图里把自己的工作分成了两个部分，(a) Neural Point Generation和(b) Point-NeRF Representation with Volume Rendering。不过论文是按照Point-NeRF Representation和Point-NeRF Reconstruction来讲的，下面笔者也按照论文的思路来介绍。</p>
+<h4 id="Point-NeRF-Representation"><a href="#Point-NeRF-Representation" class="headerlink" title="Point-NeRF Representation"></a>Point-NeRF Representation</h4><p><strong>场景表征</strong>：使用neural point cloud表示场景<br>$$<br>P = {(p_i, f_i, \gamma_i)|i = 1,…,N}<br>$$<br>对于第$i$个neural point，$p_i$表示该点的坐标，$f_i$是对应的neural feature vector，编码了局部场景的信息，$\gamma_i$是scale confidence value，表示该点位于实际场景表面附近的可能性。</p>
+<p>对于三维空间中任意的一个点$x$，Point-NeRF会在半径$R$内查询周围$K$个相邻neural point，之后通过该点的坐标$x$、观察方向$d$和$K$个相邻的neural point，得到$x$处的volume density $\sigma$和view-dependent radiance $r$。这个过程对应的公式为：<br>$$<br>(\sigma,r) = \text{Point-NeRF}(x,d,p_1,f_1,\gamma_1,…,p_K,f_K,\gamma_K)<br>$$<br><strong>Per-point processing</strong>：对于相邻点的neural feature vector，Point-NeRF不是直接拿过来就给位置$x$处用的，而是过了一个MLP网络$F$，相当于是根据距离加权，做一个插值，拿到插值之后的neural feature vector。</p>
+<blockquote>
+<p>个人感觉这一步没必要，下面还有一个类似的处理。</p>
+</blockquote>
+<p>$$<br>f_{i,x} = F(f_i,x-p_i)<br>$$</p>
+<p><strong>View-dependent radiance regression</strong>：Point-NeRF使用逆距离加权来得到位置$x$处的neural feature vector。</p>
+<img src="/images/neural-point-rendering/image-20241107210554355.png" style="zoom: 50%;">
+
+<p>之后通过一个MLP网络$R$根据特征$f_x$和观察方向$d$回归得到位置$x$的radiance $r$。<br>$$<br>r = R(f_x,d)<br>$$<br><strong>Density regression</strong>：和上面的过程类似，不过是先计算每个相邻点的体密度，再通过逆距离加权来得到最终的体密度。</p>
+<img src="/images/neural-point-rendering/image-20241107211223065.png" style="zoom:67%;">
+
+<h4 id="Point-NeRF-Reconstruction"><a href="#Point-NeRF-Reconstruction" class="headerlink" title="Point-NeRF Reconstruction"></a>Point-NeRF Reconstruction</h4><p><img src="/images/neural-point-rendering/image-20241107211447810.png"></p>
+<h5 id="初始化：Generating-initial-point-based-radiance-fields"><a href="#初始化：Generating-initial-point-based-radiance-fields" class="headerlink" title="初始化：Generating initial point-based radiance fields"></a>初始化：Generating initial point-based radiance fields</h5><p>论文提到完全从头开始训练随机初始化的neural feature和MLP可能会非常慢，因此他们设计了这个初始化的模块。这里放一个哔哩哔哩UP主<a target="_blank" rel="noopener" href="https://space.bilibili.com/355024665">意の茗</a>的总结：</p>
+<p><img src="/images/neural-point-rendering/image-20241107215153253.png"></p>
+<h5 id="优化：Optimizing-point-based-radiance-fields"><a href="#优化：Optimizing-point-based-radiance-fields" class="headerlink" title="优化：Optimizing point-based radiance fields"></a>优化：Optimizing point-based radiance fields</h5><p>论文在这里提到初始的点云，特别是其他重建方法的点云（比如Metashape或者COLMAP等方法），通常会包含孔洞和异常值，为了解决这个问题，Point-NeRF尝试过直接优化现有点的位置，但是发现这样会导致训练不稳定。因此最终的解决思路是：设计新颖的point pruning和point growing策略。</p>
+<blockquote>
+<p>3DGS优化了点的位置欸</p>
+</blockquote>
+<p><strong>Point pruning</strong></p>
+<p>每个neural point都保存了自己的置信度$\gamma$，这个置信度表示该点是否靠近场景的表面。Point-NeRF利用这些置信度来修剪异常点，置信度低说明该点附近的区域可能是空的。因此Point-NeRF每10k次迭代就修剪掉那些$\gamma &lt; 0.1$的点。</p>
+<p>针对每个点的置信度，论文设计了一个sparsity loss，这个损失函数会强迫每个点的置信度接近0或1。</p>
+<img src="/images/neural-point-rendering/image-20241107221339051.png" style="zoom: 33%;">
+
+<p>论文作者认为这种剪枝技术可以去除异常点，减少相应的伪影。</p>
+<p><strong>Point growing</strong></p>
+<p>Point growing的目的是在不存在点的空白区域恢复信息，核心思路是逐步增长在点云边界附近的点。</p>
+<p>具体的思路是，把每次沿着射线采样的点作为新的候选点，计算这条射线不透明度最高的位置$x_{jg}$，以及该位置到最近neural point的距离。</p>
+<img src="/images/neural-point-rendering/image-20241107222828251.png" style="zoom:50%;">
+
+<p>如果不透明度$\alpha_j$和最近neural point的距离都大于设定的阈值，就说明位置$x_{jg}$位于场景的表面附近，但是这个位置附近又缺少neural point，Point-NeRF就会在位置$x_{jg}$新增一个neural point。</p>
+<p>通过重复这种生长策略，Point-NeRF可以逐渐扩展并覆盖初始点云中缺失的区域，比如下图这种比较极端的情况，也可以通过该策略逐步增长新的neural point，从而覆盖整个物体表面。</p>
+<p><img src="/images/neural-point-rendering/image-20241107223232630.png"></p>
+<h4 id="实验部分-1"><a href="#实验部分-1" class="headerlink" title="实验部分"></a>实验部分</h4><blockquote>
+<p>只写几个个人感兴趣的实验，其他部分看原论文吧~</p>
+</blockquote>
+<p>Table 1这里可以发现，Point-NeRF初始化之后就有了一个不错的结果，而经过一段时间的优化之后，各项指标都很突出。</p>
+<p><img src="/images/neural-point-rendering/image-20241107223505876.png"></p>
+<p>论文的Table 4还对比了点云点修剪和生长的效果，并且展示了在Point-NeRF初始化的点和COLMAP提供的点上的效果。可以看到点云修建和生长策略可以给各项指标带来很大的提升，而且使用Point-NeRF初始化的上限比COLMAP要更高</p>
+<blockquote>
+<p>也许因为本质上还是走的体渲染流程，初始化的点全部在表面上，采样不了几个点，所以论文P&amp;G其实主要是在物体内部疯狂生成新的点？或者在表面附近生成很多个点？</p>
+</blockquote>
+<img src="/images/neural-point-rendering/image-20241107224306676.png" style="zoom: 67%;">
+
+<h4 id="局限性-1"><a href="#局限性-1" class="headerlink" title="局限性"></a>局限性</h4><ul>
+<li><p>查询MLP的次数和原版NeRF差不多，渲染速度上没有提升</p>
+</li>
+<li><p>点云密度和渲染质量之间需要平衡，大场景重建可能会比较吃力</p>
+<ul>
+<li>点云密度高，显存占用增加</li>
+<li>降低点云密度，会降低渲染质量</li>
+</ul>
+</li>
+</ul>
+<h3 id="INPC-Implicit-Neural-Point-Clouds-for-Radiance-Field-Rendering"><a href="#INPC-Implicit-Neural-Point-Clouds-for-Radiance-Field-Rendering" class="headerlink" title="INPC: Implicit Neural Point Clouds for Radiance Field Rendering"></a>INPC: Implicit Neural Point Clouds for Radiance Field Rendering</h3><blockquote>
+<p>2024年3月25日，在3D Gaussian Splatting浪潮席卷下，一篇Neural Point相关的工作被挂在了arxiv上~</p>
+<blockquote>
+<p>都年底了，这篇文章怎么还没中稿？</p>
+</blockquote>
+</blockquote>
+<p><img src="/images/neural-point-rendering/image-20241108154550207.png"></p>
+<p><strong>论文的Motivation</strong>：当前新视角生成的研究主要分为了两个方向，一个是implicit radiance fields的方法，一个是explicit point-based的方法。然而前者依赖intensive ray-marching，后者则需要a-priori point proxies。对此论文希望创建一种新的场景表示方法，结合这两种方法的优点，同时绕过ray-marching和explicit priors。</p>
+<blockquote>
+<p>看起来是在尝试结合3DGS和Zip-NeRF，原论文是这么说的：</p>
+<p>More specifically, we take inspiration from current state-of-the-art approaches 3D Gaussian Splatting and Zip-NeRF: We decompose and optimize a scene into two parts, which constitutes a concept that we dub implicit point cloud.</p>
+</blockquote>
+<p><strong>论文对Zip-NeRF的评价</strong>：The current state-of-the-art in this field, Zip-NeRF, combines ideas from both quality and efficiency directions: It augments the underlying gridbased data structure with anti-aliasing through conical sampling, the addition of scaling information, and refined empty space skipping. While Zip-NeRF is comparably fast in training (taking about 5 hours), the rendering speed for novel views is limited to ∼ 0.2 fps on consumer-grade hardware. This approach is closest in mind to our method, as we also recombine grid-based appearance information with implicit density formulation for scene reconstruction. In contrast to Zip-NeRF, however, our method enables rasterization-based rendering, making it faster in inference.</p>
+<p><strong>论文对3DGS的评价</strong>：Especially important here is 3D Gaussian Splatting (3DGS) which extends point rendering with anisotropic 3D Gaussians as a radiance field rendering paradigm. Apart from removing the need for a CNN to fill holes, this formulation allows them to start with a sparser point cloud that is densified by repeatedly splitting large Gaussians during the optimization.</p>
+<p><strong>论文的Pipeline</strong>：</p>
+<p><img src="/images/neural-point-rendering/image-20241108213938413.png"></p>
+<p>与上面的两个工作不同，INPC的neural point是隐式的，点的位置被保存在基于八叉树的概率场中，点的外观（颜色、特征、不透明度）被保存在类似于instant-ngp的neural field中。</p>
+<p>对于某个给定的视角，INPC会对Implicit Point Cloud进行采样，得到显示的点云（位置和特征向量），之后通过Bilinear Point Splatting得到多分辨率的2D feature map，再和Background Model的输出进行$\alpha$-blending，最后通过U-Net结构的渲染网络渲染得到该视角下的图像。</p>
+<blockquote>
+<p>Neural Point-Based Graphics是创建很多不同分辨率的raw image，不使用splatting。</p>
+<p>这个工作怎么又splatting，又多分辨率？</p>
+</blockquote>
+<h4 id="Sparse-Point-Probability-Octree"><a href="#Sparse-Point-Probability-Octree" class="headerlink" title="Sparse Point Probability Octree"></a>Sparse Point Probability Octree</h4><p>作者在这部分开头又提到，现有的NeRF方法不需要明确的几何形状，相比之下基于点的方法在优化过程中需要长期保存显示的点云。之后又重申了本工作的一个目标是，在point-based neural rendering pipeline中消除对长期保存显示点云的需求。</p>
+<blockquote>
+<p><strong>质疑：</strong>看到这里仍然不理解为什么作者的目标是”One goal of this work is removing the need for a persistent set of point positions within a typical point-based neural rendering pipeline.“</p>
+<p>这个工作似乎在追求完全隐式的场景表示方法，感觉有点极端了。这样有什么优势呢？这篇论文并没有多少篇幅进行介绍，而且也没有说清楚explicit point-based的方法需要a-priori point proxies为什么是不好的。</p>
+<blockquote>
+<p>也许这样可以避免point-nerf、3DGS需要的致密化？这是笔者唯一能想到的一个点了，显示的方法需要明确某个地方有多少个点，点的数量或者密度会影响最后渲染的结果，点的数量过多会导致显存占用上升。</p>
+</blockquote>
+</blockquote>
+<p><strong>初始化</strong>：使用3D体素网格初始化概率场，稀疏八叉树的初始叶节点概率设置为1。也可以将点云作为先验来计算初始叶节点的概率。</p>
+<p><strong>概率更新</strong>：叶节点的概率表示相对于其他的叶节点，场景几何占据它体积的多少。论文对此设计了一种更新策略，通过如下的公式更新所有叶节点的概率。</p>
+<img src="/images/neural-point-rendering/image-20241111150018808.png" style="zoom: 50%;">
+
+<p>其中${b_0,…,b_n}$是使用第$i$个叶节点生成的所有点的$\alpha \text{-blending}$权重的集合，而$\lambda_u$是超参数，论文设置为0.9968。</p>
+<p><strong>叶节点细分</strong>：上面的概率更新公式，会使得只有一部分被场景占据的叶子节点获得比较高的概率。论文的策略是对概率大于设定阈值的所有叶节点进行细分，并且叶子节点总数不能超过$256^3$。</p>
+<p><strong>剪枝</strong>：通过上面的概率更新公式，没有覆盖到场景的叶子节点概率会指数衰减到0，删除小于指定阈值的叶子节点即可实现剪枝。</p>
+<h4 id="Point-Sampling-Strategies"><a href="#Point-Sampling-Strategies" class="headerlink" title="Point Sampling Strategies"></a>Point Sampling Strategies</h4><p>该部分的核心思路是对Sparse Point Probability Octree进行采样，论文设计了两种采样策略：基于特定视角的采样方案（Viewpoint-Specific Sampling）和独立于视角的采样方案（Viewpoint-Independent Sampling）。对于训练，可以生成特定视角下的点云；而全局的、独立于视角的点云可以增加时间稳定性和渲染的性能，不需要对隐式的点云进行逐帧采样。</p>
+<p><strong>Viewpoint-Specific Sampling</strong>：针对特定视角的加权方案主要考虑以下三点：1）不能在相机视锥体外采样；2）远离相机的区域少采样；3）具有较高细分级别的叶子，即代表较小体积的叶子，需要少采样。对应的公式如下：</p>
+<img src="/images/neural-point-rendering/image-20241111152706562.png" style="zoom: 50%;">
+
+<p>其中$\mathbb{1}_{visible}$是一个指示函数，可见叶子节点返回1，不可见叶子节点返回0。$\lambda_l$表示应该采样多少较小的体素，论文设置为0.5，$d_i$表示叶子中心到图像平面之间的距离。</p>
+<p><strong>Viewpoint-Independent Sampling</strong>：作者观察到在推理的过程中，点云采样占用了一半以上的时间，因此作者希望为所有的视角预先提取一个全局点云。这里仍然是使用上面Viewpoint-Specific Sampling的公式，不过忽略了$\mathbb{1}_{visible}$和$d_i$。</p>
+<h4 id="Appearance-Representation"><a href="#Appearance-Representation" class="headerlink" title="Appearance Representation"></a>Appearance Representation</h4><p>采样之后，对于每个点，从多分辨率哈希网格中检索$M+1$个appearance feature，第一个feature会被转换为不透明度：<br>$$<br>\alpha_h = 1 - e^{-e^x}<br>$$<br>剩下的M个feature会用来计算球谐系数。</p>
+<p>对于background model，论文使用了一个小型MLP，使用相应的sh编码的观看方向作为输入，计算每个像素的4D特征。</p>
+<h4 id="Differentiable-Bilinear-Point-Splatting"><a href="#Differentiable-Bilinear-Point-Splatting" class="headerlink" title="Differentiable Bilinear Point Splatting"></a>Differentiable Bilinear Point Splatting</h4><p>论文提到之前关于point rasterization的工作（包括3DGS）可以证明，对辐射场的点渲染可以非常迅速，但是单像素点渲染（将多个点投影并离散到一个像素）会导致混叠，并且需要近似梯度。</p>
+<p>为了避免这个情况，论文使用双线性公式，在投影之后将每个点与其最近的$2\times2$个相邻点相接。对于采样点$p_w = (x,y,z)^T$，将其投影到图像坐标$p=(u,v,d)^T$中：<br>$$<br>p = P \cdot V \cdot p_w<br>$$<br>其中$P$是相机内参，$V$是相机外参。对于最接近的$2 \times 2$像素点$p_{i \in {0…3}} = (u_i,v_i)^T$，通过如下公式计算不透明度：<br>$$<br>\alpha = \alpha_h \cdot (1 - |u-u_i|) \cdot (1 - |v - v_i|)<br>$$<br>这种方法可以让每个点能根据它们投影的位置被正确加权。</p>
+<p>这种双线性喷溅方法有三个优点：(1)可以获得更鲁棒的梯度，(2)提高渲染的时间稳定性，(3)栅格化后的图像包含的孔洞更少，这使得填充孔洞的CNN工作更容易。</p>
+<h4 id="Post-Processing-amp-Optimization-Loss"><a href="#Post-Processing-amp-Optimization-Loss" class="headerlink" title="Post-Processing &amp; Optimization Loss"></a>Post-Processing &amp; Optimization Loss</h4><p>这篇工作使用U-Net架构的网络进行解码，得到最终渲染的图像。</p>
+<p>受到Plenoptic-points和3DGS的启发，这篇工作结合了逐像素损失和两个图像控件的损失函数：</p>
+<img src="/images/neural-point-rendering/image-20241111165553227.png" style="zoom:50%;">
+
+<h4 id="实验部分-2"><a href="#实验部分-2" class="headerlink" title="实验部分"></a>实验部分</h4><blockquote>
+<p>只写几个个人感兴趣的实验，其他部分看原论文吧~</p>
+</blockquote>
+<p>论文在Mip-NeRF360和Tanks&amp;Temples数据集上与多种方法进行了定量对比，在渲染质量上，这篇工作是比较有竞争力的。这里也放出了训练时间、渲染速度和存储占用的情况，在这三个点上，这篇工作表现得不太好。</p>
+<p><img src="/images/neural-point-rendering/image-20241111170002310.png"></p>
+<p>论文消融实验的结果如下所示。对于”G) No SfM Prior”，对LPIPS、SSIM、PSNR这三项指标的影响不是很大，说明这篇工作不需要初始点云也可以work，这里还是挺不错的。</p>
+<p><img src="/images/neural-point-rendering/image-20241111170607252.png"></p>
+<h4 id="局限性-2"><a href="#局限性-2" class="headerlink" title="局限性"></a>局限性</h4><p>如论文Fig5所示，这篇工作在相机附近缺乏更精细的几何细节，并且在高光度变化的数据集上表现较差。</p>
+<p><img src="/images/neural-point-rendering/image-20241111170943800.png"></p>
+<h2 id="总结-amp-讨论"><a href="#总结-amp-讨论" class="headerlink" title="总结&amp;讨论"></a>总结&amp;讨论</h2><p>本文回顾了Neural Point Rendering相关的几篇工作。</p>
+<p>其中Neural Point-Based Graphics和INPC都是将场景中的neural point投影到新视角的图像平面上，得到多分辨率的feature map，之后通过U-Net解码得到最终渲染的图像。投影的过程和3DGS很类似，渲染质量的瓶颈主要在于U-Net网络，neural point特征向量的维度对渲染质量的影响较小。</p>
+<p>而Point-NeRF结合了传统点云和NeRF的优点，通过neural point表示场景，避免对空白区域的采样。渲染质量主要取决于点云密度。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><p>【论文讲解】Point-NeRF：用点云做NeRF重建，既抽象又具体，既新奇又传统（2022 CVPR Oral）</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1X24y187RG">https://www.bilibili.com/video/BV1X24y187RG</a></p>
+</li>
+<li><p>【论文讲解】用点云结合3D高斯构建辐射场，成为快速训练、实时渲染的新SOTA！</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1uV4y1Y7cA">https://www.bilibili.com/video/BV1uV4y1Y7cA</a></p>
+</li>
+<li><p>day4：Z-buffering（深度缓冲）</p>
+<p><a target="_blank" rel="noopener" href="https://supercodepower.com/docs/toy-renderer/day4-Z-buffering">https://supercodepower.com/docs/toy-renderer/day4-Z-buffering</a></p>
+</li>
+<li><p>How to avoid texture bleeding in a texture atlas?</p>
+<p><a target="_blank" rel="noopener" href="https://gamedev.stackexchange.com/questions/46963/how-to-avoid-texture-bleeding-in-a-texture-atlas">https://gamedev.stackexchange.com/questions/46963/how-to-avoid-texture-bleeding-in-a-texture-atlas</a></p>
+</li>
+<li><p>Splatting 抛雪球法简介 - bo233的文章 - 知乎<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/660512916">https://zhuanlan.zhihu.com/p/660512916</a></p>
+</li>
+</ul>
+<p><strong>注：本文是笔者学习研究过程中的思考整理，如有错误疏漏，请各路大佬批评斧正！</strong></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Immortalqx</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://Immortalqx.github.io/2024/11/11/neural-point-rendering/">http://Immortalqx.github.io/2024/11/11/neural-point-rendering/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Immortalqx</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                                    <span class="chip bg-color">隐式表示</span>
+                                </a>
+                            
+                                <a href="/tags/NeRF/">
+                                    <span class="chip bg-color">NeRF</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban,google,linkedin,twitter,facebook" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'bMq5alM79AoOmPl5Q65aeVqI-gzGzoHsz',
+        appKey: 'O0Q21Re9hVoBb41y6euVKCQq',
+        serverURLs: '',
+        notify: '' === 'true',
+        verify: '' === 'true',
+        visitor: '' === 'true',
+        avatar: 'retro',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '填上邮箱可以收到我的回复呦ฅ^ω^ฅ'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2024/11/16/neural-point-slam/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/46.jpg" class="responsive-img" alt="Neural Point SLAM回顾">
+                        
+                        <span class="card-title">Neural Point SLAM回顾</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-11-16
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/slam/" class="post-category">
+                                    slam
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                        <span class="chip bg-color">隐式表示</span>
+                    </a>
+                    
+                    <a href="/tags/NeRF/">
+                        <span class="chip bg-color">NeRF</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2024/10/11/paper-reading-scaffold-octreegs/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/64.jpg" class="responsive-img" alt="论文阅读：Scaffold-GS和Octree-GS">
+                        
+                        <span class="card-title">论文阅读：Scaffold-GS和Octree-GS</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-10-11
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/NeRF-3DGS/" class="post-category">
+                                    NeRF&3DGS
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/">
+                        <span class="chip bg-color">隐式表示</span>
+                    </a>
+                    
+                    <a href="/tags/3D-Gaussian-Splatting/">
+                        <span class="chip bg-color">3D Gaussian Splatting</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2025</span>
+            
+            <a href="/about" target="_blank">Immortalqx</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">237.4k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2021";
+                    var startMonth = "2";
+                    var startDate = "1";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Immortalqx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:immortalqx@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1727854434" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1727854434" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+    
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <script src="/js/FunnyTitle.js"></script>
+    <!--script src="/live2d/autoload.js"></script-->
+</body>
+
+</html>
