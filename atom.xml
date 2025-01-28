@@ -6,7 +6,7 @@
   <link href="http://immortalqx.github.io/atom.xml" rel="self"/>
   
   <link href="http://immortalqx.github.io/"/>
-  <updated>2025-01-18T14:58:27.214Z</updated>
+  <updated>2025-01-28T10:28:34.894Z</updated>
   <id>http://immortalqx.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>在mac与ubuntu上部署DeepSeek-R1模型 &amp; 7b和32b模型的简单对比测试</title>
+    <link href="http://immortalqx.github.io/2025/01/28/deepseek-r1-deploy/"/>
+    <id>http://immortalqx.github.io/2025/01/28/deepseek-r1-deploy/</id>
+    <published>2025-01-28T10:15:58.000Z</published>
+    <updated>2025-01-28T10:28:34.894Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;在mac与ubuntu上部署DeepSeek-R1模型-amp-7b和32b模型的简单对比测试&quot;&gt;&lt;a href=&quot;#在mac与ubuntu上部署DeepSeek-R1模型-amp-7b和32b模型的简单对比测试&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="其他" scheme="http://immortalqx.github.io/categories/%E5%85%B6%E4%BB%96/"/>
+    
+    
+    <category term="大模型" scheme="http://immortalqx.github.io/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/"/>
+    
+  </entry>
   
   <entry>
     <title>Gaussian Splatting SLAM(MonoGS)代码梳理</title>
@@ -64,9 +89,9 @@
     <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
     
     
-    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
-    
     <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
+    
+    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
     
   </entry>
   
@@ -118,9 +143,9 @@
     <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
     
     
-    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
-    
     <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
     
   </entry>
   
@@ -145,9 +170,9 @@
     <category term="NeRF&amp;3DGS" scheme="http://immortalqx.github.io/categories/NeRF-3DGS/"/>
     
     
-    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
-    
     <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
     
   </entry>
   
@@ -520,35 +545,6 @@
         
     <summary type="html">&lt;p&gt;&lt;strong&gt;项目主页：&lt;/strong&gt;&lt;a href=&quot;https://zju3dv.github.io/cg-slam/&quot;&gt;https://zju3dv.github.io/cg-slam/&lt;/a&gt;&lt;/p&gt;
 &lt;h1</summary>
-        
-      
-    
-    
-    
-    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
-    
-    
-    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
-    
-    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
-    
-    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>论文阅读《Compact 3D Gaussian Splatting For Dense Visual SLAM》</title>
-    <link href="http://immortalqx.github.io/2024/05/14/paper-reading-compact-gsslam/"/>
-    <id>http://immortalqx.github.io/2024/05/14/paper-reading-compact-gsslam/</id>
-    <published>2024-05-14T11:09:36.000Z</published>
-    <updated>2025-01-18T14:44:19.662Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;论文阅读《Compact-3D-Gaussian-Splatting-For-Dense-Visual-SLAM》&quot;&gt;&lt;a href=&quot;#论文阅读《Compact-3D-Gaussian-Splatting-For-Dense-Visual-SLAM》&quot;</summary>
         
       
     
