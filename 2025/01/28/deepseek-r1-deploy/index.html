@@ -5,10 +5,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="在mac与ubuntu上部署DeepSeek-R1模型 &amp; 7b和32b模型的简单对比测试, 所念皆星河">
-    <meta name="description" content="在mac与ubuntu上部署DeepSeek-R1模型 &amp;amp; 7b和32b模型的简单对比测试笔者的硬件配置
+    <meta name="description" content="在mac与ubuntu上部署DeepSeek-R1模型 &amp;amp; 7b和32b模型的对比测试笔者的硬件配置
 mac端：macbook air m1，16G内存
 ubuntu端：i7-13700kf + RTX 4090，32G内存
-安">
+安装O">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -381,7 +381,7 @@ ubuntu端：i7-13700kf + RTX 4090，32G内存
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.6k
+                    4.8k
                 </div>
                 
 
@@ -411,7 +411,7 @@ ubuntu端：i7-13700kf + RTX 4090，32G内存
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="在mac与ubuntu上部署DeepSeek-R1模型-amp-7b和32b模型的简单对比测试"><a href="#在mac与ubuntu上部署DeepSeek-R1模型-amp-7b和32b模型的简单对比测试" class="headerlink" title="在mac与ubuntu上部署DeepSeek-R1模型 &amp; 7b和32b模型的简单对比测试"></a>在mac与ubuntu上部署DeepSeek-R1模型 &amp; 7b和32b模型的简单对比测试</h1><p><strong>笔者的硬件配置</strong></p>
+                <h1 id="在mac与ubuntu上部署DeepSeek-R1模型-amp-7b和32b模型的对比测试"><a href="#在mac与ubuntu上部署DeepSeek-R1模型-amp-7b和32b模型的对比测试" class="headerlink" title="在mac与ubuntu上部署DeepSeek-R1模型 &amp; 7b和32b模型的对比测试"></a>在mac与ubuntu上部署DeepSeek-R1模型 &amp; 7b和32b模型的对比测试</h1><p><strong>笔者的硬件配置</strong></p>
 <p>mac端：macbook air m1，16G内存</p>
 <p>ubuntu端：i7-13700kf + RTX 4090，32G内存</p>
 <h2 id="安装Ollama"><a href="#安装Ollama" class="headerlink" title="安装Ollama"></a>安装Ollama</h2><p>访问下面的网站，下载对应操作系统的安装包，根据提示安装。</p>
@@ -438,8 +438,19 @@ ubuntu端：i7-13700kf + RTX 4090，32G内存
 <p>能够顺利运行32b的模型，内存占用不多，显存占了22G。</p>
 <p><img src="/images/deepseek-r1-deploy/image_9.png"></p>
 <p><img src="/images/deepseek-r1-deploy/image_10.png"></p>
-<h2 id="7b和32b模型的不专业对比测试"><a href="#7b和32b模型的不专业对比测试" class="headerlink" title="7b和32b模型的不专业对比测试"></a>7b和32b模型的<code>不专业</code>对比测试</h2><p>笔者准备了几类自己常问ChatGPT的问题，比较一下7b和32b模型。</p>
-<h3 id="代码解析-amp-公式生成"><a href="#代码解析-amp-公式生成" class="headerlink" title="代码解析&amp;公式生成"></a>代码解析&amp;公式生成</h3><p>笔者使用gaussian splatting中的一段代码来测试这两个模型，下面是发送给这两个模型的内容。</p>
+<h2 id="7b和32b模型的对比测试"><a href="#7b和32b模型的对比测试" class="headerlink" title="7b和32b模型的对比测试"></a>7b和32b模型的对比测试</h2><p>笔者准备了几类自己常问ChatGPT的问题，比较一下7b和32b模型。</p>
+<p><strong>测试的问题比较少，代码部分内容较多，随机性还挺大的。这里只总结这三个问题的表现：</strong></p>
+<ul>
+<li><p>7b和32b在代码解析上差不太多，个人看不出区别来；</p>
+</li>
+<li><p>7b在代码报错问题上，只生成了一个解决方案，可能需要多次交互才能顺利解决问题；</p>
+<p>32b的结果和ChatGPT比较接近，给了几个解决方案，其中有一个直接能解决问题的；</p>
+</li>
+<li><p>在代码生成上，需要计算的是相机视锥体，总共是5个点。7b给的代码是错误的，把相机后面不可见的区域也考虑进去了，算了8个点；32b的代码没有问题，计算的是相机视锥体。</p>
+</li>
+</ul>
+<p>下面的内容感兴趣可以看看。</p>
+<h3 id="代码解析"><a href="#代码解析" class="headerlink" title="代码解析"></a>代码解析</h3><p>笔者使用gaussian splatting中的一段代码来测试这两个模型，下面是发送给这两个模型的内容。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">逐行注释下面的代码，并且总结这个函数和对应的公式，使用latex代码写出来。
 注意：我希望的是你把注释好的代码放在一起，返回我一整个代码块，然后再总结函数的功能，以及对应的公式。
 
@@ -1616,7 +1627,7 @@ new_min_x<span class="token punctuation">,</span> new_max_x<span class="token pu
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">242k</span>&nbsp;字
+                class="white-color">242.2k</span>&nbsp;字
             
             
             
