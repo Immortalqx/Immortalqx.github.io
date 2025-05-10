@@ -500,7 +500,7 @@
 <p><img src="/images/icp-algorithm-explanation/image-20240628203747549-1729843722025-39.png"></p>
 <h2 id="拓展：Gaussian-Splatting中的最近邻问题"><a href="#拓展：Gaussian-Splatting中的最近邻问题" class="headerlink" title="拓展：Gaussian Splatting中的最近邻问题"></a>拓展：Gaussian Splatting中的最近邻问题</h2><p>在gaussian splatting中，包括了<a target="_blank" rel="noopener" href="https://gitlab.inria.fr/bkerbl/simple-knn">submodules/simple-knn</a>，<strong>这个simple-knn并不是聚类算法，而是一个K近邻算法</strong>。</p>
 <h3 id="代码对应部分"><a href="#代码对应部分" class="headerlink" title="代码对应部分"></a>代码对应部分</h3><p>Gaussian Splatting中使用K近邻算法的目的是为了实现初始化，每个初始化高斯点的尺度是其到最近的k个点的平均距离。</p>
-<p><img src="/images/icp-algorithm-explanation/image-20240628212740328-1729843722025-40.png" alt="image-20240628212740328"></p>
+<p><img src="/images/icp-algorithm-explanation/image-20240628212740328-1729843722025-40.png"></p>
 <p><img src="/images/icp-algorithm-explanation/image-20240628212726640-1729843722025-41.png"></p>
 <h3 id="simple-knn代码实现"><a href="#simple-knn代码实现" class="headerlink" title="simple-knn代码实现"></a>simple-knn代码实现</h3><p>Gaussian Splatting中直接调用的函数如下：</p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">// 定义一个函数 distCUDA2，参数是一个常量引用 torch::Tensor 类型的 points，返回值类型是 torch::Tensor

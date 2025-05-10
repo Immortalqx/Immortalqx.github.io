@@ -435,12 +435,12 @@
 <p><img src="/images/paper-reading-FLARE-VGGSFM-VGGT/image-20250405162554447.png"></p>
 <h4 id="Camera-centric-Geometry-Estimation"><a href="#Camera-centric-Geometry-Estimation" class="headerlink" title="Camera-centric Geometry Estimation"></a>Camera-centric Geometry Estimation</h4><p>image tokens + camera tokens输入，输出local point tokens和refined pose。</p>
 <p>通过DPT-based decoder得到local dense point map和confidence map。</p>
-<p><img src="/images/paper-reading-FLARE-VGGSFM-VGGT/image-20250405163131880.png" alt="image-20250405163131880"></p>
+<p><img src="/images/paper-reading-FLARE-VGGSFM-VGGT/image-20250405163131880.png"></p>
 <h4 id="Global-Geometry-Projection"><a href="#Global-Geometry-Projection" class="headerlink" title="Global Geometry Projection"></a>Global Geometry Projection</h4><p>local point tokens和refined pose作为输入，输出global image tokens。</p>
 <p>通过DPT-based decoder得到global dense point map和confidence map。</p>
-<p><img src="/images/paper-reading-FLARE-VGGSFM-VGGT/image-20250405163139834.png" alt="image-20250405163139834"></p>
+<p><img src="/images/paper-reading-FLARE-VGGSFM-VGGT/image-20250405163139834.png"></p>
 <h3 id="3D-Gaussians-for-Appearance-Modeling"><a href="#3D-Gaussians-for-Appearance-Modeling" class="headerlink" title="3D Gaussians for Appearance Modeling"></a>3D Gaussians for Appearance Modeling</h3><p>类似于splatt3r，通过gaussian head来预测gaussian parameters。</p>
-<p><img src="/images/paper-reading-FLARE-VGGSFM-VGGT/image-20250405163345749.png" alt="image-20250405163345749"></p>
+<p><img src="/images/paper-reading-FLARE-VGGSFM-VGGT/image-20250405163345749.png"></p>
 <h3 id="Training-Loss"><a href="#Training-Loss" class="headerlink" title="Training Loss"></a>Training Loss</h3><p>由于这是一个joint learning framework，因此使用由camera pose loss、geometry loss、Gaussian Splatting loss组合成的multi-task loss来进行训练。</p>
 <p>其中camera pose loss参考VGGSFM</p>
 <img src="/images/paper-reading-FLARE-VGGSFM-VGGT/image-20250405164322954.png" style="zoom:50%;">
