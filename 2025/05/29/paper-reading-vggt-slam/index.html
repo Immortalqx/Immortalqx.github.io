@@ -1,0 +1,1565 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="VGGT-SLAM：Dense RGB SLAM Optimized on the SL(4) Manifold, 所念皆星河">
+    <meta name="description" content="VGGT-SLAM: Dense RGB SLAM Optimized on the SL(4) Manifold
+Motivation
+However, VGGT is limited in the number of frames th">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>VGGT-SLAM：Dense RGB SLAM Optimized on the SL(4) Manifold | 所念皆星河</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">所念皆星河</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/homepage" class="waves-effect waves-light">
+      
+      <i class="fas fa-award" style="zoom: 0.6;"></i>
+      
+      <span>Homepage</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">所念皆星河</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/homepage" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-award"></i>
+			
+			Homepage
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/Immortalqx" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Follow me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/Immortalqx" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Follow me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/64.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">VGGT-SLAM：Dense RGB SLAM Optimized on the SL(4) Manifold</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                                <span class="chip bg-color">视觉SLAM</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">
+                                <span class="chip bg-color">大模型</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/slam/" class="post-category">
+                                slam
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2025-05-29
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    5.4k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    21 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="VGGT-SLAM-Dense-RGB-SLAM-Optimized-on-the-SL-4-Manifold"><a href="#VGGT-SLAM-Dense-RGB-SLAM-Optimized-on-the-SL-4-Manifold" class="headerlink" title="VGGT-SLAM: Dense RGB SLAM Optimized on the SL(4) Manifold"></a>VGGT-SLAM: Dense RGB SLAM Optimized on the SL(4) Manifold</h1><p><img src="/images/paper-reading-vggt-slam/image-20250529153907398.png"></p>
+<h2 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h2><ul>
+<li><p>However, VGGT is limited in the number of frames that can be processed by GPU memory. For example, in the case of an NVIDIA GeForce RTX 4090 with 24 GB, this is limited to approximately 60 frames, making larger reconstructions requiring hundreds or thousands of frames infeasible.</p>
+<blockquote>
+<p>VGGT在GPU memory受限的情况下，做large-scale的重建是不可行的。</p>
+</blockquote>
+</li>
+<li><p>While related works align submaps using similarity transforms (i.e., translation, rotation, and scale), we show that such approaches are inadequate in the case of uncalibrated cameras.</p>
+<blockquote>
+<p>相关的工作也能够对齐submap，但是在相机没有标定的情况下比较难以实现。</p>
+</blockquote>
+</li>
+<li><p>Sim(3) is insufficient to align submaps due to a projective ambiguity, motivating our SL(4)-based SLAM.</p>
+<blockquote>
+<p>由于投影模糊，Sim(3)不足以对齐子地图，这激发了我们基于SL(4)的SLAM。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="为什么sim3存在问题？"><a href="#为什么sim3存在问题？" class="headerlink" title="为什么sim3存在问题？"></a>为什么sim3存在问题？</h2><h3 id="论文中的描述"><a href="#论文中的描述" class="headerlink" title="论文中的描述"></a>论文中的描述</h3><p>One may suspect that a simple, trivial solution would be to create multiple submaps with VGGT where each submap contains at least one overlapping frame, and solve for the scale parameter between submaps (as the reconstruction does not capture metric scale), with VGGT’s estimated poses being used to align rotation and translation (i.e., estimating a Sim(3) transformation between submaps). While we demonstrate Sim(3) optimization shows impressive reconstructions in many cases, we empirically observe that the feed-forward nature of VGGT with uncalibrated cameras introduces a projective ambiguity, which in addition to the Sim(3) DOF includes shear, stretch, and perspective DOF, especially when the disparity between frames becomes small. This ambiguity cannot be fully resolved through a similarity transformation alone.</p>
+<blockquote>
+<p>有人可能会认为，一个简单直接的解决方案是使用VGGT创建多个子地图，每个子地图至少包含一帧重叠画面，并通过求解子地图之间的尺度参数（因为重建过程无法捕获真实尺度），同时利用VGGT估计的位姿来对齐旋转和平移（即估算子地图间的Sim(3)变换）。虽然我们证明了Sim(3)优化在多数情况下能实现出色的重建效果，但实际观测发现：当使用未标定相机时，VGGT的前馈特性会引入投影歧义——这种歧义除了包含Sim(3)的自由度外，还涉及剪切、拉伸和透视自由度，尤其在帧间视差较小时更为明显。仅靠相似变换无法完全消除这种歧义。</p>
+</blockquote>
+<h3 id="我之前的实验"><a href="#我之前的实验" class="headerlink" title="我之前的实验"></a>我之前的实验</h3><p>我之前也用sim3做过类似的事情，确实也是存在这个问题。虽然之后可以做BA去优化，但是BA只能优化sparse的点，毕竟track是sparse的。除非我们进行dense的track，这样我们才能真正解决这个问题，但是这样的话，开销太大了。</p>
+<p>比如在scannet数据集上，我使用VGGT得到了下面两个submap，现在我希望进行sim3的对齐。</p>
+<img src="/images/paper-reading-vggt-slam/image-20250529154659534.png" style="zoom: 50%;">
+
+<img src="/images/paper-reading-vggt-slam/image-20250529154707568.png" style="zoom: 50%;">
+
+<p>sim3对齐之后的位姿：</p>
+<img src="/images/paper-reading-vggt-slam/image-20250529154721008.png" style="zoom: 50%;">
+
+<p>对齐之后的mesh：（分层挺明显的）</p>
+<img src="/images/paper-reading-vggt-slam/image-20250529154731930.png" style="zoom: 50%;">
+
+<img src="/images/paper-reading-vggt-slam/image-20250529154745809.png" style="zoom: 50%;">
+
+<h3 id="补充一个我的观点"><a href="#补充一个我的观点" class="headerlink" title="补充一个我的观点"></a>补充一个我的观点</h3><p><strong>CVPR 2025 Oral</strong>《MoGe: Unlocking Accurate Monocular Geometry Estimation for Open-Domain Images with Optimal Training Supervision》在下图指出了scale-invariant会出现不一致的监督信号，这会导致模型估计出来的depth存在歧义。</p>
+<p><img src="/images/paper-reading-vggt-slam/image-20250529155507771.png"></p>
+<p>Scale-invariant就是认为gt_depth与pred_depth相差了一个scale，我们有pred_depth = scale * gt_depth；</p>
+<p>Affine-invariant就是认为gt_depth与pred_depth相差了一个scale和shift，我们有pred_depth  = scale * gt_depth + shift；</p>
+<p>想象一下，拍摄同一个物体，距离近拍摄一张图，和距离远但是变焦缩放后再拍摄一张图像，看起来好像物体是同样大小的，但是深度却相差很大。对于背景复杂的场景，主体大小不变或者主体占比很小，而背景变化了，可能预测的depth还好，但如果背景比较简单，网络对主体的关注度更高，预测的depth就可能会出问题了。</p>
+<p><strong>这种情况最著名的就是，希区柯克变焦。</strong>下面是我以前拍的一段希区柯克变焦视频。</p>
+<p>【西工大图书馆希区柯克变焦】 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV11w7VzgESF/?share_source=copy_web&amp;vd_source=5040c17d0665f566f786d3874bbfd13d">https://www.bilibili.com/video/BV11w7VzgESF/?share_source=copy_web&amp;vd_source=5040c17d0665f566f786d3874bbfd13d</a></p>
+<img src="/images/paper-reading-vggt-slam/image-20250529160644232.png" style="zoom: 50%;">
+
+<img src="/images/paper-reading-vggt-slam/image-20250529160656238.png" style="zoom: 50%;">
+
+<p>尽管VGGT-SLAM没有指出这一点，但是，VGGT会有这个问题吗？VGGT是用scale-invariant训练的吗？</p>
+<p>是的是的，有的有的！看VGGT论文3.4 Training部分，depth loss和pointmap是follow的DUSt3R的。</p>
+<img src="/images/paper-reading-vggt-slam/image-20250529161040681.png" style="zoom:50%;">
+
+<p>而DUSt3R是怎么做的呢？在DUSt3R论文3.2. Traning Objective部分，这个其实就是scale-invariant的loss。</p>
+<img src="/images/paper-reading-vggt-slam/image-20250529161129051.png" style="zoom:50%;">
+
+<h2 id="做了什么？"><a href="#做了什么？" class="headerlink" title="做了什么？"></a>做了什么？</h2><p>We present VGGT-SLAM, a dense RGB SLAM system constructed by incrementally and globally aligning submaps created from the feed-forward scene reconstruction approach VGGT using only uncalibrated monocular cameras.</p>
+<blockquote>
+<p>关键词：Dense RGB SLAM、incrementally and globally aligning submaps、uncalibrated</p>
+</blockquote>
+<p><strong>论文的贡献：</strong></p>
+<ul>
+<li><p>Firstly, we present the first SLAM system that leverages the feed-forward scene reconstruction capabilities ofVGGT [68], extending it to large-scale scenes that cannot be reconstructed from a single inference of VGGT. Our system operates entirely with monocular RGB cameras and does not require known camera intrinsics or consistent calibration across frames. Importantly, it achieves this without any additional training.</p>
+<blockquote>
+<p>将VGGT扩展到了large-scale的重建，只需要RGB相机，不需要相机的内参或者校准。</p>
+</blockquote>
+</li>
+<li><p>Secondly, while Sim(3) optimization is often sufficient, we identify and analyze scenarios where projective ambiguity arises, as presented in Fig. 1. In these cases, conventional similarity transforms do not fully resolve scale and alignment issues. We highlight this limitation and demonstrate how incorporating projective constraints addresses the problem.</p>
+<blockquote>
+<p>虽然Sim(3)优化通常是足够的，但作者识别并分析了出现投影歧义的场景，传统的sim3不能够完全解决这个问题。而作者他们结合了projective constraints来解决这个问题。</p>
+</blockquote>
+</li>
+<li><p>Finally, we propose the first factor graph formulation that operates directly on the SL(4) manifold to address projective ambiguity. Even in practical scenarios, where projective ambiguity is less dominant, we show that SL(4)-based optimization achieves performance competitive with or superior to other state-of-the-art learning-based SLAM approaches, offering a principled framework for handling cases where similarity transformations are insufficient.</p>
+<blockquote>
+<p>提出了第一个直接作用于SL(4)流形的因子图公式来解决投影歧义。即使在投影模糊不占主导地位的实际场景中，我们也表明基于SL(4)的优化实现了与其他最先进的基于学习的SLAM方法相竞争或优于的性能，为处理相似转换不足的情况提供了一个原则性框架。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="与相似的工作MASt3R-SLAM的对比"><a href="#与相似的工作MASt3R-SLAM的对比" class="headerlink" title="与相似的工作MASt3R-SLAM的对比"></a>与相似的工作MASt3R-SLAM的对比</h2><p>Most similar to ours is MASt3R-SLAM [44]. MASt3R-SLAM leverages MASt3R to construct an impressive real time dense monocular SLAM system that does not require known calibration. Their pipeline also includes efficient optimization over Sim(3) poses and loop closures. Since MASt3R is limited to two input frames at a time, here, we desire to build on top of the more powerful VGGT architecture for a SLAM system which can leverage broader information of the scene by taking in an arbitrary number of frames for feed-forward reconstruction (bounded by computational limits) and provides direct estimates of camera poses. However, as mentioned, fusing submaps from VGGT goes beyond a traditional point cloud registration problem as alignment cannot be effectively performed with only a similarity transformation. Unlike MASt3R-SLAM, as will be discussed in Sec. 4.2, we do not need to estimate correspondences between frames.</p>
+<blockquote>
+<p>与我们最相似的是MASt3R-SLAM[44]。MASt3R-SLAM利用MASt3R构建一个令人印象深刻的实时密集单目SLAM系统，不需要已知的校准。他们的管道还包括对Sim(3)姿势和闭环的有效优化。由于MASt3R一次限制为两个输入帧，在这里，<strong>我们希望为SLAM系统构建更强大的VGGT架构</strong>，该系统可以通过采用任意数量的帧进行前馈重建（受计算限制限制）来利用更广泛的场景信息，并提供对相机姿势的直接估计。然而，如前所述，融合来自VGGT的子地图超越了传统的点云配准问题，因为仅通过相似性变换无法有效地进行对齐。与MASt3R-SLAM不同，我们不需要估计帧之间的对应关系，这将在4.2节中讨论。</p>
+</blockquote>
+<h2 id="VGGT-SLAM-system"><a href="#VGGT-SLAM-system" class="headerlink" title="VGGT-SLAM system"></a>VGGT-SLAM system</h2><h3 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h3><p>VGGT-SLAM接受的从VGGT来的输入是什么？下面红框的内容</p>
+<p><img src="/images/paper-reading-vggt-slam/image-20250529162618736.png"></p>
+<p><img src="/images/paper-reading-vggt-slam/image-20250529162503357.png"></p>
+<h3 id="Incremental-submap-based-keyframe-selection-and-generation"><a href="#Incremental-submap-based-keyframe-selection-and-generation" class="headerlink" title="Incremental submap-based keyframe selection and generation"></a>Incremental submap-based keyframe selection and generation</h3><p>VGGT-SLAM是怎么选择传递给VGGT的图像集合的呢？基于图像间的视差估计，选择关键帧，传递给VGGT一个关键帧列表。</p>
+<p>毕竟VGGT是支持视差比较大的重建的，如果喂给VGGT稠密的帧，比如1秒30帧全塞进去，效果反而不一定好。</p>
+<p>回顾论文abstract提到的内容“实际观测发现：当使用未标定相机时，VGGT的前馈特性会引入投影歧义——这种歧义除了包含Sim(3)的自由度外，还涉及剪切、拉伸和透视自由度，尤其<strong>在帧间视差较小时更为明显</strong>”。所以这里论文选择使用关键帧列表来作为VGGT的输入。</p>
+<p><img src="/images/paper-reading-vggt-slam/image-20250529164532506.png"></p>
+<p><strong>初始化和图像集合</strong>：</p>
+<ul>
+<li>首先，构建一个名为<code>Ilatest</code>的图像集，用于存储顺序接收到的图像。</li>
+</ul>
+<p><strong>视差估计和阈值选择</strong>：</p>
+<ul>
+<li>使用<strong>Lucas-Kanade光流法</strong>（Lucas-Kanade Optical Flow）来估算相邻图像之间的视差。这种方法能够估算图像的像素位移，进而获得视差信息。</li>
+<li>选择一个图像作为关键帧的条件是：当前图像与上一张关键帧之间的视差大于一个用户定义的阈值<code>τdisparity</code>。即，只有在视差足够大时，才会将当前帧选为关键帧。</li>
+<li>视差较大的帧有助于改善相对深度估计，因为它们提供了多视角信息，这对于精确的3D重建是有益的。使用多视角信息能够减少所需处理的图像数量，提高性能。</li>
+</ul>
+<p><strong>关键帧的添加</strong>：</p>
+<ul>
+<li>如果当前帧的视差足够高，它会被指定为关键帧，并添加到<code>Ilatest</code>列表中。</li>
+<li>该列表的大小有限制（<code>w</code>），一旦达到了这个限制，新的图像就不会再加入到列表中。</li>
+</ul>
+<p><strong>构建子图像集</strong>：</p>
+<ul>
+<li>除了<code>Ilatest</code>，每个子图（submap）还会通过追加其他两组图像来构建：<ol>
+<li><strong>Mprior</strong>：从上一个子图（submap）中选取的<strong>最后一个非回环闭合的帧</strong>（即<code>Mprior</code>），这个帧用于维持子图之间的连续性。</li>
+<li><strong>Iloop</strong>：用于回环闭合的图像集合。最多可以包含<code>wloop</code>帧，这些帧将被用于子图的回环闭合。</li>
+</ol>
+</li>
+<li>最终，构建子图的图像集为：<code>Ilatest ← {Mprior}∪Ilatest∪Iloop</code>，即将上述三组图像集合拼接起来，作为子图的图像输入。</li>
+</ul>
+<p><strong>生成子图</strong>：</p>
+<ul>
+<li>上述构建好的图像集将被输入到<strong>VGGT</strong>中，用于生成最终的子图<code>Slatest</code>。</li>
+</ul>
+<h3 id="Local-submap-alignment-addressing-projective-ambiguity"><a href="#Local-submap-alignment-addressing-projective-ambiguity" class="headerlink" title="Local submap alignment addressing projective ambiguity"></a>Local submap alignment addressing projective ambiguity</h3><p>为什么存在projective ambiguity呢？如何解决这个问题呢？</p>
+<h4 id="想要解决的问题"><a href="#想要解决的问题" class="headerlink" title="想要解决的问题"></a>想要解决的问题</h4><p><strong>首先，我们跟着论文的思路，搞清楚自己要解决的问题是什么。</strong></p>
+<p>我们希望解决的是求一个变换矩阵H，将两个有重叠的submap对齐，这里的矩阵H可以是SE(3)，也可以是Sim(3)，同样，也可以是SL(4)。比如对于lidar slam，就是一个SE(3)矩阵，而对于单目SLAM的回环等可能存在尺度差异的情况，就是一个Sim(3)矩阵。</p>
+<h4 id="为什么会存在projective-ambiguity？"><a href="#为什么会存在projective-ambiguity？" class="headerlink" title="为什么会存在projective ambiguity？"></a>为什么会存在projective ambiguity？</h4><p>VGGT出来的点云并不是典型的点云，而是由未标定的相机构建的点云。回顾R. I. Hartley and A. Zisserman写的《Multiple View Geometry in Computer Vision》，<strong>投影重建定理</strong>（Projective Reconstruction Theorem）指出，如果来自未校准相机的两幅图像之间的对应关系唯一地决定了基本矩阵（fundamental matrix），那么该对应关系可以用来重建相应的3D点，但只是一个15自由度的单应（homography）变换。这种变换对于任何相应的点都是相同的，除了连接相机中心的直线上的点，因为这些点不能唯一地重建。</p>
+<p>由于相机没有标定，最终的重建结果与Ground Truth之间仅相差一个<strong>投影变换（homography）</strong>，这个变换有15个自由度，属于**SL(4)**群。<code>SL(4)</code>是所有行列式为1的4×4实矩阵的群。论文特别强调<code>SL(4)</code>与常见的<code>SL(3)</code>有所不同，后者用于通常的图像变形任务，如图像配准和图像扭曲，它只有8个自由度。<code>SL(4)</code>群的投影变换可以描述三维场景的重建中出现的投影不确定性，而<code>SL(3)</code>则通常用于二维图像中的变换。</p>
+<p>当场景先验可用时，重构可以转换为仿射重构（即，保留平行线），例如，如果已知点位于平行线上。如果进一步的先验已知，例如场景中的线是正交的，那么重建可以转换为度量重建（与真正的欧几里得重建只相差一个相似变换）。<strong>因此，VGGT能够利用学习到的场景先验来估计度量重建</strong>，但正如论文图1中所示，在最一般的情况下，当<strong>场景先验的估计不可靠时，重建会因projective ambiguity而不同</strong>，需要15自由度的单应性矩阵来校正。</p>
+<h4 id="关于Projective-Reconstruction-Theorem"><a href="#关于Projective-Reconstruction-Theorem" class="headerlink" title="关于Projective Reconstruction Theorem"></a>关于Projective Reconstruction Theorem</h4><p><strong>为了更好地理解上面的问题，建议学习一下Projective Reconstruction∗</strong></p>
+<p>这是专门的pdf链接：<a target="_blank" rel="noopener" href="https://users.cecs.anu.edu.au/~hartley/Papers/PDF/Hartley:Encyclopedia.pdf">https://users.cecs.anu.edu.au/~hartley/Papers/PDF/Hartley:Encyclopedia.pdf</a></p>
+<p>下面是我的一个简单介绍：</p>
+<p><strong>关于二维平面的单应变换</strong></p>
+<p>从<a target="_blank" rel="noopener" href="https://docs.opencv.org/4.x/d9/dab/tutorial_homography.html">opencv文档</a>中找一张图来举例，二维的单应变换是将一个平面内的点映射到另一个平面内的二维投影变换，描述了三维空间平面上的点，投影到不同平面上，这些平面之间的点坐标是什么关系。</p>
+<p><img src="/images/paper-reading-vggt-slam/homography_transformation_example2.jpg"></p>
+<p>给定了三维空间的坐标系，我们可以通过匹配点求R和t，以及平面方程$n^TP+d =0$。</p>
+<p>这样，整个过程可以描述为：<br>$$<br>\begin{align*}<br>s_1p_1 &amp;= KP \\<br>s_2p_2 &amp;= K(RP + t) \\<br>n^T P + d &amp;= 0 \quad \Rightarrow \quad -\frac{n^T P}{d} = 1 \\<br>s_2p_2 &amp;= K(RP + t \cdot 1) = K\left(RP - \frac{tn^T}{d}P\right) \\<br>&amp;= K\left(R - \frac{tn^T}{d}\right)P = s_1 K\left(R - \frac{tn^T}{d}\right) K^{-1} p_1 \\<br>m &amp;= \frac{s_1}{s_2} \\<br>p_2 &amp;= m K\left(R - \frac{tn^T}{d}\right) K^{-1} p_1 = m H p_1 \\<br>H &amp;= K\left(R - \frac{tn^T}{d}\right) K^{-1}<br>\end{align*}<br>$$<br>这个二维的单应变换矩阵H包含了相机内参、旋转、平移、平面方程。比如在相机标定的时候，我们拿着相机绕着标定板移动，可以通过求解H矩阵，得到相机的内参。由于p1和p2都是齐次坐标，因此H矩阵第三列最后一项h9是可以被另外两个数表示的，这导致H矩阵只有8个自由度，而且第三列与p1相乘的结果是尺度因子，后面也会被消掉。</p>
+<p><strong>关于三维空间的单应变换</strong></p>
+<p>回顾相机标定的例子，这是一个利用二维平面的单应变换求相机内参的过程，这有个前提——我们知道标定板的参数。假如我们并不知道标定板的参数，那这个过程是有歧义的，$\frac{t n^T}{d}$ 无法确定，导致 $H = K \left( R - \frac{t n^T}{d} \right) K^{-1}$ 中的 $R - \frac{t n^T}{d}$ 不唯一，从而相机内参也不唯一。这进一步导致，我们恢复出来的三维坐标具有不确定性，这种不确定性可能表现为坐标系的某种变换，例如缩放、旋转或畸变。恢复出的三维坐标可能在比例上不准确，或者点之间的相对位置关系失真，无法反映标定板在真实世界中的实际几何结构。</p>
+<p>现在，我们抛开标定板，我们来审视三维空间中任意物体的重建，我们并不知道三维空间中物体的边长等相关的信息，也不知道相机的内参。这样的话，重建出来的点云和恢复的相机内参并不是唯一的，他们都会包含一个unknown projective transformation。</p>
+<p>回顾课程<a target="_blank" rel="noopener" href="http://web.stanford.edu/class/cs231a/">CS231A: Computer Vision, From 3D Perception to 3D Reconstruction and beyond</a>的透视投影矩阵(Perspective Projection Matrices)M。</p>
+<img src="/images/paper-reading-vggt-slam/image-20221012165344068.png" style="zoom:50%;">
+
+<p>我们可以把二维平面的单应变换推广到三维空间中的单应变换：<br>$$<br>\begin{align*}<br>p_1 &amp;= H_{2d} p_2 \\<br>p_1 &amp;= M_1 P_1, \quad p_2 = M_2 P_2 \\<br>M_1 P_1 &amp;= H_{2d} M_2 P_2 \quad \Rightarrow \quad P_1 = M_1^+ H_{2d} M_2 P_2 \\<br>M_1^{+} &amp;= \left( M_1^T M_1 \right)^{-1} M_1^T \\<br>P_1 &amp;= H_{3d} P_2<br>\end{align*}<br>$$<br>这里的H矩阵是一个非奇异的4x4矩阵，表示齐次坐标之间的映射关系。</p>
+<p>利用这个关系很容易看出，我们并不知道三维空间中物体的边长等相关的信息，也不知道相机的内参的时候，我们只能给定对应的图像坐标xij，这样的话透视投影矩阵Pi和三维点Xj不是唯一的，他们是多解的。<br>$$<br>\begin{align*}<br>x_{ij} &amp;= P_iX_j \\<br>&amp;= (P_iH^{-1})(HX_j) \\<br>&amp;= P_i’X_j’<br>\end{align*}<br>$$<br>事实上，存在一个完整的解集，表示所有可能的矩阵 H的选择。所有这些解通过投影变换相互关联，因此称为投影等价解。一个特定的解，由满足 $x_{ij} = P_iX_j$ 的相机矩阵 Pi 和点 Xj 组成，被称为场景的投影重建，它是通过给定的对应图像点计算得到的。</p>
+<p><img src="/images/paper-reading-vggt-slam/image-20250529193426020.png"></p>
+<p>这里我们介绍<strong>投影重建定理</strong>（The projective reconstruction theorem）：在重建问题中，之前提到过投影等价解的问题，即通过不同的投影变换可能会得到不同的解。换句话说，从二维图像中的对应点出发，我们可能会得到多组不同的三维重建解，它们彼此通过投影变换关联。但是，如果有足够多的对应点（至少8个），并且这些点不处于某些特殊的退化配置中（例如，所有点都在同一直线上，或者在同一平面内等），那么从这些点出发<strong>得到的三维重建解是唯一的，且这些解只会在投影变换下发生变化</strong>。即，<strong>虽然通过不同的投影变换可以得到不同的解，但它们代表的是同一物理场景</strong>。</p>
+<p>也就是说，<strong>如果我们不知道相机内参，我们三维重建出来的结果，和真实的场景会相差一个投影变换。即，存在projective ambiguity。</strong></p>
+<h4 id="如何解决这个问题呢？"><a href="#如何解决这个问题呢？" class="headerlink" title="如何解决这个问题呢？"></a>如何解决这个问题呢？</h4><p>VGGT-SLAM输入给VGGT的图像集为：<code>Ilatest ← {Mprior}∪Ilatest∪Iloop</code>，这说明submap之间存在完全一样的图像帧，这样可以产生密集的匹配关系（毕竟同一张图，不需要特征匹配）。</p>
+<p>通过这个完全一样的图像帧，就可以去求解单应矩阵。由于单应矩阵是按比例估计的，论文按行列式的四次方根进行缩放，使得行列式是单位行列式，这样得到的矩阵属于SL(4)。</p>
+<p>对这个问题，这个工作特意设计好了，不同的submap有完全一样的图像帧，可以得到完全对应的两个点云，这么dense的correspondence，干什么不能干？所以这篇论文求一个Homography，不过维度不一样，常见的是相机标定的Homography，是平面的；而这里是三维的，从SL(3)拓展到了SL(4)。</p>
+<p>这里重建出来的场景和gt还是会相差一个投影变换，但是论文把不同的submap与gt相差的投影变换统一起来了，这样即使分成多个submap的重建，看起来也是几何一致的，不会存在扭曲或者分层的情况。</p>
+<p><strong>另外，本节内容建议看对应的论文章节，更直观：</strong></p>
+<img src="/images/paper-reading-vggt-slam/image-20250529170601400.png" style="zoom:50%;">
+
+<img src="/images/paper-reading-vggt-slam/image-20250529170627279.png" style="zoom:50%;">
+
+<h3 id="Loop-closures"><a href="#Loop-closures" class="headerlink" title="Loop closures"></a>Loop closures</h3><p><strong>图像检索（步骤 1）</strong>：</p>
+<ul>
+<li><strong>计算关键帧图像描述符</strong>：在每个子图中，计算并存储每个关键帧的图像描述符，使用的是SALAD描述符。</li>
+<li><strong>回环闭合图像搜索</strong>：当最新的子图大小达到一定阈值（记作 <code>w</code>）时，系统会搜索之前子图中的关键帧，与最新子图中的关键帧进行相似性比较，寻找最相似的关键帧。<ul>
+<li>相似性比较是基于图像描述符的L2范数（欧几里得距离）。</li>
+<li>只有当相似度超过用户定义的阈值（<code>τdesc</code>）时，才会考虑该帧，以避免误匹配。</li>
+<li>选出一组最相似的帧（记作 <code>Iloop</code>），这些帧将作为当前子图的关键帧并加入子图中。</li>
+</ul>
+</li>
+</ul>
+<p><strong>相对单应性估计（步骤 2）</strong>：</p>
+<ul>
+<li><strong>计算单应性</strong>：在图像检索过程后，系统会估计回环闭合帧（来自 <code>Iloop</code>）与检索到的子图之间的相对单应性（homography）。<ul>
+<li>该过程不需要估计特征点对应关系，而是直接使用公式（文中提到的公式(2)）在 <code>Iloop</code> 中的帧和其在子图中的对应帧之间计算单应性。</li>
+</ul>
+</li>
+<li><strong>添加回环闭合约束</strong>：通过计算得到的单应性，为最新子图 <code>Slatest</code> 和检索到的子图之间提供回环闭合约束，并将这些约束添加到因子图中。</li>
+</ul>
+<p><strong>替代方法</strong>：可以不使用SALAD描述符，而是使用VGGT的微调DINO骨干网络的输出令牌来生成图像描述符。然而，这种方法需要更多的内存，因为DINO输出的特征比SALAD描述符更大。相比之下，原始的SALAD方法更为节省内存，因为它存储的是较小的描述符，并且避免了存储实际图像。</p>
+<h3 id="Backend-Nonlinear-factor-graph-optimization-on-the-SL-4-manifold"><a href="#Backend-Nonlinear-factor-graph-optimization-on-the-SL-4-manifold" class="headerlink" title="Backend: Nonlinear factor graph optimization on the SL(4) manifold"></a>Backend: Nonlinear factor graph optimization on the SL(4) manifold</h3><p>在前面的种种铺垫之后，我们现在知道VGGT-SLAM最终的目的就是，让所有的submap与gt相比，拥有相同的Homography矩阵。所以论文设计的代价函数就是：</p>
+<img src="/images/paper-reading-vggt-slam/image-20250529215346081.png" style="zoom:50%;">
+
+<p>通过线性最小二乘可以求解这个问题，具体看论文的内容即可。</p>
+<img src="/images/paper-reading-vggt-slam/image-20250529215708342.png" style="zoom:50%;">
+
+<h2 id="实验部分"><a href="#实验部分" class="headerlink" title="实验部分"></a>实验部分</h2><p><strong>我其实觉得VGGT-SLAM的实验反而证明了，VGGT训练的是比较好的，因为我看sim3和SL4其实没有太大的差别，这说明VGGT学的是很接近GT的，每次输出的结果与GT的Homography是非常相似的。</strong></p>
+<p><img src="/images/paper-reading-vggt-slam/image-20250529215748246.png"></p>
+<p><img src="/images/paper-reading-vggt-slam/image-20250529215905251.png"></p>
+<p><img src="/images/paper-reading-vggt-slam/image-20250529215921317.png"></p>
+<p><img src="/images/paper-reading-vggt-slam/image-20250529215933508.png"></p>
+<p><img src="/images/paper-reading-vggt-slam/image-20250529215951769.png"></p>
+<p><img src="/images/paper-reading-vggt-slam/image-20250529220108317.png"></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Immortalqx</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://Immortalqx.github.io/2025/05/29/paper-reading-vggt-slam/">http://Immortalqx.github.io/2025/05/29/paper-reading-vggt-slam/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Immortalqx</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                                    <span class="chip bg-color">视觉SLAM</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">
+                                    <span class="chip bg-color">大模型</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban,google,linkedin,twitter,facebook" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'bMq5alM79AoOmPl5Q65aeVqI-gzGzoHsz',
+        appKey: 'O0Q21Re9hVoBb41y6euVKCQq',
+        serverURLs: '',
+        notify: '' === 'true',
+        verify: '' === 'true',
+        visitor: '' === 'true',
+        avatar: 'retro',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '填上邮箱可以收到我的回复呦ฅ^ω^ฅ'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2025/05/29/paper-reading-vggt-slam/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/64.jpg" class="responsive-img" alt="VGGT-SLAM：Dense RGB SLAM Optimized on the SL(4) Manifold">
+                        
+                        <span class="card-title">VGGT-SLAM：Dense RGB SLAM Optimized on the SL(4) Manifold</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-05-29
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/slam/" class="post-category">
+                                    slam
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%A7%86%E8%A7%89SLAM/">
+                        <span class="chip bg-color">视觉SLAM</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">
+                        <span class="chip bg-color">大模型</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2025/04/14/paper-reading-dust3r-series-01/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/42.jpg" class="responsive-img" alt="DUSt3R系列工作盘点">
+                        
+                        <span class="card-title">DUSt3R系列工作盘点</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-04-14
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E4%B8%89%E7%BB%B4%E8%A7%86%E8%A7%89/" class="post-category">
+                                    三维视觉
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA/">
+                        <span class="chip bg-color">三维重建</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">
+                        <span class="chip bg-color">大模型</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2025</span>
+            
+            <a href="/about" target="_blank">Immortalqx</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">252.8k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2021";
+                    var startMonth = "2";
+                    var startDate = "1";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Immortalqx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:immortalqx@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1727854434" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1727854434" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+    
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <script src="/js/FunnyTitle.js"></script>
+    <!--script src="/live2d/autoload.js"></script-->
+</body>
+
+</html>

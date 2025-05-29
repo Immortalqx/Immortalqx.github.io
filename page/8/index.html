@@ -48,9 +48,9 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
-
+<meta name="generator" content="Hexo 5.4.2">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
 </head>
 
 
@@ -384,6 +384,63 @@
     <!-- 所有文章卡片 -->
     <article id="articles" class="container articles">
         <div class="row article-row">
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2022/01/07/machine-learning-1/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="机器学习笔记（一）：K-Means聚类算法">
+                            
+                            <span class="card-title">机器学习笔记（一）：K-Means聚类算法</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                机器学习笔记（一）：K-Means聚类算法
+2021年下半年选修了两门机器学习相关的课程，感觉学到了非常多的知识，打算好好整理一下。
+大部分内容是从课件里面搬运来的，但大部分代码是自己理解的基础上写出来的。
+
+根据训练样本中是否包含标签信息
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-07
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    机器学习
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/K-Means/">
+                            <span class="chip bg-color">K-Means</span>
+                        </a>
+                        
+                        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+                            <span class="chip bg-color">机器学习</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
             
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
@@ -803,12 +860,12 @@ Pixhawk是一款由PX4开源项目设计并由3DR公司制造生产的高级自
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/PIXHAWK/">
-                            <span class="chip bg-color">PIXHAWK</span>
-                        </a>
-                        
                         <a href="/tags/PX4/">
                             <span class="chip bg-color">PX4</span>
+                        </a>
+                        
+                        <a href="/tags/PIXHAWK/">
+                            <span class="chip bg-color">PIXHAWK</span>
                         </a>
                         
                         <a href="/tags/APM/">
@@ -860,12 +917,12 @@ Pixhawk是一款由PX4开源项目设计并由3DR公司制造生产的高级自
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/PX4/">
-                            <span class="chip bg-color">PX4</span>
-                        </a>
-                        
                         <a href="/tags/MAVROS/">
                             <span class="chip bg-color">MAVROS</span>
+                        </a>
+                        
+                        <a href="/tags/PX4/">
+                            <span class="chip bg-color">PX4</span>
                         </a>
                         
                         <a href="/tags/Gazebo/">
@@ -984,56 +1041,6 @@ ROS中机器人模型包含大量
             </div>
               <!-- 隐藏某个文章 -->
             
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2021/07/17/ros-notes-3/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/54.jpg" class="responsive-img" alt="解决source多个ROS工作空间时的覆盖问题">
-                            
-                            <span class="card-title">解决source多个ROS工作空间时的覆盖问题</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                解决source多个ROS工作空间时的覆盖问题问题描述在~/.zshrc或者~/.bashrc中source 了多个工作空间，但有的工作空间并没有被成功source
-使用ros有时需要多个利用多个工作空间，但每打开一个终端就要source一
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-17
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" class="post-category">
-                                    编程基础
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/ROS/">
-                            <span class="chip bg-color">ROS</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
         </div>
     </article>
 
@@ -1082,7 +1089,7 @@ ROS中机器人模型包含大量
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">247.3k</span>&nbsp;字
+                class="white-color">252.8k</span>&nbsp;字
             
             
             
