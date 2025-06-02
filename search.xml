@@ -2464,9 +2464,9 @@
       
         <tags>
             
-            <tag> PX4 </tag>
-            
             <tag> PIXHAWK </tag>
+            
+            <tag> PX4 </tag>
             
             <tag> APM </tag>
             
@@ -2493,9 +2493,9 @@
       
         <tags>
             
-            <tag> MAVROS </tag>
-            
             <tag> PX4 </tag>
+            
+            <tag> MAVROS </tag>
             
             <tag> Gazebo </tag>
             
