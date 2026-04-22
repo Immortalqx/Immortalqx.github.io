@@ -251,6 +251,11 @@ mark {
     background-image: linear-gradient(to right, #FFB6C1 25%, #AFEEEE 100%);
 }
 
+/* 白天模式下让顶栏与暗色模式使用同一套透明度机制 */
+header .bg-color {
+    opacity: .8;
+}
+
 .text-color {
     color: #0f9d58 !important;
 }
@@ -313,6 +318,15 @@ header .brand-logo .waves-effect {
 
 header .button-collapse i {
     font-size: 1.5rem;
+}
+
+/* 白天模式下提升顶部导航在亮色背景上的可读性 */
+header nav .brand-logo a,
+header nav .brand-logo .logo-span,
+header nav .nav-menu > li > a,
+header nav .nav-menu > li > a i,
+header .button-collapse i {
+    color: #5f6368;
 }
 
 header .side-nav .mobile-head {
@@ -1851,6 +1865,12 @@ footer a {
 
 footer .copy-right {
     color: #dbdbdb;
+}
+
+footer a,
+footer .copy-right,
+footer .white-color {
+    color: #5f6368;
 }
 
 /*搜索层样式*/

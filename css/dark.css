@@ -105,6 +105,28 @@ body.DarkMode span.bg-color {
     background-image:linear-gradient(to right, #282c34 0, rgba(52,50,50,0.7) 100%)
 }
 
+/* 夜间模式下用灰色遮罩替换白天的亮色背景，并保持头尾文字为白色 */
+body.DarkMode {
+    background:
+        linear-gradient(60deg, rgba(66, 70, 77, 0.78) 5%, rgba(28, 31, 36, 0.84)) 0% 0% / cover,
+        url(../medias/background.jpg) 0 0;
+    background-attachment: fixed;
+    background-color: #1e1e1e;
+}
+
+body.DarkMode header nav .brand-logo a,
+body.DarkMode header nav .brand-logo .logo-span,
+body.DarkMode header nav .nav-menu > li > a,
+body.DarkMode header nav .nav-menu > li > a i,
+body.DarkMode header .button-collapse i,
+body.DarkMode header .side-nav .menu-list a,
+body.DarkMode .mobile-menu-list a i,
+body.DarkMode footer a,
+body.DarkMode footer .copy-right,
+body.DarkMode footer .white-color {
+    color: #fff !important;
+}
+
 /* 背景颜色变黑色 */
 /* body.DarkMode #rewardModal .modal-content, */
 body.DarkMode #reward .reward-link,
@@ -237,8 +259,10 @@ body.DarkMode #sources_container,
 body.DarkMode #map_container {
     filter: invert(1);
 }
-body.DarkMode header .brand-logo .logo-img {
-    display: none;
+body.DarkMode header .brand-logo .logo-img,
+body.DarkMode header .side-nav .mobile-head img {
+    display: inline-block;
+    filter: none !important;
 }
 
 .DarkMode #readmode, 
@@ -318,11 +342,6 @@ body.DarkMode .test {
 
 body.DarkMode img, body.DarkMode strong {
     filter:brightness(.7)
-}
-
-body.DarkMode {
-    /* background-image: url(/medias_webp/sunset.webp); */
-    background-color: rgba(30, 30, 30);
 }
 
 body.DarkMode #vcomments textarea,
