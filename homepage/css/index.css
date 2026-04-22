@@ -1,22 +1,3 @@
-@media (min-width: 34em) {
-  .side-card {
-    width: 15.25424%;
-    min-width: 165px;
-    float: left;
-    margin-right: 1.69492%;
-    opacity: 1;
-    -webkit-transition: opacity 0.2s ease-in-out;
-    transition: opacity 0.2s ease-in-out;
-  }
-  .side-card .card-wrap {
-    padding: 10px 10px 10px 17px;
-    text-align: center;
-  }
-  .side-card .author-avatar img {
-    max-width: 175px;
-    min-width: 75px;
-  }
-}
 .page pre,
 .page .highlight {
   overflow: auto;
@@ -1001,4 +982,23 @@ blockquote p {
 }
 ::-webkit-scrollbar-thumb {
   background-color: rgba(122,130,136,0.4);
+}
+@media (min-width: 34em) {
+  .side-card {
+    width: 15.25424%;
+    min-width: 165px;
+    float: left;
+    margin-right: 1.69492%;
+    opacity: 1;
+    -webkit-transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out;
+  }
+  .side-card .card-wrap {
+    padding: 10px 10px 10px 17px;
+    text-align: center;
+  }
+  .side-card .author-avatar img {
+    max-width: 175px;
+    min-width: 75px;
+  }
 }

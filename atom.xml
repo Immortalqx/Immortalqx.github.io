@@ -278,9 +278,9 @@
     <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
     
     
-    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
-    
     <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
+    
+    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
     
   </entry>
   
@@ -332,9 +332,9 @@
     <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
     
     
-    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
-    
     <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
     
   </entry>
   
@@ -359,9 +359,9 @@
     <category term="NeRF&amp;3DGS" scheme="http://immortalqx.github.io/categories/NeRF-3DGS/"/>
     
     
-    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
-    
     <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
     
   </entry>
   
