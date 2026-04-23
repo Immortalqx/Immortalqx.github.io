@@ -146,9 +146,7 @@ body.DarkMode .toc-widget,
 body.DarkMode .tag_share .chip,
 body.DarkMode .archive-container,
 body.DarkMode .modal,
-body.DarkMode .v[data-class="v"] .vcount,
-body.DarkMode header .side-nav,
-body.DarkMode header .side-nav .menu-list .m-nav-show {
+body.DarkMode .v[data-class="v"] .vcount {
     filter: invert(0.8);
 }
 body.DarkMode .waline-card .comment_headling span {
@@ -262,7 +260,39 @@ body.DarkMode #map_container {
 body.DarkMode header .brand-logo .logo-img,
 body.DarkMode header .side-nav .mobile-head img {
     display: inline-block;
+    -webkit-filter: none !important;
     filter: none !important;
+}
+
+/* 手机侧栏在夜间模式下不要整块反相，直接使用明确的暗色配色 */
+body.DarkMode header .side-nav {
+    background-color: #1f2329;
+    -webkit-filter: none;
+    filter: none;
+}
+
+body.DarkMode header .side-nav .mobile-head.bg-color {
+    opacity: 1;
+    background-image: linear-gradient(to right, #282c34 0, rgba(52, 50, 50, 0.9) 100%);
+}
+
+body.DarkMode header .side-nav .mobile-head .logo-name,
+body.DarkMode header .side-nav .mobile-head .logo-desc,
+body.DarkMode header .side-nav .menu-list a,
+body.DarkMode .mobile-menu-list a i {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+
+body.DarkMode header .side-nav .m-nav-item ul {
+    background-color: #242932;
+}
+
+body.DarkMode header .side-nav .menu-list .m-nav-show,
+body.DarkMode header .side-nav .m-nav-item > a:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    -webkit-filter: none;
+    filter: none;
 }
 
 .DarkMode #readmode, 
