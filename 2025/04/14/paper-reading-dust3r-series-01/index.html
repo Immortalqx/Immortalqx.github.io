@@ -36,7 +36,27 @@ DUSt3R相关工作MASt3R-SfM: a Fully">
 <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
 <link rel="stylesheet" type="text/css" href="/css/matery.css">
 <link rel="stylesheet" type="text/css" href="/css/my.css">
-<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+<script>
+    (function () {
+        var darkStyleLink = document.createElement('link');
+        darkStyleLink.rel = 'stylesheet';
+        darkStyleLink.type = 'text/css';
+        darkStyleLink.href = '/css/dark.css';
+
+        if (localStorage.getItem('isDark') === '1') {
+            darkStyleLink.media = 'all';
+        } else {
+            darkStyleLink.media = 'none';
+            darkStyleLink.onload = function () {
+                if (darkStyleLink.media !== 'all') {
+                    darkStyleLink.media = 'all';
+                }
+            };
+        }
+
+        document.head.appendChild(darkStyleLink);
+    })();
+</script>
 
 
 
@@ -62,6 +82,11 @@ DUSt3R相关工作MASt3R-SfM: a Fully">
 
 
 <body>
+    <script>
+        if (localStorage.getItem('isDark') === '1') {
+            document.body.classList.add('DarkMode');
+        }
+    </script>
     <header class="navbar-fixed">
     <nav id="headNav" class="bg-color">
         <div id="navContainer" class="nav-wrapper container">
@@ -561,285 +586,112 @@ DUSt3R相关工作MASt3R-SfM: a Fully">
     </div>
 
     
-
-    
-
-    
-
-    
-
-    
         <style>
-    .valine-card {
-        margin: 1.5rem auto;
+    .giscus-card .card-content {
+        padding-top: 0;
+        display: grid;
     }
 
-    .valine-card .card-content {
-        padding: 20px 20px 5px 20px;
+    .giscus,
+    .giscus-frame {
+        width: 100%;
     }
 
-    #vcomments textarea {
-        box-sizing: border-box;
-        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
-    }
-
-    #vcomments p {
-        margin: 2px 2px 10px;
-        font-size: 1.05rem;
-        line-height: 1.78rem;
-    }
-
-    #vcomments blockquote p {
-        text-indent: 0.2rem;
-    }
-
-    #vcomments a {
-        padding: 0 2px;
-        color: #4cbf30;
-        font-weight: 500;
-        text-decoration: none;
-    }
-
-    #vcomments img {
-        max-width: 100%;
-        height: auto;
-        cursor: pointer;
-    }
-
-    #vcomments ol li {
-        list-style-type: decimal;
-    }
-
-    #vcomments ol,
-    ul {
-        display: block;
-        padding-left: 2em;
-        word-spacing: 0.05rem;
-    }
-
-    #vcomments ul li,
-    ol li {
-        display: list-item;
-        line-height: 1.8rem;
-        font-size: 1rem;
-    }
-
-    #vcomments ul li {
-        list-style-type: disc;
-    }
-
-    #vcomments ul ul li {
-        list-style-type: circle;
-    }
-
-    #vcomments table, th, td {
-        padding: 12px 13px;
-        border: 1px solid #dfe2e5;
-    }
-
-    #vcomments table, th, td {
-        border: 0;
-    }
-
-    table tr:nth-child(2n), thead {
-        background-color: #fafafa;
-    }
-
-    #vcomments table th {
-        background-color: #f2f2f2;
-        min-width: 80px;
-    }
-
-    #vcomments table td {
-        min-width: 80px;
-    }
-
-    #vcomments h1 {
-        font-size: 1.85rem;
-        font-weight: bold;
-        line-height: 2.2rem;
-    }
-
-    #vcomments h2 {
-        font-size: 1.65rem;
-        font-weight: bold;
-        line-height: 1.9rem;
-    }
-
-    #vcomments h3 {
-        font-size: 1.45rem;
-        font-weight: bold;
-        line-height: 1.7rem;
-    }
-
-    #vcomments h4 {
-        font-size: 1.25rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    #vcomments h5 {
-        font-size: 1.1rem;
-        font-weight: bold;
-        line-height: 1.4rem;
-    }
-
-    #vcomments h6 {
-        font-size: 1rem;
-        line-height: 1.3rem;
-    }
-
-    #vcomments p {
-        font-size: 1rem;
-        line-height: 1.5rem;
-    }
-
-    #vcomments hr {
-        margin: 12px 0;
-        border: 0;
-        border-top: 1px solid #ccc;
-    }
-
-    #vcomments blockquote {
-        margin: 15px 0;
-        border-left: 5px solid #42b983;
-        padding: 1rem 0.8rem 0.3rem 0.8rem;
-        color: #666;
-        background-color: rgba(66, 185, 131, .1);
-    }
-
-    #vcomments pre {
-        font-family: monospace, monospace;
-        padding: 1.2em;
-        margin: .5em 0;
-        background: #272822;
-        overflow: auto;
-        border-radius: 0.3em;
-        tab-size: 4;
-    }
-
-    #vcomments code {
-        font-family: monospace, monospace;
-        padding: 1px 3px;
-        font-size: 0.92rem;
-        color: #e96900;
-        background-color: #f8f8f8;
-        border-radius: 2px;
-    }
-
-    #vcomments pre code {
-        font-family: monospace, monospace;
-        padding: 0;
-        color: #e8eaf6;
-        background-color: #272822;
-    }
-
-    #vcomments pre[class*="language-"] {
-        padding: 1.2em;
-        margin: .5em 0;
-    }
-
-    #vcomments code[class*="language-"],
-    pre[class*="language-"] {
-        color: #e8eaf6;
-    }
-
-    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
-        position: inherit;
-        margin-left: -1.3rem;
-        margin-right: 0.4rem;
-        margin-top: -1px;
-        vertical-align: middle;
-        left: unset;
-        visibility: visible;
-    }
-
-    #vcomments b,
-    strong {
-        font-weight: bold;
-    }
-
-    #vcomments dfn {
-        font-style: italic;
-    }
-
-    #vcomments small {
-        font-size: 85%;
-    }
-
-    #vcomments cite {
-        font-style: normal;
-    }
-
-    #vcomments mark {
-        background-color: #fcf8e3;
-        padding: .2em;
-    }
-
-    #vcomments table, th, td {
-        padding: 12px 13px;
-        border: 1px solid #dfe2e5;
-    }
-
-    table tr:nth-child(2n), thead {
-        background-color: #fafafa;
-    }
-
-    #vcomments table th {
-        background-color: #f2f2f2;
-        min-width: 80px;
-    }
-
-    #vcomments table td {
-        min-width: 80px;
-    }
-
-    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
-        position: inherit;
-        margin-left: -1.3rem;
-        margin-right: 0.4rem;
-        margin-top: -1px;
-        vertical-align: middle;
-        left: unset;
-        visibility: visible;
+    .giscus-frame {
+        border: none;
     }
 </style>
 
-<div class="card valine-card" data-aos="fade-up">
+<div class="card giscus-card" data-aos="fade-up">
     <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
         <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
         <span>评论</span>
     </div>
-    <div id="vcomments" class="card-content" style="display: grid">
+    <div class="card-content">
+        <div class="giscus"></div>
     </div>
 </div>
 
-<script src="/libs/valine/av-min.js"></script>
-<script src="/libs/valine/Valine.min.js"></script>
 <script>
-    new Valine({
-        el: '#vcomments',
-        appId: 'bMq5alM79AoOmPl5Q65aeVqI-gzGzoHsz',
-        appKey: 'O0Q21Re9hVoBb41y6euVKCQq',
-        serverURLs: '',
-        notify: '' === 'true',
-        verify: '' === 'true',
-        visitor: '' === 'true',
-        avatar: 'retro',
-        pageSize: '10',
-        lang: 'zh-cn',
-        placeholder: '填上邮箱可以收到我的回复呦ฅ^ω^ฅ'
-    });
+    (function () {
+        const giscusThemeConfig = {
+            light: 'light',
+            dark: 'dark'
+        };
+
+        function getCurrentGiscusTheme() {
+            const isDark = localStorage.getItem('isDark') === '1' || document.body.classList.contains('DarkMode');
+            return isDark ? giscusThemeConfig.dark : giscusThemeConfig.light;
+        }
+
+        function syncGiscusTheme() {
+            const iframe = document.querySelector('iframe.giscus-frame');
+            if (!iframe) {
+                return;
+            }
+
+            iframe.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: getCurrentGiscusTheme()
+                        }
+                    }
+                },
+                'https://giscus.app'
+            );
+        }
+
+        function observeGiscusFrame() {
+            const container = document.querySelector('.giscus');
+            if (!container || typeof MutationObserver === 'undefined') {
+                return;
+            }
+
+            const observer = new MutationObserver(function () {
+                if (document.querySelector('iframe.giscus-frame')) {
+                    syncGiscusTheme();
+                    observer.disconnect();
+                }
+            });
+
+            observer.observe(container, {
+                childList: true,
+                subtree: true
+            });
+        }
+
+        function mountGiscus() {
+            if (document.querySelector('script[data-giscus="mounted"]')) {
+                return;
+            }
+
+            const script = document.createElement('script');
+            script.src = 'https://giscus.app/client.js';
+            script.async = true;
+            script.crossOrigin = 'anonymous';
+            script.setAttribute('data-giscus', 'mounted');
+            script.setAttribute('data-repo', 'Immortalqx/blog-comments');
+            script.setAttribute('data-repo-id', 'R_kgDOSLuCmA');
+            script.setAttribute('data-category', 'Announcements');
+            script.setAttribute('data-category-id', 'DIC_kwDOSLuCmM4C7njA');
+            script.setAttribute('data-mapping', 'pathname');
+            script.setAttribute('data-strict', '0');
+            script.setAttribute('data-reactions-enabled', '1');
+            script.setAttribute('data-emit-metadata', '0');
+            script.setAttribute('data-input-position', 'bottom');
+            script.setAttribute('data-theme', getCurrentGiscusTheme());
+            script.setAttribute('data-lang', 'zh-CN');
+            script.setAttribute('data-loading', 'lazy');
+            document.body.appendChild(script);
+        }
+
+        window.syncGiscusTheme = syncGiscusTheme;
+
+        observeGiscusFrame();
+        mountGiscus();
+    })();
 </script>
-
-<!--酷Q推送-->
-
-
-    
-
-    
-
-    
 
     
 
@@ -1309,6 +1161,8 @@ $(function () {
             $('body').hasClass('DarkMode') 
             ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
             : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+
+            window.syncGiscusTheme && window.syncGiscusTheme(),
             
             setTimeout(function () {
             $('.Cuteen_DarkSky').fadeOut(1e3, function () {

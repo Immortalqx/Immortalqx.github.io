@@ -33,7 +33,27 @@
 <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
 <link rel="stylesheet" type="text/css" href="/css/matery.css">
 <link rel="stylesheet" type="text/css" href="/css/my.css">
-<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+<script>
+    (function () {
+        var darkStyleLink = document.createElement('link');
+        darkStyleLink.rel = 'stylesheet';
+        darkStyleLink.type = 'text/css';
+        darkStyleLink.href = '/css/dark.css';
+
+        if (localStorage.getItem('isDark') === '1') {
+            darkStyleLink.media = 'all';
+        } else {
+            darkStyleLink.media = 'none';
+            darkStyleLink.onload = function () {
+                if (darkStyleLink.media !== 'all') {
+                    darkStyleLink.media = 'all';
+                }
+            };
+        }
+
+        document.head.appendChild(darkStyleLink);
+    })();
+</script>
 
 
 
@@ -55,6 +75,11 @@
 
 
 <body>
+    <script>
+        if (localStorage.getItem('isDark') === '1') {
+            document.body.classList.add('DarkMode');
+        }
+    </script>
     <header class="navbar-fixed">
     <nav id="headNav" class="bg-color">
         <div id="navContainer" class="nav-wrapper container">
@@ -899,12 +924,12 @@ Pixhawk是一款由PX4开源项目设计并由3DR公司制造生产的高级自
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/PX4/">
-                            <span class="chip bg-color">PX4</span>
-                        </a>
-                        
                         <a href="/tags/PIXHAWK/">
                             <span class="chip bg-color">PIXHAWK</span>
+                        </a>
+                        
+                        <a href="/tags/PX4/">
+                            <span class="chip bg-color">PX4</span>
                         </a>
                         
                         <a href="/tags/APM/">
@@ -956,12 +981,12 @@ Pixhawk是一款由PX4开源项目设计并由3DR公司制造生产的高级自
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/MAVROS/">
-                            <span class="chip bg-color">MAVROS</span>
-                        </a>
-                        
                         <a href="/tags/PX4/">
                             <span class="chip bg-color">PX4</span>
+                        </a>
+                        
+                        <a href="/tags/MAVROS/">
+                            <span class="chip bg-color">MAVROS</span>
                         </a>
                         
                         <a href="/tags/Gazebo/">
@@ -1301,6 +1326,8 @@ $(function () {
             $('body').hasClass('DarkMode') 
             ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
             : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+
+            window.syncGiscusTheme && window.syncGiscusTheme(),
             
             setTimeout(function () {
             $('.Cuteen_DarkSky').fadeOut(1e3, function () {

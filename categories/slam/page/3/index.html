@@ -33,7 +33,27 @@
 <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
 <link rel="stylesheet" type="text/css" href="/css/matery.css">
 <link rel="stylesheet" type="text/css" href="/css/my.css">
-<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+<script>
+    (function () {
+        var darkStyleLink = document.createElement('link');
+        darkStyleLink.rel = 'stylesheet';
+        darkStyleLink.type = 'text/css';
+        darkStyleLink.href = '/css/dark.css';
+
+        if (localStorage.getItem('isDark') === '1') {
+            darkStyleLink.media = 'all';
+        } else {
+            darkStyleLink.media = 'none';
+            darkStyleLink.onload = function () {
+                if (darkStyleLink.media !== 'all') {
+                    darkStyleLink.media = 'all';
+                }
+            };
+        }
+
+        document.head.appendChild(darkStyleLink);
+    })();
+</script>
 
 
 
@@ -59,6 +79,11 @@
 
 
 <body>
+    <script>
+        if (localStorage.getItem('isDark') === '1') {
+            document.body.classList.add('DarkMode');
+        }
+    </script>
     <header class="navbar-fixed">
     <nav id="headNav" class="bg-color">
         <div id="navContainer" class="nav-wrapper container">
@@ -376,11 +401,11 @@
                 
                 
                 
-                <a href="/categories/NeRF-3DGS/" title="NeRF&3DGS: 19">
+                <a href="/categories/%E5%85%B6%E4%BB%96/" title="其他: 13">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #F9EBEA;">NeRF&3DGS
-                        <span class="tag-length">19</span>
+                            style="background-color: #F9EBEA;">其他
+                        <span class="tag-length">13</span>
                     </span>
                 </a>
                 
@@ -394,11 +419,11 @@
                 </a>
                 
                 
-                <a href="/categories/%E5%85%B6%E4%BB%96/" title="其他: 13">
+                <a href="/categories/NeRF-3DGS/" title="NeRF&3DGS: 19">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #D5F5E3;">其他
-                        <span class="tag-length">13</span>
+                            style="background-color: #D5F5E3;">NeRF&3DGS
+                        <span class="tag-length">19</span>
                     </span>
                 </a>
                 
@@ -1259,6 +1284,8 @@ $(function () {
             $('body').hasClass('DarkMode') 
             ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
             : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+
+            window.syncGiscusTheme && window.syncGiscusTheme(),
             
             setTimeout(function () {
             $('.Cuteen_DarkSky').fadeOut(1e3, function () {
