@@ -627,12 +627,20 @@
             dark: 'dark'
         };
 
-        function getCurrentGiscusTheme() {
+        function getGiscusTheme(mode) {
+            if (mode === 'dark') {
+                return giscusThemeConfig.dark;
+            }
+
+            if (mode === 'light') {
+                return giscusThemeConfig.light;
+            }
+
             const isDark = localStorage.getItem('isDark') === '1' || document.body.classList.contains('DarkMode');
             return isDark ? giscusThemeConfig.dark : giscusThemeConfig.light;
         }
 
-        function syncGiscusTheme() {
+        function syncGiscusTheme(mode) {
             const iframe = document.querySelector('iframe.giscus-frame');
             if (!iframe) {
                 return;
@@ -642,7 +650,7 @@
                 {
                     giscus: {
                         setConfig: {
-                            theme: getCurrentGiscusTheme()
+                            theme: getGiscusTheme(mode)
                         }
                     }
                 },
@@ -688,7 +696,7 @@
             script.setAttribute('data-reactions-enabled', '1');
             script.setAttribute('data-emit-metadata', '0');
             script.setAttribute('data-input-position', 'bottom');
-            script.setAttribute('data-theme', getCurrentGiscusTheme());
+            script.setAttribute('data-theme', getGiscusTheme());
             script.setAttribute('data-lang', 'zh-CN');
             script.setAttribute('data-loading', 'lazy');
             document.body.appendChild(script);
@@ -1167,20 +1175,30 @@ $(function () {
 
 <script>
     function switchNightMode() {
-        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
-        setTimeout(function () {
-            $('body').hasClass('DarkMode') 
-            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
-            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+        const targetMode = $('body').hasClass('DarkMode') ? 'light' : 'dark';
+        const hasGiscus = typeof window.syncGiscusTheme === 'function';
 
-            window.syncGiscusTheme && window.syncGiscusTheme(),
-            
-            setTimeout(function () {
-            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
-                $(this).remove()
-            })
-            }, 2e3)
-        })
+        if (hasGiscus) {
+            window.syncGiscusTheme(targetMode);
+        }
+
+        const applyNightMode = function () {
+            if (targetMode === 'dark') {
+                $('body').addClass('DarkMode');
+                localStorage.setItem('isDark', '1');
+                $('#sum-moon-icon').addClass('fa-sun').removeClass('fa-moon');
+            } else {
+                $('body').removeClass('DarkMode');
+                localStorage.setItem('isDark', '0');
+                $('#sum-moon-icon').removeClass('fa-sun').addClass('fa-moon');
+            }
+
+            if (hasGiscus) {
+                window.syncGiscusTheme(targetMode);
+            }
+        };
+
+        setTimeout(applyNightMode, hasGiscus ? 50 : 0);
     }
 </script>
 

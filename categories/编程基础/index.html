@@ -401,19 +401,10 @@
                 
                 
                 
-                <a href="/categories/%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" title="编程基础: 16">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-active "
-                            style="background-color: #F9EBEA;">编程基础
-                        <span class="tag-length">16</span>
-                    </span>
-                </a>
-                
-                
                 <a href="/categories/NeRF-3DGS/" title="NeRF&3DGS: 19">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #F5EEF8;">NeRF&3DGS
+                            style="background-color: #F9EBEA;">NeRF&3DGS
                         <span class="tag-length">19</span>
                     </span>
                 </a>
@@ -422,8 +413,17 @@
                 <a href="/categories/%E5%85%B6%E4%BB%96/" title="其他: 13">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #D5F5E3;">其他
+                            style="background-color: #F5EEF8;">其他
                         <span class="tag-length">13</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/categories/%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" title="编程基础: 16">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-active "
+                            style="background-color: #D5F5E3;">编程基础
+                        <span class="tag-length">16</span>
                     </span>
                 </a>
                 
@@ -1342,20 +1342,30 @@ $(function () {
 
 <script>
     function switchNightMode() {
-        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
-        setTimeout(function () {
-            $('body').hasClass('DarkMode') 
-            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
-            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+        const targetMode = $('body').hasClass('DarkMode') ? 'light' : 'dark';
+        const hasGiscus = typeof window.syncGiscusTheme === 'function';
 
-            window.syncGiscusTheme && window.syncGiscusTheme(),
-            
-            setTimeout(function () {
-            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
-                $(this).remove()
-            })
-            }, 2e3)
-        })
+        if (hasGiscus) {
+            window.syncGiscusTheme(targetMode);
+        }
+
+        const applyNightMode = function () {
+            if (targetMode === 'dark') {
+                $('body').addClass('DarkMode');
+                localStorage.setItem('isDark', '1');
+                $('#sum-moon-icon').addClass('fa-sun').removeClass('fa-moon');
+            } else {
+                $('body').removeClass('DarkMode');
+                localStorage.setItem('isDark', '0');
+                $('#sum-moon-icon').removeClass('fa-sun').addClass('fa-moon');
+            }
+
+            if (hasGiscus) {
+                window.syncGiscusTheme(targetMode);
+            }
+        };
+
+        setTimeout(applyNightMode, hasGiscus ? 50 : 0);
     }
 </script>
 

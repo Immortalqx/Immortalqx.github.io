@@ -307,12 +307,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
-                                <span class="chip bg-color">机器学习</span>
-                            </a>
-                        
                             <a href="/tags/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/">
                                 <span class="chip bg-color">逻辑回归</span>
+                            </a>
+                        
+                            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+                                <span class="chip bg-color">机器学习</span>
                             </a>
                         
                     </div>
@@ -765,12 +765,12 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
-                                    <span class="chip bg-color">机器学习</span>
-                                </a>
-                            
                                 <a href="/tags/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/">
                                     <span class="chip bg-color">逻辑回归</span>
+                                </a>
+                            
+                                <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+                                    <span class="chip bg-color">机器学习</span>
                                 </a>
                             
                         </div>
@@ -862,12 +862,20 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
             dark: 'dark'
         };
 
-        function getCurrentGiscusTheme() {
+        function getGiscusTheme(mode) {
+            if (mode === 'dark') {
+                return giscusThemeConfig.dark;
+            }
+
+            if (mode === 'light') {
+                return giscusThemeConfig.light;
+            }
+
             const isDark = localStorage.getItem('isDark') === '1' || document.body.classList.contains('DarkMode');
             return isDark ? giscusThemeConfig.dark : giscusThemeConfig.light;
         }
 
-        function syncGiscusTheme() {
+        function syncGiscusTheme(mode) {
             const iframe = document.querySelector('iframe.giscus-frame');
             if (!iframe) {
                 return;
@@ -877,7 +885,7 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
                 {
                     giscus: {
                         setConfig: {
-                            theme: getCurrentGiscusTheme()
+                            theme: getGiscusTheme(mode)
                         }
                     }
                 },
@@ -923,7 +931,7 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
             script.setAttribute('data-reactions-enabled', '1');
             script.setAttribute('data-emit-metadata', '0');
             script.setAttribute('data-input-position', 'bottom');
-            script.setAttribute('data-theme', getCurrentGiscusTheme());
+            script.setAttribute('data-theme', getGiscusTheme());
             script.setAttribute('data-lang', 'zh-CN');
             script.setAttribute('data-loading', 'lazy');
             document.body.appendChild(script);
@@ -1034,12 +1042,12 @@ fig_num <span class="token operator">=</span> <span class="token number">0</span
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/K-Means/">
-                        <span class="chip bg-color">K-Means</span>
-                    </a>
-                    
                     <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
                         <span class="chip bg-color">机器学习</span>
+                    </a>
+                    
+                    <a href="/tags/K-Means/">
+                        <span class="chip bg-color">K-Means</span>
                     </a>
                     
                 </div>
@@ -1406,20 +1414,30 @@ $(function () {
 
 <script>
     function switchNightMode() {
-        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
-        setTimeout(function () {
-            $('body').hasClass('DarkMode') 
-            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
-            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+        const targetMode = $('body').hasClass('DarkMode') ? 'light' : 'dark';
+        const hasGiscus = typeof window.syncGiscusTheme === 'function';
 
-            window.syncGiscusTheme && window.syncGiscusTheme(),
-            
-            setTimeout(function () {
-            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
-                $(this).remove()
-            })
-            }, 2e3)
-        })
+        if (hasGiscus) {
+            window.syncGiscusTheme(targetMode);
+        }
+
+        const applyNightMode = function () {
+            if (targetMode === 'dark') {
+                $('body').addClass('DarkMode');
+                localStorage.setItem('isDark', '1');
+                $('#sum-moon-icon').addClass('fa-sun').removeClass('fa-moon');
+            } else {
+                $('body').removeClass('DarkMode');
+                localStorage.setItem('isDark', '0');
+                $('#sum-moon-icon').removeClass('fa-sun').addClass('fa-moon');
+            }
+
+            if (hasGiscus) {
+                window.syncGiscusTheme(targetMode);
+            }
+        };
+
+        setTimeout(applyNightMode, hasGiscus ? 50 : 0);
     }
 </script>
 

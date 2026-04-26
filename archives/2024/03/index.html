@@ -925,20 +925,30 @@ $(function () {
 
 <script>
     function switchNightMode() {
-        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
-        setTimeout(function () {
-            $('body').hasClass('DarkMode') 
-            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
-            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+        const targetMode = $('body').hasClass('DarkMode') ? 'light' : 'dark';
+        const hasGiscus = typeof window.syncGiscusTheme === 'function';
 
-            window.syncGiscusTheme && window.syncGiscusTheme(),
-            
-            setTimeout(function () {
-            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
-                $(this).remove()
-            })
-            }, 2e3)
-        })
+        if (hasGiscus) {
+            window.syncGiscusTheme(targetMode);
+        }
+
+        const applyNightMode = function () {
+            if (targetMode === 'dark') {
+                $('body').addClass('DarkMode');
+                localStorage.setItem('isDark', '1');
+                $('#sum-moon-icon').addClass('fa-sun').removeClass('fa-moon');
+            } else {
+                $('body').removeClass('DarkMode');
+                localStorage.setItem('isDark', '0');
+                $('#sum-moon-icon').removeClass('fa-sun').addClass('fa-moon');
+            }
+
+            if (hasGiscus) {
+                window.syncGiscusTheme(targetMode);
+            }
+        };
+
+        setTimeout(applyNightMode, hasGiscus ? 50 : 0);
     }
 </script>
 
