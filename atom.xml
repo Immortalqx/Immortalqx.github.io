@@ -6,7 +6,7 @@
   <link href="http://immortalqx.github.io/atom.xml" rel="self"/>
   
   <link href="http://immortalqx.github.io/"/>
-  <updated>2026-04-26T08:16:36.066Z</updated>
+  <updated>2026-06-02T13:33:42.134Z</updated>
   <id>http://immortalqx.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>为什么要预测 action？</title>
+    <link href="http://immortalqx.github.io/2026/06/02/why-action/"/>
+    <id>http://immortalqx.github.io/2026/06/02/why-action/</id>
+    <published>2026-06-02T13:27:09.000Z</published>
+    <updated>2026-06-02T13:33:42.134Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;为什么要预测-action？&quot;&gt;&lt;a href=&quot;#为什么要预测-action？&quot; class=&quot;headerlink&quot; title=&quot;为什么要预测 action？&quot;&gt;&lt;/a&gt;为什么要预测 action？&lt;/h1&gt;&lt;p&gt;我最近在学习VLA、World</summary>
+        
+      
+    
+    
+    
+    <category term="Robotics" scheme="http://immortalqx.github.io/categories/Robotics/"/>
+    
+    
+    <category term="具身智能" scheme="http://immortalqx.github.io/tags/%E5%85%B7%E8%BA%AB%E6%99%BA%E8%83%BD/"/>
+    
+  </entry>
   
   <entry>
     <title>用Codex做简单的文献调研</title>
@@ -46,7 +71,7 @@
     <link href="http://immortalqx.github.io/2025/05/29/paper-reading-vggt-slam/"/>
     <id>http://immortalqx.github.io/2025/05/29/paper-reading-vggt-slam/</id>
     <published>2025-05-29T14:12:37.000Z</published>
-    <updated>2025-05-29T14:22:38.271Z</updated>
+    <updated>2026-06-02T13:33:26.498Z</updated>
     
     
       
@@ -59,7 +84,7 @@
     
     
     
-    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    <category term="Robotics" scheme="http://immortalqx.github.io/categories/Robotics/"/>
     
     
     <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
@@ -181,7 +206,7 @@
     <link href="http://immortalqx.github.io/2025/02/22/paper-reading-densesplat/"/>
     <id>http://immortalqx.github.io/2025/02/22/paper-reading-densesplat/</id>
     <published>2025-02-22T15:12:37.000Z</published>
-    <updated>2025-04-13T16:50:50.522Z</updated>
+    <updated>2026-06-02T13:33:26.495Z</updated>
     
     
       
@@ -194,7 +219,7 @@
     
     
     
-    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    <category term="Robotics" scheme="http://immortalqx.github.io/categories/Robotics/"/>
     
     
     <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
@@ -260,7 +285,7 @@
     <link href="http://immortalqx.github.io/2025/01/18/code-reading-monogs/"/>
     <id>http://immortalqx.github.io/2025/01/18/code-reading-monogs/</id>
     <published>2025-01-18T14:53:20.000Z</published>
-    <updated>2025-01-18T14:58:27.214Z</updated>
+    <updated>2026-06-02T13:33:26.486Z</updated>
     
     
       
@@ -273,7 +298,7 @@
     
     
     
-    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    <category term="Robotics" scheme="http://immortalqx.github.io/categories/Robotics/"/>
     
     
     <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
@@ -287,7 +312,7 @@
     <link href="http://immortalqx.github.io/2024/11/26/nerf-3dgs-in-slam-robotics/"/>
     <id>http://immortalqx.github.io/2024/11/26/nerf-3dgs-in-slam-robotics/</id>
     <published>2024-11-26T13:47:36.000Z</published>
-    <updated>2025-01-18T15:01:44.599Z</updated>
+    <updated>2026-06-02T13:33:26.490Z</updated>
     
     
       
@@ -300,12 +325,12 @@
     
     
     
-    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    <category term="Robotics" scheme="http://immortalqx.github.io/categories/Robotics/"/>
     
-    
-    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
     
     <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
+    
+    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
     
   </entry>
   
@@ -314,7 +339,7 @@
     <link href="http://immortalqx.github.io/2024/11/21/paper-reading-pin-slam/"/>
     <id>http://immortalqx.github.io/2024/11/21/paper-reading-pin-slam/</id>
     <published>2024-11-21T15:05:22.000Z</published>
-    <updated>2025-01-18T14:44:19.664Z</updated>
+    <updated>2026-06-02T13:33:26.497Z</updated>
     
     
       
@@ -327,7 +352,7 @@
     
     
     
-    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    <category term="Robotics" scheme="http://immortalqx.github.io/categories/Robotics/"/>
     
     
     <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
@@ -341,7 +366,7 @@
     <link href="http://immortalqx.github.io/2024/11/16/neural-point-slam/"/>
     <id>http://immortalqx.github.io/2024/11/16/neural-point-slam/</id>
     <published>2024-11-16T04:20:01.000Z</published>
-    <updated>2025-01-18T14:44:19.661Z</updated>
+    <updated>2026-06-02T13:33:26.493Z</updated>
     
     
       
@@ -354,12 +379,12 @@
     
     
     
-    <category term="slam" scheme="http://immortalqx.github.io/categories/slam/"/>
+    <category term="Robotics" scheme="http://immortalqx.github.io/categories/Robotics/"/>
     
-    
-    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
     
     <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
     
   </entry>
   
@@ -384,9 +409,9 @@
     <category term="NeRF&amp;3DGS" scheme="http://immortalqx.github.io/categories/NeRF-3DGS/"/>
     
     
-    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
-    
     <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    
+    <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
     
   </entry>
   
@@ -511,33 +536,6 @@
         
         
     <summary type="html">&lt;h1 id=&quot;论文阅读《Mini-Splatting-Representing-Scenes-with-a-Constrained-Number-of-Gaussians》&quot;&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="NeRF&amp;3DGS" scheme="http://immortalqx.github.io/categories/NeRF-3DGS/"/>
-    
-    
-    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
-    
-    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>论文阅读《Gaussian Splatting with Localized Points Management》</title>
-    <link href="http://immortalqx.github.io/2024/07/20/paper-reading-lpm/"/>
-    <id>http://immortalqx.github.io/2024/07/20/paper-reading-lpm/</id>
-    <published>2024-07-20T08:26:22.000Z</published>
-    <updated>2025-01-18T14:44:19.663Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;论文阅读《Gaussian-Splatting-with-Localized-Points-Management》&quot;&gt;&lt;a href=&quot;#论文阅读《Gaussian-Splatting-with-Localized-Points-Management》&quot;</summary>
         
       
     
