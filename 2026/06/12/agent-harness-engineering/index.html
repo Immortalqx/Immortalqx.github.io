@@ -1,0 +1,1596 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="《Agent Harness Engineering：A Survey》阅读笔记, 所念皆星河">
+    <meta name="description" content="《Agent Harness Engineering: A Survey》阅读笔记
+71 页 TMLR 综述论文，2026-05-14 投稿，9 位作者来自 CMU / Yale / Amazon 等。
+本笔记为minimax m3阅读后直">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>《Agent Harness Engineering：A Survey》阅读笔记 | 所念皆星河</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<script>
+    (function () {
+        var darkStyleLink = document.createElement('link');
+        darkStyleLink.rel = 'stylesheet';
+        darkStyleLink.type = 'text/css';
+        darkStyleLink.href = '/css/dark.css';
+
+        if (localStorage.getItem('isDark') === '1') {
+            darkStyleLink.media = 'all';
+        } else {
+            darkStyleLink.media = 'none';
+            darkStyleLink.onload = function () {
+                if (darkStyleLink.media !== 'all') {
+                    darkStyleLink.media = 'all';
+                }
+            };
+        }
+
+        document.head.appendChild(darkStyleLink);
+    })();
+</script>
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="所念皆星河" type="application/atom+xml">
+</head>
+
+
+<body>
+    <script>
+        if (localStorage.getItem('isDark') === '1') {
+            document.body.classList.add('DarkMode');
+        }
+    </script>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo_color.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">所念皆星河</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/homepage" class="waves-effect waves-light">
+      
+      <i class="fas fa-award" style="zoom: 0.6;"></i>
+      
+      <span>Homepage</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo_color.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">所念皆星河</div>
+        <div class="logo-desc">
+            
+            其疾如风，侵掠如火，难知如阴
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/homepage" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-award"></i>
+			
+			Homepage
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/70.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">《Agent Harness Engineering：A Survey》阅读笔记</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/LLM/">
+                                <span class="chip bg-color">LLM</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">
+                                <span class="chip bg-color">大模型</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                机器学习
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2026-06-12
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    7.1k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    28 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="《Agent-Harness-Engineering-A-Survey》阅读笔记"><a href="#《Agent-Harness-Engineering-A-Survey》阅读笔记" class="headerlink" title="《Agent Harness Engineering: A Survey》阅读笔记"></a>《Agent Harness Engineering: A Survey》阅读笔记</h1><blockquote>
+<p>71 页 TMLR 综述论文，2026-05-14 投稿，9 位作者来自 CMU / Yale / Amazon 等。</p>
+<p>本笔记为<strong>minimax m3</strong>阅读后直出，<strong>用户要求是总结 + 叙述性段落 + 论文原图</strong>。<br>论文：Junjie Li 等，《Agent Harness Engineering: A Survey》，2026。</p>
+</blockquote>
+<hr>
+<h2 id="一、这篇论文要回答什么问题"><a href="#一、这篇论文要回答什么问题" class="headerlink" title="一、这篇论文要回答什么问题"></a>一、这篇论文要回答什么问题</h2><p><strong>如果把大语言模型比作一颗越来越聪明的大脑，那么当它被要求”在真实世界里独立完成任务”时，包裹在它外面那整套基础设施——执行环境、工具协议、上下文管理、调度编排、可观测、评估、治理——才是决定它能不能干好活的真正关键。</strong> 这篇 71 页的学术综述论文把这个直觉系统化了，并把它命名为 <strong>“Agent Harness Engineering”（Agent 驾驭层工程）</strong>——一个被 OpenAI、Anthropic、LangChain 在生产中用了两年、但学术界从未正式研究的领域。</p>
+<p><strong>论文的三个核心论断</strong>构成了全文骨架：<strong>第一</strong>，harness 是独立的系统层，长跑任务上可靠性的瓶颈约束是 harness 而非模型；<strong>第二</strong>，论文提出 <strong>ETCLOVG 七层分类法</strong>（Execution / Tool / Context / Lifecycle-Orchestration / Observability / Verification / Governance），把已有六组件框架扩展为七层，<strong>首次把 Observability 提升为独立架构层</strong>，并新增跨 model/system/organization 三级的 Governance；<strong>第三</strong>，论文用 PRISMA-style 方法学从 GitHub、survey、curated list、公司博客四源汇聚 <strong>171 个开源项目</strong>编码到七层中，并系统提炼 OpenAI / Anthropic / LangChain 三大厂商的生产经验。</p>
+<p>理解这篇论文最大的价值不在任何一个新算法或新协议，而在于它给整个”agent 工程”领域<strong>装上了一套共同词汇</strong>。在此之前，”harness engineering”只是 OpenAI 工程博客（2026-02-11 发表的 <a target="_blank" rel="noopener" href="https://openai.com/index/harness-engineering/">Harness engineering: leveraging Codex in an agent-first world</a>）里的口号；在此之后，它有了 academic citation、可以教学、可以写进论文。</p>
+<hr>
+<h2 id="二、为什么是-2026-年：harness-概念从工程口号到学术学科"><a href="#二、为什么是-2026-年：harness-概念从工程口号到学术学科" class="headerlink" title="二、为什么是 2026 年：harness 概念从工程口号到学术学科"></a>二、为什么是 2026 年：harness 概念从工程口号到学术学科</h2><p>理解这篇论文要先理解一个时间点：<strong>2026 年初，”harness engineering” 突然从一家公司的内部术语变成了行业共识</strong>。</p>
+<ul>
+<li><strong>2024-11-25</strong>：Anthropic 发布 <strong>Model Context Protocol (MCP)**，给 agent 调用工具提供了”AI 时代的 USB 接口”标准。一年之内社区建了数千个 MCP server，到 **2025-12-10</strong> Anthropic 把 MCP 捐赠给 Linux 基金会。</li>
+<li><strong>2025-04-09</strong>：Google 发布 <strong>Agent-to-Agent (A2A) 协议</strong>，给 agent 之间互相协作提供标准；<strong>2025-06-23</strong> Linux 基金会成立 A2A 项目，得到 100+ 厂商支持。</li>
+<li><strong>2025-04</strong>：OpenAI 开源 <strong>Codex CLI</strong>（终端编码 agent，2026 年 1 月已 67K stars）；同期 Mem0 发表 arXiv 论文 2504.19413 提出”可扩展长期记忆架构”。</li>
+<li><strong>2025-10</strong>：OpenAI <strong>DevDay 2025</strong> 宣布 Codex 正式 GA，并明确把”harness engineering”列入主题演讲。</li>
+<li><strong>2026-02-11</strong>：OpenAI 发布 <em>Harness engineering: leveraging Codex in an agent-first world</em> 工程博客，把 harness 概念从代码实践升级为公共术语。</li>
+<li><strong>2026-05-14</strong>：本文作为第一篇系统化综述投稿 TMLR。</li>
+</ul>
+<p>从 2024-11 到 2026-05 仅仅 18 个月，”harness”从一个隐喻（来自马术，harness = 马具、驾驭具）变成一个<strong>学科</strong>。论文正好踩在学科确立的节点上。</p>
+<hr>
+<h2 id="三、论文的”图谱”——ETCLOVG-七层架构"><a href="#三、论文的”图谱”——ETCLOVG-七层架构" class="headerlink" title="三、论文的”图谱”——ETCLOVG 七层架构"></a>三、论文的”图谱”——ETCLOVG 七层架构</h2><p>论文把 agent harness 拆成 <strong>7 层架构</strong>。下面这张图是论文 Figure 2 的简化版，<strong>强烈建议先把图看完再读后面文字</strong>：</p>
+<p><img src="/images/agent-harness-engineering/fig02_taxonomy_overview.png" alt="Figure 2: ETCLOVG 七层架构概览"></p>
+<p>论文 Figure 2 把七层画成一个<strong>有上下结构关系</strong>的体系：<strong>E / T / C / L 四层是”结构性支柱”**（它们构成 agent 本身），</strong>O 层提供系统级监控<strong>（横跨其他层），</strong>V 层提供跨组件的评估与反馈<strong>（横跨其他层），</strong>G 层治理与安全**作为最底层执行准入规则。</p>
+<p>如果把 Figure 2 展开成细节图（论文 Figure 4），七层各自又细分为若干子类别——</p>
+<p><img src="/images/agent-harness-engineering/fig04_taxonomy_details.png" alt="Figure 4: 七层架构的细分类"></p>
+<p>论文 Figure 4 显示的细分中，几个关键观察：</p>
+<ul>
+<li><strong>E 层（执行环境）</strong> 拆成 7 个子类——通用管理沙箱、计算机使用 agent 基础设施、代码专用沙箱、框架集成运行时、浏览器评测环境、OS 级权限沙箱、沙箱抽象层。</li>
+<li><strong>O 层（可观测）</strong> 拆成 5 类：追踪/监控平台、agent 专用运维、成本追踪与优化、可靠性工程、统一可观测。</li>
+<li><strong>V 层（验证）</strong> 拆成 5 个子阶段：任务与基准锚定 → 执行前准备验证 → 受控执行与 trace 捕获 → 多层判断与失败归因 → 持续回归与部署反馈。这是论文的”5 阶段 task-to-feedback lifecycle”原创框架（见 Figure 12）。</li>
+<li><strong>G 层（治理）</strong> 拆成 5 类：权限模型与身份管理、生命周期钩子（H1-H4）、组件硬化、声明式宪法、审计基础设施。</li>
+</ul>
+<hr>
+<h2 id="四、三阶段工程演进：Prompt-→-Context-→-Harness"><a href="#四、三阶段工程演进：Prompt-→-Context-→-Harness" class="headerlink" title="四、三阶段工程演进：Prompt → Context → Harness"></a>四、三阶段工程演进：Prompt → Context → Harness</h2><p>论文用 Figure 1 解释了<strong>为什么 harness engineering 必然在 2026 年出现</strong>——它是工程抽象层级的必然结果。</p>
+<p><img src="/images/agent-harness-engineering/fig01_three_phases.png" alt="Figure 1: Prompt / Context / Harness 三阶段对比"></p>
+<p><strong>Prompt Engineering（2022-2024）</strong> 是第一阶段：把模型的输入 prompt 文本调好（指令调优、Few-shot、推理模板）。这个阶段的工程范围是”<strong>单次文本输入到单次模型调用</strong>“。它假设”模型能处理一切”，所以工程的目标只是”怎么说服模型”。</p>
+<p><strong>Context Engineering（2025）</strong> 是第二阶段：当 agent 变长跑时，”模型看到什么”比”模型被说什么”重要得多。Karpathy 在 2025 年推广这个概念——把”单次输入”扩展到”跨多步的信息状态”。典型的 context engineering 包括 RAG、记忆管理、压缩、progressive disclosure。论文明确指出：<strong>harness engineering 包含 context engineering</strong>，不是替代。</p>
+<p><strong>Harness Engineering（2026）</strong> 是第三阶段：模型本身无法独立处理的所有”周边问题”——执行环境、工具协议、orchestration、监控、评估、治理——都被纳入”harness”这一层。<strong>Harness 是把模型从”能回答问题”变成”能在真实世界完成任务”的必要容器</strong>。论文 Figure 1 的最后一栏把 harness 拆成”基础设施 wrapper”和”execution control feedbacks”两块，前者是基础设施层，后者是反馈环——合起来就是”控制论”视角下的”前馈 + 反馈”闭环。</p>
+<p><strong>一个关键观察</strong>：后一阶段是前一阶段的<strong>超集</strong>而非替代。每个 harness 组件都编码”模型做不到某事”的假设；模型变强时这些假设会过时——这就是论文第 12 节”五大未解问题”中<strong>Harness 随模型进化而自适应简化</strong>（adaptive simplification）的核心。</p>
+<hr>
+<h2 id="五、每一层：核心洞见与代表项目"><a href="#五、每一层：核心洞见与代表项目" class="headerlink" title="五、每一层：核心洞见与代表项目"></a>五、每一层：核心洞见与代表项目</h2><p>这一节按七层顺序展开，每层抓住一个最有代表性的洞见，并介绍该层的代表项目。</p>
+<h3 id="5-1-E-层-Execution-Environment：Sandbox-在-agent-时代承担-3-种职能"><a href="#5-1-E-层-Execution-Environment：Sandbox-在-agent-时代承担-3-种职能" class="headerlink" title="5.1 E 层 - Execution Environment：Sandbox 在 agent 时代承担 3 种职能"></a>5.1 E 层 - Execution Environment：Sandbox 在 agent 时代承担 3 种职能</h3><p>论文关于 E 层最有冲击力的论断是：<strong>沙箱在 agent 时代承担的不仅是 security 和 reproducibility，还有第三种职能——liveness</strong>。</p>
+<p>传统沙箱的”安全 + 可复现”目标是软件工程老问题。但 agent 时代多出的 liveness 维度，是说：sandbox 让 agent 在 bounded region 内”自由行动”，把每个动作的弹窗授权转成<strong>会话级配置</strong>。**Anthropic 报告 Claude Code 引入 sandboxing 后权限弹窗减少 84%**——这就是 liveness 价值的最直观证据。</p>
+<p>论文 Figure 6 展示了 E 层 7 个子类的代表项目——</p>
+<p><img src="/images/agent-harness-engineering/fig06_execution_landscape.png" alt="Figure 6: E 层代表项目"></p>
+<p>几个值得记住的项目：</p>
+<ul>
+<li><strong>Daytona</strong>（72.4K stars）：用 Docker containers 实现 <strong>sub-90ms 冷启动</strong>（vs Docker 通常 2-5 秒），让”per-call sandbox”成为可能。<strong>这是 agent 时代的专用沙箱</strong>——为 AI 重新设计，不是改造传统云沙箱。</li>
+<li><strong>E2B</strong>（12.1K stars）：用 AWS Firecracker microVM 做云沙箱。</li>
+<li><strong>Anthropic Computer Use</strong>：旗舰商业 computer-use 实现，是该子类的标杆。</li>
+<li><strong>OpenHands Runtime</strong>：研究级”一站式”runtime，把 Docker + bash + IPython + Chromium + API server 装在一个镜像里。</li>
+<li><strong>SWE-ReX</strong>：跨云 sandbox 统一接口（Docker/Fargate/Modal/Daytona）。</li>
+</ul>
+<p>E 层也有严肃的威胁面：论文引用 <strong>SandboxEscapeBench (Marchand 2026)</strong> 实测，前沿 LLM 在 Docker 容器中逃逸成功率 **15%-35%**——这不是”理论上能逃”，是”在嵌套沙盒 CTF 中实际能逃”。</p>
+<h3 id="5-2-T-层-Tool-Interface：协议按”集成边界”分类"><a href="#5-2-T-层-Tool-Interface：协议按”集成边界”分类" class="headerlink" title="5.2 T 层 - Tool Interface：协议按”集成边界”分类"></a>5.2 T 层 - Tool Interface：协议按”集成边界”分类</h3><p>T 层最有价值的不是某一个工具，而是<strong>协议分类学</strong>。论文 Table 1 把所有主流 agent 工具/接口标准按”集成边界”和四个能力轴排成矩阵——</p>
+<p><img src="/images/agent-harness-engineering/table01_tool_standards.png" alt="Table 1: 工具/接口标准按集成边界分类"></p>
+<p>Table 1 显示了一个清晰的结论：**MCP 和 A2A 已经覆盖了 agent 工具层和 agent 间的全部”金标准”**。具体观察：</p>
+<ul>
+<li><strong>Function calling</strong> 只覆盖 Model↔Function 边界，能力最强但不可发现。</li>
+<li><strong>MCP</strong>（Anthropic 2024-11-25 发布）覆盖 Agent↔Capability 边界，是当前最可见的工具集成 substrate；JSON-RPC 线协议，类型化、运行时发现、支持长跑任务。</li>
+<li><strong>A2A</strong>（Google 2025-04-09 发布）覆盖 Agent↔Agent 边界，是 agent 间通信标准；JSON-RPC 线协议，类型化、运行时发现、支持长跑任务。</li>
+<li><strong>OpenAPI</strong> 是 HTTP API 描述标准，覆盖 Agent↔Capability 边界，类型化但不支持运行时发现。</li>
+<li><strong>AGENTS.md / AGENT.md</strong>（21K stars）覆盖 Agent↔Repo/env 边界，是仓库级 agent 指令文件的标准——Anthropic、OpenAI、Google、Cursor 普遍支持。</li>
+</ul>
+<p>值得注意：<strong>没有单一协议能同时覆盖”工具”和”agent”两类</strong>——MCP 和 A2A 是互补关系：MCP 管”agent 怎么调工具”，A2A 管”agent 怎么调 agent”。这与论文 Table 1 的”行”对应（按集成边界）非常吻合。</p>
+<h3 id="5-3-C-层-Context-Management：长上下文不解决记忆问题"><a href="#5-3-C-层-Context-Management：长上下文不解决记忆问题" class="headerlink" title="5.3 C 层 - Context Management：长上下文不解决记忆问题"></a>5.3 C 层 - Context Management：长上下文不解决记忆问题</h3><p>C 层最有冲击力的事实是：<strong>长上下文窗口不解决记忆问题</strong>。三个机制共同决定 context 是稀缺资源——</p>
+<ul>
+<li><strong>Quadratic attention</strong>：注意力计算是 O(n²)，n 翻倍 → 计算 ×4</li>
+<li><strong>U-shaped attention curve</strong>：模型对开头和结尾关注多，中间关注少（Liu et al. 2024 “Lost in the Middle”——20 篇文档中段放答案准确率掉 30%+）</li>
+<li><strong>Context rot</strong>：Hong et al. 2025 评测 18 个前沿模型，<strong>全部随输入增长退化</strong>；200K 上下文模型在 50K 就开始掉点</li>
+</ul>
+<p>C 层的代表项目——</p>
+<p><img src="/images/agent-harness-engineering/fig08_context_landscape.png" alt="Figure 8: C 层代表项目"></p>
+<p>最有代表性的项目是 <strong>Mem0</strong>——arXiv 2504.19413 (2025-04-28)，由 Taranjeet Singh 等提出。Mem0 把”长期记忆”建模为 <strong>LLM 决策的 4 种操作</strong>：ADD（新建记忆）、UPDATE（丰富现有记忆）、DELETE（删除）、NOOP（无操作）。在 LOCOMO 基准上，Mem0 比 OpenAI 原生 memory <strong>准确率高 26%、省 90% token</strong>；Python 包下载 1400 万+次，<strong>AWS Agent SDK 2025 独家选用</strong>。它的成功意味着 agent 工程的”上下文管理”正在从”模型自己处理”转向”专用层处理”。</p>
+<p>C 层的另一关键洞察来自 <strong>KV-cache 经济学</strong>：Anthropic 缓存命中价 0.30/Mtok vs 未命中 3.00/Mtok，<strong>差 10 倍价</strong>。Manus 团队把 <strong>KV-cache hit rate</strong> 认定为”生产 Agent 最重要单一指标”。这意味着 agent 设计中”<strong>append-only context</strong>“（上下文只追加不修改）和”<strong>sub-agent isolation</strong>“（让子 agent 拿干净窗口做深度探索，只回 1-2k token 总结）这些设计模式不是”美学选择”而是”成本选择”。</p>
+<h3 id="5-4-L-层-Lifecycle-amp-Orchestration：从单-agent-到多-agent-到控制平面"><a href="#5-4-L-层-Lifecycle-amp-Orchestration：从单-agent-到多-agent-到控制平面" class="headerlink" title="5.4 L 层 - Lifecycle &amp; Orchestration：从单 agent 到多 agent 到控制平面"></a>5.4 L 层 - Lifecycle &amp; Orchestration：从单 agent 到多 agent 到控制平面</h3><p>L 层是论文中最大的子类（<strong>48 个项目</strong>），也是工程实践最丰富的层。</p>
+<p><img src="/images/agent-harness-engineering/fig09_lifecycle_landscape.png" alt="Figure 9: L 层代表项目"></p>
+<p>Figure 9 显示 L 层按”组织层级”分成三级：</p>
+<ul>
+<li><strong>单 agent 内循环</strong>（§6.2）：OpenCode（155.8K stars）、Claude Code（120.9K）、Gemini CLI（103.3K）、Codex CLI（80.4K）、Aider（44.4K）、SWE-agent（19.1K）。<strong>这一类的代表哲学是”少即是多”——只暴露 bash/read/write/grep 几个核心工具，让 agent 自己组合。</strong></li>
+<li><strong>多 agent 编排</strong>（§6.3）：DeerFlow、AutoGen、LangGraph、OpenAI Agents SDK、DeepAgents。<strong>这一类走相反路线——planner/generator/evaluator 各司其职，靠分工换质量。</strong></li>
+<li><strong>全生命周期管道</strong>（§6.4）：Vibe Kanban、Symphony、GitHub Agentic Workflows。<strong>这一类把 issue tracker + repo 作为 agent 工作的”控制平面”，人工审批成为流程一部分。</strong></li>
+</ul>
+<p>多 agent 编排的范式正在快速收敛：Anthropic 2025-2026 的工程博客提出 <strong>Planner-Generator-Evaluator</strong> 标准三 agent 角色，并借鉴 GAN 思想加 <strong>sprint contracts</strong> 防止自评偏见。<strong>Anthropic 2026c 实证</strong>：从 Opus 4.5 升 4.6 后，<strong>移除 sprint contract 和 context reset，成本从 $200 降到 $125，质量不变</strong>——这是”adaptive simplification”思想最有力的证据。</p>
+<h3 id="5-5-O-层-Observability：89-用可观测，52-4-做评估"><a href="#5-5-O-层-Observability：89-用可观测，52-4-做评估" class="headerlink" title="5.5 O 层 - Observability：89% 用可观测，52.4% 做评估"></a>5.5 O 层 - Observability：89% 用可观测，52.4% 做评估</h3><p>O 层最有冲击力的事实是 LangChain 2026 调查：<strong>89% 团队用可观测工具，只有 52.4% 做离线评估</strong>——能看 agent 做了什么但没系统判断”做得对不对”。</p>
+<p><img src="/images/agent-harness-engineering/fig10_observability_landscape.png" alt="Figure 10: O 层代表项目"></p>
+<p>O 层最有技术含量的项目是 <strong>AgentSight</strong>——<strong>eBPF-based monitoring</strong>。eBPF 是 Linux 内核的”可编程探针”技术，可在 SSL 边界拦截 LLM 流量。AgentSight 用这个机制做框架无关、&lt;3% CPU 开销、<strong>被攻陷 agent 也无法绕过</strong>的监控——这是从内核层而非应用层做可观测，安全性上一个数量级。</p>
+<p>另一个工业级实践是 <strong>Dual-Pool Token-Budget Routing</strong>（Anthropic 2026a）：把 vLLM 集群拆成短/长上下文池，Azure 上<strong>减 31-42% GPU 小时，年省 $2.86M</strong>（A100 规模）。</p>
+<p>O 层也面临 <strong>MAST 失败模式</strong>（Cemri 2025）——多 agent 系统 14 种失败模式，3 大类（系统设计、agent 间失配、任务验证）。<strong>这意味着 O 层不只是”看”——是”识别 14 种翻车方式”的诊断能力。</strong></p>
+<h3 id="5-6-V-层-Verification：5-阶段-task-to-feedback-lifecycle"><a href="#5-6-V-层-Verification：5-阶段-task-to-feedback-lifecycle" class="headerlink" title="5.6 V 层 - Verification：5 阶段 task-to-feedback lifecycle"></a>5.6 V 层 - Verification：5 阶段 task-to-feedback lifecycle</h3><p>V 层是论文最有方法论贡献的部分——把”评估 = 打分”升级为”评估 = 质量控制回路”。</p>
+<p><img src="/images/agent-harness-engineering/fig12_task_to_feedback.png" alt="Figure 12: 5 阶段 task-to-feedback lifecycle"></p>
+<p>论文 Figure 12 把评估拆成 5 个阶段：</p>
+<ol>
+<li><strong>Task and Benchmark Grounding</strong>（任务与基准锚定）：定义任务（环境状态+可用工具+允许动作+约束+终止条件+成功标准）</li>
+<li><strong>Pre-execution Readiness Validation</strong>（执行前准备验证）：开跑前验证 sandbox、依赖、工具、上下文、权限、预算、打分器都对齐</li>
+<li><strong>Controlled Execution and Trace Capture</strong>（受控执行与 trace 捕获）：rollout 时记录 model output / tool call / state 变化 / error / retry / cost / latency</li>
+<li><strong>Multi-level Judgement and Failure Attribution</strong>（多层判断与失败归因）：outcome / trajectory / evaluator 三级评估 + 跨 harness 层归因</li>
+<li><strong>Continuous Regression and Deployment Feedback</strong>（持续回归与部署反馈）：评估结果变回归测试、监控信号、harness 改进反馈</li>
+</ol>
+<p><strong>关键洞察</strong>：V 层的设计反向喂给 L 层——评估机制<strong>奖励某些恢复循环、惩罚另一些</strong>，从而塑造 agent 行为。这与 L 层的设计是双向耦合的（harness coupling problem）。</p>
+<p>代表项目（Figure 11）：</p>
+<p><img src="/images/agent-harness-engineering/fig11_verification_landscape.png" alt="Figure 11: V 层代表项目"></p>
+<ul>
+<li><strong>Promptfoo</strong>（20.9K stars）：eval-as-code 范式，把测试用例写进 YAML 自动跑</li>
+<li><strong>DeepEval</strong>（15.2K）、<strong>RAGAS</strong>（13.8K）、<strong>SWE-bench</strong>（4.9K）</li>
+</ul>
+<h3 id="5-7-G-层-Governance：H1-H4-钩子-21-7-幻觉包名"><a href="#5-7-G-层-Governance：H1-H4-钩子-21-7-幻觉包名" class="headerlink" title="5.7 G 层 - Governance：H1-H4 钩子 + 21.7% 幻觉包名"></a>5.7 G 层 - Governance：H1-H4 钩子 + 21.7% 幻觉包名</h3><p>G 层是论文识别的”卡脖子短板”——Table 4 显示六大主流 agent（Codex、Gemini CLI、OpenHands、Browser Use、Nanobrowser、Skyvern）<strong>全部缺失 IFC（信息流控制）、身份管理、形式化验证</strong>。</p>
+<p><img src="/images/agent-harness-engineering/fig13_governance_landscape.png" alt="Figure 13: G 层代表项目"></p>
+<p>G 层最有可操作性的概念是 <strong>H1-H4 生命周期钩子</strong>——</p>
+<p><img src="/images/agent-harness-engineering/fig14_hook_points.png" alt="Figure 14: H1-H4 四个 hook points"></p>
+<p>Figure 14 显示了一个工具使用循环中 4 个 hook 位置：</p>
+<pre class="line-numbers language-none"><code class="language-none">Input → H1 → LLM → H2 → Tool → H3 → Context → ... → H4 (HITL) → Response<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li><strong>H1</strong>：验输入（防 prompt 注入）</li>
+<li><strong>H2</strong>：验动作（防越权）</li>
+<li><strong>H3</strong>：验工具返回（防数据污染/taint tracking）</li>
+<li><strong>H4</strong>：人类审批（高危动作人工 gate）</li>
+</ul>
+<p>G 层最有名的开源项目是 <strong>LiteLLM</strong>（45.9K stars，gateway/proxy/guardrails）——把传统 API gateway 的所有能力（鉴权/限流/缓存/审计）平移到 LLM 时代。</p>
+<p>Table 3 把治理机制映射到 7 大风险类（R1-R7）——</p>
+<p><img src="/images/agent-harness-engineering/table03_governance_risks.png" alt="Table 3: 治理机制与风险类对应"></p>
+<p>G 层最让人警醒的事实是 <strong>Slopsquatting 攻击</strong>：开源模型 <strong>21.7%</strong> 会产生幻觉包名（Spracklen 2025），攻击者抢先注册 → 注入恶意代码。<strong>这意味着 agent 在安装依赖时本身就是攻击面</strong>。</p>
+<hr>
+<h2 id="六、跨层综合：三大-Trade-off"><a href="#六、跨层综合：三大-Trade-off" class="headerlink" title="六、跨层综合：三大 Trade-off"></a>六、跨层综合：三大 Trade-off</h2><p>跨层综合是论文最有”智识密度”的部分。三个 trade-off 不是新发现，但被首次系统化。</p>
+<h3 id="6-1-成本-质量-速度三角"><a href="#6-1-成本-质量-速度三角" class="headerlink" title="6.1 成本-质量-速度三角"></a>6.1 成本-质量-速度三角</h3><p><strong>核心论断</strong>：质量不是标量目标；必须选”哪些风险值得花代价”、”哪些检查可异步/放回归集”、”每阶段值得捕获哪些遥测”。</p>
+<p>具体权衡：更强 sandbox → 安全与可复现 ↑ 但启动延迟 + 成本 ↑；更丰富 context/memory → 任务连续性 ↑ 但 token + 检索开销 ↑；更深评估/可观测 → 诊断能力 ↑ 但迭代变慢 + 存储/标注/trace 处理成本 ↑。</p>
+<p><strong>最尖锐的数据点</strong>是 Anthropic 2026a 警示：<strong>基础设施配置本身能让基准分数偏移 6 个百分点（p&lt;0.01）</strong>——成本与评估保真度强耦合。这意味着<strong>模型升级的”分数”是被 harness 配置放大的</strong>，所谓”模型更好”很多时候是”我们用更好的 harness 跑出来的”。</p>
+<h3 id="6-2-能力-控制权衡"><a href="#6-2-能力-控制权衡" class="headerlink" title="6.2 能力-控制权衡"></a>6.2 能力-控制权衡</h3><p><strong>核心论断</strong>：更”能干”的 harness = 更多授权 = 更大攻击面。这<strong>不是安全附加项，是设计主轴</strong>，贯穿工具 schema、context 策略、运行时权限、身份、审计、人审。</p>
+<p>具体权衡：更大工具菜单 → 任务覆盖 ↑ 但选择错误 + prompt 注入面 ↑；持久记忆 → 长任务友好 但来源/staleness/隐私风险 ↑；宽松沙箱 → 自主执行更有效 但 blast radius（爆炸半径）↑。</p>
+<p><strong>真实案例</strong>：Anthropic 2026c 实验——放开 context reset 和 sprint contract 后，agent 自主性更强但成本翻倍。<strong>这印证了 capability-control 的硬性折中。</strong></p>
+<h3 id="6-3-Harness-耦合问题（Harness-Coupling-Problem）"><a href="#6-3-Harness-耦合问题（Harness-Coupling-Problem）" class="headerlink" title="6.3 Harness 耦合问题（Harness Coupling Problem）"></a>6.3 Harness 耦合问题（Harness Coupling Problem）</h3><p><strong>核心论断</strong>：层与层相互依赖 → <strong>局部最优是脆弱的</strong>。A 在隔离下看着好，组合进整个控制环可能反而劣化。<strong>模型分数无法干净归因到模型本身</strong>（因为控制器 C_H 已经变了）。</p>
+<p>具体例子：</p>
+<ul>
+<li>E 改变 V 结果（包可用性、reset 语义、延迟、失败模式）</li>
+<li>工具描述消耗 context 预算、塑造模型行为</li>
+<li>可观测 trace 要成为治理证据需要同等粒度的身份/权限状态</li>
+<li>V 设计反向喂给 L（奖励某些恢复循环、惩罚另一些）</li>
+</ul>
+<p><strong>方法论启示</strong>：harness 改动要作为<strong>系统级改动</strong>测试，不能把模型分数干净归因到模型。这就是为什么论文第 12 节把”<strong>Harness 随模型进化而自适应简化</strong>“列为五大未解问题之首。</p>
+<hr>
+<h2 id="七、OpenAI-Anthropic-LangChain-的生产经验精华"><a href="#七、OpenAI-Anthropic-LangChain-的生产经验精华" class="headerlink" title="七、OpenAI / Anthropic / LangChain 的生产经验精华"></a>七、OpenAI / Anthropic / LangChain 的生产经验精华</h2><p>论文最有”行内情报”价值的部分是从三大厂商博客/演讲/工程文章中提炼的经验。</p>
+<h3 id="7-1-OpenAI：harness-engineering-是工程口号"><a href="#7-1-OpenAI：harness-engineering-是工程口号" class="headerlink" title="7.1 OpenAI：harness engineering 是工程口号"></a>7.1 OpenAI：harness engineering 是工程口号</h3><p>OpenAI 工程师在 2026-02-11 工程博客 <a target="_blank" rel="noopener" href="https://openai.com/index/harness-engineering/">Harness engineering: leveraging Codex in an agent-first world</a> 中明确使用”harness engineering”作为术语。几个关键事实：</p>
+<ul>
+<li><strong>5 个月内小团队产出约 100 万行内部产品代码，无手写生产代码</strong>（OpenAI 2026a）——这不是个人生产力的提升，是组织级别的范式转移</li>
+<li><strong>Codex CLI</strong>（2025-04 开源，2026 年 1 月已 67K stars）走 <strong>stateless replay</strong> 路线——每次执行都从 prompt + 工具结果从头来，trace 完整可复现</li>
+<li><strong>Symphony</strong> 把 issue tracker + repo 作为 agent 工作的”控制平面”，分配、进度状态、验证 gate、review 边界都是 Codex 编排的显式部分</li>
+<li>**Meta-Harness (Lee 2026)**：自动 harness 优化在 Terminal-Bench-2 上达到 **76.4%**，超越所有手工方案</li>
+</ul>
+<p>OpenAI 的核心论文（2026a）证明：仅靠基础设施配置 + system prompt 重组 + 自验证 hooks 就能让 Terminal-Bench 2.0 从 52.8% 升到 66.5%——**+13.7 pp 提升来自 harness 改动**，而 GPT-5.2 模型升级在该 benchmark 上只带来 2-4 pp。</p>
+<h3 id="7-2-Anthropic：GAN-启发的三-agent-与-Managed-Agents"><a href="#7-2-Anthropic：GAN-启发的三-agent-与-Managed-Agents" class="headerlink" title="7.2 Anthropic：GAN 启发的三 agent 与 Managed Agents"></a>7.2 Anthropic：GAN 启发的三 agent 与 Managed Agents</h3><p>Anthropic 在 harness 上的实践最深——可能因为他们认为 harness 是 Anthropic 的护城河之一。</p>
+<ul>
+<li><strong>Claude Code</strong>（2025-02 发布，120.9K stars）：终端编码 agent，<strong>Fewer but better tools 哲学</strong>——只暴露 bash/read/write/grep 几个核心工具。引入 sandboxing 后权限弹窗减少 84%。</li>
+<li><strong>GAN-inspired three-agent</strong>（Anthropic 2026c）：借鉴 GAN 的对抗式三 agent（planner / generator / evaluator）+ sprint contracts 防自夸。<strong>最反直觉的发现</strong>：从 Opus 4.5 升 4.6 后，<strong>移除 sprint contract 和 context reset，成本从 $200 降到 $125，质量不变</strong>——这就是 adaptive simplification 的最强证据。</li>
+<li><strong>Managed Agents</strong>（Anthropic 2026b）：把 brain（harness+LLM）/ hands（sandbox+tools）/ session（durable event log）三层解耦，**”Pets vs. Cattle” 化**——任何组件崩了都能自动重启恢复。</li>
+<li><strong>Long-Running Agent Harness</strong>（Anthropic 2025d）：总结 4 种长跑 agent 失败模式——① 试图一把搞定全任务 ② 过早宣布完成 ③ 跨 session 留下坏环境 ④ 不测试就标 done。</li>
+</ul>
+<h3 id="7-3-LangChain：89-团队用可观测，52-4-做评估"><a href="#7-3-LangChain：89-团队用可观测，52-4-做评估" class="headerlink" title="7.3 LangChain：89% 团队用可观测，52.4% 做评估"></a>7.3 LangChain：89% 团队用可观测，52.4% 做评估</h3><p>LangChain 作为 agent framework 的事实标准，在生产经验上有独特视角：</p>
+<ul>
+<li><strong>LangGraph 31.3K stars</strong>（图组合的 multi-agent runtime）、<strong>deepagents 22.3K</strong>（runtime/long-running）——图组合是 multi-agent 编排的主流范式。</li>
+<li><strong>LangChain 调查</strong>揭示 <strong>observability-evaluation gap</strong>：89% 团队用可观测工具，52.4% 跑离线评估。<strong>这意味着大多数团队能”看到”agent 做了什么但没系统判断”做得对不对”——这正是 V 层要解决的。</strong></li>
+</ul>
+<hr>
+<h2 id="八、五大未解问题"><a href="#八、五大未解问题" class="headerlink" title="八、五大未解问题"></a>八、五大未解问题</h2><p>论文最诚实也最有价值的地方是它不假装给出了全部答案。§12 列出的 5 大未解问题（实际是研究议程）：</p>
+<h3 id="8-1-硬化与扩展执行环境"><a href="#8-1-硬化与扩展执行环境" class="headerlink" title="8.1 硬化与扩展执行环境"></a>8.1 硬化与扩展执行环境</h3><p>SandboxEscapeBench 证明前沿模型能在现实配置下逃逸（15-35% 成功率）。防御工作碎片化，一容器一任务模式在万级并行下压力大。<strong>开放问题</strong>：让运行时 substrate <strong>既可测又可组合</strong>；需要 prompt injection / 目标错位 / 组合放大的共同评测。</p>
+<h3 id="8-2-长跑-Agent-维持可靠状态"><a href="#8-2-长跑-Agent-维持可靠状态" class="headerlink" title="8.2 长跑 Agent 维持可靠状态"></a>8.2 长跑 Agent 维持可靠状态</h3><p>最深 context 问题不是”装更多 token”，而是<strong>长视野下工作状态与真实任务状态的对齐</strong>。反复 summarize/retrieve/compact/externalize 都会<strong>删除约束、扭曲优先级、保留过期假设</strong>。<strong>应把 context 管理重新建模为状态估计</strong>（state estimation）：每次压缩/检索/遗忘丢失多少任务相关信息？</p>
+<h3 id="8-3-从-Agent-Traces-诊断失败"><a href="#8-3-从-Agent-Traces-诊断失败" class="headerlink" title="8.3 从 Agent Traces 诊断失败"></a>8.3 从 Agent Traces 诊断失败</h3><p>失败可能源自：模型推理、误导性工具 schema、sandbox 错配、stale context、flaky 测试、benchmark 模糊、judge 不稳定、orchestration 循环。<strong>Anthropic 2026a 证明基础设施设置能移动 benchmark 分数 6 pp</strong>。<strong>评估层要作为测量仪器来研究</strong>，不只是 leaderboard。</p>
+<h3 id="8-4-跨-Agent-Tool-Human-的标准化-Handoff"><a href="#8-4-跨-Agent-Tool-Human-的标准化-Handoff" class="headerlink" title="8.4 跨 Agent/Tool/Human 的标准化 Handoff"></a>8.4 跨 Agent/Tool/Human 的标准化 Handoff</h3><p>局部标准已有：MCP（工具）、A2A（agent 间）、OpenTelemetry（trace）。<strong>缺少跨层 handoff 契约</strong>：planner 交给 executor、agent 调工具、subagent 还控制、系统升级给人——交接应带<strong>意图/约束/权限/工件/provenance/预算/风险/trace 历史/未决决策</strong>。<strong>开放问题</strong>：定义<strong>足够丰富以保证安全恢复、足够简单以广泛采用</strong>的 handoff 协议。</p>
+<h3 id="8-5-Harness-随模型进化而自适应简化"><a href="#8-5-Harness-随模型进化而自适应简化" class="headerlink" title="8.5 Harness 随模型进化而自适应简化"></a>8.5 Harness 随模型进化而自适应简化</h3><p>假设 harness 单调变复杂是错的；每个干预都编码”模型不能做什么”的假设。因子 model × harness 评测可揭示：跨模型都帮的 / 只帮特定家族的 / 反转模型排名的。<strong>Anthropic 2026c 真实案例</strong>：原本对某个模型有用的 context reset，模型变强后可移除且<strong>省成本不降质量</strong>。<strong>核心机制</strong>：Meta-Harness（搜索 prompts/tools/control loops）、Natural-Language Agent Harnesses（把模块显式可消融）、TensorZero/Axon/AgentOps（成本感知运营）。<strong>终极目标</strong>：<strong>adaptive simplification</strong>——harness 持续追问”哪些控制还有必要”。</p>
+<hr>
+<h2 id="九、关键项目一览（按层归类，挑重要的）"><a href="#九、关键项目一览（按层归类，挑重要的）" class="headerlink" title="九、关键项目一览（按层归类，挑重要的）"></a>九、关键项目一览（按层归类，挑重要的）</h2><blockquote>
+<p>论文附录 A 列出 171 个项目，下面挑每个层最值得记住的几个。</p>
+</blockquote>
+<h3 id="E-执行环境"><a href="#E-执行环境" class="headerlink" title="E - 执行环境"></a>E - 执行环境</h3><ul>
+<li><strong>Daytona</strong> 72.4K ⭐（sub-90ms 冷启动，AI 时代专用沙箱）</li>
+<li><strong>E2B</strong> 12.1K（Firecracker microVM）</li>
+<li><strong>OpenSandbox</strong> 10.5K（<strong>阿里开源</strong>）</li>
+<li><strong>Anthropic Computer Use</strong>（旗舰商业）</li>
+</ul>
+<h3 id="T-工具接口"><a href="#T-工具接口" class="headerlink" title="T - 工具接口"></a>T - 工具接口</h3><ul>
+<li><strong>MCP Servers</strong> 85.1K（MCP 生态 server 集合，Anthropic 2024-11）</li>
+<li><strong>AGENTS.md</strong> 21.0K（仓库级 agent 指令文件标准）</li>
+<li><strong>GitHub Spec Kit</strong> 92.9K（spec-driven workflows）</li>
+</ul>
+<h3 id="C-上下文与记忆"><a href="#C-上下文与记忆" class="headerlink" title="C - 上下文与记忆"></a>C - 上下文与记忆</h3><ul>
+<li><strong>Mem0</strong> 41K ⭐（<strong>长期记忆层事实标准</strong>，AWS Agent SDK 2025 独家选用）</li>
+<li><strong>claude-mem</strong> 72.8K ⭐（Claude Code 记忆层）</li>
+<li><strong>Trellis</strong> 7.2K（specs/memory/workflow）</li>
+</ul>
+<h3 id="L-编排（最大子类）"><a href="#L-编排（最大子类）" class="headerlink" title="L - 编排（最大子类）"></a>L - 编排（<strong>最大子类</strong>）</h3><ul>
+<li><strong>OpenCode</strong> 155.8K ⭐（<strong>Anomaly 开源，sub-agents 标杆</strong>）</li>
+<li><strong>Claude Code</strong> 120.9K（Anthropic 旗舰）</li>
+<li><strong>Gemini CLI</strong> 103.3K（Google 旗舰）</li>
+<li><strong>Codex CLI</strong> 80.4K（OpenAI 旗舰，<strong>stateless replay 范式</strong>）</li>
+<li><strong>OpenHands</strong> 72.7K（研究级 runtime）</li>
+<li><strong>DeerFlow</strong> 65.4K（long-horizon/memory）</li>
+<li><strong>LangGraph</strong> 31.3K（LangChain 图工作流）</li>
+<li><strong>OpenAI Agents SDK</strong> 25.9K（handoff/workflows）</li>
+</ul>
+<h3 id="O-可观测"><a href="#O-可观测" class="headerlink" title="O - 可观测"></a>O - 可观测</h3><ul>
+<li><strong>Langfuse</strong> 26.7K ⭐（OpenTelemetry 兼容 LLM 追踪）</li>
+<li><strong>MLflow</strong> 25.8K（平台/监控/评估）</li>
+<li><strong>Opik</strong> 19.2K（Comet 旗下）</li>
+<li><strong>TensorZero</strong> 11.3K（成本优化）</li>
+</ul>
+<h3 id="V-评估"><a href="#V-评估" class="headerlink" title="V - 评估"></a>V - 评估</h3><ul>
+<li><strong>Promptfoo</strong> 20.9K ⭐（<strong>eval-as-code 标杆</strong>）</li>
+<li><strong>DeepEval</strong> 15.2K</li>
+<li><strong>RAGAS</strong> 13.8K</li>
+<li><strong>SWE-bench</strong> 4.9K（GitHub issue 修复基准）</li>
+<li><strong>Terminal-Bench</strong> 2.2K（terminal/long-horizon）</li>
+</ul>
+<h3 id="G-治理"><a href="#G-治理" class="headerlink" title="G - 治理"></a>G - 治理</h3><ul>
+<li><strong>LiteLLM</strong> 45.9K ⭐（<strong>最大治理工具</strong>——gateway/proxy/guardrails）</li>
+<li><strong>Kong</strong> 43.3K（gateway/policy/infra）</li>
+<li><strong>Archestra</strong> 3.6K（enterprise/guardrails）</li>
+<li><strong>Portkey</strong> 11.6K（gateway）</li>
+</ul>
+<h3 id="附录-B-6-个参考实现的-7-层覆盖矩阵"><a href="#附录-B-6-个参考实现的-7-层覆盖矩阵" class="headerlink" title="附录 B 6 个参考实现的 7 层覆盖矩阵"></a>附录 B 6 个参考实现的 7 层覆盖矩阵</h3><p>论文附录 B 详细剖析了 6 个旗舰 harness：</p>
+<table>
+<thead>
+<tr>
+<th>实现</th>
+<th>E</th>
+<th>T</th>
+<th>C</th>
+<th>L</th>
+<th>O</th>
+<th>V</th>
+<th>G</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Claude Code</strong></td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td></td>
+<td></td>
+<td>✓</td>
+<td>终端编码；生产级闭源</td>
+</tr>
+<tr>
+<td><strong>OpenCode</strong></td>
+<td>✓</td>
+<td>✓</td>
+<td></td>
+<td>✓</td>
+<td></td>
+<td></td>
+<td></td>
+<td>开源终端；plan/build/subagents</td>
+</tr>
+<tr>
+<td><strong>Codex CLI</strong></td>
+<td>✓</td>
+<td>✓</td>
+<td></td>
+<td>✓</td>
+<td></td>
+<td>✓</td>
+<td></td>
+<td>无状态 replay 循环</td>
+</tr>
+<tr>
+<td><strong>OpenHands</strong></td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td></td>
+<td>✓</td>
+<td></td>
+<td>研究级可组合 SDK</td>
+</tr>
+<tr>
+<td><strong>SWE-agent</strong></td>
+<td>✓</td>
+<td>✓</td>
+<td></td>
+<td>✓</td>
+<td></td>
+<td>✓</td>
+<td></td>
+<td>agent-computer interface</td>
+</tr>
+<tr>
+<td><strong>Symphony</strong></td>
+<td></td>
+<td></td>
+<td>✓</td>
+<td>✓</td>
+<td></td>
+<td>✓</td>
+<td>✓</td>
+<td>持久控制平面 + issue tracker</td>
+</tr>
+</tbody></table>
+<p><strong>关键观察</strong>：L 层全覆盖（编排是所有 harness 的核心），O 层 0/6 覆盖（可观测仍处于”作为独立层处理”的过渡期），G 层仅 2/6（<strong>治理仍是短板</strong>）。</p>
+<hr>
+<h2 id="十、给-Agent-工程师-研究者的一句话"><a href="#十、给-Agent-工程师-研究者的一句话" class="headerlink" title="十、给 Agent 工程师 / 研究者的一句话"></a>十、给 Agent 工程师 / 研究者的一句话</h2><blockquote>
+<p><strong>“Harness engineering 是 2026 年 AI 工程的核心学科。模型升级带来 2-4 pp 的提升，harness 改动经常超过这个量级——这个数字本身就是该领域的全部论点。”</strong></p>
+</blockquote>
+<h3 id="三个最值得带走的认知"><a href="#三个最值得带走的认知" class="headerlink" title="三个最值得带走的认知"></a>三个最值得带走的认知</h3><p><strong>第一，从”调 prompt”到”建平台”**。三阶段演进的终局不是”更好的 prompt”，而是”**可治理、可观测、可验证的运营系统</strong>“。Agent 平台是 harness 工程的下一个形态——tenancy、合规、计费、组织归属都成为 agent 系统的核心维度。<strong>这就是为什么 OpenAI 5 个月能写 100 万行代码——不是模型变聪明了，是 harness 让组织级协作成为可能。</strong></p>
+<p><strong>第二，局部最优是脆弱的</strong>（Harness Coupling Problem）。prompt 改好、tool 改好、context 改好，组合进同一控制环可能反向。<strong>harness 改动要作为系统级改动测试</strong>，不能把模型分数干净归因到模型（控制器 C_H 已变）。<strong>论文把”评估层要作为测量仪器来研究”列为五大未解问题之一，意思是：今天我们还分不清”模型好不好”和”harness 好不好”。</strong></p>
+<p><strong>第三，Harness 是有”保质期”的工程</strong>。Anthropic 2026c 实证——<strong>Opus 4.5 → 4.6 砍掉 sprint contract + context reset，省 37.5% 成本且质量不变</strong>。每个 wrapper/reset/verifier 都编码”模型不能做什么”的假设，<strong>模型变强时这些干预要被重新评估甚至移除</strong>。<strong>Adaptive simplification</strong> 才是 harness 工程的长期主义。</p>
+<h3 id="一个能立刻上手的-checklist"><a href="#一个能立刻上手的-checklist" class="headerlink" title="一个能立刻上手的 checklist"></a>一个能立刻上手的 checklist</h3><ul>
+<li><strong>C 层</strong>：pre-load 必备内容，retrieve 条件内容，compact 临近饱和，spawn sub-agent 处理会污染主上下文的子任务</li>
+<li><strong>L 层</strong>：用 stateless replay 做 audit，用 stateful 做恢复</li>
+<li><strong>O 层</strong>：接 Langfuse / MLflow / OpenLLMetry；做 cost tracking；做 eBPF 监控 agent 实际流量</li>
+<li><strong>V 层</strong>：outcome / trajectory / evaluator 三级判断；用 Promptfoo / DeepEval / RAGAS 做 CI 评估</li>
+<li><strong>G 层</strong>：H1-H4 四点 hook；用 LiteLLM / Portkey 做 gateway；用 AGENTS.md 让 agent 知道边界</li>
+</ul>
+<hr>
+<h2 id="附录：关键数据点速查"><a href="#附录：关键数据点速查" class="headerlink" title="附录：关键数据点速查"></a>附录：关键数据点速查</h2><table>
+<thead>
+<tr>
+<th>数据</th>
+<th>出处</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>52.8% → 66.5% (Terminal-Bench 2.0)</td>
+<td>Trivedy 2026</td>
+<td>仅改 harness 提升 13.7 pp</td>
+</tr>
+<tr>
+<td>76.4% (Terminal-Bench-2 自动 harness)</td>
+<td>Lee 2026 Meta-Harness</td>
+<td>超越所有手工方案</td>
+</tr>
+<tr>
+<td>100 万行代码 / 5 个月</td>
+<td>OpenAI 2026a</td>
+<td>小团队 + agent</td>
+</tr>
+<tr>
+<td>15-35% 沙箱逃逸率</td>
+<td>SandboxEscapeBench 2026</td>
+<td>前沿 LLM 在 Docker 容器</td>
+</tr>
+<tr>
+<td>84% 弹窗减少</td>
+<td>Anthropic Claude Code</td>
+<td>sandboxing</td>
+</tr>
+<tr>
+<td>26% / 90%</td>
+<td>Mem0 vs OpenAI Memory</td>
+<td>准确率/省 token</td>
+</tr>
+<tr>
+<td>6 pp (p&lt;0.01)</td>
+<td>Anthropic 2026a</td>
+<td>基础设施设置偏移 benchmark</td>
+</tr>
+<tr>
+<td>21.7%</td>
+<td>Spracklen 2025</td>
+<td>开源模型包名幻觉率</td>
+</tr>
+<tr>
+<td>31-42% GPU 小时节省</td>
+<td>Dual-Pool Token-Budget</td>
+<td>Azure vLLM 集群</td>
+</tr>
+<tr>
+<td>98% 成本节省</td>
+<td>FrugalGPT cascade</td>
+<td>性能匹配 GPT-4</td>
+</tr>
+<tr>
+<td>89% / 52.4%</td>
+<td>LangChain 2026</td>
+<td>可观测用 / 评估用</td>
+</tr>
+<tr>
+<td>64-88% / 38%</td>
+<td>AgentFixer 2026</td>
+<td>检出率 / 解析错误</td>
+</tr>
+<tr>
+<td>$200 → $125</td>
+<td>Anthropic 2026c</td>
+<td>Opus 4.5 → 4.6 砍 sprint contract + context reset</td>
+</tr>
+<tr>
+<td>171 项目 / 0 失效</td>
+<td>Table S1 2026-05-08</td>
+<td>验证 0 失效链接</td>
+</tr>
+<tr>
+<td>18 个月</td>
+<td>2024-11 MCP → 2026-05 综述</td>
+<td>行业从口号到学科的时间</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><strong>论文主页</strong>：Junjie Li 等，《Agent Harness Engineering: A Survey》，TMLR 投稿 2026-05-14</li>
+<li><strong>项目页</strong>：Awesome-Agent-Harness</li>
+<li><strong>OpenAI 关键博客</strong>：<a target="_blank" rel="noopener" href="https://openai.com/index/harness-engineering/">Harness engineering: leveraging Codex in an agent-first world</a>，2026-02-11</li>
+<li><strong>MCP</strong>：<a target="_blank" rel="noopener" href="https://www.anthropic.com/news/model-context-protocol">Introducing the Model Context Protocol</a>，Anthropic 2024-11-25</li>
+<li><strong>A2A</strong>：<a target="_blank" rel="noopener" href="https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/">Announcing the Agent2Agent Protocol (A2A)</a>，Google 2025-04-09</li>
+<li><strong>Mem0</strong>：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2504.19413">Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory</a>，arXiv 2025-04-28</li>
+<li><strong>Daytona</strong>：<a target="_blank" rel="noopener" href="https://www.daytona.io/">Daytona 官网</a></li>
+<li><strong>Claude Code</strong>：<a target="_blank" rel="noopener" href="https://www.latent.space/p/claude-code">Claude Code: Anthropic’s Agent in Your Terminal</a></li>
+<li><strong>Codex CLI</strong>：<a target="_blank" rel="noopener" href="https://developers.openai.com/codex/cli">OpenAI Codex CLI</a></li>
+</ul>
+<hr>
+<p><em>笔记完。这篇论文的价值不在于提供答案——而在于给整个”agent 工程”领域装上了一套共同词汇。在 2026 年这个时间点，无论是 Agent 应用开发者、平台架构师、AI 投资人还是 ML 研究生，理解 ETCLOVG 七层、三大 trade-off、五大未解问题都是必要的。</em></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Immortalqx</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://Immortalqx.github.io/2026/06/12/agent-harness-engineering/">http://Immortalqx.github.io/2026/06/12/agent-harness-engineering/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Immortalqx</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/LLM/">
+                                    <span class="chip bg-color">LLM</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">
+                                    <span class="chip bg-color">大模型</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban,google,linkedin,twitter,facebook" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+        <style>
+    .giscus-card .card-content {
+        padding-top: 0;
+        display: grid;
+    }
+
+    .giscus,
+    .giscus-frame {
+        width: 100%;
+    }
+
+    .giscus-frame {
+        border: none;
+    }
+</style>
+
+<div class="card giscus-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div class="card-content">
+        <div class="giscus"></div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        const giscusThemeConfig = {
+            light: 'light',
+            dark: 'dark'
+        };
+
+        function getGiscusTheme(mode) {
+            if (mode === 'dark') {
+                return giscusThemeConfig.dark;
+            }
+
+            if (mode === 'light') {
+                return giscusThemeConfig.light;
+            }
+
+            const isDark = localStorage.getItem('isDark') === '1' || document.body.classList.contains('DarkMode');
+            return isDark ? giscusThemeConfig.dark : giscusThemeConfig.light;
+        }
+
+        function syncGiscusTheme(mode) {
+            const iframe = document.querySelector('iframe.giscus-frame');
+            if (!iframe) {
+                return;
+            }
+
+            iframe.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: getGiscusTheme(mode)
+                        }
+                    }
+                },
+                'https://giscus.app'
+            );
+        }
+
+        function observeGiscusFrame() {
+            const container = document.querySelector('.giscus');
+            if (!container || typeof MutationObserver === 'undefined') {
+                return;
+            }
+
+            const observer = new MutationObserver(function () {
+                if (document.querySelector('iframe.giscus-frame')) {
+                    syncGiscusTheme();
+                    observer.disconnect();
+                }
+            });
+
+            observer.observe(container, {
+                childList: true,
+                subtree: true
+            });
+        }
+
+        function mountGiscus() {
+            if (document.querySelector('script[data-giscus="mounted"]')) {
+                return;
+            }
+
+            const script = document.createElement('script');
+            script.src = 'https://giscus.app/client.js';
+            script.async = true;
+            script.crossOrigin = 'anonymous';
+            script.setAttribute('data-giscus', 'mounted');
+            script.setAttribute('data-repo', 'Immortalqx/blog-comments');
+            script.setAttribute('data-repo-id', 'R_kgDOSLuCmA');
+            script.setAttribute('data-category', 'Announcements');
+            script.setAttribute('data-category-id', 'DIC_kwDOSLuCmM4C7njA');
+            script.setAttribute('data-mapping', 'pathname');
+            script.setAttribute('data-strict', '0');
+            script.setAttribute('data-reactions-enabled', '1');
+            script.setAttribute('data-emit-metadata', '0');
+            script.setAttribute('data-input-position', 'bottom');
+            script.setAttribute('data-theme', getGiscusTheme());
+            script.setAttribute('data-lang', 'zh-CN');
+            script.setAttribute('data-loading', 'lazy');
+            document.body.appendChild(script);
+        }
+
+        window.syncGiscusTheme = syncGiscusTheme;
+
+        observeGiscusFrame();
+        mountGiscus();
+    })();
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2026/06/12/agent-harness-engineering/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/70.jpg" class="responsive-img" alt="《Agent Harness Engineering：A Survey》阅读笔记">
+                        
+                        <span class="card-title">《Agent Harness Engineering：A Survey》阅读笔记</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2026-06-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    机器学习
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/LLM/">
+                        <span class="chip bg-color">LLM</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">
+                        <span class="chip bg-color">大模型</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2026/06/02/why-action/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/62.jpg" class="responsive-img" alt="为什么要预测 action？">
+                        
+                        <span class="card-title">为什么要预测 action？</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2026-06-02
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Robotics/" class="post-category">
+                                    Robotics
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%85%B7%E8%BA%AB%E6%99%BA%E8%83%BD/">
+                        <span class="chip bg-color">具身智能</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2026</span>
+            
+            <a href="/about" target="_blank">Immortalqx</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">275.6k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2021";
+                    var startMonth = "2";
+                    var startDate = "1";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Immortalqx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:immortalqx@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1727854434" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1727854434" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        const targetMode = $('body').hasClass('DarkMode') ? 'light' : 'dark';
+        const hasGiscus = typeof window.syncGiscusTheme === 'function';
+
+        if (hasGiscus) {
+            window.syncGiscusTheme(targetMode);
+        }
+
+        const applyNightMode = function () {
+            if (targetMode === 'dark') {
+                $('body').addClass('DarkMode');
+                localStorage.setItem('isDark', '1');
+                $('#sum-moon-icon').addClass('fa-sun').removeClass('fa-moon');
+            } else {
+                $('body').removeClass('DarkMode');
+                localStorage.setItem('isDark', '0');
+                $('#sum-moon-icon').removeClass('fa-sun').addClass('fa-moon');
+            }
+
+            if (hasGiscus) {
+                window.syncGiscusTheme(targetMode);
+            }
+        };
+
+        setTimeout(applyNightMode, hasGiscus ? 50 : 0);
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+    
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <script src="/js/FunnyTitle.js"></script>
+    <!--script src="/live2d/autoload.js"></script-->
+</body>
+
+</html>

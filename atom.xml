@@ -6,7 +6,7 @@
   <link href="http://immortalqx.github.io/atom.xml" rel="self"/>
   
   <link href="http://immortalqx.github.io/"/>
-  <updated>2026-06-02T13:33:42.134Z</updated>
+  <updated>2026-06-12T08:38:46.607Z</updated>
   <id>http://immortalqx.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>《Agent Harness Engineering：A Survey》阅读笔记</title>
+    <link href="http://immortalqx.github.io/2026/06/12/agent-harness-engineering/"/>
+    <id>http://immortalqx.github.io/2026/06/12/agent-harness-engineering/</id>
+    <published>2026-06-12T08:35:37.000Z</published>
+    <updated>2026-06-12T08:38:46.607Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;《Agent-Harness-Engineering-A-Survey》阅读笔记&quot;&gt;&lt;a href=&quot;#《Agent-Harness-Engineering-A-Survey》阅读笔记&quot; class=&quot;headerlink&quot; title=&quot;《Agent</summary>
+        
+      
+    
+    
+    
+    <category term="机器学习" scheme="http://immortalqx.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="LLM" scheme="http://immortalqx.github.io/tags/LLM/"/>
+    
+    <category term="大模型" scheme="http://immortalqx.github.io/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/"/>
+    
+  </entry>
   
   <entry>
     <title>为什么要预测 action？</title>
@@ -87,9 +114,9 @@
     <category term="Robotics" scheme="http://immortalqx.github.io/categories/Robotics/"/>
     
     
-    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
-    
     <category term="大模型" scheme="http://immortalqx.github.io/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/"/>
+    
+    <category term="视觉SLAM" scheme="http://immortalqx.github.io/tags/%E8%A7%86%E8%A7%89SLAM/"/>
     
   </entry>
   
@@ -328,9 +355,9 @@
     <category term="Robotics" scheme="http://immortalqx.github.io/categories/Robotics/"/>
     
     
-    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
-    
     <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
+    
+    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
     
   </entry>
   
@@ -382,9 +409,9 @@
     <category term="Robotics" scheme="http://immortalqx.github.io/categories/Robotics/"/>
     
     
-    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
-    
     <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
+    
+    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
     
   </entry>
   
@@ -409,9 +436,9 @@
     <category term="NeRF&amp;3DGS" scheme="http://immortalqx.github.io/categories/NeRF-3DGS/"/>
     
     
-    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
-    
     <category term="NeRF" scheme="http://immortalqx.github.io/tags/NeRF/"/>
+    
+    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
     
   </entry>
   
@@ -509,33 +536,6 @@
         
         
     <summary type="html">&lt;h1 id=&quot;论文阅读《Pixel-GS-Density-Control-with-Pixel-aware-Gradient-for-3D-Gaussian-Splatting》&quot;&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="NeRF&amp;3DGS" scheme="http://immortalqx.github.io/categories/NeRF-3DGS/"/>
-    
-    
-    <category term="隐式表示" scheme="http://immortalqx.github.io/tags/%E9%9A%90%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
-    
-    <category term="3D Gaussian Splatting" scheme="http://immortalqx.github.io/tags/3D-Gaussian-Splatting/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>论文阅读《Mini-Splatting：Representing Scenes with a Constrained Number of Gaussians》</title>
-    <link href="http://immortalqx.github.io/2024/07/21/paper-reading-mini-splatting/"/>
-    <id>http://immortalqx.github.io/2024/07/21/paper-reading-mini-splatting/</id>
-    <published>2024-07-21T07:44:37.000Z</published>
-    <updated>2025-01-18T14:44:19.663Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;论文阅读《Mini-Splatting-Representing-Scenes-with-a-Constrained-Number-of-Gaussians》&quot;&gt;&lt;a</summary>
         
       
     
